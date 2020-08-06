@@ -46,6 +46,7 @@ import java.util.List;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
+import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexDefinition;
@@ -126,6 +127,12 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         else if (definition instanceof SequenceDefinition) {
             sb.append(getJavaPackageName(definition.getSchema()));
             sb.append(".Sequences");
+        }
+
+        // Domains
+        else if (definition instanceof DomainDefinition) {
+            sb.append(getJavaPackageName(definition.getSchema()));
+            sb.append(".Domains");
         }
 
         // Attributes, Parameters

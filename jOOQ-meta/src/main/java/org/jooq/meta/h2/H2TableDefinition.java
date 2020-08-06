@@ -51,6 +51,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
@@ -104,7 +105,10 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.REMARKS,
-                COLUMNS.SEQUENCE_NAME)
+                COLUMNS.SEQUENCE_NAME,
+                COLUMNS.DOMAIN_SCHEMA,
+                COLUMNS.DOMAIN_NAME
+            )
             .from(COLUMNS)
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(COLUMNS.TABLE_NAME.equal(getName()))
@@ -126,6 +130,11 @@ public class H2TableDefinition extends AbstractTableDefinition {
             // [#7644] H2 puts DATETIME_PRECISION in NUMERIC_SCALE column
             boolean isTimestamp = record.get(COLUMNS.TYPE_NAME).trim().toLowerCase().startsWith("timestamp");
 
+            // [#681] Domain name if available
+            Name userType = record.get(COLUMNS.DOMAIN_NAME) != null
+                ? name(record.get(COLUMNS.DOMAIN_SCHEMA), record.get(COLUMNS.DOMAIN_NAME))
+                : name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME));
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
@@ -139,7 +148,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
                     : record.get(COLUMNS.NUMERIC_SCALE),
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
                 isIdentity ? null : record.get(COLUMNS.COLUMN_DEFAULT),
-                name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME)));
+                userType
+            );
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),

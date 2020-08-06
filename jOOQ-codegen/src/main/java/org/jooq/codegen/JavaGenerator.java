@@ -75,6 +75,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -118,6 +119,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EmbeddableRecordImpl;
 import org.jooq.impl.Internal;
+import org.jooq.impl.LazySchema;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
@@ -2501,6 +2503,8 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating DOMAIN references");
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Domains.java"));
 
+        final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all Domains in " + schemaNameOrDefault(schema) + ".");
         printClassAnnotations(out, schema, Mode.DOMAIN);
@@ -2512,7 +2516,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (DomainDefinition domain : database.getDomains(schema)) {
             final String id = getStrategy().getJavaIdentifier(domain);
-            final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
             final String domainTypeFull = getJavaType(domain.getType(resolver()));
             final String domainType = out.ref(domainTypeFull);
             final String domainTypeRef = getJavaTypeReference(domain.getDatabase(), domain.getType(resolver()));
@@ -2521,7 +2524,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.println("val %s: %s[%s] = %s.createDomain(", id, Domain.class, domainType, Internal.class);
-                out.println("  %s", schemaId);
+                out.println("  schema");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
 
@@ -2532,7 +2535,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 out.println("val %s: %s<%s> = %s.createDomain(", id, Domain.class, domainType, Internal.class);
-                out.println("  %s", schemaId);
+                out.println("  schema()");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
 
@@ -2543,7 +2546,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.println("public static final %s<%s> %s = %s.createDomain(", Domain.class, domainType, id, Internal.class);
-                out.println("  %s", schemaId);
+                out.println("  schema()");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
 
@@ -2552,6 +2555,26 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.println(");");
             }
+        }
+
+        if (scala) {
+            out.println();
+            out.println("private def schema: %s = new %s(%s.name(\"%s\"), %s.comment(\"\"), () => %s)", Schema.class, LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, schemaId);
+        }
+        else if (kotlin) {
+            out.println();
+            out.println("private fun schema(): %s = %s(%s.name(\"%s\"), %s.comment(\"\"), %s { %s })", Schema.class, LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, Callable.class, schemaId);
+        }
+        else {
+            out.println();
+            out.println("private static final %s schema() {", Schema.class);
+            out.println("return new %s(%s.name(\"%s\"), %s.comment(\"\"), new %s<%s>() {", LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, Callable.class, Schema.class);
+            out.override();
+            out.println("public %s call() {", Schema.class);
+            out.println("return %s;", schemaId);
+            out.println("}");
+            out.println("});");
+            out.println("}");
         }
 
         out.println("}");
@@ -5390,10 +5413,10 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema, Mode.DEFAULT);
 
         if (scala) {
-            out.println("class %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), catalogId, interfaces);
+            out.println("class %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
         }
         else if (kotlin) {
-            out.println("class %s : %s(\"%s\", %s)[[before=, ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), catalogId, interfaces);
+            out.println("class %s : %s(\"%s\", %s)[[before=, ][%s]] {", className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
 
             out.println("companion object {");
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
@@ -5444,7 +5467,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (!scala && !kotlin) {
             out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.println("private %s() {", className);
-            out.println("super(\"%s\", null);", schema.getOutputName());
+            out.println("super(\"%s\", null);", escapeString(schema.getOutputName()));
             out.println("}");
         }
 
@@ -7255,6 +7278,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, boolean i, String d, Name u) {
         StringBuilder sb = new StringBuilder();
+
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);
 
@@ -7262,6 +7286,10 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(".asArrayDataType(");
             sb.append(classOf(getStrategy().getFullJavaClassName(array, Mode.RECORD)));
             sb.append(")");
+        }
+        else if (db.getDomain(schema, u) != null) {
+            sb.append(getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)));
+            sb.append(".getDataType()");
         }
         else if (db.getUDT(schema, u) != null) {
             sb.append(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)));

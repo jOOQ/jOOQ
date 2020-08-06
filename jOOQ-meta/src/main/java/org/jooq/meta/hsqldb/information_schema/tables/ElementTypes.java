@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ElementTypes extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1446349351;
+    private static final long serialVersionUID = 1424943681;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code>
@@ -193,11 +193,12 @@ public class ElementTypes extends TableImpl<Record> {
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_SCALE = createField(DSL.name("DECLARED_NUMERIC_SCALE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code> table reference
-     */
-    public ElementTypes() {
-        this(DSL.name("ELEMENT_TYPES"), null);
+    private ElementTypes(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private ElementTypes(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -214,12 +215,11 @@ public class ElementTypes extends TableImpl<Record> {
         this(alias, ELEMENT_TYPES);
     }
 
-    private ElementTypes(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private ElementTypes(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code> table reference
+     */
+    public ElementTypes() {
+        this(DSL.name("ELEMENT_TYPES"), null);
     }
 
     public <O extends Record> ElementTypes(Table<O> child, ForeignKey<O, Record> key) {

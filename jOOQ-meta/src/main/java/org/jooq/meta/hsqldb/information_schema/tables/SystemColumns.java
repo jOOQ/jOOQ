@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SystemColumns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1944258303;
+    private static final long serialVersionUID = -1807251637;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SYSTEM_COLUMNS</code>
@@ -158,11 +158,12 @@ public class SystemColumns extends TableImpl<Record> {
      */
     public final TableField<Record, String> IS_GENERATEDCOLUMN = createField(DSL.name("IS_GENERATEDCOLUMN"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.SYSTEM_COLUMNS</code> table reference
-     */
-    public SystemColumns() {
-        this(DSL.name("SYSTEM_COLUMNS"), null);
+    private SystemColumns(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private SystemColumns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("the visible columns of each accessible table defined within this database"), TableOptions.table());
     }
 
     /**
@@ -179,12 +180,11 @@ public class SystemColumns extends TableImpl<Record> {
         this(alias, SYSTEM_COLUMNS);
     }
 
-    private SystemColumns(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private SystemColumns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("the visible columns of each accessible table defined within this database"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.SYSTEM_COLUMNS</code> table reference
+     */
+    public SystemColumns() {
+        this(DSL.name("SYSTEM_COLUMNS"), null);
     }
 
     public <O extends Record> SystemColumns(Table<O> child, ForeignKey<O, Record> key) {

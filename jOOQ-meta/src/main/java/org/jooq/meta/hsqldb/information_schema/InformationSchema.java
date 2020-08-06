@@ -12,6 +12,8 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Columns;
+import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
+import org.jooq.meta.hsqldb.information_schema.tables.Domains;
 import org.jooq.meta.hsqldb.information_schema.tables.ElementTypes;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.hsqldb.information_schema.tables.Parameters;
@@ -33,7 +35,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.Views;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1993917154;
+    private static final long serialVersionUID = -1879387601;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA</code>
@@ -49,6 +51,16 @@ public class InformationSchema extends SchemaImpl {
      * one row for each column of table of view
      */
     public final Columns COLUMNS = Columns.COLUMNS;
+
+    /**
+     * one row for each check constraint included in a domain definition
+     */
+    public final DomainConstraints DOMAIN_CONSTRAINTS = DomainConstraints.DOMAIN_CONSTRAINTS;
+
+    /**
+     * one row for each domain identified
+     */
+    public final Domains DOMAINS = Domains.DOMAINS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code>.
@@ -133,6 +145,8 @@ public class InformationSchema extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             CheckConstraints.CHECK_CONSTRAINTS,
             Columns.COLUMNS,
+            DomainConstraints.DOMAIN_CONSTRAINTS,
+            Domains.DOMAINS,
             ElementTypes.ELEMENT_TYPES,
             KeyColumnUsage.KEY_COLUMN_USAGE,
             Parameters.PARAMETERS,

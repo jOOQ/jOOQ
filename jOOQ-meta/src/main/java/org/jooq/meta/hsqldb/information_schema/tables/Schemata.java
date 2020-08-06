@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Schemata extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 208713892;
+    private static final long serialVersionUID = 741661092;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SCHEMATA</code>
@@ -73,11 +73,12 @@ public class Schemata extends TableImpl<Record> {
      */
     public final TableField<Record, String> SQL_PATH = createField(DSL.name("SQL_PATH"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.SCHEMATA</code> table reference
-     */
-    public Schemata() {
-        this(DSL.name("SCHEMATA"), null);
+    private Schemata(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Schemata(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each schema"), TableOptions.table());
     }
 
     /**
@@ -94,12 +95,11 @@ public class Schemata extends TableImpl<Record> {
         this(alias, SCHEMATA);
     }
 
-    private Schemata(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Schemata(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each schema"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.SCHEMATA</code> table reference
+     */
+    public Schemata() {
+        this(DSL.name("SCHEMATA"), null);
     }
 
     public <O extends Record> Schemata(Table<O> child, ForeignKey<O, Record> key) {

@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CheckConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -689370862;
+    private static final long serialVersionUID = 1527103634;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.CHECK_CONSTRAINTS</code>
@@ -58,11 +58,12 @@ public class CheckConstraints extends TableImpl<Record> {
      */
     public final TableField<Record, String> CHECK_CLAUSE = createField(DSL.name("CHECK_CLAUSE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.CHECK_CONSTRAINTS</code> table reference
-     */
-    public CheckConstraints() {
-        this(DSL.name("CHECK_CONSTRAINTS"), null);
+    private CheckConstraints(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private CheckConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each domain constraint, table check constraint, and assertion."), TableOptions.table());
     }
 
     /**
@@ -79,12 +80,11 @@ public class CheckConstraints extends TableImpl<Record> {
         this(alias, CHECK_CONSTRAINTS);
     }
 
-    private CheckConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private CheckConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each domain constraint, table check constraint, and assertion."), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.CHECK_CONSTRAINTS</code> table reference
+     */
+    public CheckConstraints() {
+        this(DSL.name("CHECK_CONSTRAINTS"), null);
     }
 
     public <O extends Record> CheckConstraints(Table<O> child, ForeignKey<O, Record> key) {

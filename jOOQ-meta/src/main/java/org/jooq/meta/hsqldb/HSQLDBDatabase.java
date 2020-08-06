@@ -44,10 +44,13 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.DOMAINS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.DOMAIN_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.meta.hsqldb.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
@@ -81,6 +84,7 @@ import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
@@ -96,9 +100,12 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Columns;
+import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
+import org.jooq.meta.hsqldb.information_schema.tables.Domains;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 /**
  * The HSQLDB database
@@ -473,6 +480,54 @@ public class HSQLDBDatabase extends AbstractDatabase {
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<>();
+
+        Domains d = DOMAINS.as("d");
+        DomainConstraints dc = DOMAIN_CONSTRAINTS.as("dc");
+        CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
+
+        for (Record record : create()
+            .select(
+                d.DOMAIN_SCHEMA,
+                d.DOMAIN_NAME,
+                d.DATA_TYPE,
+                d.CHARACTER_MAXIMUM_LENGTH,
+                d.NUMERIC_PRECISION,
+                d.NUMERIC_SCALE,
+                d.DOMAIN_DEFAULT,
+                cc.CHECK_CLAUSE)
+            .from(d)
+                .join(dc)
+                    .on(row(d.DOMAIN_CATALOG, d.DOMAIN_SCHEMA, d.DOMAIN_NAME).eq(dc.DOMAIN_CATALOG, dc.DOMAIN_SCHEMA, dc.DOMAIN_NAME))
+                .join(cc)
+                    .on(row(dc.CONSTRAINT_CATALOG, dc.CONSTRAINT_SCHEMA, dc.CONSTRAINT_NAME).eq(cc.CONSTRAINT_CATALOG, cc.CONSTRAINT_SCHEMA, cc.CONSTRAINT_NAME))
+            .where(d.DOMAIN_SCHEMA.in(getInputSchemata()))
+            .orderBy(d.DOMAIN_SCHEMA, d.DOMAIN_NAME)
+        ) {
+            SchemaDefinition schema = getSchema(record.get(d.DOMAIN_SCHEMA));
+
+            DataTypeDefinition baseType = new DefaultDataTypeDefinition(
+                this,
+                schema,
+                record.get(d.DATA_TYPE),
+                record.get(d.CHARACTER_MAXIMUM_LENGTH),
+                record.get(d.NUMERIC_PRECISION),
+                record.get(d.NUMERIC_SCALE),
+                true,
+                record.get(d.DOMAIN_DEFAULT)
+            );
+
+            DefaultDomainDefinition domain = new DefaultDomainDefinition(
+                schema,
+                record.get(d.DOMAIN_NAME),
+                baseType
+            );
+
+            if (!StringUtils.isBlank(record.get(cc.CHECK_CLAUSE)))
+                domain.addCheckClause(record.get(cc.CHECK_CLAUSE));
+
+            result.add(domain);
+        }
+
         return result;
     }
 

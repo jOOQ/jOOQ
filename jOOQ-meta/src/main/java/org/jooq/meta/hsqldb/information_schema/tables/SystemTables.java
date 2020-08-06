@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SystemTables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 108850521;
+    private static final long serialVersionUID = 1748877629;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SYSTEM_TABLES</code>
@@ -103,11 +103,12 @@ public class SystemTables extends TableImpl<Record> {
      */
     public final TableField<Record, String> COMMIT_ACTION = createField(DSL.name("COMMIT_ACTION"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.SYSTEM_TABLES</code> table reference
-     */
-    public SystemTables() {
-        this(DSL.name("SYSTEM_TABLES"), null);
+    private SystemTables(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private SystemTables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("the accessible tables defined within this database"), TableOptions.table());
     }
 
     /**
@@ -124,12 +125,11 @@ public class SystemTables extends TableImpl<Record> {
         this(alias, SYSTEM_TABLES);
     }
 
-    private SystemTables(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private SystemTables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("the accessible tables defined within this database"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.SYSTEM_TABLES</code> table reference
+     */
+    public SystemTables() {
+        this(DSL.name("SYSTEM_TABLES"), null);
     }
 
     public <O extends Record> SystemTables(Table<O> child, ForeignKey<O, Record> key) {

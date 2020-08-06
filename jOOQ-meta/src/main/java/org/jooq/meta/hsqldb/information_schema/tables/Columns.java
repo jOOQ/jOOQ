@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Columns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 929899774;
+    private static final long serialVersionUID = 1814103104;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.COLUMNS</code>
@@ -288,11 +288,12 @@ public class Columns extends TableImpl<Record> {
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_SCALE = createField(DSL.name("DECLARED_NUMERIC_SCALE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.COLUMNS</code> table reference
-     */
-    public Columns() {
-        this(DSL.name("COLUMNS"), null);
+    private Columns(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each column of table of view"), TableOptions.table());
     }
 
     /**
@@ -309,12 +310,11 @@ public class Columns extends TableImpl<Record> {
         this(alias, COLUMNS);
     }
 
-    private Columns(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each column of table of view"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.COLUMNS</code> table reference
+     */
+    public Columns() {
+        this(DSL.name("COLUMNS"), null);
     }
 
     public <O extends Record> Columns(Table<O> child, ForeignKey<O, Record> key) {

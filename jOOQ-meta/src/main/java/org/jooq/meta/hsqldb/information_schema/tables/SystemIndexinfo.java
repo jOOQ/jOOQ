@@ -24,7 +24,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SystemIndexinfo extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -882844726;
+    private static final long serialVersionUID = 1046519840;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SYSTEM_INDEXINFO</code>
@@ -109,11 +109,12 @@ public class SystemIndexinfo extends TableImpl<Record> {
      */
     public final TableField<Record, Integer> ROW_CARDINALITY = createField(DSL.name("ROW_CARDINALITY"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.SYSTEM_INDEXINFO</code> table reference
-     */
-    public SystemIndexinfo() {
-        this(DSL.name("SYSTEM_INDEXINFO"), null);
+    private SystemIndexinfo(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private SystemIndexinfo(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("information about the indices of each accessible table defined within this database"), TableOptions.table());
     }
 
     /**
@@ -130,12 +131,11 @@ public class SystemIndexinfo extends TableImpl<Record> {
         this(alias, SYSTEM_INDEXINFO);
     }
 
-    private SystemIndexinfo(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private SystemIndexinfo(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("information about the indices of each accessible table defined within this database"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.SYSTEM_INDEXINFO</code> table reference
+     */
+    public SystemIndexinfo() {
+        this(DSL.name("SYSTEM_INDEXINFO"), null);
     }
 
     public <O extends Record> SystemIndexinfo(Table<O> child, ForeignKey<O, Record> key) {

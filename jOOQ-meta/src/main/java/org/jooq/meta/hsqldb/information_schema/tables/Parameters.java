@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Parameters extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -86684052;
+    private static final long serialVersionUID = 1783892856;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.PARAMETERS</code>
@@ -238,11 +238,12 @@ public class Parameters extends TableImpl<Record> {
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_SCALE = createField(DSL.name("DECLARED_NUMERIC_SCALE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.PARAMETERS</code> table reference
-     */
-    public Parameters() {
-        this(DSL.name("PARAMETERS"), null);
+    private Parameters(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Parameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each routine parameter"), TableOptions.table());
     }
 
     /**
@@ -259,12 +260,11 @@ public class Parameters extends TableImpl<Record> {
         this(alias, PARAMETERS);
     }
 
-    private Parameters(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Parameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each routine parameter"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.PARAMETERS</code> table reference
+     */
+    public Parameters() {
+        this(DSL.name("PARAMETERS"), null);
     }
 
     public <O extends Record> Parameters(Table<O> child, ForeignKey<O, Record> key) {

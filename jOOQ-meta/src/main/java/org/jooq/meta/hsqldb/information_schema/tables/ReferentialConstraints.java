@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReferentialConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -2111790363;
+    private static final long serialVersionUID = 2102635045;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code>
@@ -83,11 +83,12 @@ public class ReferentialConstraints extends TableImpl<Record> {
      */
     public final TableField<Record, String> DELETE_RULE = createField(DSL.name("DELETE_RULE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table reference
-     */
-    public ReferentialConstraints() {
-        this(DSL.name("REFERENTIAL_CONSTRAINTS"), null);
+    private ReferentialConstraints(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each foreign key constraint"), TableOptions.table());
     }
 
     /**
@@ -104,12 +105,11 @@ public class ReferentialConstraints extends TableImpl<Record> {
         this(alias, REFERENTIAL_CONSTRAINTS);
     }
 
-    private ReferentialConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each foreign key constraint"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table reference
+     */
+    public ReferentialConstraints() {
+        this(DSL.name("REFERENTIAL_CONSTRAINTS"), null);
     }
 
     public <O extends Record> ReferentialConstraints(Table<O> child, ForeignKey<O, Record> key) {

@@ -53,6 +53,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -97,7 +98,9 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                     COLUMNS.DATETIME_PRECISION,
                     COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
                 nvl(ELEMENT_TYPES.NUMERIC_SCALE, COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
-                COLUMNS.UDT_NAME,
+
+                coalesce(COLUMNS.DOMAIN_SCHEMA, COLUMNS.UDT_SCHEMA).as(COLUMNS.UDT_SCHEMA),
+                coalesce(COLUMNS.DOMAIN_NAME, COLUMNS.UDT_NAME).as(COLUMNS.UDT_NAME),
                 SYSTEM_COLUMNS.REMARKS)
             .from(COLUMNS)
                 .leftOuterJoin(SYSTEM_COLUMNS)
@@ -122,7 +125,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.NUMERIC_SCALE),
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
                 record.get(COLUMNS.COLUMN_DEFAULT),
-                record.get(COLUMNS.UDT_NAME)
+                DSL.name(record.get(COLUMNS.UDT_SCHEMA), record.get(COLUMNS.UDT_NAME))
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(

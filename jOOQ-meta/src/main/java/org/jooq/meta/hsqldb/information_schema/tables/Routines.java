@@ -25,7 +25,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1115598562;
+    private static final long serialVersionUID = -732358096;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.ROUTINES</code>
@@ -313,12 +313,12 @@ public class Routines extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.ROUTINES.CREATED</code>.
      */
-    public final TableField<Record, Timestamp> CREATED = createField(DSL.name("CREATED"), org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<Record, Timestamp> CREATED = createField(DSL.name("CREATED"), org.jooq.impl.SQLDataType.TIMESTAMP(6), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.ROUTINES.LAST_ALTERED</code>.
      */
-    public final TableField<Record, Timestamp> LAST_ALTERED = createField(DSL.name("LAST_ALTERED"), org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<Record, Timestamp> LAST_ALTERED = createField(DSL.name("LAST_ALTERED"), org.jooq.impl.SQLDataType.TIMESTAMP(6), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.ROUTINES.NEW_SAVEPOINT_LEVEL</code>.
@@ -480,11 +480,12 @@ public class Routines extends TableImpl<Record> {
      */
     public final TableField<Record, Long> RESULT_CAST_DECLARED_NUMERIC_SCALE = createField(DSL.name("RESULT_CAST_DECLARED_NUMERIC_SCALE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.ROUTINES</code> table reference
-     */
-    public Routines() {
-        this(DSL.name("ROUTINES"), null);
+    private Routines(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Routines(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each routine"), TableOptions.table());
     }
 
     /**
@@ -501,12 +502,11 @@ public class Routines extends TableImpl<Record> {
         this(alias, ROUTINES);
     }
 
-    private Routines(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Routines(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each routine"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.ROUTINES</code> table reference
+     */
+    public Routines() {
+        this(DSL.name("ROUTINES"), null);
     }
 
     public <O extends Record> Routines(Table<O> child, ForeignKey<O, Record> key) {

@@ -75,7 +75,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,6 +119,7 @@ import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EmbeddableRecordImpl;
 import org.jooq.impl.Internal;
 import org.jooq.impl.LazySchema;
+import org.jooq.impl.LazySupplier;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
@@ -2563,14 +2563,14 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             out.println();
-            out.println("private fun schema(): %s = %s(%s.name(\"%s\"), %s.comment(\"\"), %s { %s })", Schema.class, LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, Callable.class, schemaId);
+            out.println("private fun schema(): %s = %s(%s.name(\"%s\"), %s.comment(\"\"), %s { %s })", Schema.class, LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, LazySupplier.class, schemaId);
         }
         else {
             out.println();
             out.println("private static final %s schema() {", Schema.class);
-            out.println("return new %s(%s.name(\"%s\"), %s.comment(\"\"), new %s<%s>() {", LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, Callable.class, Schema.class);
+            out.println("return new %s(%s.name(\"%s\"), %s.comment(\"\"), new %s<%s>() {", LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, LazySupplier.class, Schema.class);
             out.override();
-            out.println("public %s call() {", Schema.class);
+            out.println("public %s get() {", Schema.class);
             out.println("return %s;", schemaId);
             out.println("}");
             out.println("});");

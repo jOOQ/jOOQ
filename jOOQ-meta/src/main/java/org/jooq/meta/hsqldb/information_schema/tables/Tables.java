@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -557490683;
+    private static final long serialVersionUID = 1981035023;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.TABLES</code>
@@ -98,11 +98,12 @@ public class Tables extends TableImpl<Record> {
      */
     public final TableField<Record, String> COMMIT_ACTION = createField(DSL.name("COMMIT_ACTION"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.TABLES</code> table reference
-     */
-    public Tables() {
-        this(DSL.name("TABLES"), null);
+    private Tables(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Tables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each table or view"), TableOptions.table());
     }
 
     /**
@@ -119,12 +120,11 @@ public class Tables extends TableImpl<Record> {
         this(alias, TABLES);
     }
 
-    private Tables(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Tables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each table or view"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.TABLES</code> table reference
+     */
+    public Tables() {
+        this(DSL.name("TABLES"), null);
     }
 
     public <O extends Record> Tables(Table<O> child, ForeignKey<O, Record> key) {

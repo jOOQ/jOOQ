@@ -6,6 +6,8 @@ package org.jooq.meta.hsqldb.information_schema;
 
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Columns;
+import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
+import org.jooq.meta.hsqldb.information_schema.tables.Domains;
 import org.jooq.meta.hsqldb.information_schema.tables.ElementTypes;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.hsqldb.information_schema.tables.Parameters;
@@ -21,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.Views;
 
 
 /**
- * Convenience access to all tables in INFORMATION_SCHEMA
+ * Convenience access to all tables in INFORMATION_SCHEMA.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
@@ -35,6 +37,16 @@ public class Tables {
      * one row for each column of table of view
      */
     public static final Columns COLUMNS = Columns.COLUMNS;
+
+    /**
+     * one row for each check constraint included in a domain definition
+     */
+    public static final DomainConstraints DOMAIN_CONSTRAINTS = DomainConstraints.DOMAIN_CONSTRAINTS;
+
+    /**
+     * one row for each domain identified
+     */
+    public static final Domains DOMAINS = Domains.DOMAINS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code>.

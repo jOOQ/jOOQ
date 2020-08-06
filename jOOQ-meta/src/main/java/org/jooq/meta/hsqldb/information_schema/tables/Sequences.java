@@ -23,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1757043557;
+    private static final long serialVersionUID = -53699664;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SEQUENCES</code>
@@ -74,14 +74,19 @@ public class Sequences extends TableImpl<Record> {
     public final TableField<Record, Long> NUMERIC_SCALE = createField(DSL.name("NUMERIC_SCALE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.SEQUENCES.MAXIMUM_VALUE</code>.
+     * The column <code>INFORMATION_SCHEMA.SEQUENCES.START_VALUE</code>.
      */
-    public final TableField<Record, String> MAXIMUM_VALUE = createField(DSL.name("MAXIMUM_VALUE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
+    public final TableField<Record, String> START_VALUE = createField(DSL.name("START_VALUE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.MINIMUM_VALUE</code>.
      */
     public final TableField<Record, String> MINIMUM_VALUE = createField(DSL.name("MINIMUM_VALUE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.SEQUENCES.MAXIMUM_VALUE</code>.
+     */
+    public final TableField<Record, String> MAXIMUM_VALUE = createField(DSL.name("MAXIMUM_VALUE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.INCREMENT</code>.
@@ -118,11 +123,12 @@ public class Sequences extends TableImpl<Record> {
      */
     public final TableField<Record, String> NEXT_VALUE = createField(DSL.name("NEXT_VALUE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
-    /**
-     * Create a <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
-     */
-    public Sequences() {
-        this(DSL.name("SEQUENCES"), null);
+    private Sequences(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Sequences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each external sequence generator"), TableOptions.table());
     }
 
     /**
@@ -139,12 +145,11 @@ public class Sequences extends TableImpl<Record> {
         this(alias, SEQUENCES);
     }
 
-    private Sequences(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Sequences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each external sequence generator"), TableOptions.table());
+    /**
+     * Create a <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
+     */
+    public Sequences() {
+        this(DSL.name("SEQUENCES"), null);
     }
 
     public <O extends Record> Sequences(Table<O> child, ForeignKey<O, Record> key) {

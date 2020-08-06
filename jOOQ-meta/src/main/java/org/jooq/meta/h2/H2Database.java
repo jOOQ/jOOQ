@@ -675,11 +675,7 @@ public class H2Database extends AbstractDatabase {
                 record.get(DOMAINS.PRECISION),
                 record.get(DOMAINS.SCALE),
                !record.get(DOMAINS.IS_NULLABLE, boolean.class),
-                record.get(DOMAINS.COLUMN_DEFAULT),
-                name(
-                    record.get(DOMAINS.DOMAIN_SCHEMA),
-                    record.get(DOMAINS.TYPE_NAME)
-                )
+                record.get(DOMAINS.COLUMN_DEFAULT)
             );
 
             DefaultDomainDefinition domain = new DefaultDomainDefinition(

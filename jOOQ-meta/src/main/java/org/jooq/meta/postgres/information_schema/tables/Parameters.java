@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Parameters extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -595173817;
+    private static final long serialVersionUID = -956570809;
 
     /**
      * The reference instance of <code>information_schema.parameters</code>
@@ -198,11 +198,12 @@ public class Parameters extends TableImpl<Record> {
      */
     public final TableField<Record, String> PARAMETER_DEFAULT = createField(DSL.name("parameter_default"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
-    /**
-     * Create a <code>information_schema.parameters</code> table reference
-     */
-    public Parameters() {
-        this(DSL.name("parameters"), null);
+    private Parameters(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Parameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -219,12 +220,11 @@ public class Parameters extends TableImpl<Record> {
         this(alias, PARAMETERS);
     }
 
-    private Parameters(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Parameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.parameters</code> table reference
+     */
+    public Parameters() {
+        this(DSL.name("parameters"), null);
     }
 
     public <O extends Record> Parameters(Table<O> child, ForeignKey<O, Record> key) {

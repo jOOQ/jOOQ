@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Views extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1909991099;
+    private static final long serialVersionUID = 1570978837;
 
     /**
      * The reference instance of <code>information_schema.views</code>
@@ -88,11 +88,12 @@ public class Views extends TableImpl<Record> {
      */
     public final TableField<Record, String> IS_TRIGGER_INSERTABLE_INTO = createField(DSL.name("is_trigger_insertable_into"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
-    /**
-     * Create a <code>information_schema.views</code> table reference
-     */
-    public Views() {
-        this(DSL.name("views"), null);
+    private Views(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Views(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -109,12 +110,11 @@ public class Views extends TableImpl<Record> {
         this(alias, VIEWS);
     }
 
-    private Views(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Views(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.views</code> table reference
+     */
+    public Views() {
+        this(DSL.name("views"), null);
     }
 
     public <O extends Record> Views(Table<O> child, ForeignKey<O, Record> key) {

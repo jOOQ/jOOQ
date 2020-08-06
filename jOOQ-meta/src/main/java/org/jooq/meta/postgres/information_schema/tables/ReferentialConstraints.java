@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReferentialConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1248176473;
+    private static final long serialVersionUID = 177730727;
 
     /**
      * The reference instance of <code>information_schema.referential_constraints</code>
@@ -83,11 +83,12 @@ public class ReferentialConstraints extends TableImpl<Record> {
      */
     public final TableField<Record, String> DELETE_RULE = createField(DSL.name("delete_rule"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
-    /**
-     * Create a <code>information_schema.referential_constraints</code> table reference
-     */
-    public ReferentialConstraints() {
-        this(DSL.name("referential_constraints"), null);
+    private ReferentialConstraints(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -104,12 +105,11 @@ public class ReferentialConstraints extends TableImpl<Record> {
         this(alias, REFERENTIAL_CONSTRAINTS);
     }
 
-    private ReferentialConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.referential_constraints</code> table reference
+     */
+    public ReferentialConstraints() {
+        this(DSL.name("referential_constraints"), null);
     }
 
     public <O extends Record> ReferentialConstraints(Table<O> child, ForeignKey<O, Record> key) {

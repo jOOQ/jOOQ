@@ -39,6 +39,7 @@
 package org.jooq.meta.postgres;
 
 import static org.jooq.impl.DSL.any;
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
@@ -122,8 +123,8 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 (when(isIdentity, inline("YES"))).as(COLUMNS.IS_IDENTITY),
                 COLUMNS.IS_NULLABLE,
                 (when(isIdentity, inline(null, String.class)).else_(COLUMNS.COLUMN_DEFAULT)).as(COLUMNS.COLUMN_DEFAULT),
-                COLUMNS.UDT_SCHEMA,
-                COLUMNS.UDT_NAME,
+                coalesce(COLUMNS.DOMAIN_SCHEMA, COLUMNS.UDT_SCHEMA).as(COLUMNS.UDT_SCHEMA),
+                coalesce(COLUMNS.DOMAIN_NAME, COLUMNS.UDT_NAME).as(COLUMNS.UDT_NAME),
                 PG_DESCRIPTION.DESCRIPTION)
             .from(COLUMNS)
             .join(PG_NAMESPACE)
@@ -134,7 +135,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             .join(PG_ATTRIBUTE)
                 .on(PG_ATTRIBUTE.ATTRELID.eq(oid(PG_CLASS)))
                 .and(PG_ATTRIBUTE.ATTNAME.eq(COLUMNS.COLUMN_NAME))
-            .leftOuterJoin(PG_DESCRIPTION)
+            .leftJoin(PG_DESCRIPTION)
                 .on(PG_DESCRIPTION.OBJOID.eq(oid(PG_CLASS)))
                 .and(PG_DESCRIPTION.OBJSUBID.eq(COLUMNS.ORDINAL_POSITION))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))

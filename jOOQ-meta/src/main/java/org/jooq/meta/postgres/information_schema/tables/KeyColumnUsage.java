@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class KeyColumnUsage extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1561775192;
+    private static final long serialVersionUID = 891639896;
 
     /**
      * The reference instance of <code>information_schema.key_column_usage</code>
@@ -83,11 +83,12 @@ public class KeyColumnUsage extends TableImpl<Record> {
      */
     public final TableField<Record, Integer> POSITION_IN_UNIQUE_CONSTRAINT = createField(DSL.name("position_in_unique_constraint"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
-    /**
-     * Create a <code>information_schema.key_column_usage</code> table reference
-     */
-    public KeyColumnUsage() {
-        this(DSL.name("key_column_usage"), null);
+    private KeyColumnUsage(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private KeyColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -104,12 +105,11 @@ public class KeyColumnUsage extends TableImpl<Record> {
         this(alias, KEY_COLUMN_USAGE);
     }
 
-    private KeyColumnUsage(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private KeyColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.key_column_usage</code> table reference
+     */
+    public KeyColumnUsage() {
+        this(DSL.name("key_column_usage"), null);
     }
 
     public <O extends Record> KeyColumnUsage(Table<O> child, ForeignKey<O, Record> key) {

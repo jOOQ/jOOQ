@@ -25,7 +25,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -609409150;
+    private static final long serialVersionUID = -1133214202;
 
     /**
      * The reference instance of <code>information_schema.routines</code>
@@ -313,12 +313,12 @@ public class Routines extends TableImpl<Record> {
     /**
      * The column <code>information_schema.routines.created</code>.
      */
-    public final TableField<Record, Timestamp> CREATED = createField(DSL.name("created"), org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<Record, Timestamp> CREATED = createField(DSL.name("created"), org.jooq.impl.SQLDataType.TIMESTAMP(0), this, "");
 
     /**
      * The column <code>information_schema.routines.last_altered</code>.
      */
-    public final TableField<Record, Timestamp> LAST_ALTERED = createField(DSL.name("last_altered"), org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<Record, Timestamp> LAST_ALTERED = createField(DSL.name("last_altered"), org.jooq.impl.SQLDataType.TIMESTAMP(0), this, "");
 
     /**
      * The column <code>information_schema.routines.new_savepoint_level</code>.
@@ -450,11 +450,12 @@ public class Routines extends TableImpl<Record> {
      */
     public final TableField<Record, String> RESULT_CAST_DTD_IDENTIFIER = createField(DSL.name("result_cast_dtd_identifier"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
-    /**
-     * Create a <code>information_schema.routines</code> table reference
-     */
-    public Routines() {
-        this(DSL.name("routines"), null);
+    private Routines(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Routines(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -471,12 +472,11 @@ public class Routines extends TableImpl<Record> {
         this(alias, ROUTINES);
     }
 
-    private Routines(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Routines(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.routines</code> table reference
+     */
+    public Routines() {
+        this(DSL.name("routines"), null);
     }
 
     public <O extends Record> Routines(Table<O> child, ForeignKey<O, Record> key) {

@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CheckConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 753976016;
+    private static final long serialVersionUID = 19302096;
 
     /**
      * The reference instance of <code>information_schema.check_constraints</code>
@@ -58,11 +58,12 @@ public class CheckConstraints extends TableImpl<Record> {
      */
     public final TableField<Record, String> CHECK_CLAUSE = createField(DSL.name("check_clause"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
-    /**
-     * Create a <code>information_schema.check_constraints</code> table reference
-     */
-    public CheckConstraints() {
-        this(DSL.name("check_constraints"), null);
+    private CheckConstraints(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private CheckConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -79,12 +80,11 @@ public class CheckConstraints extends TableImpl<Record> {
         this(alias, CHECK_CONSTRAINTS);
     }
 
-    private CheckConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private CheckConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.check_constraints</code> table reference
+     */
+    public CheckConstraints() {
+        this(DSL.name("check_constraints"), null);
     }
 
     public <O extends Record> CheckConstraints(Table<O> child, ForeignKey<O, Record> key) {

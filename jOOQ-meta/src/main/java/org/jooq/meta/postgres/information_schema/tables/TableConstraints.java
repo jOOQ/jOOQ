@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TableConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 723026534;
+    private static final long serialVersionUID = 1615636582;
 
     /**
      * The reference instance of <code>information_schema.table_constraints</code>
@@ -88,11 +88,12 @@ public class TableConstraints extends TableImpl<Record> {
      */
     public final TableField<Record, String> ENFORCED = createField(DSL.name("enforced"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
-    /**
-     * Create a <code>information_schema.table_constraints</code> table reference
-     */
-    public TableConstraints() {
-        this(DSL.name("table_constraints"), null);
+    private TableConstraints(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private TableConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -109,12 +110,11 @@ public class TableConstraints extends TableImpl<Record> {
         this(alias, TABLE_CONSTRAINTS);
     }
 
-    private TableConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private TableConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.table_constraints</code> table reference
+     */
+    public TableConstraints() {
+        this(DSL.name("table_constraints"), null);
     }
 
     public <O extends Record> TableConstraints(Table<O> child, ForeignKey<O, Record> key) {

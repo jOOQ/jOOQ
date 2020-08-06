@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1768240460;
+    private static final long serialVersionUID = -918254964;
 
     /**
      * The reference instance of <code>information_schema.sequences</code>
@@ -98,11 +98,12 @@ public class Sequences extends TableImpl<Record> {
      */
     public final TableField<Record, String> CYCLE_OPTION = createField(DSL.name("cycle_option"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
-    /**
-     * Create a <code>information_schema.sequences</code> table reference
-     */
-    public Sequences() {
-        this(DSL.name("sequences"), null);
+    private Sequences(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Sequences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -119,12 +120,11 @@ public class Sequences extends TableImpl<Record> {
         this(alias, SEQUENCES);
     }
 
-    private Sequences(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Sequences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.sequences</code> table reference
+     */
+    public Sequences() {
+        this(DSL.name("sequences"), null);
     }
 
     public <O extends Record> Sequences(Table<O> child, ForeignKey<O, Record> key) {

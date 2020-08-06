@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Schemata extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -978794146;
+    private static final long serialVersionUID = -595916450;
 
     /**
      * The reference instance of <code>information_schema.schemata</code>
@@ -73,11 +73,12 @@ public class Schemata extends TableImpl<Record> {
      */
     public final TableField<Record, String> SQL_PATH = createField(DSL.name("sql_path"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
-    /**
-     * Create a <code>information_schema.schemata</code> table reference
-     */
-    public Schemata() {
-        this(DSL.name("schemata"), null);
+    private Schemata(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Schemata(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -94,12 +95,11 @@ public class Schemata extends TableImpl<Record> {
         this(alias, SCHEMATA);
     }
 
-    private Schemata(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Schemata(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.schemata</code> table reference
+     */
+    public Schemata() {
+        this(DSL.name("schemata"), null);
     }
 
     public <O extends Record> Schemata(Table<O> child, ForeignKey<O, Record> key) {

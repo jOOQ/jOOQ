@@ -8,6 +8,7 @@ import org.jooq.meta.postgres.information_schema.tables.Attributes;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.meta.postgres.information_schema.tables.Columns;
 import org.jooq.meta.postgres.information_schema.tables.ConstraintColumnUsage;
+import org.jooq.meta.postgres.information_schema.tables.Domains;
 import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.postgres.information_schema.tables.Parameters;
 import org.jooq.meta.postgres.information_schema.tables.ReferentialConstraints;
@@ -19,7 +20,7 @@ import org.jooq.meta.postgres.information_schema.tables.Views;
 
 
 /**
- * Convenience access to all tables in information_schema
+ * Convenience access to all tables in information_schema.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
@@ -43,6 +44,11 @@ public class Tables {
      * The table <code>information_schema.constraint_column_usage</code>.
      */
     public static final ConstraintColumnUsage CONSTRAINT_COLUMN_USAGE = ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE;
+
+    /**
+     * The table <code>information_schema.domains</code>.
+     */
+    public static final Domains DOMAINS = Domains.DOMAINS;
 
     /**
      * The table <code>information_schema.key_column_usage</code>.

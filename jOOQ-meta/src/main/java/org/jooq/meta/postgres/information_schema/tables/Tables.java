@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1212566173;
+    private static final long serialVersionUID = 1099370467;
 
     /**
      * The reference instance of <code>information_schema.tables</code>
@@ -98,11 +98,12 @@ public class Tables extends TableImpl<Record> {
      */
     public final TableField<Record, String> COMMIT_ACTION = createField(DSL.name("commit_action"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
-    /**
-     * Create a <code>information_schema.tables</code> table reference
-     */
-    public Tables() {
-        this(DSL.name("tables"), null);
+    private Tables(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Tables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -119,12 +120,11 @@ public class Tables extends TableImpl<Record> {
         this(alias, TABLES);
     }
 
-    private Tables(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Tables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.tables</code> table reference
+     */
+    public Tables() {
+        this(DSL.name("tables"), null);
     }
 
     public <O extends Record> Tables(Table<O> child, ForeignKey<O, Record> key) {

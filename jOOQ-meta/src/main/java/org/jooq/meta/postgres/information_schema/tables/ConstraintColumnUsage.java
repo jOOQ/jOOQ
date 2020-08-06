@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConstraintColumnUsage extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -2078486724;
+    private static final long serialVersionUID = -917946100;
 
     /**
      * The reference instance of <code>information_schema.constraint_column_usage</code>
@@ -73,11 +73,12 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
      */
     public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
-    /**
-     * Create a <code>information_schema.constraint_column_usage</code> table reference
-     */
-    public ConstraintColumnUsage() {
-        this(DSL.name("constraint_column_usage"), null);
+    private ConstraintColumnUsage(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private ConstraintColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -94,12 +95,11 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
         this(alias, CONSTRAINT_COLUMN_USAGE);
     }
 
-    private ConstraintColumnUsage(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private ConstraintColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.constraint_column_usage</code> table reference
+     */
+    public ConstraintColumnUsage() {
+        this(DSL.name("constraint_column_usage"), null);
     }
 
     public <O extends Record> ConstraintColumnUsage(Table<O> child, ForeignKey<O, Record> key) {

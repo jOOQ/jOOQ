@@ -14,6 +14,7 @@ import org.jooq.meta.postgres.information_schema.tables.Attributes;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.meta.postgres.information_schema.tables.Columns;
 import org.jooq.meta.postgres.information_schema.tables.ConstraintColumnUsage;
+import org.jooq.meta.postgres.information_schema.tables.Domains;
 import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.postgres.information_schema.tables.Parameters;
 import org.jooq.meta.postgres.information_schema.tables.ReferentialConstraints;
@@ -31,7 +32,7 @@ import org.jooq.meta.postgres.information_schema.tables.Views;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1434628550;
+    private static final long serialVersionUID = -424520553;
 
     /**
      * The reference instance of <code>information_schema</code>
@@ -57,6 +58,11 @@ public class InformationSchema extends SchemaImpl {
      * The table <code>information_schema.constraint_column_usage</code>.
      */
     public final ConstraintColumnUsage CONSTRAINT_COLUMN_USAGE = ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE;
+
+    /**
+     * The table <code>information_schema.domains</code>.
+     */
+    public final Domains DOMAINS = Domains.DOMAINS;
 
     /**
      * The table <code>information_schema.key_column_usage</code>.
@@ -123,6 +129,7 @@ public class InformationSchema extends SchemaImpl {
             CheckConstraints.CHECK_CONSTRAINTS,
             Columns.COLUMNS,
             ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE,
+            Domains.DOMAINS,
             KeyColumnUsage.KEY_COLUMN_USAGE,
             Parameters.PARAMETERS,
             ReferentialConstraints.REFERENTIAL_CONSTRAINTS,

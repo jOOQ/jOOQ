@@ -37,8 +37,10 @@
  */
 package org.jooq.meta.postgres;
 
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
+import static org.jooq.meta.postgres.information_schema.Tables.DOMAINS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -67,15 +69,19 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
         for (Record record : create().select(
                     ATTRIBUTES.ATTRIBUTE_NAME,
                     ATTRIBUTES.ORDINAL_POSITION,
-                    ATTRIBUTES.DATA_TYPE,
-                    ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH,
-                    ATTRIBUTES.NUMERIC_PRECISION,
-                    ATTRIBUTES.NUMERIC_SCALE,
+                    coalesce(DOMAINS.DATA_TYPE, ATTRIBUTES.DATA_TYPE).as(ATTRIBUTES.DATA_TYPE),
+                    coalesce(DOMAINS.CHARACTER_MAXIMUM_LENGTH, ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH).as(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
+                    coalesce(DOMAINS.NUMERIC_PRECISION, ATTRIBUTES.NUMERIC_PRECISION).as(ATTRIBUTES.NUMERIC_PRECISION),
+                    coalesce(DOMAINS.NUMERIC_SCALE, ATTRIBUTES.NUMERIC_SCALE).as(ATTRIBUTES.NUMERIC_SCALE),
                     ATTRIBUTES.IS_NULLABLE,
                     ATTRIBUTES.ATTRIBUTE_DEFAULT,
                     ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA,
                     ATTRIBUTES.ATTRIBUTE_UDT_NAME)
                 .from(ATTRIBUTES)
+                .leftJoin(DOMAINS)
+                    .on(ATTRIBUTES.ATTRIBUTE_UDT_CATALOG.eq(DOMAINS.DOMAIN_CATALOG))
+                    .and(ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA.eq(DOMAINS.DOMAIN_SCHEMA))
+                    .and(ATTRIBUTES.ATTRIBUTE_UDT_NAME.eq(DOMAINS.DOMAIN_NAME))
                 .where(ATTRIBUTES.UDT_SCHEMA.equal(getSchema().getName()))
                 .and(ATTRIBUTES.UDT_NAME.equal(getName()))
                 .orderBy(ATTRIBUTES.ORDINAL_POSITION)

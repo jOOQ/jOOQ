@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Attributes extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -413066050;
+    private static final long serialVersionUID = 1641092926;
 
     /**
      * The reference instance of <code>information_schema.attributes</code>
@@ -193,11 +193,12 @@ public class Attributes extends TableImpl<Record> {
      */
     public final TableField<Record, String> IS_DERIVED_REFERENCE_ATTRIBUTE = createField(DSL.name("is_derived_reference_attribute"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
-    /**
-     * Create a <code>information_schema.attributes</code> table reference
-     */
-    public Attributes() {
-        this(DSL.name("attributes"), null);
+    private Attributes(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Attributes(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -214,12 +215,11 @@ public class Attributes extends TableImpl<Record> {
         this(alias, ATTRIBUTES);
     }
 
-    private Attributes(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Attributes(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.attributes</code> table reference
+     */
+    public Attributes() {
+        this(DSL.name("attributes"), null);
     }
 
     public <O extends Record> Attributes(Table<O> child, ForeignKey<O, Record> key) {

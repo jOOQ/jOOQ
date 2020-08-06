@@ -23,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Columns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1390351019;
+    private static final long serialVersionUID = 1970803305;
 
     /**
      * The reference instance of <code>information_schema.columns</code>
@@ -258,11 +258,12 @@ public class Columns extends TableImpl<Record> {
      */
     public final TableField<Record, String> IS_UPDATABLE = createField(DSL.name("is_updatable"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
-    /**
-     * Create a <code>information_schema.columns</code> table reference
-     */
-    public Columns() {
-        this(DSL.name("columns"), null);
+    private Columns(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     /**
@@ -279,12 +280,11 @@ public class Columns extends TableImpl<Record> {
         this(alias, COLUMNS);
     }
 
-    private Columns(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    /**
+     * Create a <code>information_schema.columns</code> table reference
+     */
+    public Columns() {
+        this(DSL.name("columns"), null);
     }
 
     public <O extends Record> Columns(Table<O> child, ForeignKey<O, Record> key) {

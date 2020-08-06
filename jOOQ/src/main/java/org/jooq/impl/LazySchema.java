@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
@@ -66,19 +65,19 @@ public final class LazySchema extends AbstractNamed implements Schema {
      */
     private static final long serialVersionUID = -2260128711891951254L;
 
-    final Callable<Schema>    callable;
-    transient Schema          schema;
+    final LazySupplier<Schema> supplier;
+    transient Schema           schema;
 
-    public LazySchema(Name name, Comment comment, Callable<Schema> callable) {
+    public LazySchema(Name name, Comment comment, LazySupplier<Schema> supplier) {
         super(name, comment);
 
-        this.callable = callable;
+        this.supplier = supplier;
     }
 
     private final Schema schema() {
         if (schema == null) {
             try {
-                schema = callable.call();
+                schema = supplier.get();
             }
             catch (Exception e) {
                 throw new RuntimeException(e);

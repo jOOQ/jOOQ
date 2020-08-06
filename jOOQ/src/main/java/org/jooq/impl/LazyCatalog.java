@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
@@ -59,21 +58,21 @@ public final class LazyCatalog extends AbstractNamed implements Catalog {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -2260128711891951254L;
+    private static final long   serialVersionUID = -2260128711891951254L;
 
-    final Callable<Catalog>   callable;
-    transient Catalog         catalog;
+    final LazySupplier<Catalog> supplier;
+    transient Catalog           catalog;
 
-    public LazyCatalog(Name name, Callable<Catalog> callable) {
+    public LazyCatalog(Name name, LazySupplier<Catalog> supplier) {
         super(name, CommentImpl.NO_COMMENT);
 
-        this.callable = callable;
+        this.supplier = supplier;
     }
 
     private final Catalog catalog() {
         if (catalog == null) {
             try {
-                catalog = callable.call();
+                catalog = supplier.get();
             }
             catch (Exception e) {
                 throw new RuntimeException(e);

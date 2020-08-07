@@ -663,6 +663,9 @@ public class H2Database extends AbstractDatabase {
                 DOMAINS.CHECK_CONSTRAINT)
             .from(DOMAINS)
             .where(DOMAINS.DOMAIN_SCHEMA.in(getInputSchemata()))
+
+            // [#7917] Starting from 1.4.198, ENUM types are stored as domains
+            .and(DOMAINS.TYPE_NAME.ne(inline("ENUM")))
             .orderBy(DOMAINS.DOMAIN_SCHEMA, DOMAINS.DOMAIN_NAME)
         ) {
             SchemaDefinition schema = getSchema(record.get(DOMAINS.DOMAIN_SCHEMA));

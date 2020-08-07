@@ -7189,6 +7189,8 @@ public class JavaGenerator extends AbstractGenerator {
             // [#4388] TODO: Improve array handling
             Name baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
 
+            // [#10309] TODO: The schema should be taken from baseType, if available. Might be different than the argument schema.
+            //          When can this happen?
             if (scala)
                 type = "scala.Array[" + getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "]";
             else if (kotlin)
@@ -7216,6 +7218,11 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 type = getStrategy().getFullJavaClassName(db.getArray(schema, u), Mode.RECORD);
             }
+        }
+
+        // Check for DOMAIN types
+        else if (db.getDomain(schema, u) != null) {
+            type = getJavaType(db.getDomain(schema, u).getDefinedType());
         }
 
         // Check for ENUM types

@@ -67,11 +67,13 @@ implements DomainDefinition {
     }
 
     public void addCheckClause(String checkClause) {
-        checkClauses.add(checkClause);
+        if (checkClause != null)
+            checkClauses.add(checkClause);
     }
 
     public void addCheckClause(String... checkClause) {
-        checkClauses.addAll(Arrays.asList(checkClause));
+        if (checkClause != null)
+            checkClauses.addAll(Arrays.asList(checkClause));
     }
 
     @Override

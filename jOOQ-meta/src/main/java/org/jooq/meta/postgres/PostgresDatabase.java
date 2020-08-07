@@ -61,10 +61,12 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DECIMAL_INTEGER;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.meta.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
+import static org.jooq.meta.postgres.information_schema.Tables.DOMAINS;
 import static org.jooq.meta.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
@@ -724,7 +726,7 @@ public class PostgresDatabase extends AbstractDatabase {
                              oid(d),
                              oid(d),
                              d.TYPBASETYPE,
-                             array(constraintDef)
+                             when(oid(c).isNotNull(), array(constraintDef))
                          )
                         .from(d)
                         .join(n)
@@ -754,7 +756,11 @@ public class PostgresDatabase extends AbstractDatabase {
                         d.TYPNOTNULL,
                         d.TYPDEFAULT,
                         b.TYPNAME,
-                        b.TYPLEN,
+
+                        // See https://github.com/postgres/postgres/blob/master/src/backend/catalog/information_schema.sql
+                        field("information_schema._pg_char_max_length({0}, {1})", INTEGER, d.TYPBASETYPE, d.TYPTYPMOD).as(DOMAINS.CHARACTER_MAXIMUM_LENGTH),
+                        field("information_schema._pg_numeric_precision({0}, {1})", INTEGER, d.TYPBASETYPE, d.TYPTYPMOD).as(DOMAINS.NUMERIC_PRECISION),
+                        field("information_schema._pg_numeric_scale({0}, {1})", INTEGER, d.TYPBASETYPE, d.TYPTYPMOD).as(DOMAINS.NUMERIC_SCALE),
                         src)
                     .from(d)
                     .join(name("domains"))
@@ -774,9 +780,9 @@ public class PostgresDatabase extends AbstractDatabase {
                     this,
                     schema,
                     record.get(b.TYPNAME),
-                    record.get(b.TYPLEN),
-                    record.get(b.TYPLEN),
-                    0, // ?
+                    record.get(DOMAINS.CHARACTER_MAXIMUM_LENGTH),
+                    record.get(DOMAINS.NUMERIC_PRECISION),
+                    record.get(DOMAINS.NUMERIC_SCALE),
                    !record.get(d.TYPNOTNULL, boolean.class),
                     record.get(d.TYPDEFAULT),
                     name(

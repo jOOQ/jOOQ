@@ -2168,10 +2168,8 @@ public abstract class AbstractDatabase implements Database {
     protected final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema, Map<SchemaDefinition, List<T>> cache) {
         List<T> result = cache.get(schema);
 
-        if (result == null) {
-            result = filterSchema(definitions, schema);
-            cache.put(schema, result);
-        }
+        if (result == null)
+            cache.put(schema, result = filterSchema(definitions, schema));
 
         return result;
     }

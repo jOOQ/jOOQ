@@ -458,6 +458,7 @@ public class JavaGenerator extends AbstractGenerator {
             return true;
 
         if (database.getArrays(schema).isEmpty()
+            && database.getDomains(schema).isEmpty()
             && database.getEnums(schema).isEmpty()
             && database.getPackages(schema).isEmpty()
             && database.getRoutines(schema).isEmpty()

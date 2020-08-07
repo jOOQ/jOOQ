@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.firebird;
 
+import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
@@ -50,6 +51,7 @@ import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$FIELDS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDICES;
@@ -82,6 +84,7 @@ import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
@@ -103,6 +106,7 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 import org.jooq.meta.jaxb.SchemaMappingType;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.firebird.FirebirdDataType;
 
 /**
@@ -460,6 +464,49 @@ public class FirebirdDatabase extends AbstractDatabase {
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<>();
+
+        Rdb$fields f = RDB$FIELDS;
+
+        for (Record record : create()
+            .select(
+                trim(f.RDB$FIELD_NAME).as(f.RDB$FIELD_NAME),
+
+                CHARACTER_LENGTH(f).as("CHAR_LEN"),
+                f.RDB$FIELD_PRECISION,
+                FIELD_SCALE(f).as("FIELD_SCALE"),
+                FIELD_TYPE(f).as("FIELD_TYPE"),
+                DSL.bitOr(f.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(f.RDB$NULL_FLAG),
+                trim(f.RDB$VALIDATION_SOURCE).as(f.RDB$VALIDATION_SOURCE),
+                trim(f.RDB$DEFAULT_SOURCE).as(f.RDB$DEFAULT_SOURCE))
+            .from(f)
+            .where(f.RDB$FIELD_NAME.notLike(any("RDB$%", "SEC$%", "MON$%")))
+            .orderBy(f.RDB$FIELD_NAME)
+        ) {
+            SchemaDefinition schema = getSchemata().get(0);
+
+            DataTypeDefinition baseType = new DefaultDataTypeDefinition(
+                this,
+                schema,
+                record.get("FIELD_TYPE", String.class),
+                record.get("CHAR_LEN", short.class),
+                record.get(f.RDB$FIELD_PRECISION),
+                record.get("FIELD_SCALE", Integer.class),
+                record.get(f.RDB$NULL_FLAG) == 0,
+                record.get(f.RDB$DEFAULT_SOURCE) == null ? null : record.get(f.RDB$DEFAULT_SOURCE).replaceAll("(?i:default )", "")
+            );
+
+            DefaultDomainDefinition domain = new DefaultDomainDefinition(
+                schema,
+                record.get(f.RDB$FIELD_NAME),
+                baseType
+            );
+
+            if (!StringUtils.isBlank(record.get(f.RDB$VALIDATION_SOURCE)))
+                domain.addCheckClause(record.get(f.RDB$VALIDATION_SOURCE).replaceAll("(?i:check )", ""));
+
+            result.add(domain);
+        }
+
         return result;
     }
 

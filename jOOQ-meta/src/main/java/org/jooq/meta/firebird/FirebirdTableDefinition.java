@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.firebird;
 
+import static org.jooq.impl.DSL.trim;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
@@ -85,7 +86,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
         // DatabaseMetaData implementation
         for (Record record : create()
                 .select(
-                    r.RDB$FIELD_NAME.trim(),
+                    trim(r.RDB$FIELD_NAME).as(r.RDB$FIELD_NAME),
                     r.RDB$DESCRIPTION,
                     r.RDB$DEFAULT_VALUE,
                     DSL.bitOr(r.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(r.RDB$NULL_FLAG),
@@ -97,13 +98,12 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     f.RDB$FIELD_PRECISION,
                     FIELD_SCALE(f).as("FIELD_SCALE"),
                     FIELD_TYPE(f).as("FIELD_TYPE"),
-                    f.RDB$FIELD_SUB_TYPE,
+                    trim(f.RDB$FIELD_NAME).as("DOMAIN_NAME"),
                     r.RDB$DESCRIPTION)
                 .from(r)
                 .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
                 .where(r.RDB$RELATION_NAME.eq(getName()))
-                .orderBy(r.RDB$FIELD_POSITION)
-                .fetch()) {
+                .orderBy(r.RDB$FIELD_POSITION)) {
 
             // [#9411] Firebird reports the DEFAULT keyword in this column, which
             //         we do not want to reproduce in generated code.
@@ -112,23 +112,24 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 defaultValue = P_DEFAULT.matcher(defaultValue).replaceFirst("");
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
-                    getDatabase(),
-                    getSchema(),
-                    record.get("FIELD_TYPE", String.class),
-                    record.get("CHAR_LEN", short.class),
-                    record.get(f.RDB$FIELD_PRECISION),
-                    record.get("FIELD_SCALE", Integer.class),
-                    record.get(r.RDB$NULL_FLAG) == 0,
-                    defaultValue
+                getDatabase(),
+                getSchema(),
+                record.get("FIELD_TYPE", String.class),
+                record.get("CHAR_LEN", short.class),
+                record.get(f.RDB$FIELD_PRECISION),
+                record.get("FIELD_SCALE", Integer.class),
+                record.get(r.RDB$NULL_FLAG) == 0,
+                defaultValue,
+                record.get("DOMAIN_NAME") == null ? null : DSL.name(record.get("DOMAIN_NAME", String.class))
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(
-                    getDatabase().getTable(getSchema(), getName()),
-                    record.get(r.RDB$FIELD_NAME.trim()),
-                    record.get(r.RDB$FIELD_POSITION),
-                    type,
-                    false,
-                    record.get(r.RDB$DESCRIPTION)
+                getDatabase().getTable(getSchema(), getName()),
+                record.get(r.RDB$FIELD_NAME),
+                record.get(r.RDB$FIELD_POSITION),
+                type,
+                false,
+                record.get(r.RDB$DESCRIPTION)
             );
 
             result.add(column);

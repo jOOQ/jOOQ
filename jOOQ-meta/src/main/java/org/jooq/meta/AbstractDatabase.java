@@ -1523,6 +1523,8 @@ public abstract class AbstractDatabase implements Database {
                         identities.add(identity);
                 }
             }
+
+            sort(identities);
         }
 
         if (identitiesBySchema == null)
@@ -1543,6 +1545,8 @@ public abstract class AbstractDatabase implements Database {
                     for (TableDefinition table : getTables(s))
                         for (UniqueKeyDefinition uniqueKey : table.getUniqueKeys())
                             uniqueKeys.add(uniqueKey);
+
+            sort(uniqueKeys);
         }
 
         if (uniqueKeysBySchema == null)
@@ -1561,6 +1565,8 @@ public abstract class AbstractDatabase implements Database {
                     for (TableDefinition table : getTables(s))
                         for (ForeignKeyDefinition foreignKey : table.getForeignKeys())
                             foreignKeys.add(foreignKey);
+
+            sort(foreignKeys);
         }
 
         if (foreignKeysBySchema == null)
@@ -1579,6 +1585,8 @@ public abstract class AbstractDatabase implements Database {
                     for (TableDefinition table : getTables(s))
                         for (CheckConstraintDefinition checkConstraint : table.getCheckConstraints())
                             checkConstraints.add(checkConstraint);
+
+            sort(checkConstraints);
         }
 
         if (checkConstraintsBySchema == null)

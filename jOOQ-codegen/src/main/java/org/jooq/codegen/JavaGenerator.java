@@ -757,66 +757,58 @@ public class JavaGenerator extends AbstractGenerator {
         List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
 
         // Unique keys
-        for (TableDefinition table : database.getTables(schema)) {
-            try {
-                List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
+        try {
+            for (UniqueKeyDefinition uniqueKey : database.getUniqueKeys(schema)) {
+                empty = false;
 
-                for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
-                    empty = false;
+                final String keyType = out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
+                final String keyId = getStrategy().getJavaIdentifier(uniqueKey);
+                final int block = allUniqueKeys.size() / INITIALISER_SIZE;
 
-                    final String keyType = out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
-                    final String keyId = getStrategy().getJavaIdentifier(uniqueKey);
-                    final int block = allUniqueKeys.size() / INITIALISER_SIZE;
-
-                    // [#10480] Print header before first key
-                    if (allUniqueKeys.isEmpty()) {
-                        out.header("UNIQUE and PRIMARY KEY definitions");
-                        out.println();
-                    }
-
-                    if (scala || kotlin)
-                        out.println("val %s = UniqueKeys%s.%s", keyId, block, keyId);
-                    else
-                        out.println("public static final %s<%s> %s = UniqueKeys%s.%s;", UniqueKey.class, keyType, keyId, block, keyId);
-
-                    allUniqueKeys.add(uniqueKey);
+                // [#10480] Print header before first key
+                if (allUniqueKeys.isEmpty()) {
+                    out.header("UNIQUE and PRIMARY KEY definitions");
+                    out.println();
                 }
+
+                if (scala || kotlin)
+                    out.println("val %s = UniqueKeys%s.%s", keyId, block, keyId);
+                else
+                    out.println("public static final %s<%s> %s = UniqueKeys%s.%s;", UniqueKey.class, keyType, keyId, block, keyId);
+
+                allUniqueKeys.add(uniqueKey);
             }
-            catch (Exception e) {
-                log.error("Error while generating table " + table, e);
-            }
+        }
+        catch (Exception e) {
+            log.error("Error while generating unique keys for schema " + schema, e);
         }
 
         // Foreign keys
-        for (TableDefinition table : database.getTables(schema)) {
-            try {
-                List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
+        try {
+            for (ForeignKeyDefinition foreignKey : database.getForeignKeys(schema)) {
+                empty = false;
 
-                for (ForeignKeyDefinition foreignKey : foreignKeys) {
-                    empty = false;
+                final String keyType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
+                final String referencedType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
+                final String keyId = getStrategy().getJavaIdentifier(foreignKey);
+                final int block = allForeignKeys.size() / INITIALISER_SIZE;
 
-                    final String keyType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
-                    final String referencedType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
-                    final String keyId = getStrategy().getJavaIdentifier(foreignKey);
-                    final int block = allForeignKeys.size() / INITIALISER_SIZE;
-
-                    // [#10480] Print header before first key
-                    if (allForeignKeys.isEmpty()) {
-                        out.header("FOREIGN KEY definitions");
-                        out.println();
-                    }
-
-                    if (scala || kotlin)
-                        out.println("val %s = ForeignKeys%s.%s", keyId, block, keyId);
-                    else
-                        out.println("public static final %s<%s, %s> %s = ForeignKeys%s.%s;", ForeignKey.class, keyType, referencedType, keyId, block, keyId);
-
-                    allForeignKeys.add(foreignKey);
+                // [#10480] Print header before first key
+                if (allForeignKeys.isEmpty()) {
+                    out.header("FOREIGN KEY definitions");
+                    out.println();
                 }
+
+                if (scala || kotlin)
+                    out.println("val %s = ForeignKeys%s.%s", keyId, block, keyId);
+                else
+                    out.println("public static final %s<%s, %s> %s = ForeignKeys%s.%s;", ForeignKey.class, keyType, referencedType, keyId, block, keyId);
+
+                allForeignKeys.add(foreignKey);
             }
-            catch (Exception e) {
-                log.error("Error while generating reference " + table, e);
-            }
+        }
+        catch (Exception e) {
+            log.error("Error while generating foreign keys for schema " + schema, e);
         }
 
         // [#1459] Print nested classes for actual static field initialisations

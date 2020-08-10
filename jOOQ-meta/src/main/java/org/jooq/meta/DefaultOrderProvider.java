@@ -91,11 +91,22 @@ public class DefaultOrderProvider implements Comparator<Definition> {
             return compare0((IndexColumnDefinition) o1, (IndexColumnDefinition) o2);
         else if (o1 instanceof ParameterDefinition && o2 instanceof ParameterDefinition)
             return compare0((ParameterDefinition) o1, (ParameterDefinition) o2);
+        else if (o1 instanceof ConstraintDefinition && o2 instanceof ConstraintDefinition)
+            return compare0((ConstraintDefinition) o1, (ConstraintDefinition) o2);
         else
-            return o1.getQualifiedInputName().compareToIgnoreCase(o2.getQualifiedInputName());
+            return compare0(o1, o2);
+    }
+
+    private int compare0(Definition o1, Definition o2) {
+        return o1.getQualifiedInputName().compareToIgnoreCase(o2.getQualifiedInputName());
     }
 
     private int compare0(PositionedDefinition i1, PositionedDefinition i2) {
         return Integer.valueOf(i1.getPosition()).compareTo(i2.getPosition());
+    }
+
+    private int compare0(ConstraintDefinition c1, ConstraintDefinition c2) {
+        int result = compare(c1.getTable(), c2.getTable());
+        return result != 0 ? result : compare0((Definition) c1, (Definition) c2);
     }
 }

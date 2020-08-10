@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.EnumDefinition;
@@ -56,6 +57,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.jaxb.MatcherRule;
 import org.jooq.meta.jaxb.MatcherTransformType;
 import org.jooq.meta.jaxb.Matchers;
+import org.jooq.meta.jaxb.MatchersCatalogType;
 import org.jooq.meta.jaxb.MatchersEnumType;
 import org.jooq.meta.jaxb.MatchersFieldType;
 import org.jooq.meta.jaxb.MatchersRoutineType;
@@ -154,6 +156,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         }
     }
 
+    private final List<MatchersCatalogType> catalogs(Definition definition) {
+        if (definition instanceof CatalogDefinition)
+            return matchers.getCatalogs();
+
+        return emptyList();
+    }
+
     private final List<MatchersSchemaType> schemas(Definition definition) {
         if (definition instanceof SchemaDefinition)
             return matchers.getSchemas();
@@ -208,6 +217,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
+        for (MatchersCatalogType catalogs : catalogs(definition)) {
+            String result = match(definition, catalogs.getExpression(), catalogs.getCatalogIdentifier());
+            if (result != null)
+                return result;
+        }
+
         for (MatchersSchemaType schemas : schemas(definition)) {
             String result = match(definition, schemas.getExpression(), schemas.getSchemaIdentifier());
             if (result != null)
@@ -291,6 +306,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
+        for (MatchersCatalogType catalogs : catalogs(definition)) {
+            String result = match(definition, catalogs.getExpression(), catalogs.getCatalogImplements());
+            if (result != null)
+                return split(result);
+        }
+
         for (MatchersSchemaType schemas : schemas(definition)) {
             String result = match(definition, schemas.getExpression(), schemas.getSchemaImplements());
             if (result != null)
@@ -331,6 +352,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
+        for (MatchersCatalogType catalogs : catalogs(definition)) {
+            String result = match(definition, catalogs.getExpression(), catalogs.getCatalogClass());
+            if (result != null)
+                return result;
+        }
+
         for (MatchersSchemaType schemas : schemas(definition)) {
             String result = match(definition, schemas.getExpression(), schemas.getSchemaClass());
             if (result != null)

@@ -155,6 +155,10 @@
   <complexType name="Matchers">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <sequence>
+      <element name="catalogs" type="tns:MatchersCatalogsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for catalog names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="schemas" type="tns:MatchersSchemasType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for schema names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -179,6 +183,33 @@
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for enum names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </sequence>
+  </complexType>
+
+  <complexType name="MatchersCatalogsType">
+    <sequence>
+      <element name="catalog" type="tns:MatchersCatalogType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MatchersCatalogType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for catalog names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This catalog matcher applies to all unqualified or qualified catalog names matched by this expression. If left empty, this matcher applies to all catalogs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="catalogClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Catalog} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="catalogIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Catalog} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="catalogImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.Catalog} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
   </complexType>
 
   <complexType name="MatchersSchemasType">

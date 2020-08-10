@@ -78,6 +78,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MatchersCatalogType }
+     * 
+     */
+    public MatchersCatalogType createMatchersCatalogType() {
+        return new MatchersCatalogType();
+    }
+
+    /**
      * Create an instance of {@link MatchersSchemaType }
      * 
      */

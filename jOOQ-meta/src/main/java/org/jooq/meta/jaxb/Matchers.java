@@ -22,6 +22,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Matchers", propOrder = {
+    "catalogs",
     "schemas",
     "tables",
     "fields",
@@ -36,6 +37,9 @@ public class Matchers implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31400L;
+    @XmlElementWrapper(name = "catalogs")
+    @XmlElement(name = "catalog")
+    protected List<MatchersCatalogType> catalogs;
     @XmlElementWrapper(name = "schemas")
     @XmlElement(name = "schema")
     protected List<MatchersSchemaType> schemas;
@@ -54,6 +58,17 @@ public class Matchers implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "enums")
     @XmlElement(name = "enum")
     protected List<MatchersEnumType> enums;
+
+    public List<MatchersCatalogType> getCatalogs() {
+        if (catalogs == null) {
+            catalogs = new ArrayList<MatchersCatalogType>();
+        }
+        return catalogs;
+    }
+
+    public void setCatalogs(List<MatchersCatalogType> catalogs) {
+        this.catalogs = catalogs;
+    }
 
     public List<MatchersSchemaType> getSchemas() {
         if (schemas == null) {
@@ -119,6 +134,27 @@ public class Matchers implements Serializable, XMLAppendable
 
     public void setEnums(List<MatchersEnumType> enums) {
         this.enums = enums;
+    }
+
+    public Matchers withCatalogs(MatchersCatalogType... values) {
+        if (values!= null) {
+            for (MatchersCatalogType value: values) {
+                getCatalogs().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withCatalogs(Collection<MatchersCatalogType> values) {
+        if (values!= null) {
+            getCatalogs().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withCatalogs(List<MatchersCatalogType> catalogs) {
+        setCatalogs(catalogs);
+        return this;
     }
 
     public Matchers withSchemas(MatchersSchemaType... values) {
@@ -249,6 +285,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     @Override
     public final void appendTo(XMLBuilder builder) {
+        builder.append("catalogs", "catalog", catalogs);
         builder.append("schemas", "schema", schemas);
         builder.append("tables", "table", tables);
         builder.append("fields", "field", fields);
@@ -276,6 +313,15 @@ public class Matchers implements Serializable, XMLAppendable
             return false;
         }
         Matchers other = ((Matchers) that);
+        if (catalogs == null) {
+            if (other.catalogs!= null) {
+                return false;
+            }
+        } else {
+            if (!catalogs.equals(other.catalogs)) {
+                return false;
+            }
+        }
         if (schemas == null) {
             if (other.schemas!= null) {
                 return false;
@@ -337,6 +383,7 @@ public class Matchers implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
         result = ((prime*result)+((schemas == null)? 0 :schemas.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));

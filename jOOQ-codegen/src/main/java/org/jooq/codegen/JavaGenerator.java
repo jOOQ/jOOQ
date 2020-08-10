@@ -757,9 +757,6 @@ public class JavaGenerator extends AbstractGenerator {
         List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
 
         // Unique keys
-        out.header("UNIQUE and PRIMARY KEY definitions");
-        out.println();
-
         for (TableDefinition table : database.getTables(schema)) {
             try {
                 List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
@@ -770,6 +767,12 @@ public class JavaGenerator extends AbstractGenerator {
                     final String keyType = out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
                     final String keyId = getStrategy().getJavaIdentifier(uniqueKey);
                     final int block = allUniqueKeys.size() / INITIALISER_SIZE;
+
+                    // [#10480] Print header before first key
+                    if (allUniqueKeys.isEmpty()) {
+                        out.header("UNIQUE and PRIMARY KEY definitions");
+                        out.println();
+                    }
 
                     if (scala || kotlin)
                         out.println("val %s = UniqueKeys%s.%s", keyId, block, keyId);
@@ -785,9 +788,6 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // Foreign keys
-        out.header("FOREIGN KEY definitions");
-        out.println();
-
         for (TableDefinition table : database.getTables(schema)) {
             try {
                 List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
@@ -799,6 +799,12 @@ public class JavaGenerator extends AbstractGenerator {
                     final String referencedType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
                     final String keyId = getStrategy().getJavaIdentifier(foreignKey);
                     final int block = allForeignKeys.size() / INITIALISER_SIZE;
+
+                    // [#10480] Print header before first key
+                    if (allForeignKeys.isEmpty()) {
+                        out.header("FOREIGN KEY definitions");
+                        out.println();
+                    }
 
                     if (scala || kotlin)
                         out.println("val %s = ForeignKeys%s.%s", keyId, block, keyId);

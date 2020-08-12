@@ -96,6 +96,7 @@ import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Parameter;
+// ...
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -1036,7 +1037,44 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(";");
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void printCreateUniqueKey(JavaWriter out, UniqueKeyDefinition uniqueKey) {
+
+
+
+
+
+
+
+
+        printCreateNonEmbeddableUniqueKey(out, uniqueKey);
+    }
+
+    private void printCreateNonEmbeddableUniqueKey(JavaWriter out, UniqueKeyDefinition uniqueKey) {
         if (scala)
             out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
                 Internal.class,
@@ -1066,6 +1104,21 @@ public class JavaGenerator extends AbstractGenerator {
                 uniqueKey.enforced());
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     protected void printForeignKey(JavaWriter out, int foreignKeyCounter, ForeignKeyDefinition foreignKey) {
         final int block = foreignKeyCounter / INITIALISER_SIZE;
 
@@ -1083,11 +1136,47 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.println("val %s: %s[%s, %s] = %s.createForeignKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s, Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
+            out.print("val %s: %s[%s, %s] = ",
                 getStrategy().getJavaIdentifier(foreignKey),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
+                out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)));
+        else if (kotlin)
+            out.print("val %s: %s<%s, %s> = ",
+                getStrategy().getJavaIdentifier(foreignKey),
+                ForeignKey.class,
+                out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
+                out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)));
+        else
+            out.print("static final %s<%s, %s> %s = ",
+                ForeignKey.class,
+                out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
+                getStrategy().getJavaIdentifier(foreignKey));
+
+
+
+
+
+
+
+
+
+
+
+
+
+        printCreateNonEmbeddableForeignKey(out, foreignKey);
+
+        if (scala || kotlin)
+            out.println();
+        else
+            out.println(";");
+    }
+
+    private void printCreateNonEmbeddableForeignKey(JavaWriter out, ForeignKeyDefinition foreignKey) {
+        if (scala)
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s, Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1102,11 +1191,7 @@ public class JavaGenerator extends AbstractGenerator {
                 foreignKey.enforced()
             );
         else if (kotlin)
-            out.println("val %s: %s<%s, %s> = %s.createForeignKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s, arrayOf([[%s]]), %s)",
-                getStrategy().getJavaIdentifier(foreignKey),
-                ForeignKey.class,
-                out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
-                out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s, arrayOf([[%s]]), %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1117,11 +1202,7 @@ public class JavaGenerator extends AbstractGenerator {
                 foreignKey.enforced()
             );
         else
-            out.println("static final %s<%s, %s> %s = %s.createForeignKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s, new %s[] { [[%s]] }, %s);",
-                ForeignKey.class,
-                out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
-                out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
-                getStrategy().getJavaIdentifier(foreignKey),
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s, new %s[] { [[%s]] }, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1134,6 +1215,31 @@ public class JavaGenerator extends AbstractGenerator {
                 foreignKey.enforced()
             );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     protected void generateRecords(SchemaDefinition schema) {
         log.info("Generating table records");
@@ -1226,35 +1332,44 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateInterfaces())
             interfaces.add(out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE)));
 
-        if (scala) {
-            if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {
-                out.println("private object %s {", className);
-                out.println("val FIELDS: Array[%s [_] ] = Array(", Field.class);
-
-                String separator = "  ";
-                for (EmbeddableColumnDefinition column : ((EmbeddableDefinition) tableUdtOrEmbeddable).getColumns()) {
-                    final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(column));
-
-                    out.println("%s%s.field(%s.name(\"%s\"), %s.getDataType)", separator, DSL.class, DSL.class, column.getOutputName(), colIdentifier);
-                    separator = ", ";
-                }
-
-                out.println(")");
-                out.println("}");
-                out.println();
-            }
-        }
-
         if (scala)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("class %s extends %s[%s](%s.FIELDS:_*)[[before= with ][separator= with ][%s]] {", className, baseClass, className, className, interfaces);
+                out.println("class %s extends %s[%s](%s.fields(%s.%s):_*)[[before= with ][separator= with ][%s]] {",
+                    className,
+                    baseClass,
+                    className,
+                    Internal.class,
+                    out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
+                    getStrategy().getJavaIdentifier(tableUdtOrEmbeddable),
+                    interfaces
+                );
             else
-                out.println("class %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
+                out.println("class %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {",
+                    className,
+                    baseClass,
+                    className,
+                    tableIdentifier,
+                    interfaces
+                );
         else if (kotlin)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("class %s() : %s<%s>(*FIELDS)[[before=, ][%s]] {", className, baseClass, className, interfaces);
+                out.println("class %s() : %s<%s>(*%s.fields(%s.%s))[[before=, ][%s]] {",
+                    className,
+                    baseClass,
+                    className,
+                    Internal.class,
+                    out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
+                    getStrategy().getJavaIdentifier(tableUdtOrEmbeddable),
+                    interfaces
+                );
             else
-                out.println("class %s() : %s<%s>(%s)[[before=, ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
+                out.println("class %s() : %s<%s>(%s)[[before=, ][%s]] {",
+                    className,
+                    baseClass,
+                    className,
+                    tableIdentifier,
+                    interfaces
+                );
         else
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, baseClass, className, interfaces);
 
@@ -1293,7 +1408,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (tableUdtOrEmbeddable instanceof TableDefinition) {
-            List<EmbeddableDefinition> embeddables = ((TableDefinition) tableUdtOrEmbeddable).getEmbeddables();
+            List<EmbeddableDefinition> embeddables = ((TableDefinition) tableUdtOrEmbeddable).getReferencedEmbeddables();
 
             for (int i = 0; i < embeddables.size(); i++) {
                 EmbeddableDefinition embeddable = embeddables.get(i);
@@ -1407,7 +1522,16 @@ public class JavaGenerator extends AbstractGenerator {
                     printDeprecationIfUnknownType(out, colTypeFull);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                        out.println("override def field%s: %s[%s] = %s.FIELDS(%s).asInstanceOf[%s [%s] ]", i, Field.class, colType, i - 1, className, Field.class, colType);
+                        out.println("override def field%s: %s[%s] = %s.fields(%s.%s):_*.asInstanceOf[%s [%s] ]",
+                            i,
+                            Field.class,
+                            colType,
+                            Internal.class,
+                            out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
+                            getStrategy().getJavaIdentifier(tableUdtOrEmbeddable),
+                            Field.class,
+                            colType
+                        );
                     else
                         out.println("override def field%s: %s[%s] = %s", i, Field.class, colType, colIdentifier);
                 }
@@ -1415,7 +1539,16 @@ public class JavaGenerator extends AbstractGenerator {
                     printDeprecationIfUnknownType(out, colTypeFull);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                        out.println("override fun field%s(): %s<%s?> = FIELDS[%s] as %s<%s>", i, Field.class, colType, i - 1, Field.class, colType);
+                        out.println("override fun field%s(): %s<%s?> = %s.fields(%s.%s) as %s<%s>",
+                            i,
+                            Field.class,
+                            colType,
+                            Internal.class,
+                            out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
+                            getStrategy().getJavaIdentifier(tableUdtOrEmbeddable),
+                            Field.class,
+                            colType
+                        );
                     else
                         out.println("override fun field%s(): %s<%s?> = %s", i, Field.class, colType, colIdentifier);
                 }
@@ -1597,47 +1730,19 @@ public class JavaGenerator extends AbstractGenerator {
             printFromAndInto(out, tableUdtOrEmbeddable, Mode.RECORD);
 
 
+        // [#2530] TODO Implement this for Scala & Kotlin
         if (scala) {}
-        else if (kotlin) {
-            if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {
-                out.println();
-                out.println("private companion object {");
-                out.println("val FIELDS: Array<%s<*>> = arrayOf(", Field.class);
-
-                String separator = "  ";
-                for (EmbeddableColumnDefinition column : ((EmbeddableDefinition) tableUdtOrEmbeddable).getColumns()) {
-                    final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(column));
-
-                    out.println("%s%s.field(%s.name(\"%s\"), %s.dataType)", separator, DSL.class, DSL.class, column.getOutputName(), colIdentifier);
-                    separator = ", ";
-                }
-
-                out.println(")");
-                out.println("}");
-            }
-        }
+        else if (kotlin) {}
         else {
             out.header("Constructors");
-
-            if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {
-                out.println();
-                out.println("private static final %s<?>[] FIELDS = {", Field.class);
-
-                for (EmbeddableColumnDefinition column : ((EmbeddableDefinition) tableUdtOrEmbeddable).getColumns()) {
-                    final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(column));
-
-                    out.println("%s.field(%s.name(\"%s\"), %s.getDataType()),", DSL.class, DSL.class, column.getOutputName(), colIdentifier);
-                }
-
-                out.println("};");
-                out.println();
-            }
-
             out.javadoc("Create a detached %s", className);
 
             out.println("public %s() {", className);
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("super(FIELDS);");
+                out.println("super(%s.fields(%s.%s));",
+                    Internal.class,
+                    out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
+                    getStrategy().getJavaIdentifier(tableUdtOrEmbeddable));
             else
                 out.println("super(%s);", tableIdentifier);
             out.println("}");
@@ -4299,29 +4404,37 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnName = column.getName();
             final List<String> converter = out.ref(list(column.getType(resolver()).getConverter()));
             final List<String> binding = out.ref(list(column.getType(resolver()).getBinding()));
+            final String columnVisibility =
+
+
+
+
+                scala || kotlin ?
+                "" :
+                "public ";
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.javadoc("The column <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));
 
             if (scala) {
-                out.println("val %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
+                out.println("%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
             }
             else if (kotlin) {
-                out.println("val %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
+                out.println("%sval %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
             }
             else {
                 String isStatic = generateInstanceFields() ? "" : "static ";
                 String tableRef = generateInstanceFields() ? "this" : out.ref(getStrategy().getJavaIdentifier(table), 2);
 
-                out.println("public %sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(comment(column)), converter, binding);
+                out.println("%s%sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                    columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(comment(column)), converter, binding);
             }
         }
 
         // [#2530] Embeddable types
-        for (EmbeddableDefinition embeddable : table.getEmbeddables()) {
+        for (EmbeddableDefinition embeddable : table.getReferencedEmbeddables()) {
             final String columnId = out.ref(getStrategy().getJavaIdentifier(embeddable), colRefSegments(null));
             final String columnType = out.ref(getStrategy().getFullJavaClassName(embeddable, Mode.RECORD));
 
@@ -4332,14 +4445,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("The embeddable type <code>%s</code>.", embeddable.getOutputName());
 
             if (scala)
-                out.println("val %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], this, [[%s]])",
-                        columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, embeddable.getName(), columnType, columnIds);
+                out.println("val %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
+                    columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
             else if (kotlin)
-                out.println("val %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, this, [[%s]])",
-                    columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, embeddable.getName(), columnType, columnIds);
+                out.println("val %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, [[%s]])",
+                    columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
             else
-                out.println("public final %s<%s, %s> %s = %s.createEmbeddable(%s.name(\"%s\"), %s.class, this, [[%s]]);",
-                    TableField.class, recordType, columnType, columnId, Internal.class, DSL.class, embeddable.getName(), columnType, columnIds);
+                out.println("public final %s<%s, %s> %s = %s.createEmbeddable(%s.name(\"%s\"), %s.class, %s, this, [[%s]]);",
+                    TableField.class, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
         }
 
         out.println();
@@ -5073,7 +5186,10 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (EmbeddableDefinition embeddable : database.getEmbeddables(schema)) {
             try {
-                generateEmbeddable(schema, embeddable);
+
+                // [#6124] [#10481] Don't generate embeddable types for FKs
+                if (embeddable.getTable().equals(embeddable.getReferencingTable()))
+                    generateEmbeddable(schema, embeddable);
             }
             catch (Exception e) {
                 log.error("Error while generating embeddable " + embeddable, e);

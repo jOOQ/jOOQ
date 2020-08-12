@@ -41,6 +41,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.tools.JooqLogger;
+
 /**
  * @author Lukas Eder
  */
@@ -48,28 +50,74 @@ public class DefaultEmbeddableDefinition
     extends AbstractElementContainerDefinition<EmbeddableColumnDefinition>
     implements EmbeddableDefinition {
 
-    private final List<String>                     columnNames;
-    private final TableDefinition                  table;
+    private static final JooqLogger                log = JooqLogger.getLogger(DefaultEmbeddableDefinition.class);
+    private final TableDefinition                  definingTable;
+    private final List<String>                     definingColumnNames;
+    private final String                           referencingName;
+    private final TableDefinition                  referencingTable;
     private final List<EmbeddableColumnDefinition> embeddableColumns;
+    private final boolean                          replacesFields;
 
-    public DefaultEmbeddableDefinition(String name, List<String> columnNames, TableDefinition table, List<ColumnDefinition> columns) {
-        super(table.getSchema(), name, "");
+    @SuppressWarnings("unused")
+    public DefaultEmbeddableDefinition(
+        String definingName,
+        TableDefinition definingTable,
+        List<String> definingColumnNames,
+        String referencingName,
+        TableDefinition referencingTable,
+        List<ColumnDefinition> referencingColumns,
+        boolean replacesFields
+    ) {
+        super(definingTable.getSchema(), definingName, "");
 
-        this.columnNames = columnNames;
-        this.table = table;
+        this.definingColumnNames = definingColumnNames;
+        this.definingTable = definingTable;
+        this.referencingName = referencingName;
+        this.referencingTable = referencingTable;
         this.embeddableColumns = new ArrayList<>();
+        this.replacesFields = replacesFields;
 
-        for (int i = 0; i < columns.size(); i++)
-            embeddableColumns.add(new DefaultEmbeddableColumnDefinition(this, columnNames.get(i), columns.get(i), i));
+
+
+
+        log.info("Commercial feature", "Embeddables replacing fields is a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+
+        for (int i = 0; i < referencingColumns.size(); i++)
+            embeddableColumns.add(new DefaultEmbeddableColumnDefinition(this, definingColumnNames.get(i), referencingColumns.get(i), i));
     }
 
     @Override
     public final TableDefinition getTable() {
-        return table;
+        return getDefiningTable();
     }
 
     @Override
-    protected List<EmbeddableColumnDefinition> getElements0() throws SQLException {
+    public final TableDefinition getDefiningTable() {
+        return definingTable;
+    }
+
+    @Override
+    public final String getReferencingName() {
+        return getReferencingInputName();
+    }
+
+    @Override
+    public final String getReferencingInputName() {
+        return referencingName;
+    }
+
+    @Override
+    public final String getReferencingOutputName() {
+        return referencingName;
+    }
+
+    @Override
+    public final TableDefinition getReferencingTable() {
+        return referencingTable;
+    }
+
+    @Override
+    protected final List<EmbeddableColumnDefinition> getElements0() throws SQLException {
         return embeddableColumns;
     }
 
@@ -91,5 +139,10 @@ public class DefaultEmbeddableDefinition
     @Override
     public final EmbeddableColumnDefinition getColumn(int columnIndex) {
         return getElement(columnIndex);
+    }
+
+    @Override
+    public final boolean replacesFields() {
+        return replacesFields;
     }
 }

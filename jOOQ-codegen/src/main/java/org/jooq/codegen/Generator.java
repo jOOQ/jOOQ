@@ -960,16 +960,6 @@ public interface Generator {
     void setGenerateEmptySchemas(boolean generateEmptySchemas);
 
     /**
-     * Whether wrapper types for primary keys should be generated.
-     */
-    boolean generatePrimaryKeyTypes();
-
-    /**
-     * Whether wrapper types for primary keys should be generated.
-     */
-    void setGeneratePrimaryKeyTypes(boolean generatePrimaryKeyTypes);
-
-    /**
      * The newline character(s) to be used in generated code.
      */
     String generateNewline();

@@ -40,6 +40,8 @@ package org.jooq.meta;
 
 import java.util.List;
 
+// ...
+
 /**
  * An interface defining a column of a table.
  *
@@ -76,4 +78,22 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
      */
     @Deprecated
     boolean isNullable();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

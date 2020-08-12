@@ -190,8 +190,6 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean emptySchemas = false;
     @XmlElement(defaultValue = "true")
     protected Boolean javaTimeTypes = true;
-    @XmlElement(defaultValue = "false")
-    protected Boolean primaryKeyTypes = false;
     @XmlElement(defaultValue = "\\n")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String newline = "\\n";
@@ -2093,30 +2091,6 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isPrimaryKeyTypes() {
-        return primaryKeyTypes;
-    }
-
-    /**
-     * Sets the value of the primaryKeyTypes property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setPrimaryKeyTypes(Boolean value) {
-        this.primaryKeyTypes = value;
-    }
-
-    /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
      * 
      */
@@ -2568,11 +2542,6 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
-    public Generate withPrimaryKeyTypes(Boolean value) {
-        setPrimaryKeyTypes(value);
-        return this;
-    }
-
     /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
      * 
@@ -2672,7 +2641,6 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("emptyCatalogs", emptyCatalogs);
         builder.append("emptySchemas", emptySchemas);
         builder.append("javaTimeTypes", javaTimeTypes);
-        builder.append("primaryKeyTypes", primaryKeyTypes);
         builder.append("newline", newline);
         builder.append("indentation", indentation);
     }
@@ -3407,15 +3375,6 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (primaryKeyTypes == null) {
-            if (other.primaryKeyTypes!= null) {
-                return false;
-            }
-        } else {
-            if (!primaryKeyTypes.equals(other.primaryKeyTypes)) {
-                return false;
-            }
-        }
         if (newline == null) {
             if (other.newline!= null) {
                 return false;
@@ -3520,7 +3479,6 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((emptyCatalogs == null)? 0 :emptyCatalogs.hashCode()));
         result = ((prime*result)+((emptySchemas == null)? 0 :emptySchemas.hashCode()));
         result = ((prime*result)+((javaTimeTypes == null)? 0 :javaTimeTypes.hashCode()));
-        result = ((prime*result)+((primaryKeyTypes == null)? 0 :primaryKeyTypes.hashCode()));
         result = ((prime*result)+((newline == null)? 0 :newline.hashCode()));
         result = ((prime*result)+((indentation == null)? 0 :indentation.hashCode()));
         return result;

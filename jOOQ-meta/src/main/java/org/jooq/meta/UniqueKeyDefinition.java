@@ -63,4 +63,14 @@ public interface UniqueKeyDefinition extends ConstraintDefinition {
      * The foreign keys referencing this primary key
      */
     List<ForeignKeyDefinition> getForeignKeys();
+
+    /**
+     * Resolve a referenced key.
+     * <p>
+     * If this key coincides with a foreign key, resolve that foreign key
+     * recursively. In case of ambiguity (two foreign keys coinciding with a
+     * single unique key), this returns <code>null</code>.
+     */
+    UniqueKeyDefinition resolveReferencedKey();
+
 }

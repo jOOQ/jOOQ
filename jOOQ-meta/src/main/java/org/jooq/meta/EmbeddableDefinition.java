@@ -48,23 +48,56 @@ import java.util.List;
 public interface EmbeddableDefinition extends TableElementDefinition {
 
     /**
-     * All columns in the type, table or view.
+     * The table defining the embeddable (same as {@link #getTable()}).
+     */
+    TableDefinition getDefiningTable();
+
+    /**
+     * The referencing name of this embeddable, if it differs from the defining
+     * name ({@link #getName()}).
+     */
+    String getReferencingName();
+
+    /**
+     * The referencing input name of this embeddable, if it differs from the defining
+     * name ({@link #getInputName()}).
+     */
+    String getReferencingInputName();
+
+    /**
+     * The referencing output name of this embeddable, if it differs from the defining
+     * name ({@link #getOutputName()}).
+     */
+    String getReferencingOutputName();
+
+    /**
+     * The table referencing the embeddable.
+     */
+    TableDefinition getReferencingTable();
+
+    /**
+     * All referencing columns in the type, table or view.
      */
     List<EmbeddableColumnDefinition> getColumns();
 
     /**
-     * Get a column in this type by its name.
+     * Get a referencing column in this type by its name.
      */
     EmbeddableColumnDefinition getColumn(String columnName);
 
     /**
-     * Get a column in this type by its name.
+     * Get a referencing column in this type by its name.
      */
     EmbeddableColumnDefinition getColumn(String columnName, boolean ignoreCase);
 
     /**
-     * Get a column in this type by its index (starting at 0).
+     * Get a referencing column in this type by its index (starting at 0).
      */
     EmbeddableColumnDefinition getColumn(int columnIndex);
+
+    /**
+     * Whether this embeddable replaces the fields it represents.
+     */
+    boolean replacesFields();
 
 }

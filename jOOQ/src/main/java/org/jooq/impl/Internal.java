@@ -42,6 +42,7 @@ import org.jooq.Check;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Domain;
+import org.jooq.EmbeddableRecord;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
@@ -76,9 +77,19 @@ public final class Internal {
     /**
      * Factory method for embeddable types.
      */
+    @SafeVarargs
     @NotNull
     public static final <R extends Record, T extends Record> TableField<R, T> createEmbeddable(Name name, Class<T> recordType, Table<R> table, TableField<R, ?>... fields) {
-        return new EmbeddableTableField<>(name, recordType, table, fields);
+        return createEmbeddable(name, recordType, false, table, fields);
+    }
+
+    /**
+     * Factory method for embeddable types.
+     */
+    @SafeVarargs
+    @NotNull
+    public static final <R extends Record, T extends Record> TableField<R, T> createEmbeddable(Name name, Class<T> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>... fields) {
+        return new EmbeddableTableField<>(name, recordType, replacesFields, table, fields);
     }
 
     /**
@@ -124,6 +135,14 @@ public final class Internal {
     }
 
     /**
+     * Factory method for unique keys.
+     */
+    @NotNull
+    public static final <R extends Record, ER extends EmbeddableRecord<ER>> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ER> embeddableField, boolean enforced) {
+        return createUniqueKey(table, name, fields(embeddableField), enforced);
+    }
+
+    /**
      * Factory method for foreign keys.
      *
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
@@ -146,6 +165,14 @@ public final class Internal {
             ((UniqueKeyImpl<U>) uk).references.add(result);
 
         return result;
+    }
+
+    /**
+     * Factory method for foreign keys.
+     */
+    @NotNull
+    public static final <R extends Record, U extends Record, ER extends EmbeddableRecord<ER>> ForeignKey<R, U> createForeignKey(Table<R> table, Name name, TableField<R, ER> fkEmbeddableField, UniqueKey<U> uk, TableField<U, ER> ukEmbeddableField, boolean enforced) {
+        return createForeignKey(table, name, fields(fkEmbeddableField), uk, fields(ukEmbeddableField), enforced);
     }
 
     /**
@@ -321,5 +348,13 @@ public final class Internal {
     @Deprecated
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
         return createForeignKey(table, DSL.name(name), fields, key, key.getFieldsArray(), enforced);
+    }
+
+    /**
+     * Get the fields of an embeddable type.
+     */
+    @NotNull
+    public static final <R extends Record, ER extends EmbeddableRecord<ER>> TableField<R, ?>[] fields(TableField<R, ER> embeddableField) {
+        return ((EmbeddableTableField<R, ER>) embeddableField).fields;
     }
 }

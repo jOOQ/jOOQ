@@ -40,11 +40,16 @@ package org.jooq.meta;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.tools.JooqLogger;
+
 public class DefaultUniqueKeyDefinition extends AbstractConstraintDefinition implements UniqueKeyDefinition {
 
+    private static final JooqLogger          log = JooqLogger.getLogger(DefaultUniqueKeyDefinition.class);
     private final List<ForeignKeyDefinition> foreignKeys;
     private final List<ColumnDefinition>     keyColumns;
     private final boolean                    isPrimaryKey;
+    private transient boolean                resolvedUKCalculated;
+    private transient UniqueKeyDefinition    resolvedUK;
 
     public DefaultUniqueKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean isPrimaryKey) {
         this(schema, name, table, isPrimaryKey, true);
@@ -71,5 +76,29 @@ public class DefaultUniqueKeyDefinition extends AbstractConstraintDefinition imp
     @Override
     public List<ForeignKeyDefinition> getForeignKeys() {
         return foreignKeys;
+    }
+
+    @Override
+    public final UniqueKeyDefinition resolveReferencedKey() {
+        if (!resolvedUKCalculated) {
+            resolvedUKCalculated = true;
+
+            ForeignKeyDefinition candidate = null;
+            for (ForeignKeyDefinition fk : getTable().getForeignKeys()) {
+                if (keyColumns.equals(fk.getKeyColumns())) {
+                    if (candidate == null) {
+                        candidate = fk;
+                    }
+                    else {
+                        log.info("Cannot resolve key", (isPrimaryKey ? "Primary" : "Unique") + " key coincides with at least two foreign keys: " + candidate + " and " + fk);
+                        return null;
+                    }
+                }
+            }
+
+            resolvedUK = candidate == null ? this : candidate.resolveReferencedKey();
+        }
+
+        return resolvedUK;
     }
 }

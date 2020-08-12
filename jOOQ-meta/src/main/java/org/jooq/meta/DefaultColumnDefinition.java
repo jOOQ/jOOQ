@@ -40,6 +40,8 @@ package org.jooq.meta;
 
 import static java.util.Collections.singletonList;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jooq.tools.JooqLogger;
@@ -53,9 +55,11 @@ public class DefaultColumnDefinition
     extends AbstractTypedElementDefinition<TableDefinition>
     implements ColumnDefinition {
 
-    private static final JooqLogger log = JooqLogger.getLogger(DefaultColumnDefinition.class);
-    private final int               position;
-    private final boolean           isIdentity;
+    private static final JooqLogger              log = JooqLogger.getLogger(DefaultColumnDefinition.class);
+    private final int                            position;
+    private final boolean                        isIdentity;
+    private transient List<EmbeddableDefinition> containedInEmbeddables;
+    private transient EmbeddableDefinition       replacedByEmbeddable;
 
     public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
         boolean isIdentity, String comment) {
@@ -110,4 +114,35 @@ public class DefaultColumnDefinition
     public final boolean isNullable() {
         return getType().isNullable();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

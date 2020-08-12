@@ -41,6 +41,7 @@ import org.jooq.Converter;
 import org.jooq.EmbeddableRecord;
 import org.jooq.Field;
 import org.jooq.Row;
+import org.jooq.TableField;
 
 /**
  * A record implementation for a record originating from a single table
@@ -58,6 +59,10 @@ public class EmbeddableRecordImpl<R extends EmbeddableRecord<R>> extends Abstrac
     private static final long serialVersionUID = -1260149220986944763L;
 
     public EmbeddableRecordImpl(Field<?>... fields) {
+        super(fields);
+    }
+
+    public EmbeddableRecordImpl(TableField<?, ?>... fields) {
         super(fields);
     }
 

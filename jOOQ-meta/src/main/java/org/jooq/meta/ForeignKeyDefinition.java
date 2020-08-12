@@ -65,6 +65,16 @@ public interface ForeignKeyDefinition extends ConstraintDefinition {
     UniqueKeyDefinition getReferencedKey();
 
     /**
+     * Resolve a referenced key.
+     * <p>
+     * If {@link #getReferencedKey()} coincides itself with a foreign key,
+     * resolve that foreign key recursively. In case of ambiguity (two foreign
+     * keys coinciding with a single unique key), this returns
+     * <code>null</code>.
+     */
+    UniqueKeyDefinition resolveReferencedKey();
+
+    /**
      * The definition of the referenced table.
      */
     TableDefinition getReferencedTable();

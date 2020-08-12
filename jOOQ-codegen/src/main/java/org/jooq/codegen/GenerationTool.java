@@ -546,6 +546,8 @@ public class GenerationTool {
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
             database.setConfiguredEmbeddables(d.getEmbeddables());
+            database.setEmbeddablePrimaryKeys(TRUE.equals(g.getDatabase().isEmbeddablePrimaryKeys()));
+            database.setEmbeddableUniqueKeys(TRUE.equals(g.getDatabase().isEmbeddableUniqueKeys()));
             database.setLogSlowQueriesAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowQueriesAfterSeconds(), 5));
             database.setLogSlowResultsAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowResultsAfterSeconds(), 5));
 
@@ -806,8 +808,6 @@ public class GenerationTool {
                 generator.setGenerateEmptyCatalogs(g.getGenerate().isEmptyCatalogs());
             if (g.getGenerate().isEmptySchemas() != null)
                 generator.setGenerateEmptySchemas(g.getGenerate().isEmptySchemas());
-            if (g.getGenerate().isPrimaryKeyTypes() != null)
-                generator.setGeneratePrimaryKeyTypes(g.getGenerate().isPrimaryKeyTypes());
             if (g.getGenerate().getNewline() != null)
                 generator.setGenerateNewline(g.getGenerate().getNewline());
             if (g.getGenerate().getIndentation() != null)

@@ -81,6 +81,11 @@ implements TableDefinition {
     }
 
     @Override
+    public final List<EmbeddableDefinition> getReferencedEmbeddables() {
+        return getDatabase().getEmbeddablesByReferencingTable(this);
+    }
+
+    @Override
     public final UniqueKeyDefinition getPrimaryKey() {
         for (ColumnDefinition column : getColumns())
             if (column.getPrimaryKey() != null)

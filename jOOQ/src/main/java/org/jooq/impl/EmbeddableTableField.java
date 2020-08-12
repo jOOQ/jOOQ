@@ -56,15 +56,17 @@ final class EmbeddableTableField<R extends Record, T extends Record> extends Abs
      * Generated UID
      */
     private static final long serialVersionUID = -7105430856294526440L;
+    final Class<T>            recordType;
+    final boolean             replacesFields;
     final Table<R>            table;
     final TableField<R, ?>[]  fields;
-    final Class<T>            recordType;
 
-    EmbeddableTableField(Name name, Class<T> recordType, Table<R> table, TableField<R, ?>[] fields) {
+    EmbeddableTableField(Name name, Class<T> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>[] fields) {
         super(name, new DefaultDataType<>(SQLDialect.DEFAULT, recordType, name.last()));
 
-        this.table = table;
         this.recordType = recordType;
+        this.replacesFields = replacesFields;
+        this.table = table;
         this.fields = fields;
     }
 

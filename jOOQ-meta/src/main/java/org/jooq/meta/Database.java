@@ -117,7 +117,17 @@ public interface Database extends AutoCloseable {
     /**
      * The unique keys contained in this database.
      */
+    List<UniqueKeyDefinition> getUniqueKeys();
+
+    /**
+     * The unique keys contained in this database.
+     */
     List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema);
+
+    /**
+     * The foreign keys contained in this database.
+     */
+    List<ForeignKeyDefinition> getForeignKeys();
 
     /**
      * The foreign keys contained in this database.
@@ -128,6 +138,11 @@ public interface Database extends AutoCloseable {
      * The check constraints contained in this database.
      */
     List<CheckConstraintDefinition> getCheckConstraints(SchemaDefinition schema);
+
+    /**
+     * The tables contained in this database.
+     */
+    List<TableDefinition> getTables();
 
     /**
      * The tables contained in this database.
@@ -160,14 +175,19 @@ public interface Database extends AutoCloseable {
     List<EmbeddableDefinition> getEmbeddables();
 
     /**
-     * Get all embeddables for a given schema.
+     * Get all embeddables for a given defining schema.
      */
     List<EmbeddableDefinition> getEmbeddables(SchemaDefinition schema);
 
     /**
-     * Get all embeddables for a given table.
+     * Get all embeddables for a given defining table.
      */
     List<EmbeddableDefinition> getEmbeddables(TableDefinition table);
+
+    /**
+     * Get all embeddables for a given referencing table.
+     */
+    List<EmbeddableDefinition> getEmbeddablesByReferencingTable(TableDefinition table);
 
     /**
      * The enum UDTs defined in this database.
@@ -867,6 +887,26 @@ public interface Database extends AutoCloseable {
      * {@link Definition}.
      */
     List<Embeddable> getConfiguredEmbeddables();
+
+    /**
+     * Whether embeddable types for primary keys should be generated.
+     */
+    boolean embeddablePrimaryKeys();
+
+    /**
+     * Whether embeddable types for primary keys should be generated.
+     */
+    void setEmbeddablePrimaryKeys(boolean embeddablePrimaryKeys);
+
+    /**
+     * Whether embeddable types for unique keys should be generated.
+     */
+    boolean embeddableUniqueKeys();
+
+    /**
+     * Whether embeddable types for unique keys should be generated.
+     */
+    void setEmbeddableUniqueKeys(boolean embeddableUniqueKeys);
 
     /**
      * Get the dialect for this database.

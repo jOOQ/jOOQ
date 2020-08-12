@@ -38,12 +38,14 @@
 
 package org.jooq.meta;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Log.Level.ERROR;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
+import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 
 import java.io.File;
@@ -155,6 +157,8 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         syntheticPrimaryKeys;
     private String[]                                                         overridePrimaryKeys;
     private String[]                                                         syntheticIdentities;
+    private boolean                                                          embeddablePrimaryKeys                = false;
+    private boolean                                                          embeddableUniqueKeys                 = false;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
@@ -208,8 +212,9 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
     private transient Map<SchemaDefinition, List<CheckConstraintDefinition>> checkConstraintsBySchema;
     private transient Map<SchemaDefinition, List<TableDefinition>>           tablesBySchema;
-    private transient Map<SchemaDefinition, List<EmbeddableDefinition>>      embeddablesBySchema;
-    private transient Map<TableDefinition, List<EmbeddableDefinition>>       embeddablesByTable;
+    private transient Map<SchemaDefinition, List<EmbeddableDefinition>>      embeddablesByDefiningSchema;
+    private transient Map<TableDefinition, List<EmbeddableDefinition>>       embeddablesByDefiningTable;
+    private transient Map<TableDefinition, List<EmbeddableDefinition>>       embeddablesByReferencingTable;
     private transient Map<SchemaDefinition, List<EnumDefinition>>            enumsBySchema;
     private transient Map<SchemaDefinition, List<DomainDefinition>>          domainsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>             udtsBySchema;
@@ -1533,10 +1538,8 @@ public abstract class AbstractDatabase implements Database {
         return filterSchema(identities, schema, identitiesBySchema);
     }
 
-
-
     @Override
-    public final List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema) {
+    public final List<UniqueKeyDefinition> getUniqueKeys() {
         if (uniqueKeys == null) {
             uniqueKeys = new ArrayList<>();
 
@@ -1549,14 +1552,19 @@ public abstract class AbstractDatabase implements Database {
             sort(uniqueKeys);
         }
 
-        if (uniqueKeysBySchema == null)
-            uniqueKeysBySchema = new LinkedHashMap<>();
-
-        return filterSchema(uniqueKeys, schema, uniqueKeysBySchema);
+        return uniqueKeys;
     }
 
     @Override
-    public final List<ForeignKeyDefinition> getForeignKeys(SchemaDefinition schema) {
+    public final List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema) {
+        if (uniqueKeysBySchema == null)
+            uniqueKeysBySchema = new LinkedHashMap<>();
+
+        return filterSchema(getUniqueKeys(), schema, uniqueKeysBySchema);
+    }
+
+    @Override
+    public final List<ForeignKeyDefinition> getForeignKeys() {
         if (foreignKeys == null) {
             foreignKeys = new ArrayList<>();
 
@@ -1569,10 +1577,15 @@ public abstract class AbstractDatabase implements Database {
             sort(foreignKeys);
         }
 
+        return foreignKeys;
+    }
+
+    @Override
+    public final List<ForeignKeyDefinition> getForeignKeys(SchemaDefinition schema) {
         if (foreignKeysBySchema == null)
             foreignKeysBySchema = new LinkedHashMap<>();
 
-        return filterSchema(foreignKeys, schema, foreignKeysBySchema);
+        return filterSchema(getForeignKeys(), schema, foreignKeysBySchema);
     }
 
     @Override
@@ -1596,7 +1609,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<TableDefinition> getTables(SchemaDefinition schema) {
+    public final List<TableDefinition> getTables() {
         if (tables == null) {
             tables = new ArrayList<>();
 
@@ -1615,10 +1628,15 @@ public abstract class AbstractDatabase implements Database {
                 log.info("Tables excluded");
         }
 
+        return tables;
+    }
+
+    @Override
+    public final List<TableDefinition> getTables(SchemaDefinition schema) {
         if (tablesBySchema == null)
             tablesBySchema = new LinkedHashMap<>();
 
-        return filterSchema(tables, schema, tablesBySchema);
+        return filterSchema(getTables(), schema, tablesBySchema);
     }
 
     @Override
@@ -1776,37 +1794,41 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<EmbeddableDefinition> getEmbeddables() {
-        List<EmbeddableDefinition> result = new ArrayList<>();
+    public boolean embeddablePrimaryKeys() {
+        return embeddablePrimaryKeys;
+    }
 
-        for (SchemaDefinition schema : getSchemata()) {
-            for (TableDefinition table : getTables(schema)) {
-                for (Embeddable embeddable : getConfiguredEmbeddables()) {
-                    List<ColumnDefinition> columns = new ArrayList<>();
-                    List<String> names = new ArrayList<>();
+    @SuppressWarnings("unused")
+    @Override
+    public void setEmbeddablePrimaryKeys(boolean embeddablePrimaryKeys) {
 
-                    for (EmbeddableField embeddableField : embeddable.getFields()) {
-                        boolean matched = false;
 
-                        for (ColumnDefinition column : table.getColumns())
-                            if (matches(patterns.pattern(embeddableField.getExpression()), column))
-                                if (matched)
-                                    log.warn("EmbeddableField configuration matched several columns in table " + table + ": " + embeddableField);
-                                else
-                                    matched = columns.add(column) && names.add(defaultIfEmpty(embeddableField.getName(), column.getName()));
-                    }
 
-                    if (columns.size() == embeddable.getFields().size())
-                        result.add(new DefaultEmbeddableDefinition(embeddable.getName(), names, table, columns));
-                }
-            }
-        }
+        if (embeddablePrimaryKeys)
+            log.info("Commercial feature", "Embeddable primary and unique keys are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
 
-        return result;
+        this.embeddablePrimaryKeys = embeddablePrimaryKeys;
     }
 
     @Override
-    public final List<EmbeddableDefinition> getEmbeddables(SchemaDefinition schema) {
+    public boolean embeddableUniqueKeys() {
+        return embeddableUniqueKeys;
+    }
+
+    @SuppressWarnings("unused")
+    @Override
+    public void setEmbeddableUniqueKeys(boolean embeddableUniqueKeys) {
+
+
+
+        if (embeddableUniqueKeys)
+            log.info("Commercial feature", "Embeddable primary and unique keys are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
+
+        this.embeddableUniqueKeys = embeddableUniqueKeys;
+    }
+
+    @Override
+    public final List<EmbeddableDefinition> getEmbeddables() {
         if (embeddables == null) {
             embeddables = new ArrayList<>();
 
@@ -1814,7 +1836,7 @@ public abstract class AbstractDatabase implements Database {
                 onError(ERROR, "Error while fetching embeddables", new ExceptionRunnable() {
                     @Override
                     public void run() throws Exception {
-                        List<EmbeddableDefinition> r = getEmbeddables();
+                        List<EmbeddableDefinition> r = getEmbeddables0();
 
                         embeddables = sort(r);
                         // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
@@ -1826,18 +1848,145 @@ public abstract class AbstractDatabase implements Database {
                 log.info("Embeddables excluded");
         }
 
-        if (embeddablesBySchema == null)
-            embeddablesBySchema = new LinkedHashMap<>();
+        return embeddables;
+    }
 
-        return filterSchema(embeddables, schema, embeddablesBySchema);
+    @Override
+    public final List<EmbeddableDefinition> getEmbeddables(SchemaDefinition schema) {
+        if (embeddablesByDefiningSchema == null)
+            embeddablesByDefiningSchema = new LinkedHashMap<>();
+
+        return filterSchema(getEmbeddables(), schema, embeddablesByDefiningSchema);
     }
 
     @Override
     public final List<EmbeddableDefinition> getEmbeddables(TableDefinition table) {
-        if (embeddablesByTable == null)
-            embeddablesByTable = new LinkedHashMap<>();
+        if (embeddablesByDefiningTable == null)
+            embeddablesByDefiningTable = new LinkedHashMap<>();
 
-        return filterTable(getEmbeddables(table.getSchema()), table, embeddablesByTable);
+        return filterTable(getEmbeddables(table.getSchema()), table, embeddablesByDefiningTable);
+    }
+
+    @Override
+    public final List<EmbeddableDefinition> getEmbeddablesByReferencingTable(TableDefinition table) {
+        if (embeddablesByReferencingTable == null)
+            embeddablesByReferencingTable = new LinkedHashMap<>();
+
+        return filterReferencingTable(getEmbeddables(), table, embeddablesByReferencingTable);
+    }
+
+    private final List<EmbeddableDefinition> getEmbeddables0() {
+        Map<Name, EmbeddableDefinition> result = new LinkedHashMap<>();
+
+        for (TableDefinition table : getTables()) {
+            for (Embeddable embeddable : getConfiguredEmbeddables()) {
+                List<ColumnDefinition> columns = new ArrayList<>();
+                List<String> names = new ArrayList<>();
+
+                for (EmbeddableField embeddableField : embeddable.getFields()) {
+                    boolean matched = false;
+
+                    for (ColumnDefinition column : table.getColumns())
+                        if (matches(patterns.pattern(embeddableField.getExpression()), column))
+                            if (matched)
+                                log.warn("EmbeddableField configuration matched several columns in table " + table + ": " + embeddableField);
+                            else
+                                matched = columns.add(column) && names.add(defaultIfEmpty(embeddableField.getName(), column.getName()));
+                }
+
+
+                if (columns.size() == embeddable.getFields().size()) {
+                    Name name = table.getQualifiedNamePart().append(embeddable.getName());
+
+                    if (result.containsKey(name))
+                        log.warn("Embeddable configuration", "Table " + table + " already has embeddable " + embeddable);
+                    else
+                        result.put(
+                            name,
+                            new DefaultEmbeddableDefinition(
+                                embeddable.getName(),
+                                table,
+                                names,
+                                defaultIfBlank(embeddable.getReferencingName(), embeddable.getName()),
+                                table,
+                                columns,
+                                TRUE.equals(embeddable.isReplacesFields())
+                            )
+                        );
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return new ArrayList<>(result.values());
     }
 
     @Override
@@ -2219,6 +2368,30 @@ public abstract class AbstractDatabase implements Database {
         return result;
     }
 
+    private final <T extends EmbeddableDefinition> List<T> filterReferencingTable(List<T> definitions, TableDefinition table, Map<TableDefinition, List<T>> cache) {
+        List<T> result = cache.get(table);
+
+        if (result == null) {
+            result = filterReferencingTable(definitions, table);
+            cache.put(table, result);
+        }
+
+        return result;
+    }
+
+    private final <T extends EmbeddableDefinition> List<T> filterReferencingTable(List<T> definitions, TableDefinition table) {
+        if (table == null)
+            return definitions;
+
+        List<T> result = new ArrayList<>();
+
+        for (T definition : definitions)
+            if (definition.getReferencingTable().equals(table))
+                result.add(definition);
+
+        return result;
+    }
+
     @Override
     public final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
         List<T> result = filterExcludeInclude(definitions, excludes, includes, filters);
@@ -2319,7 +2492,7 @@ public abstract class AbstractDatabase implements Database {
             onError(ERROR, "Error while fetching unique keys", new ExceptionRunnable() {
                 @Override
                 public void run() throws Exception {
-                        loadUniqueKeys(result);
+                    loadUniqueKeys(result);
                 }
             });
         }
@@ -2328,7 +2501,7 @@ public abstract class AbstractDatabase implements Database {
             onError(ERROR, "Error while fetching foreign keys", new ExceptionRunnable() {
                 @Override
                 public void run() throws Exception {
-                        loadForeignKeys(result);
+                    loadForeignKeys(result);
                 }
             });
         }

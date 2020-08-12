@@ -793,6 +793,14 @@ This comparator can be used to influence the order of any object that is produce
       <element name="embeddables" type="tns:Embeddables" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure embeddable types.]]></jxb:javadoc></jxb:property></appinfo></annotation>      
       </element>
+            
+      <element name="embeddablePrimaryKeys" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="embeddableUniqueKeys" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether wrapper types should be generated for unique key columns, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
         <annotation>
@@ -1005,11 +1013,19 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[An embeddable type declaration]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="name" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The name of the embeddable type]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining name of the embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="referencingName" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The referencing name of the embeddable type, defaulting to the defining name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="fields" type="tns:EmbeddableFields" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set of field specifications for the embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="replacesFields" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify that the embeddable field replaces its underlying fields in code generation output, and when working with asterisks.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -1496,10 +1512,6 @@ by specifying <code>java\.lang\..*</code>]]></jxb:javadoc></jxb:property></appin
 source code generator, rather than JDBC's java.sql types.
 <p>
 This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
-
-      <element name="primaryKeyTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="newline" type="string" default="\n" minOccurs="0" maxOccurs="1">

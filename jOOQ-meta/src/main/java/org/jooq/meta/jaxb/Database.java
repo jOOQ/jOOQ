@@ -133,6 +133,10 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String orderProvider = "";
+    @XmlElement(defaultValue = "false")
+    protected Boolean embeddablePrimaryKeys = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean embeddableUniqueKeys = false;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
@@ -1356,6 +1360,54 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isEmbeddablePrimaryKeys() {
+        return embeddablePrimaryKeys;
+    }
+
+    /**
+     * Sets the value of the embeddablePrimaryKeys property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setEmbeddablePrimaryKeys(Boolean value) {
+        this.embeddablePrimaryKeys = value;
+    }
+
+    /**
+     * Whether wrapper types should be generated for unique key columns, and for their referencing foreign keys.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isEmbeddableUniqueKeys() {
+        return embeddableUniqueKeys;
+    }
+
+    /**
+     * Sets the value of the embeddableUniqueKeys property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setEmbeddableUniqueKeys(Boolean value) {
+        this.embeddableUniqueKeys = value;
+    }
+
+    /**
      * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.
      * 
      * @return
@@ -1989,6 +2041,16 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withEmbeddablePrimaryKeys(Boolean value) {
+        setEmbeddablePrimaryKeys(value);
+        return this;
+    }
+
+    public Database withEmbeddableUniqueKeys(Boolean value) {
+        setEmbeddableUniqueKeys(value);
+        return this;
+    }
+
     public Database withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
@@ -2215,6 +2277,8 @@ public class Database implements Serializable, XMLAppendable
         builder.append("schemaVersionProvider", schemaVersionProvider);
         builder.append("catalogVersionProvider", catalogVersionProvider);
         builder.append("orderProvider", orderProvider);
+        builder.append("embeddablePrimaryKeys", embeddablePrimaryKeys);
+        builder.append("embeddableUniqueKeys", embeddableUniqueKeys);
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("tableValuedFunctions", tableValuedFunctions);
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
@@ -2634,6 +2698,24 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (embeddablePrimaryKeys == null) {
+            if (other.embeddablePrimaryKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!embeddablePrimaryKeys.equals(other.embeddablePrimaryKeys)) {
+                return false;
+            }
+        }
+        if (embeddableUniqueKeys == null) {
+            if (other.embeddableUniqueKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!embeddableUniqueKeys.equals(other.embeddableUniqueKeys)) {
+                return false;
+            }
+        }
         if (forceIntegerTypesOnZeroScaleDecimals == null) {
             if (other.forceIntegerTypesOnZeroScaleDecimals!= null) {
                 return false;
@@ -2783,6 +2865,8 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((schemaVersionProvider == null)? 0 :schemaVersionProvider.hashCode()));
         result = ((prime*result)+((catalogVersionProvider == null)? 0 :catalogVersionProvider.hashCode()));
         result = ((prime*result)+((orderProvider == null)? 0 :orderProvider.hashCode()));
+        result = ((prime*result)+((embeddablePrimaryKeys == null)? 0 :embeddablePrimaryKeys.hashCode()));
+        result = ((prime*result)+((embeddableUniqueKeys == null)? 0 :embeddableUniqueKeys.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));

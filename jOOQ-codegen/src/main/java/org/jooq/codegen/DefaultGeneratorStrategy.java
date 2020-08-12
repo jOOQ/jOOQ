@@ -156,6 +156,10 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         else if (definition instanceof ForeignKeyDefinition && asList(POSTGRES).contains(definition.getDatabase().getDialect().family()))
             return ((ForeignKeyDefinition) definition).getTable().getOutputName().toUpperCase() + "__" + definition.getOutputName().toUpperCase();
 
+        // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name).
+        else if (definition instanceof EmbeddableDefinition)
+            return ((EmbeddableDefinition) definition).getReferencingOutputName().toUpperCase();
+
         else
             return definition.getOutputName().toUpperCase();
     }

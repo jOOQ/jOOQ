@@ -88,12 +88,4 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
 
 
 
-
-
-
-
-
-
-
-
 }

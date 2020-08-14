@@ -1060,8 +1060,6 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-
-
     private void printCreateUniqueKey(JavaWriter out, UniqueKeyDefinition uniqueKey) {
 
 

@@ -101,7 +101,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             if (!CASTS_NEEDED.contains(ctx.dialect()))
                 ctx.castMode(CastMode.NEVER);
 
-            for (Entry<Field<?>, Field<?>> entry : flattenEntrySet(entrySet())) {
+            for (Entry<Field<?>, Field<?>> entry : flattenEntrySet(entrySet(), true)) {
                 if (!"".equals(separator))
                     ctx.sql(separator)
                        .formatSeparator();

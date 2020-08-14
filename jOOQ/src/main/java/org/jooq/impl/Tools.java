@@ -5358,10 +5358,23 @@ final class Tools {
         }
     }
 
+    static final <E> List<E> collect(Iterable<E> iterable) {
+        if (iterable instanceof List)
+            return (List<E>) iterable;
+
+        List<E> result = new ArrayList<>();
+        for (E e : iterable)
+            result.add(e);
+
+        return result;
+    }
+
     /**
      * Flatten out an {@link EmbeddableTableField}.
      */
+    @SuppressWarnings("unchecked")
     static final <E extends Field<?>> Iterable<E> flatten(final E field) {
+        // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
         return new Iterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -5369,10 +5382,16 @@ final class Tools {
 
                 if (field instanceof EmbeddableTableField)
                     return new FlatteningIterator<E>(it) {
-                        @SuppressWarnings("unchecked")
                         @Override
                         List<E> flatten(E e) {
                             return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
+                        }
+                    };
+                else if (field instanceof Val && ((Val<?>) field).getValue() instanceof EmbeddableRecord)
+                    return new FlatteningIterator<E>(it) {
+                        @Override
+                        List<E> flatten(E e) {
+                            return (List<E>) Arrays.asList(embeddedFields(field));
                         }
                     };
                 else
@@ -5385,16 +5404,33 @@ final class Tools {
      * Flatten out {@link EmbeddableTableField} elements contained in an
      * ordinary iterable.
      */
-    static final <E extends Field<?>> Iterable<E> flattenCollection(final Iterable<E> iterable) {
+    static final <E extends Field<?>> Iterable<E> flattenCollection(
+        final Iterable<E> iterable,
+        final boolean removeDuplicates
+    ) {
+        // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
         return new Iterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return new FlatteningIterator<E>(iterable.iterator()) {
+                    Set<Field<?>> overlapping = null;
+
                     @SuppressWarnings("unchecked")
                     @Override
                     List<E> flatten(E e) {
-                        if (e instanceof EmbeddableTableField)
-                            return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
+                        if (e instanceof EmbeddableTableField) {
+                            if (removeDuplicates) {
+                                List<E> result = new ArrayList<>();
+
+                                for (Field<?> field : ((EmbeddableTableField<?, ?>) e).fields)
+                                    if ((overlapping = lazy(overlapping)).add(field))
+                                        result.add((E) field);
+
+                                return result;
+                            }
+                            else
+                                return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
+                        }
 
                         return null;
                     }
@@ -5404,14 +5440,21 @@ final class Tools {
     }
 
     /**
-     * Flatten out {@link EmbeddableTableField} elements contained in an
-     * entry set iterable.
+     * Flatten out {@link EmbeddableTableField} elements contained in an entry
+     * set iterable, making sure no duplicate keys resulting from overlapping
+     * embeddables will be produced.
      */
-    static final <E extends Entry<Field<?>, Field<?>>> Iterable<E> flattenEntrySet(final Iterable<E> iterable) {
+    static final <E extends Entry<Field<?>, Field<?>>> Iterable<E> flattenEntrySet(
+        final Iterable<E> iterable,
+        final boolean removeDuplicates
+    ) {
+        // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
         return new Iterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return new FlatteningIterator<E>(iterable.iterator()) {
+                    Set<Field<?>> overlapping = null;
+
                     @SuppressWarnings("unchecked")
                     @Override
                     List<E> flatten(E e) {
@@ -5421,9 +5464,10 @@ final class Tools {
                             Field<?>[] values = embeddedFields(e.getValue());
 
                             for (int i = 0; i < keys.length; i++)
-                                result.add((E) new SimpleImmutableEntry<Field<?>, Field<?>>(
-                                    keys[i], values[i]
-                                ));
+                                if (!removeDuplicates || (overlapping = lazy(overlapping)).add(keys[i]))
+                                    result.add((E) new SimpleImmutableEntry<Field<?>, Field<?>>(
+                                        keys[i], values[i]
+                                    ));
 
                             return result;
                         }
@@ -5433,6 +5477,10 @@ final class Tools {
                 };
             }
         };
+    }
+
+    static final <T> Set<T> lazy(Set<T> set) {
+        return set == null ? new HashSet<>() : set;
     }
 
     /**

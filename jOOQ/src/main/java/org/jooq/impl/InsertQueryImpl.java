@@ -668,6 +668,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+            // [#8353] TODO: Support overlapping embeddables
             ctx.formatSeparator()
                .start(INSERT_SELECT)
                .visit(select)

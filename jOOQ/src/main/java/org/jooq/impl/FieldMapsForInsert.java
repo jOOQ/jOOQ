@@ -46,6 +46,11 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.flatten;
+import static org.jooq.impl.Tools.flattenCollection;
+import static org.jooq.impl.Tools.isEmbeddable;
+import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 
 import java.util.AbstractList;
@@ -86,6 +91,9 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
     final Table<?>                       table;
     final Map<Field<?>, Field<?>>        empty;
+    // Depending on whether embeddable types are allowed, this data structure
+    // needs to be flattened with duplicates removed, prior to consumption
+    // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
     final Map<Field<?>, List<Field<?>>>  values;
     int                                  rows;
     int                                  nextRow          = -1;
@@ -225,10 +233,11 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     final Select<Record> insertSelect() {
         Select<Record> select = null;
 
+        Map<Field<?>, List<Field<?>>> v = valuesFlattened();
         for (int row = 0; row < rows; row++) {
-            List<Field<?>> fields = new ArrayList<>(values.size());
+            List<Field<?>> fields = new ArrayList<>(v.size());
 
-            for (List<Field<?>> list : values.values())
+            for (List<Field<?>> list : v.values())
                 fields.add(list.get(row));
 
             Select<Record> iteration = DSL.select(fields);
@@ -269,11 +278,13 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             String separator = "";
             int i = 0;
 
-            for (List<Field<?>> list : values.values()) {
+            for (List<Field<?>> list : valuesFlattened().values()) {
                 ctx.sql(separator);
 
                 if (indent)
                     ctx.formatNewLine();
+
+
 
 
 
@@ -502,7 +513,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             return;
 
         // [#2995] Do not generate empty column lists.
-        if (values.size() == 0)
+        if (values.isEmpty())
             return;
 
         // [#4629] Do not generate column lists for unknown columns
@@ -519,9 +530,45 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         // [#989] Avoid qualifying fields in INSERT field declaration
         boolean qualify = ctx.qualify();
         ctx.qualify(false)
-           .visit(new QueryPartCollectionView<>(values.keySet()))
+           .visit(new QueryPartCollectionView<>(collect(flattenCollection(values.keySet(), true))))
            .qualify(qualify);
 
         ctx.sql(')');
+    }
+
+    final Map<Field<?>, List<Field<?>>> valuesFlattened() {
+        Map<Field<?>, List<Field<?>>> result = new LinkedHashMap<>();
+
+        // [#2530] [#6124] [#10481] TODO: Shortcut for performance, when there are no embeddables
+        // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
+        Set<Field<?>> overlapping = null;
+        for (Entry<Field<?>, List<Field<?>>> entry : values.entrySet()) {
+            if (isEmbeddable(entry.getKey())) {
+                List<Iterator<? extends Field<?>>> value = new ArrayList<>(entry.getValue().size());
+
+                for (Field<?> f : entry.getValue())
+                    value.add(flatten(f).iterator());
+
+                for (Field<?> key : flatten(entry.getKey())) {
+                    if ((overlapping = lazy(overlapping)).add(key)) {
+                        List<Field<?>> list = new ArrayList<>(entry.getValue().size());
+
+                        for (Iterator<? extends Field<?>> v : value)
+                            if (v.hasNext())
+                                list.add(v.next());
+
+                        result.put(key, list);
+                    }
+                    else
+                        for (Iterator<? extends Field<?>> v : value)
+                            if (v.hasNext())
+                                v.next();
+                }
+            }
+            else
+                result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
     }
 }

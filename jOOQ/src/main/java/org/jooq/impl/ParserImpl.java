@@ -10542,7 +10542,7 @@ final class ParserImpl implements Parser {
                 break;
         }
 
-        return new DefaultDataType(ctx.dsl.dialect(), Object.class, parseIdentifier(ctx).toString());
+        return new DefaultDataType(ctx.dsl.dialect(), Object.class, parseName(ctx));
     }
 
     private static final boolean parseKeywordOrIdentifierIf(ParserContext ctx, String keyword) {

@@ -274,6 +274,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
+import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
@@ -2592,13 +2593,16 @@ final class Tools {
                     // Try getting the {numbered placeholder}
                     Integer index = Ints.tryParse(sql, start, end);
                     if (index != null) {
+                        if (index < 0 || index >= substitutes.size())
+                            throw new TemplatingException("No substitute QueryPart provided for placeholder {" + index + "} in plain SQL template: " + sql);
+
                         QueryPart substitute = substitutes.get(index);
                         render.visit(substitute);
 
-                        if (bind != null) {
+                        if (bind != null)
                             bind.visit(substitute);
-                        }
-                    } else {
+                    }
+                    else {
                         // Then we're dealing with a {keyword}
                         render.visit(DSL.keyword(sql.substring(start, end)));
                     }

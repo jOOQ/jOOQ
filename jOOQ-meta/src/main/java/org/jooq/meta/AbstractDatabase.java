@@ -1901,6 +1901,15 @@ public abstract class AbstractDatabase implements Database {
 
 
                 if (columns.size() == embeddable.getFields().size()) {
+                    CatalogDefinition catalog = getCatalog(embeddable.getCatalog());
+
+                    SchemaDefinition schema = catalog != null
+                        ? catalog.getSchema(embeddable.getSchema())
+                        : getSchema(embeddable.getSchema());
+
+                    if (schema == null)
+                        schema = table.getSchema();
+
                     Name name = table.getQualifiedNamePart().append(embeddable.getName());
 
                     if (result.containsKey(name))
@@ -1909,6 +1918,7 @@ public abstract class AbstractDatabase implements Database {
                         result.put(
                             name,
                             new DefaultEmbeddableDefinition(
+                                schema,
                                 embeddable.getName(),
                                 table,
                                 names,
@@ -1921,6 +1931,8 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
         }
+
+
 
 
 

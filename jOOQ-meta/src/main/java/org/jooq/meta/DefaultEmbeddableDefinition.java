@@ -60,6 +60,7 @@ public class DefaultEmbeddableDefinition
 
     @SuppressWarnings("unused")
     public DefaultEmbeddableDefinition(
+        SchemaDefinition definingSchema,
         String definingName,
         TableDefinition definingTable,
         List<String> definingColumnNames,
@@ -68,7 +69,7 @@ public class DefaultEmbeddableDefinition
         List<ColumnDefinition> referencingColumns,
         boolean replacesFields
     ) {
-        super(definingTable.getSchema(), definingName, "");
+        super(definingSchema, definingName, "");
 
         this.definingColumnNames = definingColumnNames;
         this.definingTable = definingTable;

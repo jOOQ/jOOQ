@@ -34,6 +34,10 @@ public class Embeddable implements Serializable, XMLAppendable
 
     private final static long serialVersionUID = 31400L;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String catalog;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String schema;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String referencingName;
@@ -44,6 +48,38 @@ public class Embeddable implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "fields")
     @XmlElement(name = "field")
     protected List<EmbeddableField> fields;
+
+    /**
+     * The defining catalog of the embeddable type, or the catalog of the first matched table if left empty.
+     * 
+     */
+    public String getCatalog() {
+        return catalog;
+    }
+
+    /**
+     * The defining catalog of the embeddable type, or the catalog of the first matched table if left empty.
+     * 
+     */
+    public void setCatalog(String value) {
+        this.catalog = value;
+    }
+
+    /**
+     * The defining schema of the embeddable type, or the schema of the first matched table if left empty.
+     * 
+     */
+    public String getSchema() {
+        return schema;
+    }
+
+    /**
+     * The defining schema of the embeddable type, or the schema of the first matched table if left empty.
+     * 
+     */
+    public void setSchema(String value) {
+        this.schema = value;
+    }
 
     /**
      * The defining name of the embeddable type.
@@ -129,6 +165,24 @@ public class Embeddable implements Serializable, XMLAppendable
     }
 
     /**
+     * The defining catalog of the embeddable type, or the catalog of the first matched table if left empty.
+     * 
+     */
+    public Embeddable withCatalog(String value) {
+        setCatalog(value);
+        return this;
+    }
+
+    /**
+     * The defining schema of the embeddable type, or the schema of the first matched table if left empty.
+     * 
+     */
+    public Embeddable withSchema(String value) {
+        setSchema(value);
+        return this;
+    }
+
+    /**
      * The defining name of the embeddable type.
      * 
      */
@@ -183,6 +237,8 @@ public class Embeddable implements Serializable, XMLAppendable
 
     @Override
     public final void appendTo(XMLBuilder builder) {
+        builder.append("catalog", catalog);
+        builder.append("schema", schema);
         builder.append("name", name);
         builder.append("referencingName", referencingName);
         builder.append("tables", tables);
@@ -209,6 +265,24 @@ public class Embeddable implements Serializable, XMLAppendable
             return false;
         }
         Embeddable other = ((Embeddable) that);
+        if (catalog == null) {
+            if (other.catalog!= null) {
+                return false;
+            }
+        } else {
+            if (!catalog.equals(other.catalog)) {
+                return false;
+            }
+        }
+        if (schema == null) {
+            if (other.schema!= null) {
+                return false;
+            }
+        } else {
+            if (!schema.equals(other.schema)) {
+                return false;
+            }
+        }
         if (name == null) {
             if (other.name!= null) {
                 return false;
@@ -261,6 +335,8 @@ public class Embeddable implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = ((prime*result)+((catalog == null)? 0 :catalog.hashCode()));
+        result = ((prime*result)+((schema == null)? 0 :schema.hashCode()));
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((referencingName == null)? 0 :referencingName.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));

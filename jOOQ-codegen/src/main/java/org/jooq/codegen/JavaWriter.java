@@ -136,13 +136,13 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter override() {
-        println("@Override");
+        println("@%s", Override.class);
         return this;
     }
 
     public JavaWriter overrideIf(boolean override) {
         if (override)
-            println("@Override");
+            println("@%s", Override.class);
 
         return this;
     }

@@ -540,32 +540,35 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         Map<Field<?>, List<Field<?>>> result = new LinkedHashMap<>();
 
         // [#2530] [#6124] [#10481] TODO: Shortcut for performance, when there are no embeddables
-        // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
         Set<Field<?>> overlapping = null;
         for (Entry<Field<?>, List<Field<?>>> entry : values.entrySet()) {
-            if (isEmbeddable(entry.getKey())) {
-                List<Iterator<? extends Field<?>>> value = new ArrayList<>(entry.getValue().size());
 
-                for (Field<?> f : entry.getValue())
-                    value.add(flatten(f).iterator());
 
-                for (Field<?> key : flatten(entry.getKey())) {
-                    if ((overlapping = lazy(overlapping)).add(key)) {
-                        List<Field<?>> list = new ArrayList<>(entry.getValue().size());
 
-                        for (Iterator<? extends Field<?>> v : value)
-                            if (v.hasNext())
-                                list.add(v.next());
 
-                        result.put(key, list);
-                    }
-                    else
-                        for (Iterator<? extends Field<?>> v : value)
-                            if (v.hasNext())
-                                v.next();
-                }
-            }
-            else
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 result.put(entry.getKey(), entry.getValue());
         }
 

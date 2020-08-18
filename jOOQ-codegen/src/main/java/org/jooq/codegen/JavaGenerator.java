@@ -1510,7 +1510,7 @@ public class JavaGenerator extends AbstractGenerator {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
                 if (column instanceof EmbeddableColumnDefinition)
-                    column = ((EmbeddableColumnDefinition) column).getColumn();
+                    column = ((EmbeddableColumnDefinition) column).getReferencingColumn();
 
                 final String colTypeFull = getJavaType(column.getType(resolver()));
                 final String colType = out.ref(colTypeFull);
@@ -4438,7 +4438,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             final List<String> columnIds = new ArrayList<>();
             for (EmbeddableColumnDefinition column : embeddable.getColumns())
-                columnIds.add(out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column)));
+                columnIds.add(out.ref(getStrategy().getJavaIdentifier(column.getReferencingColumn()), colRefSegments(column.getReferencingColumn())));
 
             out.javadoc("The embeddable type <code>%s</code>.", embeddable.getOutputName());
 

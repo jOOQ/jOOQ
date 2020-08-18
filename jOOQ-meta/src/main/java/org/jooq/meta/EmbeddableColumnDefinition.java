@@ -46,8 +46,8 @@ package org.jooq.meta;
 public interface EmbeddableColumnDefinition extends TypedElementDefinition<EmbeddableDefinition>, PositionedDefinition {
 
     /**
-     * The backing column definition.
+     * The referencing column definition.
      */
-    ColumnDefinition getColumn();
+    ColumnDefinition getReferencingColumn();
 
 }

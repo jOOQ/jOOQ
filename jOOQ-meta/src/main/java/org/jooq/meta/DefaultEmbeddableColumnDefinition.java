@@ -44,13 +44,13 @@ public class DefaultEmbeddableColumnDefinition
     extends AbstractTypedElementDefinition<EmbeddableDefinition>
     implements EmbeddableColumnDefinition {
 
-    private final ColumnDefinition column;
+    private final ColumnDefinition referencingColumn;
     private final int              position;
 
-    public DefaultEmbeddableColumnDefinition(EmbeddableDefinition container, String name, ColumnDefinition column, int position) {
-        super(container, name, position, column.getDefinedType(), column.getComment());
+    public DefaultEmbeddableColumnDefinition(EmbeddableDefinition container, String definingColumnName, ColumnDefinition referencingColumn, int position) {
+        super(container, definingColumnName, position, referencingColumn.getDefinedType(), referencingColumn.getComment());
 
-        this.column = column;
+        this.referencingColumn = referencingColumn;
         this.position = position;
     }
 
@@ -60,7 +60,7 @@ public class DefaultEmbeddableColumnDefinition
     }
 
     @Override
-    public final ColumnDefinition getColumn() {
-        return column;
+    public final ColumnDefinition getReferencingColumn() {
+        return referencingColumn;
     }
 }

@@ -3679,7 +3679,7 @@ final class ParserImpl implements Parser {
                         parseKeywordIf(ctx, "INDEX");
 
                     // [#9132] Avoid parsing "using" as an identifier
-                    parseUsingBtreeOrHashIf(ctx);
+                    parseUsingIndexTypeIf(ctx);
 
                     // [#7268] MySQL has some legacy syntax where an index name
                     //         can override a constraint name
@@ -3699,19 +3699,19 @@ final class ParserImpl implements Parser {
                     continue columnLoop;
                 }
                 else if (constraint == null && parseIndexOrKeyIf(ctx)) {
-                    parseUsingBtreeOrHashIf(ctx);
+                    parseUsingIndexTypeIf(ctx);
 
                     int p2 = ctx.position();
 
                     // [#7348] [#7651] [#9132] Look ahead if the next tokens
                     // indicate a MySQL index definition
                     if (parseIf(ctx, '(') || (parseIdentifierIf(ctx) != null
-                                && parseUsingBtreeOrHashIf(ctx)
+                                && parseUsingIndexTypeIf(ctx)
                                 && parseIf(ctx, '('))) {
                         ctx.position(p2);
                         indexes.add(parseIndexSpecification(ctx, tableName));
 
-                        parseUsingBtreeOrHashIf(ctx);
+                        parseUsingIndexTypeIf(ctx);
                         continue columnLoop;
                     }
                     else {
@@ -4187,7 +4187,7 @@ final class ParserImpl implements Parser {
 
     private static final Index parseIndexSpecification(ParserContext ctx, Table<?> table) {
         Name name = parseIdentifierIf(ctx);
-        parseUsingBtreeOrHashIf(ctx);
+        parseUsingIndexTypeIf(ctx);
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
@@ -4223,19 +4223,19 @@ final class ParserImpl implements Parser {
     }
 
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
-        parseUsingBtreeOrHashIf(ctx);
+        parseUsingIndexTypeIf(ctx);
         Field<?>[] fieldNames = parseKeyColumnList(ctx);
 
         ConstraintEnforcementStep e = constraint == null
             ? primaryKey(fieldNames)
             : constraint.primaryKey(fieldNames);
 
-        parseUsingBtreeOrHashIf(ctx);
+        parseUsingIndexTypeIf(ctx);
         return parseConstraintEnforcementIf(ctx, e);
     }
 
     private static final Constraint parseUniqueSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
-        parseUsingBtreeOrHashIf(ctx);
+        parseUsingIndexTypeIf(ctx);
 
         // [#9246] In MySQL, there's a syntax where the unique constraint looks like an index:
         //         ALTER TABLE t ADD UNIQUE INDEX i (c)
@@ -4249,7 +4249,7 @@ final class ParserImpl implements Parser {
             ? unique(fieldNames)
             : constraint.unique(fieldNames);
 
-        parseUsingBtreeOrHashIf(ctx);
+        parseUsingIndexTypeIf(ctx);
         return parseConstraintEnforcementIf(ctx, e);
     }
 
@@ -5069,13 +5069,14 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseCreateIndex(ParserContext ctx, boolean unique) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
         Name indexName = parseIndexNameIf(ctx);
-        parseUsingBtreeOrHashIf(ctx);
+        parseUsingIndexTypeIf(ctx);
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
+        parseUsingIndexTypeIf(ctx);
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
-        parseUsingBtreeOrHashIf(ctx);
+        parseUsingIndexTypeIf(ctx);
 
         Name[] include = null;
         if (parseKeywordIf(ctx, "INCLUDE") || parseKeywordIf(ctx, "COVERING") || parseKeywordIf(ctx, "STORING")) {
@@ -5115,9 +5116,9 @@ final class ParserImpl implements Parser {
         return s4;
     }
 
-    private static final boolean parseUsingBtreeOrHashIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "USING BTREE") || parseKeywordIf(ctx, "USING HASH"))
-            ;
+    private static final boolean parseUsingIndexTypeIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "USING"))
+            parseIdentifier(ctx);
 
         return true;
     }

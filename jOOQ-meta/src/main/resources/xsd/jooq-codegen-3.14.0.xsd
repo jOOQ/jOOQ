@@ -1020,6 +1020,10 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The referencing name of the embeddable type, defaulting to the defining name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching the tables to which to apply the embeddable definition.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="fields" type="tns:EmbeddableFields" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set of field specifications for the embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

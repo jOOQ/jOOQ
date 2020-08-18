@@ -1879,7 +1879,12 @@ public abstract class AbstractDatabase implements Database {
         Map<Name, EmbeddableDefinition> result = new LinkedHashMap<>();
 
         for (TableDefinition table : getTables()) {
+
+            embeddableLoop:
             for (Embeddable embeddable : getConfiguredEmbeddables()) {
+                if (embeddable.getTables() != null && !matches(patterns.pattern(embeddable.getTables()), table))
+                    continue embeddableLoop;
+
                 List<ColumnDefinition> columns = new ArrayList<>();
                 List<String> names = new ArrayList<>();
 

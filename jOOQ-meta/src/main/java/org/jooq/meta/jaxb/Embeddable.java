@@ -37,6 +37,8 @@ public class Embeddable implements Serializable, XMLAppendable
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String referencingName;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String tables;
     @XmlElement(defaultValue = "false")
     protected Boolean replacesFields = false;
     @XmlElementWrapper(name = "fields")
@@ -73,6 +75,22 @@ public class Embeddable implements Serializable, XMLAppendable
      */
     public void setReferencingName(String value) {
         this.referencingName = value;
+    }
+
+    /**
+     * A regular expression matching the tables to which to apply the embeddable definition.
+     * 
+     */
+    public String getTables() {
+        return tables;
+    }
+
+    /**
+     * A regular expression matching the tables to which to apply the embeddable definition.
+     * 
+     */
+    public void setTables(String value) {
+        this.tables = value;
     }
 
     /**
@@ -128,6 +146,15 @@ public class Embeddable implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * A regular expression matching the tables to which to apply the embeddable definition.
+     * 
+     */
+    public Embeddable withTables(String value) {
+        setTables(value);
+        return this;
+    }
+
     public Embeddable withReplacesFields(Boolean value) {
         setReplacesFields(value);
         return this;
@@ -158,6 +185,7 @@ public class Embeddable implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("name", name);
         builder.append("referencingName", referencingName);
+        builder.append("tables", tables);
         builder.append("replacesFields", replacesFields);
         builder.append("fields", "field", fields);
     }
@@ -199,6 +227,15 @@ public class Embeddable implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (tables == null) {
+            if (other.tables!= null) {
+                return false;
+            }
+        } else {
+            if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
         if (replacesFields == null) {
             if (other.replacesFields!= null) {
                 return false;
@@ -226,6 +263,7 @@ public class Embeddable implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((referencingName == null)? 0 :referencingName.hashCode()));
+        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((replacesFields == null)? 0 :replacesFields.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         return result;

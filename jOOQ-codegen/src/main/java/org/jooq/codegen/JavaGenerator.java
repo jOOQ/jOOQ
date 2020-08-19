@@ -1795,7 +1795,7 @@ public class JavaGenerator extends AbstractGenerator {
                     arguments.add(columnMember + " : " + type);
                 }
                 else if (kotlin) {
-                    arguments.add(columnMember + ": " + type + (column instanceof EmbeddableColumnDefinition ? "" : "?") + " = null");
+                    arguments.add(columnMember + ": " + type + "? = null");
                 }
                 else {
                     final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
@@ -1997,7 +1997,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (!generateInterfaces()) {
             if (!printDeprecationIfUnknownType(out, typeFull))
-                out.javadoc("Setter for embeddable <code>%s</code>.", name);
+                out.javadoc("Setter for the embeddable <code>%s</code>.", name);
 
             if (scala) {
                 out.println("def %s(value: %s): %s = {", setter, type, setterReturnType);
@@ -2012,11 +2012,21 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nonnullAnnotation), type);
             }
 
-            for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
-                final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.RECORD);
-                final String g = getStrategy().getJavaGetterName(column, Mode.RECORD);
+            if (kotlin) {
+                for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
+                    final String s = getStrategy().getJavaMemberName(column.getReferencingColumn());
+                    final String g = getStrategy().getJavaMemberName(column);
 
-                out.println("%s(value.%s())%s", s, g, semicolon);
+                    out.println("%s = value.%s", s, g);
+                }
+            }
+            else {
+                for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
+                    final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.RECORD);
+                    final String g = getStrategy().getJavaGetterName(column, Mode.RECORD);
+
+                    out.println("%s(value.%s())%s", s, g, semicolon);
+                }
             }
 
             if (generateFluentSetters())
@@ -2118,11 +2128,22 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         String separator = "  ";
-        for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
-            final String g = getStrategy().getJavaGetterName(column.getReferencingColumn(), Mode.RECORD);
 
-            out.println("%s%s()", separator, g);
-            separator = ", ";
+        if (kotlin) {
+            for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
+                final String g = getStrategy().getJavaMemberName(column.getReferencingColumn());
+
+                out.println("%s%s", separator, g);
+                separator = ", ";
+            }
+        }
+        else {
+            for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
+                final String g = getStrategy().getJavaGetterName(column.getReferencingColumn(), Mode.RECORD);
+
+                out.println("%s%s()", separator, g);
+                separator = ", ";
+            }
         }
 
         if (scala || kotlin) {

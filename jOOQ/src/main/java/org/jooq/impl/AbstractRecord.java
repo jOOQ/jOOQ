@@ -330,16 +330,17 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> void set(Field<T> field, T value) {
-        if (isEmbeddable(field) && value instanceof EmbeddableRecord) {
+        if (isEmbeddable(field)) {
             Field<?>[] f = embeddedFields(field);
-            Object[] v = ((EmbeddableRecord) value).intoArray();
+            Object[] v = value instanceof EmbeddableRecord
+                ? ((EmbeddableRecord) value).intoArray()
+                : new Object[f.length];
 
             for (int i = 0; i < f.length; i++)
                 set(indexOrFail(fields, f[i]), f[i], v[i]);
         }
-        else {
+        else
             set(indexOrFail(fields, field), field, value);
-        }
     }
 
     final void set(int index, Field<?> field, Object value) {

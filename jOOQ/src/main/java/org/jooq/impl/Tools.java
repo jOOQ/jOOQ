@@ -5337,7 +5337,7 @@ final class Tools {
 
     static final boolean isEmbeddable(Field<?> field) {
         return field instanceof EmbeddableTableField
-            || field instanceof Val && ((Val<?>) field).value instanceof EmbeddableRecord;
+            || field instanceof Val && EmbeddableRecord.class.isAssignableFrom(field.getType());
     }
 
     @SuppressWarnings("unchecked")
@@ -5391,7 +5391,7 @@ final class Tools {
                             return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
                         }
                     };
-                else if (field instanceof Val && ((Val<?>) field).getValue() instanceof EmbeddableRecord)
+                else if (field instanceof Val && EmbeddableRecord.class.isAssignableFrom(field.getType()))
                     return new FlatteningIterator<E>(it) {
                         @Override
                         List<E> flatten(E e) {

@@ -1900,6 +1900,11 @@ public abstract class AbstractDatabase implements Database {
                 if (embeddable.getTables() != null && !matches(patterns.pattern(embeddable.getTables()), table))
                     continue embeddableLoop;
 
+                if (embeddable.getFields().isEmpty()) {
+                    log.warn("Illegal embeddable", "An embeddable definition must have at least one field declaration");
+                    continue embeddableLoop;
+                }
+
                 List<ColumnDefinition> columns = new ArrayList<>();
                 List<String> names = new ArrayList<>();
 
@@ -1913,7 +1918,6 @@ public abstract class AbstractDatabase implements Database {
                             else
                                 matched = columns.add(column) && names.add(defaultIfEmpty(embeddableField.getName(), column.getName()));
                 }
-
 
                 if (columns.size() == embeddable.getFields().size()) {
                     CatalogDefinition catalog = getCatalog(embeddable.getCatalog());

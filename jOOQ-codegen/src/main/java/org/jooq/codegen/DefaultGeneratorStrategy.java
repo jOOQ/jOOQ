@@ -156,7 +156,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         else if (definition instanceof ForeignKeyDefinition && asList(POSTGRES).contains(definition.getDatabase().getDialect().family()))
             return ((ForeignKeyDefinition) definition).getTable().getOutputName().toUpperCase() + "__" + definition.getOutputName().toUpperCase();
 
-        // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name).
+        // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name, member name).
         else if (definition instanceof EmbeddableDefinition)
             return ((EmbeddableDefinition) definition).getReferencingOutputName().toUpperCase();
 
@@ -179,6 +179,10 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             chars[0] = Character.toUpperCase(chars[0]);
             return new String(chars);
         }
+
+        // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name, member name).
+        if (definition instanceof EmbeddableDefinition)
+            return getJavaClassName0(((EmbeddableDefinition) definition).getReferencingOutputName(), Mode.DEFAULT);
         else
             return getJavaClassName0(definition, Mode.DEFAULT);
     }
@@ -289,7 +293,12 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
-        return getJavaClassName0LC(definition, mode);
+
+        // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name, member name).
+        if (definition instanceof EmbeddableDefinition)
+            return getJavaClassName0LC(((EmbeddableDefinition) definition).getReferencingOutputName(), mode);
+        else
+            return getJavaClassName0LC(definition, mode);
     }
 
     private String getJavaClassName0LC(Definition definition, Mode mode) {
@@ -297,13 +306,21 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         return result.substring(0, 1).toLowerCase() + result.substring(1);
     }
 
+    private String getJavaClassName0LC(String outputName, Mode mode) {
+        String result = getJavaClassName0(outputName, mode);
+        return result.substring(0, 1).toLowerCase() + result.substring(1);
+    }
+
     private String getJavaClassName0(Definition definition, Mode mode) {
+        return getJavaClassName0(definition.getOutputName(), mode);
+    }
+
+    private String getJavaClassName0(String outputName, Mode mode) {
         StringBuilder result = new StringBuilder();
 
         // [#4562] Some characters should be treated like underscore
         result.append(StringUtils.toCamelCase(
-            definition.getOutputName()
-                      .replace(' ', '_')
+            outputName.replace(' ', '_')
                       .replace('-', '_')
                       .replace('.', '_')
         ));

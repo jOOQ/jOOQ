@@ -1310,19 +1310,24 @@ public class JavaGenerator extends AbstractGenerator {
         for (int i = 0; i < columns.size(); i++)
             columnIndexes.put(columns.get(i), i);
 
-        Set<TypedElementDefinition<?>> columnsOrReplacedEmbeddables = new LinkedHashSet<>(columns);
+        List<Definition> columnsOrReplacingEmbeddables = new ArrayList<>(columns);
+        if (tableUdtOrEmbeddable instanceof TableDefinition) {
+            Set<EmbeddableDefinition> duplicates = new HashSet<>();
 
+            for (EmbeddableDefinition embeddable : ((TableDefinition) tableUdtOrEmbeddable).getEmbeddables()) {
+                for (EmbeddableColumnDefinition embeddableColumn : embeddable.getColumns()) {
+                    int index = columnsOrReplacingEmbeddables.indexOf(embeddableColumn.getReferencingColumn());
 
+                    if (index >= 0)
+                        if (duplicates.add(embeddable))
+                            columnsOrReplacingEmbeddables.set(index, embeddable);
+                        else
+                            columnsOrReplacingEmbeddables.remove(index);
+                }
+            }
+        }
 
-
-
-
-
-
-
-
-        int degreeNoEmbeddables = columns.size();
-        int degreeWithEmbeddables = columnsOrReplacedEmbeddables.size();
+        int degree = columns.size();
 
         String rowType = null;
         String rowTypeRecord = null;
@@ -1332,13 +1337,13 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-        if (generateRecordsImplementingRecordN() && degreeNoEmbeddables > 0 && degreeNoEmbeddables <= Constants.MAX_ROW_DEGREE) {
+        if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
             rowType = refRowType(out, columns);
 
             if (scala)
-                rowTypeRecord = out.ref(Record.class.getName() + degreeNoEmbeddables) + "[" + rowType + "]";
+                rowTypeRecord = out.ref(Record.class.getName() + degree) + "[" + rowType + "]";
             else
-                rowTypeRecord = out.ref(Record.class.getName() + degreeNoEmbeddables) + "<" + rowType + ">";
+                rowTypeRecord = out.ref(Record.class.getName() + degree) + "<" + rowType + ">";
 
             interfaces.add(rowTypeRecord);
         }
@@ -1390,7 +1395,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.printSerial();
 
         columnLoop:
-        for (int i = 0; i < degreeNoEmbeddables; i++) {
+        for (int i = 0; i < degree; i++) {
             TypedElementDefinition<?> column = columns.get(i);
 
 
@@ -1500,10 +1505,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-        if (generateRecordsImplementingRecordN() && degreeNoEmbeddables > 0 && degreeNoEmbeddables <= Constants.MAX_ROW_DEGREE) {
-            final String recordNType = out.ref(Row.class.getName() + degreeNoEmbeddables);
+        if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
+            final String recordNType = out.ref(Row.class.getName() + degree);
 
-            out.header("Record%s type implementation", degreeNoEmbeddables);
+            out.header("Record%s type implementation", degree);
 
             // fieldsRow()
             if (scala) {
@@ -1537,7 +1542,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             // field[N]()
-            for (int i = 1; i <= degreeNoEmbeddables; i++) {
+            for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
                 if (column instanceof EmbeddableColumnDefinition)
@@ -1599,7 +1604,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             // component[N]()
-            for (int i = 1; i <= degreeNoEmbeddables; i++) {
+            for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colTypeFull = getJavaType(column.getType(resolver()));
@@ -1630,7 +1635,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             // value[N]()
-            for (int i = 1; i <= degreeNoEmbeddables; i++) {
+            for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colTypeFull = getJavaType(column.getType(resolver()));
@@ -1661,7 +1666,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             // value[N](T[N])
-            for (int i = 1; i <= degreeNoEmbeddables; i++) {
+            for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colTypeFull = getJavaType(column.getType(resolver()));
@@ -1700,9 +1705,9 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
-            List<String> arguments = new ArrayList<>(degreeNoEmbeddables);
-            List<String> calls = new ArrayList<>(degreeNoEmbeddables);
-            for (int i = 1; i <= degreeNoEmbeddables; i++) {
+            List<String> arguments = new ArrayList<>(degree);
+            List<String> calls = new ArrayList<>(degree);
+            for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colType = out.ref(getJavaType(column.getType(resolver())));
@@ -1783,13 +1788,42 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-        if (degreeWithEmbeddables > 0 && degreeWithEmbeddables < 256) {
-            List<String> arguments = new ArrayList<>(degreeWithEmbeddables);
-            List<String> properties = new ArrayList<>(degreeWithEmbeddables);
+        generateRecordConstructor(tableUdtOrEmbeddable, out, columnIndexes, columns);
 
-            for (TypedElementDefinition<?> column : columnsOrReplacedEmbeddables) {
+        if (!columns.equals(columnsOrReplacingEmbeddables))
+            generateRecordConstructor(tableUdtOrEmbeddable, out, columnIndexes, columnsOrReplacingEmbeddables);
+
+        if (tableUdtOrEmbeddable instanceof TableDefinition)
+            generateRecordClassFooter((TableDefinition) tableUdtOrEmbeddable, out);
+        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+            generateEmbeddableClassFooter((EmbeddableDefinition) tableUdtOrEmbeddable, out);
+        else
+            generateUDTRecordClassFooter((UDTDefinition) tableUdtOrEmbeddable, out);
+
+        out.println("}");
+    }
+
+    private void generateRecordConstructor(
+        Definition tableUdtOrEmbeddable,
+        JavaWriter out,
+        Map<TypedElementDefinition<?>, Integer> columnIndexes,
+        Collection<? extends Definition> columns
+    ) {
+        final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.RECORD);
+        final String tableIdentifier = !(tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+            ? out.ref(getStrategy().getFullJavaIdentifier(tableUdtOrEmbeddable), 2)
+            : null;
+        final int degree = columns.size();
+
+        if (degree > 0 && degree < 256) {
+            List<String> arguments = new ArrayList<>(degree);
+            List<String> properties = new ArrayList<>(degree);
+
+            for (Definition column : columns) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
-                final String type = out.ref(getJavaType(column.getType(resolver())));
+                final String type = column instanceof EmbeddableDefinition
+                    ? out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD))
+                    : out.ref(getJavaType(((TypedElementDefinition<?>) column).getType(resolver())));
 
                 if (scala) {
                     arguments.add(columnMember + " : " + type);
@@ -1798,7 +1832,9 @@ public class JavaGenerator extends AbstractGenerator {
                     arguments.add(columnMember + ": " + type + "? = null");
                 }
                 else {
-                    final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
+                    final String nullableAnnotation = column instanceof EmbeddableDefinition
+                        ? null
+                        : nullableOrNonnullAnnotation(out, (TypedElementDefinition<?>) column);
 
                     arguments.add((nullableAnnotation == null ? "" : "@" + nullableAnnotation + " ") + type + " " + columnMember);
                 }
@@ -1830,20 +1866,14 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println();
             }
 
-            for (TypedElementDefinition<?> column : columnsOrReplacedEmbeddables)
-                out.println("set(%s, %s)%s", columnIndexes.get(column), getStrategy().getJavaMemberName(column, Mode.DEFAULT), semicolon);
+            for (Definition column : columns)
+                if (column instanceof EmbeddableDefinition)
+                    out.println("%s(%s)%s", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.DEFAULT), semicolon);
+                else
+                    out.println("set(%s, %s)%s", columnIndexes.get(column), getStrategy().getJavaMemberName(column, Mode.DEFAULT), semicolon);
 
             out.println("}");
         }
-
-        if (tableUdtOrEmbeddable instanceof TableDefinition)
-            generateRecordClassFooter((TableDefinition) tableUdtOrEmbeddable, out);
-        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-            generateEmbeddableClassFooter((EmbeddableDefinition) tableUdtOrEmbeddable, out);
-        else
-            generateUDTRecordClassFooter((UDTDefinition) tableUdtOrEmbeddable, out);
-
-        out.println("}");
     }
 
     /**
@@ -2025,7 +2055,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.RECORD);
                     final String g = getStrategy().getJavaGetterName(column, Mode.RECORD);
 
-                    out.println("%s(value.%s%s)%s", s, g, semicolon, emptyparens);
+                    out.println("%s(value.%s%s)%s", s, g, emptyparens, semicolon);
                 }
             }
 

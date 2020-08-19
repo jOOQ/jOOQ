@@ -23,13 +23,13 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Embeddable", propOrder = {
+@XmlType(name = "EmbeddableDefinitionType", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class Embeddable implements Serializable, XMLAppendable
+public class EmbeddableDefinitionType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31400L;
@@ -168,7 +168,7 @@ public class Embeddable implements Serializable, XMLAppendable
      * The defining catalog of the embeddable type, or the catalog of the first matched table if left empty.
      * 
      */
-    public Embeddable withCatalog(String value) {
+    public EmbeddableDefinitionType withCatalog(String value) {
         setCatalog(value);
         return this;
     }
@@ -177,7 +177,7 @@ public class Embeddable implements Serializable, XMLAppendable
      * The defining schema of the embeddable type, or the schema of the first matched table if left empty.
      * 
      */
-    public Embeddable withSchema(String value) {
+    public EmbeddableDefinitionType withSchema(String value) {
         setSchema(value);
         return this;
     }
@@ -186,7 +186,7 @@ public class Embeddable implements Serializable, XMLAppendable
      * The defining name of the embeddable type.
      * 
      */
-    public Embeddable withName(String value) {
+    public EmbeddableDefinitionType withName(String value) {
         setName(value);
         return this;
     }
@@ -195,7 +195,7 @@ public class Embeddable implements Serializable, XMLAppendable
      * The referencing name of the embeddable type, defaulting to the defining name.
      * 
      */
-    public Embeddable withReferencingName(String value) {
+    public EmbeddableDefinitionType withReferencingName(String value) {
         setReferencingName(value);
         return this;
     }
@@ -204,17 +204,17 @@ public class Embeddable implements Serializable, XMLAppendable
      * A regular expression matching the tables to which to apply the embeddable definition.
      * 
      */
-    public Embeddable withTables(String value) {
+    public EmbeddableDefinitionType withTables(String value) {
         setTables(value);
         return this;
     }
 
-    public Embeddable withReplacesFields(Boolean value) {
+    public EmbeddableDefinitionType withReplacesFields(Boolean value) {
         setReplacesFields(value);
         return this;
     }
 
-    public Embeddable withFields(EmbeddableField... values) {
+    public EmbeddableDefinitionType withFields(EmbeddableField... values) {
         if (values!= null) {
             for (EmbeddableField value: values) {
                 getFields().add(value);
@@ -223,14 +223,14 @@ public class Embeddable implements Serializable, XMLAppendable
         return this;
     }
 
-    public Embeddable withFields(Collection<EmbeddableField> values) {
+    public EmbeddableDefinitionType withFields(Collection<EmbeddableField> values) {
         if (values!= null) {
             getFields().addAll(values);
         }
         return this;
     }
 
-    public Embeddable withFields(List<EmbeddableField> fields) {
+    public EmbeddableDefinitionType withFields(List<EmbeddableField> fields) {
         setFields(fields);
         return this;
     }
@@ -264,7 +264,7 @@ public class Embeddable implements Serializable, XMLAppendable
         if (getClass()!= that.getClass()) {
             return false;
         }
-        Embeddable other = ((Embeddable) that);
+        EmbeddableDefinitionType other = ((EmbeddableDefinitionType) that);
         if (catalog == null) {
             if (other.catalog!= null) {
                 return false;

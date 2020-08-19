@@ -134,6 +134,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MatchersEmbeddableType }
+     * 
+     */
+    public MatchersEmbeddableType createMatchersEmbeddableType() {
+        return new MatchersEmbeddableType();
+    }
+
+    /**
      * Create an instance of {@link MatcherRule }
      * 
      */
@@ -182,11 +190,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Embeddable }
+     * Create an instance of {@link EmbeddableDefinitionType }
      * 
      */
-    public Embeddable createEmbeddable() {
-        return new Embeddable();
+    public EmbeddableDefinitionType createEmbeddableDefinitionType() {
+        return new EmbeddableDefinitionType();
     }
 
     /**

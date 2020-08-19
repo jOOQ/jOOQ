@@ -92,7 +92,7 @@ import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
-import org.jooq.meta.jaxb.Embeddable;
+import org.jooq.meta.jaxb.EmbeddableDefinitionType;
 import org.jooq.meta.jaxb.EmbeddableField;
 import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
@@ -170,8 +170,8 @@ public abstract class AbstractDatabase implements Database {
     private List<EnumType>                                                   configuredEnumTypes                  = new ArrayList<>();
     private List<ForcedType>                                                 configuredForcedTypes                = new ArrayList<>();
     private Set<ForcedType>                                                  unusedForcedTypes                    = new HashSet<>();
-    private List<Embeddable>                                                 configuredEmbeddables                = new ArrayList<>();
-    private Set<Embeddable>                                                  unusedEmbeddables                    = new HashSet<>();
+    private List<EmbeddableDefinitionType>                                   configuredEmbeddables                = new ArrayList<>();
+    private Set<EmbeddableDefinitionType>                                    unusedEmbeddables                    = new HashSet<>();
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
     private Comparator<Definition>                                           orderProvider;
@@ -1781,17 +1781,17 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final void markUsed(Embeddable embeddable) {
+    public final void markUsed(EmbeddableDefinitionType embeddable) {
         unusedEmbeddables.remove(embeddable);
     }
 
     @Override
-    public final List<Embeddable> getUnusedEmbeddables() {
+    public final List<EmbeddableDefinitionType> getUnusedEmbeddables() {
         return new ArrayList<>(unusedEmbeddables);
     }
 
     @Override
-    public final void setConfiguredEmbeddables(List<Embeddable> configuredEmbeddables) {
+    public final void setConfiguredEmbeddables(List<EmbeddableDefinitionType> configuredEmbeddables) {
 
         // [#8512] Some implementation of this database may have already
         // configured a forced type programmatically, so we must not set the
@@ -1801,7 +1801,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<Embeddable> getConfiguredEmbeddables() {
+    public final List<EmbeddableDefinitionType> getConfiguredEmbeddables() {
         if (configuredEmbeddables == null)
             configuredEmbeddables = new ArrayList<>();
 
@@ -1896,7 +1896,7 @@ public abstract class AbstractDatabase implements Database {
         for (TableDefinition table : getTables()) {
 
             embeddableLoop:
-            for (Embeddable embeddable : getConfiguredEmbeddables()) {
+            for (EmbeddableDefinitionType embeddable : getConfiguredEmbeddables()) {
                 if (embeddable.getTables() != null && !matches(patterns.pattern(embeddable.getTables()), table))
                     continue embeddableLoop;
 

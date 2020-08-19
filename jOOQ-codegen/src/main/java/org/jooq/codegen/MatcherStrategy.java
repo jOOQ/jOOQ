@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
+import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.Patterns;
 import org.jooq.meta.RoutineDefinition;
@@ -58,6 +59,7 @@ import org.jooq.meta.jaxb.MatcherRule;
 import org.jooq.meta.jaxb.MatcherTransformType;
 import org.jooq.meta.jaxb.Matchers;
 import org.jooq.meta.jaxb.MatchersCatalogType;
+import org.jooq.meta.jaxb.MatchersEmbeddableType;
 import org.jooq.meta.jaxb.MatchersEnumType;
 import org.jooq.meta.jaxb.MatchersFieldType;
 import org.jooq.meta.jaxb.MatchersRoutineType;
@@ -205,6 +207,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
+    private final List<MatchersEmbeddableType> embeddables(Definition definition) {
+        if (definition instanceof EmbeddableDefinition)
+            return matchers.getEmbeddables();
+
+        return emptyList();
+    }
+
     private final List<String> split(String result) {
         String[] split = result.split(",");
         List<String> list = new ArrayList<>(split.length);
@@ -279,6 +288,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     public String getJavaMethodName(Definition definition, Mode mode) {
         for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineMethod());
+
             if (result != null)
                 return result;
         }
@@ -300,6 +310,17 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return result;
         }
 
+        for (MatchersEmbeddableType embeddables : embeddables(definition)) {
+            String result = null;
+
+            switch (mode) {
+                case POJO: result = match(definition, embeddables.getExpression(), embeddables.getPojoExtends()); break;
+            }
+
+            if (result != null)
+                return result;
+        }
+
         // Default to standard behaviour
         return super.getJavaClassExtends(definition, mode);
     }
@@ -308,12 +329,14 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
         for (MatchersCatalogType catalogs : catalogs(definition)) {
             String result = match(definition, catalogs.getExpression(), catalogs.getCatalogImplements());
+
             if (result != null)
                 return split(result);
         }
 
         for (MatchersSchemaType schemas : schemas(definition)) {
             String result = match(definition, schemas.getExpression(), schemas.getSchemaImplements());
+
             if (result != null)
                 return split(result);
         }
@@ -329,19 +352,34 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 case RECORD:    result = match(definition, tables.getExpression(), tables.getRecordImplements());    break;
             }
 
-            if (result != null) {
+            if (result != null)
                 return split(result);
+        }
+
+        for (MatchersEmbeddableType embeddables : embeddables(definition)) {
+            String result = null;
+
+            switch (mode) {
+                case DEFAULT:   result = match(definition, embeddables.getExpression(), embeddables.getRecordImplements());    break;
+                case INTERFACE: result = match(definition, embeddables.getExpression(), embeddables.getInterfaceImplements()); break;
+                case POJO:      result = match(definition, embeddables.getExpression(), embeddables.getPojoImplements());      break;
+                case RECORD:    result = match(definition, embeddables.getExpression(), embeddables.getRecordImplements());    break;
             }
+
+            if (result != null)
+                return split(result);
         }
 
         for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineImplements());
+
             if (result != null)
                 return split(result);
         }
 
         for (MatchersEnumType enums : enums(definition)) {
             String result = match(definition, enums.getExpression(), enums.getEnumImplements());
+
             if (result != null)
                 return split(result);
         }
@@ -354,12 +392,14 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     public String getJavaClassName(Definition definition, Mode mode) {
         for (MatchersCatalogType catalogs : catalogs(definition)) {
             String result = match(definition, catalogs.getExpression(), catalogs.getCatalogClass());
+
             if (result != null)
                 return result;
         }
 
         for (MatchersSchemaType schemas : schemas(definition)) {
             String result = match(definition, schemas.getExpression(), schemas.getSchemaClass());
+
             if (result != null)
                 return result;
         }
@@ -379,14 +419,30 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return result;
         }
 
+        for (MatchersEmbeddableType embeddables : embeddables(definition)) {
+            String result = null;
+
+            switch (mode) {
+                case DEFAULT:   result = match(definition, embeddables.getExpression(), embeddables.getRecordClass());    break;
+                case INTERFACE: result = match(definition, embeddables.getExpression(), embeddables.getInterfaceClass()); break;
+                case POJO:      result = match(definition, embeddables.getExpression(), embeddables.getPojoClass());      break;
+                case RECORD:    result = match(definition, embeddables.getExpression(), embeddables.getRecordClass());    break;
+            }
+
+            if (result != null)
+                return result;
+        }
+
         for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineClass());
+
             if (result != null)
                 return result;
         }
 
         for (MatchersEnumType enums : enums(definition)) {
             String result = match(definition, enums.getExpression(), enums.getEnumClass());
+
             if (result != null)
                 return result;
         }
@@ -404,6 +460,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     public String getJavaMemberName(Definition definition, Mode mode) {
         for (MatchersFieldType fields : fields(definition)) {
             String result = match(definition, fields.getExpression(), fields.getFieldMember());
+
             if (result != null)
                 return result;
         }

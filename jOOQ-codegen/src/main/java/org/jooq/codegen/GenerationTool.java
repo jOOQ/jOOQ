@@ -72,7 +72,7 @@ import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaVersionProvider;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.Configuration;
-import org.jooq.meta.jaxb.Embeddable;
+import org.jooq.meta.jaxb.EmbeddableDefinitionType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.Generate;
 import org.jooq.meta.jaxb.Jdbc;
@@ -881,7 +881,7 @@ public class GenerationTool {
                     + "- the embeddable is obsolete\n"
                 );
 
-                for (Embeddable e : database.getUnusedEmbeddables())
+                for (EmbeddableDefinitionType e : database.getUnusedEmbeddables())
                     log.warn("Unused Embeddable", e);
             }
         }

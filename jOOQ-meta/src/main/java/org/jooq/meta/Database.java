@@ -50,7 +50,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
-import org.jooq.meta.jaxb.Embeddable;
+import org.jooq.meta.jaxb.EmbeddableDefinitionType;
 import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.OnError;
@@ -880,23 +880,23 @@ public interface Database extends AutoCloseable {
     /**
      * Configure the embeddable types.
      */
-    void setConfiguredEmbeddables(List<Embeddable> configuredEmbeddables);
+    void setConfiguredEmbeddables(List<EmbeddableDefinitionType> configuredEmbeddables);
 
     /**
      * Get the configured embeddable type definitions for any given
      * {@link Definition}.
      */
-    List<Embeddable> getConfiguredEmbeddables();
+    List<EmbeddableDefinitionType> getConfiguredEmbeddables();
 
     /**
      * Mark an embeddable as used.
      */
-    void markUsed(Embeddable embeddable);
+    void markUsed(EmbeddableDefinitionType embeddable);
 
     /**
      * Retrieve the not-yet used embeddables.
      */
-    List<Embeddable> getUnusedEmbeddables();
+    List<EmbeddableDefinitionType> getUnusedEmbeddables();
 
     /**
      * Whether embeddable types for primary keys should be generated.

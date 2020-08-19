@@ -28,7 +28,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
     "fields",
     "routines",
     "sequences",
-    "enums"
+    "enums",
+    "embeddables"
 })
 @SuppressWarnings({
     "all"
@@ -58,6 +59,9 @@ public class Matchers implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "enums")
     @XmlElement(name = "enum")
     protected List<MatchersEnumType> enums;
+    @XmlElementWrapper(name = "embeddables")
+    @XmlElement(name = "embeddable")
+    protected List<MatchersEmbeddableType> embeddables;
 
     public List<MatchersCatalogType> getCatalogs() {
         if (catalogs == null) {
@@ -134,6 +138,17 @@ public class Matchers implements Serializable, XMLAppendable
 
     public void setEnums(List<MatchersEnumType> enums) {
         this.enums = enums;
+    }
+
+    public List<MatchersEmbeddableType> getEmbeddables() {
+        if (embeddables == null) {
+            embeddables = new ArrayList<MatchersEmbeddableType>();
+        }
+        return embeddables;
+    }
+
+    public void setEmbeddables(List<MatchersEmbeddableType> embeddables) {
+        this.embeddables = embeddables;
     }
 
     public Matchers withCatalogs(MatchersCatalogType... values) {
@@ -283,6 +298,27 @@ public class Matchers implements Serializable, XMLAppendable
         return this;
     }
 
+    public Matchers withEmbeddables(MatchersEmbeddableType... values) {
+        if (values!= null) {
+            for (MatchersEmbeddableType value: values) {
+                getEmbeddables().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withEmbeddables(Collection<MatchersEmbeddableType> values) {
+        if (values!= null) {
+            getEmbeddables().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withEmbeddables(List<MatchersEmbeddableType> embeddables) {
+        setEmbeddables(embeddables);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("catalogs", "catalog", catalogs);
@@ -292,6 +328,7 @@ public class Matchers implements Serializable, XMLAppendable
         builder.append("routines", "routine", routines);
         builder.append("sequences", "sequence", sequences);
         builder.append("enums", "enum", enums);
+        builder.append("embeddables", "embeddable", embeddables);
     }
 
     @Override
@@ -376,6 +413,15 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (embeddables == null) {
+            if (other.embeddables!= null) {
+                return false;
+            }
+        } else {
+            if (!embeddables.equals(other.embeddables)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -390,6 +436,7 @@ public class Matchers implements Serializable, XMLAppendable
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
         result = ((prime*result)+((enums == null)? 0 :enums.hashCode()));
+        result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
         return result;
     }
 

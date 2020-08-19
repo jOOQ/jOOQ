@@ -155,7 +155,7 @@ public class Database implements Serializable, XMLAppendable
     protected List<SchemaMappingType> schemata;
     @XmlElementWrapper(name = "embeddables")
     @XmlElement(name = "embeddable")
-    protected List<Embeddable> embeddables;
+    protected List<EmbeddableDefinitionType> embeddables;
     @XmlElementWrapper(name = "customTypes")
     @XmlElement(name = "customType")
     protected List<CustomType> customTypes;
@@ -1528,14 +1528,14 @@ public class Database implements Serializable, XMLAppendable
         this.schemata = schemata;
     }
 
-    public List<Embeddable> getEmbeddables() {
+    public List<EmbeddableDefinitionType> getEmbeddables() {
         if (embeddables == null) {
-            embeddables = new ArrayList<Embeddable>();
+            embeddables = new ArrayList<EmbeddableDefinitionType>();
         }
         return embeddables;
     }
 
-    public void setEmbeddables(List<Embeddable> embeddables) {
+    public void setEmbeddables(List<EmbeddableDefinitionType> embeddables) {
         this.embeddables = embeddables;
     }
 
@@ -2142,23 +2142,23 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
-    public Database withEmbeddables(Embeddable... values) {
+    public Database withEmbeddables(EmbeddableDefinitionType... values) {
         if (values!= null) {
-            for (Embeddable value: values) {
+            for (EmbeddableDefinitionType value: values) {
                 getEmbeddables().add(value);
             }
         }
         return this;
     }
 
-    public Database withEmbeddables(Collection<Embeddable> values) {
+    public Database withEmbeddables(Collection<EmbeddableDefinitionType> values) {
         if (values!= null) {
             getEmbeddables().addAll(values);
         }
         return this;
     }
 
-    public Database withEmbeddables(List<Embeddable> embeddables) {
+    public Database withEmbeddables(List<EmbeddableDefinitionType> embeddables) {
         setEmbeddables(embeddables);
         return this;
     }

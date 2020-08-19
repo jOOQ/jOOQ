@@ -182,6 +182,10 @@
       <element name="enums" type="tns:MatchersEnumsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for enum names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="embeddables" type="tns:MatchersEmbeddablesType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for embeddable names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </sequence>
   </complexType>
 
@@ -398,6 +402,49 @@
 
       <element name="enumImplements" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="MatchersEmbeddablesType">
+    <sequence>
+      <element name="embeddable" type="tns:MatchersEmbeddableType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MatchersEmbeddableType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for embeddable names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This table matcher applies to all unqualified or qualified embeddable names matched by this expression. If left empty, this matcher applies to all embeddables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.EmbeddableRecord} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.EmbeddableRecord} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="interfaceClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated interface implemented by the {@link org.jooq.EmbeddableRecord} and/or the POJO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="interfaceImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated interface (which is implemented by the {@link org.jooq.EmbeddableRecord} and/or POJO) should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated POJOs object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated POJO should extend.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated POJO should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -790,7 +837,7 @@ generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
 This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="embeddables" type="tns:Embeddables" minOccurs="0" maxOccurs="1">
+      <element name="embeddables" type="tns:EmbeddableDefinitionTypes" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure embeddable types.]]></jxb:javadoc></jxb:property></appinfo></annotation>      
       </element>
             
@@ -918,9 +965,9 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     </sequence>
   </complexType>
   
-  <complexType name="Embeddables">
+  <complexType name="EmbeddableDefinitionTypes">
     <sequence>
-      <element name="embeddable" type="tns:Embeddable" minOccurs="0" maxOccurs="unbounded" />
+      <element name="embeddable" type="tns:EmbeddableDefinitionType" minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
 
@@ -1009,7 +1056,7 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     </all>
   </complexType>
   
-  <complexType name="Embeddable">
+  <complexType name="EmbeddableDefinitionType">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[An embeddable type declaration]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="catalog" type="string" minOccurs="0" maxOccurs="1">

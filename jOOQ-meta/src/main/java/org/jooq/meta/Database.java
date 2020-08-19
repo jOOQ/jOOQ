@@ -889,6 +889,16 @@ public interface Database extends AutoCloseable {
     List<Embeddable> getConfiguredEmbeddables();
 
     /**
+     * Mark an embeddable as used.
+     */
+    void markUsed(Embeddable embeddable);
+
+    /**
+     * Retrieve the not-yet used embeddables.
+     */
+    List<Embeddable> getUnusedEmbeddables();
+
+    /**
      * Whether embeddable types for primary keys should be generated.
      */
     boolean embeddablePrimaryKeys();

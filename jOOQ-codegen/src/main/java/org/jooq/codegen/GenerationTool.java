@@ -72,6 +72,7 @@ import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaVersionProvider;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.Configuration;
+import org.jooq.meta.jaxb.Embeddable;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.Generate;
 import org.jooq.meta.jaxb.Jdbc;
@@ -245,7 +246,7 @@ public class GenerationTool {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "unused" })
     private void run0(Configuration configuration) throws Exception {
         if (configuration.getLogging() != null) {
             setGlobalLoggingThreshold(configuration);
@@ -855,7 +856,7 @@ public class GenerationTool {
             generator.generate(database);
 
             if (!database.getUnusedForcedTypes().isEmpty()) {
-                log.info(
+                log.warn(
                       "Unused ForcedTypes",
                       "There are unused forced types, which have not been used by this generation run.\n"
                     + "This can be because of misconfigurations, such as, for example:\n"
@@ -866,7 +867,22 @@ public class GenerationTool {
                 );
 
                 for (ForcedType f : database.getUnusedForcedTypes())
-                    log.info("Unused ForcedType", f);
+                    log.warn("Unused ForcedType", f);
+            }
+
+            if (!database.getUnusedEmbeddables().isEmpty()) {
+                log.warn(
+                      "Unused Embeddables",
+                      "There are unused embeddables, which have not been used by this generation run.\n"
+                    + "This can be because of misconfigurations, such as, for example:\n"
+                    + "- case sensitive regular expressions\n"
+                    + "- regular expressions depending on whitespace (Pattern.COMMENTS is turned on!)\n"
+                    + "- missing or inadequate object qualification\n"
+                    + "- the embeddable is obsolete\n"
+                );
+
+                for (Embeddable e : database.getUnusedEmbeddables())
+                    log.warn("Unused Embeddable", e);
             }
         }
         finally {

@@ -169,8 +169,9 @@ public abstract class AbstractDatabase implements Database {
     private List<CustomType>                                                 configuredCustomTypes                = new ArrayList<>();
     private List<EnumType>                                                   configuredEnumTypes                  = new ArrayList<>();
     private List<ForcedType>                                                 configuredForcedTypes                = new ArrayList<>();
-    private Set<ForcedType>                                                  unusedForcedTypes;
+    private Set<ForcedType>                                                  unusedForcedTypes                    = new HashSet<>();
     private List<Embeddable>                                                 configuredEmbeddables                = new ArrayList<>();
+    private Set<Embeddable>                                                  unusedEmbeddables                    = new HashSet<>();
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
     private Comparator<Definition>                                           orderProvider;
@@ -241,7 +242,6 @@ public abstract class AbstractDatabase implements Database {
         all = new ArrayList<>();
         included = new ArrayList<>();
         excluded = new ArrayList<>();
-        unusedForcedTypes = new HashSet<>();
         orderProvider = new DefaultOrderProvider();
     }
 
@@ -1781,8 +1781,23 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final void markUsed(Embeddable embeddable) {
+        unusedEmbeddables.remove(embeddable);
+    }
+
+    @Override
+    public final List<Embeddable> getUnusedEmbeddables() {
+        return new ArrayList<>(unusedEmbeddables);
+    }
+
+    @Override
     public final void setConfiguredEmbeddables(List<Embeddable> configuredEmbeddables) {
-        this.configuredEmbeddables = configuredEmbeddables;
+
+        // [#8512] Some implementation of this database may have already
+        // configured a forced type programmatically, so we must not set the
+        // list but append it.
+        getConfiguredEmbeddables().addAll(configuredEmbeddables);
+        unusedEmbeddables.addAll(configuredEmbeddables);
     }
 
     @Override
@@ -1912,9 +1927,10 @@ public abstract class AbstractDatabase implements Database {
 
                     Name name = table.getQualifiedNamePart().append(embeddable.getName());
 
-                    if (result.containsKey(name))
+                    if (result.containsKey(name)) {
                         log.warn("Embeddable configuration", "Table " + table + " already has embeddable " + embeddable);
-                    else
+                    }
+                    else {
                         result.put(
                             name,
                             new DefaultEmbeddableDefinition(
@@ -1928,6 +1944,9 @@ public abstract class AbstractDatabase implements Database {
                                 TRUE.equals(embeddable.isReplacesFields())
                             )
                         );
+
+                        markUsed(embeddable);
+                    }
                 }
             }
         }

@@ -2025,7 +2025,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.RECORD);
                     final String g = getStrategy().getJavaGetterName(column, Mode.RECORD);
 
-                    out.println("%s(value.%s())%s", s, g, semicolon);
+                    out.println("%s(value.%s%s)%s", s, g, semicolon, emptyparens);
                 }
             }
 
@@ -2141,7 +2141,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
                 final String g = getStrategy().getJavaGetterName(column.getReferencingColumn(), Mode.RECORD);
 
-                out.println("%s%s()", separator, g);
+                out.println("%s%s%s", separator, g, emptyparens);
                 separator = ", ";
             }
         }

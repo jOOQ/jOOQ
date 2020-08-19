@@ -143,6 +143,25 @@ public class DefaultEmbeddableDefinition
     }
 
     @Override
+    public final EmbeddableColumnDefinition getReferencingColumn(String columnName) {
+        return getReferencingColumn(columnName, false);
+    }
+
+    @Override
+    public final EmbeddableColumnDefinition getReferencingColumn(String columnName, boolean ignoreCase) {
+        if (columnName == null)
+            return null;
+
+        for (EmbeddableColumnDefinition column : getColumns())
+            if ((ignoreCase && column.getReferencingColumn().getName().equalsIgnoreCase(columnName)) ||
+                (!ignoreCase && column.getReferencingColumn().getName().equals(columnName)))
+
+                return column;
+
+        return null;
+    }
+
+    @Override
     public final boolean replacesFields() {
         return replacesFields;
     }

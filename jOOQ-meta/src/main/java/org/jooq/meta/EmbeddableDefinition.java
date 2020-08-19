@@ -76,24 +76,34 @@ public interface EmbeddableDefinition extends TableElementDefinition {
     TableDefinition getReferencingTable();
 
     /**
-     * All referencing columns in the type, table or view.
+     * All defining columns in the type, table or view.
      */
     List<EmbeddableColumnDefinition> getColumns();
 
     /**
-     * Get a referencing column in this type by its name.
+     * Get a defining column in this type by its name.
      */
     EmbeddableColumnDefinition getColumn(String columnName);
 
     /**
-     * Get a referencing column in this type by its name.
+     * Get a defining column in this type by its name.
      */
     EmbeddableColumnDefinition getColumn(String columnName, boolean ignoreCase);
 
     /**
-     * Get a referencing column in this type by its index (starting at 0).
+     * Get a defining column in this type by its index (starting at 0).
      */
     EmbeddableColumnDefinition getColumn(int columnIndex);
+
+    /**
+     * Get a referencing column in this type by its referencing name.
+     */
+    EmbeddableColumnDefinition getReferencingColumn(String columnName);
+
+    /**
+     * Get a referencing column in this type by its referencing name.
+     */
+    EmbeddableColumnDefinition getReferencingColumn(String columnName, boolean ignoreCase);
 
     /**
      * Whether this embeddable replaces the fields it represents.

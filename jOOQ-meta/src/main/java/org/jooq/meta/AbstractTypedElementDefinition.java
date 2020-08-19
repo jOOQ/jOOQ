@@ -125,18 +125,16 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
     @Override
     public DataTypeDefinition getType() {
-        if (type == null) {
+        if (type == null)
             type = mapDefinedType(container, this, definedType, null);
-        }
 
         return type;
     }
 
     @Override
     public DataTypeDefinition getType(JavaTypeResolver resolver) {
-        if (resolvedType == null) {
+        if (resolvedType == null)
             resolvedType = mapDefinedType(container, this, definedType, resolver);
-        }
 
         return resolvedType;
     }

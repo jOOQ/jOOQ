@@ -63,4 +63,19 @@ public class DefaultEmbeddableColumnDefinition
     public final ColumnDefinition getReferencingColumn() {
         return referencingColumn;
     }
+
+    @Override
+    public DataTypeDefinition getType() {
+        return getReferencingColumn().getType();
+    }
+
+    @Override
+    public DataTypeDefinition getType(JavaTypeResolver resolver) {
+        return getReferencingColumn().getType(resolver);
+    }
+
+    @Override
+    public DataTypeDefinition getDefinedType() {
+        return getReferencingColumn().getDefinedType();
+    }
 }

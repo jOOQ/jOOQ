@@ -48,6 +48,7 @@ import java.util.Set;
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.Meta;
+import org.jooq.QueryPart;
 import org.jooq.Schema;
 import org.jooq.Table;
 
@@ -133,11 +134,24 @@ final class CatalogMetaImpl extends AbstractMeta {
         for (Table<?> table : tables)
             s.add(table.getSchema() != null ? table.getSchema() : defaultSchema);
 
-        return filterSchemas(configuration, s).filterTables(new Predicate<Table<?>>() {
+        return filterSchemas(configuration, s)
+              .filterTables(new Predicate<Table<?>>() {
+                  @Override
+                  public boolean test(Table<?> table) {
+                      return tables.contains(table);
+                  }
+              })
+              .filterSequences(none())
+              .filterDomains(none())
+              ;
+    }
+
+    static final <Q extends QueryPart> Predicate<Q> none() {
+        return new Predicate<Q>() {
             @Override
-            public boolean test(Table<?> table) {
-                return tables.contains(table);
+            public boolean test(Q t) {
+                return false;
             }
-        });
+        };
     }
 }

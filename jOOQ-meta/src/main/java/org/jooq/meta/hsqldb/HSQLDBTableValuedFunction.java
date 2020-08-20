@@ -90,16 +90,14 @@ public class HSQLDBTableValuedFunction extends AbstractTableDefinition {
                 (String) null
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 field.getName(),
-                i + 1,
+                result.size() + 1,
                 type,
                 false,
                 null
-            );
-
-            result.add(column);
+            ));
         }
 
         return result;

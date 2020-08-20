@@ -131,16 +131,14 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME))
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 record.get(COLUMNS.COLUMN_NAME),
-                record.get(COLUMNS.ORDINAL_POSITION, int.class),
+                result.size() + 1,
                 type,
                 "auto_increment".equalsIgnoreCase(record.get(COLUMNS.EXTRA)),
                 record.get(COLUMNS.COLUMN_COMMENT)
-            );
-
-            result.add(column);
+            ));
         }
 
         return result;

@@ -198,16 +198,14 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 )
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 record.get(p.PARAMETER_NAME),
-                record.get(p.ORDINAL_POSITION, int.class),
+                result.size() + 1,
                 type,
                 defaultString(record.get(c.COLUMN_DEFAULT)).startsWith("nextval"),
                 null
-            );
-
-            result.add(column);
+            ));
         }
 
         return result;

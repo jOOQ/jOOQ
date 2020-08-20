@@ -64,7 +64,6 @@ public class DefaultMetaTableDefinition extends AbstractTableDefinition {
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<>();
 
-        int ordinal = 0;
         for (Field<?> field : table.fields()) {
             DataType<?> dataType = field.getDataType();
 
@@ -80,18 +79,14 @@ public class DefaultMetaTableDefinition extends AbstractTableDefinition {
                 (Name) null
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 field.getName(),
-                ordinal,
+                result.size() + 1,
                 type,
                 false,
                 null
-            );
-
-            result.add(column);
-
-            ordinal++;
+            ));
         }
 
         return result;

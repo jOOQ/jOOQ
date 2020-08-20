@@ -128,16 +128,14 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 DSL.name(record.get(COLUMNS.UDT_SCHEMA), record.get(COLUMNS.UDT_NAME))
             );
 
-			ColumnDefinition column = new DefaultColumnDefinition(
+			result.add(new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
 			    record.get(COLUMNS.COLUMN_NAME),
-			    record.get(COLUMNS.ORDINAL_POSITION, int.class),
+                result.size() + 1,
 			    type,
 			    null != record.get(COLUMNS.IDENTITY_GENERATION),
 			    record.get(SYSTEM_COLUMNS.REMARKS)
-		    );
-
-			result.add(column);
+		    ));
 		}
 
 		return result;

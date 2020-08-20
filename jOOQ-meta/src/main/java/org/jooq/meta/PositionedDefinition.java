@@ -38,14 +38,14 @@
 package org.jooq.meta;
 
 /**
- * A definition that is positioned at an index within its parent.
+ * A definition that is positioned at a 1-based index within its parent.
  *
  * @author Lukas Eder
  */
 public interface PositionedDefinition extends Definition {
 
     /**
-     * The object position in the parent.
+     * The object's 1-based position in the parent.
      */
     int getPosition();
 

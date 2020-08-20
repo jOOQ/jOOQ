@@ -84,7 +84,7 @@ public class DefaultEmbeddableDefinition
         log.info("Commercial feature", "Embeddables replacing fields is a commercial only feature. Please upgrade to the jOOQ Professional Edition");
 
         for (int i = 0; i < referencingColumns.size(); i++)
-            embeddableColumns.add(new DefaultEmbeddableColumnDefinition(this, definingColumnNames.get(i), referencingColumns.get(i), i));
+            embeddableColumns.add(new DefaultEmbeddableColumnDefinition(this, definingColumnNames.get(i), referencingColumns.get(i), i + 1));
     }
 
     @Override

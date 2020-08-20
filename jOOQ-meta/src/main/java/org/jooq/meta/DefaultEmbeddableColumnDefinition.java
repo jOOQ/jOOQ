@@ -65,6 +65,11 @@ public class DefaultEmbeddableColumnDefinition
     }
 
     @Override
+    public final int getReferencingColumnPosition() {
+        return getReferencingColumn().getPosition();
+    }
+
+    @Override
     public DataTypeDefinition getType() {
         return getReferencingColumn().getType();
     }

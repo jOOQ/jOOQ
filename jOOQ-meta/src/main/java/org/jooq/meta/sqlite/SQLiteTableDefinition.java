@@ -89,11 +89,11 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         Field<String> fDefaultValue = field(name("dflt_value"), String.class);
         Field<Integer> fPk = field(name("pk"), int.class);
 
-        int position = 0;
         Table<?> interpreted = null;
-        for (Record record : create().select(fName, fType, fNotnull, fDefaultValue, fPk)
-                .from("pragma_table_info({0})", inline(getName())).fetch()) {
-            position++;
+        for (Record record : create()
+            .select(fName, fType, fNotnull, fDefaultValue, fPk)
+            .from("pragma_table_info({0})", inline(getName()))
+        ) {
 
             String name = record.get(fName);
             String dataType = record.get(fType)
@@ -160,16 +160,14 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 record.get(fDefaultValue)
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 name,
-                position,
+                result.size() + 1,
                 type,
                 identity,
                 null
-            );
-
-            result.add(column);
+            ));
         }
 
         return result;

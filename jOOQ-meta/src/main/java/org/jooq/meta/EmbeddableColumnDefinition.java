@@ -50,4 +50,10 @@ public interface EmbeddableColumnDefinition extends TypedElementDefinition<Embed
      */
     ColumnDefinition getReferencingColumn();
 
+    /**
+     * The {@link PositionedDefinition#getPosition()} of
+     * {@link #getReferencingColumn()} within its defining table.
+     */
+    int getReferencingColumnPosition();
+
 }

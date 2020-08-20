@@ -143,8 +143,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 
 
 
-            .orderBy(COLUMNS.ORDINAL_POSITION)
-            .fetch()) {
+            .orderBy(COLUMNS.ORDINAL_POSITION)) {
 
             SchemaDefinition typeSchema = null;
 

@@ -151,6 +151,7 @@ import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.JavaTypeResolver;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.ParameterDefinition;
+import org.jooq.meta.PositionedDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -1314,10 +1315,6 @@ public class JavaGenerator extends AbstractGenerator {
         else
             baseClass = TableRecordImpl.class;
 
-        Map<TypedElementDefinition<?>, Integer> columnIndexes = new LinkedHashMap<>();
-        for (int i = 0; i < columns.size(); i++)
-            columnIndexes.put(columns.get(i), i);
-
         List<Definition> columnsOrReplacingEmbeddables = columnsOrReplacingEmbeddables(tableUdtOrEmbeddable);
 
         int degree = columns.size();
@@ -1763,10 +1760,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-        generateRecordConstructor(tableUdtOrEmbeddable, out, columnIndexes, columns);
+        generateRecordConstructor(tableUdtOrEmbeddable, out, columns);
 
         if (!columns.equals(columnsOrReplacingEmbeddables))
-            generateRecordConstructor(tableUdtOrEmbeddable, out, columnIndexes, columnsOrReplacingEmbeddables);
+            generateRecordConstructor(tableUdtOrEmbeddable, out, columnsOrReplacingEmbeddables);
 
         if (tableUdtOrEmbeddable instanceof TableDefinition)
             generateRecordClassFooter((TableDefinition) tableUdtOrEmbeddable, out);
@@ -1803,7 +1800,6 @@ public class JavaGenerator extends AbstractGenerator {
     private void generateRecordConstructor(
         Definition tableUdtOrEmbeddable,
         JavaWriter out,
-        Map<TypedElementDefinition<?>, Integer> columnIndexes,
         Collection<? extends Definition> columns
     ) {
         final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.RECORD);
@@ -1863,7 +1859,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println();
             }
 
-            for (Definition column : columns)
+            for (Definition column : columns) {
                 if (column instanceof EmbeddableDefinition)
 
                     // TODO: Setters of X properties cannot accept X? in Kotlin: https://twitter.com/lukaseder/status/1296371561214234624
@@ -1875,12 +1871,9 @@ public class JavaGenerator extends AbstractGenerator {
                             Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
                     else
                         out.println("%s(%s)%s", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.DEFAULT), semicolon);
-                else if (kotlin)
-                    out.println("this.%s = %s",
-                        getStrategy().getJavaMemberName(column, Mode.POJO),
-                        getStrategy().getJavaMemberName(column, Mode.POJO));
                 else
-                    out.println("set(%s, %s)%s", columnIndexes.get(column), getStrategy().getJavaMemberName(column, Mode.DEFAULT), semicolon);
+                    out.println("set(%s, %s)%s", ((PositionedDefinition) column).getPosition() - 1, getStrategy().getJavaMemberName(column, Mode.POJO), semicolon);
+            }
 
             out.println("}");
         }
@@ -2047,25 +2040,25 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("set(value) {");
         }
         else {
-            final String nonnullAnnotation = nonnullAnnotation(out);
-
             out.overrideIf(override);
-            out.println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nonnullAnnotation), type);
+            out.println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nonnullAnnotation(out)), type);
         }
 
         for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
-            if (kotlin) {
-                final String s = getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO);
-                final String g = getStrategy().getJavaMemberName(column, Mode.POJO);
+            final int position = column.getReferencingColumnPosition() - 1;
 
-                out.tab(1).println("%s = value.%s", s, g);
-            }
-            else {
-                final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.RECORD);
-                final String g = getStrategy().getJavaGetterName(column, Mode.RECORD);
-
-                out.println("%s(value.%s%s)%s", s, g, emptyparens, semicolon);
-            }
+            if (kotlin)
+                out.tab(1).println("set(%s, value.%s)",
+                    position,
+                    getStrategy().getJavaMemberName(column, Mode.POJO)
+                );
+            else
+                out.println("set(%s, value.%s%s)%s",
+                    position,
+                    getStrategy().getJavaGetterName(column, Mode.RECORD),
+                    emptyparens,
+                    semicolon
+                );
         }
 
         if (generateFluentSetters())
@@ -2171,10 +2164,21 @@ public class JavaGenerator extends AbstractGenerator {
         String separator = "  ";
 
         for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
-            if (kotlin)
-                out.tab(1).println("%s%s", separator, getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO));
-            else
-                out.println("%s%s%s", separator, getStrategy().getJavaGetterName(column.getReferencingColumn(), Mode.RECORD), emptyparens);
+            final String columnType = out.ref(getJavaType(column.getReferencingColumn().getType(resolver())));
+            final int position = column.getReferencingColumnPosition() - 1;
+
+            if (scala)
+                out.println("%sget(%s).asInstanceOf[%s]", separator, position, columnType);
+            else if (kotlin)
+                out.tab(1).println("%sget(%s) as %s?", separator, position, columnType);
+            else {
+
+                // [#6705] Avoid generating code with a redundant (Object) cast
+                if (Object.class.getName().equals(typeFull))
+                    out.println("%sget(%s)", separator, position);
+                else
+                    out.println("%s(%s) get(%s)", separator, columnType, position);
+            }
 
             separator = ", ";
         }

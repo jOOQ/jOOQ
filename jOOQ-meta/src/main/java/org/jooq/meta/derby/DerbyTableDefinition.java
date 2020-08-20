@@ -83,8 +83,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             // [#1241] Suddenly, bind values didn't work any longer, here...
             // [#6797] The cast is necessary if a non-standard collation is used
             .where(SYSCOLUMNS.REFERENCEID.cast(VARCHAR(32672)).equal(inline(tableid)))
-            .orderBy(SYSCOLUMNS.COLUMNNUMBER)
-            .fetch()) {
+            .orderBy(SYSCOLUMNS.COLUMNNUMBER)) {
 
             String columnDataType = record.get(SYSCOLUMNS.COLUMNDATATYPE, String.class);
             String typeName = parseTypeName(columnDataType);
@@ -104,16 +103,14 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 record.get(SYSCOLUMNS.COLUMNDEFAULT)
             );
 
-			ColumnDefinition column = new DefaultColumnDefinition(
+			result.add(new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
 			    record.get(SYSCOLUMNS.COLUMNNAME),
-			    record.get(SYSCOLUMNS.COLUMNNUMBER),
+			    result.size() + 1,
 			    type,
                 null != record.get(SYSCOLUMNS.AUTOINCREMENTINC),
                 null
-            );
-
-			result.add(column);
+            ));
 		}
 
 		return result;

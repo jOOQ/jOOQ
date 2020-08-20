@@ -107,26 +107,24 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
                 .orderBy(p.RDB$PARAMETER_NUMBER)) {
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
-                    getDatabase(),
-                    getSchema(),
-                    record.get("FIELD_TYPE", String.class),
-                    record.get("CHAR_LEN", short.class),
-                    record.get(f.RDB$FIELD_PRECISION),
-                    record.get("FIELD_SCALE", Integer.class),
-                    record.get(p.RDB$NULL_FLAG) == 0,
-                    record.get(p.RDB$DEFAULT_SOURCE)
+                getDatabase(),
+                getSchema(),
+                record.get("FIELD_TYPE", String.class),
+                record.get("CHAR_LEN", short.class),
+                record.get(f.RDB$FIELD_PRECISION),
+                record.get("FIELD_SCALE", Integer.class),
+                record.get(p.RDB$NULL_FLAG) == 0,
+                record.get(p.RDB$DEFAULT_SOURCE)
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
-                    getDatabase().getTable(getSchema(), getName()),
-                    record.get(p.RDB$PARAMETER_NAME.trim()),
-                    record.get(p.RDB$PARAMETER_NUMBER),
-                    type,
-                    false,
-                    null
-            );
-
-            result.add(column);
+            result.add(new DefaultColumnDefinition(
+                getDatabase().getTable(getSchema(), getName()),
+                record.get(p.RDB$PARAMETER_NAME.trim()),
+                result.size() + 1,
+                type,
+                false,
+                null
+            ));
         }
 
         return result;

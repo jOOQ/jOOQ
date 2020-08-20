@@ -123,16 +123,14 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 record.get("DOMAIN_NAME") == null ? null : DSL.name(record.get("DOMAIN_NAME", String.class))
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 record.get(r.RDB$FIELD_NAME),
-                record.get(r.RDB$FIELD_POSITION),
+                result.size() + 1,
                 type,
                 false,
                 record.get(r.RDB$DESCRIPTION)
-            );
-
-            result.add(column);
+            ));
         }
 
         return result;

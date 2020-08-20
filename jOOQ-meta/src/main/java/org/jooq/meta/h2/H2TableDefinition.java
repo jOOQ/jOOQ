@@ -151,15 +151,14 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 userType
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
                 record.get(COLUMNS.COLUMN_NAME),
-                record.get(COLUMNS.ORDINAL_POSITION),
+                result.size() + 1,
                 type,
                 isIdentity,
-                record.get(COLUMNS.REMARKS));
-
-            result.add(column);
+                record.get(COLUMNS.REMARKS))
+            );
         }
 
         return result;

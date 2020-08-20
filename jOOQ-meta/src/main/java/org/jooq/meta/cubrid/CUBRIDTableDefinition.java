@@ -69,7 +69,7 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
 		 for (Record record : create()
 		         .select(
         		     DB_ATTRIBUTE.ATTR_NAME,
-		             DB_ATTRIBUTE.DEF_ORDER,
+        		     DB_ATTRIBUTE.DEF_ORDER,
 		             DB_ATTRIBUTE.DATA_TYPE,
 		             DB_ATTRIBUTE.PREC,
 		             DB_ATTRIBUTE.SCALE,
@@ -81,8 +81,7 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
 		            DB_ATTRIBUTE.ATTR_NAME.equal(DB_SERIAL.ATT_NAME).and(
 	                DB_ATTRIBUTE.CLASS_NAME.equal(DB_SERIAL.CLASS_NAME)))
 		        .where(DB_ATTRIBUTE.CLASS_NAME.equal(getName()))
-		        .orderBy(DB_ATTRIBUTE.DEF_ORDER)
-		        .fetch()) {
+		        .orderBy(DB_ATTRIBUTE.DEF_ORDER)) {
 
 		    String dataType = record.get(DB_ATTRIBUTE.DATA_TYPE);
 
@@ -98,16 +97,14 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
                 getName() + "_" + record.get(DB_ATTRIBUTE.ATTR_NAME)
             );
 
-			ColumnDefinition column = new DefaultColumnDefinition(
+			result.add(new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
 			    record.get(DB_ATTRIBUTE.ATTR_NAME),
-			    record.get(DB_ATTRIBUTE.DEF_ORDER),
+			    result.size() + 1,
 			    type,
 			    record.get(DB_SERIAL.NAME) != null,
 			    null
-		    );
-
-			result.add(column);
+		    ));
 		}
 
 		return result;

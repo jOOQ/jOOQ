@@ -184,16 +184,14 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                 )
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
+            result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 record.get(COLUMNS.COLUMN_NAME),
-                record.get(COLUMNS.ORDINAL_POSITION, int.class),
+                result.size() + 1,
                 type,
                 defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).startsWith("nextval"),
                 record.get(PG_DESCRIPTION.DESCRIPTION)
-            );
-
-            result.add(column);
+            ));
         }
 
         return result;

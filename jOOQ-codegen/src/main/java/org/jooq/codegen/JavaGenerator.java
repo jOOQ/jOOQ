@@ -5350,7 +5350,8 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating embeddables");
 
         // [#6124] Prevent FKs from overriding PK embeddable
-        for (EmbeddableDefinition embeddable : new LinkedHashSet<>(database.getEmbeddables(schema))) {
+        LinkedHashSet<EmbeddableDefinition> embeddables = new LinkedHashSet<>(database.getEmbeddables(schema));
+        for (EmbeddableDefinition embeddable : embeddables) {
             try {
 
                 // [#6124] [#10481] Don't generate embeddable types for FKs

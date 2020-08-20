@@ -559,6 +559,12 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateEmbeddables() && database.getEmbeddables(schema).size() > 0)
             generateEmbeddables(schema);
 
+        if (generateEmbeddables() && generateInterfaces() && database.getTables(schema).size() > 0)
+            generateEmbeddableInterfaces(schema);
+
+        if (generateEmbeddables() && generatePojos() && database.getTables(schema).size() > 0)
+            generateEmbeddablePojos(schema);
+
         if (generatePojos() && database.getTables(schema).size() > 0)
             generatePojos(schema);
 
@@ -583,19 +589,19 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateUDTs() && database.getUDTs(schema).size() > 0)
             generateUDTs(schema);
 
-        if (generatePojos() && database.getUDTs(schema).size() > 0)
+        if (generateUDTs() && generatePojos() && database.getUDTs(schema).size() > 0)
             generateUDTPojos(schema);
 
         if (generateUDTs() && generateRecords() && database.getUDTs(schema).size() > 0)
             generateUDTRecords(schema);
 
-        if (generateInterfaces() && database.getUDTs(schema).size() > 0)
+        if (generateUDTs() && generateInterfaces() && database.getUDTs(schema).size() > 0)
             generateUDTInterfaces(schema);
 
         if (generateUDTs() && generateRoutines() && database.getUDTs(schema).size() > 0)
             generateUDTRoutines(schema);
 
-        if (generateGlobalUDTReferences() && database.getUDTs(schema).size() > 0)
+        if (generateUDTs() && generateGlobalUDTReferences() && database.getUDTs(schema).size() > 0)
             generateUDTReferences(schema);
 
         if (generateUDTs() && database.getArrays(schema).size() > 0)
@@ -1311,22 +1317,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (int i = 0; i < columns.size(); i++)
             columnIndexes.put(columns.get(i), i);
 
-        List<Definition> columnsOrReplacingEmbeddables = new ArrayList<>(columns);
-        if (tableUdtOrEmbeddable instanceof TableDefinition) {
-            Set<EmbeddableDefinition> duplicates = new HashSet<>();
-
-            for (EmbeddableDefinition embeddable : ((TableDefinition) tableUdtOrEmbeddable).getEmbeddables()) {
-                for (EmbeddableColumnDefinition embeddableColumn : embeddable.getColumns()) {
-                    int index = columnsOrReplacingEmbeddables.indexOf(embeddableColumn.getReferencingColumn());
-
-                    if (index >= 0)
-                        if (duplicates.add(embeddable))
-                            columnsOrReplacingEmbeddables.set(index, embeddable);
-                        else
-                            columnsOrReplacingEmbeddables.remove(index);
-                }
-            }
-        }
+        List<Definition> columnsOrReplacingEmbeddables = columnsOrReplacingEmbeddables(tableUdtOrEmbeddable);
 
         int degree = columns.size();
 
@@ -1425,8 +1416,8 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 0; i < embeddables.size(); i++) {
                 EmbeddableDefinition embeddable = embeddables.get(i);
 
-                generateRecordSetterForEmbeddable(embeddable, out);
-                generateRecordGetterForEmbeddable(embeddable, out);
+                generateEmbeddableRecordSetter(embeddable, out);
+                generateEmbeddableRecordGetter(embeddable, out);
             }
         }
 
@@ -1787,6 +1778,28 @@ public class JavaGenerator extends AbstractGenerator {
         out.println("}");
     }
 
+    private List<Definition> columnsOrReplacingEmbeddables(Definition tableUdtOrEmbeddable) {
+        List<Definition> result = new ArrayList<>(getTypedElements(tableUdtOrEmbeddable));
+
+        if (tableUdtOrEmbeddable instanceof TableDefinition) {
+            Set<EmbeddableDefinition> duplicates = new HashSet<>();
+
+            for (EmbeddableDefinition embeddable : ((TableDefinition) tableUdtOrEmbeddable).getEmbeddables()) {
+                for (EmbeddableColumnDefinition embeddableColumn : embeddable.getColumns()) {
+                    int index = result.indexOf(embeddableColumn.getReferencingColumn());
+
+                    if (index >= 0)
+                        if (duplicates.add(embeddable))
+                            result.set(index, embeddable);
+                        else
+                            result.remove(index);
+                }
+            }
+        }
+
+        return result;
+    }
+
     private void generateRecordConstructor(
         Definition tableUdtOrEmbeddable,
         JavaWriter out,
@@ -2011,62 +2024,60 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide their own record getters for embeddables.
      */
-    protected void generateRecordSetterForEmbeddable(EmbeddableDefinition embeddable, JavaWriter out) {
+    protected void generateEmbeddableRecordSetter(EmbeddableDefinition embeddable, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(embeddable.getReferencingTable(), Mode.RECORD);
         final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String member = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
         final String setter = getStrategy().getJavaSetterName(embeddable, Mode.RECORD);
-        final String typeFull = getStrategy().getFullJavaClassName(embeddable, Mode.RECORD);
+        final String typeFull = getStrategy().getFullJavaClassName(embeddable, generateInterfaces() ? Mode.INTERFACE : Mode.RECORD);
         final String type = out.ref(typeFull);
         final String name = embeddable.getQualifiedOutputName();
         boolean override = generateInterfaces() && !generateImmutableInterfaces();
 
-        if (!generateInterfaces()) {
-            if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
-                out.javadoc("Setter for the embeddable <code>%s</code>.", name);
+        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
+            out.javadoc("Setter for the embeddable <code>%s</code>.", name);
 
-            if (scala) {
-                out.println("def %s(value: %s): %s = {", setter, type, setterReturnType);
-            }
-            else if (kotlin) {
-                out.println();
-                out.println("%svar %s: %s",
-                    (generateInterfaces() ? "override " : ""), member, type);
-                out.tab(1).println("set(value) {");
+        if (scala) {
+            out.println("def %s(value: %s): %s = {", setter, type, setterReturnType);
+        }
+        else if (kotlin) {
+            out.println();
+            out.println("%svar %s: %s",
+                (generateInterfaces() ? "override " : ""), member, type);
+            out.tab(1).println("set(value) {");
+        }
+        else {
+            final String nonnullAnnotation = nonnullAnnotation(out);
+
+            out.overrideIf(override);
+            out.println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nonnullAnnotation), type);
+        }
+
+        for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
+            if (kotlin) {
+                final String s = getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO);
+                final String g = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                out.tab(1).println("%s = value.%s", s, g);
             }
             else {
-                final String nonnullAnnotation = nonnullAnnotation(out);
+                final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.RECORD);
+                final String g = getStrategy().getJavaGetterName(column, Mode.RECORD);
 
-                out.overrideIf(override);
-                out.println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nonnullAnnotation), type);
+                out.println("%s(value.%s%s)%s", s, g, emptyparens, semicolon);
             }
-
-            for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
-                if (kotlin) {
-                    final String s = getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO);
-                    final String g = getStrategy().getJavaMemberName(column, Mode.POJO);
-
-                    out.tab(1).println("%s = value.%s", s, g);
-                }
-                else {
-                    final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.RECORD);
-                    final String g = getStrategy().getJavaGetterName(column, Mode.RECORD);
-
-                    out.println("%s(value.%s%s)%s", s, g, emptyparens, semicolon);
-                }
-            }
-
-            if (generateFluentSetters())
-                if (scala)
-                    out.println("this");
-                else
-                    out.println("return this%s", semicolon);
-
-            if (kotlin)
-                out.tab(1).println("}");
-            else
-                out.println("}");
         }
+
+        if (generateFluentSetters())
+            if (scala)
+                out.println("this");
+            else
+                out.println("return this%s", semicolon);
+
+        if (kotlin)
+            out.tab(1).println("}");
+        else
+            out.println("}");
     }
 
     /**
@@ -2114,7 +2125,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("r.asInstanceOf[%s]", type);
             out.println("}");
         }
-        if (kotlin) {
+        else if (kotlin) {
             out.tab(1).println("get() = get(%s) as %s?", index, type);
         }
         else {
@@ -2134,7 +2145,7 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide their own record getters for embeddables.
      */
-    protected void generateRecordGetterForEmbeddable(EmbeddableDefinition embeddable, JavaWriter out) {
+    protected void generateEmbeddableRecordGetter(EmbeddableDefinition embeddable, JavaWriter out) {
         final String getter = getStrategy().getJavaGetterName(embeddable, Mode.RECORD);
         final String typeFull = getStrategy().getFullJavaClassName(embeddable, Mode.RECORD);
         final String type = out.ref(typeFull);
@@ -2262,6 +2273,13 @@ public class JavaGenerator extends AbstractGenerator {
         closeJavaWriter(out);
     }
 
+    protected void generateEmbeddableInterface(EmbeddableDefinition embeddable) {
+        JavaWriter out = newJavaWriter(getFile(embeddable, Mode.INTERFACE));
+        log.info("Generating interface", out.file().getName());
+        generateInterface0(embeddable, out);
+        closeJavaWriter(out);
+    }
+
     protected void generateInterface(TableDefinition table, JavaWriter out) {
         generateInterface0(table, out);
     }
@@ -2270,20 +2288,22 @@ public class JavaGenerator extends AbstractGenerator {
         generateInterface0(udt, out);
     }
 
-    private final void generateInterface0(Definition tableOrUDT, JavaWriter out) {
-        final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.INTERFACE);
-        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableOrUDT, Mode.INTERFACE));
+    private final void generateInterface0(Definition tableUdtOrEmbeddable, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE);
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.INTERFACE));
 
-        printPackage(out, tableOrUDT, Mode.INTERFACE);
-        if (tableOrUDT instanceof TableDefinition)
-            generateInterfaceClassJavadoc((TableDefinition) tableOrUDT, out);
+        printPackage(out, tableUdtOrEmbeddable, Mode.INTERFACE);
+        if (tableUdtOrEmbeddable instanceof TableDefinition)
+            generateInterfaceClassJavadoc((TableDefinition) tableUdtOrEmbeddable, out);
+        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+            generateEmbeddableClassJavadoc((EmbeddableDefinition) tableUdtOrEmbeddable, out);
         else
-            generateUDTInterfaceClassJavadoc((UDTDefinition) tableOrUDT, out);
+            generateUDTInterfaceClassJavadoc((UDTDefinition) tableUdtOrEmbeddable, out);
 
-        printClassAnnotations(out, tableOrUDT, Mode.INTERFACE);
+        printClassAnnotations(out, tableUdtOrEmbeddable, Mode.INTERFACE);
 
-        if (tableOrUDT instanceof TableDefinition)
-            printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
+        if (tableUdtOrEmbeddable instanceof TableDefinition)
+            printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
         if (scala)
             out.println("trait %s[[before= extends ][%s]] {", className, interfaces);
@@ -2292,36 +2312,36 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public interface %s[[before= extends ][%s]] {", className, interfaces);
 
-        List<? extends TypedElementDefinition<?>> typedElements = getTypedElements(tableOrUDT);
+        List<? extends TypedElementDefinition<?>> typedElements = getTypedElements(tableUdtOrEmbeddable);
         for (int i = 0; i < typedElements.size(); i++) {
             TypedElementDefinition<?> column = typedElements.get(i);
 
-            if (kotlin) {
-
-                // TODO: The Mode should be INTERFACE
-                final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
-                final String typeFull = getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE);
-                final String type = out.ref(typeFull);
-
-                out.println("%s %s: %s?", (generateImmutableInterfaces() ? "val" : "var"), member, type);
-            }
-            else {
-                if (!generateImmutableInterfaces())
-                    if (tableOrUDT instanceof TableDefinition)
-                        generateInterfaceSetter(column, i, out);
-                    else
-                        generateUDTInterfaceSetter(column, i, out);
-
-                if (tableOrUDT instanceof TableDefinition)
-                    generateInterfaceGetter(column, i, out);
+            if (!generateImmutableInterfaces())
+                if (tableUdtOrEmbeddable instanceof TableDefinition)
+                    generateInterfaceSetter(column, i, out);
                 else
-                    generateUDTInterfaceGetter(column, i, out);
+                    generateUDTInterfaceSetter(column, i, out);
+
+            if (tableUdtOrEmbeddable instanceof TableDefinition)
+                generateInterfaceGetter(column, i, out);
+            else
+                generateUDTInterfaceGetter(column, i, out);
+        }
+
+        if (tableUdtOrEmbeddable instanceof TableDefinition) {
+            List<EmbeddableDefinition> embeddables = ((TableDefinition) tableUdtOrEmbeddable).getReferencedEmbeddables();
+
+            for (int i = 0; i < embeddables.size(); i++) {
+                EmbeddableDefinition embeddable = embeddables.get(i);
+
+                generateEmbeddableInterfaceSetter(embeddable, i, out);
+                generateEmbeddableInterfaceGetter(embeddable, i, out);
             }
         }
 
         if (!generateImmutableInterfaces()) {
-            String local = getStrategy().getJavaClassName(tableOrUDT, Mode.INTERFACE);
-            String qualified = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE));
+            String local = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE);
+            String qualified = out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE));
 
             out.header("FROM and INTO");
 
@@ -2349,10 +2369,12 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
 
-        if (tableOrUDT instanceof TableDefinition)
-            generateInterfaceClassFooter((TableDefinition) tableOrUDT, out);
+        if (tableUdtOrEmbeddable instanceof TableDefinition)
+            generateInterfaceClassFooter((TableDefinition) tableUdtOrEmbeddable, out);
+        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+            generateEmbeddableClassFooter((EmbeddableDefinition) tableUdtOrEmbeddable, out);
         else
-            generateUDTInterfaceClassFooter((UDTDefinition) tableOrUDT, out);
+            generateUDTInterfaceClassFooter((UDTDefinition) tableUdtOrEmbeddable, out);
 
         out.println("}");
     }
@@ -2362,6 +2384,27 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void generateInterfaceSetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
         generateInterfaceSetter0(column, index, out);
+    }
+
+    /**
+     * Subclasses may override this method to provide their own interface setters.
+     */
+    protected void generateEmbeddableInterfaceSetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(embeddable.getReferencingTable(), Mode.INTERFACE);
+        final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
+        final String setter = getStrategy().getJavaSetterName(embeddable, Mode.INTERFACE);
+        final String typeFull = getStrategy().getFullJavaClassName(embeddable, Mode.INTERFACE);
+        final String type = out.ref(typeFull);
+
+        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
+            out.javadoc("Setter for <code>%s</code>.", embeddable.getQualifiedOutputName());
+
+        if (scala)
+            out.println("def %s(value: %s): %s", setter, type, setterReturnType);
+        // The property is already defined in the getter
+        else if (kotlin) {}
+        else
+            out.println("public %s %s([[before=@][after= ][%s]]%s value);", setterReturnType, setter, list(nonnullAnnotation(out)), type);
     }
 
     /**
@@ -2379,20 +2422,15 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
-        if (!printDeprecationIfUnknownType(out, typeFull))
+        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
-        if (scala) {
+        if (scala)
             out.println("def %s(value: %s): %s", setter, type, setterReturnType);
-        }
-        else if (kotlin) {
-            out.println("fun %s(value: %s?): %s", setter, type, setterReturnType);
-        }
-        else {
-            final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
-
-            out.println("public %s %s([[before=@][after= ][%s]]%s value);", setterReturnType, setter, list(nullableAnnotation), varargsIfArray(type));
-        }
+        // The property is already defined in the getter
+        else if (kotlin) {}
+        else
+            out.println("public %s %s([[before=@][after= ][%s]]%s value);", setterReturnType, setter, list(nullableOrNonnullAnnotation(out, column)), varargsIfArray(type));
     }
 
     /**
@@ -2405,17 +2443,45 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide their own interface getters.
      */
+    protected void generateEmbeddableInterfaceGetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
+
+        // TODO: The Mode should be INTERFACE
+        final String member = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
+        final String getter = getStrategy().getJavaGetterName(embeddable, Mode.INTERFACE);
+        final String typeFull = getStrategy().getFullJavaClassName(embeddable, Mode.INTERFACE);
+        final String type = out.ref(typeFull);
+        final String name = embeddable.getQualifiedOutputName();
+
+        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
+            out.javadoc("Getter for <code>%s</code>.", name);
+
+        printNonnullAnnotation(out);
+
+        if (scala)
+            out.println("def %s: %s", getter, type);
+        else if (kotlin)
+            out.println("%s %s: %s", (generateImmutableInterfaces() ? "val" : "var"), member, type);
+        else
+            out.println("public %s %s();", type, getter);
+    }
+
+    /**
+     * Subclasses may override this method to provide their own interface getters.
+     */
     protected void generateUDTInterfaceGetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
         generateInterfaceGetter0(column, index, out);
     }
 
     private final void generateInterfaceGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
+
+        // TODO: The Mode should be INTERFACE
+        final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
         final String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
         final String typeFull = getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
-        if (!printDeprecationIfUnknownType(out, typeFull))
+        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
         if (column instanceof ColumnDefinition)
@@ -2427,7 +2493,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala)
             out.println("def %s: %s", getter, type);
         else if (kotlin)
-            out.println("fun %s(): %s?", getter, type);
+            out.println("%s %s: %s?", (generateImmutableInterfaces() ? "val" : "var"), member, type);
         else
             out.println("public %s %s();", type, getter);
     }
@@ -3731,6 +3797,13 @@ public class JavaGenerator extends AbstractGenerator {
         closeJavaWriter(out);
     }
 
+    protected void generateEmbeddablePojo(EmbeddableDefinition embeddable) {
+        JavaWriter out = newJavaWriter(getFile(embeddable, Mode.POJO));
+        log.info("Generating POJO", out.file().getName());
+        generatePojo0(embeddable, out);
+        closeJavaWriter(out);
+    }
+
     protected void generateUDTPojo(UDTDefinition udt) {
         JavaWriter out = newJavaWriter(getFile(udt, Mode.POJO));
         log.info("Generating POJO", out.file().getName());
@@ -3746,39 +3819,41 @@ public class JavaGenerator extends AbstractGenerator {
         generatePojo0(udt, out);
     }
 
-    private final void generatePojo0(Definition tableOrUDT, JavaWriter out) {
-        final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
+    private final void generatePojo0(Definition tableUdtOrEmbeddable, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.POJO);
         final String interfaceName = generateInterfaces()
-            ? out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE))
+            ? out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE))
             : "";
-        final String superName = out.ref(getStrategy().getJavaClassExtends(tableOrUDT, Mode.POJO));
-        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableOrUDT, Mode.POJO));
+        final String superName = out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, Mode.POJO));
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.POJO));
 
         if (generateInterfaces())
             interfaces.add(interfaceName);
 
         final List<String> superTypes = list(superName, interfaces);
-        printPackage(out, tableOrUDT, Mode.POJO);
+        printPackage(out, tableUdtOrEmbeddable, Mode.POJO);
 
-        if (tableOrUDT instanceof TableDefinition)
-            generatePojoClassJavadoc((TableDefinition) tableOrUDT, out);
+        if (tableUdtOrEmbeddable instanceof TableDefinition)
+            generatePojoClassJavadoc((TableDefinition) tableUdtOrEmbeddable, out);
+        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+            generateEmbeddableClassJavadoc((EmbeddableDefinition) tableUdtOrEmbeddable, out);
         else
-            generateUDTPojoClassJavadoc((UDTDefinition) tableOrUDT, out);
+            generateUDTPojoClassJavadoc((UDTDefinition) tableUdtOrEmbeddable, out);
 
-        printClassAnnotations(out, tableOrUDT, Mode.POJO);
+        printClassAnnotations(out, tableUdtOrEmbeddable, Mode.POJO);
 
-        if (tableOrUDT instanceof TableDefinition)
-            printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
+        if (tableUdtOrEmbeddable instanceof TableDefinition)
+            printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
         int maxLength = 0;
-        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
+        for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable))
             maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)).length());
 
         if (scala) {
             out.println("%sclass %s(", (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
 
             String separator = "  ";
-            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+            for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable)) {
                 out.println("%s%s %s: %s",
                     separator,
                     generateImmutablePojos() ? "val" : "var",
@@ -3794,7 +3869,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sclass %s(", (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
 
             String separator = "  ";
-            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+            for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable)) {
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 out.println("%s%s%s %s: %s? = null",
@@ -3817,7 +3892,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println();
 
-            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+            for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable)) {
                 out.println("private %s%s %s;",
                     generateImmutablePojos() ? "final " : "",
                     StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)), maxLength),
@@ -3830,47 +3905,60 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Default constructor
         if (!generateImmutablePojos())
-            generatePojoDefaultConstructor(tableOrUDT, out);
+            generatePojoDefaultConstructor(tableUdtOrEmbeddable, out);
 
         if (!kotlin) {
 
             // [#1363] [#7055] copy constructor
-            generatePojoCopyConstructor(tableOrUDT, out);
+            generatePojoCopyConstructor(tableUdtOrEmbeddable, out);
 
             // Multi-constructor
-            generatePojoMultiConstructor(tableOrUDT, out);
+            generatePojoMultiConstructor(tableUdtOrEmbeddable, out);
 
-            List<? extends TypedElementDefinition<?>> elements = getTypedElements(tableOrUDT);
+            List<? extends TypedElementDefinition<?>> elements = getTypedElements(tableUdtOrEmbeddable);
             for (int i = 0; i < elements.size(); i++) {
                 TypedElementDefinition<?> column = elements.get(i);
 
-                if (tableOrUDT instanceof TableDefinition)
+                if (tableUdtOrEmbeddable instanceof TableDefinition)
                     generatePojoGetter(column, i, out);
                 else
                     generateUDTPojoGetter(column, i, out);
 
                 // Setter
                 if (!generateImmutablePojos())
-                    if (tableOrUDT instanceof TableDefinition)
+                    if (tableUdtOrEmbeddable instanceof TableDefinition)
                         generatePojoSetter(column, i, out);
                     else
                         generateUDTPojoSetter(column, i, out);
             }
         }
 
+        if (tableUdtOrEmbeddable instanceof TableDefinition) {
+            List<EmbeddableDefinition> embeddables = ((TableDefinition) tableUdtOrEmbeddable).getReferencedEmbeddables();
+
+            for (int i = 0; i < embeddables.size(); i++) {
+                EmbeddableDefinition embeddable = embeddables.get(i);
+
+                generateEmbeddablePojoSetter(embeddable, i, out);
+                generateEmbeddablePojoGetter(embeddable, i, out);
+            }
+        }
+
         if (generatePojosEqualsAndHashCode())
-            generatePojoEqualsAndHashCode(tableOrUDT, out);
+            generatePojoEqualsAndHashCode(tableUdtOrEmbeddable, out);
 
         if (generatePojosToString())
-            generatePojoToString(tableOrUDT, out);
+            generatePojoToString(tableUdtOrEmbeddable, out);
 
         if (generateInterfaces() && !generateImmutablePojos())
-            printFromAndInto(out, tableOrUDT, Mode.POJO);
+            printFromAndInto(out, tableUdtOrEmbeddable, Mode.POJO);
 
-        if (tableOrUDT instanceof TableDefinition)
-            generatePojoClassFooter((TableDefinition) tableOrUDT, out);
+        if (tableUdtOrEmbeddable instanceof TableDefinition)
+            generatePojoClassFooter((TableDefinition) tableUdtOrEmbeddable, out);
+        else if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+            generateEmbeddableClassFooter((EmbeddableDefinition) tableUdtOrEmbeddable, out);
         else
-            generateUDTPojoClassFooter((UDTDefinition) tableOrUDT, out);
+            generateUDTPojoClassFooter((UDTDefinition) tableUdtOrEmbeddable, out);
 
         out.println("}");
         closeJavaWriter(out);
@@ -4016,6 +4104,51 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide their own pojo getters.
      */
+    protected void generateEmbeddablePojoGetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
+        final String columnTypeFull = getStrategy().getFullJavaClassName(embeddable, Mode.POJO);
+        final String columnType = out.ref(columnTypeFull);
+        final String columnGetter = getStrategy().getJavaGetterName(embeddable, Mode.POJO);
+        final String name = embeddable.getQualifiedOutputName();
+
+        // Getter
+        if (!kotlin && !printDeprecationIfUnknownType(out, columnTypeFull))
+            out.javadoc("Getter for <code>%s</code>.", name);
+
+        printNonnullAnnotation(out);
+
+        if (scala)
+            out.println("def %s: %s = new %s(", columnGetter, columnType, columnType);
+        else if (kotlin)
+            out.tab(1).println("get() = %s(", columnType);
+        else {
+            out.overrideIf(generateInterfaces());
+            out.println("public %s %s() {", columnType, columnGetter);
+            out.println("return new %s(", columnType);
+        }
+
+        String separator = "  ";
+        for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
+            if (kotlin)
+                out.tab(1).println("%s%s", separator, getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO));
+            else
+                out.println("%s%s%s", separator, getStrategy().getJavaGetterName(column.getReferencingColumn(), Mode.POJO), emptyparens);
+
+            separator = ", ";
+        }
+
+        if (scala)
+            out.println(")");
+        else if (kotlin)
+            out.tab(1).println(")");
+        else {
+            out.println(");");
+            out.println("}");
+        }
+    }
+
+    /**
+     * Subclasses may override this method to provide their own pojo getters.
+     */
     protected void generateUDTPojoGetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
         generatePojoGetter0(column, index, out);
     }
@@ -4053,6 +4186,59 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void generatePojoSetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
         generatePojoSetter0(column, index, out);
+    }
+
+    /**
+     * Subclasses may override this method to provide their own pojo setters.
+     */
+    protected void generateEmbeddablePojoSetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(embeddable.getReferencingTable(), Mode.POJO);
+        final String columnTypeFull = getStrategy().getFullJavaClassName(embeddable, Mode.POJO);
+        final String columnType = out.ref(columnTypeFull);
+        final String columnSetterReturnType = generateFluentSetters() ? className : tokenVoid;
+        final String columnSetter = getStrategy().getJavaSetterName(embeddable, Mode.POJO);
+        final String columnMember = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
+        final String name = embeddable.getQualifiedOutputName();
+
+        if (!kotlin && !printDeprecationIfUnknownType(out, columnTypeFull))
+            out.javadoc("Setter for <code>%s</code>.", name);
+
+        if (scala) {
+            out.println("def %s(value: %s): %s = {", columnSetter, columnType, columnSetterReturnType);
+        }
+        else if (kotlin) {
+            out.println("var %s: %s", columnMember, columnType);
+            out.tab(1).println("set(value) {");
+        }
+        else {
+            out.overrideIf(generateInterfaces() && !generateImmutableInterfaces());
+            out.println("public %s %s([[before=@][after= ][%s]]%s value) {", columnSetterReturnType, columnSetter, list(nonnullAnnotation(out)), columnType);
+        }
+
+        if (kotlin) {
+            for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
+                final String s = getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO);
+                final String g = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                out.tab(1).println("%s = value.%s", s, g);
+            }
+        }
+        else {
+            for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
+                final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.POJO);
+                final String g = getStrategy().getJavaGetterName(column, Mode.POJO);
+
+                out.println("%s(value.%s%s)%s", s, g, emptyparens, semicolon);
+            }
+        }
+
+        if (generateFluentSetters())
+            out.println("return this;");
+
+        if (kotlin)
+            out.tab(1).println("}");
+        else
+            out.println("}");
     }
 
     /**
@@ -5339,17 +5525,25 @@ public class JavaGenerator extends AbstractGenerator {
         closeJavaWriter(out);
     }
 
-    protected void generateEmbeddables(SchemaDefinition schema) {
-        log.info("Generating embeddables");
+    private Iterable<EmbeddableDefinition> embeddables(SchemaDefinition schema) {
 
         // [#6124] Prevent FKs from overriding PK embeddable
         LinkedHashSet<EmbeddableDefinition> embeddables = new LinkedHashSet<>(database.getEmbeddables(schema));
-        for (EmbeddableDefinition embeddable : embeddables) {
-            try {
+        for (EmbeddableDefinition embeddable : embeddables)
 
-                // [#6124] [#10481] Don't generate embeddable types for FKs
-                if (embeddable.getTable().equals(embeddable.getReferencingTable()))
-                    generateEmbeddable(schema, embeddable);
+            // [#6124] [#10481] Don't generate embeddable types for FKs
+            if (embeddable.getTable().equals(embeddable.getReferencingTable()))
+                embeddables.add(embeddable);
+
+        return embeddables;
+    }
+
+    protected void generateEmbeddables(SchemaDefinition schema) {
+        log.info("Generating embeddables");
+
+        for (EmbeddableDefinition embeddable : embeddables(schema)) {
+            try {
+                generateEmbeddable(schema, embeddable);
             }
             catch (Exception e) {
                 log.error("Error while generating embeddable " + embeddable, e);
@@ -5364,6 +5558,67 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getFile(embeddable, Mode.RECORD));
         generateRecord0(embeddable, out);
         closeJavaWriter(out);
+    }
+
+    protected void generateEmbeddablePojos(SchemaDefinition schema) {
+        log.info("Generating embeddable POJOs");
+
+        for (EmbeddableDefinition embeddable : embeddables(schema)) {
+            try {
+                generateEmbeddablePojo(embeddable);
+            }
+            catch (Exception e) {
+                log.error("Error while generating embeddable POJO " + embeddable, e);
+            }
+        }
+
+        watch.splitInfo("Embeddable POJOs generated");
+    }
+
+    /**
+     * Subclasses may override this method to provide embeddable POJO class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateEmbeddablePojoClassFooter(EmbeddableDefinition embeddable, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateEmbeddablePojoClassJavadoc(EmbeddableDefinition embeddable, JavaWriter out) {
+        if (generateCommentsOnEmbeddables())
+            printClassJavadoc(out, embeddable);
+        else
+            printClassJavadoc(out, "The embeddable <code>" + embeddable.getQualifiedInputName() + "</code>.");
+    }
+
+    protected void generateEmbeddableInterfaces(SchemaDefinition schema) {
+        log.info("Generating embeddable interfaces");
+
+        for (EmbeddableDefinition embeddable : embeddables(schema)) {
+            try {
+                generateEmbeddableInterface(embeddable);
+            } catch (Exception e) {
+                log.error("Error while generating embeddable interface " + embeddable, e);
+            }
+        }
+
+        watch.splitInfo("embeddable interfaces generated");
+    }
+
+    /**
+     * Subclasses may override this method to provide embeddable interface class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateEmbeddableInterfaceClassFooter(EmbeddableDefinition embeddable, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateEmbeddableInterfaceClassJavadoc(EmbeddableDefinition embeddable, JavaWriter out) {
+        if (generateCommentsOnEmbeddables())
+            printClassJavadoc(out, embeddable);
+        else
+            printClassJavadoc(out, "The embeddable <code>" + embeddable.getQualifiedInputName() + "</code>.");
     }
 
     private String converterTemplate(List<String> converter) {

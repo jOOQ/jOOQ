@@ -132,6 +132,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateCommentsOnSequences             = true;
     boolean                            generateCommentsOnTables                = true;
     boolean                            generateCommentsOnUDTs                  = true;
+    boolean                            generateCommentsOnEmbeddables           = true;
     boolean                            generateSources                         = true;
     boolean                            generateSourcesOnViews                  = true;
     boolean                            generateFluentSetters                   = false;
@@ -930,6 +931,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateCommentsOnTables(boolean commentsOnTables) {
         this.generateCommentsOnTables = commentsOnTables;
+    }
+
+    @Override
+    public boolean generateCommentsOnEmbeddables() {
+        return generateComments() && generateCommentsOnEmbeddables;
+    }
+
+    @Override
+    public void setGenerateCommentsOnEmbeddables(boolean generateCommentsOnEmbeddables) {
+        this.generateCommentsOnEmbeddables = generateCommentsOnEmbeddables;
     }
 
     @Override

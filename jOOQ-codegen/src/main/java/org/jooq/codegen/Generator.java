@@ -765,6 +765,16 @@ public interface Generator {
     void setGenerateCommentsOnTables(boolean commentsOnTables);
 
     /**
+     * Whether SQL comments on embeddables should be generated as Javadoc.
+     */
+    boolean generateCommentsOnEmbeddables();
+
+    /**
+     * Whether SQL comments on embeddables should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnEmbeddables(boolean commentsOnEmbeddables);
+
+    /**
      * Whether SQL comments on UDTs should be generated as Javadoc.
      */
     boolean generateCommentsOnUDTs();

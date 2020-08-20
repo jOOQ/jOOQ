@@ -40,8 +40,8 @@ object Keys {
 
     val FK_T_BOOK_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_AUTHOR_ID
     val FK_T_BOOK_CO_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_CO_AUTHOR_ID
-    val FK_B2BS_BS_NAME = ForeignKeys0.FK_B2BS_BS_NAME
     val FK_B2BS_B_ID = ForeignKeys0.FK_B2BS_B_ID
+    val FK_B2BS_BS_NAME = ForeignKeys0.FK_B2BS_BS_NAME
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -57,7 +57,7 @@ object Keys {
     private object ForeignKeys0 {
         val FK_T_BOOK_AUTHOR_ID: ForeignKey<BookRecord, AuthorRecord> = Internal.createForeignKey(Book.BOOK, DSL.name("FK_T_BOOK_AUTHOR_ID"), arrayOf(Book.BOOK.AUTHOR_ID), Keys.PK_T_AUTHOR, arrayOf(Author.AUTHOR.ID), true)
         val FK_T_BOOK_CO_AUTHOR_ID: ForeignKey<BookRecord, AuthorRecord> = Internal.createForeignKey(Book.BOOK, DSL.name("FK_T_BOOK_CO_AUTHOR_ID"), arrayOf(Book.BOOK.CO_AUTHOR_ID), Keys.PK_T_AUTHOR, arrayOf(Author.AUTHOR.ID), true)
-        val FK_B2BS_BS_NAME: ForeignKey<BookToBookStoreRecord, BookStoreRecord> = Internal.createForeignKey(BookToBookStore.BOOK_TO_BOOK_STORE, DSL.name("FK_B2BS_BS_NAME"), arrayOf(BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME), Keys.UK_T_BOOK_STORE_NAME, arrayOf(BookStore.BOOK_STORE.NAME), true)
         val FK_B2BS_B_ID: ForeignKey<BookToBookStoreRecord, BookRecord> = Internal.createForeignKey(BookToBookStore.BOOK_TO_BOOK_STORE, DSL.name("FK_B2BS_B_ID"), arrayOf(BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID), Keys.PK_T_BOOK, arrayOf(Book.BOOK.ID), true)
+        val FK_B2BS_BS_NAME: ForeignKey<BookToBookStoreRecord, BookStoreRecord> = Internal.createForeignKey(BookToBookStore.BOOK_TO_BOOK_STORE, DSL.name("FK_B2BS_BS_NAME"), arrayOf(BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME), Keys.UK_T_BOOK_STORE_NAME, arrayOf(BookStore.BOOK_STORE.NAME), true)
     }
 }

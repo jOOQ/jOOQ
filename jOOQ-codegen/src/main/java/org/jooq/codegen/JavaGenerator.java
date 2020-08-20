@@ -1781,7 +1781,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (tableUdtOrEmbeddable instanceof TableDefinition) {
             Set<EmbeddableDefinition> duplicates = new HashSet<>();
 
-            for (EmbeddableDefinition embeddable : ((TableDefinition) tableUdtOrEmbeddable).getEmbeddables()) {
+            for (EmbeddableDefinition embeddable : ((TableDefinition) tableUdtOrEmbeddable).getReferencedEmbeddables()) {
                 for (EmbeddableColumnDefinition embeddableColumn : embeddable.getColumns()) {
                     int index = result.indexOf(embeddableColumn.getReferencingColumn());
 
@@ -1802,6 +1802,13 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out,
         Collection<? extends Definition> columns
     ) {
+
+
+
+
+
+
+
         final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.RECORD);
         final String tableIdentifier = !(tableUdtOrEmbeddable instanceof EmbeddableDefinition)
             ? out.ref(getStrategy().getFullJavaIdentifier(tableUdtOrEmbeddable), 2)

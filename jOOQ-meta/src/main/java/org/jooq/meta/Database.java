@@ -97,6 +97,11 @@ public interface Database extends AutoCloseable {
     /**
      * The sequences contained in this database.
      */
+    List<SequenceDefinition> getSequences();
+
+    /**
+     * The sequences contained in this database.
+     */
     List<SequenceDefinition> getSequences(SchemaDefinition schema);
 
     /**
@@ -213,6 +218,11 @@ public interface Database extends AutoCloseable {
      * Get an enum UDT defined in this database by name.
      */
     EnumDefinition getEnum(SchemaDefinition schema, Name name, boolean ignoreCase);
+
+    /**
+     * The domain UDTs defined in this database.
+     */
+    List<DomainDefinition> getDomains();
 
     /**
      * The domain UDTs defined in this database.
@@ -488,6 +498,16 @@ public interface Database extends AutoCloseable {
      * whether indexes should be included.
      */
     boolean getIncludeIndexes();
+
+    /**
+     * whether domains should be included.
+     */
+    void setIncludeDomains(boolean includeDomains);
+
+    /**
+     * whether domains should be included.
+     */
+    boolean getIncludeDomains();
 
     /**
      * whether sequences should be included.
@@ -917,6 +937,16 @@ public interface Database extends AutoCloseable {
      * Whether embeddable types for unique keys should be generated.
      */
     void setEmbeddableUniqueKeys(boolean embeddableUniqueKeys);
+
+    /**
+     * Whether embeddable types for domains should be generated.
+     */
+    boolean embeddableDomains();
+
+    /**
+     * Whether embeddable types for domains should be generated.
+     */
+    void setEmbeddableDomains(boolean embeddableDomains);
 
     /**
      * Get the dialect for this database.

@@ -39,6 +39,7 @@
 package org.jooq.meta;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.Log.Level.ERROR;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -143,6 +144,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includePackageUDTs                   = true;
     private boolean                                                          includePackageConstants              = true;
     private boolean                                                          includeUDTs                          = true;
+    private boolean                                                          includeDomains                       = true;
     private boolean                                                          includeSequences                     = true;
     private boolean                                                          includeIndexes                       = true;
     private boolean                                                          includeCheckConstraints              = true;
@@ -159,6 +161,7 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         syntheticIdentities;
     private boolean                                                          embeddablePrimaryKeys                = false;
     private boolean                                                          embeddableUniqueKeys                 = false;
+    private boolean                                                          embeddableDomains                    = false;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
@@ -1031,6 +1034,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final boolean getIncludeDomains() {
+        return includeDomains;
+    }
+
+    @Override
+    public final void setIncludeDomains(boolean includeDomains) {
+        this.includeDomains = includeDomains;
+    }
+
+    @Override
     public final boolean getIncludeSequences() {
         return includeSequences;
     }
@@ -1490,7 +1503,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<SequenceDefinition> getSequences(SchemaDefinition schema) {
+    public final List<SequenceDefinition> getSequences() {
         if (sequences == null) {
             sequences = new ArrayList<>();
 
@@ -1509,10 +1522,15 @@ public abstract class AbstractDatabase implements Database {
                 log.info("Sequences excluded");
         }
 
+        return sequences;
+    }
+
+    @Override
+    public final List<SequenceDefinition> getSequences(SchemaDefinition schema) {
         if (sequencesBySchema == null)
             sequencesBySchema = new LinkedHashMap<>();
 
-        return filterSchema(sequences, schema, sequencesBySchema);
+        return filterSchema(getSequences(), schema, sequencesBySchema);
     }
 
     @Override
@@ -1843,6 +1861,23 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public boolean embeddableDomains() {
+        return embeddableDomains;
+    }
+
+    @SuppressWarnings("unused")
+    @Override
+    public void setEmbeddableDomains(boolean embeddableDomains) {
+
+
+
+        if (embeddableDomains)
+            log.info("Commercial feature", "Embeddable domains are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
+
+        this.embeddableDomains = embeddableDomains;
+    }
+
+    @Override
     public final List<EmbeddableDefinition> getEmbeddables() {
         if (embeddables == null) {
             embeddables = new ArrayList<>();
@@ -2026,6 +2061,37 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return new ArrayList<>(result.values());
     }
 
@@ -2050,25 +2116,34 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<DomainDefinition> getDomains(SchemaDefinition schema) {
+    public final List<DomainDefinition> getDomains() {
         if (domains == null) {
             domains = new ArrayList<>();
 
-            onError(ERROR, "Error while fetching domains", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    List<DomainDefinition> e = getDomains0();
+            if (getIncludeDomains()) {
+                onError(ERROR, "Error while fetching domains", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<DomainDefinition> e = getDomains0();
 
-                    domains = sort(filterExcludeInclude(e));
-                    log.info("Domains fetched", fetchedSize(e, domains));
-                }
-            });
+                        domains = sort(filterExcludeInclude(e));
+                        log.info("Domains fetched", fetchedSize(e, domains));
+                    }
+                });
+            }
+            else
+                log.info("Domains excluded");
         }
 
+        return domains;
+    }
+
+    @Override
+    public final List<DomainDefinition> getDomains(SchemaDefinition schema) {
         if (domainsBySchema == null)
             domainsBySchema = new LinkedHashMap<>();
 
-        return filterSchema(domains, schema, domainsBySchema);
+        return filterSchema(getDomains(), schema, domainsBySchema);
     }
 
     @Override

@@ -531,6 +531,7 @@ public class GenerationTool {
             database.setIncludeInvisibleColumns(!FALSE.equals(d.isIncludeInvisibleColumns()));
             database.setIncludePrimaryKeys(!FALSE.equals(d.isIncludePrimaryKeys()));
             database.setIncludeRoutines(!FALSE.equals(d.isIncludeRoutines()));
+            database.setIncludeDomains(!FALSE.equals(d.isIncludeDomains()));
             database.setIncludeSequences(!FALSE.equals(d.isIncludeSequences()));
             database.setIncludeTables(!FALSE.equals(d.isIncludeTables()));
             database.setIncludeEmbeddables(!FALSE.equals(d.isIncludeEmbeddables()));
@@ -549,6 +550,7 @@ public class GenerationTool {
             database.setConfiguredEmbeddables(d.getEmbeddables());
             database.setEmbeddablePrimaryKeys(TRUE.equals(g.getDatabase().isEmbeddablePrimaryKeys()));
             database.setEmbeddableUniqueKeys(TRUE.equals(g.getDatabase().isEmbeddableUniqueKeys()));
+            database.setEmbeddableDomains(TRUE.equals(g.getDatabase().isEmbeddableDomains()));
             database.setLogSlowQueriesAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowQueriesAfterSeconds(), 5));
             database.setLogSlowResultsAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowResultsAfterSeconds(), 5));
 

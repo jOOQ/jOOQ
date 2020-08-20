@@ -70,6 +70,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean includeUDTs = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean includeDomains = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean includeSequences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean includeIndexes = true;
@@ -137,6 +139,8 @@ public class Database implements Serializable, XMLAppendable
     protected Boolean embeddablePrimaryKeys = false;
     @XmlElement(defaultValue = "false")
     protected Boolean embeddableUniqueKeys = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean embeddableDomains = false;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
@@ -639,6 +643,30 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeUDTs(Boolean value) {
         this.includeUDTs = value;
+    }
+
+    /**
+     * This flag indicates whether domains should be included in output produced by this database
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeDomains() {
+        return includeDomains;
+    }
+
+    /**
+     * Sets the value of the includeDomains property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeDomains(Boolean value) {
+        this.includeDomains = value;
     }
 
     /**
@@ -1408,6 +1436,30 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether wrapper types should be generated for domain types.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isEmbeddableDomains() {
+        return embeddableDomains;
+    }
+
+    /**
+     * Sets the value of the embeddableDomains property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setEmbeddableDomains(Boolean value) {
+        this.embeddableDomains = value;
+    }
+
+    /**
      * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.
      * 
      * @return
@@ -1781,6 +1833,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withIncludeDomains(Boolean value) {
+        setIncludeDomains(value);
+        return this;
+    }
+
     public Database withIncludeSequences(Boolean value) {
         setIncludeSequences(value);
         return this;
@@ -2051,6 +2108,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withEmbeddableDomains(Boolean value) {
+        setEmbeddableDomains(value);
+        return this;
+    }
+
     public Database withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
@@ -2250,6 +2312,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includePackageUDTs", includePackageUDTs);
         builder.append("includePackageConstants", includePackageConstants);
         builder.append("includeUDTs", includeUDTs);
+        builder.append("includeDomains", includeDomains);
         builder.append("includeSequences", includeSequences);
         builder.append("includeIndexes", includeIndexes);
         builder.append("includePrimaryKeys", includePrimaryKeys);
@@ -2279,6 +2342,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("orderProvider", orderProvider);
         builder.append("embeddablePrimaryKeys", embeddablePrimaryKeys);
         builder.append("embeddableUniqueKeys", embeddableUniqueKeys);
+        builder.append("embeddableDomains", embeddableDomains);
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("tableValuedFunctions", tableValuedFunctions);
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
@@ -2452,6 +2516,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeUDTs.equals(other.includeUDTs)) {
+                return false;
+            }
+        }
+        if (includeDomains == null) {
+            if (other.includeDomains!= null) {
+                return false;
+            }
+        } else {
+            if (!includeDomains.equals(other.includeDomains)) {
                 return false;
             }
         }
@@ -2716,6 +2789,15 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (embeddableDomains == null) {
+            if (other.embeddableDomains!= null) {
+                return false;
+            }
+        } else {
+            if (!embeddableDomains.equals(other.embeddableDomains)) {
+                return false;
+            }
+        }
         if (forceIntegerTypesOnZeroScaleDecimals == null) {
             if (other.forceIntegerTypesOnZeroScaleDecimals!= null) {
                 return false;
@@ -2838,6 +2920,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includePackageUDTs == null)? 0 :includePackageUDTs.hashCode()));
         result = ((prime*result)+((includePackageConstants == null)? 0 :includePackageConstants.hashCode()));
         result = ((prime*result)+((includeUDTs == null)? 0 :includeUDTs.hashCode()));
+        result = ((prime*result)+((includeDomains == null)? 0 :includeDomains.hashCode()));
         result = ((prime*result)+((includeSequences == null)? 0 :includeSequences.hashCode()));
         result = ((prime*result)+((includeIndexes == null)? 0 :includeIndexes.hashCode()));
         result = ((prime*result)+((includePrimaryKeys == null)? 0 :includePrimaryKeys.hashCode()));
@@ -2867,6 +2950,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((orderProvider == null)? 0 :orderProvider.hashCode()));
         result = ((prime*result)+((embeddablePrimaryKeys == null)? 0 :embeddablePrimaryKeys.hashCode()));
         result = ((prime*result)+((embeddableUniqueKeys == null)? 0 :embeddableUniqueKeys.hashCode()));
+        result = ((prime*result)+((embeddableDomains == null)? 0 :embeddableDomains.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));

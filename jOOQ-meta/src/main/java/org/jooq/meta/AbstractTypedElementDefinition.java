@@ -335,4 +335,9 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
         return null;
     }
+
+    @Override
+    public final DomainDefinition getDomain() {
+        return getDatabase().getDomain(getSchema(), getDefinedType().getQualifiedUserType());
+    }
 }

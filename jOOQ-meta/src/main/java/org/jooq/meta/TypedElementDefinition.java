@@ -64,4 +64,10 @@ public interface TypedElementDefinition<T extends Definition> extends Definition
      * The container that contains this typed element.
      */
     T getContainer();
+
+    /**
+     * The column / parameter / attribute domain type, or <code>null</code>, if
+     * it does not reference a domain.
+     */
+    DomainDefinition getDomain();
 }

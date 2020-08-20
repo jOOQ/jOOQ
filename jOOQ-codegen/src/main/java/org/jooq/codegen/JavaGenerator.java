@@ -1248,7 +1248,8 @@ public class JavaGenerator extends AbstractGenerator {
         for (TableDefinition table : database.getTables(schema)) {
             try {
                 generateRecord(table);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating table record " + table, e);
             }
         }
@@ -1260,7 +1261,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRecord(TableDefinition table) {
         JavaWriter out = newJavaWriter(getFile(table, Mode.RECORD));
         log.info("Generating record", out.file().getName());
-        generateRecord(table, out);
+        generateRecord0(table, out);
         closeJavaWriter(out);
     }
 
@@ -1389,7 +1390,6 @@ public class JavaGenerator extends AbstractGenerator {
         columnLoop:
         for (int i = 0; i < degree; i++) {
             TypedElementDefinition<?> column = columns.get(i);
-
 
 
 

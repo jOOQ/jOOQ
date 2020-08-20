@@ -52,8 +52,10 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.ArrayList;
 import java.util.List;
 
+// ...
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
+import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EmbeddableDefinition;
@@ -160,9 +162,29 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         else if (definition instanceof EmbeddableDefinition)
             return ((EmbeddableDefinition) definition).getReferencingOutputName().toUpperCase();
 
+
+
+
+
+
         else
             return definition.getOutputName().toUpperCase();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private String getterSetterSuffix(Definition definition) {
 

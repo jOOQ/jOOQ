@@ -302,7 +302,7 @@ public class GenerationTool {
             if (true)
                 locale = Locale.forLanguageTag(g.getTarget().getLocale());
             else
-            /* [java-8] */
+
                 log.info("Locale support", "Locale support has been added for the Java 8+ distributions only");
 
         Database database = null;

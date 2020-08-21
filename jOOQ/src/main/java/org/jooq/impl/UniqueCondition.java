@@ -44,11 +44,13 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.Keywords.K_UNIQUE;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPartInternal;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -74,7 +76,27 @@ final class UniqueCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx));
+        switch (ctx.family()) {
+            case H2:
+                if (!unique)
+                    ctx.visit(K_NOT).sql(' ');
+
+                ctx.visit(K_UNIQUE).sql(' ');
+                visitSubquery(ctx, query, true);
+                break;
+
+            default:
+                Table<?> queryTable = query.asTable("t");
+                Field<?>[] queryFields = queryTable.fields();
+                Select<?> subquery = select(one())
+                    .from(queryTable)
+                    .where(row(queryFields).isNotNull())
+                    .groupBy(queryFields)
+                    .having(count().gt(one()));
+
+                ctx.visit(unique ? notExists(subquery) : exists(subquery));
+                break;
+        }
     }
 
     @Override
@@ -83,18 +105,4 @@ final class UniqueCondition extends AbstractCondition {
         // TODO: [#7362] [#10304] Find a better way to prevent double negation and unnecessary parentheses
         return unique ? new UniqueCondition(query, false) : super.not();
     }
-
-    @SuppressWarnings("unused")
-    private final QueryPartInternal delegate(Context<?> ctx) {
-        Table<?> queryTable = query.asTable("t");
-        Field<?>[] queryFields = queryTable.fields();
-        Select<?> subquery = select(one())
-            .from(queryTable)
-            .where(row(queryFields).isNotNull())
-            .groupBy(queryFields)
-            .having(count().gt(one()));
-
-        return (QueryPartInternal) (unique ? notExists(subquery) : exists(subquery));
-    }
-
 }

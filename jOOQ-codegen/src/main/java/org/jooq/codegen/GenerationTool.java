@@ -800,6 +800,8 @@ public class GenerationTool {
                 generator.setGenerateCommentsOnSequences(g.getGenerate().isCommentsOnSequences());
             if (g.getGenerate().isCommentsOnTables() != null)
                 generator.setGenerateCommentsOnTables(g.getGenerate().isCommentsOnTables());
+            if (g.getGenerate().isCommentsOnEmbeddables() != null)
+                generator.setGenerateCommentsOnEmbeddables(g.getGenerate().isCommentsOnEmbeddables());
             if (g.getGenerate().isCommentsOnUDTs() != null)
                 generator.setGenerateCommentsOnUDTs(g.getGenerate().isCommentsOnUDTs());
             if (g.getGenerate().isSources() != null)

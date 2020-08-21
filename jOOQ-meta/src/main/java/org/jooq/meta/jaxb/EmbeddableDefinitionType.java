@@ -40,7 +40,11 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String comment;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String referencingName;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String referencingComment;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tables;
     @XmlElement(defaultValue = "false")
@@ -98,6 +102,22 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
     }
 
     /**
+     * The defining comment on the embeddable type.
+     * 
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * The defining comment on the embeddable type.
+     * 
+     */
+    public void setComment(String value) {
+        this.comment = value;
+    }
+
+    /**
      * The referencing name of the embeddable type, defaulting to the defining name.
      * 
      */
@@ -111,6 +131,22 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
      */
     public void setReferencingName(String value) {
         this.referencingName = value;
+    }
+
+    /**
+     * The referencing comment on the embeddable type, defaulting to the defining comment.
+     * 
+     */
+    public String getReferencingComment() {
+        return referencingComment;
+    }
+
+    /**
+     * The referencing comment on the embeddable type, defaulting to the defining comment.
+     * 
+     */
+    public void setReferencingComment(String value) {
+        this.referencingComment = value;
     }
 
     /**
@@ -192,11 +228,29 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
     }
 
     /**
+     * The defining comment on the embeddable type.
+     * 
+     */
+    public EmbeddableDefinitionType withComment(String value) {
+        setComment(value);
+        return this;
+    }
+
+    /**
      * The referencing name of the embeddable type, defaulting to the defining name.
      * 
      */
     public EmbeddableDefinitionType withReferencingName(String value) {
         setReferencingName(value);
+        return this;
+    }
+
+    /**
+     * The referencing comment on the embeddable type, defaulting to the defining comment.
+     * 
+     */
+    public EmbeddableDefinitionType withReferencingComment(String value) {
+        setReferencingComment(value);
         return this;
     }
 
@@ -240,7 +294,9 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         builder.append("catalog", catalog);
         builder.append("schema", schema);
         builder.append("name", name);
+        builder.append("comment", comment);
         builder.append("referencingName", referencingName);
+        builder.append("referencingComment", referencingComment);
         builder.append("tables", tables);
         builder.append("replacesFields", replacesFields);
         builder.append("fields", "field", fields);
@@ -292,12 +348,30 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (comment == null) {
+            if (other.comment!= null) {
+                return false;
+            }
+        } else {
+            if (!comment.equals(other.comment)) {
+                return false;
+            }
+        }
         if (referencingName == null) {
             if (other.referencingName!= null) {
                 return false;
             }
         } else {
             if (!referencingName.equals(other.referencingName)) {
+                return false;
+            }
+        }
+        if (referencingComment == null) {
+            if (other.referencingComment!= null) {
+                return false;
+            }
+        } else {
+            if (!referencingComment.equals(other.referencingComment)) {
                 return false;
             }
         }
@@ -338,7 +412,9 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         result = ((prime*result)+((catalog == null)? 0 :catalog.hashCode()));
         result = ((prime*result)+((schema == null)? 0 :schema.hashCode()));
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
+        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         result = ((prime*result)+((referencingName == null)? 0 :referencingName.hashCode()));
+        result = ((prime*result)+((referencingComment == null)? 0 :referencingComment.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((replacesFields == null)? 0 :replacesFields.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));

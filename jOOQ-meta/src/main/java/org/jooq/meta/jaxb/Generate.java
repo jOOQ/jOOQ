@@ -154,6 +154,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean commentsOnColumns = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnEmbeddables = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean commentsOnUDTs = true;
     @XmlElement(defaultValue = "true")
     protected Boolean commentsOnAttributes = true;
@@ -1637,6 +1639,30 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Turn off generation of all SQL comments as Javadoc on all embeddables.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isCommentsOnEmbeddables() {
+        return commentsOnEmbeddables;
+    }
+
+    /**
+     * Sets the value of the commentsOnEmbeddables property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setCommentsOnEmbeddables(Boolean value) {
+        this.commentsOnEmbeddables = value;
+    }
+
+    /**
      * Turn off generation of all SQL comments as Javadoc on all UDTs.
      * 
      * @return
@@ -2444,6 +2470,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withCommentsOnEmbeddables(Boolean value) {
+        setCommentsOnEmbeddables(value);
+        return this;
+    }
+
     public Generate withCommentsOnUDTs(Boolean value) {
         setCommentsOnUDTs(value);
         return this;
@@ -2623,6 +2654,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("commentsOnSchemas", commentsOnSchemas);
         builder.append("commentsOnTables", commentsOnTables);
         builder.append("commentsOnColumns", commentsOnColumns);
+        builder.append("commentsOnEmbeddables", commentsOnEmbeddables);
         builder.append("commentsOnUDTs", commentsOnUDTs);
         builder.append("commentsOnAttributes", commentsOnAttributes);
         builder.append("commentsOnPackages", commentsOnPackages);
@@ -3213,6 +3245,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (commentsOnEmbeddables == null) {
+            if (other.commentsOnEmbeddables!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnEmbeddables.equals(other.commentsOnEmbeddables)) {
+                return false;
+            }
+        }
         if (commentsOnUDTs == null) {
             if (other.commentsOnUDTs!= null) {
                 return false;
@@ -3461,6 +3502,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((commentsOnSchemas == null)? 0 :commentsOnSchemas.hashCode()));
         result = ((prime*result)+((commentsOnTables == null)? 0 :commentsOnTables.hashCode()));
         result = ((prime*result)+((commentsOnColumns == null)? 0 :commentsOnColumns.hashCode()));
+        result = ((prime*result)+((commentsOnEmbeddables == null)? 0 :commentsOnEmbeddables.hashCode()));
         result = ((prime*result)+((commentsOnUDTs == null)? 0 :commentsOnUDTs.hashCode()));
         result = ((prime*result)+((commentsOnAttributes == null)? 0 :commentsOnAttributes.hashCode()));
         result = ((prime*result)+((commentsOnPackages == null)? 0 :commentsOnPackages.hashCode()));

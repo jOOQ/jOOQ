@@ -1975,9 +1975,11 @@ public abstract class AbstractDatabase implements Database {
                             new DefaultEmbeddableDefinition(
                                 schema,
                                 embeddable.getName(),
+                                embeddable.getComment(),
                                 table,
                                 names,
                                 defaultIfBlank(embeddable.getReferencingName(), embeddable.getName()),
+                                defaultIfBlank(embeddable.getReferencingComment(), embeddable.getComment()),
                                 table,
                                 columns,
                                 TRUE.equals(embeddable.isReplacesFields())
@@ -1989,6 +1991,11 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
         }
+
+
+
+
+
 
 
 

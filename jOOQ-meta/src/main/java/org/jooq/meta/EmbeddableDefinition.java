@@ -53,20 +53,26 @@ public interface EmbeddableDefinition extends TableElementDefinition {
     TableDefinition getDefiningTable();
 
     /**
+     * The referencing comment of this embeddable, if it differs from the
+     * defining name ({@link #getComment()}).
+     */
+    String getReferencingComment();
+
+    /**
      * The referencing name of this embeddable, if it differs from the defining
      * name ({@link #getName()}).
      */
     String getReferencingName();
 
     /**
-     * The referencing input name of this embeddable, if it differs from the defining
-     * name ({@link #getInputName()}).
+     * The referencing input name of this embeddable, if it differs from the
+     * defining name ({@link #getInputName()}).
      */
     String getReferencingInputName();
 
     /**
-     * The referencing output name of this embeddable, if it differs from the defining
-     * name ({@link #getOutputName()}).
+     * The referencing output name of this embeddable, if it differs from the
+     * defining name ({@link #getOutputName()}).
      */
     String getReferencingOutputName();
 

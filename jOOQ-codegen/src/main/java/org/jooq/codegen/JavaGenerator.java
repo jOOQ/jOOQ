@@ -4791,7 +4791,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (EmbeddableColumnDefinition column : embeddable.getColumns())
                 columnIds.add(out.ref(getStrategy().getJavaIdentifier(column.getReferencingColumn()), colRefSegments(column.getReferencingColumn())));
 
-            out.javadoc("The embeddable type <code>%s</code>.", embeddable.getOutputName());
+            out.javadoc("The embeddable type <code>%s</code>.[[before= ][%s]]", embeddable.getOutputName(), list(escapeEntities(referencingComment(embeddable))));
 
             if (scala)
                 out.println("val %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
@@ -7319,6 +7319,7 @@ public class JavaGenerator extends AbstractGenerator {
             || definition instanceof SchemaDefinition && generateCommentsOnSchemas()
             || definition instanceof TableDefinition && generateCommentsOnTables()
             || definition instanceof ColumnDefinition && generateCommentsOnColumns()
+            || definition instanceof EmbeddableDefinition && generateCommentsOnEmbeddables()
             || definition instanceof UDTDefinition && generateCommentsOnUDTs()
             || definition instanceof AttributeDefinition && generateCommentsOnAttributes()
             || definition instanceof PackageDefinition && generateCommentsOnPackages()
@@ -7326,6 +7327,12 @@ public class JavaGenerator extends AbstractGenerator {
             || definition instanceof ParameterDefinition && generateCommentsOnParameters()
             || definition instanceof SequenceDefinition && generateCommentsOnSequences()
              ? StringUtils.defaultIfBlank(definition.getComment(), "")
+             : "";
+    }
+
+    private String referencingComment(EmbeddableDefinition definition) {
+        return generateCommentsOnEmbeddables()
+             ? StringUtils.defaultIfBlank(definition.getReferencingComment(), "")
              : "";
     }
 

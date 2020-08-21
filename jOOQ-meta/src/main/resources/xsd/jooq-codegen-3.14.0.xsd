@@ -1079,8 +1079,16 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining name of the embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="comment" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining comment on the embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="referencingName" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The referencing name of the embeddable type, defaulting to the defining name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="referencingComment" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The referencing comment on the embeddable type, defaulting to the defining comment.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="tables" type="string" minOccurs="0" maxOccurs="1">
@@ -1460,6 +1468,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
 
       <element name="commentsOnColumns" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all columns.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="commentsOnEmbeddables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all embeddables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="commentsOnUDTs" type="boolean" default="true" minOccurs="0" maxOccurs="1">

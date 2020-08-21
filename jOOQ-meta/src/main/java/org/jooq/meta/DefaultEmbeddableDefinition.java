@@ -54,6 +54,7 @@ public class DefaultEmbeddableDefinition
     private final TableDefinition                  definingTable;
     private final List<String>                     definingColumnNames;
     private final String                           referencingName;
+    private final String                           referencingComment;
     private final TableDefinition                  referencingTable;
     private final List<EmbeddableColumnDefinition> embeddableColumns;
     private final boolean                          replacesFields;
@@ -62,18 +63,21 @@ public class DefaultEmbeddableDefinition
     public DefaultEmbeddableDefinition(
         SchemaDefinition definingSchema,
         String definingName,
+        String definingComment,
         TableDefinition definingTable,
         List<String> definingColumnNames,
         String referencingName,
+        String referencingComment,
         TableDefinition referencingTable,
         List<ColumnDefinition> referencingColumns,
         boolean replacesFields
     ) {
-        super(definingSchema, definingName, "");
+        super(definingSchema, definingName, definingComment);
 
         this.definingColumnNames = definingColumnNames;
         this.definingTable = definingTable;
         this.referencingName = referencingName;
+        this.referencingComment = referencingComment;
         this.referencingTable = referencingTable;
         this.embeddableColumns = new ArrayList<>();
         this.replacesFields = replacesFields;
@@ -95,6 +99,11 @@ public class DefaultEmbeddableDefinition
     @Override
     public final TableDefinition getDefiningTable() {
         return definingTable;
+    }
+
+    @Override
+    public final String getReferencingComment() {
+        return referencingComment;
     }
 
     @Override

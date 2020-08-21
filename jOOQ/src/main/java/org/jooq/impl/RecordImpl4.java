@@ -143,7 +143,10 @@ class RecordImpl4<T1, T2, T3, T4> extends AbstractRecord implements InternalReco
 
     @Override
     public final Record4<T1, T2, T3, T4> values(T1 t1, T2 t2, T3 t3, T4 t4) {
-        fromArray(t1, t2, t3, t4);
+        set(0, t1);
+        set(1, t2);
+        set(2, t3);
+        set(3, t4);
         return this;
     }
 

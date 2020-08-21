@@ -95,7 +95,7 @@ class RecordImpl1<T1> extends AbstractRecord implements InternalRecord, Record1<
 
     @Override
     public final Record1<T1> values(T1 t1) {
-        fromArray(t1);
+        set(0, t1);
         return this;
     }
 

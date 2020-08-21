@@ -159,7 +159,11 @@ class RecordImpl5<T1, T2, T3, T4, T5> extends AbstractRecord implements Internal
 
     @Override
     public final Record5<T1, T2, T3, T4, T5> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        fromArray(t1, t2, t3, t4, t5);
+        set(0, t1);
+        set(1, t2);
+        set(2, t3);
+        set(3, t4);
+        set(4, t5);
         return this;
     }
 

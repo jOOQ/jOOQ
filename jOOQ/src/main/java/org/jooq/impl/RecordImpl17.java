@@ -351,7 +351,23 @@ class RecordImpl17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, 
 
     @Override
     public final Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
-        fromArray(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+        set(0, t1);
+        set(1, t2);
+        set(2, t3);
+        set(3, t4);
+        set(4, t5);
+        set(5, t6);
+        set(6, t7);
+        set(7, t8);
+        set(8, t9);
+        set(9, t10);
+        set(10, t11);
+        set(11, t12);
+        set(12, t13);
+        set(13, t14);
+        set(14, t15);
+        set(15, t16);
+        set(16, t17);
         return this;
     }
 

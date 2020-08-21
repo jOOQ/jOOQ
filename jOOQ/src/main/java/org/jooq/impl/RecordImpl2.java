@@ -111,7 +111,8 @@ class RecordImpl2<T1, T2> extends AbstractRecord implements InternalRecord, Reco
 
     @Override
     public final Record2<T1, T2> values(T1 t1, T2 t2) {
-        fromArray(t1, t2);
+        set(0, t1);
+        set(1, t2);
         return this;
     }
 

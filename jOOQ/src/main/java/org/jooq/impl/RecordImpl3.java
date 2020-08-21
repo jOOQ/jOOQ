@@ -127,7 +127,9 @@ class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRecord, 
 
     @Override
     public final Record3<T1, T2, T3> values(T1 t1, T2 t2, T3 t3) {
-        fromArray(t1, t2, t3);
+        set(0, t1);
+        set(1, t2);
+        set(2, t3);
         return this;
     }
 

@@ -152,6 +152,7 @@ import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Catalog;
 import org.jooq.CharacterSet;
+import org.jooq.CloseableDSLContext;
 import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
@@ -520,10 +521,10 @@ public class DSL {
      * @see JDBCUtils#dialect(String)
      */
     @NotNull
-    public static DSLContext using(String url) {
+    public static CloseableDSLContext using(String url) {
         try {
             Connection connection = DriverManager.getConnection(url);
-            return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+            return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
         }
         catch (SQLException e) {
             throw Tools.translate("Error when initialising Connection", e);
@@ -552,10 +553,10 @@ public class DSL {
      * @see JDBCUtils#dialect(String)
      */
     @NotNull
-    public static DSLContext using(String url, String username, String password) {
+    public static CloseableDSLContext using(String url, String username, String password) {
         try {
             Connection connection = DriverManager.getConnection(url, username, password);
-            return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+            return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
         }
         catch (SQLException e) {
             throw Tools.translate("Error when initialising Connection", e);
@@ -583,10 +584,10 @@ public class DSL {
      * @see JDBCUtils#dialect(String)
      */
     @NotNull
-    public static DSLContext using(String url, Properties properties) {
+    public static CloseableDSLContext using(String url, Properties properties) {
         try {
             Connection connection = DriverManager.getConnection(url, properties);
-            return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+            return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
         }
         catch (SQLException e) {
             throw Tools.translate("Error when initialising Connection", e);

@@ -81,7 +81,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.function.BiFunction;
@@ -143,30 +142,7 @@ import org.jetbrains.annotations.Nullable;
  * @see Configuration
  * @author Lukas Eder
  */
-public interface DSLContext extends Scope , AutoCloseable {
-
-    // -------------------------------------------------------------------------
-    // XXX AutoCloseable API
-    // -------------------------------------------------------------------------
-
-    /**
-     * Close the underlying resources, if any resources have been allocated when
-     * constructing this <code>DSLContext</code>.
-     * <p>
-     * Some {@link DSLContext} constructors, such as {@link DSL#using(String)},
-     * {@link DSL#using(String, Properties)}, or
-     * {@link DSL#using(String, String, String)} allocate a {@link Connection}
-     * resource, which is inaccessible to the outside of the {@link DSLContext}
-     * implementation. Proper resource management must thus be done via this
-     * {@link #close()} method.
-     *
-     * @throws DataAccessException When something went wrong closing the
-     *             underlying resources.
-     */
-
-    @Override
-
-    void close() throws DataAccessException;
+public interface DSLContext extends Scope {
 
     // -------------------------------------------------------------------------
     // XXX Configuration API

@@ -2117,13 +2117,7 @@ public class JavaGenerator extends AbstractGenerator {
         boolean override = generateInterfaces();
 
         if (scala) {
-            out.println("def %s: %s = {", getter, type);
-            out.println("val r = get(%s)", index);
-            out.println("if (r == null)");
-            out.println("null");
-            out.println("else");
-            out.println("r.asInstanceOf[%s]", type);
-            out.println("}");
+            out.println("def %s: %s = get(%s).asInstanceOf[%s]", getter, type, index, type);
         }
         else if (kotlin) {
             out.tab(1).println("get() = get(%s) as %s?", index, type);

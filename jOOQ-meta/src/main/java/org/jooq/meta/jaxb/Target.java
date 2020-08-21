@@ -38,6 +38,8 @@ public class Target implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "UTF-8")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String encoding = "UTF-8";
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String locale;
     @XmlElement(defaultValue = "true")
     protected Boolean clean = true;
 
@@ -96,6 +98,22 @@ public class Target implements Serializable, XMLAppendable
     }
 
     /**
+     * The locale to be used with all locale specific operations.
+     * 
+     */
+    public String getLocale() {
+        return locale;
+    }
+
+    /**
+     * The locale to be used with all locale specific operations.
+     * 
+     */
+    public void setLocale(String value) {
+        this.locale = value;
+    }
+
+    /**
      * Whether the target package should be cleaned to contain only generated code after a generation run.
      * 
      * @return
@@ -149,6 +167,15 @@ public class Target implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The locale to be used with all locale specific operations.
+     * 
+     */
+    public Target withLocale(String value) {
+        setLocale(value);
+        return this;
+    }
+
     public Target withClean(Boolean value) {
         setClean(value);
         return this;
@@ -159,6 +186,7 @@ public class Target implements Serializable, XMLAppendable
         builder.append("packageName", packageName);
         builder.append("directory", directory);
         builder.append("encoding", encoding);
+        builder.append("locale", locale);
         builder.append("clean", clean);
     }
 
@@ -208,6 +236,15 @@ public class Target implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (locale == null) {
+            if (other.locale!= null) {
+                return false;
+            }
+        } else {
+            if (!locale.equals(other.locale)) {
+                return false;
+            }
+        }
         if (clean == null) {
             if (other.clean!= null) {
                 return false;
@@ -227,6 +264,7 @@ public class Target implements Serializable, XMLAppendable
         result = ((prime*result)+((packageName == null)? 0 :packageName.hashCode()));
         result = ((prime*result)+((directory == null)? 0 :directory.hashCode()));
         result = ((prime*result)+((encoding == null)? 0 :encoding.hashCode()));
+        result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((clean == null)? 0 :clean.hashCode()));
         return result;
     }

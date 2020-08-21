@@ -1370,7 +1370,7 @@ public final class StringUtils {
     }
 
     /**
-     * Change a string's first letter to lower case
+     * Change a string's first letter to upper case
      */
     public static String toUC(String string) {
         if (string == null || string.isEmpty())

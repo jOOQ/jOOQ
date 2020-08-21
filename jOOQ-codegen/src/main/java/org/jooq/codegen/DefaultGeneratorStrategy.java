@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 // ...
 import org.jooq.meta.ArrayDefinition;
@@ -80,6 +81,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     private String  targetDirectory;
     private String  targetPackage;
+    private Locale  targetLocale               = Locale.getDefault();
     private boolean instanceFields             = true;
     private boolean javaBeansGettersAndSetters = false;
 
@@ -127,6 +129,16 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         this.targetPackage = packageName;
     }
 
+    @Override
+    public Locale getTargetLocale() {
+        return targetLocale;
+    }
+
+    @Override
+    public void setTargetLocale(Locale targetLocale) {
+        this.targetLocale = targetLocale;
+    }
+
     // -------------------------------------------------------------------------
     // Strategy methods
     // -------------------------------------------------------------------------
@@ -146,7 +158,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         // [#6307] Some databases work with per-table namespacing for indexes, not per-schema namespacing.
         //         In order to have non-ambiguous identifiers, we need to include the table name.
         else if (definition instanceof IndexDefinition && asList(MARIADB, MYSQL).contains(definition.getDatabase().getDialect().family()))
-            return ((IndexDefinition) definition).getTable().getOutputName().toUpperCase() + "_" + definition.getOutputName().toUpperCase();
+            return ((IndexDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "_" + definition.getOutputName().toUpperCase(targetLocale);
 
 
 
@@ -156,11 +168,11 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
         // [#9758] And then also for foreign keys
         else if (definition instanceof ForeignKeyDefinition && asList(POSTGRES).contains(definition.getDatabase().getDialect().family()))
-            return ((ForeignKeyDefinition) definition).getTable().getOutputName().toUpperCase() + "__" + definition.getOutputName().toUpperCase();
+            return ((ForeignKeyDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "__" + definition.getOutputName().toUpperCase(targetLocale);
 
         // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name, member name).
         else if (definition instanceof EmbeddableDefinition)
-            return ((EmbeddableDefinition) definition).getReferencingOutputName().toUpperCase();
+            return ((EmbeddableDefinition) definition).getReferencingOutputName().toUpperCase(targetLocale);
 
 
 
@@ -168,7 +180,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
 
         else
-            return definition.getOutputName().toUpperCase();
+            return definition.getOutputName().toUpperCase(targetLocale);
     }
 
 
@@ -263,7 +275,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         // [#2032] In multi-catalog setups, the catalog name goes into the package
         if (definition.getDatabase().getCatalogs().size() > 1) {
             sb.append(".");
-            sb.append(getJavaIdentifier(definition.getCatalog()).toLowerCase());
+            sb.append(getJavaIdentifier(definition.getCatalog()).toLowerCase(targetLocale));
         }
 
         if (!(definition instanceof CatalogDefinition)) {
@@ -271,7 +283,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             // [#282] In multi-schema setups, the schema name goes into the package
             if (definition.getDatabase().getSchemata().size() > 1) {
                 sb.append(".");
-                sb.append(getJavaIdentifier(definition.getSchema()).toLowerCase());
+                sb.append(getJavaIdentifier(definition.getSchema()).toLowerCase(targetLocale));
             }
 
             if (!(definition instanceof SchemaDefinition)) {
@@ -325,12 +337,12 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     private String getJavaClassName0LC(Definition definition, Mode mode) {
         String result = getJavaClassName0(definition, mode);
-        return result.substring(0, 1).toLowerCase() + result.substring(1);
+        return result.substring(0, 1).toLowerCase(targetLocale) + result.substring(1);
     }
 
     private String getJavaClassName0LC(String outputName, Mode mode) {
         String result = getJavaClassName0(outputName, mode);
-        return result.substring(0, 1).toLowerCase() + result.substring(1);
+        return result.substring(0, 1).toLowerCase(targetLocale) + result.substring(1);
     }
 
     private String getJavaClassName0(Definition definition, Mode mode) {
@@ -373,7 +385,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
             // [#330] [#6529] A UDT inside of a package is a PL/SQL RECORD type
             if (udt.getPackage() != null)
-                return "packages." + getJavaIdentifier(udt.getPackage()).toLowerCase() + ".udt";
+                return "packages." + getJavaIdentifier(udt.getPackage()).toLowerCase(targetLocale) + ".udt";
             else
                 return "udt";
         }
@@ -384,10 +396,10 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             RoutineDefinition routine = (RoutineDefinition) definition;
 
             if (routine.getPackage() instanceof UDTDefinition) {
-                return "udt." + getJavaIdentifier(routine.getPackage()).toLowerCase();
+                return "udt." + getJavaIdentifier(routine.getPackage()).toLowerCase(targetLocale);
             }
             else if (routine.getPackage() != null) {
-                return "packages." + getJavaIdentifier(routine.getPackage()).toLowerCase();
+                return "packages." + getJavaIdentifier(routine.getPackage()).toLowerCase(targetLocale);
             }
             else {
                 return "routines";
@@ -405,7 +417,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
             // [#7125] An array inside of a package is a PL/SQL TABLE type
             if (array.getPackage() != null)
-                return "packages." + getJavaIdentifier(array.getPackage()).toLowerCase() + ".udt";
+                return "packages." + getJavaIdentifier(array.getPackage()).toLowerCase(targetLocale) + ".udt";
             else
                 return "udt";
         }

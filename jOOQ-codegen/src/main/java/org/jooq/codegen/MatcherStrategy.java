@@ -141,11 +141,11 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             case AS_IS:
                 return string;
             case LOWER:
-                return string.toLowerCase();
+                return string.toLowerCase(getTargetLocale());
             case LOWER_FIRST_LETTER:
                 return StringUtils.toLC(string);
             case UPPER:
-                return string.toUpperCase();
+                return string.toUpperCase(getTargetLocale());
             case UPPER_FIRST_LETTER:
                 return StringUtils.toUC(string);
             case CAMEL:

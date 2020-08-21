@@ -44,6 +44,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Set;
 
 import org.jooq.meta.Database;
@@ -1139,6 +1140,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setTargetEncoding(String encoding) {
         this.targetEncoding = encoding;
+    }
+
+    @Override
+    public Locale getTargetLocale() {
+        return strategy.getTargetLocale();
+    }
+
+    @Override
+    public void setTargetLocale(Locale targetLocale) {
+        strategy.setTargetLocale(targetLocale);
     }
 
     @Override

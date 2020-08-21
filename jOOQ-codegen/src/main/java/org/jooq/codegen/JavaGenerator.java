@@ -647,7 +647,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Check if we've previously encountered a Java type of the same case-insensitive, fully-qualified name.
             String name = getStrategy().getFullJavaClassName(definition);
-            String nameLC = name.toLowerCase();
+            String nameLC = name.toLowerCase(getStrategy().getTargetLocale());
             String existing = included.put(nameLC, name);
 
             if (existing == null)
@@ -1454,7 +1454,7 @@ public class JavaGenerator extends AbstractGenerator {
                 // Instance methods ship with a SELF parameter at the first position
                 // [#1584] Static methods don't have that
                 boolean instance = routine.getInParameters().size() > 0
-                                && routine.getInParameters().get(0).getInputName().toUpperCase().equals("SELF");
+                                && routine.getInParameters().get(0).getInputName().toUpperCase(getStrategy().getTargetLocale()).equals("SELF");
 
                 try {
                     if (!routine.isSQLUsable()) {
@@ -7908,7 +7908,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     // [#5574] While MySQL usually reports actual values, it does report
                     //         a CURRENT_TIMESTAMP expression, inconsistently
-                    if (d != null && d.toLowerCase().startsWith("current_timestamp"))
+                    if (d != null && d.toLowerCase(getStrategy().getTargetLocale()).startsWith("current_timestamp"))
                         sb.append("org.jooq.impl.DSL.field(\"")
                           .append(escapeString(d))
                           .append("\"");

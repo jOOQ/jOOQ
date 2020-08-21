@@ -57,6 +57,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -85,6 +86,7 @@ import org.jooq.meta.jaxb.Strategy;
 import org.jooq.meta.jaxb.Target;
 // ...
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 
@@ -292,6 +294,16 @@ public class GenerationTool {
             g.setStrategy(new Strategy());
         if (g.getTarget() == null)
             g.setTarget(new Target());
+
+        // [#9744] The <locale/> is also needed in GenerationTool:
+        Locale locale = Locale.getDefault();
+        if (!StringUtils.isBlank(g.getTarget().getLocale()))
+
+            if (true)
+                locale = Locale.forLanguageTag(g.getTarget().getLocale());
+            else
+            /* [java-8] */
+                log.info("Locale support", "Locale support has been added for the Java 8+ distributions only");
 
         Database database = null;
 
@@ -573,7 +585,7 @@ public class GenerationTool {
                     log.info("Using custom schema version provider : " + svp);
                 }
                 catch (Exception ignore) {
-                    if (d.getSchemaVersionProvider().toLowerCase().startsWith("select")) {
+                    if (d.getSchemaVersionProvider().toLowerCase(locale).startsWith("select")) {
                         svp = new SQLSchemaVersionProvider(connection, d.getSchemaVersionProvider());
                         log.info("Using SQL schema version provider : " + d.getSchemaVersionProvider());
                     }
@@ -589,7 +601,7 @@ public class GenerationTool {
                     log.info("Using custom catalog version provider : " + cvp);
                 }
                 catch (Exception ignore) {
-                    if (d.getCatalogVersionProvider().toLowerCase().startsWith("select")) {
+                    if (d.getCatalogVersionProvider().toLowerCase(locale).startsWith("select")) {
                         cvp = new SQLCatalogVersionProvider(connection, d.getCatalogVersionProvider());
                         log.info("Using SQL catalog version provider : " + d.getCatalogVersionProvider());
                     }
@@ -652,6 +664,7 @@ public class GenerationTool {
 
             if (g.getTarget().isClean() != null)
                 generator.setTargetClean(g.getTarget().isClean());
+            generator.setTargetLocale(locale);
 
             if (g.getGenerate().isIndexes() != null)
                 generator.setGenerateIndexes(g.getGenerate().isIndexes());

@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -108,6 +109,16 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     @Override
     public void setTargetPackage(String packageName) {
         delegate.setTargetPackage(packageName);
+    }
+
+    @Override
+    public Locale getTargetLocale() {
+        return delegate.getTargetLocale();
+    }
+
+    @Override
+    public void setTargetLocale(Locale targetLocale) {
+        delegate.setTargetLocale(targetLocale);
     }
 
     @Override

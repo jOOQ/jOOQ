@@ -39,6 +39,7 @@
 package org.jooq.codegen;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
@@ -1028,4 +1029,14 @@ public interface Generator {
      * Whether the target package should be cleaned to contain only generated code after a generation run.
      */
     void setTargetClean(boolean clean);
+
+    /**
+     * The target locale.
+     */
+    Locale getTargetLocale();
+
+    /**
+     *The target locale.
+     */
+    void setTargetLocale(Locale targetLocale);
 }

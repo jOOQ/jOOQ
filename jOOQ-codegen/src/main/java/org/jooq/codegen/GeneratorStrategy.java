@@ -40,6 +40,7 @@ package org.jooq.codegen;
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -77,6 +78,16 @@ public interface GeneratorStrategy {
      * Initialise the target package name
      */
     void setTargetPackage(String packageName);
+
+    /**
+     * @return Get the target locale for the current configuration
+     */
+    Locale getTargetLocale();
+
+    /**
+     * Initialise the target locale
+     */
+    void setTargetLocale(Locale targetLocale);
 
     /**
      * Whether fields are instance fields (as opposed to static fields)

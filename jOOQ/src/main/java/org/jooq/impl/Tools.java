@@ -5335,9 +5335,15 @@ final class Tools {
         return array == null || array.length == 0;
     }
 
-    static final boolean isEmbeddable(Field<?> field) {
+    @SuppressWarnings("unchecked")
+    static final Class<? extends AbstractRecord> embeddedRecordType(Field<?> field) {
         return field instanceof EmbeddableTableField
-            || field instanceof Val && EmbeddableRecord.class.isAssignableFrom(field.getType());
+             ? (Class<AbstractRecord>) ((EmbeddableTableField<?, ?>) field).recordType
+             : field instanceof Val && ((Val<?>) field).value instanceof EmbeddableRecord
+             ? ((AbstractRecord) ((Val<?>) field).value).getClass()
+             : EmbeddableRecord.class.isAssignableFrom(field.getType())
+             ? ((Field<AbstractRecord>) field).getType()
+             : null;
     }
 
     @SuppressWarnings("unchecked")
@@ -5346,12 +5352,10 @@ final class Tools {
              ? ((EmbeddableTableField<?, ?>) field).fields
              : field instanceof Val && ((Val<?>) field).value instanceof EmbeddableRecord
              ? ((EmbeddableRecord<?>) ((Val<?>) field).value).valuesRow().fields()
-
-             // It's an embeddable type, but it is null
-             : field instanceof Val && EmbeddableRecord.class.isAssignableFrom(field.getType())
-             ? newInstance((Class<? extends EmbeddableRecord<?>>) field.getType()).valuesRow().fields()
              : field instanceof ScalarSubquery
              ? embeddedFields((ScalarSubquery<?>) field)
+             : EmbeddableRecord.class.isAssignableFrom(field.getType())
+             ? newInstance(((Field<EmbeddableRecord<?>>) field).getType()).valuesRow().fields()
              : null;
     }
 

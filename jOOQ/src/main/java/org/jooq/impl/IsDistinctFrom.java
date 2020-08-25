@@ -67,7 +67,6 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Tools.embeddedFields;
-import static org.jooq.impl.Tools.isEmbeddable;
 
 import java.util.Set;
 
@@ -112,7 +111,7 @@ final class IsDistinctFrom<T> extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (isEmbeddable(lhs) && isEmbeddable(rhs))
+        if (lhs.getDataType().isEmbeddable() && rhs.getDataType().isEmbeddable())
             ctx.visit(row(embeddedFields(lhs)).compare(comparator, row(embeddedFields(rhs))));
 
 

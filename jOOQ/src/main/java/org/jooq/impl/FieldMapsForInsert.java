@@ -49,7 +49,6 @@ import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
-import static org.jooq.impl.Tools.isEmbeddable;
 import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 

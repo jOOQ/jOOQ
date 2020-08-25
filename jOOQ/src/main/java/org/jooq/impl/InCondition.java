@@ -79,7 +79,6 @@ import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_OR;
 import static org.jooq.impl.Tools.embeddedFields;
-import static org.jooq.impl.Tools.isEmbeddable;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.AbstractList;
@@ -122,7 +121,7 @@ final class InCondition<T> extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (isEmbeddable(field))
+        if (field.getDataType().isEmbeddable())
             if (comparator == IN)
                 ctx.visit(row(embeddedFields(field)).in(rows()));
             else

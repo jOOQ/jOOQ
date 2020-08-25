@@ -44,7 +44,6 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.indexOrFail;
-import static org.jooq.impl.Tools.isEmbeddable;
 import static org.jooq.impl.Tools.resetChangedOnNotNull;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.ThreadGuard.Guard.RECORD_TOSTRING;
@@ -330,7 +329,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> void set(Field<T> field, T value) {
-        if (isEmbeddable(field)) {
+        if (field.getDataType().isEmbeddable()) {
             Field<?>[] f = embeddedFields(field);
             Object[] v = value instanceof EmbeddableRecord
                 ? ((EmbeddableRecord) value).intoArray()

@@ -80,7 +80,6 @@ import static org.jooq.impl.Keywords.K_ESCAPE;
 import static org.jooq.impl.Keywords.K_VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.embeddedFields;
-import static org.jooq.impl.Tools.isEmbeddable;
 
 import java.util.Set;
 
@@ -122,9 +121,9 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
     @Override
     public final void accept(Context<?> ctx) {
-        boolean field1Embeddable = isEmbeddable(field1);
+        boolean field1Embeddable = field1.getDataType().isEmbeddable();
 
-        if (field1Embeddable && isEmbeddable(field2))
+        if (field1Embeddable && field2.getDataType().isEmbeddable())
             ctx.visit(row(embeddedFields(field1)).compare(comparator, embeddedFields(field2)));
         else if (field1Embeddable && field2 instanceof ScalarSubquery)
             ctx.visit(row(embeddedFields(field1)).compare(comparator, ((ScalarSubquery<?>) field2).query));

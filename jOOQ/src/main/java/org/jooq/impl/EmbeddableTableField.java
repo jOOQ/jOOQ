@@ -41,6 +41,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import org.jooq.Context;
+import org.jooq.EmbeddableRecord;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -50,18 +51,20 @@ import org.jooq.TableField;
 /**
  * @author Lukas Eder
  */
-final class EmbeddableTableField<R extends Record, T extends Record> extends AbstractField<T> implements TableField<R, T> {
+final class EmbeddableTableField<R extends Record, E extends EmbeddableRecord<E>>
+extends AbstractField<E>
+implements TableField<R, E> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -7105430856294526440L;
-    final Class<T>            recordType;
+    final Class<E>            recordType;
     final boolean             replacesFields;
     final Table<R>            table;
     final TableField<R, ?>[]  fields;
 
-    EmbeddableTableField(Name name, Class<T> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>[] fields) {
+    EmbeddableTableField(Name name, Class<E> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>[] fields) {
         super(name, new DefaultDataType<>(SQLDialect.DEFAULT, recordType, name.last()));
 
         this.recordType = recordType;

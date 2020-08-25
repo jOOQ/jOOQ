@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.embeddedRecordType;
 import static org.jooq.impl.Tools.recordFactory;
 
 import java.io.InputStream;
@@ -1698,9 +1699,9 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
                         // TODO: [#4695] Calculate the correct Record[B] type
                         recordType = RecordImplN.class;
                     }
-                    else if (field instanceof EmbeddableTableField) {
+                    else if (field.getDataType().isEmbeddable()) {
                         nested = embeddedFields(field);
-                        recordType = (Class<AbstractRecord>) ((EmbeddableTableField<?, ?>) field).recordType;
+                        recordType = embeddedRecordType(field);
                     }
 
                     if (nested != null) {

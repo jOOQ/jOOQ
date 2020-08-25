@@ -72,7 +72,6 @@ import static org.jooq.impl.Keywords.K_BETWEEN;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_SYMMETRIC;
 import static org.jooq.impl.Tools.embeddedFields;
-import static org.jooq.impl.Tools.isEmbeddable;
 
 import java.util.Set;
 
@@ -138,7 +137,9 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (isEmbeddable(field) && isEmbeddable(minValue) && isEmbeddable(maxValue)) {
+        if (field.getDataType().isEmbeddable()
+                && minValue.getDataType().isEmbeddable()
+                && maxValue.getDataType().isEmbeddable()) {
             RowN f = row(embeddedFields(field));
             RowN min = row(embeddedFields(minValue));
             RowN max = row(embeddedFields(maxValue));

@@ -72,7 +72,6 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.embeddedFields;
-import static org.jooq.impl.Tools.isEmbeddable;
 import static org.jooq.tools.Convert.convert;
 
 import java.util.ArrayList;
@@ -123,7 +122,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (isEmbeddable(field))
+        if (field.getDataType().isEmbeddable())
             ctx.visit(row(embeddedFields(field)).compare(comparator, query));
         else
             accept0(ctx);

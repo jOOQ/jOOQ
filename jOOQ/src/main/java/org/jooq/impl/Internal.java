@@ -79,7 +79,7 @@ public final class Internal {
      */
     @SafeVarargs
     @NotNull
-    public static final <R extends Record, T extends Record> TableField<R, T> createEmbeddable(Name name, Class<T> recordType, Table<R> table, TableField<R, ?>... fields) {
+    public static final <R extends Record, E extends EmbeddableRecord<E>> TableField<R, E> createEmbeddable(Name name, Class<E> recordType, Table<R> table, TableField<R, ?>... fields) {
         return createEmbeddable(name, recordType, false, table, fields);
     }
 
@@ -88,7 +88,7 @@ public final class Internal {
      */
     @SafeVarargs
     @NotNull
-    public static final <R extends Record, T extends Record> TableField<R, T> createEmbeddable(Name name, Class<T> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>... fields) {
+    public static final <R extends Record, E extends EmbeddableRecord<E>> TableField<R, E> createEmbeddable(Name name, Class<E> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>... fields) {
         return new EmbeddableTableField<>(name, recordType, replacesFields, table, fields);
     }
 

@@ -5341,7 +5341,7 @@ final class Tools {
              ? (Class<AbstractRecord>) ((EmbeddableTableField<?, ?>) field).recordType
              : field instanceof Val && ((Val<?>) field).value instanceof EmbeddableRecord
              ? ((AbstractRecord) ((Val<?>) field).value).getClass()
-             : EmbeddableRecord.class.isAssignableFrom(field.getType())
+             : field.getDataType().isEmbeddable()
              ? ((Field<AbstractRecord>) field).getType()
              : null;
     }
@@ -5354,7 +5354,7 @@ final class Tools {
              ? ((EmbeddableRecord<?>) ((Val<?>) field).value).valuesRow().fields()
              : field instanceof ScalarSubquery
              ? embeddedFields((ScalarSubquery<?>) field)
-             : EmbeddableRecord.class.isAssignableFrom(field.getType())
+             : field.getDataType().isEmbeddable()
              ? newInstance(((Field<EmbeddableRecord<?>>) field).getType()).valuesRow().fields()
              : null;
     }
@@ -5411,14 +5411,7 @@ final class Tools {
             public Iterator<E> iterator() {
                 Iterator<E> it = singletonList(field).iterator();
 
-                if (field instanceof EmbeddableTableField)
-                    return new FlatteningIterator<E>(it) {
-                        @Override
-                        List<E> flatten(E e) {
-                            return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
-                        }
-                    };
-                else if (EmbeddableRecord.class.isAssignableFrom(field.getType()))
+                if (field.getDataType().isEmbeddable())
                     return new FlatteningIterator<E>(it) {
                         @Override
                         List<E> flatten(E e) {

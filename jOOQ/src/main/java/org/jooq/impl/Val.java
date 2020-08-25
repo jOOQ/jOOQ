@@ -49,7 +49,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.EmbeddableRecord;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
@@ -113,7 +112,7 @@ final class Val<T> extends AbstractParam<T> {
 
     @Override
     public void accept(Context<?> ctx) {
-        if (EmbeddableRecord.class.isAssignableFrom(getType())) {
+        if (getDataType().isEmbeddable()) {
             Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
             ctx.data(DATA_LIST_ALREADY_INDENTED, true);

@@ -5418,7 +5418,7 @@ final class Tools {
                             return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
                         }
                     };
-                else if (field instanceof Val && EmbeddableRecord.class.isAssignableFrom(field.getType()))
+                else if (EmbeddableRecord.class.isAssignableFrom(field.getType()))
                     return new FlatteningIterator<E>(it) {
                         @Override
                         List<E> flatten(E e) {

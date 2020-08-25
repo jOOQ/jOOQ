@@ -5375,7 +5375,7 @@ final class Tools {
         String[] fieldNames = fieldNameStrings(result.size());
         Table<?> t = field.query.asTable("t", fieldNames);
         for (int i = 0; i < result.size(); i++)
-            result.set(i, DSL.field(DSL.select(DSL.field(name("t", fieldNames[i]))).from(t)));
+            result.set(i, DSL.field(DSL.select(DSL.field(name("t", fieldNames[i]), result.get(i).getDataType())).from(t)));
 
         return result.toArray(EMPTY_FIELD);
     }

@@ -5350,7 +5350,30 @@ final class Tools {
              // It's an embeddable type, but it is null
              : field instanceof Val && EmbeddableRecord.class.isAssignableFrom(field.getType())
              ? newInstance((Class<? extends EmbeddableRecord<?>>) field.getType()).valuesRow().fields()
+             : field instanceof ScalarSubquery
+             ? embeddedFields((ScalarSubquery<?>) field)
              : null;
+    }
+
+    static final Field<?>[] embeddedFields(ScalarSubquery<?> field) {
+
+        // Split a scalar subquery of degree N into N scalar subqueries of degree 1
+        // In a few cases, there's a better solution that prevents the N subqueries,
+        // but this is a good default that works in many cases.
+        // [#8353] [#10522] [#10523] TODO: Factor out some of this logic and
+        // reuse it for the emulation of UPDATE .. SET row = (SELECT ..)
+        List<Field<?>> select = field.query.getSelect();
+        List<Field<?>> result = new ArrayList<>();
+
+        for (Field<?> f : flattenCollection(select, false))
+            result.add(f);
+
+        String[] fieldNames = fieldNameStrings(result.size());
+        Table<?> t = field.query.asTable("t", fieldNames);
+        for (int i = 0; i < result.size(); i++)
+            result.set(i, DSL.field(DSL.select(DSL.field(name("t", fieldNames[i]))).from(t)));
+
+        return result.toArray(EMPTY_FIELD);
     }
 
     private static final EmbeddableRecord<?> newInstance(Class<? extends EmbeddableRecord<?>> type) {
@@ -5423,8 +5446,7 @@ final class Tools {
 
                     @SuppressWarnings("unchecked")
                     @Override
-                    List<E> flatten(E e) {
-                        if (e instanceof EmbeddableTableField) {
+                    Iterable<E> flatten(E e) {
 
 
 
@@ -5437,11 +5459,7 @@ final class Tools {
 
 
 
-
-                            return (List<E>) Arrays.asList(((EmbeddableTableField<?, ?>) e).fields);
-                        }
-
-                        return null;
+                        return Tools.flatten(e);
                     }
                 };
             }
@@ -5510,7 +5528,7 @@ final class Tools {
             this.delegate = delegate;
         }
 
-        abstract List<E> flatten(E e);
+        abstract Iterable<E> flatten(E e);
 
         private final void move() {
             if (next == null) {
@@ -5527,7 +5545,7 @@ final class Tools {
                 if (delegate.hasNext()) {
                     next = delegate.next();
 
-                    List<E> flattened = flatten(next);
+                    Iterable<E> flattened = flatten(next);
                     if (flattened == null)
                         return;
 

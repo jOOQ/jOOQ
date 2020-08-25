@@ -123,10 +123,10 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
     public final void accept(Context<?> ctx) {
         boolean field1Embeddable = field1.getDataType().isEmbeddable();
 
-        if (field1Embeddable && field2.getDataType().isEmbeddable())
-            ctx.visit(row(embeddedFields(field1)).compare(comparator, embeddedFields(field2)));
-        else if (field1Embeddable && field2 instanceof ScalarSubquery)
+        if (field1Embeddable && field2 instanceof ScalarSubquery)
             ctx.visit(row(embeddedFields(field1)).compare(comparator, ((ScalarSubquery<?>) field2).query));
+        else if (field1Embeddable && field2.getDataType().isEmbeddable())
+            ctx.visit(row(embeddedFields(field1)).compare(comparator, embeddedFields(field2)));
         else
             accept0(ctx);
     }

@@ -68,7 +68,6 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 // ...
@@ -127,7 +126,6 @@ final class RowSubqueryCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Context<?> ctx) {
-        final Configuration configuration = ctx.configuration();
         final RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
 
         // [#3505] TODO: Emulate this where it is not supported

@@ -249,7 +249,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(Field<T> field) {
-        if (field instanceof EmbeddableTableField)
+        if (field.getDataType().isEmbeddable())
             return (T) Tools
                 .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
                 .operate(new TransferRecordState<Record>(embeddedFields(field)));

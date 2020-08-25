@@ -76,6 +76,7 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Domain;
+import org.jooq.EmbeddableRecord;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -654,6 +655,11 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         Class<?> tType = tType0();
         return 
             (!isBinary() && tType.isArray());
+    }
+
+    @Override
+    public final boolean isEmbeddable() {
+        return EmbeddableRecord.class.isAssignableFrom(tType0());
     }
 
     @Override

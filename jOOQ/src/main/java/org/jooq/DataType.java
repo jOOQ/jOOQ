@@ -771,6 +771,11 @@ public interface DataType<T> extends Named {
     boolean isArray();
 
     /**
+     * Whether this data type is an embeddable type.
+     */
+    boolean isEmbeddable();
+
+    /**
      * Whether this data type is a UDT type.
      */
     boolean isUDT();

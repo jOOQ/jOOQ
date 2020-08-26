@@ -104,6 +104,11 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
         return null;
     }
 
+    @Override
+    public final Schema getSchema(Name name) {
+        return find(name, getSchemas());
+    }
+
     /**
      * {@inheritDoc}
      * <p>

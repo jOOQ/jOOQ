@@ -96,6 +96,13 @@ public interface Catalog extends Named {
     @Nullable
     Schema getSchema(String name);
 
+    /**
+     * Get a schema by its name in this catalog, or <code>null</code> if no such
+     * schema exists.
+     */
+    @Nullable
+    Schema getSchema(Name name);
+
 
     /**
      * Stream all schemas contained in this catalog.

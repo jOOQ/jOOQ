@@ -105,6 +105,11 @@ public final class LazyCatalog extends AbstractNamed implements Catalog {
         return catalog().getSchema(name);
     }
 
+    @Override
+    public final Schema getSchema(Name name) {
+        return catalog().getSchema(name);
+    }
+
 
 
     @Override

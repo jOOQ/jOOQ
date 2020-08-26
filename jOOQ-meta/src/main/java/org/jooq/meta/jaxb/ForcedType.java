@@ -37,6 +37,7 @@ public class ForcedType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
     protected Boolean enumConverter;
+    protected LambdaConverter lambdaConverter;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -138,6 +139,22 @@ public class ForcedType implements Serializable, XMLAppendable
      */
     public void setEnumConverter(Boolean value) {
         this.enumConverter = value;
+    }
+
+    /**
+     * A lambda converter implementation for the {@link #getUserType()}.
+     * 
+     */
+    public LambdaConverter getLambdaConverter() {
+        return lambdaConverter;
+    }
+
+    /**
+     * A lambda converter implementation for the {@link #getUserType()}.
+     * 
+     */
+    public void setLambdaConverter(LambdaConverter value) {
+        this.lambdaConverter = value;
     }
 
     /**
@@ -366,6 +383,15 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
+     * A lambda converter implementation for the {@link #getUserType()}.
+     * 
+     */
+    public ForcedType withLambdaConverter(LambdaConverter value) {
+        setLambdaConverter(value);
+        return this;
+    }
+
+    /**
      * A {@link org.jooq.Binding} implementation for the custom type.
      * 
      */
@@ -477,6 +503,7 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("userType", userType);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
+        builder.append("lambdaConverter", lambdaConverter);
         builder.append("binding", binding);
         builder.append("excludeExpression", excludeExpression);
         builder.append("includeExpression", includeExpression);
@@ -542,6 +569,15 @@ public class ForcedType implements Serializable, XMLAppendable
             }
         } else {
             if (!enumConverter.equals(other.enumConverter)) {
+                return false;
+            }
+        }
+        if (lambdaConverter == null) {
+            if (other.lambdaConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!lambdaConverter.equals(other.lambdaConverter)) {
                 return false;
             }
         }
@@ -655,6 +691,7 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((userType == null)? 0 :userType.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
+        result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
         result = ((prime*result)+((excludeExpression == null)? 0 :excludeExpression.hashCode()));
         result = ((prime*result)+((includeExpression == null)? 0 :includeExpression.hashCode()));

@@ -214,6 +214,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link LambdaConverter }
+     * 
+     */
+    public LambdaConverter createLambdaConverter() {
+        return new LambdaConverter();
+    }
+
+    /**
      * Create an instance of {@link Generate }
      * 
      */

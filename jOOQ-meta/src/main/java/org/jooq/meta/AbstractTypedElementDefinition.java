@@ -38,6 +38,7 @@
 package org.jooq.meta;
 
 
+import static java.lang.Boolean.FALSE;
 import static org.jooq.tools.Convert.convert;
 import static org.jooq.tools.StringUtils.isEmpty;
 
@@ -57,6 +58,7 @@ import org.jooq.impl.EnumConverter;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.ForcedType;
+import org.jooq.meta.jaxb.LambdaConverter;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -225,20 +227,13 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 // [#5877] [#6567] EnumConverters profit from simplified configuration
                 if (Boolean.TRUE.equals(customType.isEnumConverter()) ||
                     EnumConverter.class.getName().equals(customType.getConverter())) {
-
-                    String tType = Object.class.getName();
-
-                    if (resolver != null)
-                        tType = resolver.resolve(definedType);
-                    else
-                        try {
-                            tType = getDataType(db, definedType.getType(), definedType.getPrecision(), definedType.getScale())
-                                .getType()
-                                .getName();
-                        }
-                        catch (SQLDialectNotSupportedException ignore) {}
-
+                    String tType = tType(db, resolver, definedType);
                     converter = "new " + EnumConverter.class.getName() + "<" + tType + ", " + uType + ">(" + tType + ".class, " + uType + ".class)";
+                }
+                else if (customType.getLambdaConverter() != null) {
+                    LambdaConverter c = customType.getLambdaConverter();
+                    String tType = tType(db, resolver, definedType);
+                    converter = "org.jooq.Converter.of" + (!FALSE.equals(c.isNullable()) ? "Nullable" : "") + "(" + tType + ".class, " + uType + ".class, " + c.getFrom() + ", " + c.getTo() + ")";
                 }
                 else if (!StringUtils.isBlank(customType.getConverter())) {
                     converter = customType.getConverter();
@@ -309,6 +304,20 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         return result;
     }
 
+    private static final String tType(Database db, JavaTypeResolver resolver, DataTypeDefinition definedType) {
+        if (resolver != null)
+            return resolver.resolve(definedType);
+
+        try {
+            return getDataType(db, definedType.getType(), definedType.getPrecision(), definedType.getScale())
+                .getType()
+                .getName();
+        }
+        catch (SQLDialectNotSupportedException ignore) {
+            return Object.class.getName();
+        }
+    }
+
     @SuppressWarnings("deprecation")
     public static final CustomType customType(Database db, ForcedType forcedType) {
         String name = forcedType.getName();
@@ -328,6 +337,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
             return new CustomType()
                 .withBinding(forcedType.getBinding())
                 .withEnumConverter(forcedType.isEnumConverter())
+                .withLambdaConverter(forcedType.getLambdaConverter())
                 .withConverter(forcedType.getConverter())
                 .withName(name)
                 .withType(forcedType.getUserType());

@@ -38,6 +38,7 @@ public class CustomType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
     protected Boolean enumConverter;
+    protected LambdaConverter lambdaConverter;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;
 
@@ -126,6 +127,24 @@ public class CustomType implements Serializable, XMLAppendable
      * 
      */
     @Deprecated
+    public LambdaConverter getLambdaConverter() {
+        return lambdaConverter;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
+    public void setLambdaConverter(LambdaConverter value) {
+        this.lambdaConverter = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
     public String getBinding() {
         return binding;
     }
@@ -179,6 +198,16 @@ public class CustomType implements Serializable, XMLAppendable
      * 
      */
     @Deprecated
+    public CustomType withLambdaConverter(LambdaConverter value) {
+        setLambdaConverter(value);
+        return this;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
     public CustomType withBinding(String value) {
         setBinding(value);
         return this;
@@ -190,6 +219,7 @@ public class CustomType implements Serializable, XMLAppendable
         builder.append("type", type);
         builder.append("converter", converter);
         builder.append("enumConverter", enumConverter);
+        builder.append("lambdaConverter", lambdaConverter);
         builder.append("binding", binding);
     }
 
@@ -248,6 +278,15 @@ public class CustomType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (lambdaConverter == null) {
+            if (other.lambdaConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!lambdaConverter.equals(other.lambdaConverter)) {
+                return false;
+            }
+        }
         if (binding == null) {
             if (other.binding!= null) {
                 return false;
@@ -268,6 +307,7 @@ public class CustomType implements Serializable, XMLAppendable
         result = ((prime*result)+((type == null)? 0 :type.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
+        result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
         return result;
     }

@@ -1310,8 +1310,9 @@ public abstract class AbstractDatabase implements Database {
 
                 if (StringUtils.isBlank(type.getBinding()) &&
                     StringUtils.isBlank(type.getConverter()) &&
-                    !Boolean.TRUE.equals(type.isEnumConverter())) {
-                    log.warn("Bad configuration for <forcedType/>. Either <binding/> or <converter/> or <enumConverter/> is required: " + type);
+                    !Boolean.TRUE.equals(type.isEnumConverter()) &&
+                    type.getLambdaConverter() == null) {
+                    log.warn("Bad configuration for <forcedType/>. Either <binding/> or <converter/> or <enumConverter/> or <lambdaConverter/> is required: " + type);
 
                     it2.remove();
                     continue;
@@ -1333,6 +1334,10 @@ public abstract class AbstractDatabase implements Database {
                 if (Boolean.TRUE.equals(type.isEnumConverter())) {
                     log.warn("Bad configuration for <forcedType/>. <enumConverter/> is not allowed when <name/> is provided: " + type);
                     type.setEnumConverter(null);
+                }
+                if (type.getLambdaConverter() != null) {
+                    log.warn("Bad configuration for <forcedType/>. <lambdaConverter/> is not allowed when <name/> is provided: " + type);
+                    type.setLambdaConverter(null);
                 }
             }
 

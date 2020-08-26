@@ -53,7 +53,6 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Domain;
 import org.jooq.Name;
-import org.jooq.Named;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -132,32 +131,44 @@ public class SchemaImpl extends AbstractNamed implements Schema {
         return CLAUSES;
     }
 
-    private final <N extends Named> N getNamed(List<N> list, String name) {
-        for (N named : list)
-            if (named.getName().equals(name))
-                return named;
-
-        return null;
+    @Override
+    public final Table<?> getTable(String name) {
+        return find(name, getTables());
     }
 
     @Override
-    public final Table<?> getTable(String name) {
-        return getNamed(getTables(), name);
+    public final Table<?> getTable(Name name) {
+        return find(name, getTables());
     }
 
     @Override
     public final UDT<?> getUDT(String name) {
-        return getNamed(getUDTs(), name);
+        return find(name, getUDTs());
+    }
+
+    @Override
+    public final UDT<?> getUDT(Name name) {
+        return find(name, getUDTs());
     }
 
     @Override
     public final Domain<?> getDomain(String name) {
-        return getNamed(getDomains(), name);
+        return find(name, getDomains());
+    }
+
+    @Override
+    public final Domain<?> getDomain(Name name) {
+        return find(name, getDomains());
     }
 
     @Override
     public final Sequence<?> getSequence(String name) {
-        return getNamed(getSequences(), name);
+        return find(name, getSequences());
+    }
+
+    @Override
+    public final Sequence<?> getSequence(Name name) {
+        return find(name, getSequences());
     }
 
     /**

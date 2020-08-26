@@ -119,11 +119,19 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     // Utilities
     // -------------------------------------------------------------------------
 
-    static Name qualify(Named qualifier, Name name) {
+    static final Name qualify(Named qualifier, Name name) {
         return qualifier == null || name.qualified() ? name : qualifier.getQualifiedName().append(name);
     }
 
-    static <N extends Named> N find(Name name, Iterable<? extends N> in) {
+    static final <N extends Named> N find(String name, Iterable<? extends N> in) {
+        for (N n : in)
+            if (n.getName().equals(name))
+                return n;
+
+        return null;
+    }
+
+    static final <N extends Named> N find(Name name, Iterable<? extends N> in) {
         N unqualified = null;
 
         for (N n : in)

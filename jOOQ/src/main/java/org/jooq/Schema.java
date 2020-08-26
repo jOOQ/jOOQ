@@ -108,6 +108,13 @@ public interface Schema extends Named {
     @Nullable
     Table<?> getTable(String name);
 
+    /**
+     * Get a table by its qualified or unqualified name in this schema, or
+     * <code>null</code> if no such table exists.
+     */
+    @Nullable
+    Table<?> getTable(Name name);
+
 
     /**
      * Stream all UDTs contained in this schema.
@@ -128,6 +135,13 @@ public interface Schema extends Named {
      */
     @Nullable
     UDT<?> getUDT(String name);
+
+    /**
+     * Get a UDT by its qualified or unqualified name in this schema, or
+     * <code>null</code> if no such UDT exists.
+     */
+    @Nullable
+    UDT<?> getUDT(Name name);
 
     /**
      * Stream all domains contained in this schema.
@@ -151,6 +165,13 @@ public interface Schema extends Named {
     Domain<?> getDomain(String name);
 
     /**
+     * Get a domain by its qualified or unqualified name in this schema, or
+     * <code>null</code> if no such domain exists.
+     */
+    @Nullable
+    Domain<?> getDomain(Name name);
+
+    /**
      * Stream all sequences contained in this schema.
      */
 
@@ -170,4 +191,11 @@ public interface Schema extends Named {
      */
     @Nullable
     Sequence<?> getSequence(String name);
+
+    /**
+     * Get a sequence by its qualified or unqualified name in this schema, or
+     * <code>null</code> if no such sequence exists.
+     */
+    @Nullable
+    Sequence<?> getSequence(Name name);
 }

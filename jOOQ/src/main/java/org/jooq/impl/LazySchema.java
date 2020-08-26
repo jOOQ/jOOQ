@@ -124,6 +124,11 @@ public final class LazySchema extends AbstractNamed implements Schema {
         return schema().getTable(name);
     }
 
+    @Override
+    public final Table<?> getTable(Name name) {
+        return schema().getTable(name);
+    }
+
 
 
     @Override
@@ -140,6 +145,11 @@ public final class LazySchema extends AbstractNamed implements Schema {
 
     @Override
     public final UDT<?> getUDT(String name) {
+        return schema().getUDT(name);
+    }
+
+    @Override
+    public final UDT<?> getUDT(Name name) {
         return schema().getUDT(name);
     }
 
@@ -162,6 +172,11 @@ public final class LazySchema extends AbstractNamed implements Schema {
         return schema().getDomain(name);
     }
 
+    @Override
+    public final Domain<?> getDomain(Name name) {
+        return schema().getDomain(name);
+    }
+
 
 
     @Override
@@ -178,6 +193,11 @@ public final class LazySchema extends AbstractNamed implements Schema {
 
     @Override
     public final Sequence<?> getSequence(String name) {
+        return schema().getSequence(name);
+    }
+
+    @Override
+    public final Sequence<?> getSequence(Name name) {
         return schema().getSequence(name);
     }
 }

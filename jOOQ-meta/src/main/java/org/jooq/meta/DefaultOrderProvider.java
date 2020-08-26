@@ -96,7 +96,11 @@ public class DefaultOrderProvider implements Comparator<Definition> {
         else if (o1 instanceof ParameterDefinition && o2 instanceof ParameterDefinition)
             return compare0((ParameterDefinition) o1, (ParameterDefinition) o2);
         else
-            return o1.getQualifiedInputName().compareToIgnoreCase(o2.getQualifiedInputName());
+            return compare0(o1, o2);
+    }
+
+    private int compare0(Definition o1, Definition o2) {
+        return o1.getQualifiedInputName().compareToIgnoreCase(o2.getQualifiedInputName());
     }
 
     private int compare0(RoutineDefinition r1, RoutineDefinition r2) {

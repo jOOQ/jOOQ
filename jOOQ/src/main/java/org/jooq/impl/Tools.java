@@ -96,6 +96,7 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafeDataType;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
@@ -5359,6 +5360,19 @@ final class Tools {
              : null;
     }
 
+    static final Row embeddedFieldsRow(Row row) {
+        if (hasEmbeddedFields(row.fields())) {
+            List<Field<?>> fields = new ArrayList<>(row.size());
+
+            for (Field<?> f : flattenCollection(Arrays.asList(row.fields()), false))
+                fields.add(f);
+
+            return row(fields);
+        }
+        else
+            return row;
+    }
+
     static final Field<?>[] embeddedFields(ScalarSubquery<?> field) {
 
         // Split a scalar subquery of degree N into N scalar subqueries of degree 1
@@ -5387,6 +5401,22 @@ final class Tools {
         catch (Exception e) {
             throw new MappingException("Cannot create EmbeddableRecord type", e);
         }
+    }
+
+    static final boolean hasEmbeddedFields(Field<?>[] fields) {
+        for (Field<?> f : fields)
+            if (f.getDataType().isEmbeddable())
+                return true;
+
+        return false;
+    }
+
+    static final boolean hasEmbeddedFields(Iterable<? extends Field<?>> fields) {
+        for (Field<?> f : fields)
+            if (f.getDataType().isEmbeddable())
+                return true;
+
+        return false;
     }
 
     static final <E> List<E> collect(Iterable<E> iterable) {

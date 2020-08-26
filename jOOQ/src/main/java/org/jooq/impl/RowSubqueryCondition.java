@@ -61,6 +61,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Tools.embeddedFieldsRow;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -151,9 +152,10 @@ final class RowSubqueryCondition extends AbstractCondition {
         // [#2395] All other configurations have to be emulated
         else {
             String table = render == null ? "t" : render.nextAlias();
+            Row l = embeddedFieldsRow(left);
 
-            String[] names = new String[left.size()];
-            for (int i = 0; i < left.size(); i++)
+            String[] names = new String[l.size()];
+            for (int i = 0; i < l.size(); i++)
                 names[i] = table + "_" + i;
 
             Field<?>[] fields = new Field[names.length];
@@ -166,7 +168,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                 case GREATER_OR_EQUAL:
                 case LESS:
                 case LESS_OR_EQUAL:
-                    condition = new RowCondition(left, row(fields), comparator);
+                    condition = new RowCondition(l, row(fields), comparator);
                     break;
 
                 case IN:
@@ -174,7 +176,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                 case NOT_IN:
                 case NOT_EQUALS:
                 default:
-                    condition = new RowCondition(left, row(fields), EQUALS);
+                    condition = new RowCondition(l, row(fields), EQUALS);
                     break;
             }
 

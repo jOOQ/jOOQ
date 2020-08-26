@@ -176,12 +176,13 @@ final class RowCondition extends AbstractCondition {
                 for (int j = 0; j < i; j++)
                     inner.add(leftFields[j].equal((Field) rightFields[j]));
 
-                inner.add(leftFields[i].compare(order, (Field) rightFields[i]));
+                inner.add(leftFields[i].compare(
+                    equal && i == leftFields.length - 1 ? comparator : order,
+                    (Field) rightFields[i])
+                );
+
                 outer.add(DSL.and(inner));
             }
-
-            if (equal)
-                outer.add(new RowCondition(left, right, Comparator.EQUALS));
 
             Condition result = DSL.or(outer);
 

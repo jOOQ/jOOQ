@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import static org.jooq.tools.StringUtils.defaultIfNull;
+
 import java.util.Comparator;
 
 /**
@@ -89,10 +91,17 @@ public class DefaultOrderProvider implements Comparator<Definition> {
             return compare0((AttributeDefinition) o1, (AttributeDefinition) o2);
         else if (o1 instanceof IndexColumnDefinition && o2 instanceof IndexColumnDefinition)
             return compare0((IndexColumnDefinition) o1, (IndexColumnDefinition) o2);
+        else if (o1 instanceof RoutineDefinition && o2 instanceof RoutineDefinition)
+            return compare0((RoutineDefinition) o1, (RoutineDefinition) o2);
         else if (o1 instanceof ParameterDefinition && o2 instanceof ParameterDefinition)
             return compare0((ParameterDefinition) o1, (ParameterDefinition) o2);
         else
             return o1.getQualifiedInputName().compareToIgnoreCase(o2.getQualifiedInputName());
+    }
+
+    private int compare0(RoutineDefinition r1, RoutineDefinition r2) {
+        int result = compare0((Definition) r1, (Definition) r2);
+        return result != 0 ? result : defaultIfNull(r1.getOverload(), "").compareTo(defaultIfNull(r2.getOverload(), ""));
     }
 
     private int compare0(PositionedDefinition i1, PositionedDefinition i2) {

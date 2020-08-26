@@ -2593,7 +2593,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (AttributeDefinition attribute : udt.getAttributes()) {
             final String attrTypeFull = getJavaType(attribute.getType(resolver()));
             final String attrType = out.ref(attrTypeFull);
-            final String attrTypeRef = getJavaTypeReference(attribute.getDatabase(), attribute.getType(resolver()));
+            final String attrTypeRef = getJavaTypeReference(attribute.getDatabase(), attribute.getType(resolver()), out);
             final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
             final String attrName = attribute.getName();
             final List<String> converter = out.ref(list(attribute.getType(resolver()).getConverter()));
@@ -2851,7 +2851,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String id = getStrategy().getJavaIdentifier(domain);
             final String domainTypeFull = getJavaType(domain.getType(resolver()));
             final String domainType = out.ref(domainTypeFull);
-            final String domainTypeRef = getJavaTypeReference(domain.getDatabase(), domain.getType(resolver()));
+            final String domainTypeRef = getJavaTypeReference(domain.getDatabase(), domain.getType(resolver()), out);
 
             out.javadoc("The domain <code>%s</code>.", domain.getQualifiedOutputName());
 
@@ -4748,7 +4748,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (ColumnDefinition column : table.getColumns()) {
             final String columnTypeFull = getJavaType(column.getType(resolver()));
             final String columnType = out.ref(columnTypeFull);
-            final String columnTypeRef = getJavaTypeReference(column.getDatabase(), column.getType(resolver()));
+            final String columnTypeRef = getJavaTypeReference(column.getDatabase(), column.getType(resolver()), out);
             final String columnId = out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column));
             final String columnName = column.getName();
             final List<String> converter = out.ref(list(column.getType(resolver()).getConverter()));
@@ -5456,7 +5456,7 @@ public class JavaGenerator extends AbstractGenerator {
                     String separator = "  ";
                     for (ParameterDefinition parameter : parameters) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
-                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
+                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()), out);
                         final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
                         final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
@@ -5480,7 +5480,7 @@ public class JavaGenerator extends AbstractGenerator {
                     String separator = "  ";
                     for (ParameterDefinition parameter : parameters) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
-                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
+                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()), out);
                         final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
                         final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
@@ -5503,7 +5503,7 @@ public class JavaGenerator extends AbstractGenerator {
                     String separator = "  ";
                     for (ParameterDefinition parameter : parameters) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
-                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
+                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()), out);
                         final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
                         final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
@@ -5721,7 +5721,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String seqName = sequence.getOutputName();
             final String schemaId = qualifySequenceClassReferences ? getStrategy().getFullJavaIdentifier(schema)
                 : out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
-            final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType(resolver()));
+            final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType(resolver()), out);
 
             if (!printDeprecationIfUnknownType(out, seqTypeFull))
                 out.javadoc("The sequence <code>%s</code>", sequence.getQualifiedOutputName());
@@ -6525,7 +6525,7 @@ public class JavaGenerator extends AbstractGenerator {
             ? Void.class.getName()
             : out.ref(returnTypeFull);
         final List<String> returnTypeRef = list((routine.getReturnValue() != null)
-            ? getJavaTypeReference(database, routine.getReturnType(resolver()))
+            ? getJavaTypeReference(database, routine.getReturnType(resolver()), out)
             : null);
         final List<String> returnConverter = out.ref(list(
              (routine.getReturnValue() != null)
@@ -6547,7 +6547,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (ParameterDefinition parameter : routine.getAllParameters()) {
                 final String paramTypeFull = getJavaType(parameter.getType(resolver()));
                 final String paramType = out.ref(paramTypeFull);
-                final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
+                final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()), out);
                 final String paramId = out.ref(getStrategy().getJavaIdentifier(parameter), 2);
                 final String paramName = parameter.getName();
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
@@ -6592,7 +6592,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (ParameterDefinition parameter : routine.getAllParameters()) {
                 final String paramTypeFull = getJavaType(parameter.getType(resolver()));
                 final String paramType = out.ref(paramTypeFull);
-                final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
+                final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()), out);
                 final String paramId = getStrategy().getJavaIdentifier(parameter);
                 final String paramName = parameter.getName();
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
@@ -7595,7 +7595,7 @@ public class JavaGenerator extends AbstractGenerator {
         return GenerationUtil.getSimpleJavaType(getJavaType(type));
     }
 
-    protected String getJavaTypeReference(Database db, DataTypeDefinition type) {
+    protected String getJavaTypeReference(Database db, DataTypeDefinition type, JavaWriter out) {
 
         // [#4388] TODO: Improve array handling
         if (database.isArrayType(type.getType())) {
@@ -7603,6 +7603,7 @@ public class JavaGenerator extends AbstractGenerator {
             return getTypeReference(
                 db,
                 type.getSchema(),
+                out,
                 baseType.last(),
                 type.getPrecision(),
                 type.getScale(),
@@ -7617,6 +7618,7 @@ public class JavaGenerator extends AbstractGenerator {
             return getTypeReference(
                 db,
                 type.getSchema(),
+                out,
                 type.getType(),
                 type.getPrecision(),
                 type.getScale(),
@@ -7793,13 +7795,13 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
-    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, boolean i, String d, Name u) {
+    protected String getTypeReference(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, int l, boolean n, boolean i, String d, Name u) {
         StringBuilder sb = new StringBuilder();
 
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);
 
-            sb.append(getJavaTypeReference(db, array.getElementType(resolver())));
+            sb.append(getJavaTypeReference(db, array.getElementType(resolver()), out));
             sb.append(".asArrayDataType(");
             sb.append(classOf(getStrategy().getFullJavaClassName(array, Mode.RECORD)));
             sb.append(")");
@@ -7821,7 +7823,7 @@ public class JavaGenerator extends AbstractGenerator {
         else if (db.getEnum(schema, u) != null) {
             sb.append(getJavaTypeReference(db, new DefaultDataTypeDefinition(
                 db, schema, DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName(), l, p, s, n, d, (Name) null
-            )));
+            ), out));
             sb.append(".asEnumDataType(");
             sb.append(classOf(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM)));
             sb.append(")");
@@ -7859,7 +7861,7 @@ public class JavaGenerator extends AbstractGenerator {
                 DataType<?> sqlDataType = dataType.getSQLDataType();
                 String literal = SQLDATATYPE_LITERAL_LOOKUP.get(sqlDataType);
                 sqlDataTypeRef =
-                    SQLDataType.class.getCanonicalName()
+                    out.ref(SQLDataType.class)
                   + '.'
                   + literal;
 
@@ -7910,15 +7912,18 @@ public class JavaGenerator extends AbstractGenerator {
                     // [#5574] While MySQL usually reports actual values, it does report
                     //         a CURRENT_TIMESTAMP expression, inconsistently
                     if (d != null && d.toLowerCase(getStrategy().getTargetLocale()).startsWith("current_timestamp"))
-                        sb.append("org.jooq.impl.DSL.field(\"")
+                        sb.append(out.ref(DSL.class))
+                          .append(".field(\"")
                           .append(escapeString(d))
                           .append("\"");
                     else
-                        sb.append("org.jooq.impl.DSL.inline(\"")
+                        sb.append(out.ref(DSL.class))
+                          .append(".inline(\"")
                           .append(escapeString(d))
                           .append("\"");
                 else
-                    sb.append("org.jooq.impl.DSL.field(\"")
+                    sb.append(out.ref(DSL.class))
+                      .append(".field(\"")
                       .append(escapeString(d))
                       .append("\"");
 

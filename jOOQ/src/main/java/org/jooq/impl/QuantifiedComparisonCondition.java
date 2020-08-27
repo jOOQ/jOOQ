@@ -187,7 +187,9 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
                     throw new IllegalStateException();
             }
 
-            Table<?> t = (query.array != null ? new ArrayTable(query.array) : query.query).asTable("t", "pattern");
+            Table<?> t = query.array != null
+                ? new ArrayTable(query.array).asTable("t", "pattern")
+                : new AliasedSelect<>(query.query, name("pattern")).as("t");
             Select<Record1<Boolean>> select = select(DSL.field(cond)).from(t);
             ctx.visit(lhs.eq(query.quantifier.apply(select)));
         }

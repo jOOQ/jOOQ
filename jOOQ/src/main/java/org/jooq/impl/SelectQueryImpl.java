@@ -2279,6 +2279,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> UNION_PARENTHESIS = SQLDialect.supportedBy(DERBY, MARIADB, MYSQL);
     private static final Set<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = SQLDialect.supportedBy(DERBY);
 
+    final boolean hasUnions() {
+        return !unionOp.isEmpty();
+    }
+
     private final boolean unionOpNesting() {
         if (unionOp.size() > 1)
             return true;

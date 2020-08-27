@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Names.N_SELECT;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
@@ -106,11 +108,22 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        Object previous = ctx.data(DATA_SELECT_ALIASES);
+        SelectQueryImpl<R> q = selectQueryImpl(query);
 
-        ctx.data(DATA_SELECT_ALIASES, aliases);
-        visitSubquery(ctx, query);
-        ctx.data(DATA_SELECT_ALIASES, previous);
+        // [#3679] [#10540] Without standardised UNION subquery column names,
+        //                  Derby projects column indexes 1, 2, 3 as names, but
+        //                  they cannot be referenced. In that case, revert to
+        //                  actual derived table usage.
+        if (ctx.family() == DERBY && q != null && q.hasUnions()) {
+            visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)));
+        }
+        else {
+            Object previous = ctx.data(DATA_SELECT_ALIASES);
+
+             ctx.data(DATA_SELECT_ALIASES, aliases);
+             visitSubquery(ctx, query);
+             ctx.data(DATA_SELECT_ALIASES, previous);
+        }
     }
 
     @Override // Avoid AbstractTable implementation

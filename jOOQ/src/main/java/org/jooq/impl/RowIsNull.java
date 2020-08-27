@@ -65,7 +65,6 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
-import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.ArrayList;
@@ -128,7 +127,7 @@ final class RowIsNull extends AbstractCondition {
         if (row != null && EMULATE_NULL_ROW.contains(ctx.dialect()))
             ctx.visit(condition(row.fields()));
         else if (select != null && EMULATE_NULL_QUERY.contains(ctx.dialect())) {
-            Table<?> t = select.asTable("t", fieldNameStrings(select.getSelect().size()));
+            Table<?> t = new AliasedSelect<>(select).as("t");
             ctx.visit(inline(1).eq(selectCount().from(t).where(condition(t.fields()))));
         }
         else

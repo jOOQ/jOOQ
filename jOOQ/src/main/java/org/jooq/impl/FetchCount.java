@@ -72,7 +72,7 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
+        ctx.visit(select(count).from(new AliasedSelect<>(query).as("t")));
     }
 
     private final QueryPart delegate(Configuration configuration) {

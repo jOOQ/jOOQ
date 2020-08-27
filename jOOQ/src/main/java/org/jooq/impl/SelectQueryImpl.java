@@ -162,6 +162,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PAR
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
@@ -929,7 +930,25 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // of jOOQ should implement a push / pop semantics to clearly delimit such scope.
         Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
         Object localWindowDefinitions = context.data(DATA_WINDOW_DEFINITIONS);
+        Name[] selectAliases = (Name[]) context.data(DATA_SELECT_ALIASES);
+
         try {
+            Field<?>[] originalFields = null;
+            Field<?>[] alternativeFields = null;
+
+            if (selectAliases != null) {
+                context.data().remove(DATA_SELECT_ALIASES);
+
+                originalFields = getSelect().toArray(EMPTY_FIELD);
+                alternativeFields = new Field[originalFields.length];
+
+                for (int i = 0; i < originalFields.length; i++)
+                    if (i < selectAliases.length)
+                        alternativeFields[i] = originalFields[i].as(selectAliases[i]);
+                    else
+                        alternativeFields[i] = originalFields[i];
+            }
+
             if (TRUE.equals(renderTrailingLimit))
                 context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
 
@@ -1118,14 +1137,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     if (getLimit().isApplicable() && getLimit().withTies())
                         toSQLReferenceLimitWithWindowFunctions(context);
                     else
-                        toSQLReferenceLimitDefault(context);
+                        toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
 
                     break;
                 }
 
                 // By default, render the dialect's limit clause
                 default: {
-                    toSQLReferenceLimitDefault(context);
+                    toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
 
                     break;
                 }
@@ -1193,7 +1212,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context.data(DATA_WINDOW_DEFINITIONS, localWindowDefinitions);
             if (renderTrailingLimit != null)
                 context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, renderTrailingLimit);
+            if (selectAliases != null)
+                context.data(DATA_SELECT_ALIASES, selectAliases);
         }
+
 
         context.scopeEnd();
     }
@@ -1219,11 +1241,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     /**
      * The default LIMIT / OFFSET clause in most dialects
      */
-    private final void toSQLReferenceLimitDefault(Context<?> context) {
+    private final void toSQLReferenceLimitDefault(Context<?> context, Field<?>[] originalFields, Field<?>[] alternativeFields) {
         Object data = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
 
         context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true);
-        toSQLReference0(context);
+        toSQLReference0(context, originalFields, alternativeFields);
 
         if (data == null)
             context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
@@ -1417,14 +1439,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-    /**
-     * This method renders the main part of a query without the LIMIT clause.
-     * This part is common to any type of limited query
-     */
-    private final void toSQLReference0(Context<?> context) {
-        toSQLReference0(context, null, null);
-    }
 
     /**
      * This method renders the main part of a query without the LIMIT clause.

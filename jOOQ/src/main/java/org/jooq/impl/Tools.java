@@ -610,9 +610,16 @@ final class Tools {
         DATA_ON_DUPLICATE_KEY_WHERE,
 
         /**
-         * [#3607] [#8522] CTEs that need to be added to the top level CTE section.
+         * [#3607] [#8522] CTEs that need to be added to the top level CTE
+         * section.
          */
-        DATA_TOP_LEVEL_CTE
+        DATA_TOP_LEVEL_CTE,
+
+        /**
+         * [#10540] Aliases to be applied to the current <code>SELECT</code>
+         * statement.
+         */
+        DATA_SELECT_ALIASES
     }
 
     /**
@@ -3106,6 +3113,16 @@ final class Tools {
 
 
 
+
+    @SuppressWarnings("unchecked")
+    static final <R extends Record> SelectQueryImpl<R> selectQueryImpl(Select<R> select) {
+        if (select instanceof SelectQueryImpl)
+            return (SelectQueryImpl<R>) select;
+        else if (select instanceof AbstractDelegatingQuery)
+            return ((AbstractDelegatingQuery<SelectQueryImpl<R>>) select).getDelegate();
+        else
+            return null;
+    }
 
     /**
      * Add primary key conditions to a query

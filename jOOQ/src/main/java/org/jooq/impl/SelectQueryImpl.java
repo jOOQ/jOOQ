@@ -2277,7 +2277,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private static final Set<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = SQLDialect.supportedBy(SQLITE);
     private static final Set<SQLDialect> UNION_PARENTHESIS = SQLDialect.supportedBy(DERBY, MARIADB, MYSQL);
-    private static final Set<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = SQLDialect.supportedBy(DERBY);
 
     final boolean hasUnions() {
         return !unionOp.isEmpty();
@@ -2334,9 +2333,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // [#2995] Ambiguity may need to be resolved when parentheses could mean both:
             //         Set op subqueries or insert column lists
             || TRUE.equals(ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST))
-
-            // [#7222] [#7711] Workaround for https://issues.apache.org/jira/browse/DERBY-6984
-            || (ctx.subquery() && UNION_PARENTHESIS_IN_DERIVED_TABLES.contains(ctx.dialect()))
             ;
 
         parensRequired |= derivedTable;

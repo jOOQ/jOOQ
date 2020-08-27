@@ -38,14 +38,13 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A comparator to be used in conditions to form comparison predicates.
@@ -172,6 +171,28 @@ public enum Comparator {
      */
     public Keyword toKeyword() {
         return keyword;
+    }
+
+    public Comparator inverse() {
+        switch (this) {
+            case EQUALS:               return NOT_EQUALS;
+            case GREATER:              return LESS_OR_EQUAL;
+            case GREATER_OR_EQUAL:     return LESS;
+            case IN:                   return NOT_IN;
+            case IS_DISTINCT_FROM:     return IS_NOT_DISTINCT_FROM;
+            case IS_NOT_DISTINCT_FROM: return IS_DISTINCT_FROM;
+            case LESS:                 return GREATER_OR_EQUAL;
+            case LESS_OR_EQUAL:        return GREATER;
+            case LIKE:                 return NOT_LIKE;
+            case LIKE_IGNORE_CASE:     return NOT_LIKE_IGNORE_CASE;
+            case NOT_EQUALS:           return EQUALS;
+            case NOT_IN:               return IN;
+            case NOT_LIKE:             return LIKE;
+            case NOT_LIKE_IGNORE_CASE: return LIKE_IGNORE_CASE;
+            case NOT_SIMILAR_TO:       return SIMILAR_TO;
+            case SIMILAR_TO:           return NOT_SIMILAR_TO;
+            default:                   throw new IllegalStateException();
+        }
     }
 
     /**

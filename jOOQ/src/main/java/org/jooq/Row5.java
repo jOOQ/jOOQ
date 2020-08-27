@@ -37,22 +37,6 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-
 import java.util.Collection;
 
 import org.jooq.conf.Settings;
@@ -241,7 +225,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see #greaterOrEqual(Select)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition compare(Comparator comparator, QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     // ------------------------------------------------------------------------
@@ -310,7 +294,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition equal(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -372,7 +356,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition eq(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -437,7 +421,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition notEqual(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -499,7 +483,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition ne(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     // ------------------------------------------------------------------------
@@ -652,7 +636,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition lessThan(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -714,7 +698,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition lt(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -779,7 +763,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition lessOrEqual(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -841,7 +825,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition le(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -906,7 +890,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition greaterThan(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -968,7 +952,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition gt(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -1033,7 +1017,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition greaterOrEqual(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -1095,7 +1079,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition ge(QuantifiedSelect<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     // ------------------------------------------------------------------------

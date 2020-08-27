@@ -40,27 +40,39 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.GREATER;
+import static org.jooq.Comparator.GREATER_OR_EQUAL;
 import static org.jooq.Comparator.IN;
+import static org.jooq.Comparator.LESS;
+import static org.jooq.Comparator.LESS_OR_EQUAL;
 import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_IN;
 // ...
 // ...
 // ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Quantifier.ALL;
 import static org.jooq.impl.Tools.embeddedFieldsRow;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -68,7 +80,6 @@ import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 // ...
@@ -79,6 +90,7 @@ import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SelectOrderByStep;
 import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
@@ -89,9 +101,10 @@ final class RowSubqueryCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID         = -1806139685201770706L;
-    private static final Clause[]        CLAUSES                  = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect> SUPPORT_NATIVE           = SQLDialect.supportedBy(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final long            serialVersionUID             = -1806139685201770706L;
+    private static final Clause[]        CLAUSES                      = { CONDITION, CONDITION_COMPARISON };
+    private static final Set<SQLDialect> SUPPORT_NATIVE               = SQLDialect.supportedBy(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE_QUANTIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
 
 
 
@@ -127,19 +140,39 @@ final class RowSubqueryCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Context<?> ctx) {
-        final RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
 
         // [#3505] TODO: Emulate this where it is not supported
         if (rightQuantified != null) {
-            return new Native();
+            if (NO_SUPPORT_NATIVE_QUANTIFIED.contains(ctx.dialect())) {
+
+                // TODO: Handle all cases, not just the query one
+                QuantifiedSelectImpl<?> q = (QuantifiedSelectImpl<?>) rightQuantified;
+
+                switch (comparator) {
+                    case EQUALS:
+                    case NOT_EQUALS: {
+                        if (comparator == NOT_EQUALS ^ q.quantifier == ALL)
+                            return emulationUsingExists(ctx, left, q.query, comparator == EQUALS ? NOT_EQUALS : EQUALS, comparator == EQUALS);
+                        else
+                            return new RowSubqueryCondition(left, q.query, comparator == EQUALS ? IN : NOT_IN);
+                    }
+
+                    case GREATER:
+                    case GREATER_OR_EQUAL:
+                    case LESS:
+                    case LESS_OR_EQUAL:
+                    default:
+                        return emulationUsingExists(ctx, left, q.query, q.quantifier == ALL ? comparator.inverse() : comparator, q.quantifier == ALL);
+                }
+            }
+            else
+                return new Native();
         }
 
         // [#2395] These dialects have full native support for comparison
         // predicates with row value expressions and subqueries:
-        else if (SUPPORT_NATIVE.contains(ctx.dialect())) {
+        else if (SUPPORT_NATIVE.contains(ctx.dialect()))
             return new Native();
-        }
-
 
 
 
@@ -150,49 +183,39 @@ final class RowSubqueryCondition extends AbstractCondition {
 
 
         // [#2395] All other configurations have to be emulated
-        else {
-            String table = render == null ? "t" : render.nextAlias();
-            Row l = embeddedFieldsRow(left);
+        else
+            return emulationUsingExists(ctx, left, right,
+                comparator == GREATER
+             || comparator == GREATER_OR_EQUAL
+             || comparator == LESS
+             || comparator == LESS_OR_EQUAL ? comparator : EQUALS,
+                comparator == NOT_IN || comparator == NOT_EQUALS
+            );
+    }
 
-            String[] names = new String[l.size()];
-            for (int i = 0; i < l.size(); i++)
-                names[i] = table + "_" + i;
+    private static final QueryPartInternal emulationUsingExists(Context<?> ctx, Row row, Select<?> select, Comparator comparator, boolean notExists) {
+        Select<Record> subselect = emulatedSubselect(ctx, row, select, comparator);
+        return (QueryPartInternal) (notExists ? notExists(subselect) : exists(subselect));
+    }
 
-            Field<?>[] fields = new Field[names.length];
-            for (int i = 0; i < fields.length; i++)
-                fields[i] = field(name(table, names[i]));
+    private static final SelectOrderByStep<Record> emulatedSubselect(Context<?> ctx, Row row, Select<?> s, Comparator c) {
+        RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
+        String table = render == null ? "t" : render.nextAlias();
+        Row l = embeddedFieldsRow(row);
 
-            Condition condition;
-            switch (comparator) {
-                case GREATER:
-                case GREATER_OR_EQUAL:
-                case LESS:
-                case LESS_OR_EQUAL:
-                    condition = new RowCondition(l, row(fields), comparator);
-                    break;
+        String[] names = new String[l.size()];
+        for (int i = 0; i < l.size(); i++)
+            names[i] = table + "_" + i;
 
-                case IN:
-                case EQUALS:
-                case NOT_IN:
-                case NOT_EQUALS:
-                default:
-                    condition = new RowCondition(l, row(fields), EQUALS);
-                    break;
-            }
+        Field<?>[] fields = new Field[names.length];
+        for (int i = 0; i < fields.length; i++)
+            fields[i] = field(name(table, names[i]));
 
-            Select<Record> subselect =
-            select().from(right.asTable(table, names))
-                    .where(condition);
-
-            switch (comparator) {
-                case NOT_IN:
-                case NOT_EQUALS:
-                    return (QueryPartInternal) notExists(subselect);
-
-                default:
-                    return (QueryPartInternal) exists(subselect);
-            }
-        }
+        return select()
+              .from(s.asTable(table, names))
+              .where(c == null
+                  ? noCondition()
+                  : new RowCondition(l, row(fields), c));
     }
 
     private class Native extends AbstractCondition {

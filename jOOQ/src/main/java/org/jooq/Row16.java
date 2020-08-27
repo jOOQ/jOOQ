@@ -37,22 +37,6 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-
 import java.util.Collection;
 
 import org.jooq.conf.Settings;
@@ -307,7 +291,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see #greaterOrEqual(Select)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition compare(Comparator comparator, QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     // ------------------------------------------------------------------------
@@ -376,7 +360,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition equal(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -438,7 +422,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition eq(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -503,7 +487,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition notEqual(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -565,7 +549,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition ne(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     // ------------------------------------------------------------------------
@@ -718,7 +702,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition lessThan(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -780,7 +764,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition lt(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -845,7 +829,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition lessOrEqual(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -907,7 +891,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition le(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -972,7 +956,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition greaterThan(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -1034,7 +1018,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition gt(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -1099,7 +1083,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition greaterOrEqual(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
@@ -1161,7 +1145,7 @@ public interface Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support
     Condition ge(QuantifiedSelect<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     // ------------------------------------------------------------------------

@@ -40,14 +40,12 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Tools.fieldNameStrings;
 
 import java.sql.ResultSetMetaData;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.Select;
 
@@ -73,23 +71,6 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(select(count).from(new AliasedSelect<>(query).as("t")));
-    }
-
-    private final QueryPart delegate(Configuration configuration) {
-        switch (configuration.family()) {
-
-
-
-
-
-
-
-
-
-
-            default:
-                return select(count).from(query.asTable("q"));
-        }
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

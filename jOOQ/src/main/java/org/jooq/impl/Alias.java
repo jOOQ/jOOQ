@@ -79,6 +79,8 @@ import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
+import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
+import static org.jooq.impl.Values.NO_SUPPORT_VALUES;
 
 import java.util.HashSet;
 import java.util.List;
@@ -181,57 +183,65 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                 emulatedDerivedColumnList = true;
 
-                // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
-                // in those derived tables
-                Select<? extends Record> wrappedAsSelect =
-                    wrapped instanceof Select
-                  ? (Select<?>) wrapped
-                  : wrapped instanceof DerivedTable
-                  ? ((DerivedTable<?>) wrapped).query()
-                  : select(asterisk()).from(((Table<?>) wrapped).as(alias));
-
-                List<Field<?>> select = wrappedAsSelect.getSelect();
-
-                // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
-                //         See: https://github.com/h2database/h2database/issues/2532
-                if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect)) {
-                    List<Name> names = fieldNames(select);
-
-                    if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {
-                        toSQLWrapped(context);
-                        emulatedDerivedColumnList = false;
-                    }
+                if (wrapped instanceof Values && NO_SUPPORT_VALUES.contains(dialect)) {
+                    Object previous = context.data(DATA_SELECT_ALIASES, fieldAliases);
+                    toSQLWrapped(context);
+                    context.data(DATA_SELECT_ALIASES, previous);
                 }
+                else {
 
-                if (emulatedDerivedColumnList) {
-                    SelectFieldList<Field<?>> fields = new SelectFieldList<>();
-                    for (int i = 0; i < fieldAliases.length; i++) {
-                        switch (family) {
+                    // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
+                    // in those derived tables
+                    Select<? extends Record> wrappedAsSelect =
+                        wrapped instanceof Select
+                      ? (Select<?>) wrapped
+                      : wrapped instanceof DerivedTable
+                      ? ((DerivedTable<?>) wrapped).query()
+                      : select(asterisk()).from(((Table<?>) wrapped).as(alias));
 
+                    List<Field<?>> select = wrappedAsSelect.getSelect();
 
+                    // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
+                    //         See: https://github.com/h2database/h2database/issues/2532
+                    if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect)) {
+                        List<Name> names = fieldNames(select);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            default:
-                                fields.add(field("null").as(fieldAliases[i]));
-                                break;
+                        if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {
+                            toSQLWrapped(context);
+                            emulatedDerivedColumnList = false;
                         }
                     }
 
-                    visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true);
+                    if (emulatedDerivedColumnList) {
+                        SelectFieldList<Field<?>> fields = new SelectFieldList<>();
+                        for (int i = 0; i < fieldAliases.length; i++) {
+                            switch (family) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                default:
+                                    fields.add(field("null").as(fieldAliases[i]));
+                                    break;
+                            }
+                        }
+
+                        visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true);
+                    }
                 }
             }
 

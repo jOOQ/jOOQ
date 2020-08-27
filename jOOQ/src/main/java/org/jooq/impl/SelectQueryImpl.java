@@ -151,6 +151,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.qualify;
+import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
@@ -2282,14 +2283,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (unionOp.size() > 1)
             return true;
 
+        SelectQueryImpl<?> s;
         for (QueryPartList<Select<?>> s1 : union)
             for (Select<?> s2 : s1)
-                if (s2 instanceof SelectQueryImpl
-                        && ((SelectQueryImpl<?>) s2).unionOp.size() > 0)
-                    return true;
-                else if (s2 instanceof AbstractDelegatingQuery
-                        && ((AbstractDelegatingQuery<?>) s2).getDelegate() instanceof SelectQueryImpl
-                        && ((SelectQueryImpl<?>) ((AbstractDelegatingQuery<?>) s2).getDelegate()).unionOp.size() > 0)
+                if ((s = selectQueryImpl(s2)) != null && !s.unionOp.isEmpty())
                     return true;
 
         return false;
@@ -2306,21 +2303,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             return true;
 
         // [#3676] if a query has an ORDER BY or LIMIT clause parens are required
+        SelectQueryImpl<?> s;
         for (QueryPartList<Select<?>> s1 : union)
             for (Select<?> s2 : s1)
-                if (s2 instanceof SelectQueryImpl
-                        && unionParensRequired((SelectQueryImpl<?>) s2))
-                    return true;
-                else if (s2 instanceof AbstractDelegatingQuery
-                        && ((AbstractDelegatingQuery<?>) s2).getDelegate() instanceof SelectQueryImpl
-                        && unionParensRequired((SelectQueryImpl<?>) ((AbstractDelegatingQuery<?>) s2).getDelegate()))
+                if ((s = selectQueryImpl(s2)) != null && unionParensRequired(s))
                     return true;
 
         return false;
     }
 
-    private final boolean unionParensRequired(SelectQueryImpl<?> select) {
-        return select.orderBy.size() > 0 || select.limit.isApplicable();
+    private final boolean unionParensRequired(SelectQueryImpl<?> s) {
+        return s.orderBy.size() > 0 || s.limit.isApplicable();
     }
 
     private final boolean unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields, boolean parensRequired) {

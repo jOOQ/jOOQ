@@ -66,7 +66,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.exists;
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
@@ -74,6 +73,8 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Quantifier.ALL;
 import static org.jooq.impl.Tools.embeddedFieldsRow;
+import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -81,7 +82,7 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.Name;
 // ...
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPartInternal;
@@ -200,22 +201,15 @@ final class RowSubqueryCondition extends AbstractCondition {
 
     private static final SelectOrderByStep<Record> emulatedSubselect(Context<?> ctx, Row row, Select<?> s, Comparator c) {
         RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
-        String table = render == null ? "t" : render.nextAlias();
         Row l = embeddedFieldsRow(row);
-
-        String[] names = new String[l.size()];
-        for (int i = 0; i < l.size(); i++)
-            names[i] = table + "_" + i;
-
-        Field<?>[] fields = new Field[names.length];
-        for (int i = 0; i < fields.length; i++)
-            fields[i] = field(name(table, names[i]));
+        Name table = name(render == null ? "t" : render.nextAlias());
+        Name[] names = fieldNames(l.size());
 
         return select()
-              .from(s.asTable(table, names))
+              .from(new AliasedSelect<>(s, names).as(table))
               .where(c == null
                   ? noCondition()
-                  : new RowCondition(l, row(fields), c));
+                  : new RowCondition(l, row(fieldsByName(table, names)), c));
     }
 
     private class Native extends AbstractCondition {

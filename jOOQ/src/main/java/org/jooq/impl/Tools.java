@@ -5403,10 +5403,11 @@ final class Tools {
         for (Field<?> f : flattenCollection(select, false))
             result.add(f);
 
-        String[] fieldNames = fieldNameStrings(result.size());
-        Table<?> t = field.query.asTable("t", fieldNames);
+        Name tableName = name("t");
+        Name[] fieldNames = fieldNames(result.size());
+        Table<?> t = new AliasedSelect<>(field.query, fieldNames).as("t");
         for (int i = 0; i < result.size(); i++)
-            result.set(i, DSL.field(DSL.select(DSL.field(name("t", fieldNames[i]), result.get(i).getDataType())).from(t)));
+            result.set(i, DSL.field(DSL.select(DSL.field(tableName.append(fieldNames[i]), result.get(i).getDataType())).from(t)));
 
         return result.toArray(EMPTY_FIELD);
     }

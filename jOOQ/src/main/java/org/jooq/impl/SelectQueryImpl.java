@@ -1547,7 +1547,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // [#3676] There might be cases where nested set operations do not
                 //         imply required parentheses in some dialects, but better
                 //         play safe than sorry
-                unionParenthesis(context, '(', getSelect().toArray(EMPTY_FIELD), unionParensRequired = unionOpNesting || unionParensRequired(context));
+                unionParenthesis(context, '(', alternativeFields != null ? alternativeFields : getSelect().toArray(EMPTY_FIELD), unionParensRequired = unionOpNesting || unionParensRequired(context));
             }
         }
 

@@ -228,12 +228,12 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 if (Boolean.TRUE.equals(customType.isEnumConverter()) ||
                     EnumConverter.class.getName().equals(customType.getConverter())) {
                     String tType = tType(db, resolver, definedType);
-                    converter = "new " + EnumConverter.class.getName() + "<" + tType + ", " + uType + ">(" + tType + ".class, " + uType + ".class)";
+                    converter = "new " + EnumConverter.class.getName() + "<" + tType + ", " + uType + ">(" + classLiteral(tType) + ", " + classLiteral(uType) + ")";
                 }
                 else if (customType.getLambdaConverter() != null) {
                     LambdaConverter c = customType.getLambdaConverter();
                     String tType = tType(db, resolver, definedType);
-                    converter = "org.jooq.Converter.of" + (!FALSE.equals(c.isNullable()) ? "Nullable" : "") + "(" + tType + ".class, " + uType + ".class, " + c.getFrom() + ", " + c.getTo() + ")";
+                    converter = "org.jooq.Converter.of" + (!FALSE.equals(c.isNullable()) ? "Nullable" : "") + "(" + classLiteral(tType) + ", " + classLiteral(uType) + ", " + c.getFrom() + ", " + c.getTo() + ")";
                 }
                 else if (!StringUtils.isBlank(customType.getConverter())) {
                     converter = customType.getConverter();
@@ -316,6 +316,11 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         catch (SQLDialectNotSupportedException ignore) {
             return Object.class.getName();
         }
+    }
+
+    private static final String classLiteral(String type) {
+        String rawtype = type.replaceAll("<.*>", "").replaceAll("\\[.*\\]", "");
+        return (rawtype.equals(type) ? "" : "(java.lang.Class) ") + rawtype + ".class";
     }
 
     @SuppressWarnings("deprecation")

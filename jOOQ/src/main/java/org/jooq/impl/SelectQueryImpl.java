@@ -1722,7 +1722,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 actual.addConditions(semiAntiJoinPredicates);
 
             if (where.hasWhere())
-                actual.addConditions(where);
+                actual.addConditions(where.getWhere());
 
             context.formatSeparator()
                    .visit(K_WHERE)

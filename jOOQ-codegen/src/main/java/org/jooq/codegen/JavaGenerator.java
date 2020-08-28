@@ -7641,7 +7641,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 case JAVA:
                 default:
-                    return (generic ? "" : "(" + out.ref(Class.class) + ") ") + out.ref(rawtype) + ".class";
+                    return (generic ? "(" + out.ref(Class.class) + ") " : "") + out.ref(rawtype) + ".class";
             }
         }
 

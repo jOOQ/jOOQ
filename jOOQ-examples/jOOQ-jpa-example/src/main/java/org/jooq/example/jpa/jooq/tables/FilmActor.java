@@ -21,6 +21,7 @@ import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.tables.records.FilmActorRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -30,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActor extends TableImpl<FilmActorRecord> {
 
-    private static final long serialVersionUID = 1729998951;
+    private static final long serialVersionUID = -1780609702;
 
     /**
      * The reference instance of <code>FILM_ACTOR</code>
@@ -48,12 +49,12 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     /**
      * The column <code>FILM_ACTOR.FILMS_FILMID</code>.
      */
-    public final TableField<FilmActorRecord, Integer> FILMS_FILMID = createField(DSL.name("FILMS_FILMID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmActorRecord, Integer> FILMS_FILMID = createField(DSL.name("FILMS_FILMID"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>FILM_ACTOR.ACTORS_ACTORID</code>.
      */
-    public final TableField<FilmActorRecord, Integer> ACTORS_ACTORID = createField(DSL.name("ACTORS_ACTORID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmActorRecord, Integer> ACTORS_ACTORID = createField(DSL.name("ACTORS_ACTORID"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private FilmActor(Name alias, Table<FilmActorRecord> aliased) {
         this(alias, aliased, null);

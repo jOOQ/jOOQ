@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -128,7 +129,31 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
     @Override
     public DataTypeDefinition getType() {
         if (type == null)
-            type = mapDefinedType(container, this, definedType, null);
+            type = mapDefinedType(container, this, definedType, new JavaTypeResolver() {
+
+                // [#10553] TODO: This was introduced as a dummy implementation
+                //          to make [#10534] work. jOOQ-meta should not have any
+                //          such implementation
+                @Override
+                public String resolve(DataTypeDefinition type) {
+                    return "java.lang.Object";
+                }
+
+                @Override
+                public String ref(Class<?> type) {
+                    return type.getName();
+                }
+
+                @Override
+                public String ref(String type) {
+                    return type;
+                }
+
+                @Override
+                public String classLiteral(String type) {
+                    return type + ".class";
+                }
+            });
 
         return type;
     }
@@ -228,12 +253,12 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 if (Boolean.TRUE.equals(customType.isEnumConverter()) ||
                     EnumConverter.class.getName().equals(customType.getConverter())) {
                     String tType = tType(db, resolver, definedType);
-                    converter = "new " + EnumConverter.class.getName() + "<" + tType + ", " + uType + ">(" + classLiteral(tType) + ", " + classLiteral(uType) + ")";
+                    converter = "new " + EnumConverter.class.getName() + "<" + tType + ", " + uType + ">(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
                 }
                 else if (customType.getLambdaConverter() != null) {
                     LambdaConverter c = customType.getLambdaConverter();
                     String tType = tType(db, resolver, definedType);
-                    converter = "org.jooq.Converter.of" + (!FALSE.equals(c.isNullable()) ? "Nullable" : "") + "(" + classLiteral(tType) + ", " + classLiteral(uType) + ", " + c.getFrom() + ", " + c.getTo() + ")";
+                    converter = resolver.ref(Converter.class) + ".of" + (!FALSE.equals(c.isNullable()) ? "Nullable" : "") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ", " + c.getFrom() + ", " + c.getTo() + ")";
                 }
                 else if (!StringUtils.isBlank(customType.getConverter())) {
                     converter = customType.getConverter();
@@ -316,11 +341,6 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         catch (SQLDialectNotSupportedException ignore) {
             return Object.class.getName();
         }
-    }
-
-    private static final String classLiteral(String type) {
-        String rawtype = type.replaceAll("<.*>", "").replaceAll("\\[.*\\]", "");
-        return (rawtype.equals(type) ? "" : "(java.lang.Class) ") + rawtype + ".class";
     }
 
     @SuppressWarnings("deprecation")

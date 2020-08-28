@@ -46,11 +46,34 @@ package org.jooq.meta;
  *
  * @author Lukas Eder
  */
-@FunctionalInterface
 public interface JavaTypeResolver {
 
     /**
      * Resolve a Java type from a {@link DataTypeDefinition}.
      */
     String resolve(DataTypeDefinition type);
+
+    /**
+     * Get a language dependent class literal for a type.
+     * <p>
+     * <table>
+     * <tr><th>Language</th><th>Output for <code>String</code></th></tr>
+     * <tr><td>Java</td><td><code>String.class</code></td></tr>
+     * <tr><td>Scala</td><td><code>classOf[String]</code></td></tr>
+     * <tr><td>Kotlin</td><td><code>String::class.java</code></td></tr>
+     * </table>
+     */
+    String classLiteral(String type);
+
+    /**
+     * Get the unqualified type reference and add an import for the qualified
+     * type, if necessary.
+     */
+    String ref(String type);
+
+    /**
+     * Get the unqualified type reference and add an import for the qualified
+     * type, if necessary.
+     */
+    String ref(Class<?> type);
 }

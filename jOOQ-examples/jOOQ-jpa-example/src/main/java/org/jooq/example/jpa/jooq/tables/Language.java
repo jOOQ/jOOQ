@@ -22,6 +22,7 @@ import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.tables.records.LanguageRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = -1201806006;
+    private static final long serialVersionUID = -985164033;
 
     /**
      * The reference instance of <code>LANGUAGE</code>
@@ -49,12 +50,12 @@ public class Language extends TableImpl<LanguageRecord> {
     /**
      * The column <code>LANGUAGE.LANGUAGEID</code>.
      */
-    public final TableField<LanguageRecord, Integer> LANGUAGEID = createField(DSL.name("LANGUAGEID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<LanguageRecord, Integer> LANGUAGEID = createField(DSL.name("LANGUAGEID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>LANGUAGE.NAME</code>.
      */
-    public final TableField<LanguageRecord, String> NAME = createField(DSL.name("NAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<LanguageRecord, String> NAME = createField(DSL.name("NAME"), SQLDataType.VARCHAR(255), this, "");
 
     private Language(Name alias, Table<LanguageRecord> aliased) {
         this(alias, aliased, null);

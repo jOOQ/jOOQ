@@ -22,6 +22,7 @@ import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.tables.records.ActorRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = -837715027;
+    private static final long serialVersionUID = -976374127;
 
     /**
      * The reference instance of <code>ACTOR</code>
@@ -49,17 +50,17 @@ public class Actor extends TableImpl<ActorRecord> {
     /**
      * The column <code>ACTOR.ACTORID</code>.
      */
-    public final TableField<ActorRecord, Integer> ACTORID = createField(DSL.name("ACTORID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<ActorRecord, Integer> ACTORID = createField(DSL.name("ACTORID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>ACTOR.FIRSTNAME</code>.
      */
-    public final TableField<ActorRecord, String> FIRSTNAME = createField(DSL.name("FIRSTNAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<ActorRecord, String> FIRSTNAME = createField(DSL.name("FIRSTNAME"), SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>ACTOR.LASTNAME</code>.
      */
-    public final TableField<ActorRecord, String> LASTNAME = createField(DSL.name("LASTNAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<ActorRecord, String> LASTNAME = createField(DSL.name("LASTNAME"), SQLDataType.VARCHAR(255), this, "");
 
     private Actor(Name alias, Table<ActorRecord> aliased) {
         this(alias, aliased, null);

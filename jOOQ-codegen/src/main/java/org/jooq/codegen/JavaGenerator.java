@@ -7639,9 +7639,10 @@ public class JavaGenerator extends AbstractGenerator {
                 case KOTLIN:
                     return out.ref(rawtype) + "::class.java" + (generic ? (" as " + out.ref(Class.class) + "<" + out.ref(type) + ">") : "");
 
+                // The double cast is required only in Java 8 and less, not in Java 11
                 case JAVA:
                 default:
-                    return (generic ? "(" + out.ref(Class.class) + ") " : "") + out.ref(rawtype) + ".class";
+                    return (generic ? "(" + out.ref(Class.class) + "<" + out.ref(type) + ">) (" + out.ref(Class.class) + ") " : "") + out.ref(rawtype) + ".class";
             }
         }
 

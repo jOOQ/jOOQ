@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +34,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     private final Pattern             fullyQualifiedTypes;
     private final boolean             javadoc;
+    private final Set<String>         refConflicts;
     private final Set<String>         qualifiedTypes   = new TreeSet<>(qualifiedTypeComparator());
     private final Map<String, String> unqualifiedTypes = new TreeMap<>();
     private final String              className;
@@ -60,6 +62,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         this.isJava = file.getName().endsWith(".java");
         this.isScala = file.getName().endsWith(".scala");
         this.isKotlin = file.getName().endsWith(".kt");
+        this.refConflicts = new HashSet<>();
         this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
         this.javadoc = javadoc;
 
@@ -239,6 +242,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         return string;
     }
 
+    public JavaWriter refConflicts(List<String> conflicts) {
+        this.refConflicts.addAll(conflicts);
+        return this;
+    }
+
     @Override
     protected List<String> ref(List<String> clazz, int keepSegments) {
         List<String> result = new ArrayList<>(clazz == null ? 0 : clazz.size());
@@ -247,43 +255,51 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             for (String c : clazz) {
 
                 // Skip unqualified and primitive types
-                if (c.contains(".")) {
+                checks: {
+                    if (!c.contains("."))
+                        break checks;
+
                     c = patchKotlinClasses(c);
 
                     // com.example.Table.TABLE.COLUMN (with keepSegments = 3)
-                    if (fullyQualifiedTypes == null || !fullyQualifiedTypes.matcher(c).matches()) {
-                        Matcher m = TYPE_REFERENCE_PATTERN.matcher(c);
+                    if (fullyQualifiedTypes != null && fullyQualifiedTypes.matcher(c).matches())
+                        break checks;
 
-                        if (m.find()) {
+                    Matcher m = TYPE_REFERENCE_PATTERN.matcher(c);
+                    if (!m.find())
+                        break checks;
 
-                            // [com, example, Table, TABLE, COLUMN]
-                            List<String> split = Arrays.asList(m.group(1).split("\\."));
+                    // [com, example, Table, TABLE, COLUMN]
+                    List<String> split = Arrays.asList(m.group(1).split("\\."));
 
-                            // com.example.Table
-                            String qualifiedType = StringUtils.join(split.subList(0, split.size() - keepSegments + 1).toArray(), ".");
+                    // com.example.Table
+                    String qualifiedType = StringUtils.join(split.subList(0, split.size() - keepSegments + 1).toArray(), ".");
 
-                            // Table
-                            String unqualifiedType = split.get(split.size() - keepSegments);
+                    // Table
+                    String unqualifiedType = split.get(split.size() - keepSegments);
 
-                            // Table.TABLE.COLUMN
-                            String remainder = StringUtils.join(split.subList(split.size() - keepSegments, split.size()).toArray(), ".");
+                    // Table.TABLE.COLUMN
+                    String remainder = StringUtils.join(split.subList(split.size() - keepSegments, split.size()).toArray(), ".");
 
-                            // [#9697] Don't import a class from a different package by the same name as this class
-                            if ((!className.equals(unqualifiedType) || packageName != null && qualifiedType.equals(packageName + "." + className)) &&
-                               (!unqualifiedTypes.containsKey(unqualifiedType) || qualifiedType.equals(unqualifiedTypes.get(unqualifiedType)))) {
+                    // [#9697] Don't import a class from a different package by the same name as this class
+                    if ((className.equals(unqualifiedType) && (packageName == null || !qualifiedType.equals(packageName + "." + className)))
+                        || (unqualifiedTypes.containsKey(unqualifiedType) && !qualifiedType.equals(unqualifiedTypes.get(unqualifiedType))))
+                        break checks;
 
-                                unqualifiedTypes.put(unqualifiedType, qualifiedType);
-                                qualifiedTypes.add(qualifiedType);
-                                String generic = m.group(2);
+                    // [#10561] Don't import type that conflicts with a local identifier
+                    if (refConflicts.contains(unqualifiedType))
+                        break checks;
 
-                                // Consider importing generic type arguments, recursively
-                                c = remainder
-                                  + (PLAIN_GENERIC_TYPE_PATTERN.matcher(generic).matches()
-                                  ?  generic.substring(0, 1) + ref(generic.substring(1, generic.length() - 1)) + generic.substring(generic.length() - 1)
-                                  :  generic);
-                            }
-                        }
-                    }
+                    // [#10561] Don't import a class that conflicts with a local identifier
+                    unqualifiedTypes.put(unqualifiedType, qualifiedType);
+                    qualifiedTypes.add(qualifiedType);
+                    String generic = m.group(2);
+
+                    // Consider importing generic type arguments, recursively
+                    c = remainder
+                      + (PLAIN_GENERIC_TYPE_PATTERN.matcher(generic).matches()
+                      ?  generic.substring(0, 1) + ref(generic.substring(1, generic.length() - 1)) + generic.substring(generic.length() - 1)
+                      :  generic);
                 }
 
                 // If any of the above tests fail, c will remain the unchanged,

@@ -757,6 +757,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         boolean empty = true;
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Keys.java"));
+        out.refConflicts(getStrategy().getJavaIdentifiers(database.getUniqueKeys(schema)));
+        out.refConflicts(getStrategy().getJavaIdentifiers(database.getForeignKeys(schema)));
         printPackage(out, schema);
         printClassJavadoc(out,
             "A class modelling foreign key relationships and constraints of tables in " + schemaNameOrDefault(schema) + ".");
@@ -874,6 +876,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Indexes.java"));
+        out.refConflicts(getStrategy().getJavaIdentifiers(database.getIndexes(schema)));
         printPackage(out, schema);
         printClassJavadoc(out,
             "A class modelling indexes of tables in "  + schemaNameOrDefault(schema) + ".");
@@ -889,24 +892,20 @@ public class JavaGenerator extends AbstractGenerator {
         out.header("INDEX definitions");
         out.println();
 
-        for (TableDefinition table : database.getTables(schema)) {
+        for (IndexDefinition index : database.getIndexes(schema)) {
             try {
-                List<IndexDefinition> indexes = table.getIndexes();
+                final String keyId = getStrategy().getJavaIdentifier(index);
+                final int block = allIndexes.size() / INITIALISER_SIZE;
 
-                for (IndexDefinition index : indexes) {
-                    final String keyId = getStrategy().getJavaIdentifier(index);
-                    final int block = allIndexes.size() / INITIALISER_SIZE;
+                if (scala || kotlin)
+                    out.println("val %s = Indexes%s.%s", keyId, block, keyId);
+                else
+                    out.println("public static final %s %s = Indexes%s.%s;", Index.class, keyId, block, keyId);
 
-                    if (scala || kotlin)
-                        out.println("val %s = Indexes%s.%s", keyId, block, keyId);
-                    else
-                        out.println("public static final %s %s = Indexes%s.%s;", Index.class, keyId, block, keyId);
-
-                    allIndexes.add(index);
-                }
+                allIndexes.add(index);
             }
             catch (Exception e) {
-                log.error("Error while generating table " + table, e);
+                log.error("Error while generating index " + index, e);
             }
         }
 
@@ -963,6 +962,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println("%s", semicolon);
     }
+
+
 
     private void printCreateIndex(JavaWriter out, IndexDefinition index) {
         String sortFieldSeparator = "";
@@ -2835,6 +2836,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateDomainReferences(SchemaDefinition schema) {
         log.info("Generating DOMAIN references");
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Domains.java"));
+        out.refConflicts(getStrategy().getJavaIdentifiers(database.getDomains(schema)));
 
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
 
@@ -5718,6 +5720,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateSequences(SchemaDefinition schema) {
         log.info("Generating sequences");
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Sequences.java"));
+        out.refConflicts(getStrategy().getJavaIdentifiers(database.getSequences(schema)));
 
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all sequences in " + schemaNameOrDefault(schema) + ".");
@@ -5728,15 +5731,12 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class Sequences {");
 
-        boolean qualifySequenceClassReferences = containsConflictingDefinition(schema, database.getSequences(schema));
-
         for (SequenceDefinition sequence : database.getSequences(schema)) {
             final String seqTypeFull = getJavaType(sequence.getType(resolver(out)), out);
             final String seqType = out.ref(seqTypeFull);
             final String seqId = getStrategy().getJavaIdentifier(sequence);
             final String seqName = sequence.getOutputName();
-            final String schemaId = qualifySequenceClassReferences ? getStrategy().getFullJavaIdentifier(schema)
-                : out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+            final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
             final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType(resolver(out)), out);
 
             if (!printDeprecationIfUnknownType(out, seqTypeFull))
@@ -5816,14 +5816,6 @@ public class JavaGenerator extends AbstractGenerator {
         else if (n != null)
             return Long.toString(n.longValue()) + 'L';
         return "null";
-    }
-
-    private boolean containsConflictingDefinition(SchemaDefinition schema, List<? extends Definition> definitions) {
-        final String unqualifiedSchemaId = getStrategy().getJavaIdentifier(schema);
-        for (Definition def : definitions)
-            if (unqualifiedSchemaId.equals(getStrategy().getJavaIdentifier(def)))
-                return true;
-        return false;
     }
 
     protected void generateCatalog(CatalogDefinition catalog) {

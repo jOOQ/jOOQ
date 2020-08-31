@@ -89,6 +89,10 @@ import org.jooq.Record1;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
+import org.jooq.Result;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.TableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
@@ -97,7 +101,9 @@ import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 
 /**
- * This is the default implementation for <code>RecordMapper</code> types.
+ * This is the default implementation for <code>RecordMapper</code> types, which
+ * applies to {@link Record#into(Class)}, {@link Result#into(Class)}, and
+ * similar calls.
  * <p>
  * The mapping algorithm is this:
  * <p>
@@ -110,7 +116,8 @@ import org.jooq.tools.reflect.ReflectException;
  * conversion exceptions.
  * <p>
  * <h5>If <code>&lt;E&gt;</code> is a field "value type" and
- * <code>&lt;R&gt;</code> has exactly one column:</h5>
+ * <code>&lt;R extends Record1&lt;?&gt;&gt;</code>, i.e. it has exactly one
+ * column:</h5>
  * <p>
  * Any Java type available from {@link SQLDataType} qualifies as a well-known
  * "value type" that can be converted from a single-field {@link Record1}. The
@@ -128,6 +135,16 @@ import org.jooq.tools.reflect.ReflectException;
  * <code>0.0</code> for <code>double</code>, <code>false</code> for
  * <code>boolean</code>.</li>
  * </ul>
+ * <p>
+ * <h5>If <code>&lt;E&gt;</code> is a {@link TableRecord} type (e.g. from a
+ * generated record), then its meta data are used:</h5>
+ * <p>
+ * Generated {@link TableRecord} types reference their corresponding generated
+ * {@link Table} types, which provide {@link TableField} meta data through
+ * {@link Table#fields()}. All target {@link Record#fields()} are looked up in
+ * the source table via {@link Table#indexOf(Field)} and their values are
+ * mapped. Excess source values and missing target values are ignored.
+ * <p>
  * <h5>If a default constructor is available and any JPA {@link Column}
  * annotations are found on the provided <code>&lt;E&gt;</code>, only those are
  * used:</h5>

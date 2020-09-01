@@ -1356,7 +1356,7 @@ final class ParserImpl implements Parser {
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(ctx, false)) != null) {
             if (degree == null)
-                degree = result.getSelect().size();
+                degree = Tools.degree(result);
 
             switch (combine) {
                 case UNION:
@@ -1385,7 +1385,7 @@ final class ParserImpl implements Parser {
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(ctx, true)) != null) {
             if (degree == null)
-                degree = result.getSelect().size();
+                degree = Tools.degree(result);
 
             switch (combine) {
                 case INTERSECT:
@@ -3401,10 +3401,10 @@ final class ParserImpl implements Parser {
 
         parseKeyword(ctx, "AS");
         Select<?> select = parseWithOrSelect(ctx);
+        int degree = Tools.degree(select);
 
-        if (fields.length > 0 && fields.length != select.getSelect().size())
-            throw ctx.exception("Select list size (" + select.getSelect().size() + ") must match declared field size (" + fields.length + ")");
-
+        if (fields.length > 0 && fields.length != degree)
+            throw ctx.exception("Select list size (" + degree + ") must match declared field size (" + fields.length + ")");
 
         return ifNotExists
             ? ctx.dsl.createViewIfNotExists(view, fields).as(select)

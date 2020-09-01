@@ -49,6 +49,7 @@ import java.util.Set;
 
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 // ...
 import org.jooq.Record;
@@ -136,7 +137,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
     final Fields<R> fields1() {
         List<Field<?>> s = select.getSelect();
-        Field<?>[] f = new Field[s.size()];
+        Field<?>[] f = new Field[Tools.degree(select)];
 
         for (int i = 0; i < f.length; i++) {
             f[i] = DSL.field(
@@ -147,11 +148,10 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
                     name.fieldNames.length > 0
                         ? name.fieldNames[i]
                         : s.get(i).getUnqualifiedName()),
-                s.get(i).getDataType()
+                (DataType<?>) (f.length == 1 ? Tools.scalarType(select) : s.get(i).getDataType())
             );
         }
 
-        Fields<R> result = new Fields<>(f);
-        return result;
+        return new Fields<>(f);
     }
 }

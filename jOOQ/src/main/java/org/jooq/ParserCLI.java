@@ -45,6 +45,7 @@ import java.util.regex.Pattern;
 
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
@@ -92,6 +93,8 @@ public final class ParserCLI {
             settings.setRenderKeywordCase(a.keywords);
         if (a.name != null)
             settings.setRenderNameCase(a.name);
+        if (a.quoted != null)
+            settings.setRenderQuotedNames(a.quoted);
         if (a.fromDialect != null)
             settings.setParseDialect(a.fromDialect);
     }
@@ -147,6 +150,15 @@ public final class ParserCLI {
                                 }
                                 catch (IllegalArgumentException e) {
                                     invalid(arg, RenderNameCase.class);
+                                }
+                            }
+                            else if ("Q".equals(flag) || "quoted".equals(flag)) {
+                                try {
+                                    a.quoted = RenderQuotedNames.valueOf(arg.toUpperCase());
+                                    displayQuoted(a);
+                                }
+                                catch (IllegalArgumentException e) {
+                                    invalid(arg, RenderQuotedNames.class);
                                 }
                             }
                             else if ("F".equals(flag) || "from-dialect".equals(flag)) {
@@ -205,10 +217,15 @@ public final class ParserCLI {
         displayToDialect(a);
         displayKeywords(a);
         displayIdentifiers(a);
+        displayQuoted(a);
     }
 
     private static void displayIdentifiers(Args a) {
         System.out.println("Identifiers  : " + a.name);
+    }
+
+    private static void displayQuoted(Args a) {
+        System.out.println("Quoted       : " + a.quoted);
     }
 
     private static void displayKeywords(Args a) {
@@ -292,6 +309,20 @@ public final class ParserCLI {
                     throw e;
                 }
             }
+            else if ("-Q".equals(args[i]) || "--quoted".equals(args[i])) {
+                try {
+                    result.quoted = RenderQuotedNames.valueOf(args[++i].toUpperCase());
+                    continue argsLoop;
+                }
+                catch (IllegalArgumentException e) {
+                    invalid(args[i], RenderQuotedNames.class);
+                    throw e;
+                }
+                catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Flag -Q / --quoted requires <RenderQuotedNames> argument");
+                    throw e;
+                }
+            }
             else if ("-F".equals(args[i]) || "--from-dialect".equals(args[i])) {
                 try {
                     result.fromDialect = SQLDialect.valueOf(args[++i].toUpperCase());
@@ -362,6 +393,7 @@ public final class ParserCLI {
         System.out.println("  -h / --help                             Display this help");
         System.out.println("  -k / --keyword      <RenderKeywordCase> Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
         System.out.println("  -i / --identifier   <RenderNameCase>    Specify the output identifier case (org.jooq.conf.RenderNameCase)");
+        System.out.println("  -Q / --quoted       <RenderQuotedNames> Specify the output identifier quoting (org.jooq.conf.RenderQuotedNames)");
         System.out.println("  -F / --from-dialect <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
         System.out.println("  -T / --to-dialect   <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
         System.out.println("  -s / --sql          <String>            Specify the input SQL string");
@@ -376,6 +408,7 @@ public final class ParserCLI {
         System.out.println("  /h  or  /help                             Display this help");
         System.out.println("  /k  or  /keyword      <RenderKeywordCase> Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
         System.out.println("  /i  or  /identifier   <RenderNameCase>    Specify the output identifier case (org.jooq.conf.RenderNameCase)");
+        System.out.println("  /Q  or  /quoted       <RenderQuotedNames> Specify the output identifier quoting (org.jooq.conf.RenderQuotedNames)");
         System.out.println("  /F  or  /from-dialect <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
         System.out.println("  /T  or  /to-dialect   <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
         System.out.println("                        <String>            Specify the input SQL string");
@@ -389,6 +422,7 @@ public final class ParserCLI {
         String            sql;
         RenderKeywordCase keywords    = RenderKeywordCase.LOWER;
         RenderNameCase    name        = RenderNameCase.LOWER;
+        RenderQuotedNames quoted      = RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED;
         SQLDialect        toDialect   = SQLDialect.DEFAULT;
         SQLDialect        fromDialect = SQLDialect.DEFAULT;
         boolean           formatted;

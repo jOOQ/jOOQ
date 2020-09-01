@@ -374,12 +374,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @SuppressWarnings("unchecked")
     @Override
     public final <T> Field<T> asField() {
-        List<Field<?>> s = getSelect();
-
-        if (s.size() != 1)
-            throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
-
-        return new ScalarSubquery<>(this, (DataType<T>) s.get(0).getDataType());
+        return new ScalarSubquery<>(this, (DataType<T>) Tools.scalarType(this));
     }
 
     @Override
@@ -2604,6 +2599,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final void initLockMode() {
         forLock().forLockMode = forLock().forLockMode == null ? ForLockMode.UPDATE : forLock().forLockMode;
     }
+
+
+
+
+
+
+
+
 
 
 

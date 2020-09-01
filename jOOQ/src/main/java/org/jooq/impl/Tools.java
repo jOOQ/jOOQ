@@ -150,7 +150,10 @@ import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
@@ -3122,6 +3125,38 @@ final class Tools {
             return ((AbstractDelegatingQuery<SelectQueryImpl<R>>) select).getDelegate();
         else
             return null;
+    }
+
+    static final int degree(Select<?> select) {
+
+
+
+
+
+
+
+        return select.getSelect().size();
+    }
+
+    static final DataType<?> scalarType(Select<?> select) {
+
+
+
+
+
+
+
+
+
+
+
+
+        List<Field<?>> list = select.getSelect();
+
+        if (list.size() != 1)
+            throw new IllegalStateException("Only single-column selects have a scalar type");
+
+        return list.get(0).getDataType();
     }
 
     /**

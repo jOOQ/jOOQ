@@ -7179,11 +7179,10 @@ final class ParserImpl implements Parser {
                 try {
                     if (peekSelect(ctx, true)) {
                         SelectQueryImpl<Record> select = parseSelect(ctx);
-                        if (select.getSelect().size() != 1)
+                        if (Tools.degree(select) != 1)
                             throw ctx.exception("Select list must contain exactly one column");
 
-                        field = field((Select) select);
-                        return field;
+                        return field((Select) select);
                     }
                 }
                 catch (ParserException e) {

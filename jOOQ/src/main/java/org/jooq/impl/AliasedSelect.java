@@ -67,7 +67,7 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
     private final Name[]      aliases;
 
     AliasedSelect(Select<R> query) {
-        this(query, Tools.fieldNames(query.getSelect().size()));
+        this(query, Tools.fieldNames(Tools.degree(query)));
     }
 
     AliasedSelect(Select<R> query, Name... aliases) {

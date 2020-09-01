@@ -1212,6 +1212,18 @@ final class Tools {
         return result;
     }
 
+    static final DataType<?>[] dataTypes(Field<?>[] fields) {
+        if (fields == null)
+            return null;
+
+        DataType<?>[] result = new DataType<?>[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].getDataType();
+
+        return result;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: General utility methods
     // ------------------------------------------------------------------------
@@ -3138,25 +3150,34 @@ final class Tools {
         return select.getSelect().size();
     }
 
+    static final List<DataType<?>> dataTypes(Select<?> select) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+        List<DataType<?>> result = new ArrayList<>();
+        for (Field<?> f : select.getSelect())
+            result.add(f.getDataType());
+
+        return result;
+    }
+
     static final DataType<?> scalarType(Select<?> select) {
-
-
-
-
-
-
-
-
-
-
-
-
-        List<Field<?>> list = select.getSelect();
+        List<DataType<?>> list = dataTypes(select);
 
         if (list.size() != 1)
             throw new IllegalStateException("Only single-column selects have a scalar type");
 
-        return list.get(0).getDataType();
+        return list.get(0);
     }
 
     /**

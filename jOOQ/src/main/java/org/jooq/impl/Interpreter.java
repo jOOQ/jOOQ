@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.intersect;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.Tools.reverseIterable;
@@ -810,9 +811,9 @@ final class Interpreter {
                 return;
         }
 
-        List<DataType<?>> columnTypes = new ArrayList<>();
-        for (Field<?> f : (query.$select() != null ? query.$select().getSelect() : asList(query.$fields())))
-            columnTypes.add(f.getDataType());
+        List<DataType<?>> columnTypes = query.$select() != null
+            ? dataTypes(query.$select())
+            : asList(dataTypes(query.$fields()));
 
         newTable(table, schema, asList(query.$fields()), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
     }

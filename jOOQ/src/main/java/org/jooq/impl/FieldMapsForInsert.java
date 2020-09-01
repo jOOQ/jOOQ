@@ -542,6 +542,14 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         Set<Field<?>> overlapping = null;
         for (Entry<Field<?>, List<Field<?>>> entry : values.entrySet()) {
 
+            // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
+            if (entry.getKey().getDataType().isEmbeddable()) {
+                List<Iterator<? extends Field<?>>> value = new ArrayList<>(entry.getValue().size());
+
+                for (Field<?> f : entry.getValue())
+                    value.add(flatten(f).iterator());
+
+                for (Field<?> key : flatten(entry.getKey())) {
 
 
 
@@ -551,23 +559,17 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
 
 
+                    {
+                        List<Field<?>> list = new ArrayList<>(entry.getValue().size());
 
+                        for (Iterator<? extends Field<?>> v : value)
+                            list.add(v.hasNext() ? v.next() : null);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        result.put(key, list);
+                    }
+                }
+            }
+            else
                 result.put(entry.getKey(), entry.getValue());
         }
 

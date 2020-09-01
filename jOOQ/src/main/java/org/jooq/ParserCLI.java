@@ -58,7 +58,7 @@ import org.jooq.impl.ParserException;
  */
 public final class ParserCLI {
 
-    private static final Pattern FLAG = Pattern.compile("^/([\\w\\-]+)\\s+(\\w+)\\s*$");
+    private static final Pattern FLAG = Pattern.compile("^/([\\w\\-]+)(?:\\s+(\\w+))?\\s*$");
 
     public static final void main(String... args) throws Exception {
         Args a;
@@ -129,14 +129,18 @@ public final class ParserCLI {
                         String flag = matcher.group(1);
                         String arg = matcher.group(2);
 
-                        if (flag != null && arg != null) {
+                        if (flag != null) {
                             if ("f".equals(flag) || "formatted".equals(flag)) {
-                                a.formatted = Boolean.parseBoolean(arg.toLowerCase());
+                                if (arg != null)
+                                    a.formatted = Boolean.parseBoolean(arg.toLowerCase());
+
                                 displayFormatted(a);
                             }
                             else if ("k".equals(flag) || "keyword".equals(flag)) {
                                 try {
-                                    a.keywords = RenderKeywordCase.valueOf(arg.toUpperCase());
+                                    if (arg != null)
+                                        a.keywords = RenderKeywordCase.valueOf(arg.toUpperCase());
+
                                     displayKeywords(a);
                                 }
                                 catch (IllegalArgumentException e) {
@@ -145,7 +149,9 @@ public final class ParserCLI {
                             }
                             else if ("i".equals(flag) || "identifier".equals(flag)) {
                                 try {
-                                    a.name = RenderNameCase.valueOf(arg.toUpperCase());
+                                    if (arg != null)
+                                        a.name = RenderNameCase.valueOf(arg.toUpperCase());
+
                                     displayIdentifiers(a);
                                 }
                                 catch (IllegalArgumentException e) {
@@ -154,7 +160,9 @@ public final class ParserCLI {
                             }
                             else if ("Q".equals(flag) || "quoted".equals(flag)) {
                                 try {
-                                    a.quoted = RenderQuotedNames.valueOf(arg.toUpperCase());
+                                    if (arg != null)
+                                        a.quoted = RenderQuotedNames.valueOf(arg.toUpperCase());
+
                                     displayQuoted(a);
                                 }
                                 catch (IllegalArgumentException e) {
@@ -163,7 +171,9 @@ public final class ParserCLI {
                             }
                             else if ("F".equals(flag) || "from-dialect".equals(flag)) {
                                 try {
-                                    a.fromDialect = SQLDialect.valueOf(arg.toUpperCase());
+                                    if (arg != null)
+                                        a.fromDialect = SQLDialect.valueOf(arg.toUpperCase());
+
                                     displayFromDialect(a);
                                 }
                                 catch (IllegalArgumentException e) {
@@ -174,7 +184,9 @@ public final class ParserCLI {
                             // [#9144] /t maintained for backwards compatibility
                             else if ("t".equals(flag) || "T".equals(flag) || "to-dialect".equals(flag)) {
                                 try {
-                                    a.toDialect = SQLDialect.valueOf(arg.toUpperCase());
+                                    if (arg != null)
+                                        a.toDialect = SQLDialect.valueOf(arg.toUpperCase());
+
                                     displayToDialect(a);
                                 }
                                 catch (IllegalArgumentException e) {

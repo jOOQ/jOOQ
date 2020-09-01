@@ -1541,7 +1541,7 @@ final class Tools {
             return (Field<T>) value;
 
         // [#6362] [#8220] Single-column selects can be considered fields, too
-        else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
+        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
             return DSL.field((Select<Record1<T>>) value);
 
         // [#4771] Any other QueryPart type is not supported here
@@ -1713,7 +1713,7 @@ final class Tools {
             return (Field<T>) value;
 
         // [#6362] [#8220] Single-column selects can be considered fields, too
-        else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
+        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
             return DSL.field((Select<Record1<T>>) value);
 
         // [#4771] Any other QueryPart type is not supported here
@@ -1732,7 +1732,7 @@ final class Tools {
             return (Field<T>) value;
 
         // [#6362] [#8220] Single-column selects can be considered fields, too
-        else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
+        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
             return DSL.field((Select<Record1<T>>) value);
 
         // [#4771] Any other QueryPart type is not supported here
@@ -1751,7 +1751,7 @@ final class Tools {
             return (Field<T>) value;
 
         // [#6362] [#8220] Single-column selects can be considered fields, too
-        else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
+        else if (value instanceof Select && Tools.degree((Select<?>) value) == 1)
             return DSL.field((Select<Record1<T>>) value);
 
         // [#4771] Any other QueryPart type is not supported here

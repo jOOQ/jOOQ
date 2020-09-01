@@ -4294,7 +4294,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final Condition compare(Comparator comparator, R record) {
-        if (getSelect().size() == 1)
+        if (Tools.degree(this) == 1)
             return DSL.field((Select) this).compare(comparator, record.get(0, field(0).getType()));
         else
             throw new UnsupportedOperationException("Not yet implemented");
@@ -4302,7 +4302,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final Condition compare(Comparator comparator, Select<? extends R> select) {
-        if (getSelect().size() == 1)
+        if (Tools.degree(this) == 1)
             return DSL.field((Select) this).compare(comparator, select);
         else
             throw new UnsupportedOperationException("Not yet implemented");
@@ -4310,7 +4310,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final Condition compare(Comparator comparator, QuantifiedSelect<? extends R> select) {
-        if (getSelect().size() == 1)
+        if (Tools.degree(this) == 1)
             return DSL.field((Select) this).compare(comparator, select);
         else
             throw new UnsupportedOperationException("Not yet implemented");
@@ -4508,7 +4508,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final Condition in(R... records) {
-        if (getSelect().size() == 1)
+        if (Tools.degree(this) == 1)
             return DSL.field((Select) this).in(values(0, records));
         else
             throw new UnsupportedOperationException("Not yet implemented");
@@ -4516,7 +4516,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final Condition in(Select<? extends R> select) {
-        if (getSelect().size() == 1)
+        if (Tools.degree(this) == 1)
             return DSL.field((Select) this).in(select);
         else
             throw new UnsupportedOperationException("Not yet implemented");
@@ -4524,7 +4524,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final Condition notIn(R... records) {
-        if (getSelect().size() == 1)
+        if (Tools.degree(this) == 1)
             return DSL.field((Select) this).notIn(values(0, records));
         else
             throw new UnsupportedOperationException("Not yet implemented");
@@ -4532,7 +4532,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final Condition notIn(Select<? extends R> select) {
-        if (getSelect().size() == 1)
+        if (Tools.degree(this) == 1)
             return DSL.field((Select) this).notIn(select);
         else
             throw new UnsupportedOperationException("Not yet implemented");

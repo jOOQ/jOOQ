@@ -18,8 +18,8 @@ import org.jooq.impl.UpdatableRecordImpl
 class BookStoreRecord() : UpdatableRecordImpl<BookStoreRecord>(BookStore.BOOK_STORE), Record1<String?> {
 
     var name: String?
-        get() = get(0) as String?
         set(value) = set(0, value)
+        get() = get(0) as String?
 
     // -------------------------------------------------------------------------
     // Primary key information

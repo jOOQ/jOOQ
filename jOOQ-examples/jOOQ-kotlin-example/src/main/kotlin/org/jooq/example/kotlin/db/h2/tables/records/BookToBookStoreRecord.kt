@@ -19,16 +19,16 @@ import org.jooq.impl.UpdatableRecordImpl
 class BookToBookStoreRecord() : UpdatableRecordImpl<BookToBookStoreRecord>(BookToBookStore.BOOK_TO_BOOK_STORE), Record3<String?, Int?, Int?> {
 
     var bookStoreName: String?
-        get() = get(0) as String?
         set(value) = set(0, value)
+        get() = get(0) as String?
 
     var bookId: Int?
-        get() = get(1) as Int?
         set(value) = set(1, value)
+        get() = get(1) as Int?
 
     var stock: Int?
-        get() = get(2) as Int?
         set(value) = set(2, value)
+        get() = get(2) as Int?
 
     // -------------------------------------------------------------------------
     // Primary key information

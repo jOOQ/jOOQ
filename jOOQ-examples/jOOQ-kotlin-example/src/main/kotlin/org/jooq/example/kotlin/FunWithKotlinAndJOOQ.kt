@@ -43,7 +43,7 @@ import org.jooq.*
 import org.jooq.impl.*
 import org.jooq.impl.DSL.*
 
-import org.jooq.example.kotlin.db.h2.*
+import org.jooq.example.kotlin.db.h2.tables.references.*
 
 fun main(args: Array<String>) {
 

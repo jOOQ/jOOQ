@@ -21,48 +21,48 @@ import org.jooq.impl.UpdatableRecordImpl
 class BookRecord() : UpdatableRecordImpl<BookRecord>(Book.BOOK), Record11<Int?, Int?, Int?, Int?, String?, Int?, Int?, String?, ByteArray?, Int?, LocalDateTime?> {
 
     var id: Int?
-        get() = get(0) as Int?
         set(value) = set(0, value)
+        get() = get(0) as Int?
 
     var authorId: Int?
-        get() = get(1) as Int?
         set(value) = set(1, value)
+        get() = get(1) as Int?
 
     var coAuthorId: Int?
-        get() = get(2) as Int?
         set(value) = set(2, value)
+        get() = get(2) as Int?
 
     var detailsId: Int?
-        get() = get(3) as Int?
         set(value) = set(3, value)
+        get() = get(3) as Int?
 
     var title: String?
-        get() = get(4) as String?
         set(value) = set(4, value)
+        get() = get(4) as String?
 
     var publishedIn: Int?
-        get() = get(5) as Int?
         set(value) = set(5, value)
+        get() = get(5) as Int?
 
     var languageId: Int?
-        get() = get(6) as Int?
         set(value) = set(6, value)
+        get() = get(6) as Int?
 
     var contentText: String?
-        get() = get(7) as String?
         set(value) = set(7, value)
+        get() = get(7) as String?
 
     var contentPdf: ByteArray?
-        get() = get(8) as ByteArray?
         set(value) = set(8, value)
+        get() = get(8) as ByteArray?
 
     var recVersion: Int?
-        get() = get(9) as Int?
         set(value) = set(9, value)
+        get() = get(9) as Int?
 
     var recTimestamp: LocalDateTime?
-        get() = get(10) as LocalDateTime?
         set(value) = set(10, value)
+        get() = get(10) as LocalDateTime?
 
     // -------------------------------------------------------------------------
     // Primary key information

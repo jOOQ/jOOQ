@@ -308,7 +308,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
 
         else if (PackageDefinition.class.isAssignableFrom(objectType))
-            return "Packages";
+            return "UDTs";
 
 
 

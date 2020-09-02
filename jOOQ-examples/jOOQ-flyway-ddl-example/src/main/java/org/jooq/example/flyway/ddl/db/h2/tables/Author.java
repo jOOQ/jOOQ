@@ -22,6 +22,7 @@ import org.jooq.example.flyway.ddl.db.h2.FlywayTest;
 import org.jooq.example.flyway.ddl.db.h2.Keys;
 import org.jooq.example.flyway.ddl.db.h2.tables.records.AuthorRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = 1852277325;
+    private static final long serialVersionUID = -1732801086;
 
     /**
      * The reference instance of <code>FLYWAY_TEST.AUTHOR</code>
@@ -49,32 +50,32 @@ public class Author extends TableImpl<AuthorRecord> {
     /**
      * The column <code>FLYWAY_TEST.AUTHOR.ID</code>.
      */
-    public final TableField<AuthorRecord, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<AuthorRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>FLYWAY_TEST.AUTHOR.FIRST_NAME</code>.
      */
-    public final TableField<AuthorRecord, String> FIRST_NAME = createField(DSL.name("FIRST_NAME"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<AuthorRecord, String> FIRST_NAME = createField(DSL.name("FIRST_NAME"), SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>FLYWAY_TEST.AUTHOR.LAST_NAME</code>.
      */
-    public final TableField<AuthorRecord, String> LAST_NAME = createField(DSL.name("LAST_NAME"), org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<AuthorRecord, String> LAST_NAME = createField(DSL.name("LAST_NAME"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>FLYWAY_TEST.AUTHOR.DATE_OF_BIRTH</code>.
      */
-    public final TableField<AuthorRecord, LocalDate> DATE_OF_BIRTH = createField(DSL.name("DATE_OF_BIRTH"), org.jooq.impl.SQLDataType.LOCALDATE, this, "");
+    public final TableField<AuthorRecord, LocalDate> DATE_OF_BIRTH = createField(DSL.name("DATE_OF_BIRTH"), SQLDataType.LOCALDATE, this, "");
 
     /**
      * The column <code>FLYWAY_TEST.AUTHOR.YEAR_OF_BIRTH</code>.
      */
-    public final TableField<AuthorRecord, Integer> YEAR_OF_BIRTH = createField(DSL.name("YEAR_OF_BIRTH"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<AuthorRecord, Integer> YEAR_OF_BIRTH = createField(DSL.name("YEAR_OF_BIRTH"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>FLYWAY_TEST.AUTHOR.ADDRESS</code>.
      */
-    public final TableField<AuthorRecord, String> ADDRESS = createField(DSL.name("ADDRESS"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<AuthorRecord, String> ADDRESS = createField(DSL.name("ADDRESS"), SQLDataType.VARCHAR(50), this, "");
 
     private Author(Name alias, Table<AuthorRecord> aliased) {
         this(alias, aliased, null);

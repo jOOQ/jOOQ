@@ -16,11 +16,12 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.TableOptions
 import org.jooq.UniqueKey
-import org.jooq.example.kotlin.db.h2.Keys
 import org.jooq.example.kotlin.db.h2.Public
+import org.jooq.example.kotlin.db.h2.keys.UK_T_BOOK_STORE_NAME
 import org.jooq.example.kotlin.db.h2.tables.records.BookStoreRecord
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
+import org.jooq.impl.SQLDataType
 import org.jooq.impl.TableImpl
 
 
@@ -60,7 +61,7 @@ class BookStore(
     /**
      * The column <code>PUBLIC.BOOK_STORE.NAME</code>.
      */
-    val NAME: TableField<BookStoreRecord, String?> = createField(DSL.name("NAME"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "")
+    val NAME: TableField<BookStoreRecord, String?> = createField(DSL.name("NAME"), SQLDataType.VARCHAR(400).nullable(false), this, "")
 
     private constructor(alias: Name, aliased: Table<BookStoreRecord>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<BookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
@@ -82,8 +83,8 @@ class BookStore(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BookStoreRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK_STORE, null)
     override fun getSchema(): Schema = Public.PUBLIC
-    override fun getPrimaryKey(): UniqueKey<BookStoreRecord> = Keys.UK_T_BOOK_STORE_NAME
-    override fun getKeys(): List<UniqueKey<BookStoreRecord>> = listOf(Keys.UK_T_BOOK_STORE_NAME)
+    override fun getPrimaryKey(): UniqueKey<BookStoreRecord> = UK_T_BOOK_STORE_NAME
+    override fun getKeys(): List<UniqueKey<BookStoreRecord>> = listOf(UK_T_BOOK_STORE_NAME)
     override fun `as`(alias: String): BookStore = BookStore(DSL.name(alias), this)
     override fun `as`(alias: Name): BookStore = BookStore(alias, this)
 

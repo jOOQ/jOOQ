@@ -26,25 +26,12 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<AuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
-    public static final UniqueKey<BookRecord> PK_T_BOOK = UniqueKeys0.PK_T_BOOK;
+    public static final UniqueKey<AuthorRecord> PK_T_AUTHOR = Internal.createUniqueKey(Author.AUTHOR, DSL.name("PK_T_AUTHOR"), new TableField[] { Author.AUTHOR.ID }, true);
+    public static final UniqueKey<BookRecord> PK_T_BOOK = Internal.createUniqueKey(Book.BOOK, DSL.name("PK_T_BOOK"), new TableField[] { Book.BOOK.ID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_AUTHOR_ID;
-
-    // -------------------------------------------------------------------------
-    // [#1459] distribute members to avoid static initialisers > 64kb
-    // -------------------------------------------------------------------------
-
-    private static class UniqueKeys0 {
-        static final UniqueKey<AuthorRecord> PK_T_AUTHOR = Internal.createUniqueKey(Author.AUTHOR, DSL.name("PK_T_AUTHOR"), new TableField[] { Author.AUTHOR.ID }, true);
-        static final UniqueKey<BookRecord> PK_T_BOOK = Internal.createUniqueKey(Book.BOOK, DSL.name("PK_T_BOOK"), new TableField[] { Book.BOOK.ID }, true);
-    }
-
-    private static class ForeignKeys0 {
-        static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(Book.BOOK, DSL.name("FK_T_BOOK_AUTHOR_ID"), new TableField[] { Book.BOOK.AUTHOR_ID }, Keys.PK_T_AUTHOR, new TableField[] { Author.AUTHOR.ID }, true);
-    }
+    public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(Book.BOOK, DSL.name("FK_T_BOOK_AUTHOR_ID"), new TableField[] { Book.BOOK.AUTHOR_ID }, Keys.PK_T_AUTHOR, new TableField[] { Author.AUTHOR.ID }, true);
 }

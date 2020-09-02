@@ -16,11 +16,14 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.TableOptions
 import org.jooq.UniqueKey
-import org.jooq.example.kotlin.db.h2.Keys
 import org.jooq.example.kotlin.db.h2.Public
+import org.jooq.example.kotlin.db.h2.keys.FK_B2BS_BS_NAME
+import org.jooq.example.kotlin.db.h2.keys.FK_B2BS_B_ID
+import org.jooq.example.kotlin.db.h2.keys.PK_B2BS
 import org.jooq.example.kotlin.db.h2.tables.records.BookToBookStoreRecord
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
+import org.jooq.impl.SQLDataType
 import org.jooq.impl.TableImpl
 
 
@@ -60,17 +63,17 @@ class BookToBookStore(
     /**
      * The column <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
      */
-    val BOOK_STORE_NAME: TableField<BookToBookStoreRecord, String?> = createField(DSL.name("BOOK_STORE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "")
+    val BOOK_STORE_NAME: TableField<BookToBookStoreRecord, String?> = createField(DSL.name("BOOK_STORE_NAME"), SQLDataType.VARCHAR(400).nullable(false), this, "")
 
     /**
      * The column <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_ID</code>.
      */
-    val BOOK_ID: TableField<BookToBookStoreRecord, Int?> = createField(DSL.name("BOOK_ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "")
+    val BOOK_ID: TableField<BookToBookStoreRecord, Int?> = createField(DSL.name("BOOK_ID"), SQLDataType.INTEGER.nullable(false), this, "")
 
     /**
      * The column <code>PUBLIC.BOOK_TO_BOOK_STORE.STOCK</code>.
      */
-    val STOCK: TableField<BookToBookStoreRecord, Int?> = createField(DSL.name("STOCK"), org.jooq.impl.SQLDataType.INTEGER, this, "")
+    val STOCK: TableField<BookToBookStoreRecord, Int?> = createField(DSL.name("STOCK"), SQLDataType.INTEGER, this, "")
 
     private constructor(alias: Name, aliased: Table<BookToBookStoreRecord>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<BookToBookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
@@ -92,11 +95,11 @@ class BookToBookStore(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BookToBookStoreRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK_TO_BOOK_STORE, null)
     override fun getSchema(): Schema = Public.PUBLIC
-    override fun getPrimaryKey(): UniqueKey<BookToBookStoreRecord> = Keys.PK_B2BS
-    override fun getKeys(): List<UniqueKey<BookToBookStoreRecord>> = listOf(Keys.PK_B2BS)
-    override fun getReferences(): List<ForeignKey<BookToBookStoreRecord, *>> = listOf(Keys.FK_B2BS_BS_NAME, Keys.FK_B2BS_B_ID)
-    fun bookStore(): BookStore = BookStore(this, Keys.FK_B2BS_BS_NAME)
-    fun book(): Book = Book(this, Keys.FK_B2BS_B_ID)
+    override fun getPrimaryKey(): UniqueKey<BookToBookStoreRecord> = PK_B2BS
+    override fun getKeys(): List<UniqueKey<BookToBookStoreRecord>> = listOf(PK_B2BS)
+    override fun getReferences(): List<ForeignKey<BookToBookStoreRecord, *>> = listOf(FK_B2BS_BS_NAME, FK_B2BS_B_ID)
+    fun bookStore(): BookStore = BookStore(this, FK_B2BS_BS_NAME)
+    fun book(): Book = Book(this, FK_B2BS_B_ID)
     override fun `as`(alias: String): BookToBookStore = BookToBookStore(DSL.name(alias), this)
     override fun `as`(alias: Name): BookToBookStore = BookToBookStore(alias, this)
 

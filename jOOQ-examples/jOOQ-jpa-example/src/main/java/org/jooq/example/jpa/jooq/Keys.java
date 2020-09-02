@@ -30,35 +30,17 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<ActorRecord> CONSTRAINT_3 = UniqueKeys0.CONSTRAINT_3;
-    public static final UniqueKey<FilmRecord> CONSTRAINT_2 = UniqueKeys0.CONSTRAINT_2;
-    public static final UniqueKey<FilmActorRecord> CONSTRAINT_7 = UniqueKeys0.CONSTRAINT_7;
-    public static final UniqueKey<LanguageRecord> CONSTRAINT_C = UniqueKeys0.CONSTRAINT_C;
+    public static final UniqueKey<ActorRecord> CONSTRAINT_3 = Internal.createUniqueKey(Actor.ACTOR, DSL.name("CONSTRAINT_3"), new TableField[] { Actor.ACTOR.ACTORID }, true);
+    public static final UniqueKey<FilmRecord> CONSTRAINT_2 = Internal.createUniqueKey(Film.FILM, DSL.name("CONSTRAINT_2"), new TableField[] { Film.FILM.FILMID }, true);
+    public static final UniqueKey<FilmActorRecord> CONSTRAINT_7 = Internal.createUniqueKey(FilmActor.FILM_ACTOR, DSL.name("CONSTRAINT_7"), new TableField[] { FilmActor.FILM_ACTOR.FILMS_FILMID, FilmActor.FILM_ACTOR.ACTORS_ACTORID }, true);
+    public static final UniqueKey<LanguageRecord> CONSTRAINT_C = Internal.createUniqueKey(Language.LANGUAGE, DSL.name("CONSTRAINT_C"), new TableField[] { Language.LANGUAGE.LANGUAGEID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = ForeignKeys0.FKD2YJC1RU34H1SMWLA3FX7B6NX;
-    public static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = ForeignKeys0.FKN2UB730RPO5B5E9X6U2LWL9FT;
-    public static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = ForeignKeys0.FK3FSUXQ0JJ1XONRE7BHROOPVBX;
-    public static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = ForeignKeys0.FK43SD2F45W7YN0GAXQ94EHTWT2;
-
-    // -------------------------------------------------------------------------
-    // [#1459] distribute members to avoid static initialisers > 64kb
-    // -------------------------------------------------------------------------
-
-    private static class UniqueKeys0 {
-        static final UniqueKey<ActorRecord> CONSTRAINT_3 = Internal.createUniqueKey(Actor.ACTOR, DSL.name("CONSTRAINT_3"), new TableField[] { Actor.ACTOR.ACTORID }, true);
-        static final UniqueKey<FilmRecord> CONSTRAINT_2 = Internal.createUniqueKey(Film.FILM, DSL.name("CONSTRAINT_2"), new TableField[] { Film.FILM.FILMID }, true);
-        static final UniqueKey<FilmActorRecord> CONSTRAINT_7 = Internal.createUniqueKey(FilmActor.FILM_ACTOR, DSL.name("CONSTRAINT_7"), new TableField[] { FilmActor.FILM_ACTOR.FILMS_FILMID, FilmActor.FILM_ACTOR.ACTORS_ACTORID }, true);
-        static final UniqueKey<LanguageRecord> CONSTRAINT_C = Internal.createUniqueKey(Language.LANGUAGE, DSL.name("CONSTRAINT_C"), new TableField[] { Language.LANGUAGE.LANGUAGEID }, true);
-    }
-
-    private static class ForeignKeys0 {
-        static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = Internal.createForeignKey(Film.FILM, DSL.name("FKD2YJC1RU34H1SMWLA3FX7B6NX"), new TableField[] { Film.FILM.LANGUAGE_LANGUAGEID }, Keys.CONSTRAINT_C, new TableField[] { Language.LANGUAGE.LANGUAGEID }, true);
-        static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = Internal.createForeignKey(Film.FILM, DSL.name("FKN2UB730RPO5B5E9X6U2LWL9FT"), new TableField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID }, Keys.CONSTRAINT_C, new TableField[] { Language.LANGUAGE.LANGUAGEID }, true);
-        static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = Internal.createForeignKey(FilmActor.FILM_ACTOR, DSL.name("FK3FSUXQ0JJ1XONRE7BHROOPVBX"), new TableField[] { FilmActor.FILM_ACTOR.FILMS_FILMID }, Keys.CONSTRAINT_2, new TableField[] { Film.FILM.FILMID }, true);
-        static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = Internal.createForeignKey(FilmActor.FILM_ACTOR, DSL.name("FK43SD2F45W7YN0GAXQ94EHTWT2"), new TableField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID }, Keys.CONSTRAINT_3, new TableField[] { Actor.ACTOR.ACTORID }, true);
-    }
+    public static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = Internal.createForeignKey(Film.FILM, DSL.name("FKD2YJC1RU34H1SMWLA3FX7B6NX"), new TableField[] { Film.FILM.LANGUAGE_LANGUAGEID }, Keys.CONSTRAINT_C, new TableField[] { Language.LANGUAGE.LANGUAGEID }, true);
+    public static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = Internal.createForeignKey(Film.FILM, DSL.name("FKN2UB730RPO5B5E9X6U2LWL9FT"), new TableField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID }, Keys.CONSTRAINT_C, new TableField[] { Language.LANGUAGE.LANGUAGEID }, true);
+    public static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = Internal.createForeignKey(FilmActor.FILM_ACTOR, DSL.name("FK3FSUXQ0JJ1XONRE7BHROOPVBX"), new TableField[] { FilmActor.FILM_ACTOR.FILMS_FILMID }, Keys.CONSTRAINT_2, new TableField[] { Film.FILM.FILMID }, true);
+    public static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = Internal.createForeignKey(FilmActor.FILM_ACTOR, DSL.name("FK43SD2F45W7YN0GAXQ94EHTWT2"), new TableField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID }, Keys.CONSTRAINT_3, new TableField[] { Actor.ACTOR.ACTORID }, true);
 }

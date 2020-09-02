@@ -21,28 +21,28 @@ import org.jooq.impl.UpdatableRecordImpl
 class AuthorRecord() : UpdatableRecordImpl<AuthorRecord>(Author.AUTHOR), Record6<Int?, String?, String?, LocalDate?, Int?, String?> {
 
     var id: Int?
-        get() = get(0) as Int?
         set(value) = set(0, value)
+        get() = get(0) as Int?
 
     var firstName: String?
-        get() = get(1) as String?
         set(value) = set(1, value)
+        get() = get(1) as String?
 
     var lastName: String?
-        get() = get(2) as String?
         set(value) = set(2, value)
+        get() = get(2) as String?
 
     var dateOfBirth: LocalDate?
-        get() = get(3) as LocalDate?
         set(value) = set(3, value)
+        get() = get(3) as LocalDate?
 
     var yearOfBirth: Int?
-        get() = get(4) as Int?
         set(value) = set(4, value)
+        get() = get(4) as Int?
 
     var address: String?
-        get() = get(5) as String?
         set(value) = set(5, value)
+        get() = get(5) as String?
 
     // -------------------------------------------------------------------------
     // Primary key information

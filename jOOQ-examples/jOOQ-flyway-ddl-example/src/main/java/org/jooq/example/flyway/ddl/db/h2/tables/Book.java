@@ -21,6 +21,7 @@ import org.jooq.example.flyway.ddl.db.h2.FlywayTest;
 import org.jooq.example.flyway.ddl.db.h2.Keys;
 import org.jooq.example.flyway.ddl.db.h2.tables.records.BookRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -30,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = -40744821;
+    private static final long serialVersionUID = 1583971749;
 
     /**
      * The reference instance of <code>FLYWAY_TEST.BOOK</code>
@@ -48,17 +49,17 @@ public class Book extends TableImpl<BookRecord> {
     /**
      * The column <code>FLYWAY_TEST.BOOK.ID</code>.
      */
-    public final TableField<BookRecord, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<BookRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>FLYWAY_TEST.BOOK.AUTHOR_ID</code>.
      */
-    public final TableField<BookRecord, Integer> AUTHOR_ID = createField(DSL.name("AUTHOR_ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<BookRecord, Integer> AUTHOR_ID = createField(DSL.name("AUTHOR_ID"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>FLYWAY_TEST.BOOK.TITLE</code>.
      */
-    public final TableField<BookRecord, String> TITLE = createField(DSL.name("TITLE"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
+    public final TableField<BookRecord, String> TITLE = createField(DSL.name("TITLE"), SQLDataType.VARCHAR(400).nullable(false), this, "");
 
     private Book(Name alias, Table<BookRecord> aliased) {
         this(alias, aliased, null);

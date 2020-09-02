@@ -19,11 +19,14 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.TableOptions
 import org.jooq.UniqueKey
-import org.jooq.example.kotlin.db.h2.Keys
 import org.jooq.example.kotlin.db.h2.Public
+import org.jooq.example.kotlin.db.h2.keys.FK_T_BOOK_AUTHOR_ID
+import org.jooq.example.kotlin.db.h2.keys.FK_T_BOOK_CO_AUTHOR_ID
+import org.jooq.example.kotlin.db.h2.keys.PK_T_BOOK
 import org.jooq.example.kotlin.db.h2.tables.records.BookRecord
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
+import org.jooq.impl.SQLDataType
 import org.jooq.impl.TableImpl
 
 
@@ -63,57 +66,57 @@ class Book(
     /**
      * The column <code>PUBLIC.BOOK.ID</code>.
      */
-    val ID: TableField<BookRecord, Int?> = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "")
+    val ID: TableField<BookRecord, Int?> = createField(DSL.name("ID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.AUTHOR_ID</code>.
      */
-    val AUTHOR_ID: TableField<BookRecord, Int?> = createField(DSL.name("AUTHOR_ID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "")
+    val AUTHOR_ID: TableField<BookRecord, Int?> = createField(DSL.name("AUTHOR_ID"), SQLDataType.INTEGER.nullable(false), this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.CO_AUTHOR_ID</code>.
      */
-    val CO_AUTHOR_ID: TableField<BookRecord, Int?> = createField(DSL.name("CO_AUTHOR_ID"), org.jooq.impl.SQLDataType.INTEGER, this, "")
+    val CO_AUTHOR_ID: TableField<BookRecord, Int?> = createField(DSL.name("CO_AUTHOR_ID"), SQLDataType.INTEGER, this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.DETAILS_ID</code>.
      */
-    val DETAILS_ID: TableField<BookRecord, Int?> = createField(DSL.name("DETAILS_ID"), org.jooq.impl.SQLDataType.INTEGER, this, "")
+    val DETAILS_ID: TableField<BookRecord, Int?> = createField(DSL.name("DETAILS_ID"), SQLDataType.INTEGER, this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.TITLE</code>.
      */
-    val TITLE: TableField<BookRecord, String?> = createField(DSL.name("TITLE"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "")
+    val TITLE: TableField<BookRecord, String?> = createField(DSL.name("TITLE"), SQLDataType.VARCHAR(400).nullable(false), this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.PUBLISHED_IN</code>.
      */
-    val PUBLISHED_IN: TableField<BookRecord, Int?> = createField(DSL.name("PUBLISHED_IN"), org.jooq.impl.SQLDataType.INTEGER, this, "")
+    val PUBLISHED_IN: TableField<BookRecord, Int?> = createField(DSL.name("PUBLISHED_IN"), SQLDataType.INTEGER, this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.LANGUAGE_ID</code>.
      */
-    val LANGUAGE_ID: TableField<BookRecord, Int?> = createField(DSL.name("LANGUAGE_ID"), org.jooq.impl.SQLDataType.INTEGER, this, "")
+    val LANGUAGE_ID: TableField<BookRecord, Int?> = createField(DSL.name("LANGUAGE_ID"), SQLDataType.INTEGER, this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.CONTENT_TEXT</code>.
      */
-    val CONTENT_TEXT: TableField<BookRecord, String?> = createField(DSL.name("CONTENT_TEXT"), org.jooq.impl.SQLDataType.CLOB, this, "")
+    val CONTENT_TEXT: TableField<BookRecord, String?> = createField(DSL.name("CONTENT_TEXT"), SQLDataType.CLOB, this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.CONTENT_PDF</code>.
      */
-    val CONTENT_PDF: TableField<BookRecord, ByteArray?> = createField(DSL.name("CONTENT_PDF"), org.jooq.impl.SQLDataType.BLOB, this, "")
+    val CONTENT_PDF: TableField<BookRecord, ByteArray?> = createField(DSL.name("CONTENT_PDF"), SQLDataType.BLOB, this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.REC_VERSION</code>.
      */
-    val REC_VERSION: TableField<BookRecord, Int?> = createField(DSL.name("REC_VERSION"), org.jooq.impl.SQLDataType.INTEGER, this, "")
+    val REC_VERSION: TableField<BookRecord, Int?> = createField(DSL.name("REC_VERSION"), SQLDataType.INTEGER, this, "")
 
     /**
      * The column <code>PUBLIC.BOOK.REC_TIMESTAMP</code>.
      */
-    val REC_TIMESTAMP: TableField<BookRecord, LocalDateTime?> = createField(DSL.name("REC_TIMESTAMP"), org.jooq.impl.SQLDataType.LOCALDATETIME(6), this, "")
+    val REC_TIMESTAMP: TableField<BookRecord, LocalDateTime?> = createField(DSL.name("REC_TIMESTAMP"), SQLDataType.LOCALDATETIME(6), this, "")
 
     private constructor(alias: Name, aliased: Table<BookRecord>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<BookRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
@@ -136,11 +139,11 @@ class Book(
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BookRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK, null)
     override fun getSchema(): Schema = Public.PUBLIC
     override fun getIdentity(): Identity<BookRecord, Int?> = super.getIdentity() as Identity<BookRecord, Int?>
-    override fun getPrimaryKey(): UniqueKey<BookRecord> = Keys.PK_T_BOOK
-    override fun getKeys(): List<UniqueKey<BookRecord>> = listOf(Keys.PK_T_BOOK)
-    override fun getReferences(): List<ForeignKey<BookRecord, *>> = listOf(Keys.FK_T_BOOK_AUTHOR_ID, Keys.FK_T_BOOK_CO_AUTHOR_ID)
-    fun fkTBookAuthorId(): Author = Author(this, Keys.FK_T_BOOK_AUTHOR_ID)
-    fun fkTBookCoAuthorId(): Author = Author(this, Keys.FK_T_BOOK_CO_AUTHOR_ID)
+    override fun getPrimaryKey(): UniqueKey<BookRecord> = PK_T_BOOK
+    override fun getKeys(): List<UniqueKey<BookRecord>> = listOf(PK_T_BOOK)
+    override fun getReferences(): List<ForeignKey<BookRecord, *>> = listOf(FK_T_BOOK_AUTHOR_ID, FK_T_BOOK_CO_AUTHOR_ID)
+    fun fkTBookAuthorId(): Author = Author(this, FK_T_BOOK_AUTHOR_ID)
+    fun fkTBookCoAuthorId(): Author = Author(this, FK_T_BOOK_CO_AUTHOR_ID)
     override fun `as`(alias: String): Book = Book(DSL.name(alias), this)
     override fun `as`(alias: Name): Book = Book(alias, this)
 

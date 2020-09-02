@@ -757,6 +757,29 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
         for (TableDefinition table : database.getTables(schema)) {
             if (table.isTableValuedFunction()) {
@@ -876,6 +899,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (foreignKeyCounter > 0)
             out.println("}");
 
+        generateRelationsClassFooter(schema, out);
+
         if (!kotlin)
             out.println("}");
 
@@ -887,6 +912,12 @@ public class JavaGenerator extends AbstractGenerator {
             watch.splitInfo("Keys generated");
         }
     }
+
+    /**
+     * Subclasses may override this method to provide relations references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateRelationsClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     protected void generateIndexes(SchemaDefinition schema) {
         log.info("Generating Indexes");
@@ -951,12 +982,20 @@ public class JavaGenerator extends AbstractGenerator {
         if (indexCounter > 0)
             out.println("}");
 
+        generateIndexesClassFooter(schema, out);
+
         if (!kotlin)
             out.println("}");
         closeJavaWriter(out);
 
         watch.splitInfo("Indexes generated");
     }
+
+    /**
+     * Subclasses may override this method to provide index references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateIndexesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     protected void printIndex(JavaWriter out, int indexCounter, IndexDefinition index) {
         final int block = indexCounter / INITIALISER_SIZE;
@@ -2858,12 +2897,20 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("public static final %s %s = %s;", className, id, fullId);
         }
 
+        generateUDTReferencesClassFooter(schema, out);
+
         if (!kotlin)
             out.println("}");
         closeJavaWriter(out);
 
         watch.splitInfo("UDT references generated");
     }
+
+    /**
+     * Subclasses may override this method to provide UDT references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateUDTReferencesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     /**
      * Generating central static domain access
@@ -2952,6 +2999,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
+        generateDomainReferencesClassFooter(schema, out);
+
         if (!kotlin)
             out.println("}");
         closeJavaWriter(out);
@@ -2959,13 +3008,20 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("DOMAIN references generated");
     }
 
+    /**
+     * Subclasses may override this method to provide domain references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateDomainReferencesClassFooter(SchemaDefinition schema, JavaWriter out) {}
+
     protected void generateArrays(SchemaDefinition schema) {
         log.info("Generating ARRAYs");
 
         for (ArrayDefinition array : database.getArrays(schema)) {
             try {
                 generateArray(schema, array);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating ARRAY record " + array, e);
             }
         }
@@ -3347,6 +3403,8 @@ public class JavaGenerator extends AbstractGenerator {
                 if (table.isTableValuedFunction())
                     printTableValuedFunction(out, table, getStrategy().getJavaMethodName(table, Mode.DEFAULT));
 
+            generateRoutinesClassFooter(schema, out);
+
             if (!kotlin)
                 out.println("}");
             closeJavaWriter(out);
@@ -3363,6 +3421,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         watch.splitInfo("Routines generated");
     }
+
+    /**
+     * Subclasses may override this method to provide routine references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateRoutinesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     protected void printConstant(JavaWriter out, AttributeDefinition constant) {
 
@@ -3561,6 +3625,8 @@ public class JavaGenerator extends AbstractGenerator {
                 printTableValuedFunction(out, table, getStrategy().getJavaIdentifier(table));
         }
 
+        generateTableReferencesClassFooter(schema, out);
+
         if (!kotlin)
             out.println("}");
 
@@ -3568,6 +3634,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         watch.splitInfo("Table refs generated");
     }
+
+    /**
+     * Subclasses may override this method to provide table references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateTableReferencesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     private String schemaNameOrDefault(SchemaDefinition schema) {
         return StringUtils.isEmpty(schema.getOutputName()) ? "the default schema" : schema.getOutputName();
@@ -5852,12 +5924,20 @@ public class JavaGenerator extends AbstractGenerator {
                 );
         }
 
+        generateSequencesClassFooter(schema, out);
+
         if (!kotlin)
             out.println("}");
         closeJavaWriter(out);
 
         watch.splitInfo("Sequences generated");
     }
+
+    /**
+     * Subclasses may override this method to provide sequence references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateSequencesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     private String numberLiteral(Number n) {
         if (n instanceof BigInteger) {

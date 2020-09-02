@@ -85,6 +85,11 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         return routines;
     }
 
+    @Override
+    public final List<UDTDefinition> getUDTs() {
+        return getDatabase().getUDTs(this);
+    }
+
     protected abstract List<RoutineDefinition> getRoutines0() throws SQLException;
 
     @Override

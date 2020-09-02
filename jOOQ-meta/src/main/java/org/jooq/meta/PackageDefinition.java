@@ -52,6 +52,11 @@ public interface PackageDefinition extends Definition {
     List<RoutineDefinition> getRoutines();
 
     /**
+     * Fetch all UDTs from the package.
+     */
+    List<UDTDefinition> getUDTs();
+
+    /**
      * Fetch all constants from the package.
      */
     List<AttributeDefinition> getConstants();

@@ -222,6 +222,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<EnumDefinition>>            enumsBySchema;
     private transient Map<SchemaDefinition, List<DomainDefinition>>          domainsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>             udtsBySchema;
+    private transient Map<PackageDefinition, List<UDTDefinition>>            udtsByPackage;
     private transient Map<SchemaDefinition, List<ArrayDefinition>>           arraysBySchema;
     private transient Map<SchemaDefinition, List<RoutineDefinition>>         routinesBySchema;
     private transient Map<SchemaDefinition, List<PackageDefinition>>         packagesBySchema;
@@ -2224,7 +2225,8 @@ public abstract class AbstractDatabase implements Database {
         return getDefinition(getArrays(schema), name, ignoreCase);
     }
 
-    private final List<UDTDefinition> getAllUDTs(SchemaDefinition schema) {
+    @Override
+    public final List<UDTDefinition> getUDTs() {
         if (udts == null) {
             udts = new ArrayList<>();
 
@@ -2243,25 +2245,15 @@ public abstract class AbstractDatabase implements Database {
                 log.info("UDTs excluded");
         }
 
-        if (udtsBySchema == null)
-            udtsBySchema = new LinkedHashMap<>();
-
-        return filterSchema(udts, schema, udtsBySchema);
-    }
-
-    private final List<UDTDefinition> ifInPackage(List<UDTDefinition> allUDTs, boolean expected) {
-        List<UDTDefinition> result = new ArrayList<>();
-
-        for (UDTDefinition u : allUDTs)
-            if ((u.getPackage() != null) == expected)
-                result.add(u);
-
-        return result;
+        return udts;
     }
 
     @Override
     public final List<UDTDefinition> getUDTs(SchemaDefinition schema) {
-        return getAllUDTs(schema);
+        if (udtsBySchema == null)
+            udtsBySchema = new LinkedHashMap<>();
+
+        return filterSchema(getUDTs(), schema, udtsBySchema);
     }
 
     @Override
@@ -2286,7 +2278,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<UDTDefinition> getUDTs(PackageDefinition pkg) {
-        return ifInPackage(getAllUDTs(pkg.getSchema()), true);
+        if (udtsByPackage == null)
+            udtsByPackage = new LinkedHashMap<>();
+
+        return filterPackage(getUDTs(), pkg, udtsByPackage);
     }
 
     @Override
@@ -2465,7 +2460,29 @@ public abstract class AbstractDatabase implements Database {
         List<T> result = new ArrayList<>();
 
         for (T definition : definitions)
-            if (definition.getSchema().equals(schema))
+            if (definition.getSchema() != null && definition.getSchema().equals(schema))
+                result.add(definition);
+
+        return result;
+    }
+
+    protected final <T extends Definition> List<T> filterPackage(List<T> definitions, PackageDefinition pkg, Map<PackageDefinition, List<T>> cache) {
+        List<T> result = cache.get(pkg);
+
+        if (result == null)
+            cache.put(pkg, result = filterPackage(definitions, pkg));
+
+        return result;
+    }
+
+    protected final <T extends Definition> List<T> filterPackage(List<T> definitions, PackageDefinition pkg) {
+        if (pkg == null)
+            return definitions;
+
+        List<T> result = new ArrayList<>();
+
+        for (T definition : definitions)
+            if (definition.getPackage() != null && definition.getPackage().equals(pkg))
                 result.add(definition);
 
         return result;

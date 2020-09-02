@@ -778,8 +778,6 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-
-
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
         for (TableDefinition table : database.getTables(schema)) {
             if (table.isTableValuedFunction()) {
@@ -2609,7 +2607,8 @@ public class JavaGenerator extends AbstractGenerator {
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
                 generateUDT(schema, udt);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating udt " + udt, e);
             }
         }
@@ -2798,7 +2797,8 @@ public class JavaGenerator extends AbstractGenerator {
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
                 generateUDTInterface(udt);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating UDT interface " + udt, e);
             }
         }
@@ -2831,7 +2831,8 @@ public class JavaGenerator extends AbstractGenerator {
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
                 generateUDTRecord(udt);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating UDT record " + udt, e);
             }
         }
@@ -2864,7 +2865,8 @@ public class JavaGenerator extends AbstractGenerator {
                     for (RoutineDefinition routine : udt.getRoutines()) {
                         try {
                             generateRoutine(schema, routine);
-                        } catch (Exception e) {
+                        }
+                        catch (Exception e) {
                             log.error("Error while generating member routines " + routine, e);
                         }
                     }
@@ -2880,17 +2882,18 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Generating central static udt access
      */
-    protected void generateUDTReferences(SchemaDefinition schema) {
-        log.info("Generating UDT references");
-        JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, UDTDefinition.class));
-        printGlobalReferencesPackage(out, schema, UDTDefinition.class);
+    protected void generateUDTReferences(Definition schemaOrPackage) {
+        String logSuffix = schemaOrPackage instanceof SchemaDefinition ? "" : (" for package " + schemaOrPackage.getOutputName());
+        log.info("Generating UDT references" + logSuffix);
+        JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schemaOrPackage, UDTDefinition.class));
+        printGlobalReferencesPackage(out, schemaOrPackage, UDTDefinition.class);
 
         if (!kotlin) {
-            printClassJavadoc(out, "Convenience access to all UDTs in " + schemaNameOrDefault(schema) + ".");
-            printClassAnnotations(out, schema, Mode.DEFAULT);
+            printClassJavadoc(out, "Convenience access to all UDTs in " + schemaNameOrDefault(schemaOrPackage) + ".");
+            printClassAnnotations(out, schemaOrPackage, Mode.DEFAULT);
         }
 
-        final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, UDTDefinition.class);
+        final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schemaOrPackage, UDTDefinition.class);
 
         if (scala)
             out.println("object %s {", referencesClassName);
@@ -2898,33 +2901,54 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class %s {", referencesClassName);
 
-        for (UDTDefinition udt : database.getUDTs(schema)) {
+        List<UDTDefinition> udts = new ArrayList<>();
+
+        if (schemaOrPackage instanceof SchemaDefinition) {
+            for (UDTDefinition udt : database.getUDTs((SchemaDefinition) schemaOrPackage))
+                if (udt.getPackage() == null)
+                    udts.add(udt);
+        }
+        else
+            udts.addAll(database.getUDTs((PackageDefinition) schemaOrPackage));
+
+        for (UDTDefinition udt : udts) {
             final String className = out.ref(getStrategy().getFullJavaClassName(udt));
             final String id = getStrategy().getJavaIdentifier(udt);
             final String fullId = getStrategy().getFullJavaIdentifier(udt);
 
             out.javadoc("The type <code>%s</code>", udt.getQualifiedOutputName());
 
-            if (scala)
+            if (scala || kotlin)
                 out.println("val %s = %s", id, fullId);
             else
                 out.println("public static final %s %s = %s;", className, id, fullId);
         }
 
-        generateUDTReferencesClassFooter(schema, out);
+        generateUDTReferencesClassFooter(schemaOrPackage, out);
 
         if (!kotlin)
             out.println("}");
         closeJavaWriter(out);
 
-        watch.splitInfo("UDT references generated");
+        watch.splitInfo("UDT references generated" + logSuffix);
+
+        if (schemaOrPackage instanceof SchemaDefinition)
+            for (PackageDefinition pkg : database.getPackages((SchemaDefinition) schemaOrPackage))
+                if (!pkg.getUDTs().isEmpty())
+                    generateUDTReferences(pkg);
     }
 
     /**
      * Subclasses may override this method to provide UDT references class footer code.
      */
     @SuppressWarnings("unused")
-    protected void generateUDTReferencesClassFooter(SchemaDefinition schema, JavaWriter out) {}
+    protected void generateUDTReferencesClassFooter(Definition schemaOrPackage, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide UDT references class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateUDTReferencesClassFooter(PackageDefinition pkg, JavaWriter out) {}
 
     /**
      * Generating central static domain access
@@ -3655,7 +3679,7 @@ public class JavaGenerator extends AbstractGenerator {
     @SuppressWarnings("unused")
     protected void generateTableReferencesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
-    private String schemaNameOrDefault(SchemaDefinition schema) {
+    private String schemaNameOrDefault(Definition schema) {
         return StringUtils.isEmpty(schema.getOutputName()) ? "the default schema" : schema.getOutputName();
     }
 
@@ -7697,10 +7721,10 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
     }
 
-    protected void printGlobalReferencesPackage(JavaWriter out, SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        printGlobalReferencesPackageComment(out, containingSchema, objectType);
+    protected void printGlobalReferencesPackage(JavaWriter out, Definition container, Class<? extends Definition> objectType) {
+        printGlobalReferencesPackageComment(out, container, objectType);
 
-        out.printPackageSpecification(getStrategy().getGlobalReferencesJavaPackageName(containingSchema, objectType));
+        out.printPackageSpecification(getStrategy().getGlobalReferencesJavaPackageName(container, objectType));
         out.println();
         out.printImports();
         out.println();
@@ -7716,8 +7740,8 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    protected void printGlobalReferencesPackageComment(JavaWriter out, SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        String header = getStrategy().getGlobalReferencesFileHeader(containingSchema, objectType);
+    protected void printGlobalReferencesPackageComment(JavaWriter out, Definition container, Class<? extends Definition> objectType) {
+        String header = getStrategy().getGlobalReferencesFileHeader(container, objectType);
 
         if (!StringUtils.isBlank(header)) {
             out.println("/*");

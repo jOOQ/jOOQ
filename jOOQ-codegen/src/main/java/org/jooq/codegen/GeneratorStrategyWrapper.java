@@ -150,8 +150,8 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
-    public String getGlobalReferencesFileHeader(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        return delegate.getGlobalReferencesFileHeader(containingSchema, objectType);
+    public String getGlobalReferencesFileHeader(Definition container, Class<? extends Definition> objectType) {
+        return delegate.getGlobalReferencesFileHeader(container, objectType);
     }
 
     @Override
@@ -325,8 +325,8 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
-    public String getGlobalReferencesJavaClassExtends(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        return delegate.getGlobalReferencesJavaClassExtends(containingSchema, objectType);
+    public String getGlobalReferencesJavaClassExtends(Definition container, Class<? extends Definition> objectType) {
+        return delegate.getGlobalReferencesJavaClassExtends(container, objectType);
     }
 
     @Override
@@ -337,8 +337,8 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
-    public List<String> getGlobalReferencesJavaClassImplements(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        return delegate.getGlobalReferencesJavaClassImplements(containingSchema, objectType);
+    public List<String> getGlobalReferencesJavaClassImplements(Definition container, Class<? extends Definition> objectType) {
+        return delegate.getGlobalReferencesJavaClassImplements(container, objectType);
     }
 
     @Override
@@ -364,8 +364,8 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
-    public String getGlobalReferencesJavaClassName(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        return fixJavaClassName(delegate.getGlobalReferencesJavaClassName(containingSchema, objectType));
+    public String getGlobalReferencesJavaClassName(Definition container, Class<? extends Definition> objectType) {
+        return fixJavaClassName(delegate.getGlobalReferencesJavaClassName(container, objectType));
     }
 
     @Override
@@ -394,8 +394,8 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
-    public String getGlobalReferencesJavaPackageName(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        return fixJavaPackageName(delegate.getGlobalReferencesJavaPackageName(containingSchema, objectType));
+    public String getGlobalReferencesJavaPackageName(Definition container, Class<? extends Definition> objectType) {
+        return fixJavaPackageName(delegate.getGlobalReferencesJavaPackageName(container, objectType));
     }
 
     @Override

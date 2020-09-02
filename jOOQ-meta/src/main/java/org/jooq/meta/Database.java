@@ -252,6 +252,11 @@ public interface Database extends AutoCloseable {
     /**
      * The UDTs defined in this database.
      */
+    List<UDTDefinition> getUDTs();
+
+    /**
+     * The UDTs defined in this database.
+     */
     List<UDTDefinition> getUDTs(SchemaDefinition schema);
 
     /**

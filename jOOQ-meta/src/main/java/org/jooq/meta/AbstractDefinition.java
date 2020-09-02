@@ -113,6 +113,7 @@ public abstract class AbstractDefinition implements Definition {
         return result;
     }
 
+    @Override
     public final PackageDefinition getPackage() {
         return pkg;
     }

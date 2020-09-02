@@ -67,6 +67,12 @@ public interface Definition {
     SchemaDefinition getSchema();
 
     /**
+     * @return The package of this object or <code>null</code> if this object is
+     *         not contained in a package.
+     */
+    PackageDefinition getPackage();
+
+    /**
      * @return The name of this object, e.g. [my_table]. This corresponds to
      *         {@link #getInputName()}
      */

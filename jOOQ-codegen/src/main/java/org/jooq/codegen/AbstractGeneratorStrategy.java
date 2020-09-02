@@ -68,8 +68,8 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     // -------------------------------------------------------------------------
 
     @Override
-    public final String getGlobalReferencesFileName(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        return getGlobalReferencesJavaClassName(containingSchema, objectType) + ".java";
+    public final String getGlobalReferencesFileName(Definition container, Class<? extends Definition> objectType) {
+        return getGlobalReferencesJavaClassName(container, objectType) + ".java";
     }
 
     @Override
@@ -90,10 +90,10 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    public final File getGlobalReferencesFile(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+    public final File getGlobalReferencesFile(Definition container, Class<? extends Definition> objectType) {
         String dir = getTargetDirectory();
-        String pkg = getGlobalReferencesJavaPackageName(containingSchema, objectType).replaceAll("\\.", "/");
-        return new File(dir + "/" + pkg, getGlobalReferencesFileName(containingSchema, objectType));
+        String pkg = getGlobalReferencesJavaPackageName(container, objectType).replaceAll("\\.", "/");
+        return new File(dir + "/" + pkg, getGlobalReferencesFileName(container, objectType));
     }
 
     @Override
@@ -204,8 +204,8 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    public final String getGlobalReferencesFullJavaClassName(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
-        return getGlobalReferencesJavaPackageName(containingSchema, objectType) + "." + getGlobalReferencesJavaClassName(containingSchema, objectType);
+    public final String getGlobalReferencesFullJavaClassName(Definition container, Class<? extends Definition> objectType) {
+        return getGlobalReferencesJavaPackageName(container, objectType) + "." + getGlobalReferencesJavaClassName(container, objectType);
     }
 
     @Override

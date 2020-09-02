@@ -812,6 +812,10 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class %s {", referencesClassName);
 
+        // [#1459] [#10554] Distribute keys to nested classes only if necessary
+        boolean distributeUniqueKeys = database.getUniqueKeys(schema).size() > INITIALISER_SIZE;
+        boolean distributeForeignKeys = database.getForeignKeys(schema).size() > INITIALISER_SIZE;
+
         List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<>();
         List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
 
@@ -830,10 +834,13 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println();
                 }
 
-                if (scala || kotlin)
-                    out.println("val %s = UniqueKeys%s.%s", keyId, block, keyId);
+                if (distributeUniqueKeys)
+                    if (scala || kotlin)
+                        out.println("val %s = UniqueKeys%s.%s", keyId, block, keyId);
+                    else
+                        out.println("public static final %s<%s> %s = UniqueKeys%s.%s;", UniqueKey.class, keyType, keyId, block, keyId);
                 else
-                    out.println("public static final %s<%s> %s = UniqueKeys%s.%s;", UniqueKey.class, keyType, keyId, block, keyId);
+                    printUniqueKey(out, -1, uniqueKey, distributeUniqueKeys);
 
                 allUniqueKeys.add(uniqueKey);
             }
@@ -858,10 +865,13 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println();
                 }
 
-                if (scala || kotlin)
-                    out.println("val %s = ForeignKeys%s.%s", keyId, block, keyId);
+                if (distributeForeignKeys)
+                    if (scala || kotlin)
+                        out.println("val %s = ForeignKeys%s.%s", keyId, block, keyId);
+                    else
+                        out.println("public static final %s<%s, %s> %s = ForeignKeys%s.%s;", ForeignKey.class, keyType, referencedType, keyId, block, keyId);
                 else
-                    out.println("public static final %s<%s, %s> %s = ForeignKeys%s.%s;", ForeignKey.class, keyType, referencedType, keyId, block, keyId);
+                    printForeignKey(out, -1, foreignKey, distributeForeignKeys);
 
                 allForeignKeys.add(foreignKey);
             }
@@ -875,29 +885,31 @@ public class JavaGenerator extends AbstractGenerator {
         int uniqueKeyCounter = 0;
         int foreignKeyCounter = 0;
 
-        out.header("[#1459] distribute members to avoid static initialisers > 64kb");
+        if (distributeUniqueKeys || distributeForeignKeys) {
+            out.header("[#1459] distribute members to avoid static initialisers > 64kb");
 
-        // UniqueKeys
-        // ----------
+            // UniqueKeys
+            // ----------
 
-        for (UniqueKeyDefinition uniqueKey : allUniqueKeys) {
-            printUniqueKey(out, uniqueKeyCounter, uniqueKey);
-            uniqueKeyCounter++;
+            if (distributeUniqueKeys) {
+                for (UniqueKeyDefinition uniqueKey : allUniqueKeys)
+                    printUniqueKey(out, uniqueKeyCounter++, uniqueKey, distributeUniqueKeys);
+
+                if (uniqueKeyCounter > 0)
+                    out.println("}");
+            }
+
+            // ForeignKeys
+            // -----------
+
+            if (distributeForeignKeys) {
+                for (ForeignKeyDefinition foreignKey : allForeignKeys)
+                    printForeignKey(out, foreignKeyCounter++, foreignKey, distributeForeignKeys);
+
+                if (foreignKeyCounter > 0)
+                    out.println("}");
+            }
         }
-
-        if (uniqueKeyCounter > 0)
-            out.println("}");
-
-        // ForeignKeys
-        // -----------
-
-        for (ForeignKeyDefinition foreignKey : allForeignKeys) {
-            printForeignKey(out, foreignKeyCounter, foreignKey);
-            foreignKeyCounter++;
-        }
-
-        if (foreignKeyCounter > 0)
-            out.println("}");
 
         generateRelationsClassFooter(schema, out);
 
@@ -1074,11 +1086,11 @@ public class JavaGenerator extends AbstractGenerator {
             );
     }
 
-    protected void printUniqueKey(JavaWriter out, int uniqueKeyCounter, UniqueKeyDefinition uniqueKey) {
+    protected void printUniqueKey(JavaWriter out, int uniqueKeyCounter, UniqueKeyDefinition uniqueKey, boolean distributeUniqueKeys) {
         final int block = uniqueKeyCounter / INITIALISER_SIZE;
 
         // Print new nested class
-        if (uniqueKeyCounter % INITIALISER_SIZE == 0) {
+        if (distributeUniqueKeys && uniqueKeyCounter % INITIALISER_SIZE == 0) {
             if (uniqueKeyCounter > 0)
                 out.println("}");
 
@@ -1101,7 +1113,8 @@ public class JavaGenerator extends AbstractGenerator {
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)));
         else
-            out.print("static final %s<%s> %s = ",
+            out.print("%sstatic final %s<%s> %s = ",
+                distributeUniqueKeys ? "" : "public ",
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 getStrategy().getJavaIdentifier(uniqueKey));
@@ -1191,11 +1204,11 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-    protected void printForeignKey(JavaWriter out, int foreignKeyCounter, ForeignKeyDefinition foreignKey) {
+    protected void printForeignKey(JavaWriter out, int foreignKeyCounter, ForeignKeyDefinition foreignKey, boolean distributeForeignKey) {
         final int block = foreignKeyCounter / INITIALISER_SIZE;
 
         // Print new nested class
-        if (foreignKeyCounter % INITIALISER_SIZE == 0) {
+        if (distributeForeignKey && foreignKeyCounter % INITIALISER_SIZE == 0) {
             if (foreignKeyCounter > 0)
                 out.println("}");
 
@@ -1220,7 +1233,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)));
         else
-            out.print("static final %s<%s, %s> %s = ",
+            out.print("%sstatic final %s<%s, %s> %s = ",
+                distributeForeignKey ? "" : "public ",
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),

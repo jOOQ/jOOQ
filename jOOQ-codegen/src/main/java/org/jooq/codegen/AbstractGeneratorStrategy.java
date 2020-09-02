@@ -37,6 +37,8 @@
  */
 package org.jooq.codegen;
 
+import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,15 +47,14 @@ import java.util.List;
 
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
+import org.jooq.meta.ConstraintDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
-import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TypedElementDefinition;
-import org.jooq.meta.UniqueKeyDefinition;
 
 /**
  * Common base class for convenience method abstraction
@@ -65,6 +66,11 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     // -------------------------------------------------------------------------
     // Strategy methods
     // -------------------------------------------------------------------------
+
+    @Override
+    public final String getGlobalReferencesFileName(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        return getGlobalReferencesJavaClassName(containingSchema, objectType) + ".java";
+    }
 
     @Override
     public final String getFileName(Definition definition) {
@@ -81,6 +87,13 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         String dir = getTargetDirectory();
         String pkg = getTargetPackage().replaceAll("\\.", "/");
         return new File(dir + "/" + pkg);
+    }
+
+    @Override
+    public final File getGlobalReferencesFile(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        String dir = getTargetDirectory();
+        String pkg = getGlobalReferencesJavaPackageName(containingSchema, objectType).replaceAll("\\.", "/");
+        return new File(dir + "/" + pkg, getGlobalReferencesFileName(containingSchema, objectType));
     }
 
     @Override
@@ -115,54 +128,28 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         if (definition instanceof ColumnDefinition) {
             TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
 
-            if (getInstanceFields()) {
+            if (getInstanceFields())
                 sb.append(getFullJavaIdentifier(e.getContainer()));
-            }
-            else {
+            else
                 sb.append(getFullJavaClassName(e.getContainer()));
-            }
         }
 
-        // Sequences
-        else if (definition instanceof SequenceDefinition) {
-            sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".Sequences");
-        }
-
-        // Domains
-        else if (definition instanceof DomainDefinition) {
-            sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".Domains");
+        else if (definition instanceof SequenceDefinition
+            || definition instanceof DomainDefinition
+            || definition instanceof IndexDefinition
+            || definition instanceof IdentityDefinition
+            || definition instanceof ConstraintDefinition
+        ) {
+            if (getTargetLanguage() == KOTLIN)
+                sb.append(getGlobalReferencesJavaPackageName(definition.getSchema(), definition.getClass()));
+            else
+                sb.append(getGlobalReferencesFullJavaClassName(definition.getSchema(), definition.getClass()));
         }
 
         // Attributes, Parameters
         else if (definition instanceof TypedElementDefinition) {
             TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
             sb.append(getFullJavaClassName(e.getContainer()));
-        }
-
-        // Indexes
-        else if (definition instanceof IndexDefinition) {
-            sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".Indexes");
-        }
-
-        // Identities
-        else if (definition instanceof IdentityDefinition) {
-            sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".Keys");
-        }
-
-        // Unique Keys
-        else if (definition instanceof UniqueKeyDefinition) {
-            sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".Keys");
-        }
-
-        // Foreign Keys
-        else if (definition instanceof ForeignKeyDefinition) {
-            sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".Keys");
         }
 
         // Table, UDT, Schema, etc
@@ -217,19 +204,18 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
+    public final String getGlobalReferencesFullJavaClassName(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        return getGlobalReferencesJavaPackageName(containingSchema, objectType) + "." + getGlobalReferencesJavaClassName(containingSchema, objectType);
+    }
+
+    @Override
     public final String getFullJavaClassName(Definition definition) {
         return getFullJavaClassName(definition, Mode.DEFAULT);
     }
 
     @Override
     public final String getFullJavaClassName(Definition definition, Mode mode) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(getJavaPackageName(definition, mode));
-        sb.append(".");
-        sb.append(getJavaClassName(definition, mode));
-
-        return sb.toString();
+        return getJavaPackageName(definition, mode) + "." + getJavaClassName(definition, mode);
     }
 
     // -------------------------------------------------------------------------

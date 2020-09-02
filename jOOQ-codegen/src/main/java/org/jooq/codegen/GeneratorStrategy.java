@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import org.jooq.codegen.AbstractGenerator.Language;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
@@ -49,6 +50,7 @@ import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
+import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 
@@ -58,6 +60,10 @@ import org.jooq.meta.UDTDefinition;
  * @author Lukas Eder
  */
 public interface GeneratorStrategy {
+
+    // -------------------------------------------------------------------------
+    // XXX: Configuration of the strategy
+    // -------------------------------------------------------------------------
 
     /**
      * The target directory
@@ -90,6 +96,16 @@ public interface GeneratorStrategy {
     void setTargetLocale(Locale targetLocale);
 
     /**
+     * @return Get the target language for the current configuration
+     */
+    Language getTargetLanguage();
+
+    /**
+     * Initialise the target language
+     */
+    void setTargetLanguage(Language targetLanguage);
+
+    /**
      * Whether fields are instance fields (as opposed to static fields)
      */
     void setInstanceFields(boolean instanceFields);
@@ -108,6 +124,10 @@ public interface GeneratorStrategy {
      * Whether getters and setters should be generated JavaBeans style (or jOOQ style).
      */
     boolean getJavaBeansGettersAndSetters();
+
+    // -------------------------------------------------------------------------
+    // XXX: The SPI
+    // -------------------------------------------------------------------------
 
     /**
      * This is applied to definitions that can result in reference static and
@@ -221,6 +241,14 @@ public interface GeneratorStrategy {
     String getJavaMethodName(Definition definition, Mode mode);
 
     /**
+     * @return The super class name of the global references class for a given
+     *         definition type, e.g. [com.example.AbstractPojo]. If this returns
+     *         <code>null</code> or an empty string, then no super class is
+     *         extended.
+     */
+    String getGlobalReferencesJavaClassExtends(SchemaDefinition containingSchema, Class<? extends Definition> objectType);
+
+    /**
      * This is the same as calling
      * <code>getJavaClassExtends(definition, Mode.DEFAULT)</code>
      *
@@ -238,6 +266,14 @@ public interface GeneratorStrategy {
      *         extended.
      */
     String getJavaClassExtends(Definition definition, Mode mode);
+
+    /**
+     * @return The implemented interface names of the global references class
+     *         for a given definition type, e.g. [com.example.Pojo]. If this
+     *         returns <code>null</code> or an empty list, then no interfaces
+     *         are implemented.
+     */
+    List<String> getGlobalReferencesJavaClassImplements(SchemaDefinition containingSchema, Class<? extends Definition> objectType);
 
     /**
      * This is the same as calling
@@ -259,6 +295,12 @@ public interface GeneratorStrategy {
     List<String> getJavaClassImplements(Definition definition, Mode mode);
 
     /**
+     * @return The Java class name of the global references class for a given
+     *         definition type, e.g. [MyTableSuffix]
+     */
+    String getGlobalReferencesJavaClassName(SchemaDefinition containingSchema, Class<? extends Definition> objectType);
+
+    /**
      * This is the same as calling
      * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
      *
@@ -271,6 +313,12 @@ public interface GeneratorStrategy {
      *         [MyTableSuffix]
      */
     String getJavaClassName(Definition definition, Mode mode);
+
+    /**
+     * @return The Java package name of the global references class for a given
+     *         definition type, e.g. [org.jooq.generated]
+     */
+    String getGlobalReferencesJavaPackageName(SchemaDefinition containingSchema, Class<? extends Definition> objectType);
 
     /**
      * This is the same as calling
@@ -318,6 +366,12 @@ public interface GeneratorStrategy {
     String getJavaMemberName(Definition definition, Mode mode);
 
     /**
+     * @return The full Java class name of the global references class for a
+     *         given definition type, e.g. [org.jooq.generated.MyTable]
+     */
+    String getGlobalReferencesFullJavaClassName(SchemaDefinition containingSchema, Class<? extends Definition> objectType);
+
+    /**
      * @return The full Java class name representing this object, e.g.
      *         [org.jooq.generated.MyTable]
      */
@@ -331,6 +385,12 @@ public interface GeneratorStrategy {
      *         [org.jooq.generated.MyTable][suffix]
      */
     String getFullJavaClassName(Definition definition, Mode mode);
+
+    /**
+     * @return The Java class file name of the global references class for a
+     *         given definition type, e.g. [MyTable.java]
+     */
+    String getGlobalReferencesFileName(SchemaDefinition containingSchema, Class<? extends Definition> objectType);
 
     /**
      * @return The Java class file name representing this object, e.g.
@@ -351,6 +411,12 @@ public interface GeneratorStrategy {
     File getFileRoot();
 
     /**
+     * @return The Java class file name of the global references class for a
+     *         given definition type, e.g. [C:\org\jooq\generated\MyTable.java]
+     */
+    File getGlobalReferencesFile(SchemaDefinition containingSchema, Class<? extends Definition> objectType);
+
+    /**
      * @return The Java class file name representing this object, e.g.
      *         [C:\org\jooq\generated\MyTable.java]
      */
@@ -367,6 +433,14 @@ public interface GeneratorStrategy {
      *         [C:\org\jooq\generated\fileName]
      */
     File getFile(String fileName);
+
+    /**
+     * @return The Java class file header of the global references class for a
+     *         given definition type, e.g. <code><pre>
+     * This file is generated by jOOQ.
+     * </pre></code>
+     */
+    String getGlobalReferencesFileHeader(SchemaDefinition containingSchema, Class<? extends Definition> objectType);
 
     /**
      * @return The Java class file header, e.g. <code><pre>

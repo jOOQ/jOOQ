@@ -83,12 +83,10 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     final Generator                                        generator;
     final GeneratorStrategy                                delegate;
-    final Language                                         language;
 
-    GeneratorStrategyWrapper(Generator generator, GeneratorStrategy delegate, Language language) {
+    GeneratorStrategyWrapper(Generator generator, GeneratorStrategy delegate) {
         this.generator = generator;
         this.delegate = delegate;
-        this.language = language;
     }
 
     @Override
@@ -122,6 +120,16 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
+    public Language getTargetLanguage() {
+        return delegate.getTargetLanguage();
+    }
+
+    @Override
+    public void setTargetLanguage(Language targetLanguage) {
+        delegate.setTargetLanguage(targetLanguage);
+    }
+
+    @Override
     public void setInstanceFields(boolean instanceFields) {
         delegate.setInstanceFields(instanceFields);
     }
@@ -142,6 +150,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
+    public String getGlobalReferencesFileHeader(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        return delegate.getGlobalReferencesFileHeader(containingSchema, objectType);
+    }
+
+    @Override
     public String getFileHeader(Definition definition, Mode mode) {
         return delegate.getFileHeader(definition, mode);
     }
@@ -153,7 +166,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         if (identifier != null)
             return identifier;
 
-        identifier = convertToIdentifier(delegate.getJavaIdentifier(definition), language);
+        identifier = convertToIdentifier(delegate.getJavaIdentifier(definition), getTargetLanguage());
 
         // [#1212] Don't trust custom strategies and disambiguate identifiers here
         if (definition instanceof ColumnDefinition ||
@@ -205,7 +218,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     private String fixMethodName(Definition definition, Mode mode, String methodName) {
         methodName = overload(definition, mode, methodName);
-        methodName = convertToIdentifier(methodName, language);
+        methodName = convertToIdentifier(methodName, getTargetLanguage());
 
         return disambiguateMethod(definition, methodName);
     }
@@ -303,7 +316,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
             // [#5457] In Scala, we must not "override" any inherited members, even if they're private
             //         or package private, and thus not visible
-            if (language == Language.SCALA)
+            if (getTargetLanguage() == Language.SCALA)
                 for (Field f : clazz.getDeclaredFields())
                     result.add(f.getName());
         }
@@ -312,10 +325,20 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
+    public String getGlobalReferencesJavaClassExtends(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        return delegate.getGlobalReferencesJavaClassExtends(containingSchema, objectType);
+    }
+
+    @Override
     public String getJavaClassExtends(Definition definition, Mode mode) {
 
         // [#1243] Only POJO mode can accept super classes
         return delegate.getJavaClassExtends(definition, mode);
+    }
+
+    @Override
+    public List<String> getGlobalReferencesJavaClassImplements(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        return delegate.getGlobalReferencesJavaClassImplements(containingSchema, objectType);
     }
 
     @Override
@@ -341,6 +364,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
+    public String getGlobalReferencesJavaClassName(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        return fixJavaClassName(delegate.getGlobalReferencesJavaClassName(containingSchema, objectType));
+    }
+
+    @Override
     public String getJavaClassName(Definition definition, Mode mode) {
         String name = getFixedJavaClassName(definition);
         if (name != null)
@@ -354,24 +382,37 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
         className = delegate.getJavaClassName(definition, mode);
         className = overload(definition, mode, className);
-        className = convertToIdentifier(className, language);
+
+        return fixJavaClassName(className);
+    }
+
+    private String fixJavaClassName(String className) {
+        className = convertToIdentifier(className, getTargetLanguage());
         className = escapeWindowsForbiddenNames(className);
 
         return className;
     }
 
     @Override
+    public String getGlobalReferencesJavaPackageName(SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        return fixJavaPackageName(delegate.getGlobalReferencesJavaPackageName(containingSchema, objectType));
+    }
+
+    @Override
     public String getJavaPackageName(Definition definition, Mode mode) {
 
         // [#1150] Intercept Mode.RECORD calls for tables
-        if (!generator.generateRecords() && mode == Mode.RECORD && definition instanceof TableDefinition) {
+        if (!generator.generateRecords() && mode == Mode.RECORD && definition instanceof TableDefinition)
             return Record.class.getPackage().getName();
-        }
 
-        String[] split = delegate.getJavaPackageName(definition, mode).split("\\.");
+        return fixJavaPackageName(delegate.getJavaPackageName(definition, mode));
+    }
+
+    private String fixJavaPackageName(String packageName) {
+        String[] split = packageName.split("\\.");
 
         for (int i = 0; i < split.length; i++) {
-            split[i] = convertToIdentifier(split[i], language);
+            split[i] = convertToIdentifier(split[i], getTargetLanguage());
             split[i] = escapeWindowsForbiddenNames(split[i]);
         }
 
@@ -383,7 +424,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
-        String identifier = convertToIdentifier(delegate.getJavaMemberName(definition, mode), language);
+        String identifier = convertToIdentifier(delegate.getJavaMemberName(definition, mode), getTargetLanguage());
 
         // [#2781] Disambiguate collisions with the leading package name
         if (identifier.equals(getJavaPackageName(definition, mode).replaceAll("\\..*", ""))) {

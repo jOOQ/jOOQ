@@ -210,7 +210,8 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public void setStrategy(GeneratorStrategy strategy) {
-        this.strategy = new GeneratorStrategyWrapper(this, strategy, language);
+        this.strategy = new GeneratorStrategyWrapper(this, strategy);
+        this.strategy.setTargetLanguage(language);
     }
 
     @Override

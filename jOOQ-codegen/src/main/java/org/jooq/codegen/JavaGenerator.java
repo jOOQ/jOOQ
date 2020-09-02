@@ -136,6 +136,7 @@ import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.CheckConstraintDefinition;
 import org.jooq.meta.ColumnDefinition;
+import org.jooq.meta.ConstraintDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.Database;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -742,6 +743,20 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
         for (TableDefinition table : database.getTables(schema)) {
             if (table.isTableValuedFunction()) {
@@ -756,18 +771,23 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating Keys");
 
         boolean empty = true;
-        JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Keys.java"));
+        JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, ConstraintDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getUniqueKeys(schema)));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getForeignKeys(schema)));
-        printPackage(out, schema);
-        printClassJavadoc(out,
-            "A class modelling foreign key relationships and constraints of tables in " + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema, Mode.DEFAULT);
+        printGlobalReferencesPackage(out, schema, ConstraintDefinition.class);
 
-        if (scala || kotlin)
-            out.println("object Keys {");
+        if (!kotlin) {
+            printClassJavadoc(out, "A class modelling foreign key relationships and constraints of tables in " + schemaNameOrDefault(schema) + ".");
+            printClassAnnotations(out, schema, Mode.DEFAULT);
+        }
+
+        final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, ConstraintDefinition.class);
+
+        if (scala)
+            out.println("object %s {", referencesClassName);
+        else if (kotlin) {}
         else
-            out.println("public class Keys {");
+            out.println("public class %s {", referencesClassName);
 
         List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<>();
         List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
@@ -856,7 +876,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (foreignKeyCounter > 0)
             out.println("}");
 
-        out.println("}");
+        if (!kotlin)
+            out.println("}");
 
         if (empty) {
             log.info("Skipping empty keys");
@@ -875,17 +896,22 @@ public class JavaGenerator extends AbstractGenerator {
             return;
         }
 
-        JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Indexes.java"));
+        JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, IndexDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getIndexes(schema)));
-        printPackage(out, schema);
-        printClassJavadoc(out,
-            "A class modelling indexes of tables in "  + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema, Mode.DEFAULT);
+        printGlobalReferencesPackage(out, schema, IndexDefinition.class);
 
-        if (scala || kotlin)
-            out.println("object Indexes {");
+        if (!kotlin) {
+            printClassJavadoc(out, "A class modelling indexes of tables in "  + schemaNameOrDefault(schema) + ".");
+            printClassAnnotations(out, schema, Mode.DEFAULT);
+        }
+
+        final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, IndexDefinition.class);
+
+        if (scala)
+            out.println("object %s {", referencesClassName);
+        else if (kotlin) {}
         else
-            out.println("public class Indexes {");
+            out.println("public class %s {", referencesClassName);
 
         List<IndexDefinition> allIndexes = new ArrayList<>();
 
@@ -925,7 +951,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (indexCounter > 0)
             out.println("}");
 
-        out.println("}");
+        if (!kotlin)
+            out.println("}");
         closeJavaWriter(out);
 
         watch.splitInfo("Indexes generated");
@@ -1200,7 +1227,7 @@ public class JavaGenerator extends AbstractGenerator {
                 DSL.class,
                 escapeString(foreignKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),
-                out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
+                out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey())),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getReferencedColumns()), colRefSegments(null)),
                 foreignKey.enforced()
             );
@@ -1218,6 +1245,8 @@ public class JavaGenerator extends AbstractGenerator {
                 foreignKey.enforced()
             );
     }
+
+
 
 
 
@@ -2800,16 +2829,21 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void generateUDTReferences(SchemaDefinition schema) {
         log.info("Generating UDT references");
-        JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "UDTs.java"));
+        JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, UDTDefinition.class));
+        printGlobalReferencesPackage(out, schema, UDTDefinition.class);
 
-        printPackage(out, schema);
-        printClassJavadoc(out, "Convenience access to all UDTs in " + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema, Mode.DEFAULT);
+        if (!kotlin) {
+            printClassJavadoc(out, "Convenience access to all UDTs in " + schemaNameOrDefault(schema) + ".");
+            printClassAnnotations(out, schema, Mode.DEFAULT);
+        }
+
+        final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, UDTDefinition.class);
 
         if (scala)
-            out.println("object UDTs {");
+            out.println("object %s {", referencesClassName);
+        else if (kotlin) {}
         else
-            out.println("public class UDTs {");
+            out.println("public class %s {", referencesClassName);
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
             final String className = out.ref(getStrategy().getFullJavaClassName(udt));
@@ -2824,7 +2858,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("public static final %s %s = %s;", className, id, fullId);
         }
 
-        out.println("}");
+        if (!kotlin)
+            out.println("}");
         closeJavaWriter(out);
 
         watch.splitInfo("UDT references generated");
@@ -2835,19 +2870,24 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void generateDomainReferences(SchemaDefinition schema) {
         log.info("Generating DOMAIN references");
-        JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Domains.java"));
+        JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, DomainDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getDomains(schema)));
+        printGlobalReferencesPackage(out, schema, DomainDefinition.class);
 
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
 
-        printPackage(out, schema);
-        printClassJavadoc(out, "Convenience access to all Domains in " + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema, Mode.DOMAIN);
+        if (!kotlin) {
+            printClassJavadoc(out, "Convenience access to all Domains in " + schemaNameOrDefault(schema) + ".");
+            printClassAnnotations(out, schema, Mode.DOMAIN);
+        }
 
-        if (scala || kotlin)
-            out.println("object Domains {");
+        final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, DomainDefinition.class);
+
+        if (scala)
+            out.println("object %s {", referencesClassName);
+        else if (kotlin) {}
         else
-            out.println("public class Domains {");
+            out.println("public class %s {", referencesClassName);
 
         for (DomainDefinition domain : database.getDomains(schema)) {
             final String id = getStrategy().getJavaIdentifier(domain);
@@ -2912,7 +2952,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        out.println("}");
+        if (!kotlin)
+            out.println("}");
         closeJavaWriter(out);
 
         watch.splitInfo("DOMAIN references generated");
@@ -3283,19 +3324,21 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating routines and table-valued functions");
 
         if (generateGlobalRoutineReferences()) {
-            JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Routines.java"));
-            printPackage(out, schema);
+            JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, RoutineDefinition.class));
+            printGlobalReferencesPackage(out, schema, RoutineDefinition.class);
 
             if (!kotlin) {
                 printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + schemaNameOrDefault(schema) + ".");
                 printClassAnnotations(out, schema, Mode.DEFAULT);
             }
 
+            final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, RoutineDefinition.class);
+
             if (scala)
-                out.println("object Routines {");
+                out.println("object %s {", referencesClassName);
             else if (kotlin) {}
             else
-                out.println("public class Routines {");
+                out.println("public class %s {", referencesClassName);
 
             for (RoutineDefinition routine : database.getRoutines(schema))
                 printRoutine(out, routine);
@@ -3304,10 +3347,8 @@ public class JavaGenerator extends AbstractGenerator {
                 if (table.isTableValuedFunction())
                     printTableValuedFunction(out, table, getStrategy().getJavaMethodName(table, Mode.DEFAULT));
 
-            if (kotlin) {}
-            else
+            if (!kotlin)
                 out.println("}");
-
             closeJavaWriter(out);
         }
 
@@ -3475,20 +3516,21 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void generateTableReferences(SchemaDefinition schema) {
         log.info("Generating table references");
-        JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Tables.java"));
-
-        printPackage(out, schema);
+        JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, TableDefinition.class));
+        printGlobalReferencesPackage(out, schema, TableDefinition.class);
 
         if (!kotlin) {
             printClassJavadoc(out, "Convenience access to all tables in " + schemaNameOrDefault(schema) + ".");
             printClassAnnotations(out, schema, Mode.DEFAULT);
         }
 
+        final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, TableDefinition.class);
+
         if (scala)
-            out.println("object Tables {");
+            out.println("object %s {", referencesClassName);
         else if (kotlin) {}
         else
-            out.println("public class Tables {");
+            out.println("public class %s {", referencesClassName);
 
         for (TableDefinition table : database.getTables(schema)) {
             final String className = getStrategy().getJavaClassName(table);
@@ -3519,8 +3561,7 @@ public class JavaGenerator extends AbstractGenerator {
                 printTableValuedFunction(out, table, getStrategy().getJavaIdentifier(table));
         }
 
-        if (kotlin) {}
-        else
+        if (!kotlin)
             out.println("}");
 
         closeJavaWriter(out);
@@ -4644,6 +4685,8 @@ public class JavaGenerator extends AbstractGenerator {
     @SuppressWarnings("unused")
     protected void generateTable(SchemaDefinition schema, TableDefinition table) {
         JavaWriter out = newJavaWriter(getFile(table));
+        out.refConflicts(getStrategy().getJavaIdentifiers(table.getColumns()));
+        out.refConflicts(getStrategy().getJavaIdentifiers(table.getReferencedEmbeddables()));
         generateTable(table, out);
         closeJavaWriter(out);
     }
@@ -4942,7 +4985,9 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (!indexes.isEmpty()) {
                 if (generateGlobalIndexReferences()) {
-                    final List<String> indexFullIds = out.ref(getStrategy().getFullJavaIdentifiers(indexes), 2);
+                    final List<String> indexFullIds = kotlin
+                        ? out.ref(getStrategy().getFullJavaIdentifiers(indexes))
+                        : out.ref(getStrategy().getFullJavaIdentifiers(indexes), 2);
 
                     if (scala) {
                         out.println();
@@ -5040,7 +5085,9 @@ public class JavaGenerator extends AbstractGenerator {
             // The primary / main unique key
             if (primaryKey != null) {
                 final String keyFullId = generateGlobalKeyReferences()
-                    ? out.ref(getStrategy().getFullJavaIdentifier(primaryKey), 2)
+                    ? kotlin
+                        ? out.ref(getStrategy().getFullJavaIdentifier(primaryKey))
+                        : out.ref(getStrategy().getFullJavaIdentifier(primaryKey), 2)
                     : null;
 
                 if (scala) {
@@ -5083,7 +5130,9 @@ public class JavaGenerator extends AbstractGenerator {
             List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
             if (uniqueKeys.size() > 0) {
                 if (generateGlobalKeyReferences()) {
-                    final List<String> keyFullIds = out.ref(getStrategy().getFullJavaIdentifiers(uniqueKeys), 2);
+                    final List<String> keyFullIds = kotlin
+                        ? out.ref(getStrategy().getFullJavaIdentifiers(uniqueKeys))
+                        : out.ref(getStrategy().getFullJavaIdentifiers(uniqueKeys), 2);
 
                     if (scala) {
                         out.println();
@@ -5152,7 +5201,9 @@ public class JavaGenerator extends AbstractGenerator {
 
             // [#7554] [#8028] Not yet supported with global key references turned off
             if (foreignKeys.size() > 0 && generateGlobalKeyReferences()) {
-                final List<String> keyFullIds = out.ref(getStrategy().getFullJavaIdentifiers(foreignKeys), 2);
+                final List<String> keyFullIds = kotlin
+                    ? out.ref(getStrategy().getFullJavaIdentifiers(foreignKeys))
+                    : out.ref(getStrategy().getFullJavaIdentifiers(foreignKeys), 2);
 
                 if (scala) {
                     out.println();
@@ -5172,7 +5223,9 @@ public class JavaGenerator extends AbstractGenerator {
                 // Outbound (to-one) implicit join paths
                 if (generateImplicitJoinPathsToOne()) {
                     for (ForeignKeyDefinition foreignKey : foreignKeys) {
-                        final String keyFullId = out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
+                        final String keyFullId = kotlin
+                            ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
+                            : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
                         final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
@@ -5719,17 +5772,22 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void generateSequences(SchemaDefinition schema) {
         log.info("Generating sequences");
-        JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Sequences.java"));
+        JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, SequenceDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getSequences(schema)));
+        printGlobalReferencesPackage(out, schema, SequenceDefinition.class);
 
-        printPackage(out, schema);
-        printClassJavadoc(out, "Convenience access to all sequences in " + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema, Mode.DEFAULT);
+        if (!kotlin) {
+            printClassJavadoc(out, "Convenience access to all sequences in " + schemaNameOrDefault(schema) + ".");
+            printClassAnnotations(out, schema, Mode.DEFAULT);
+        }
 
-        if (scala || kotlin)
-            out.println("object Sequences {");
+        final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, SequenceDefinition.class);
+
+        if (scala)
+            out.println("object %s {", referencesClassName);
+        else if (kotlin) {}
         else
-            out.println("public class Sequences {");
+            out.println("public class %s {", referencesClassName);
 
         for (SequenceDefinition sequence : database.getSequences(schema)) {
             final String seqTypeFull = getJavaType(sequence.getType(resolver(out)), out);
@@ -5794,7 +5852,8 @@ public class JavaGenerator extends AbstractGenerator {
                 );
         }
 
-        out.println("}");
+        if (!kotlin)
+            out.println("}");
         closeJavaWriter(out);
 
         watch.splitInfo("Sequences generated");
@@ -6188,8 +6247,11 @@ public class JavaGenerator extends AbstractGenerator {
                     references.add(getShortId(out, memberNames, schema));
             }
             else {
-                references.addAll(out.ref(getStrategy().getFullJavaIdentifiers(definitions), 2));
+                references.addAll(kotlin
+                    ? out.ref(getStrategy().getFullJavaIdentifiers(definitions))
+                    : out.ref(getStrategy().getFullJavaIdentifiers(definitions), 2));
             }
+
             out.println();
 
             if (scala) {
@@ -6198,15 +6260,13 @@ public class JavaGenerator extends AbstractGenerator {
                 if (definitions.size() > INITIALISER_SIZE) {
                     out.println("val result = new %s[%s%s]", ArrayList.class, type, generic);
 
-                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
+                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE)
                         out.println("result.addAll(get%ss%s)", type.getSimpleName(), i / INITIALISER_SIZE);
-                    }
 
                     out.println("result");
                 }
-                else {
+                else
                     out.println("return %s.asList[%s%s]([[before=\n\t\t\t][separator=,\n\t\t\t][%s]])", Arrays.class, type, generic, references);
-                }
 
                 out.println("}");
             }
@@ -6215,9 +6275,8 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("override fun get%ss(): %s<%s%s> {", type.getSimpleName(), out.ref(KLIST), type, generic);
                     out.println("val result = mutableListOf<%s%s>()", type, generic);
 
-                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
+                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE)
                         out.println("result.addAll(get%ss%s())", type.getSimpleName(), i / INITIALISER_SIZE);
-                    }
 
                     out.println("return result");
                     out.println("}");
@@ -6235,9 +6294,8 @@ public class JavaGenerator extends AbstractGenerator {
                 if (definitions.size() > INITIALISER_SIZE) {
                     out.println("%s result = new %s();", List.class, ArrayList.class);
 
-                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
+                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE)
                         out.println("result.addAll(get%ss%s());", type.getSimpleName(), i / INITIALISER_SIZE);
-                    }
 
                     out.println("return result;");
                 }
@@ -7545,8 +7603,27 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
     }
 
+    protected void printGlobalReferencesPackage(JavaWriter out, SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        printGlobalReferencesPackageComment(out, containingSchema, objectType);
+
+        out.printPackageSpecification(getStrategy().getGlobalReferencesJavaPackageName(containingSchema, objectType));
+        out.println();
+        out.printImports();
+        out.println();
+    }
+
     protected void printPackageComment(JavaWriter out, Definition definition, Mode mode) {
         String header = getStrategy().getFileHeader(definition, mode);
+
+        if (!StringUtils.isBlank(header)) {
+            out.println("/*");
+            printJavadocParagraph(out, header, "");
+            out.println(" */");
+        }
+    }
+
+    protected void printGlobalReferencesPackageComment(JavaWriter out, SchemaDefinition containingSchema, Class<? extends Definition> objectType) {
+        String header = getStrategy().getGlobalReferencesFileHeader(containingSchema, objectType);
 
         if (!StringUtils.isBlank(header)) {
             out.println("/*");

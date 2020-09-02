@@ -85,11 +85,15 @@ implements
 
     @Override
     public final List<RoutineDefinition> getRoutines() {
-        if (routines == null) {
+        if (routines == null)
             routines = getRoutines0();
-        }
 
         return routines;
+    }
+
+    @Override
+    public List<UDTDefinition> getUDTs() {
+        return getDatabase().getUDTs(this);
     }
 
     protected abstract List<RoutineDefinition> getRoutines0();

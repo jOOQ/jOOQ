@@ -829,6 +829,10 @@ final class LoaderImpl<R extends Record> implements
                             if (fields[i].getType() == byte[].class && row[i] instanceof String)
                                 row[i] = DatatypeConverter.parseBase64Binary((String) row[i]);
 
+                    // [#10583] Pad row to the fields length
+                    if (row.length < fields.length)
+                        row = Arrays.copyOf(row, fields.length);
+
                     rowCtx.row(row);
                     if (onRowStart != null) {
                         onRowStart.row(rowCtx);

@@ -954,6 +954,8 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class %s {", referencesClassName);
 
+        // [#1459] [#10554] Distribute keys to nested classes only if necessary
+        boolean distributeIndexes = database.getIndexes(schema).size() > INITIALISER_SIZE;
         List<IndexDefinition> allIndexes = new ArrayList<>();
 
         out.header("INDEX definitions");
@@ -964,10 +966,13 @@ public class JavaGenerator extends AbstractGenerator {
                 final String keyId = getStrategy().getJavaIdentifier(index);
                 final int block = allIndexes.size() / INITIALISER_SIZE;
 
-                if (scala || kotlin)
-                    out.println("val %s = Indexes%s.%s", keyId, block, keyId);
+                if (distributeIndexes)
+                    if (scala || kotlin)
+                        out.println("val %s = Indexes%s.%s", keyId, block, keyId);
+                    else
+                        out.println("public static final %s %s = Indexes%s.%s;", Index.class, keyId, block, keyId);
                 else
-                    out.println("public static final %s %s = Indexes%s.%s;", Index.class, keyId, block, keyId);
+                    printIndex(out, -1, index, distributeIndexes);
 
                 allIndexes.add(index);
             }
@@ -979,18 +984,20 @@ public class JavaGenerator extends AbstractGenerator {
         // [#1459] Print nested classes for actual static field initialisations
         // keeping top-level initialiser small
         int indexCounter = 0;
-        out.header("[#1459] distribute members to avoid static initialisers > 64kb");
+        if (distributeIndexes) {
+            out.header("[#1459] distribute members to avoid static initialisers > 64kb");
 
-        // Indexes
-        // -------
+            // Indexes
+            // -------
 
-        for (IndexDefinition index : allIndexes) {
-            printIndex(out, indexCounter, index);
-            indexCounter++;
+            for (IndexDefinition index : allIndexes) {
+                printIndex(out, indexCounter, index, distributeIndexes);
+                indexCounter++;
+            }
+
+            if (indexCounter > 0)
+                out.println("}");
         }
-
-        if (indexCounter > 0)
-            out.println("}");
 
         generateIndexesClassFooter(schema, out);
 
@@ -1007,7 +1014,7 @@ public class JavaGenerator extends AbstractGenerator {
     @SuppressWarnings("unused")
     protected void generateIndexesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
-    protected void printIndex(JavaWriter out, int indexCounter, IndexDefinition index) {
+    protected void printIndex(JavaWriter out, int indexCounter, IndexDefinition index, boolean distributeIndexes) {
         final int block = indexCounter / INITIALISER_SIZE;
 
         // Print new nested class
@@ -1029,7 +1036,8 @@ public class JavaGenerator extends AbstractGenerator {
                 Index.class
             );
         else
-            out.print("static final %s %s = ",
+            out.print("%sstatic final %s %s = ",
+                distributeIndexes ? "" : "public ",
                 Index.class,
                 getStrategy().getJavaIdentifier(index)
             );

@@ -284,7 +284,10 @@ public class GenerationTool {
         if (g == null)
             throw new GeneratorException("The <generator/> tag is mandatory. For details, see " + Constants.NS_CODEGEN);
 
-        org.jooq.meta.jaxb.Database d = defaultIfNull(g.getDatabase(), new org.jooq.meta.jaxb.Database());
+        // [#3669] Optional Database element
+        if (g.getDatabase() == null)
+            g.setDatabase(new org.jooq.meta.jaxb.Database());
+        org.jooq.meta.jaxb.Database d = g.getDatabase();
         String databaseName = trim(d.getName());
 
         // [#1394] The <generate/> element and some others should be optional
@@ -560,11 +563,11 @@ public class GenerationTool {
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
             database.setConfiguredEmbeddables(d.getEmbeddables());
-            database.setEmbeddablePrimaryKeys(TRUE.equals(g.getDatabase().isEmbeddablePrimaryKeys()));
-            database.setEmbeddableUniqueKeys(TRUE.equals(g.getDatabase().isEmbeddableUniqueKeys()));
-            database.setEmbeddableDomains(TRUE.equals(g.getDatabase().isEmbeddableDomains()));
-            database.setLogSlowQueriesAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowQueriesAfterSeconds(), 5));
-            database.setLogSlowResultsAfterSeconds(defaultIfNull(g.getDatabase().getLogSlowResultsAfterSeconds(), 5));
+            database.setEmbeddablePrimaryKeys(TRUE.equals(d.isEmbeddablePrimaryKeys()));
+            database.setEmbeddableUniqueKeys(TRUE.equals(d.isEmbeddableUniqueKeys()));
+            database.setEmbeddableDomains(TRUE.equals(d.isEmbeddableDomains()));
+            database.setLogSlowQueriesAfterSeconds(defaultIfNull(d.getLogSlowQueriesAfterSeconds(), 5));
+            database.setLogSlowResultsAfterSeconds(defaultIfNull(d.getLogSlowResultsAfterSeconds(), 5));
 
             if (d.getRegexFlags() != null) {
                 database.setRegexFlags(d.getRegexFlags());
@@ -832,15 +835,12 @@ public class GenerationTool {
                 generator.setGenerateIndentation(g.getGenerate().getIndentation());
 
 
-            // [#3669] Optional Database element
-            if (g.getDatabase() == null)
-                g.setDatabase(new org.jooq.meta.jaxb.Database());
-            if (!isBlank(g.getDatabase().getSchemaVersionProvider()))
+            if (!isBlank(d.getSchemaVersionProvider()))
                 generator.setUseSchemaVersionProvider(true);
-            if (!isBlank(g.getDatabase().getCatalogVersionProvider()))
+            if (!isBlank(d.getCatalogVersionProvider()))
                 generator.setUseCatalogVersionProvider(true);
-            if (g.getDatabase().isTableValuedFunctions() != null)
-                generator.setGenerateTableValuedFunctions(g.getDatabase().isTableValuedFunctions());
+            if (d.isTableValuedFunctions() != null)
+                generator.setGenerateTableValuedFunctions(d.isTableValuedFunctions());
             else {
                 generator.setGenerateTableValuedFunctions(true);
 

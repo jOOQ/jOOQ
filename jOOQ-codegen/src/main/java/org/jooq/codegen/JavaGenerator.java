@@ -6242,6 +6242,10 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateGlobalSequenceReferences())
             printReferences(out, database.getSequences(schema), Sequence.class, true);
 
+        // [#681] Avoid referencing domain literals, if they're not generated
+        if (generateGlobalDomainReferences())
+            printReferences(out, database.getDomains(schema), Domain.class, true);
+
         // [#9685] Avoid referencing table literals if they're not generated
         if (generateTables())
             printReferences(out, database.getTables(schema), Table.class, true);

@@ -197,13 +197,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         string = super.beforeClose(string);
 
         StringBuilder importString = new StringBuilder();
-        String pkg = "";
-
-        Matcher m = Pattern.compile("(?s:^.*?[\\r\\n]+package\\s+(.*?);?[\\r\\n]+.*?$)").matcher(string);
-        if (m.find())
-            pkg = m.group(1);
-
-        Pattern samePackagePattern = Pattern.compile(pkg + "\\.[^\\.]+");
+        Pattern samePackagePattern = Pattern.compile(packageName + "\\.[^\\.]+");
+        String dotClassName = "." + className;
 
         String previous = "";
         for (String imp : qualifiedTypes) {
@@ -218,11 +213,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                 continue;
 
             // Don't import the class itself
-            if (imp.endsWith("." + className))
+            if (imp.endsWith(dotClassName))
                 continue;
 
             // [#4229] [#4531] Avoid warnings due to unnecessary same-package imports
-            if (pkg.length() > 0 && samePackagePattern.matcher(imp).matches())
+            if (packageName.length() > 0 && samePackagePattern.matcher(imp).matches())
                 continue;
 
             String topLevelPackage = imp.split("\\.")[0];

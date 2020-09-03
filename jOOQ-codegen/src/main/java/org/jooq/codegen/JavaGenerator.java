@@ -1520,6 +1520,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     out.overrideInherit();
+                    printNonnullAnnotation(out);
                     out.println("public %s<%s> key() {", recordNType, keyType);
                     out.println("return (%s) super.key();", recordNType);
                     out.println("}");
@@ -1576,6 +1577,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.overrideInherit();
+                printNonnullAnnotation(out);
                 out.println("public %s<%s> fieldsRow() {", recordNType, rowType);
                 out.println("return (%s) super.fieldsRow();", recordNType);
                 out.println("}");
@@ -1591,6 +1593,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.overrideInherit();
+                printNonnullAnnotation(out);
                 out.println("public %s<%s> valuesRow() {", recordNType, rowType);
                 out.println("return (%s) super.valuesRow();", recordNType);
                 out.println("}");
@@ -1647,6 +1650,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else
                         out.overrideInherit();
 
+                    printNonnullAnnotation(out);
                     out.println("public %s<%s> field%s() {", Field.class, colType, i);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
@@ -1682,7 +1686,6 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
 
                     printNullableOrNonnullAnnotation(out, column);
-
                     out.println("public %s component%s() {", colType, i);
                     out.println("return %s();", colGetter);
                     out.println("}");
@@ -1713,7 +1716,6 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
 
                     printNullableOrNonnullAnnotation(out, column);
-
                     out.println("public %s value%s() {", colType, i);
                     out.println("return %s();", colGetter);
                     out.println("}");
@@ -1753,6 +1755,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else
                         out.overrideInherit();
 
+                    printNonnullAnnotation(out);
                     out.println("public %s value%s([[before=@][after= ][%s]]%s value) {", className, i, list(nullableAnnotation), varargsIfArray(colType));
                     out.println("%s(value);", colSetter);
                     out.println("return this;");
@@ -1805,6 +1808,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.overrideInherit();
+                printNonnullAnnotation(out);
                 out.println("public %s values([[%s]]) {", className, arguments);
 
                 for (String call : calls)
@@ -3804,6 +3808,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.overrideInherit();
+            printNonnullAnnotation(out);
             out.println("public %s getId(%s object) {", tType, pType);
         }
 
@@ -3863,6 +3868,7 @@ public class JavaGenerator extends AbstractGenerator {
                     colClass, colType, colType, out.ref(KLIST), pType, colIdentifier);
             }
             else {
+                printNonnullAnnotation(out);
                 out.println("public %s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", List.class, pType, colClass, colType, colType);
                 out.println("return fetchRange(%s, lowerInclusive, upperInclusive);", colIdentifier);
                 out.println("}");
@@ -3881,6 +3887,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("fun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)", colClass, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
             }
             else {
+                printNonnullAnnotation(out);
                 out.println("public %s<%s> fetchBy%s(%s... values) {", List.class, pType, colClass, colType);
                 out.println("return fetch(%s, values);", colIdentifier);
                 out.println("}");
@@ -3903,6 +3910,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.println("fun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", colClass, colType, pType, colIdentifier);
                     }
                     else {
+                        printNullableAnnotation(out);
                         out.println("public %s fetchOneBy%s(%s value) {", pType, colClass, colType);
                         out.println("return fetchOne(%s, value);", colIdentifier);
                         out.println("}");
@@ -5084,6 +5092,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.overrideInherit();
+            printNonnullAnnotation(out);
             out.println("public %s getSchema() {", Schema.class);
             out.println("return %s;", schemaId);
             out.println("}");
@@ -5109,6 +5118,7 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                     else {
                         out.overrideInherit();
+                        printNonnullAnnotation(out);
                         out.println("public %s<%s> getIndexes() {", List.class, Index.class);
                         out.println("return %s.<%s>asList([[%s]]);", Arrays.class, Index.class, indexFullIds);
                         out.println("}");
@@ -5144,6 +5154,7 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                     else {
                         out.overrideInherit();
+                        printNonnullAnnotation(out);
                         out.println("public %s<%s> getIndexes() {", List.class, Index.class);
                         out.println("return %s.<%s>asList(", Arrays.class, Index.class);
 
@@ -5186,6 +5197,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else
                         out.overrideInherit();
 
+                    printNonnullAnnotation(out);
                     out.println("public %s<%s, %s> getIdentity() {", Identity.class, recordType, identityType);
                     out.println("return (%s<%s, %s>) super.getIdentity();", Identity.class, recordType, identityType);
                     out.println("}");
@@ -5223,6 +5235,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     out.overrideInherit();
+                    printNonnullAnnotation(out);
                     out.println("public %s<%s> getPrimaryKey() {", UniqueKey.class, recordType);
                     out.print("return ");
 
@@ -5254,6 +5267,7 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                     else {
                         out.overrideInherit();
+                        printNonnullAnnotation(out);
                         out.println("public %s<%s<%s>> getKeys() {", List.class, UniqueKey.class, recordType);
                         out.println("return %s.<%s<%s>>asList([[%s]]);", Arrays.class, UniqueKey.class, recordType, keyFullIds);
                         out.println("}");
@@ -5290,6 +5304,7 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                     else {
                         out.overrideInherit();
+                        printNonnullAnnotation(out);
                         out.println("public %s<%s<%s>> getKeys() {", List.class, UniqueKey.class, recordType);
                         out.println("return %s.<%s<%s>>asList(", Arrays.class, UniqueKey.class, recordType);
 
@@ -5325,6 +5340,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     out.overrideInherit();
+                    printNonnullAnnotation(out);
                     out.println("public %s<%s<%s, ?>> getReferences() {", List.class, ForeignKey.class, recordType);
                     out.println("return %s.<%s<%s, ?>>asList([[%s]]);", Arrays.class, ForeignKey.class, recordType, keyFullIds);
                     out.println("}");
@@ -5369,6 +5385,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.overrideInherit();
+                printNonnullAnnotation(out);
                 out.println("public %s<%s<%s>> getChecks() {", List.class, Check.class, recordType);
                 out.println("return %s.<%s<%s>>asList(", Arrays.class, Check.class, recordType);
             }
@@ -5416,6 +5433,7 @@ public class JavaGenerator extends AbstractGenerator {
                         else
                             out.overrideInherit();
 
+                        printNonnullAnnotation(out);
                         out.println("public %s<%s, %s> getRecordVersion() {", TableField.class, recordType, columnType);
                         out.println("return %s;", columnId);
                         out.println("}");
@@ -5452,6 +5470,7 @@ public class JavaGenerator extends AbstractGenerator {
                         else
                             out.overrideInherit();
 
+                        printNonnullAnnotation(out);
                         out.println("public %s<%s, %s> getRecordTimestamp() {", TableField.class, recordType, columnType);
                         out.println("return %s;", columnId);
                         out.println("}");
@@ -5498,6 +5517,7 @@ public class JavaGenerator extends AbstractGenerator {
         // type-safe table alias
         else if (generateInstanceFields()) {
             out.overrideInherit();
+            printNonnullAnnotation(out);
             out.println("public %s as(%s alias) {", className, String.class);
 
             if (table.isTableValuedFunction())
@@ -5509,6 +5529,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
             out.overrideInherit();
+            printNonnullAnnotation(out);
             out.println("public %s as(%s alias) {", className, Name.class);
 
             if (table.isTableValuedFunction())
@@ -5559,6 +5580,7 @@ public class JavaGenerator extends AbstractGenerator {
         else if (generateInstanceFields()) {
             out.javadoc("Rename this table");
             out.override();
+            printNonnullAnnotation(out);
             out.println("public %s rename(%s name) {", className, String.class);
 
             if (table.isTableValuedFunction())
@@ -5570,6 +5592,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.javadoc("Rename this table");
             out.override();
+            printNonnullAnnotation(out);
             out.println("public %s rename(%s name) {", className, Name.class);
 
             if (table.isTableValuedFunction())
@@ -5596,6 +5619,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.overrideInherit();
+                printNonnullAnnotation(out);
                 out.println("public %s<%s> fieldsRow() {", rowNType, rowType);
                 out.println("return (%s) super.fieldsRow();", rowNType);
                 out.println("}");
@@ -6200,6 +6224,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.overrideInherit();
+            printNonnullAnnotation(out);
             out.println("public %s getCatalog() {", Catalog.class);
             out.println("return %s;", catalogId);
             out.println("}");
@@ -6407,6 +6432,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.override();
+                printNonnullAnnotation(out);
                 out.println("public final %s<%s%s> get%ss() {", List.class, type, generic, type.getSimpleName());
 
                 if (definitions.size() > INITIALISER_SIZE) {
@@ -7462,6 +7488,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.override();
+            printNonnullAnnotation(out);
             out.println("public %s<%s> getRecordType() {", Class.class, className);
             out.println("return %s.class;", className);
             out.println("}");

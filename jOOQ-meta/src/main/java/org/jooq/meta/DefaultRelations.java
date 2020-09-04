@@ -66,10 +66,6 @@ public class DefaultRelations implements Relations {
     private transient Map<ColumnDefinition, List<ForeignKeyDefinition>>     foreignKeysByColumn;
     private transient Map<TableDefinition, List<CheckConstraintDefinition>> checkConstraintsByTable;
 
-    public void promoteUniqueKey(UniqueKeyDefinition uk) {
-
-    }
-
     public void addPrimaryKey(String keyName, TableDefinition table, ColumnDefinition column) {
         addPrimaryKey(keyName, table, column, true);
     }

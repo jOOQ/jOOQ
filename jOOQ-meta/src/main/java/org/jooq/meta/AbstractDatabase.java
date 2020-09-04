@@ -162,7 +162,6 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          forceIntegerTypesOnZeroScaleDecimals = true;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
-    private String[]                                                         syntheticPrimaryKeys;
     private String[]                                                         syntheticIdentities;
     private boolean                                                          embeddablePrimaryKeys                = false;
     private boolean                                                          embeddableUniqueKeys                 = false;
@@ -1197,15 +1196,18 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public void setSyntheticPrimaryKeys(String[] syntheticPrimaryKeys) {
-        this.syntheticPrimaryKeys = syntheticPrimaryKeys;
+        if (syntheticPrimaryKeys != null) {
+            for (String syntheticPrimaryKey : syntheticPrimaryKeys) {
+                log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+                getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKeyFields(syntheticPrimaryKey));
+            }
+        }
     }
 
     @Override
     public String[] getSyntheticPrimaryKeys() {
-        if (syntheticPrimaryKeys == null)
-            syntheticPrimaryKeys = new String[0];
-
-        return syntheticPrimaryKeys;
+        log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+        return new String[0];
     }
 
     @Override
@@ -2682,13 +2684,6 @@ public abstract class AbstractDatabase implements Database {
             onError(ERROR, "Error while generating synthetic primary keys", new ExceptionRunnable() {
                 @Override
                 public void run() throws Exception {
-                    syntheticPrimaryKeysLegacy(result);
-                }
-            });
-
-            onError(ERROR, "Error while generating synthetic primary keys", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
                     syntheticPrimaryKeys(result);
                 }
             });
@@ -2857,24 +2852,6 @@ public abstract class AbstractDatabase implements Database {
         return new ArrayList<>(unusedSyntheticForeignKeys);
     }
 
-    private final void syntheticPrimaryKeys(DefaultRelations r) {
-
-        keyLoop:
-        for (SyntheticPrimaryKeyType key : getConfiguredSyntheticPrimaryKeys()) {
-            if (key.getKey() != null)
-                continue keyLoop;
-
-            for (TableDefinition table : filterExcludeInclude(getTables(), null, key.getKeyTables() != null ? key.getKeyTables() : ".*", Collections.emptyList())) {
-                String keyName = key.getName() != null ? key.getName() : "SYNTHETIC_PK_" + table.getName();
-
-                for (ColumnDefinition column : filterExcludeInclude(table.getColumns(), null, key.getKeyFields(), Collections.emptyList())) {
-                    markUsed(key);
-                    r.addPrimaryKey(keyName, table, column);
-                }
-            }
-        }
-    }
-
     private final void overridePrimaryKeys(DefaultRelations r) {
 
         keyLoop:
@@ -2892,74 +2869,84 @@ public abstract class AbstractDatabase implements Database {
         }
     }
 
+    private final void syntheticPrimaryKeys(DefaultRelations r) {
 
+        keyLoop:
+        for (SyntheticPrimaryKeyType key : getConfiguredSyntheticPrimaryKeys()) {
+            if (key.getKey() != null)
+                continue keyLoop;
 
+            for (TableDefinition table : filterExcludeInclude(getTables(), null, key.getKeyTables() != null ? key.getKeyTables() : ".*", Collections.emptyList())) {
+                String keyName = key.getName() != null ? key.getName() : "SYNTHETIC_PK_" + table.getName();
 
+                List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, key.getKeyFields(), Collections.emptyList());
+                if (!columns.isEmpty()) {
+                    markUsed(key);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private final void syntheticPrimaryKeysLegacy(DefaultRelations r) {
-        List<UniqueKeyDefinition> syntheticKeys = new ArrayList<>();
-
-        for (TableDefinition table : getTables()) {
-            List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, getSyntheticPrimaryKeys(), filters);
-
-            if (!columns.isEmpty()) {
-                DefaultUniqueKeyDefinition syntheticKey = new DefaultUniqueKeyDefinition(table.getSchema(), "SYNTHETIC_PK_" + table.getName(), table, true);
-                syntheticKey.getKeyColumns().addAll(columns);
-                syntheticKeys.add(syntheticKey);
+                    DefaultUniqueKeyDefinition pk = new DefaultUniqueKeyDefinition(table.getSchema(), keyName, table, true);
+                    pk.getKeyColumns().addAll(columns);
+                    log.info("Synthetic primary key", "" + pk);
+                    r.overridePrimaryKey(pk);
+                }
             }
         }
-
-        log.info("Synthetic primary keys", fetchedSize(syntheticKeys, syntheticKeys));
-
-        for (UniqueKeyDefinition key : syntheticKeys)
-            r.overridePrimaryKey(key);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void close() {}

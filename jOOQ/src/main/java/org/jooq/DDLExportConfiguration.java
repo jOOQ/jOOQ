@@ -71,6 +71,8 @@ public final class DDLExportConfiguration {
 
     private final boolean          defaultSequenceFlags;
 
+    private final boolean          includeConstraintsOnViews;
+
     /**
      * Create a new default export configuration instance.
      */
@@ -93,6 +95,8 @@ public final class DDLExportConfiguration {
             false,
             false,
             false,
+            false,
+
             false,
 
             false
@@ -119,7 +123,9 @@ public final class DDLExportConfiguration {
         boolean respectDomainOrder,
         boolean respectSequenceOrder,
 
-        boolean defaultSequenceFlags
+        boolean defaultSequenceFlags,
+
+        boolean includeConstraintsOnViews
     ) {
         this.flags = EnumSet.copyOf(flags);
 
@@ -141,6 +147,8 @@ public final class DDLExportConfiguration {
         this.respectSequenceOrder = respectSequenceOrder;
 
         this.defaultSequenceFlags = defaultSequenceFlags;
+
+        this.includeConstraintsOnViews = includeConstraintsOnViews;
     }
 
     /**
@@ -178,7 +186,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -214,7 +223,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -250,7 +260,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -286,7 +297,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -322,7 +334,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -358,7 +371,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -394,7 +408,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -430,7 +445,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -464,7 +480,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -498,7 +515,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -532,7 +550,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -566,7 +585,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -600,7 +620,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -634,7 +655,8 @@ public final class DDLExportConfiguration {
             newRespectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -668,7 +690,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             newRespectDomainOrder,
             respectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -702,7 +725,8 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             newRespectSequenceOrder,
-            defaultSequenceFlags
+            defaultSequenceFlags,
+            includeConstraintsOnViews
         );
     }
 
@@ -736,7 +760,41 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
-            newDefaultSequenceFlags
+            newDefaultSequenceFlags,
+            includeConstraintsOnViews
+        );
+    }
+
+    /**
+     * Whether to include constraints on views.
+     */
+    public final boolean includeConstraintsOnViews() {
+        return includeConstraintsOnViews;
+    }
+
+    /**
+     * Whether to include constraints on views.
+     */
+    public final DDLExportConfiguration includeConstraintsOnViews(boolean newIncludeConstraintsOnViews) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createDomainIfNotExists,
+            createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectDomainOrder,
+            respectSequenceOrder,
+            defaultSequenceFlags,
+            newIncludeConstraintsOnViews
         );
     }
 }

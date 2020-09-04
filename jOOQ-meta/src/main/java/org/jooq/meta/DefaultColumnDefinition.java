@@ -81,6 +81,7 @@ public class DefaultColumnDefinition
             for (TableDefinition t : db.filter(singletonList(column.getContainer()), id.getKeyTables())) {
                 for (ColumnDefinition c : db.filter(singletonList(column), id.getKeyFields())) {
                     log.info("Synthetic identity", column.getQualifiedName());
+                    db.markUsed(id);
                     return true;
                 }
             }

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.DDLFlag.CHECK;
 import static org.jooq.DDLFlag.COMMENT;
 import static org.jooq.DDLFlag.DOMAIN;
@@ -47,6 +48,7 @@ import static org.jooq.DDLFlag.SCHEMA;
 import static org.jooq.DDLFlag.SEQUENCE;
 import static org.jooq.DDLFlag.TABLE;
 import static org.jooq.DDLFlag.UNIQUE;
+import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
 import static org.jooq.impl.DSL.constraint;
@@ -99,18 +101,26 @@ final class DDL {
         this.configuration = configuration;
     }
 
-    private final Query createTable(Table<?> table, Collection<? extends Constraint> constraints) {
+    private final List<Query> createTableOrView(Table<?> table, Collection<? extends Constraint> constraints) {
         boolean temporary = table.getType() == TableType.TEMPORARY;
         boolean view = table.getType().isView();
         OnCommit onCommit = table.getOptions().onCommit();
 
-        if (view)
-            return (configuration.createViewIfNotExists()
+        if (view) {
+            List<Query> result = new ArrayList<>();
+
+            result.add((configuration.createViewIfNotExists()
                         ? ctx.createViewIfNotExists(table, table.fields())
                         : configuration.createOrReplaceView()
                         ? ctx.createOrReplaceView(table, table.fields())
                         : ctx.createView(table, table.fields()))
-                    .as(table.getOptions().select());
+                    .as(table.getOptions().select()));
+
+            if (!constraints.isEmpty() && configuration.includeConstraintsOnViews())
+                result.addAll(alterTableAddConstraints(table));
+
+            return result;
+        }
 
         CreateTableOnCommitStep s0 =
             (configuration.createTableIfNotExists()
@@ -126,17 +136,17 @@ final class DDL {
         if (temporary && onCommit != null) {
             switch (table.getOptions().onCommit()) {
                 case DELETE_ROWS:
-                    return s0.onCommitDeleteRows();
+                    return asList(s0.onCommitDeleteRows());
                 case PRESERVE_ROWS:
-                    return s0.onCommitPreserveRows();
+                    return asList(s0.onCommitPreserveRows());
                 case DROP:
-                    return s0.onCommitDrop();
+                    return asList(s0.onCommitDrop());
                 default:
                     throw new IllegalStateException("Unsupported flag: " + onCommit);
             }
         }
 
-        return s0;
+        return asList(s0);
     }
 
     final Query createSequence(Sequence<?> sequence) {
@@ -198,8 +208,8 @@ final class DDL {
         return s3.constraints(constraints);
     }
 
-    final Query createTable(Table<?> table) {
-        return createTable(table, constraints(table));
+    final List<Query> createTableOrView(Table<?> table) {
+        return createTableOrView(table, constraints(table));
     }
 
     private final List<Query> createIndex(Table<?> table) {
@@ -222,7 +232,10 @@ final class DDL {
     }
 
     private final List<Query> alterTableAddConstraints(Table<?> table) {
-        List<Constraint> constraints = constraints(table);
+        return alterTableAddConstraints(table, constraints(table));
+    }
+
+    private final List<Query> alterTableAddConstraints(Table<?> table, List<Constraint> constraints) {
         List<Query> result = new ArrayList<>(constraints.size());
 
         for (Constraint constraint : constraints)
@@ -245,7 +258,7 @@ final class DDL {
     private final List<Constraint> primaryKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
-        if (configuration.flags().contains(PRIMARY_KEY))
+        if (configuration.flags().contains(PRIMARY_KEY) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
             for (UniqueKey<?> key : table.getKeys())
                 if (key.isPrimary())
                     result.add(enforced(constraint(key.getUnqualifiedName()).primaryKey(key.getFieldsArray()), key.enforced()));
@@ -256,7 +269,7 @@ final class DDL {
     private final List<Constraint> uniqueKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
-        if (configuration.flags().contains(UNIQUE))
+        if (configuration.flags().contains(UNIQUE) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
             for (UniqueKey<?> key : sortKeysIf(table.getKeys(), !configuration.respectConstraintOrder()))
                 if (!key.isPrimary())
                     result.add(enforced(constraint(key.getUnqualifiedName()).unique(key.getFieldsArray()), key.enforced()));
@@ -267,7 +280,7 @@ final class DDL {
     private final List<Constraint> foreignKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
-        if (configuration.flags().contains(FOREIGN_KEY))
+        if (configuration.flags().contains(FOREIGN_KEY) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
             for (ForeignKey<?, ?> key : sortKeysIf(table.getReferences(), !configuration.respectConstraintOrder()))
                 result.add(enforced(constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()), key.enforced()));
 
@@ -277,7 +290,7 @@ final class DDL {
     private final List<Constraint> checks(Table<?> table) {
         List<Constraint> result = new ArrayList<>();
 
-        if (configuration.flags().contains(CHECK))
+        if (configuration.flags().contains(CHECK) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
             for (Check<?> check : sortIf(table.getChecks(), !configuration.respectConstraintOrder()))
                 result.add(enforced(constraint(check.getUnqualifiedName()).check(check.condition()), check.enforced()));
 
@@ -289,7 +302,7 @@ final class DDL {
 
         for (Table<?> table : tables) {
             if (configuration.flags().contains(TABLE))
-                queries.add(createTable(table));
+                queries.addAll(createTableOrView(table));
             else
                 queries.addAll(alterTableAddConstraints(table));
 
@@ -343,7 +356,7 @@ final class DDL {
                     constraints.addAll(uniqueKeys(table));
                     constraints.addAll(checks(table));
 
-                    queries.add(createTable(table, constraints));
+                    queries.addAll(createTableOrView(table, constraints));
                 }
             }
         }

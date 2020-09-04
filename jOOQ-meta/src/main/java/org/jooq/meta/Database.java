@@ -56,6 +56,11 @@ import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.OnError;
 import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
+import org.jooq.meta.jaxb.SyntheticForeignKeyType;
+import org.jooq.meta.jaxb.SyntheticIdentityType;
+import org.jooq.meta.jaxb.SyntheticKeysType;
+import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
+import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 
 /**
  * A general database model.
@@ -759,13 +764,22 @@ public interface Database extends AutoCloseable {
     /**
      * Unique keys matching these regular expressions will be considered as
      * primary keys in generated code.
+     *
+     * @deprecated - 3.14.0 - [#10588] - Use
+     *             {@link #setConfiguredSyntheticKeys(SyntheticKeysType)}
+     *             instead.
      */
+    @Deprecated
     void setOverridePrimaryKeys(String[] primaryKeys);
 
     /**
      * Unique keys matching these regular expressions will be considered as
      * primary keys in generated code.
+     *
+     * @deprecated - 3.14.0 - [#10588] - Use
+     *             {@link #getConfiguredSyntheticPrimaryKeys()} instead.
      */
+    @Deprecated
     String[] getOverridePrimaryKeys();
 
     /**
@@ -952,6 +966,71 @@ public interface Database extends AutoCloseable {
      * Whether embeddable types for domains should be generated.
      */
     void setEmbeddableDomains(boolean embeddableDomains);
+
+    /**
+     * Configure the synthetic keys.
+     */
+    void setConfiguredSyntheticKeys(SyntheticKeysType configuredSyntheticKeys);
+
+    /**
+     * Get the configured synthetic identities.
+     */
+    List<SyntheticIdentityType> getConfiguredSyntheticIdentities();
+
+    /**
+     * Get the configured synthetic primary keys.
+     */
+    List<SyntheticPrimaryKeyType> getConfiguredSyntheticPrimaryKeys();
+
+    /**
+     * Get the configured synthetic unique keys.
+     */
+    List<SyntheticUniqueKeyType> getConfiguredSyntheticUniqueKeys();
+
+    /**
+     * Get the configured synthetic foreign keys.
+     */
+    List<SyntheticForeignKeyType> getConfiguredSyntheticForeignKeys();
+
+    /**
+     * Mark a synthetic identity as used.
+     */
+    void markUsed(SyntheticIdentityType identity);
+
+    /**
+     * Retrieve the not-yet used synthetic identities.
+     */
+    List<SyntheticIdentityType> getUnusedSyntheticIdentities();
+
+    /**
+     * Mark a synthetic primary key as used.
+     */
+    void markUsed(SyntheticPrimaryKeyType primaryKey);
+
+    /**
+     * Retrieve the not-yet used synthetic primary keys.
+     */
+    List<SyntheticPrimaryKeyType> getUnusedSyntheticPrimaryKeys();
+
+    /**
+     * Mark a synthetic unique key as used.
+     */
+    void markUsed(SyntheticUniqueKeyType uniqueKey);
+
+    /**
+     * Retrieve the not-yet used synthetic unique keys.
+     */
+    List<SyntheticUniqueKeyType> getUnusedSyntheticUniqueKeys();
+
+    /**
+     * Mark a synthetic foreign key as used.
+     */
+    void markUsed(SyntheticForeignKeyType foreignKey);
+
+    /**
+     * Retrieve the not-yet used synthetic foreign keys.
+     */
+    List<SyntheticForeignKeyType> getUnusedSyntheticForeignKeys();
 
     /**
      * Get the dialect for this database.

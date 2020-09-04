@@ -73,8 +73,6 @@ import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaVersionProvider;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.Configuration;
-import org.jooq.meta.jaxb.EmbeddableDefinitionType;
-import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.Generate;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Logging;
@@ -563,6 +561,7 @@ public class GenerationTool {
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
             database.setConfiguredEmbeddables(d.getEmbeddables());
+            database.setConfiguredSyntheticKeys(d.getSyntheticKeys());
             database.setEmbeddablePrimaryKeys(TRUE.equals(d.isEmbeddablePrimaryKeys()));
             database.setEmbeddableUniqueKeys(TRUE.equals(d.isEmbeddableUniqueKeys()));
             database.setEmbeddableDomains(TRUE.equals(d.isEmbeddableDomains()));
@@ -872,35 +871,12 @@ public class GenerationTool {
 
             generator.generate(database);
 
-            if (!database.getUnusedForcedTypes().isEmpty()) {
-                log.warn(
-                      "Unused ForcedTypes",
-                      "There are unused forced types, which have not been used by this generation run.\n"
-                    + "This can be because of misconfigurations, such as, for example:\n"
-                    + "- case sensitive regular expressions\n"
-                    + "- regular expressions depending on whitespace (Pattern.COMMENTS is turned on!)\n"
-                    + "- missing or inadequate object qualification\n"
-                    + "- the forced type is obsolete\n"
-                );
-
-                for (ForcedType f : database.getUnusedForcedTypes())
-                    log.warn("Unused ForcedType", f);
-            }
-
-            if (!database.getUnusedEmbeddables().isEmpty()) {
-                log.warn(
-                      "Unused Embeddables",
-                      "There are unused embeddables, which have not been used by this generation run.\n"
-                    + "This can be because of misconfigurations, such as, for example:\n"
-                    + "- case sensitive regular expressions\n"
-                    + "- regular expressions depending on whitespace (Pattern.COMMENTS is turned on!)\n"
-                    + "- missing or inadequate object qualification\n"
-                    + "- the embeddable is obsolete\n"
-                );
-
-                for (EmbeddableDefinitionType e : database.getUnusedEmbeddables())
-                    log.warn("Unused Embeddable", e);
-            }
+            logUnused("forced type", "forced types", database.getUnusedForcedTypes());
+            logUnused("embeddable", "embeddables", database.getUnusedEmbeddables());
+            logUnused("synthetic identity", "synthetic identities", database.getUnusedSyntheticIdentities());
+            logUnused("synthetic primary key", "synthetic primary keys", database.getUnusedSyntheticPrimaryKeys());
+            logUnused("synthetic unique key", "synthetic unique keys", database.getUnusedSyntheticUniqueKeys());
+            logUnused("synthetic foreign key", "synthetic foreign keys", database.getUnusedSyntheticForeignKeys());
         }
         finally {
             if (database != null)
@@ -923,6 +899,23 @@ public class GenerationTool {
                     connection.setAutoCommit(autoCommit);
                 }
             }
+        }
+    }
+
+    private void logUnused(String objectType, String objectTypes, List<?> list) {
+        if (!list.isEmpty()) {
+            log.warn(
+                  "Unused " + objectTypes,
+                  "There are unused " + objectTypes + ", which have not been used by this generation run.\n"
+                + "This can be because of misconfigurations, such as, for example:\n"
+                + "- case sensitive regular expressions\n"
+                + "- regular expressions depending on whitespace (Pattern.COMMENTS is turned on!)\n"
+                + "- missing or inadequate object qualification\n"
+                + "- the " + objectType + " are obsolete\n"
+            );
+
+            for (Object o : list)
+                log.warn("Unused " + objectType, o);
         }
     }
 

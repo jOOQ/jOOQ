@@ -77,6 +77,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.Log;
 import org.jooq.Name;
+// ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -102,6 +103,11 @@ import org.jooq.meta.jaxb.Nullability;
 import org.jooq.meta.jaxb.OnError;
 import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
+import org.jooq.meta.jaxb.SyntheticForeignKeyType;
+import org.jooq.meta.jaxb.SyntheticIdentityType;
+import org.jooq.meta.jaxb.SyntheticKeysType;
+import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
+import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 // ...
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
@@ -157,7 +163,6 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
     private String[]                                                         syntheticPrimaryKeys;
-    private String[]                                                         overridePrimaryKeys;
     private String[]                                                         syntheticIdentities;
     private boolean                                                          embeddablePrimaryKeys                = false;
     private boolean                                                          embeddableUniqueKeys                 = false;
@@ -175,6 +180,14 @@ public abstract class AbstractDatabase implements Database {
     private Set<ForcedType>                                                  unusedForcedTypes                    = new HashSet<>();
     private List<EmbeddableDefinitionType>                                   configuredEmbeddables                = new ArrayList<>();
     private Set<EmbeddableDefinitionType>                                    unusedEmbeddables                    = new HashSet<>();
+    private List<SyntheticIdentityType>                                      configuredSyntheticIdentities        = new ArrayList<>();
+    private Set<SyntheticIdentityType>                                       unusedSyntheticIdentities            = new HashSet<>();
+    private List<SyntheticPrimaryKeyType>                                    configuredSyntheticPrimaryKeys       = new ArrayList<>();
+    private Set<SyntheticPrimaryKeyType>                                     unusedSyntheticPrimaryKeys           = new HashSet<>();
+    private List<SyntheticUniqueKeyType>                                     configuredSyntheticUniqueKeys        = new ArrayList<>();
+    private Set<SyntheticUniqueKeyType>                                      unusedSyntheticUniqueKeys            = new HashSet<>();
+    private List<SyntheticForeignKeyType>                                    configuredSyntheticForeignKeys       = new ArrayList<>();
+    private Set<SyntheticForeignKeyType>                                     unusedSyntheticForeignKeys           = new HashSet<>();
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
     private Comparator<Definition>                                           orderProvider;
@@ -1189,25 +1202,27 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getSyntheticPrimaryKeys() {
-        if (syntheticPrimaryKeys == null) {
+        if (syntheticPrimaryKeys == null)
             syntheticPrimaryKeys = new String[0];
-        }
 
         return syntheticPrimaryKeys;
     }
 
     @Override
+    @Deprecated
     public void setOverridePrimaryKeys(String[] overridePrimaryKeys) {
-        this.overridePrimaryKeys = overridePrimaryKeys;
+        if (overridePrimaryKeys != null) {
+            for (String overridePrimaryKey : overridePrimaryKeys) {
+                log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+                getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKey(overridePrimaryKey));
+            }
+        }
     }
 
     @Override
     public String[] getOverridePrimaryKeys() {
-        if (overridePrimaryKeys == null) {
-            overridePrimaryKeys = new String[0];
-        }
-
-        return overridePrimaryKeys;
+        log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+        return new String[0];
     }
 
     @Override
@@ -2571,6 +2586,10 @@ public abstract class AbstractDatabase implements Database {
         return Collections.unmodifiableList(all);
     }
 
+    protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String e, String i, List<Filter> f) {
+        return filterExcludeInclude(definitions, new String[] { e }, new String[] { i }, f);
+    }
+
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] e, String[] i, List<Filter> f) {
         List<T> result = new ArrayList<>();
 
@@ -2621,7 +2640,7 @@ public abstract class AbstractDatabase implements Database {
      * Retrieve ALL relations from the database.
      */
     protected final Relations getRelations0() {
-        final DefaultRelations result = new DefaultRelations();
+        final DefaultRelations result = relations instanceof DefaultRelations ? (DefaultRelations) relations : new DefaultRelations();
 
         if (getIncludePrimaryKeys()) {
             onError(ERROR, "Error while fetching primary keys", new ExceptionRunnable() {
@@ -2663,19 +2682,46 @@ public abstract class AbstractDatabase implements Database {
             onError(ERROR, "Error while generating synthetic primary keys", new ExceptionRunnable() {
                 @Override
                 public void run() throws Exception {
+                    syntheticPrimaryKeysLegacy(result);
+                }
+            });
+
+            onError(ERROR, "Error while generating synthetic primary keys", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
                     syntheticPrimaryKeys(result);
                 }
             });
-        }
 
-        if (getIncludePrimaryKeys()) {
-            onError(ERROR, "Error while fetching domains", new ExceptionRunnable() {
+            onError(ERROR, "Error while generating overridden primary keys", new ExceptionRunnable() {
                 @Override
                 public void run() throws Exception {
                     overridePrimaryKeys(result);
                 }
             });
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return result;
     }
@@ -2709,37 +2755,210 @@ public abstract class AbstractDatabase implements Database {
         return fetched.size() + " (" + included.size() + " included, " + (fetched.size() - included.size()) + " excluded)";
     }
 
+    @SuppressWarnings("unused")
+    @Override
+    public void setConfiguredSyntheticKeys(SyntheticKeysType configuredSyntheticKeys) {
+        if (configuredSyntheticKeys != null) {
+            // [#8512] Some implementation of this database may have already
+            // configured things programmatically, so we must not set the
+            // list but append it.
+
+            getConfiguredSyntheticIdentities().addAll(configuredSyntheticKeys.getIdentities());
+            getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticKeys.getPrimaryKeys());
+            getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticKeys.getUniqueKeys());
+            getConfiguredSyntheticForeignKeys().addAll(configuredSyntheticKeys.getForeignKeys());
+
+            unusedSyntheticIdentities.addAll(configuredSyntheticKeys.getIdentities());
+            unusedSyntheticPrimaryKeys.addAll(configuredSyntheticKeys.getPrimaryKeys());
+            unusedSyntheticUniqueKeys.addAll(configuredSyntheticKeys.getUniqueKeys());
+            unusedSyntheticForeignKeys.addAll(configuredSyntheticKeys.getForeignKeys());
+
+
+
+
+
+
+            if (!configuredSyntheticKeys.getUniqueKeys().isEmpty())
+                log.info("Commercial feature", "Synthetic unique keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+            if (!configuredSyntheticKeys.getForeignKeys().isEmpty())
+                log.info("Commercial feature", "Synthetic foreign keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+        }
+    }
+
+    @Override
+    public List<SyntheticIdentityType> getConfiguredSyntheticIdentities() {
+        if (configuredSyntheticIdentities == null)
+            configuredSyntheticIdentities = new ArrayList<>();
+
+        return configuredSyntheticIdentities;
+    }
+
+    @Override
+    public List<SyntheticPrimaryKeyType> getConfiguredSyntheticPrimaryKeys() {
+        if (configuredSyntheticPrimaryKeys == null)
+            configuredSyntheticPrimaryKeys = new ArrayList<>();
+
+        return configuredSyntheticPrimaryKeys;
+    }
+
+    @Override
+    public List<SyntheticUniqueKeyType> getConfiguredSyntheticUniqueKeys() {
+        if (configuredSyntheticUniqueKeys == null)
+            configuredSyntheticUniqueKeys = new ArrayList<>();
+
+        return configuredSyntheticUniqueKeys;
+    }
+
+    @Override
+    public List<SyntheticForeignKeyType> getConfiguredSyntheticForeignKeys() {
+        if (configuredSyntheticForeignKeys == null)
+            configuredSyntheticForeignKeys = new ArrayList<>();
+
+        return configuredSyntheticForeignKeys;
+    }
+
+    @Override
+    public void markUsed(SyntheticIdentityType identity) {
+        unusedSyntheticIdentities.remove(identity);
+    }
+
+    @Override
+    public void markUsed(SyntheticPrimaryKeyType primaryKey) {
+        unusedSyntheticPrimaryKeys.remove(primaryKey);
+    }
+
+    @Override
+    public void markUsed(SyntheticUniqueKeyType uniqueKey) {
+        unusedSyntheticUniqueKeys.remove(uniqueKey);
+    }
+
+    @Override
+    public void markUsed(SyntheticForeignKeyType foreignKey) {
+        unusedSyntheticForeignKeys.remove(foreignKey);
+    }
+
+    @Override
+    public List<SyntheticIdentityType> getUnusedSyntheticIdentities() {
+        return new ArrayList<>(unusedSyntheticIdentities);
+    }
+
+    @Override
+    public List<SyntheticPrimaryKeyType> getUnusedSyntheticPrimaryKeys() {
+        return new ArrayList<>(unusedSyntheticPrimaryKeys);
+    }
+
+    @Override
+    public List<SyntheticUniqueKeyType> getUnusedSyntheticUniqueKeys() {
+        return new ArrayList<>(unusedSyntheticUniqueKeys);
+    }
+
+    @Override
+    public List<SyntheticForeignKeyType> getUnusedSyntheticForeignKeys() {
+        return new ArrayList<>(unusedSyntheticForeignKeys);
+    }
+
     private final void syntheticPrimaryKeys(DefaultRelations r) {
+
+        keyLoop:
+        for (SyntheticPrimaryKeyType key : getConfiguredSyntheticPrimaryKeys()) {
+            if (key.getKey() != null)
+                continue keyLoop;
+
+            for (TableDefinition table : filterExcludeInclude(getTables(), null, key.getKeyTables() != null ? key.getKeyTables() : ".*", Collections.emptyList())) {
+                String keyName = key.getName() != null ? key.getName() : "SYNTHETIC_PK_" + table.getName();
+
+                for (ColumnDefinition column : filterExcludeInclude(table.getColumns(), null, key.getKeyFields(), Collections.emptyList())) {
+                    markUsed(key);
+                    r.addPrimaryKey(keyName, table, column);
+                }
+            }
+        }
+    }
+
+    private final void overridePrimaryKeys(DefaultRelations r) {
+
+        keyLoop:
+        for (SyntheticPrimaryKeyType key : getConfiguredSyntheticPrimaryKeys()) {
+            if (key.getKey() == null)
+                continue keyLoop;
+
+            for (TableDefinition table : filterExcludeInclude(getTables(), null, key.getKeyTables() != null ? key.getKeyTables() : ".*", Collections.emptyList())) {
+                for (UniqueKeyDefinition uk : filterExcludeInclude(table.getUniqueKeys(), null, key.getKey(), Collections.emptyList())) {
+                    log.info("Overriding primary key", "" + uk);
+                    r.overridePrimaryKey(uk);
+                    markUsed(key);
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final void syntheticPrimaryKeysLegacy(DefaultRelations r) {
         List<UniqueKeyDefinition> syntheticKeys = new ArrayList<>();
 
-        for (SchemaDefinition schema : getSchemata()) {
-            for (TableDefinition table : schema.getTables()) {
-                List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, getSyntheticPrimaryKeys(), filters);
+        for (TableDefinition table : getTables()) {
+            List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, getSyntheticPrimaryKeys(), filters);
 
-                if (!columns.isEmpty()) {
-                    DefaultUniqueKeyDefinition syntheticKey = new DefaultUniqueKeyDefinition(schema, "SYNTHETIC_PK_" + table.getName(), table, true);
-                    syntheticKey.getKeyColumns().addAll(columns);
-                    syntheticKeys.add(syntheticKey);
-                }
+            if (!columns.isEmpty()) {
+                DefaultUniqueKeyDefinition syntheticKey = new DefaultUniqueKeyDefinition(table.getSchema(), "SYNTHETIC_PK_" + table.getName(), table, true);
+                syntheticKey.getKeyColumns().addAll(columns);
+                syntheticKeys.add(syntheticKey);
             }
         }
 
         log.info("Synthetic primary keys", fetchedSize(syntheticKeys, syntheticKeys));
 
-        for (UniqueKeyDefinition key : syntheticKeys) {
+        for (UniqueKeyDefinition key : syntheticKeys)
             r.overridePrimaryKey(key);
-        }
-    }
-
-    private final void overridePrimaryKeys(DefaultRelations r) {
-        List<UniqueKeyDefinition> allKeys = r.getUniqueKeys();
-        List<UniqueKeyDefinition> filteredKeys = filterExcludeInclude(allKeys, null, overridePrimaryKeys, filters);
-
-        log.info("Overriding primary keys", fetchedSize(allKeys, filteredKeys));
-
-        for (UniqueKeyDefinition key : filteredKeys) {
-            r.overridePrimaryKey(key);
-        }
     }
 
     @Override

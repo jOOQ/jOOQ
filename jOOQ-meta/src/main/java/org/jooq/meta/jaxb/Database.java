@@ -95,6 +95,7 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String recordTimestampFields = "";
+    protected SyntheticKeysType syntheticKeys;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String syntheticIdentities = "";
@@ -927,6 +928,22 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setRecordTimestampFields(String value) {
         this.recordTimestampFields = value;
+    }
+
+    /**
+     * The synthetic key configuration.
+     * 
+     */
+    public SyntheticKeysType getSyntheticKeys() {
+        return syntheticKeys;
+    }
+
+    /**
+     * The synthetic key configuration.
+     * 
+     */
+    public void setSyntheticKeys(SyntheticKeysType value) {
+        this.syntheticKeys = value;
     }
 
     /**
@@ -1908,6 +1925,15 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * The synthetic key configuration.
+     * 
+     */
+    public Database withSyntheticKeys(SyntheticKeysType value) {
+        setSyntheticKeys(value);
+        return this;
+    }
+
+    /**
      * A regular expression matching all columns that represent identities.
      * <p>
      * To be used if columns are not detected as automatically as identities.
@@ -2324,6 +2350,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includeInvisibleColumns", includeInvisibleColumns);
         builder.append("recordVersionFields", recordVersionFields);
         builder.append("recordTimestampFields", recordTimestampFields);
+        builder.append("syntheticKeys", syntheticKeys);
         builder.append("syntheticIdentities", syntheticIdentities);
         builder.append("syntheticPrimaryKeys", syntheticPrimaryKeys);
         builder.append("overridePrimaryKeys", overridePrimaryKeys);
@@ -2624,6 +2651,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!recordTimestampFields.equals(other.recordTimestampFields)) {
+                return false;
+            }
+        }
+        if (syntheticKeys == null) {
+            if (other.syntheticKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!syntheticKeys.equals(other.syntheticKeys)) {
                 return false;
             }
         }
@@ -2932,6 +2968,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includeInvisibleColumns == null)? 0 :includeInvisibleColumns.hashCode()));
         result = ((prime*result)+((recordVersionFields == null)? 0 :recordVersionFields.hashCode()));
         result = ((prime*result)+((recordTimestampFields == null)? 0 :recordTimestampFields.hashCode()));
+        result = ((prime*result)+((syntheticKeys == null)? 0 :syntheticKeys.hashCode()));
         result = ((prime*result)+((syntheticIdentities == null)? 0 :syntheticIdentities.hashCode()));
         result = ((prime*result)+((syntheticPrimaryKeys == null)? 0 :syntheticPrimaryKeys.hashCode()));
         result = ((prime*result)+((overridePrimaryKeys == null)? 0 :overridePrimaryKeys.hashCode()));

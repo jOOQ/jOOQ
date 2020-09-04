@@ -158,6 +158,46 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyntheticKeysType }
+     * 
+     */
+    public SyntheticKeysType createSyntheticKeysType() {
+        return new SyntheticKeysType();
+    }
+
+    /**
+     * Create an instance of {@link SyntheticIdentityType }
+     * 
+     */
+    public SyntheticIdentityType createSyntheticIdentityType() {
+        return new SyntheticIdentityType();
+    }
+
+    /**
+     * Create an instance of {@link SyntheticPrimaryKeyType }
+     * 
+     */
+    public SyntheticPrimaryKeyType createSyntheticPrimaryKeyType() {
+        return new SyntheticPrimaryKeyType();
+    }
+
+    /**
+     * Create an instance of {@link SyntheticUniqueKeyType }
+     * 
+     */
+    public SyntheticUniqueKeyType createSyntheticUniqueKeyType() {
+        return new SyntheticUniqueKeyType();
+    }
+
+    /**
+     * Create an instance of {@link SyntheticForeignKeyType }
+     * 
+     */
+    public SyntheticForeignKeyType createSyntheticForeignKeyType() {
+        return new SyntheticForeignKeyType();
+    }
+
+    /**
      * Create an instance of {@link CatalogMappingType }
      * 
      */

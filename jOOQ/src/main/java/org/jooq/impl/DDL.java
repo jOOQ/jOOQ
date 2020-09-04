@@ -68,6 +68,7 @@ import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
+import org.jooq.CreateViewAsStep;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
@@ -83,6 +84,7 @@ import org.jooq.Query;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
+import org.jooq.TableOptions;
 import org.jooq.TableOptions.OnCommit;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
@@ -109,12 +111,13 @@ final class DDL {
         if (view) {
             List<Query> result = new ArrayList<>();
 
-            result.add((configuration.createViewIfNotExists()
+            result.add(
+                applyAs((configuration.createViewIfNotExists()
                         ? ctx.createViewIfNotExists(table, table.fields())
                         : configuration.createOrReplaceView()
                         ? ctx.createOrReplaceView(table, table.fields())
-                        : ctx.createView(table, table.fields()))
-                    .as(table.getOptions().select()));
+                        : ctx.createView(table, table.fields())), table.getOptions())
+            );
 
             if (!constraints.isEmpty() && configuration.includeConstraintsOnViews())
                 result.addAll(alterTableAddConstraints(table));
@@ -147,6 +150,20 @@ final class DDL {
         }
 
         return asList(s0);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private final Query applyAs(CreateViewAsStep q, TableOptions options) {
+        if (options.select() != null)
+            return q.as(options.select());
+        else if (StringUtils.isBlank(options.source()))
+            return q.as("");
+
+        Query query = ctx.parser().parseQuery(options.source());
+        if (query instanceof CreateViewImpl)
+            return q.as(((CreateViewImpl<?>) query).$select());
+        else
+            return q.as("");
     }
 
     final Query createSequence(Sequence<?> sequence) {

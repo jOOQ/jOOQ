@@ -11,7 +11,9 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
@@ -22,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgAttrdef extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -608714992;
+    private static final long serialVersionUID = 430142938;
 
     /**
      * The reference instance of <code>pg_catalog.pg_attrdef</code>
@@ -40,17 +42,17 @@ public class PgAttrdef extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_attrdef.oid</code>.
      */
-    public final TableField<Record, Long> OID = createField(DSL.name("oid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> OID = createField(DSL.name("oid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attrdef.adrelid</code>.
      */
-    public final TableField<Record, Long> ADRELID = createField(DSL.name("adrelid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> ADRELID = createField(DSL.name("adrelid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attrdef.adnum</code>.
      */
-    public final TableField<Record, Short> ADNUM = createField(DSL.name("adnum"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> ADNUM = createField(DSL.name("adnum"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
@@ -58,11 +60,12 @@ public class PgAttrdef extends TableImpl<Record> {
     @java.lang.Deprecated
     public final TableField<Record, Object> ADBIN = createField(DSL.name("adbin"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\"").nullable(false), this, "");
 
-    /**
-     * Create a <code>pg_catalog.pg_attrdef</code> table reference
-     */
-    public PgAttrdef() {
-        this(DSL.name("pg_attrdef"), null);
+    private PgAttrdef(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PgAttrdef(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -79,12 +82,11 @@ public class PgAttrdef extends TableImpl<Record> {
         this(alias, PG_ATTRDEF);
     }
 
-    private PgAttrdef(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PgAttrdef(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>pg_catalog.pg_attrdef</code> table reference
+     */
+    public PgAttrdef() {
+        this(DSL.name("pg_attrdef"), null);
     }
 
     public <O extends Record> PgAttrdef(Table<O> child, ForeignKey<O, Record> key) {

@@ -13,7 +13,7 @@ import org.jooq.meta.postgres.pg_catalog.routines.FormatType;
 
 
 /**
- * Convenience access to all stored procedures and functions in pg_catalog
+ * Convenience access to all stored procedures and functions in pg_catalog.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
@@ -22,7 +22,9 @@ public class Routines {
      * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
      */
     @java.lang.Deprecated
-    public static AggregateFunction<Long> count1(Object __1) {
+    public static AggregateFunction<Long> count1(
+          Object __1
+    ) {
         Count1 f = new Count1();
         f.set__1(__1);
 
@@ -33,7 +35,9 @@ public class Routines {
      * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
      */
     @java.lang.Deprecated
-    public static AggregateFunction<Long> count1(Field<Object> __1) {
+    public static AggregateFunction<Long> count1(
+          Field<Object> __1
+    ) {
         Count1 f = new Count1();
         f.set__1(__1);
 
@@ -52,7 +56,11 @@ public class Routines {
     /**
      * Call <code>pg_catalog.format_type</code>
      */
-    public static String formatType(Configuration configuration, Long __1, Integer __2) {
+    public static String formatType(
+          Configuration configuration
+        , Long __1
+        , Integer __2
+    ) {
         FormatType f = new FormatType();
         f.set__1(__1);
         f.set__2(__2);
@@ -64,7 +72,10 @@ public class Routines {
     /**
      * Get <code>pg_catalog.format_type</code> as a field.
      */
-    public static Field<String> formatType(Long __1, Integer __2) {
+    public static Field<String> formatType(
+          Long __1
+        , Integer __2
+    ) {
         FormatType f = new FormatType();
         f.set__1(__1);
         f.set__2(__2);
@@ -75,7 +86,10 @@ public class Routines {
     /**
      * Get <code>pg_catalog.format_type</code> as a field.
      */
-    public static Field<String> formatType(Field<Long> __1, Field<Integer> __2) {
+    public static Field<String> formatType(
+          Field<Long> __1
+        , Field<Integer> __2
+    ) {
         FormatType f = new FormatType();
         f.set__1(__1);
         f.set__2(__2);

@@ -4,6 +4,9 @@
 package org.jooq.meta.mysql.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -13,8 +16,10 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
+import org.jooq.meta.mysql.information_schema.Keys;
 
 
 /**
@@ -23,7 +28,7 @@ import org.jooq.meta.mysql.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Views extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1434878600;
+    private static final long serialVersionUID = -815570636;
 
     /**
      * The reference instance of <code>information_schema.VIEWS</code>
@@ -41,52 +46,52 @@ public class Views extends TableImpl<Record> {
     /**
      * The column <code>information_schema.VIEWS.TABLE_CATALOG</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.TABLE_SCHEMA</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.TABLE_NAME</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.VIEW_DEFINITION</code>.
      */
-    public final TableField<Record, String> VIEW_DEFINITION = createField(DSL.name("VIEW_DEFINITION"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> VIEW_DEFINITION = createField(DSL.name("VIEW_DEFINITION"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>information_schema.VIEWS.CHECK_OPTION</code>.
      */
-    public final TableField<Record, String> CHECK_OPTION = createField(DSL.name("CHECK_OPTION"), org.jooq.impl.SQLDataType.VARCHAR(8), this, "");
+    public final TableField<Record, String> CHECK_OPTION = createField(DSL.name("CHECK_OPTION"), SQLDataType.VARCHAR(8), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.IS_UPDATABLE</code>.
      */
-    public final TableField<Record, String> IS_UPDATABLE = createField(DSL.name("IS_UPDATABLE"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+    public final TableField<Record, String> IS_UPDATABLE = createField(DSL.name("IS_UPDATABLE"), SQLDataType.VARCHAR(3), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.DEFINER</code>.
      */
-    public final TableField<Record, String> DEFINER = createField(DSL.name("DEFINER"), org.jooq.impl.SQLDataType.VARCHAR(288), this, "");
+    public final TableField<Record, String> DEFINER = createField(DSL.name("DEFINER"), SQLDataType.VARCHAR(288), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.SECURITY_TYPE</code>.
      */
-    public final TableField<Record, String> SECURITY_TYPE = createField(DSL.name("SECURITY_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(7), this, "");
+    public final TableField<Record, String> SECURITY_TYPE = createField(DSL.name("SECURITY_TYPE"), SQLDataType.VARCHAR(7), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.CHARACTER_SET_CLIENT</code>.
      */
-    public final TableField<Record, String> CHARACTER_SET_CLIENT = createField(DSL.name("CHARACTER_SET_CLIENT"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> CHARACTER_SET_CLIENT = createField(DSL.name("CHARACTER_SET_CLIENT"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.COLLATION_CONNECTION</code>.
      */
-    public final TableField<Record, String> COLLATION_CONNECTION = createField(DSL.name("COLLATION_CONNECTION"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> COLLATION_CONNECTION = createField(DSL.name("COLLATION_CONNECTION"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     private Views(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -124,6 +129,15 @@ public class Views extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
+    }
+
+    public Tables tables() {
+        return new Tables(this, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
     }
 
     @Override

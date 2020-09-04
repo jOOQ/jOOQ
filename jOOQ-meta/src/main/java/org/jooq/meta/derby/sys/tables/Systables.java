@@ -4,6 +4,9 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,8 +15,11 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -23,7 +29,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Systables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -2129244550;
+    private static final long serialVersionUID = -1556687250;
 
     /**
      * The reference instance of <code>SYS.SYSTABLES</code>
@@ -41,27 +47,27 @@ public class Systables extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSTABLES.TABLEID</code>.
      */
-    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSTABLES.TABLENAME</code>.
      */
-    public final TableField<Record, String> TABLENAME = createField(DSL.name("TABLENAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
+    public final TableField<Record, String> TABLENAME = createField(DSL.name("TABLENAME"), SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSTABLES.TABLETYPE</code>.
      */
-    public final TableField<Record, String> TABLETYPE = createField(DSL.name("TABLETYPE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
+    public final TableField<Record, String> TABLETYPE = createField(DSL.name("TABLETYPE"), SQLDataType.CHAR(1).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSTABLES.SCHEMAID</code>.
      */
-    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSTABLES.LOCKGRANULARITY</code>.
      */
-    public final TableField<Record, String> LOCKGRANULARITY = createField(DSL.name("LOCKGRANULARITY"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
+    public final TableField<Record, String> LOCKGRANULARITY = createField(DSL.name("LOCKGRANULARITY"), SQLDataType.CHAR(1).nullable(false), this, "");
 
     private Systables(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -99,6 +105,25 @@ public class Systables extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_SYSTABLES;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SYSTABLES);
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS);
+    }
+
+    public Sysschemas sysschemas() {
+        return new Sysschemas(this, Keys.SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS);
     }
 
     @Override

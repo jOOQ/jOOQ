@@ -4,6 +4,9 @@
 package org.jooq.meta.h2.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,9 +15,12 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.h2.information_schema.InformationSchema;
+import org.jooq.meta.h2.information_schema.Keys;
 
 
 /**
@@ -23,7 +29,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1234952486;
+    private static final long serialVersionUID = 585173913;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SEQUENCES</code>
@@ -41,62 +47,62 @@ public class Sequences extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_CATALOG</code>.
      */
-    public final TableField<Record, String> SEQUENCE_CATALOG = createField(DSL.name("SEQUENCE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> SEQUENCE_CATALOG = createField(DSL.name("SEQUENCE_CATALOG"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_SCHEMA</code>.
      */
-    public final TableField<Record, String> SEQUENCE_SCHEMA = createField(DSL.name("SEQUENCE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> SEQUENCE_SCHEMA = createField(DSL.name("SEQUENCE_SCHEMA"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_NAME</code>.
      */
-    public final TableField<Record, String> SEQUENCE_NAME = createField(DSL.name("SEQUENCE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> SEQUENCE_NAME = createField(DSL.name("SEQUENCE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.CURRENT_VALUE</code>.
      */
-    public final TableField<Record, Long> CURRENT_VALUE = createField(DSL.name("CURRENT_VALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> CURRENT_VALUE = createField(DSL.name("CURRENT_VALUE"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.INCREMENT</code>.
      */
-    public final TableField<Record, Long> INCREMENT = createField(DSL.name("INCREMENT"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> INCREMENT = createField(DSL.name("INCREMENT"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.IS_GENERATED</code>.
      */
-    public final TableField<Record, Boolean> IS_GENERATED = createField(DSL.name("IS_GENERATED"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+    public final TableField<Record, Boolean> IS_GENERATED = createField(DSL.name("IS_GENERATED"), SQLDataType.BOOLEAN, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.REMARKS</code>.
      */
-    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.CACHE</code>.
      */
-    public final TableField<Record, Long> CACHE = createField(DSL.name("CACHE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> CACHE = createField(DSL.name("CACHE"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.MIN_VALUE</code>.
      */
-    public final TableField<Record, Long> MIN_VALUE = createField(DSL.name("MIN_VALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> MIN_VALUE = createField(DSL.name("MIN_VALUE"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.MAX_VALUE</code>.
      */
-    public final TableField<Record, Long> MAX_VALUE = createField(DSL.name("MAX_VALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> MAX_VALUE = createField(DSL.name("MAX_VALUE"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.IS_CYCLE</code>.
      */
-    public final TableField<Record, Boolean> IS_CYCLE = createField(DSL.name("IS_CYCLE"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+    public final TableField<Record, Boolean> IS_CYCLE = createField(DSL.name("IS_CYCLE"), SQLDataType.BOOLEAN, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.ID</code>.
      */
-    public final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER, this, "");
 
     private Sequences(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -134,6 +140,25 @@ public class Sequences extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_SEQUENCES;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SEQUENCES);
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
+    }
+
+    public Schemata schemata() {
+        return new Schemata(this, Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
     }
 
     @Override

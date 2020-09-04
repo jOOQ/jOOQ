@@ -4,6 +4,9 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -13,8 +16,10 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
+import org.jooq.meta.postgres.information_schema.Keys;
 
 
 /**
@@ -23,7 +28,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Views extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1570978837;
+    private static final long serialVersionUID = 937684986;
 
     /**
      * The reference instance of <code>information_schema.views</code>
@@ -41,52 +46,52 @@ public class Views extends TableImpl<Record> {
     /**
      * The column <code>information_schema.views.table_catalog</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.views.table_schema</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.views.table_name</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.views.view_definition</code>.
      */
-    public final TableField<Record, String> VIEW_DEFINITION = createField(DSL.name("view_definition"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> VIEW_DEFINITION = createField(DSL.name("view_definition"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.views.check_option</code>.
      */
-    public final TableField<Record, String> CHECK_OPTION = createField(DSL.name("check_option"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CHECK_OPTION = createField(DSL.name("check_option"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.views.is_updatable</code>.
      */
-    public final TableField<Record, String> IS_UPDATABLE = createField(DSL.name("is_updatable"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+    public final TableField<Record, String> IS_UPDATABLE = createField(DSL.name("is_updatable"), SQLDataType.VARCHAR(3), this, "");
 
     /**
      * The column <code>information_schema.views.is_insertable_into</code>.
      */
-    public final TableField<Record, String> IS_INSERTABLE_INTO = createField(DSL.name("is_insertable_into"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+    public final TableField<Record, String> IS_INSERTABLE_INTO = createField(DSL.name("is_insertable_into"), SQLDataType.VARCHAR(3), this, "");
 
     /**
      * The column <code>information_schema.views.is_trigger_updatable</code>.
      */
-    public final TableField<Record, String> IS_TRIGGER_UPDATABLE = createField(DSL.name("is_trigger_updatable"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+    public final TableField<Record, String> IS_TRIGGER_UPDATABLE = createField(DSL.name("is_trigger_updatable"), SQLDataType.VARCHAR(3), this, "");
 
     /**
      * The column <code>information_schema.views.is_trigger_deletable</code>.
      */
-    public final TableField<Record, String> IS_TRIGGER_DELETABLE = createField(DSL.name("is_trigger_deletable"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+    public final TableField<Record, String> IS_TRIGGER_DELETABLE = createField(DSL.name("is_trigger_deletable"), SQLDataType.VARCHAR(3), this, "");
 
     /**
      * The column <code>information_schema.views.is_trigger_insertable_into</code>.
      */
-    public final TableField<Record, String> IS_TRIGGER_INSERTABLE_INTO = createField(DSL.name("is_trigger_insertable_into"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+    public final TableField<Record, String> IS_TRIGGER_INSERTABLE_INTO = createField(DSL.name("is_trigger_insertable_into"), SQLDataType.VARCHAR(3), this, "");
 
     private Views(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -124,6 +129,15 @@ public class Views extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
+    }
+
+    public Tables tables() {
+        return new Tables(this, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
     }
 
     @Override

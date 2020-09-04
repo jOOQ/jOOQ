@@ -13,6 +13,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 
@@ -23,7 +24,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConstraintColumnUsage extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -917946100;
+    private static final long serialVersionUID = -1916631194;
 
     /**
      * The reference instance of <code>information_schema.constraint_column_usage</code>
@@ -41,37 +42,37 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     /**
      * The column <code>information_schema.constraint_column_usage.table_catalog</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.table_schema</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.table_name</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.column_name</code>.
      */
-    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.constraint_catalog</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.constraint_schema</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.constraint_name</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), SQLDataType.VARCHAR, this, "");
 
     private ConstraintColumnUsage(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);

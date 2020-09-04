@@ -176,15 +176,13 @@ public class PostgresDatabase extends AbstractDatabase {
 
         PgIndex i = PG_INDEX.as("i");
         PgClass trel = PG_CLASS.as("trel");
-        PgClass irel = PG_CLASS.as("irel");
-        PgNamespace tnsp = PG_NAMESPACE.as("tnsp");
 
         indexLoop:
         for (Record6<String, String, String, Boolean, String[], Integer[]> record : create()
                 .select(
-                    tnsp.NSPNAME,
+                    trel.pgNamespace().NSPNAME,
                     trel.RELNAME,
-                    irel.RELNAME,
+                    i.indexClass().RELNAME,
                     i.INDISUNIQUE,
                     array(
                         select(field("pg_get_indexdef({0}, k + 1, true)", String.class, i.INDEXRELID))
@@ -194,23 +192,21 @@ public class PostgresDatabase extends AbstractDatabase {
                     field("{0}::int[]", Integer[].class, i.INDOPTION).as("asc_or_desc")
                 )
                 .from(i)
-                .join(irel).on(oid(irel).eq(i.INDEXRELID))
                 .join(trel).on(oid(trel).eq(i.INDRELID))
-                .join(tnsp).on(oid(tnsp).eq(trel.RELNAMESPACE))
-                .where(tnsp.NSPNAME.in(getInputSchemata()))
+                .where(trel.pgNamespace().NSPNAME.in(getInputSchemata()))
                 .and(getIncludeSystemIndexes()
                     ? noCondition()
-                    : row(tnsp.NSPNAME, irel.RELNAME).notIn(
+                    : row(trel.pgNamespace().NSPNAME, i.indexClass().RELNAME).notIn(
                         select(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, TABLE_CONSTRAINTS.CONSTRAINT_NAME)
                         .from(TABLE_CONSTRAINTS)
                       ))
                 .orderBy(1, 2, 3)) {
 
-            final SchemaDefinition tableSchema = getSchema(record.get(tnsp.NSPNAME));
+            final SchemaDefinition tableSchema = getSchema(record.get(trel.pgNamespace().NSPNAME));
             if (tableSchema == null)
                 continue indexLoop;
 
-            final String indexName = record.get(irel.RELNAME);
+            final String indexName = record.get(i.indexClass().RELNAME);
             final String tableName = record.get(trel.RELNAME);
             final String[] columns = record.value5();
             final Integer[] options = record.value6();
@@ -296,12 +292,9 @@ public class PostgresDatabase extends AbstractDatabase {
                 KEY_COLUMN_USAGE.TABLE_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_NAME,
                 KEY_COLUMN_USAGE.COLUMN_NAME)
-            .from(TABLE_CONSTRAINTS)
-            .join(KEY_COLUMN_USAGE)
-            .on(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA))
-            .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
-            .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
+            .from(KEY_COLUMN_USAGE)
+            .where(KEY_COLUMN_USAGE.tableConstraints().CONSTRAINT_TYPE.equal(constraintType))
+            .and(KEY_COLUMN_USAGE.tableConstraints().TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -668,19 +661,18 @@ public class PostgresDatabase extends AbstractDatabase {
             // cross-version compatible enum literal ordering
             Result<Record2<String, String>> types = create()
                 .select(
-                    PG_NAMESPACE.NSPNAME,
+                    PG_TYPE.pgNamespace().NSPNAME,
                     PG_TYPE.TYPNAME)
                 .from(PG_TYPE)
-                .join(PG_NAMESPACE).on(PG_TYPE.TYPNAMESPACE.eq(oid(PG_NAMESPACE)))
-                .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
+                .where(PG_TYPE.pgNamespace().NSPNAME.in(getInputSchemata()))
                 .and(oid(PG_TYPE).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
                 .orderBy(
-                    PG_NAMESPACE.NSPNAME,
+                    PG_TYPE.pgNamespace().NSPNAME,
                     PG_TYPE.TYPNAME)
                 .fetch();
 
             for (Record2<String, String> type : types) {
-                String nspname = type.get(PG_NAMESPACE.NSPNAME);
+                String nspname = type.get(PG_TYPE.pgNamespace().NSPNAME);
                 String typname = type.get(PG_TYPE.TYPNAME);
 
                 DefaultEnumDefinition definition = null;
@@ -1075,8 +1067,7 @@ public class PostgresDatabase extends AbstractDatabase {
         create().select(PG_ENUM.ENUMLABEL)
                 .from(PG_ENUM)
                 .join(PG_TYPE).on(PG_ENUM.ENUMTYPID.eq(oid(PG_TYPE)))
-                .join(PG_NAMESPACE).on(PG_TYPE.TYPNAMESPACE.eq(oid(PG_NAMESPACE)))
-                .where(PG_NAMESPACE.NSPNAME.eq(nspname))
+                .where(PG_TYPE.pgNamespace().NSPNAME.eq(nspname))
                 .and(PG_TYPE.TYPNAME.eq(typname))
                 .orderBy(orderBy)
                 .fetch(PG_ENUM.ENUMLABEL);

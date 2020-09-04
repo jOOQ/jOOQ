@@ -4,6 +4,9 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -13,7 +16,9 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -23,7 +28,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syschecks extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -437146003;
+    private static final long serialVersionUID = -1008578696;
 
     /**
      * The reference instance of <code>SYS.SYSCHECKS</code>
@@ -41,12 +46,12 @@ public class Syschecks extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSCHECKS.CONSTRAINTID</code>.
      */
-    public final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCHECKS.CHECKDEFINITION</code>.
      */
-    public final TableField<Record, String> CHECKDEFINITION = createField(DSL.name("CHECKDEFINITION"), org.jooq.impl.SQLDataType.LONGVARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> CHECKDEFINITION = createField(DSL.name("CHECKDEFINITION"), SQLDataType.LONGVARCHAR.nullable(false), this, "");
 
     /**
      * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
@@ -90,6 +95,15 @@ public class Syschecks extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS);
+    }
+
+    public Sysconstraints sysconstraints() {
+        return new Sysconstraints(this, Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS);
     }
 
     @Override

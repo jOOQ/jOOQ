@@ -134,27 +134,19 @@ public class DerbyDatabase extends AbstractDatabase {
 
     private Result<Record5<String, String, String, String, String>> fetchKeys(String constraintType) {
         return create().select(
-                    SYSSCHEMAS.SCHEMANAME,
-                    SYSTABLES.TABLENAME,
-                    SYSTABLES.TABLEID,
-                    SYSCONSTRAINTS.CONSTRAINTNAME,
-                    SYSCONGLOMERATES.DESCRIPTOR)
-                .from(SYSCONGLOMERATES)
-                .join(SYSKEYS)
-                .on(SYSKEYS.CONGLOMERATEID.equal(SYSCONGLOMERATES.CONGLOMERATEID))
-                .join(SYSCONSTRAINTS)
-                .on(SYSCONSTRAINTS.CONSTRAINTID.equal(SYSKEYS.CONSTRAINTID))
-                .join(SYSTABLES)
-                .on(SYSTABLES.TABLEID.equal(SYSCONGLOMERATES.TABLEID))
-                .join(SYSSCHEMAS)
-                .on(SYSSCHEMAS.SCHEMAID.equal(SYSTABLES.SCHEMAID))
+                    SYSKEYS.sysconglomerates().systables().sysschemas().SCHEMANAME,
+                    SYSKEYS.sysconglomerates().systables().TABLENAME,
+                    SYSKEYS.sysconglomerates().systables().TABLEID,
+                    SYSKEYS.sysconstraints().CONSTRAINTNAME,
+                    SYSKEYS.sysconglomerates().DESCRIPTOR)
+                .from(SYSKEYS)
                 // [#6797] The casts are necessary if a non-standard collation is used
-                .and(SYSSCHEMAS.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
-                .where(SYSCONSTRAINTS.TYPE.cast(VARCHAR(32672)).equal(constraintType))
+                .where(SYSKEYS.sysconglomerates().systables().sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+                .and(SYSKEYS.sysconstraints().TYPE.cast(VARCHAR(32672)).equal(constraintType))
                 .orderBy(
-                    SYSSCHEMAS.SCHEMANAME,
-                    SYSTABLES.TABLENAME,
-                    SYSCONSTRAINTS.CONSTRAINTNAME)
+                    SYSKEYS.sysconglomerates().systables().sysschemas().SCHEMANAME,
+                    SYSKEYS.sysconglomerates().systables().TABLENAME,
+                    SYSKEYS.sysconstraints().CONSTRAINTNAME)
                 .fetch();
     }
 
@@ -238,27 +230,21 @@ public class DerbyDatabase extends AbstractDatabase {
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
         for (Record record : create()
             .select(
-                SYSSCHEMAS.SCHEMANAME,
-                SYSTABLES.TABLENAME,
-                SYSCONSTRAINTS.CONSTRAINTNAME,
+                SYSCHECKS.sysconstraints().systables().sysschemas().SCHEMANAME,
+                SYSCHECKS.sysconstraints().systables().TABLENAME,
+                SYSCHECKS.sysconstraints().CONSTRAINTNAME,
                 SYSCHECKS.CHECKDEFINITION)
             .from(SYSCHECKS)
-            .join(SYSCONSTRAINTS)
-                .on(SYSCHECKS.CONSTRAINTID.eq(SYSCONSTRAINTS.CONSTRAINTID))
-            .join(SYSTABLES)
-                .on(SYSTABLES.TABLEID.equal(SYSCONSTRAINTS.TABLEID))
-            .join(SYSSCHEMAS)
-                .on(SYSSCHEMAS.SCHEMAID.equal(SYSTABLES.SCHEMAID))
-            .where(SYSSCHEMAS.SCHEMANAME.in(getInputSchemata()))
+            .where(SYSCHECKS.sysconstraints().systables().sysschemas().SCHEMANAME.in(getInputSchemata()))
         ) {
-            SchemaDefinition schema = getSchema(record.get(SYSSCHEMAS.SCHEMANAME));
-            TableDefinition table = getTable(schema, record.get(SYSTABLES.TABLENAME));
+            SchemaDefinition schema = getSchema(record.get(SYSCHECKS.sysconstraints().systables().sysschemas().SCHEMANAME));
+            TableDefinition table = getTable(schema, record.get(SYSCHECKS.sysconstraints().systables().TABLENAME));
 
             if (table != null) {
                 relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
                     schema,
                     table,
-                    record.get(SYSCONSTRAINTS.CONSTRAINTNAME),
+                    record.get(SYSCHECKS.sysconstraints().CONSTRAINTNAME),
                     record.get(SYSCHECKS.CHECKDEFINITION)
                 ));
             }
@@ -272,31 +258,29 @@ public class DerbyDatabase extends AbstractDatabase {
         indexLoop:
         for (Record record : create()
             .select(
-                SYSSCHEMAS.SCHEMANAME,
-                SYSTABLES.TABLENAME,
+                SYSCONGLOMERATES.systables().sysschemas().SCHEMANAME,
+                SYSCONGLOMERATES.systables().TABLENAME,
                 SYSCONGLOMERATES.CONGLOMERATENAME,
                 SYSCONGLOMERATES.DESCRIPTOR)
             .from(SYSCONGLOMERATES)
-            .join(SYSTABLES).on(SYSCONGLOMERATES.TABLEID.eq(SYSTABLES.TABLEID))
-            .join(SYSSCHEMAS).on(SYSTABLES.SCHEMAID.eq(SYSSCHEMAS.SCHEMAID))
 
             // [#6797] The cast is necessary if a non-standard collation is used
-            .where(SYSSCHEMAS.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+            .where(SYSCONGLOMERATES.systables().sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
             .and(SYSCONGLOMERATES.ISINDEX)
             .and(getIncludeSystemIndexes()
                 ? noCondition()
                 : not(condition(SYSCONGLOMERATES.ISCONSTRAINT)))
             .orderBy(
-                SYSSCHEMAS.SCHEMANAME,
-                SYSTABLES.TABLENAME,
+                SYSCONGLOMERATES.systables().sysschemas().SCHEMANAME,
+                SYSCONGLOMERATES.systables().TABLENAME,
                 SYSCONGLOMERATES.CONGLOMERATENAME)
         ) {
-            final SchemaDefinition tableSchema = getSchema(record.get(SYSSCHEMAS.SCHEMANAME));
+            final SchemaDefinition tableSchema = getSchema(record.get(SYSCONGLOMERATES.systables().sysschemas().SCHEMANAME));
             if (tableSchema == null)
                 continue indexLoop;
 
             final String indexName = record.get(SYSCONGLOMERATES.CONGLOMERATENAME);
-            final String tableName = record.get(SYSTABLES.TABLENAME);
+            final String tableName = record.get(SYSCONGLOMERATES.systables().TABLENAME);
             final TableDefinition table = getTable(tableSchema, tableName);
             if (table == null)
                 continue indexLoop;
@@ -357,7 +341,7 @@ public class DerbyDatabase extends AbstractDatabase {
         List<SequenceDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                    SYSSCHEMAS.SCHEMANAME,
+                    SYSSEQUENCES.sysschemas().SCHEMANAME,
                     SYSSEQUENCES.SEQUENCENAME,
                     SYSSEQUENCES.SEQUENCEDATATYPE,
                     nullif(SYSSEQUENCES.STARTVALUE, one()).as(SYSSEQUENCES.STARTVALUE),
@@ -375,16 +359,14 @@ public class DerbyDatabase extends AbstractDatabase {
                     SYSSEQUENCES.CYCLEOPTION
                 )
                 .from(SYSSEQUENCES)
-                .join(SYSSCHEMAS)
-                .on(SYSSCHEMAS.SCHEMAID.equal(SYSSEQUENCES.SCHEMAID))
                 // [#6797] The cast is necessary if a non-standard collation is used
-                .where(SYSSCHEMAS.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+                .where(SYSSEQUENCES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
                 .orderBy(
-                    SYSSCHEMAS.SCHEMANAME,
+                    SYSSEQUENCES.sysschemas().SCHEMANAME,
                     SYSSEQUENCES.SEQUENCENAME)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.get(SYSSCHEMAS.SCHEMANAME));
+            SchemaDefinition schema = getSchema(record.get(SYSSEQUENCES.sysschemas().SCHEMANAME));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this,
@@ -414,24 +396,22 @@ public class DerbyDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                    SYSSCHEMAS.SCHEMANAME,
+                    SYSTABLES.sysschemas().SCHEMANAME,
                     SYSTABLES.TABLENAME,
                     SYSTABLES.TABLEID,
                     when(SYSTABLES.TABLETYPE.eq(inline("V")), inline(TableType.VIEW.name()))
                         .else_(inline(TableType.TABLE.name())).as("table_type"),
                     SYSVIEWS.VIEWDEFINITION)
                 .from(SYSTABLES)
-                .join(SYSSCHEMAS)
-                    .on(SYSTABLES.SCHEMAID.equal(SYSSCHEMAS.SCHEMAID))
                 .leftJoin(SYSVIEWS)
                     .on(SYSTABLES.TABLEID.eq(SYSVIEWS.TABLEID))
                 // [#6797] The cast is necessary if a non-standard collation is used
-                .where(SYSSCHEMAS.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+                .where(SYSTABLES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
                 .orderBy(
-                    SYSSCHEMAS.SCHEMANAME,
+                    SYSTABLES.sysschemas().SCHEMANAME,
                     SYSTABLES.TABLENAME)) {
 
-            SchemaDefinition schema = getSchema(record.get(SYSSCHEMAS.SCHEMANAME));
+            SchemaDefinition schema = getSchema(record.get(SYSTABLES.sysschemas().SCHEMANAME));
             String name = record.get(SYSTABLES.TABLENAME);
             String id = record.get(SYSTABLES.TABLEID);
             TableType tableType = record.get("table_type", TableType.class);

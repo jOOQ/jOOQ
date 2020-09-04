@@ -20,7 +20,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 
 
 /**
- * Convenience access to all tables in pg_catalog
+ * Convenience access to all tables in pg_catalog.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {

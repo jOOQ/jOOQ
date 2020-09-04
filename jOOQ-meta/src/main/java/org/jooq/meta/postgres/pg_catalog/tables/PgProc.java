@@ -11,7 +11,9 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
@@ -22,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgProc extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 107189806;
+    private static final long serialVersionUID = -1945177977;
 
     /**
      * The reference instance of <code>pg_catalog.pg_proc</code>
@@ -40,117 +42,117 @@ public class PgProc extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_proc.oid</code>.
      */
-    public final TableField<Record, Long> OID = createField(DSL.name("oid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> OID = createField(DSL.name("oid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proname</code>.
      */
-    public final TableField<Record, String> PRONAME = createField(DSL.name("proname"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> PRONAME = createField(DSL.name("proname"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.pronamespace</code>.
      */
-    public final TableField<Record, Long> PRONAMESPACE = createField(DSL.name("pronamespace"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> PRONAMESPACE = createField(DSL.name("pronamespace"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proowner</code>.
      */
-    public final TableField<Record, Long> PROOWNER = createField(DSL.name("proowner"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> PROOWNER = createField(DSL.name("proowner"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prolang</code>.
      */
-    public final TableField<Record, Long> PROLANG = createField(DSL.name("prolang"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> PROLANG = createField(DSL.name("prolang"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.procost</code>.
      */
-    public final TableField<Record, Float> PROCOST = createField(DSL.name("procost"), org.jooq.impl.SQLDataType.REAL.nullable(false), this, "");
+    public final TableField<Record, Float> PROCOST = createField(DSL.name("procost"), SQLDataType.REAL.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prorows</code>.
      */
-    public final TableField<Record, Float> PROROWS = createField(DSL.name("prorows"), org.jooq.impl.SQLDataType.REAL.nullable(false), this, "");
+    public final TableField<Record, Float> PROROWS = createField(DSL.name("prorows"), SQLDataType.REAL.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.provariadic</code>.
      */
-    public final TableField<Record, Long> PROVARIADIC = createField(DSL.name("provariadic"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> PROVARIADIC = createField(DSL.name("provariadic"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prosupport</code>.
      */
-    public final TableField<Record, String> PROSUPPORT = createField(DSL.name("prosupport"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> PROSUPPORT = createField(DSL.name("prosupport"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prokind</code>.
      */
-    public final TableField<Record, String> PROKIND = createField(DSL.name("prokind"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> PROKIND = createField(DSL.name("prokind"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prosecdef</code>.
      */
-    public final TableField<Record, Boolean> PROSECDEF = createField(DSL.name("prosecdef"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> PROSECDEF = createField(DSL.name("prosecdef"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proleakproof</code>.
      */
-    public final TableField<Record, Boolean> PROLEAKPROOF = createField(DSL.name("proleakproof"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> PROLEAKPROOF = createField(DSL.name("proleakproof"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proisstrict</code>.
      */
-    public final TableField<Record, Boolean> PROISSTRICT = createField(DSL.name("proisstrict"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> PROISSTRICT = createField(DSL.name("proisstrict"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proretset</code>.
      */
-    public final TableField<Record, Boolean> PRORETSET = createField(DSL.name("proretset"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> PRORETSET = createField(DSL.name("proretset"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.provolatile</code>.
      */
-    public final TableField<Record, String> PROVOLATILE = createField(DSL.name("provolatile"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> PROVOLATILE = createField(DSL.name("provolatile"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proparallel</code>.
      */
-    public final TableField<Record, String> PROPARALLEL = createField(DSL.name("proparallel"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> PROPARALLEL = createField(DSL.name("proparallel"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.pronargs</code>.
      */
-    public final TableField<Record, Short> PRONARGS = createField(DSL.name("pronargs"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> PRONARGS = createField(DSL.name("pronargs"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.pronargdefaults</code>.
      */
-    public final TableField<Record, Short> PRONARGDEFAULTS = createField(DSL.name("pronargdefaults"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> PRONARGDEFAULTS = createField(DSL.name("pronargdefaults"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prorettype</code>.
      */
-    public final TableField<Record, Long> PRORETTYPE = createField(DSL.name("prorettype"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> PRORETTYPE = createField(DSL.name("prorettype"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proargtypes</code>.
      */
-    public final TableField<Record, Long[]> PROARGTYPES = createField(DSL.name("proargtypes"), org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> PROARGTYPES = createField(DSL.name("proargtypes"), SQLDataType.BIGINT.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proallargtypes</code>.
      */
-    public final TableField<Record, Long[]> PROALLARGTYPES = createField(DSL.name("proallargtypes"), org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> PROALLARGTYPES = createField(DSL.name("proallargtypes"), SQLDataType.BIGINT.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proargmodes</code>.
      */
-    public final TableField<Record, String[]> PROARGMODES = createField(DSL.name("proargmodes"), org.jooq.impl.SQLDataType.CHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> PROARGMODES = createField(DSL.name("proargmodes"), SQLDataType.CHAR.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proargnames</code>.
      */
-    public final TableField<Record, String[]> PROARGNAMES = createField(DSL.name("proargnames"), org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> PROARGNAMES = createField(DSL.name("proargnames"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
      * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
@@ -161,33 +163,34 @@ public class PgProc extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_proc.protrftypes</code>.
      */
-    public final TableField<Record, Long[]> PROTRFTYPES = createField(DSL.name("protrftypes"), org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> PROTRFTYPES = createField(DSL.name("protrftypes"), SQLDataType.BIGINT.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.prosrc</code>.
      */
-    public final TableField<Record, String> PROSRC = createField(DSL.name("prosrc"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<Record, String> PROSRC = createField(DSL.name("prosrc"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.probin</code>.
      */
-    public final TableField<Record, String> PROBIN = createField(DSL.name("probin"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> PROBIN = createField(DSL.name("probin"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proconfig</code>.
      */
-    public final TableField<Record, String[]> PROCONFIG = createField(DSL.name("proconfig"), org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> PROCONFIG = createField(DSL.name("proconfig"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proacl</code>.
      */
-    public final TableField<Record, String[]> PROACL = createField(DSL.name("proacl"), org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> PROACL = createField(DSL.name("proacl"), SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
-    /**
-     * Create a <code>pg_catalog.pg_proc</code> table reference
-     */
-    public PgProc() {
-        this(DSL.name("pg_proc"), null);
+    private PgProc(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PgProc(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -204,12 +207,11 @@ public class PgProc extends TableImpl<Record> {
         this(alias, PG_PROC);
     }
 
-    private PgProc(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PgProc(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>pg_catalog.pg_proc</code> table reference
+     */
+    public PgProc() {
+        this(DSL.name("pg_proc"), null);
     }
 
     public <O extends Record> PgProc(Table<O> child, ForeignKey<O, Record> key) {

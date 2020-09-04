@@ -5,6 +5,8 @@ package org.jooq.meta.mysql.information_schema.tables;
 
 
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -14,9 +16,12 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
+import org.jooq.meta.mysql.information_schema.Keys;
 import org.jooq.types.ULong;
 
 
@@ -26,7 +31,7 @@ import org.jooq.types.ULong;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1572822407;
+    private static final long serialVersionUID = 43722443;
 
     /**
      * The reference instance of <code>information_schema.TABLES</code>
@@ -44,107 +49,107 @@ public class Tables extends TableImpl<Record> {
     /**
      * The column <code>information_schema.TABLES.TABLE_CATALOG</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.TABLES.TABLE_SCHEMA</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.TABLES.TABLE_NAME</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.TABLES.TABLE_TYPE</code>.
      */
-    public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("TABLE_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(11).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("TABLE_TYPE"), SQLDataType.VARCHAR(11).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.TABLES.ENGINE</code>.
      */
-    public final TableField<Record, String> ENGINE = createField(DSL.name("ENGINE"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
+    public final TableField<Record, String> ENGINE = createField(DSL.name("ENGINE"), SQLDataType.VARCHAR(64), this, "");
 
     /**
      * The column <code>information_schema.TABLES.VERSION</code>.
      */
-    public final TableField<Record, Integer> VERSION = createField(DSL.name("VERSION"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> VERSION = createField(DSL.name("VERSION"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>information_schema.TABLES.ROW_FORMAT</code>.
      */
-    public final TableField<Record, String> ROW_FORMAT = createField(DSL.name("ROW_FORMAT"), org.jooq.impl.SQLDataType.VARCHAR(10), this, "");
+    public final TableField<Record, String> ROW_FORMAT = createField(DSL.name("ROW_FORMAT"), SQLDataType.VARCHAR(10), this, "");
 
     /**
      * The column <code>information_schema.TABLES.TABLE_ROWS</code>.
      */
-    public final TableField<Record, ULong> TABLE_ROWS = createField(DSL.name("TABLE_ROWS"), org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
+    public final TableField<Record, ULong> TABLE_ROWS = createField(DSL.name("TABLE_ROWS"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.TABLES.AVG_ROW_LENGTH</code>.
      */
-    public final TableField<Record, ULong> AVG_ROW_LENGTH = createField(DSL.name("AVG_ROW_LENGTH"), org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
+    public final TableField<Record, ULong> AVG_ROW_LENGTH = createField(DSL.name("AVG_ROW_LENGTH"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.TABLES.DATA_LENGTH</code>.
      */
-    public final TableField<Record, ULong> DATA_LENGTH = createField(DSL.name("DATA_LENGTH"), org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
+    public final TableField<Record, ULong> DATA_LENGTH = createField(DSL.name("DATA_LENGTH"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.TABLES.MAX_DATA_LENGTH</code>.
      */
-    public final TableField<Record, ULong> MAX_DATA_LENGTH = createField(DSL.name("MAX_DATA_LENGTH"), org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
+    public final TableField<Record, ULong> MAX_DATA_LENGTH = createField(DSL.name("MAX_DATA_LENGTH"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.TABLES.INDEX_LENGTH</code>.
      */
-    public final TableField<Record, ULong> INDEX_LENGTH = createField(DSL.name("INDEX_LENGTH"), org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
+    public final TableField<Record, ULong> INDEX_LENGTH = createField(DSL.name("INDEX_LENGTH"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.TABLES.DATA_FREE</code>.
      */
-    public final TableField<Record, ULong> DATA_FREE = createField(DSL.name("DATA_FREE"), org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
+    public final TableField<Record, ULong> DATA_FREE = createField(DSL.name("DATA_FREE"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.TABLES.AUTO_INCREMENT</code>.
      */
-    public final TableField<Record, ULong> AUTO_INCREMENT = createField(DSL.name("AUTO_INCREMENT"), org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
+    public final TableField<Record, ULong> AUTO_INCREMENT = createField(DSL.name("AUTO_INCREMENT"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.TABLES.CREATE_TIME</code>.
      */
-    public final TableField<Record, Timestamp> CREATE_TIME = createField(DSL.name("CREATE_TIME"), org.jooq.impl.SQLDataType.TIMESTAMP(0).nullable(false), this, "");
+    public final TableField<Record, Timestamp> CREATE_TIME = createField(DSL.name("CREATE_TIME"), SQLDataType.TIMESTAMP(0).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.TABLES.UPDATE_TIME</code>.
      */
-    public final TableField<Record, Timestamp> UPDATE_TIME = createField(DSL.name("UPDATE_TIME"), org.jooq.impl.SQLDataType.TIMESTAMP(0), this, "");
+    public final TableField<Record, Timestamp> UPDATE_TIME = createField(DSL.name("UPDATE_TIME"), SQLDataType.TIMESTAMP(0), this, "");
 
     /**
      * The column <code>information_schema.TABLES.CHECK_TIME</code>.
      */
-    public final TableField<Record, Timestamp> CHECK_TIME = createField(DSL.name("CHECK_TIME"), org.jooq.impl.SQLDataType.TIMESTAMP(0), this, "");
+    public final TableField<Record, Timestamp> CHECK_TIME = createField(DSL.name("CHECK_TIME"), SQLDataType.TIMESTAMP(0), this, "");
 
     /**
      * The column <code>information_schema.TABLES.TABLE_COLLATION</code>.
      */
-    public final TableField<Record, String> TABLE_COLLATION = createField(DSL.name("TABLE_COLLATION"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
+    public final TableField<Record, String> TABLE_COLLATION = createField(DSL.name("TABLE_COLLATION"), SQLDataType.VARCHAR(64), this, "");
 
     /**
      * The column <code>information_schema.TABLES.CHECKSUM</code>.
      */
-    public final TableField<Record, Long> CHECKSUM = createField(DSL.name("CHECKSUM"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> CHECKSUM = createField(DSL.name("CHECKSUM"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>information_schema.TABLES.CREATE_OPTIONS</code>.
      */
-    public final TableField<Record, String> CREATE_OPTIONS = createField(DSL.name("CREATE_OPTIONS"), org.jooq.impl.SQLDataType.VARCHAR(256), this, "");
+    public final TableField<Record, String> CREATE_OPTIONS = createField(DSL.name("CREATE_OPTIONS"), SQLDataType.VARCHAR(256), this, "");
 
     /**
      * The column <code>information_schema.TABLES.TABLE_COMMENT</code>.
      */
-    public final TableField<Record, String> TABLE_COMMENT = createField(DSL.name("TABLE_COMMENT"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> TABLE_COMMENT = createField(DSL.name("TABLE_COMMENT"), SQLDataType.CLOB, this, "");
 
     private Tables(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -182,6 +187,16 @@ public class Tables extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_TABLES;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_TABLES);
     }
 
     @Override

@@ -4,6 +4,9 @@
 package org.jooq.meta.mysql.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,9 +15,12 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
+import org.jooq.meta.mysql.information_schema.Keys;
 
 
 /**
@@ -23,7 +29,7 @@ import org.jooq.meta.mysql.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Schemata extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 670631725;
+    private static final long serialVersionUID = 994269618;
 
     /**
      * The reference instance of <code>information_schema.SCHEMATA</code>
@@ -41,32 +47,32 @@ public class Schemata extends TableImpl<Record> {
     /**
      * The column <code>information_schema.SCHEMATA.CATALOG_NAME</code>.
      */
-    public final TableField<Record, String> CATALOG_NAME = createField(DSL.name("CATALOG_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> CATALOG_NAME = createField(DSL.name("CATALOG_NAME"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.SCHEMA_NAME</code>.
      */
-    public final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("SCHEMA_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("SCHEMA_NAME"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.DEFAULT_CHARACTER_SET_NAME</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("DEFAULT_CHARACTER_SET_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("DEFAULT_CHARACTER_SET_NAME"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.DEFAULT_COLLATION_NAME</code>.
      */
-    public final TableField<Record, String> DEFAULT_COLLATION_NAME = createField(DSL.name("DEFAULT_COLLATION_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> DEFAULT_COLLATION_NAME = createField(DSL.name("DEFAULT_COLLATION_NAME"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.SQL_PATH</code>.
      */
-    public final TableField<Record, byte[]> SQL_PATH = createField(DSL.name("SQL_PATH"), org.jooq.impl.SQLDataType.BINARY, this, "");
+    public final TableField<Record, byte[]> SQL_PATH = createField(DSL.name("SQL_PATH"), SQLDataType.BINARY, this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.DEFAULT_ENCRYPTION</code>.
      */
-    public final TableField<Record, String> DEFAULT_ENCRYPTION = createField(DSL.name("DEFAULT_ENCRYPTION"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false), this, "");
+    public final TableField<Record, String> DEFAULT_ENCRYPTION = createField(DSL.name("DEFAULT_ENCRYPTION"), SQLDataType.VARCHAR(3).nullable(false), this, "");
 
     private Schemata(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -104,6 +110,16 @@ public class Schemata extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_SCHEMATA;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SCHEMATA);
     }
 
     @Override

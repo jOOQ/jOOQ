@@ -13,6 +13,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
 import org.jooq.types.UInteger;
@@ -24,7 +25,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Statistics extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1860734808;
+    private static final long serialVersionUID = -277536801;
 
     /**
      * The reference instance of <code>information_schema.STATISTICS</code>
@@ -42,92 +43,92 @@ public class Statistics extends TableImpl<Record> {
     /**
      * The column <code>information_schema.STATISTICS.TABLE_CATALOG</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.TABLE_SCHEMA</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.TABLE_NAME</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.NON_UNIQUE</code>.
      */
-    public final TableField<Record, Integer> NON_UNIQUE = createField(DSL.name("NON_UNIQUE"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<Record, Integer> NON_UNIQUE = createField(DSL.name("NON_UNIQUE"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.inline("0", SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.INDEX_SCHEMA</code>.
      */
-    public final TableField<Record, String> INDEX_SCHEMA = createField(DSL.name("INDEX_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
+    public final TableField<Record, String> INDEX_SCHEMA = createField(DSL.name("INDEX_SCHEMA"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.INDEX_NAME</code>.
      */
-    public final TableField<Record, String> INDEX_NAME = createField(DSL.name("INDEX_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
+    public final TableField<Record, String> INDEX_NAME = createField(DSL.name("INDEX_NAME"), SQLDataType.VARCHAR(64), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.SEQ_IN_INDEX</code>.
      */
-    public final TableField<Record, UInteger> SEQ_IN_INDEX = createField(DSL.name("SEQ_IN_INDEX"), org.jooq.impl.SQLDataType.INTEGERUNSIGNED.nullable(false), this, "");
+    public final TableField<Record, UInteger> SEQ_IN_INDEX = createField(DSL.name("SEQ_IN_INDEX"), SQLDataType.INTEGERUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.COLUMN_NAME</code>.
      */
-    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("COLUMN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
+    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("COLUMN_NAME"), SQLDataType.VARCHAR(64), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.COLLATION</code>.
      */
-    public final TableField<Record, String> COLLATION = createField(DSL.name("COLLATION"), org.jooq.impl.SQLDataType.VARCHAR(1), this, "");
+    public final TableField<Record, String> COLLATION = createField(DSL.name("COLLATION"), SQLDataType.VARCHAR(1), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.CARDINALITY</code>.
      */
-    public final TableField<Record, Long> CARDINALITY = createField(DSL.name("CARDINALITY"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> CARDINALITY = createField(DSL.name("CARDINALITY"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.SUB_PART</code>.
      */
-    public final TableField<Record, Long> SUB_PART = createField(DSL.name("SUB_PART"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> SUB_PART = createField(DSL.name("SUB_PART"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.PACKED</code>.
      */
-    public final TableField<Record, byte[]> PACKED = createField(DSL.name("PACKED"), org.jooq.impl.SQLDataType.BINARY, this, "");
+    public final TableField<Record, byte[]> PACKED = createField(DSL.name("PACKED"), SQLDataType.BINARY, this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.NULLABLE</code>.
      */
-    public final TableField<Record, String> NULLABLE = createField(DSL.name("NULLABLE"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<Record, String> NULLABLE = createField(DSL.name("NULLABLE"), SQLDataType.VARCHAR(3).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.INDEX_TYPE</code>.
      */
-    public final TableField<Record, String> INDEX_TYPE = createField(DSL.name("INDEX_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(11).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<Record, String> INDEX_TYPE = createField(DSL.name("INDEX_TYPE"), SQLDataType.VARCHAR(11).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.COMMENT</code>.
      */
-    public final TableField<Record, String> COMMENT = createField(DSL.name("COMMENT"), org.jooq.impl.SQLDataType.VARCHAR(8).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<Record, String> COMMENT = createField(DSL.name("COMMENT"), SQLDataType.VARCHAR(8).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.INDEX_COMMENT</code>.
      */
-    public final TableField<Record, String> INDEX_COMMENT = createField(DSL.name("INDEX_COMMENT"), org.jooq.impl.SQLDataType.VARCHAR(2048).nullable(false), this, "");
+    public final TableField<Record, String> INDEX_COMMENT = createField(DSL.name("INDEX_COMMENT"), SQLDataType.VARCHAR(2048).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.IS_VISIBLE</code>.
      */
-    public final TableField<Record, String> IS_VISIBLE = createField(DSL.name("IS_VISIBLE"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<Record, String> IS_VISIBLE = createField(DSL.name("IS_VISIBLE"), SQLDataType.VARCHAR(3).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>information_schema.STATISTICS.EXPRESSION</code>.
      */
-    public final TableField<Record, String> EXPRESSION = createField(DSL.name("EXPRESSION"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> EXPRESSION = createField(DSL.name("EXPRESSION"), SQLDataType.CLOB, this, "");
 
     private Statistics(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);

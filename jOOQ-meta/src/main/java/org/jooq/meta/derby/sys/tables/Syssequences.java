@@ -4,6 +4,9 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -13,7 +16,9 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -23,7 +28,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syssequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1743018166;
+    private static final long serialVersionUID = -530759919;
 
     /**
      * The reference instance of <code>SYS.SYSSEQUENCES</code>
@@ -41,52 +46,52 @@ public class Syssequences extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSSEQUENCES.SEQUENCEID</code>.
      */
-    public final TableField<Record, String> SEQUENCEID = createField(DSL.name("SEQUENCEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> SEQUENCEID = createField(DSL.name("SEQUENCEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.SEQUENCENAME</code>.
      */
-    public final TableField<Record, String> SEQUENCENAME = createField(DSL.name("SEQUENCENAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
+    public final TableField<Record, String> SEQUENCENAME = createField(DSL.name("SEQUENCENAME"), SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.SCHEMAID</code>.
      */
-    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.SEQUENCEDATATYPE</code>.
      */
-    public final TableField<Record, String> SEQUENCEDATATYPE = createField(DSL.name("SEQUENCEDATATYPE"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<Record, String> SEQUENCEDATATYPE = createField(DSL.name("SEQUENCEDATATYPE"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.CURRENTVALUE</code>.
      */
-    public final TableField<Record, Long> CURRENTVALUE = createField(DSL.name("CURRENTVALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> CURRENTVALUE = createField(DSL.name("CURRENTVALUE"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.STARTVALUE</code>.
      */
-    public final TableField<Record, Long> STARTVALUE = createField(DSL.name("STARTVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> STARTVALUE = createField(DSL.name("STARTVALUE"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.MINIMUMVALUE</code>.
      */
-    public final TableField<Record, Long> MINIMUMVALUE = createField(DSL.name("MINIMUMVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> MINIMUMVALUE = createField(DSL.name("MINIMUMVALUE"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.MAXIMUMVALUE</code>.
      */
-    public final TableField<Record, Long> MAXIMUMVALUE = createField(DSL.name("MAXIMUMVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> MAXIMUMVALUE = createField(DSL.name("MAXIMUMVALUE"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.INCREMENT</code>.
      */
-    public final TableField<Record, Long> INCREMENT = createField(DSL.name("INCREMENT"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> INCREMENT = createField(DSL.name("INCREMENT"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.CYCLEOPTION</code>.
      */
-    public final TableField<Record, String> CYCLEOPTION = createField(DSL.name("CYCLEOPTION"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
+    public final TableField<Record, String> CYCLEOPTION = createField(DSL.name("CYCLEOPTION"), SQLDataType.CHAR(1).nullable(false), this, "");
 
     private Syssequences(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -124,6 +129,15 @@ public class Syssequences extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS);
+    }
+
+    public Sysschemas sysschemas() {
+        return new Sysschemas(this, Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS);
     }
 
     @Override

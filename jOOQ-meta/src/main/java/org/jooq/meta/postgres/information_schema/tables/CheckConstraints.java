@@ -4,6 +4,9 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -13,8 +16,10 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
+import org.jooq.meta.postgres.information_schema.Keys;
 
 
 /**
@@ -23,7 +28,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CheckConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 19302096;
+    private static final long serialVersionUID = -1318152086;
 
     /**
      * The reference instance of <code>information_schema.check_constraints</code>
@@ -41,22 +46,22 @@ public class CheckConstraints extends TableImpl<Record> {
     /**
      * The column <code>information_schema.check_constraints.constraint_catalog</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.check_constraints.constraint_schema</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.check_constraints.constraint_name</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.check_constraints.check_clause</code>.
      */
-    public final TableField<Record, String> CHECK_CLAUSE = createField(DSL.name("check_clause"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CHECK_CLAUSE = createField(DSL.name("check_clause"), SQLDataType.VARCHAR, this, "");
 
     private CheckConstraints(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -94,6 +99,15 @@ public class CheckConstraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.CHECK_CONSTRAINTS__SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS);
+    }
+
+    public TableConstraints tableConstraints() {
+        return new TableConstraints(this, Keys.CHECK_CONSTRAINTS__SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS);
     }
 
     @Override

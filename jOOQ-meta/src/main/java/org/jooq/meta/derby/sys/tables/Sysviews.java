@@ -4,6 +4,9 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -13,7 +16,9 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -23,7 +28,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysviews extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -766523387;
+    private static final long serialVersionUID = 1865079473;
 
     /**
      * The reference instance of <code>SYS.SYSVIEWS</code>
@@ -41,22 +46,22 @@ public class Sysviews extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSVIEWS.TABLEID</code>.
      */
-    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSVIEWS.VIEWDEFINITION</code>.
      */
-    public final TableField<Record, String> VIEWDEFINITION = createField(DSL.name("VIEWDEFINITION"), org.jooq.impl.SQLDataType.LONGVARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> VIEWDEFINITION = createField(DSL.name("VIEWDEFINITION"), SQLDataType.LONGVARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSVIEWS.CHECKOPTION</code>.
      */
-    public final TableField<Record, String> CHECKOPTION = createField(DSL.name("CHECKOPTION"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
+    public final TableField<Record, String> CHECKOPTION = createField(DSL.name("CHECKOPTION"), SQLDataType.CHAR(1).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSVIEWS.COMPILATIONSCHEMAID</code>.
      */
-    public final TableField<Record, String> COMPILATIONSCHEMAID = createField(DSL.name("COMPILATIONSCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36), this, "");
+    public final TableField<Record, String> COMPILATIONSCHEMAID = createField(DSL.name("COMPILATIONSCHEMAID"), SQLDataType.CHAR(36), this, "");
 
     private Sysviews(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -94,6 +99,15 @@ public class Sysviews extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES);
+    }
+
+    public Systables systables() {
+        return new Systables(this, Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES);
     }
 
     @Override

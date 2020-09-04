@@ -13,6 +13,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Sys;
 
@@ -23,7 +24,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syscolumns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 413698351;
+    private static final long serialVersionUID = -62833438;
 
     /**
      * The reference instance of <code>SYS.SYSCOLUMNS</code>
@@ -41,52 +42,52 @@ public class Syscolumns extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSCOLUMNS.REFERENCEID</code>.
      */
-    public final TableField<Record, String> REFERENCEID = createField(DSL.name("REFERENCEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> REFERENCEID = createField(DSL.name("REFERENCEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNNAME</code>.
      */
-    public final TableField<Record, String> COLUMNNAME = createField(DSL.name("COLUMNNAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
+    public final TableField<Record, String> COLUMNNAME = createField(DSL.name("COLUMNNAME"), SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNNUMBER</code>.
      */
-    public final TableField<Record, Integer> COLUMNNUMBER = createField(DSL.name("COLUMNNUMBER"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> COLUMNNUMBER = createField(DSL.name("COLUMNNUMBER"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNDATATYPE</code>.
      */
-    public final TableField<Record, String> COLUMNDATATYPE = createField(DSL.name("COLUMNDATATYPE"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<Record, String> COLUMNDATATYPE = createField(DSL.name("COLUMNDATATYPE"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNDEFAULT</code>.
      */
-    public final TableField<Record, String> COLUMNDEFAULT = createField(DSL.name("COLUMNDEFAULT"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> COLUMNDEFAULT = createField(DSL.name("COLUMNDEFAULT"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNDEFAULTID</code>.
      */
-    public final TableField<Record, String> COLUMNDEFAULTID = createField(DSL.name("COLUMNDEFAULTID"), org.jooq.impl.SQLDataType.CHAR(36), this, "");
+    public final TableField<Record, String> COLUMNDEFAULTID = createField(DSL.name("COLUMNDEFAULTID"), SQLDataType.CHAR(36), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTVALUE</code>.
      */
-    public final TableField<Record, Long> AUTOINCREMENTVALUE = createField(DSL.name("AUTOINCREMENTVALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> AUTOINCREMENTVALUE = createField(DSL.name("AUTOINCREMENTVALUE"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTSTART</code>.
      */
-    public final TableField<Record, Long> AUTOINCREMENTSTART = createField(DSL.name("AUTOINCREMENTSTART"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> AUTOINCREMENTSTART = createField(DSL.name("AUTOINCREMENTSTART"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTINC</code>.
      */
-    public final TableField<Record, Long> AUTOINCREMENTINC = createField(DSL.name("AUTOINCREMENTINC"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> AUTOINCREMENTINC = createField(DSL.name("AUTOINCREMENTINC"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTCYCLE</code>.
      */
-    public final TableField<Record, Boolean> AUTOINCREMENTCYCLE = createField(DSL.name("AUTOINCREMENTCYCLE"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+    public final TableField<Record, Boolean> AUTOINCREMENTCYCLE = createField(DSL.name("AUTOINCREMENTCYCLE"), SQLDataType.BOOLEAN, this, "");
 
     private Syscolumns(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);

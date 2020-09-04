@@ -13,6 +13,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.h2.information_schema.InformationSchema;
 
@@ -23,7 +24,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FunctionColumns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1360761985;
+    private static final long serialVersionUID = 1384288249;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS</code>
@@ -41,87 +42,87 @@ public class FunctionColumns extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_CATALOG</code>.
      */
-    public final TableField<Record, String> ALIAS_CATALOG = createField(DSL.name("ALIAS_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> ALIAS_CATALOG = createField(DSL.name("ALIAS_CATALOG"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_SCHEMA</code>.
      */
-    public final TableField<Record, String> ALIAS_SCHEMA = createField(DSL.name("ALIAS_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> ALIAS_SCHEMA = createField(DSL.name("ALIAS_SCHEMA"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_NAME</code>.
      */
-    public final TableField<Record, String> ALIAS_NAME = createField(DSL.name("ALIAS_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> ALIAS_NAME = createField(DSL.name("ALIAS_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.JAVA_CLASS</code>.
      */
-    public final TableField<Record, String> JAVA_CLASS = createField(DSL.name("JAVA_CLASS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> JAVA_CLASS = createField(DSL.name("JAVA_CLASS"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.JAVA_METHOD</code>.
      */
-    public final TableField<Record, String> JAVA_METHOD = createField(DSL.name("JAVA_METHOD"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> JAVA_METHOD = createField(DSL.name("JAVA_METHOD"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_COUNT</code>.
      */
-    public final TableField<Record, Integer> COLUMN_COUNT = createField(DSL.name("COLUMN_COUNT"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> COLUMN_COUNT = createField(DSL.name("COLUMN_COUNT"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.POS</code>.
      */
-    public final TableField<Record, Integer> POS = createField(DSL.name("POS"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> POS = createField(DSL.name("POS"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_NAME</code>.
      */
-    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("COLUMN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("COLUMN_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.DATA_TYPE</code>.
      */
-    public final TableField<Record, Integer> DATA_TYPE = createField(DSL.name("DATA_TYPE"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> DATA_TYPE = createField(DSL.name("DATA_TYPE"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.TYPE_NAME</code>.
      */
-    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.PRECISION</code>.
      */
-    public final TableField<Record, Integer> PRECISION = createField(DSL.name("PRECISION"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> PRECISION = createField(DSL.name("PRECISION"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.SCALE</code>.
      */
-    public final TableField<Record, Short> SCALE = createField(DSL.name("SCALE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> SCALE = createField(DSL.name("SCALE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.RADIX</code>.
      */
-    public final TableField<Record, Short> RADIX = createField(DSL.name("RADIX"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RADIX = createField(DSL.name("RADIX"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.NULLABLE</code>.
      */
-    public final TableField<Record, Short> NULLABLE = createField(DSL.name("NULLABLE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> NULLABLE = createField(DSL.name("NULLABLE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_TYPE</code>.
      */
-    public final TableField<Record, Short> COLUMN_TYPE = createField(DSL.name("COLUMN_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> COLUMN_TYPE = createField(DSL.name("COLUMN_TYPE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.REMARKS</code>.
      */
-    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_DEFAULT</code>.
      */
-    public final TableField<Record, String> COLUMN_DEFAULT = createField(DSL.name("COLUMN_DEFAULT"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> COLUMN_DEFAULT = createField(DSL.name("COLUMN_DEFAULT"), SQLDataType.VARCHAR(2147483647), this, "");
 
     private FunctionColumns(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);

@@ -11,7 +11,9 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
@@ -22,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgInherits extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1859127245;
+    private static final long serialVersionUID = 978457723;
 
     /**
      * The reference instance of <code>pg_catalog.pg_inherits</code>
@@ -40,23 +42,24 @@ public class PgInherits extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_inherits.inhrelid</code>.
      */
-    public final TableField<Record, Long> INHRELID = createField(DSL.name("inhrelid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> INHRELID = createField(DSL.name("inhrelid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_inherits.inhparent</code>.
      */
-    public final TableField<Record, Long> INHPARENT = createField(DSL.name("inhparent"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> INHPARENT = createField(DSL.name("inhparent"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_inherits.inhseqno</code>.
      */
-    public final TableField<Record, Integer> INHSEQNO = createField(DSL.name("inhseqno"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> INHSEQNO = createField(DSL.name("inhseqno"), SQLDataType.INTEGER.nullable(false), this, "");
 
-    /**
-     * Create a <code>pg_catalog.pg_inherits</code> table reference
-     */
-    public PgInherits() {
-        this(DSL.name("pg_inherits"), null);
+    private PgInherits(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PgInherits(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -73,12 +76,11 @@ public class PgInherits extends TableImpl<Record> {
         this(alias, PG_INHERITS);
     }
 
-    private PgInherits(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PgInherits(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>pg_catalog.pg_inherits</code> table reference
+     */
+    public PgInherits() {
+        this(DSL.name("pg_inherits"), null);
     }
 
     public <O extends Record> PgInherits(Table<O> child, ForeignKey<O, Record> key) {

@@ -4,6 +4,9 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,8 +15,11 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -23,7 +29,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysconglomerates extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1312507280;
+    private static final long serialVersionUID = 679295714;
 
     /**
      * The reference instance of <code>SYS.SYSCONGLOMERATES</code>
@@ -41,42 +47,42 @@ public class Sysconglomerates extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSCONGLOMERATES.SCHEMAID</code>.
      */
-    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.TABLEID</code>.
      */
-    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATENUMBER</code>.
      */
-    public final TableField<Record, Long> CONGLOMERATENUMBER = createField(DSL.name("CONGLOMERATENUMBER"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> CONGLOMERATENUMBER = createField(DSL.name("CONGLOMERATENUMBER"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATENAME</code>.
      */
-    public final TableField<Record, String> CONGLOMERATENAME = createField(DSL.name("CONGLOMERATENAME"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> CONGLOMERATENAME = createField(DSL.name("CONGLOMERATENAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.ISINDEX</code>.
      */
-    public final TableField<Record, Boolean> ISINDEX = createField(DSL.name("ISINDEX"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> ISINDEX = createField(DSL.name("ISINDEX"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.DESCRIPTOR</code>.
      */
-    public final TableField<Record, String> DESCRIPTOR = createField(DSL.name("DESCRIPTOR"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> DESCRIPTOR = createField(DSL.name("DESCRIPTOR"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.ISCONSTRAINT</code>.
      */
-    public final TableField<Record, Boolean> ISCONSTRAINT = createField(DSL.name("ISCONSTRAINT"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+    public final TableField<Record, Boolean> ISCONSTRAINT = createField(DSL.name("ISCONSTRAINT"), SQLDataType.BOOLEAN, this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATEID</code>.
      */
-    public final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     private Sysconglomerates(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -114,6 +120,25 @@ public class Sysconglomerates extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_SYSCONGLOMERATES;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SYSCONGLOMERATES);
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES);
+    }
+
+    public Systables systables() {
+        return new Systables(this, Keys.SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES);
     }
 
     @Override

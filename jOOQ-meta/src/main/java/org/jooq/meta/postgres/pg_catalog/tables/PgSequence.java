@@ -11,7 +11,9 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
@@ -22,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgSequence extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -599690389;
+    private static final long serialVersionUID = -1398651846;
 
     /**
      * The reference instance of <code>pg_catalog.pg_sequence</code>
@@ -40,48 +42,49 @@ public class PgSequence extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_sequence.seqrelid</code>.
      */
-    public final TableField<Record, Long> SEQRELID = createField(DSL.name("seqrelid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> SEQRELID = createField(DSL.name("seqrelid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_sequence.seqtypid</code>.
      */
-    public final TableField<Record, Long> SEQTYPID = createField(DSL.name("seqtypid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> SEQTYPID = createField(DSL.name("seqtypid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_sequence.seqstart</code>.
      */
-    public final TableField<Record, Long> SEQSTART = createField(DSL.name("seqstart"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> SEQSTART = createField(DSL.name("seqstart"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_sequence.seqincrement</code>.
      */
-    public final TableField<Record, Long> SEQINCREMENT = createField(DSL.name("seqincrement"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> SEQINCREMENT = createField(DSL.name("seqincrement"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_sequence.seqmax</code>.
      */
-    public final TableField<Record, Long> SEQMAX = createField(DSL.name("seqmax"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> SEQMAX = createField(DSL.name("seqmax"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_sequence.seqmin</code>.
      */
-    public final TableField<Record, Long> SEQMIN = createField(DSL.name("seqmin"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> SEQMIN = createField(DSL.name("seqmin"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_sequence.seqcache</code>.
      */
-    public final TableField<Record, Long> SEQCACHE = createField(DSL.name("seqcache"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> SEQCACHE = createField(DSL.name("seqcache"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_sequence.seqcycle</code>.
      */
-    public final TableField<Record, Boolean> SEQCYCLE = createField(DSL.name("seqcycle"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> SEQCYCLE = createField(DSL.name("seqcycle"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
-    /**
-     * Create a <code>pg_catalog.pg_sequence</code> table reference
-     */
-    public PgSequence() {
-        this(DSL.name("pg_sequence"), null);
+    private PgSequence(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PgSequence(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -98,12 +101,11 @@ public class PgSequence extends TableImpl<Record> {
         this(alias, PG_SEQUENCE);
     }
 
-    private PgSequence(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PgSequence(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>pg_catalog.pg_sequence</code> table reference
+     */
+    public PgSequence() {
+        this(DSL.name("pg_sequence"), null);
     }
 
     public <O extends Record> PgSequence(Table<O> child, ForeignKey<O, Record> key) {

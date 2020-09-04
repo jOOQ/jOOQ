@@ -44,12 +44,10 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
-import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
-import static org.jooq.meta.hsqldb.information_schema.Tables.DOMAINS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.DOMAIN_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.KEY_COLUMN_USAGE;
@@ -101,9 +99,7 @@ import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Columns;
 import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
-import org.jooq.meta.hsqldb.information_schema.tables.Domains;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
-import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -237,12 +233,9 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 KEY_COLUMN_USAGE.CONSTRAINT_NAME,
                 KEY_COLUMN_USAGE.TABLE_NAME,
                 KEY_COLUMN_USAGE.COLUMN_NAME)
-            .from(TABLE_CONSTRAINTS
-                .join(KEY_COLUMN_USAGE)
-                .on(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA))
-                .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME)))
-            .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
+            .from(KEY_COLUMN_USAGE)
+            .where(KEY_COLUMN_USAGE.tableConstraints().CONSTRAINT_TYPE.equal(constraintType))
+            .and(KEY_COLUMN_USAGE.tableConstraints().TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -315,7 +308,6 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
     @Override
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
-        TableConstraints tc = TABLE_CONSTRAINTS.as("tc");
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
         Columns c = COLUMNS.as("c");
 
@@ -324,18 +316,16 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
         for (Record record : create()
                 .select(
-                    tc.TABLE_SCHEMA,
-                    tc.TABLE_NAME,
+                    cc.tableConstraints().TABLE_SCHEMA,
+                    cc.tableConstraints().TABLE_NAME,
                     constraintName,
                     cc.CHECK_CLAUSE
                  )
-                .from(tc)
-                .join(cc)
-                .using(tc.CONSTRAINT_CATALOG, tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME)
-                .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
+                .from(cc)
+                .where(cc.tableConstraints().TABLE_SCHEMA.in(getInputSchemata()))
                 .and(getIncludeSystemCheckConstraints()
                     ? noCondition()
-                    : tc.CONSTRAINT_NAME.notLike("SYS!_CT!_%", '!')
+                    : cc.tableConstraints().CONSTRAINT_NAME.notLike("SYS!_CT!_%", '!')
                         .or(cc.CHECK_CLAUSE.notIn(
 
                             // TODO: Should we ever quote these?
@@ -343,13 +333,13 @@ public class HSQLDBDatabase extends AbstractDatabase {
                                     .concat(c.TABLE_NAME).concat(inline('.'))
                                     .concat(c.COLUMN_NAME).concat(inline(" IS NOT NULL")))
                             .from(c)
-                            .where(c.TABLE_SCHEMA.eq(tc.TABLE_SCHEMA))
-                            .and(c.TABLE_NAME.eq(tc.TABLE_NAME))
+                            .where(c.TABLE_SCHEMA.eq(cc.tableConstraints().TABLE_SCHEMA))
+                            .and(c.TABLE_NAME.eq(cc.tableConstraints().TABLE_NAME))
                         )))
         ) {
 
-            SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));
-            TableDefinition table = getTable(schema, record.get(tc.TABLE_NAME));
+            SchemaDefinition schema = getSchema(record.get(cc.tableConstraints().TABLE_SCHEMA));
+            TableDefinition table = getTable(schema, record.get(cc.tableConstraints().TABLE_NAME));
 
             if (table != null) {
                 relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
@@ -481,49 +471,43 @@ public class HSQLDBDatabase extends AbstractDatabase {
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<>();
 
-        Domains d = DOMAINS.as("d");
         DomainConstraints dc = DOMAIN_CONSTRAINTS.as("dc");
-        CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
 
         for (Record record : create()
             .select(
-                d.DOMAIN_SCHEMA,
-                d.DOMAIN_NAME,
-                d.DATA_TYPE,
-                d.CHARACTER_MAXIMUM_LENGTH,
-                d.NUMERIC_PRECISION,
-                d.NUMERIC_SCALE,
-                d.DOMAIN_DEFAULT,
-                cc.CHECK_CLAUSE)
-            .from(d)
-                .join(dc)
-                    .on(row(d.DOMAIN_CATALOG, d.DOMAIN_SCHEMA, d.DOMAIN_NAME).eq(dc.DOMAIN_CATALOG, dc.DOMAIN_SCHEMA, dc.DOMAIN_NAME))
-                .join(cc)
-                    .on(row(dc.CONSTRAINT_CATALOG, dc.CONSTRAINT_SCHEMA, dc.CONSTRAINT_NAME).eq(cc.CONSTRAINT_CATALOG, cc.CONSTRAINT_SCHEMA, cc.CONSTRAINT_NAME))
-            .where(d.DOMAIN_SCHEMA.in(getInputSchemata()))
-            .orderBy(d.DOMAIN_SCHEMA, d.DOMAIN_NAME)
+                dc.domains().DOMAIN_SCHEMA,
+                dc.domains().DOMAIN_NAME,
+                dc.domains().DATA_TYPE,
+                dc.domains().CHARACTER_MAXIMUM_LENGTH,
+                dc.domains().NUMERIC_PRECISION,
+                dc.domains().NUMERIC_SCALE,
+                dc.domains().DOMAIN_DEFAULT,
+                dc.checkConstraints().CHECK_CLAUSE)
+            .from(dc)
+            .where(dc.domains().DOMAIN_SCHEMA.in(getInputSchemata()))
+            .orderBy(dc.domains().DOMAIN_SCHEMA, dc.domains().DOMAIN_NAME)
         ) {
-            SchemaDefinition schema = getSchema(record.get(d.DOMAIN_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(dc.domains().DOMAIN_SCHEMA));
 
             DataTypeDefinition baseType = new DefaultDataTypeDefinition(
                 this,
                 schema,
-                record.get(d.DATA_TYPE),
-                record.get(d.CHARACTER_MAXIMUM_LENGTH),
-                record.get(d.NUMERIC_PRECISION),
-                record.get(d.NUMERIC_SCALE),
+                record.get(dc.domains().DATA_TYPE),
+                record.get(dc.domains().CHARACTER_MAXIMUM_LENGTH),
+                record.get(dc.domains().NUMERIC_PRECISION),
+                record.get(dc.domains().NUMERIC_SCALE),
                 true,
-                record.get(d.DOMAIN_DEFAULT)
+                record.get(dc.domains().DOMAIN_DEFAULT)
             );
 
             DefaultDomainDefinition domain = new DefaultDomainDefinition(
                 schema,
-                record.get(d.DOMAIN_NAME),
+                record.get(dc.domains().DOMAIN_NAME),
                 baseType
             );
 
-            if (!StringUtils.isBlank(record.get(cc.CHECK_CLAUSE)))
-                domain.addCheckClause(record.get(cc.CHECK_CLAUSE));
+            if (!StringUtils.isBlank(record.get(dc.checkConstraints().CHECK_CLAUSE)))
+                domain.addCheckClause(record.get(dc.checkConstraints().CHECK_CLAUSE));
 
             result.add(domain);
         }

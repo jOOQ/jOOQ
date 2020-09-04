@@ -4,6 +4,9 @@
 package org.jooq.meta.h2.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,9 +15,12 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.h2.information_schema.InformationSchema;
+import org.jooq.meta.h2.information_schema.Keys;
 
 
 /**
@@ -23,7 +29,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 696479444;
+    private static final long serialVersionUID = -1054465531;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.TABLES</code>
@@ -41,62 +47,62 @@ public class Tables extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_CATALOG</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_SCHEMA</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_NAME</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_TYPE</code>.
      */
-    public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("TABLE_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("TABLE_TYPE"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.STORAGE_TYPE</code>.
      */
-    public final TableField<Record, String> STORAGE_TYPE = createField(DSL.name("STORAGE_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> STORAGE_TYPE = createField(DSL.name("STORAGE_TYPE"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.SQL</code>.
      */
-    public final TableField<Record, String> SQL = createField(DSL.name("SQL"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> SQL = createField(DSL.name("SQL"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.REMARKS</code>.
      */
-    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.LAST_MODIFICATION</code>.
      */
-    public final TableField<Record, Long> LAST_MODIFICATION = createField(DSL.name("LAST_MODIFICATION"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> LAST_MODIFICATION = createField(DSL.name("LAST_MODIFICATION"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.ID</code>.
      */
-    public final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.TYPE_NAME</code>.
      */
-    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_CLASS</code>.
      */
-    public final TableField<Record, String> TABLE_CLASS = createField(DSL.name("TABLE_CLASS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TABLE_CLASS = createField(DSL.name("TABLE_CLASS"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TABLES.ROW_COUNT_ESTIMATE</code>.
      */
-    public final TableField<Record, Long> ROW_COUNT_ESTIMATE = createField(DSL.name("ROW_COUNT_ESTIMATE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> ROW_COUNT_ESTIMATE = createField(DSL.name("ROW_COUNT_ESTIMATE"), SQLDataType.BIGINT, this, "");
 
     private Tables(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -134,6 +140,16 @@ public class Tables extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_TABLES;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_TABLES);
     }
 
     @Override

@@ -107,7 +107,10 @@ public class GenerationTool {
     public static final String      DEFAULT_TARGET_DIRECTORY   = "target/generated-sources/jooq";
     public static final String      DEFAULT_TARGET_PACKAGENAME = "org.jooq.generated";
 
-    private static final JooqLogger log = JooqLogger.getLogger(GenerationTool.class);
+    private static final JooqLogger log                        = JooqLogger.getLogger(GenerationTool.class);
+    private static final JooqLogger unusedLogger               = JooqLogger.getLogger(Unused.class);
+
+    private static class Unused {}
 
     private ClassLoader             loader;
     private DataSource              dataSource;
@@ -903,8 +906,8 @@ public class GenerationTool {
     }
 
     private void logUnused(String objectType, String objectTypes, List<?> list) {
-        if (!list.isEmpty()) {
-            log.warn(
+        if (!list.isEmpty() && Boolean.parseBoolean(System.getProperty("jooq.codegen.logunused", "true"))) {
+            unusedLogger.warn(
                   "Unused " + objectTypes,
                   "There are unused " + objectTypes + ", which have not been used by this generation run.\n"
                 + "This can be because of misconfigurations, such as, for example:\n"
@@ -915,7 +918,7 @@ public class GenerationTool {
             );
 
             for (Object o : list)
-                log.warn("Unused " + objectType, o);
+                unusedLogger.warn("Unused " + objectType, o);
         }
     }
 

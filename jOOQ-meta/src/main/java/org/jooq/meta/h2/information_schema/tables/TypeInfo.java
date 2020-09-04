@@ -13,6 +13,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.h2.information_schema.InformationSchema;
 
@@ -23,7 +24,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TypeInfo extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1838722667;
+    private static final long serialVersionUID = 1262659550;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.TYPE_INFO</code>
@@ -41,72 +42,72 @@ public class TypeInfo extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.TYPE_NAME</code>.
      */
-    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.DATA_TYPE</code>.
      */
-    public final TableField<Record, Integer> DATA_TYPE = createField(DSL.name("DATA_TYPE"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> DATA_TYPE = createField(DSL.name("DATA_TYPE"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.PRECISION</code>.
      */
-    public final TableField<Record, Integer> PRECISION = createField(DSL.name("PRECISION"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> PRECISION = createField(DSL.name("PRECISION"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.PREFIX</code>.
      */
-    public final TableField<Record, String> PREFIX = createField(DSL.name("PREFIX"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PREFIX = createField(DSL.name("PREFIX"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.SUFFIX</code>.
      */
-    public final TableField<Record, String> SUFFIX = createField(DSL.name("SUFFIX"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> SUFFIX = createField(DSL.name("SUFFIX"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.PARAMS</code>.
      */
-    public final TableField<Record, String> PARAMS = createField(DSL.name("PARAMS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
+    public final TableField<Record, String> PARAMS = createField(DSL.name("PARAMS"), SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.AUTO_INCREMENT</code>.
      */
-    public final TableField<Record, Boolean> AUTO_INCREMENT = createField(DSL.name("AUTO_INCREMENT"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+    public final TableField<Record, Boolean> AUTO_INCREMENT = createField(DSL.name("AUTO_INCREMENT"), SQLDataType.BOOLEAN, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.MINIMUM_SCALE</code>.
      */
-    public final TableField<Record, Short> MINIMUM_SCALE = createField(DSL.name("MINIMUM_SCALE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> MINIMUM_SCALE = createField(DSL.name("MINIMUM_SCALE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.MAXIMUM_SCALE</code>.
      */
-    public final TableField<Record, Short> MAXIMUM_SCALE = createField(DSL.name("MAXIMUM_SCALE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> MAXIMUM_SCALE = createField(DSL.name("MAXIMUM_SCALE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.RADIX</code>.
      */
-    public final TableField<Record, Integer> RADIX = createField(DSL.name("RADIX"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> RADIX = createField(DSL.name("RADIX"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.POS</code>.
      */
-    public final TableField<Record, Integer> POS = createField(DSL.name("POS"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Integer> POS = createField(DSL.name("POS"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.CASE_SENSITIVE</code>.
      */
-    public final TableField<Record, Boolean> CASE_SENSITIVE = createField(DSL.name("CASE_SENSITIVE"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+    public final TableField<Record, Boolean> CASE_SENSITIVE = createField(DSL.name("CASE_SENSITIVE"), SQLDataType.BOOLEAN, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.NULLABLE</code>.
      */
-    public final TableField<Record, Short> NULLABLE = createField(DSL.name("NULLABLE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> NULLABLE = createField(DSL.name("NULLABLE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.TYPE_INFO.SEARCHABLE</code>.
      */
-    public final TableField<Record, Short> SEARCHABLE = createField(DSL.name("SEARCHABLE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> SEARCHABLE = createField(DSL.name("SEARCHABLE"), SQLDataType.SMALLINT, this, "");
 
     private TypeInfo(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);

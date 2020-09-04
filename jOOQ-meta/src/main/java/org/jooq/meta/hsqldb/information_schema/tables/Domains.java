@@ -4,6 +4,9 @@
 package org.jooq.meta.hsqldb.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,9 +15,12 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
+import org.jooq.meta.hsqldb.information_schema.Keys;
 
 
 /**
@@ -23,7 +29,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Domains extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -478808995;
+    private static final long serialVersionUID = 1923709268;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.DOMAINS</code>
@@ -41,122 +47,122 @@ public class Domains extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_CATALOG</code>.
      */
-    public final TableField<Record, String> DOMAIN_CATALOG = createField(DSL.name("DOMAIN_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> DOMAIN_CATALOG = createField(DSL.name("DOMAIN_CATALOG"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_SCHEMA</code>.
      */
-    public final TableField<Record, String> DOMAIN_SCHEMA = createField(DSL.name("DOMAIN_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> DOMAIN_SCHEMA = createField(DSL.name("DOMAIN_SCHEMA"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_NAME</code>.
      */
-    public final TableField<Record, String> DOMAIN_NAME = createField(DSL.name("DOMAIN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> DOMAIN_NAME = createField(DSL.name("DOMAIN_NAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DATA_TYPE</code>.
      */
-    public final TableField<Record, String> DATA_TYPE = createField(DSL.name("DATA_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> DATA_TYPE = createField(DSL.name("DATA_TYPE"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_MAXIMUM_LENGTH</code>.
      */
-    public final TableField<Record, Long> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_OCTET_LENGTH</code>.
      */
-    public final TableField<Record, Long> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_SET_CATALOG</code>.
      */
-    public final TableField<Record, String> CHARACTER_SET_CATALOG = createField(DSL.name("CHARACTER_SET_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> CHARACTER_SET_CATALOG = createField(DSL.name("CHARACTER_SET_CATALOG"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_SET_SCHEMA</code>.
      */
-    public final TableField<Record, String> CHARACTER_SET_SCHEMA = createField(DSL.name("CHARACTER_SET_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> CHARACTER_SET_SCHEMA = createField(DSL.name("CHARACTER_SET_SCHEMA"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_SET_NAME</code>.
      */
-    public final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("CHARACTER_SET_NAME"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("CHARACTER_SET_NAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.COLLATION_CATALOG</code>.
      */
-    public final TableField<Record, String> COLLATION_CATALOG = createField(DSL.name("COLLATION_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> COLLATION_CATALOG = createField(DSL.name("COLLATION_CATALOG"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.COLLATION_SCHEMA</code>.
      */
-    public final TableField<Record, String> COLLATION_SCHEMA = createField(DSL.name("COLLATION_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> COLLATION_SCHEMA = createField(DSL.name("COLLATION_SCHEMA"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.COLLATION_NAME</code>.
      */
-    public final TableField<Record, String> COLLATION_NAME = createField(DSL.name("COLLATION_NAME"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> COLLATION_NAME = createField(DSL.name("COLLATION_NAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.NUMERIC_PRECISION</code>.
      */
-    public final TableField<Record, Long> NUMERIC_PRECISION = createField(DSL.name("NUMERIC_PRECISION"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> NUMERIC_PRECISION = createField(DSL.name("NUMERIC_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.NUMERIC_PRECISION_RADIX</code>.
      */
-    public final TableField<Record, Long> NUMERIC_PRECISION_RADIX = createField(DSL.name("NUMERIC_PRECISION_RADIX"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> NUMERIC_PRECISION_RADIX = createField(DSL.name("NUMERIC_PRECISION_RADIX"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.NUMERIC_SCALE</code>.
      */
-    public final TableField<Record, Long> NUMERIC_SCALE = createField(DSL.name("NUMERIC_SCALE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> NUMERIC_SCALE = createField(DSL.name("NUMERIC_SCALE"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DATETIME_PRECISION</code>.
      */
-    public final TableField<Record, Long> DATETIME_PRECISION = createField(DSL.name("DATETIME_PRECISION"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> DATETIME_PRECISION = createField(DSL.name("DATETIME_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.INTERVAL_TYPE</code>.
      */
-    public final TableField<Record, String> INTERVAL_TYPE = createField(DSL.name("INTERVAL_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
+    public final TableField<Record, String> INTERVAL_TYPE = createField(DSL.name("INTERVAL_TYPE"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.INTERVAL_PRECISION</code>.
      */
-    public final TableField<Record, Long> INTERVAL_PRECISION = createField(DSL.name("INTERVAL_PRECISION"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> INTERVAL_PRECISION = createField(DSL.name("INTERVAL_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_DEFAULT</code>.
      */
-    public final TableField<Record, String> DOMAIN_DEFAULT = createField(DSL.name("DOMAIN_DEFAULT"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
+    public final TableField<Record, String> DOMAIN_DEFAULT = createField(DSL.name("DOMAIN_DEFAULT"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.MAXIMUM_CARDINALITY</code>.
      */
-    public final TableField<Record, Long> MAXIMUM_CARDINALITY = createField(DSL.name("MAXIMUM_CARDINALITY"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> MAXIMUM_CARDINALITY = createField(DSL.name("MAXIMUM_CARDINALITY"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DTD_IDENTIFIER</code>.
      */
-    public final TableField<Record, String> DTD_IDENTIFIER = createField(DSL.name("DTD_IDENTIFIER"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> DTD_IDENTIFIER = createField(DSL.name("DTD_IDENTIFIER"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DECLARED_DATA_TYPE</code>.
      */
-    public final TableField<Record, String> DECLARED_DATA_TYPE = createField(DSL.name("DECLARED_DATA_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
+    public final TableField<Record, String> DECLARED_DATA_TYPE = createField(DSL.name("DECLARED_DATA_TYPE"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DECLARED_NUMERIC_PRECISION</code>.
      */
-    public final TableField<Record, Long> DECLARED_NUMERIC_PRECISION = createField(DSL.name("DECLARED_NUMERIC_PRECISION"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> DECLARED_NUMERIC_PRECISION = createField(DSL.name("DECLARED_NUMERIC_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DECLARED_NUMERIC_SCALE</code>.
      */
-    public final TableField<Record, Long> DECLARED_NUMERIC_SCALE = createField(DSL.name("DECLARED_NUMERIC_SCALE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> DECLARED_NUMERIC_SCALE = createField(DSL.name("DECLARED_NUMERIC_SCALE"), SQLDataType.BIGINT, this, "");
 
     private Domains(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -194,6 +200,16 @@ public class Domains extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_DOMAINS;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_DOMAINS);
     }
 
     @Override

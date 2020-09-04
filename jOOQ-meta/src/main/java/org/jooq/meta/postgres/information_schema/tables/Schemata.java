@@ -4,6 +4,9 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,9 +15,12 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
+import org.jooq.meta.postgres.information_schema.Keys;
 
 
 /**
@@ -23,7 +29,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Schemata extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -595916450;
+    private static final long serialVersionUID = -1387781475;
 
     /**
      * The reference instance of <code>information_schema.schemata</code>
@@ -41,37 +47,37 @@ public class Schemata extends TableImpl<Record> {
     /**
      * The column <code>information_schema.schemata.catalog_name</code>.
      */
-    public final TableField<Record, String> CATALOG_NAME = createField(DSL.name("catalog_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CATALOG_NAME = createField(DSL.name("catalog_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.schema_name</code>.
      */
-    public final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("schema_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("schema_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.schema_owner</code>.
      */
-    public final TableField<Record, String> SCHEMA_OWNER = createField(DSL.name("schema_owner"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> SCHEMA_OWNER = createField(DSL.name("schema_owner"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.default_character_set_catalog</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.default_character_set_schema</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.default_character_set_name</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.sql_path</code>.
      */
-    public final TableField<Record, String> SQL_PATH = createField(DSL.name("sql_path"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> SQL_PATH = createField(DSL.name("sql_path"), SQLDataType.VARCHAR, this, "");
 
     private Schemata(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -109,6 +115,16 @@ public class Schemata extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_SCHEMATA;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SCHEMATA);
     }
 
     @Override

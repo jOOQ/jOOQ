@@ -4,6 +4,9 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,8 +15,11 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -23,7 +29,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysschemas extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 578657045;
+    private static final long serialVersionUID = 1557720970;
 
     /**
      * The reference instance of <code>SYS.SYSSCHEMAS</code>
@@ -41,17 +47,17 @@ public class Sysschemas extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSSCHEMAS.SCHEMAID</code>.
      */
-    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSCHEMAS.SCHEMANAME</code>.
      */
-    public final TableField<Record, String> SCHEMANAME = createField(DSL.name("SCHEMANAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
+    public final TableField<Record, String> SCHEMANAME = createField(DSL.name("SCHEMANAME"), SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSCHEMAS.AUTHORIZATIONID</code>.
      */
-    public final TableField<Record, String> AUTHORIZATIONID = createField(DSL.name("AUTHORIZATIONID"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
+    public final TableField<Record, String> AUTHORIZATIONID = createField(DSL.name("AUTHORIZATIONID"), SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     private Sysschemas(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -89,6 +95,16 @@ public class Sysschemas extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_SYSSCHEMAS;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SYSSCHEMAS);
     }
 
     @Override

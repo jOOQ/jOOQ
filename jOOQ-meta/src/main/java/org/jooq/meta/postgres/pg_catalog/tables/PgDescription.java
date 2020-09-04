@@ -11,7 +11,9 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
@@ -22,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgDescription extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 201387977;
+    private static final long serialVersionUID = -1984292078;
 
     /**
      * The reference instance of <code>pg_catalog.pg_description</code>
@@ -40,28 +42,29 @@ public class PgDescription extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_description.objoid</code>.
      */
-    public final TableField<Record, Long> OBJOID = createField(DSL.name("objoid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> OBJOID = createField(DSL.name("objoid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_description.classoid</code>.
      */
-    public final TableField<Record, Long> CLASSOID = createField(DSL.name("classoid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> CLASSOID = createField(DSL.name("classoid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_description.objsubid</code>.
      */
-    public final TableField<Record, Integer> OBJSUBID = createField(DSL.name("objsubid"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> OBJSUBID = createField(DSL.name("objsubid"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_description.description</code>.
      */
-    public final TableField<Record, String> DESCRIPTION = createField(DSL.name("description"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<Record, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB.nullable(false), this, "");
 
-    /**
-     * Create a <code>pg_catalog.pg_description</code> table reference
-     */
-    public PgDescription() {
-        this(DSL.name("pg_description"), null);
+    private PgDescription(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PgDescription(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -78,12 +81,11 @@ public class PgDescription extends TableImpl<Record> {
         this(alias, PG_DESCRIPTION);
     }
 
-    private PgDescription(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PgDescription(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>pg_catalog.pg_description</code> table reference
+     */
+    public PgDescription() {
+        this(DSL.name("pg_description"), null);
     }
 
     public <O extends Record> PgDescription(Table<O> child, ForeignKey<O, Record> key) {

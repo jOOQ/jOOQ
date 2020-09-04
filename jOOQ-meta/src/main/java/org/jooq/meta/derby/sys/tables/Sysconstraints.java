@@ -4,6 +4,9 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,8 +15,11 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -23,7 +29,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysconstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -736503307;
+    private static final long serialVersionUID = -1457660597;
 
     /**
      * The reference instance of <code>SYS.SYSCONSTRAINTS</code>
@@ -41,37 +47,37 @@ public class Sysconstraints extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSCONSTRAINTS.CONSTRAINTID</code>.
      */
-    public final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.TABLEID</code>.
      */
-    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.CONSTRAINTNAME</code>.
      */
-    public final TableField<Record, String> CONSTRAINTNAME = createField(DSL.name("CONSTRAINTNAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
+    public final TableField<Record, String> CONSTRAINTNAME = createField(DSL.name("CONSTRAINTNAME"), SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.TYPE</code>.
      */
-    public final TableField<Record, String> TYPE = createField(DSL.name("TYPE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
+    public final TableField<Record, String> TYPE = createField(DSL.name("TYPE"), SQLDataType.CHAR(1).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.SCHEMAID</code>.
      */
-    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.STATE</code>.
      */
-    public final TableField<Record, String> STATE = createField(DSL.name("STATE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
+    public final TableField<Record, String> STATE = createField(DSL.name("STATE"), SQLDataType.CHAR(1).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.REFERENCECOUNT</code>.
      */
-    public final TableField<Record, Integer> REFERENCECOUNT = createField(DSL.name("REFERENCECOUNT"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> REFERENCECOUNT = createField(DSL.name("REFERENCECOUNT"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private Sysconstraints(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -109,6 +115,29 @@ public class Sysconstraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_SYSCONSTRAINTS;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SYSCONSTRAINTS);
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSTABLES, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS);
+    }
+
+    public Systables systables() {
+        return new Systables(this, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSTABLES);
+    }
+
+    public Sysschemas sysschemas() {
+        return new Sysschemas(this, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS);
     }
 
     @Override

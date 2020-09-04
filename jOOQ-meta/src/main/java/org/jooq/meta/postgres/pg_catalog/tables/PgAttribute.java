@@ -11,7 +11,9 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
@@ -22,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgAttribute extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1985719853;
+    private static final long serialVersionUID = 672275510;
 
     /**
      * The reference instance of <code>pg_catalog.pg_attribute</code>
@@ -40,122 +42,122 @@ public class PgAttribute extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_attribute.attrelid</code>.
      */
-    public final TableField<Record, Long> ATTRELID = createField(DSL.name("attrelid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> ATTRELID = createField(DSL.name("attrelid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attname</code>.
      */
-    public final TableField<Record, String> ATTNAME = createField(DSL.name("attname"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> ATTNAME = createField(DSL.name("attname"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.atttypid</code>.
      */
-    public final TableField<Record, Long> ATTTYPID = createField(DSL.name("atttypid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> ATTTYPID = createField(DSL.name("atttypid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attstattarget</code>.
      */
-    public final TableField<Record, Integer> ATTSTATTARGET = createField(DSL.name("attstattarget"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> ATTSTATTARGET = createField(DSL.name("attstattarget"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attlen</code>.
      */
-    public final TableField<Record, Short> ATTLEN = createField(DSL.name("attlen"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> ATTLEN = createField(DSL.name("attlen"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attnum</code>.
      */
-    public final TableField<Record, Short> ATTNUM = createField(DSL.name("attnum"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> ATTNUM = createField(DSL.name("attnum"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attndims</code>.
      */
-    public final TableField<Record, Integer> ATTNDIMS = createField(DSL.name("attndims"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> ATTNDIMS = createField(DSL.name("attndims"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attcacheoff</code>.
      */
-    public final TableField<Record, Integer> ATTCACHEOFF = createField(DSL.name("attcacheoff"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> ATTCACHEOFF = createField(DSL.name("attcacheoff"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.atttypmod</code>.
      */
-    public final TableField<Record, Integer> ATTTYPMOD = createField(DSL.name("atttypmod"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> ATTTYPMOD = createField(DSL.name("atttypmod"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attbyval</code>.
      */
-    public final TableField<Record, Boolean> ATTBYVAL = createField(DSL.name("attbyval"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> ATTBYVAL = createField(DSL.name("attbyval"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attstorage</code>.
      */
-    public final TableField<Record, String> ATTSTORAGE = createField(DSL.name("attstorage"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> ATTSTORAGE = createField(DSL.name("attstorage"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attalign</code>.
      */
-    public final TableField<Record, String> ATTALIGN = createField(DSL.name("attalign"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> ATTALIGN = createField(DSL.name("attalign"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attnotnull</code>.
      */
-    public final TableField<Record, Boolean> ATTNOTNULL = createField(DSL.name("attnotnull"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> ATTNOTNULL = createField(DSL.name("attnotnull"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.atthasdef</code>.
      */
-    public final TableField<Record, Boolean> ATTHASDEF = createField(DSL.name("atthasdef"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> ATTHASDEF = createField(DSL.name("atthasdef"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.atthasmissing</code>.
      */
-    public final TableField<Record, Boolean> ATTHASMISSING = createField(DSL.name("atthasmissing"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> ATTHASMISSING = createField(DSL.name("atthasmissing"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attidentity</code>.
      */
-    public final TableField<Record, String> ATTIDENTITY = createField(DSL.name("attidentity"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> ATTIDENTITY = createField(DSL.name("attidentity"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attgenerated</code>.
      */
-    public final TableField<Record, String> ATTGENERATED = createField(DSL.name("attgenerated"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> ATTGENERATED = createField(DSL.name("attgenerated"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attisdropped</code>.
      */
-    public final TableField<Record, Boolean> ATTISDROPPED = createField(DSL.name("attisdropped"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> ATTISDROPPED = createField(DSL.name("attisdropped"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attislocal</code>.
      */
-    public final TableField<Record, Boolean> ATTISLOCAL = createField(DSL.name("attislocal"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> ATTISLOCAL = createField(DSL.name("attislocal"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attinhcount</code>.
      */
-    public final TableField<Record, Integer> ATTINHCOUNT = createField(DSL.name("attinhcount"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> ATTINHCOUNT = createField(DSL.name("attinhcount"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attcollation</code>.
      */
-    public final TableField<Record, Long> ATTCOLLATION = createField(DSL.name("attcollation"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> ATTCOLLATION = createField(DSL.name("attcollation"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attacl</code>.
      */
-    public final TableField<Record, String[]> ATTACL = createField(DSL.name("attacl"), org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> ATTACL = createField(DSL.name("attacl"), SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attoptions</code>.
      */
-    public final TableField<Record, String[]> ATTOPTIONS = createField(DSL.name("attoptions"), org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> ATTOPTIONS = createField(DSL.name("attoptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_attribute.attfdwoptions</code>.
      */
-    public final TableField<Record, String[]> ATTFDWOPTIONS = createField(DSL.name("attfdwoptions"), org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> ATTFDWOPTIONS = createField(DSL.name("attfdwoptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
      * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
@@ -163,11 +165,12 @@ public class PgAttribute extends TableImpl<Record> {
     @java.lang.Deprecated
     public final TableField<Record, Object> ATTMISSINGVAL = createField(DSL.name("attmissingval"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"anyarray\""), this, "");
 
-    /**
-     * Create a <code>pg_catalog.pg_attribute</code> table reference
-     */
-    public PgAttribute() {
-        this(DSL.name("pg_attribute"), null);
+    private PgAttribute(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PgAttribute(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -184,12 +187,11 @@ public class PgAttribute extends TableImpl<Record> {
         this(alias, PG_ATTRIBUTE);
     }
 
-    private PgAttribute(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PgAttribute(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>pg_catalog.pg_attribute</code> table reference
+     */
+    public PgAttribute() {
+        this(DSL.name("pg_attribute"), null);
     }
 
     public <O extends Record> PgAttribute(Table<O> child, ForeignKey<O, Record> key) {

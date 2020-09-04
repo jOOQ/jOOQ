@@ -11,7 +11,9 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
@@ -22,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgCollation extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1168306903;
+    private static final long serialVersionUID = -1853827620;
 
     /**
      * The reference instance of <code>pg_catalog.pg_collation</code>
@@ -40,58 +42,59 @@ public class PgCollation extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_collation.oid</code>.
      */
-    public final TableField<Record, Long> OID = createField(DSL.name("oid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> OID = createField(DSL.name("oid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collname</code>.
      */
-    public final TableField<Record, String> COLLNAME = createField(DSL.name("collname"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> COLLNAME = createField(DSL.name("collname"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collnamespace</code>.
      */
-    public final TableField<Record, Long> COLLNAMESPACE = createField(DSL.name("collnamespace"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> COLLNAMESPACE = createField(DSL.name("collnamespace"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collowner</code>.
      */
-    public final TableField<Record, Long> COLLOWNER = createField(DSL.name("collowner"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> COLLOWNER = createField(DSL.name("collowner"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collprovider</code>.
      */
-    public final TableField<Record, String> COLLPROVIDER = createField(DSL.name("collprovider"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> COLLPROVIDER = createField(DSL.name("collprovider"), SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collisdeterministic</code>.
      */
-    public final TableField<Record, Boolean> COLLISDETERMINISTIC = createField(DSL.name("collisdeterministic"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> COLLISDETERMINISTIC = createField(DSL.name("collisdeterministic"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collencoding</code>.
      */
-    public final TableField<Record, Integer> COLLENCODING = createField(DSL.name("collencoding"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> COLLENCODING = createField(DSL.name("collencoding"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collcollate</code>.
      */
-    public final TableField<Record, String> COLLCOLLATE = createField(DSL.name("collcollate"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> COLLCOLLATE = createField(DSL.name("collcollate"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collctype</code>.
      */
-    public final TableField<Record, String> COLLCTYPE = createField(DSL.name("collctype"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> COLLCTYPE = createField(DSL.name("collctype"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_collation.collversion</code>.
      */
-    public final TableField<Record, String> COLLVERSION = createField(DSL.name("collversion"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> COLLVERSION = createField(DSL.name("collversion"), SQLDataType.CLOB, this, "");
 
-    /**
-     * Create a <code>pg_catalog.pg_collation</code> table reference
-     */
-    public PgCollation() {
-        this(DSL.name("pg_collation"), null);
+    private PgCollation(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PgCollation(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -108,12 +111,11 @@ public class PgCollation extends TableImpl<Record> {
         this(alias, PG_COLLATION);
     }
 
-    private PgCollation(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PgCollation(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>pg_catalog.pg_collation</code> table reference
+     */
+    public PgCollation() {
+        this(DSL.name("pg_collation"), null);
     }
 
     public <O extends Record> PgCollation(Table<O> child, ForeignKey<O, Record> key) {

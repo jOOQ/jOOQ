@@ -4,6 +4,9 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -13,7 +16,9 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -23,7 +28,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syskeys extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1768228891;
+    private static final long serialVersionUID = 216860706;
 
     /**
      * The reference instance of <code>SYS.SYSKEYS</code>
@@ -41,12 +46,12 @@ public class Syskeys extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSKEYS.CONSTRAINTID</code>.
      */
-    public final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSKEYS.CONGLOMERATEID</code>.
      */
-    public final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
+    public final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     private Syskeys(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -84,6 +89,19 @@ public class Syskeys extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONSTRAINTS, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONGLOMERATES);
+    }
+
+    public Sysconstraints sysconstraints() {
+        return new Sysconstraints(this, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONSTRAINTS);
+    }
+
+    public Sysconglomerates sysconglomerates() {
+        return new Sysconglomerates(this, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONGLOMERATES);
     }
 
     @Override

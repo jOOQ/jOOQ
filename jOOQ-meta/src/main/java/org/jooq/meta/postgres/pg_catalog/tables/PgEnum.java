@@ -4,6 +4,9 @@
 package org.jooq.meta.postgres.pg_catalog.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -11,8 +14,11 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
 
@@ -22,7 +28,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgEnum extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1086087906;
+    private static final long serialVersionUID = -1870532870;
 
     /**
      * The reference instance of <code>pg_catalog.pg_enum</code>
@@ -40,28 +46,29 @@ public class PgEnum extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_enum.oid</code>.
      */
-    public final TableField<Record, Long> OID = createField(DSL.name("oid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> OID = createField(DSL.name("oid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_enum.enumtypid</code>.
      */
-    public final TableField<Record, Long> ENUMTYPID = createField(DSL.name("enumtypid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> ENUMTYPID = createField(DSL.name("enumtypid"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_enum.enumsortorder</code>.
      */
-    public final TableField<Record, Float> ENUMSORTORDER = createField(DSL.name("enumsortorder"), org.jooq.impl.SQLDataType.REAL.nullable(false), this, "");
+    public final TableField<Record, Float> ENUMSORTORDER = createField(DSL.name("enumsortorder"), SQLDataType.REAL.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_enum.enumlabel</code>.
      */
-    public final TableField<Record, String> ENUMLABEL = createField(DSL.name("enumlabel"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> ENUMLABEL = createField(DSL.name("enumlabel"), SQLDataType.VARCHAR.nullable(false), this, "");
 
-    /**
-     * Create a <code>pg_catalog.pg_enum</code> table reference
-     */
-    public PgEnum() {
-        this(DSL.name("pg_enum"), null);
+    private PgEnum(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PgEnum(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -78,12 +85,11 @@ public class PgEnum extends TableImpl<Record> {
         this(alias, PG_ENUM);
     }
 
-    private PgEnum(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PgEnum(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>pg_catalog.pg_enum</code> table reference
+     */
+    public PgEnum() {
+        this(DSL.name("pg_enum"), null);
     }
 
     public <O extends Record> PgEnum(Table<O> child, ForeignKey<O, Record> key) {
@@ -93,6 +99,15 @@ public class PgEnum extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return PgCatalog.PG_CATALOG;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_ENUM__REFERENCING_CONSTRAINT);
+    }
+
+    public PgType pgType() {
+        return new PgType(this, Keys.PG_ENUM__REFERENCING_CONSTRAINT);
     }
 
     @Override

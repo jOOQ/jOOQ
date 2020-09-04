@@ -752,13 +752,22 @@ public interface Database extends AutoCloseable {
     /**
      * Columns matching these regular expressions will be considered as members
      * of synthetic primary keys in generated code.
+     *
+     * @deprecated - 3.14.0 - [#10588] - Use
+     *             {@link #setConfiguredSyntheticKeys(SyntheticKeysType)}
+     *             instead.
      */
+    @Deprecated
     void setSyntheticPrimaryKeys(String[] primaryKeys);
 
     /**
      * Columns matching these regular expressions will be considered as members
      * of synthetic primary keys in generated code.
+     *
+     * @deprecated - 3.14.0 - [#10588] - Use
+     *             {@link #getConfiguredSyntheticPrimaryKeys()} instead.
      */
+    @Deprecated
     String[] getSyntheticPrimaryKeys();
 
     /**
@@ -785,13 +794,22 @@ public interface Database extends AutoCloseable {
     /**
      * Columns matching these regular expressions will be considered as identity
      * columns in generated code.
+     *
+     * @deprecated - 3.14.0 - [#10588] - Use
+     *             {@link #setConfiguredSyntheticKeys(SyntheticKeysType)}
+     *             instead.
      */
+    @Deprecated
     void setSyntheticIdentities(String[] syntheticIdentities);
 
     /**
      * Columns matching these regular expressions will be considered as identity
      * columns in generated code.
+     *
+     * @deprecated - 3.14.0 - [#10588] - Use
+     *             {@link #getConfiguredSyntheticIdentities()} instead.
      */
+    @Deprecated
     String[] getSyntheticIdentities();
 
     /**

@@ -43,6 +43,7 @@ import static java.util.Collections.singletonList;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -72,15 +73,20 @@ public class DefaultColumnDefinition
             ((DefaultDataTypeDefinition) type).identity(this.isIdentity);
     }
 
+    @SuppressWarnings("unused")
     private static boolean isSyntheticIdentity(DefaultColumnDefinition column) {
         AbstractDatabase db = (AbstractDatabase) column.getDatabase();
-        String[] syntheticIdentities = db.getSyntheticIdentities();
-        boolean match = !db.filterExcludeInclude(singletonList(column), null, syntheticIdentities, db.getFilters()).isEmpty();
 
-        if (match)
-            log.info("Synthetic Identity: " + column.getQualifiedName());
+        for (SyntheticIdentityType id : db.getConfiguredSyntheticIdentities()) {
+            for (TableDefinition t : db.filter(singletonList(column.getContainer()), id.getKeyTables())) {
+                for (ColumnDefinition c : db.filter(singletonList(column), id.getKeyFields())) {
+                    log.info("Synthetic identity", column.getQualifiedName());
+                    return true;
+                }
+            }
+        }
 
-        return match;
+        return false;
     }
 
     @Override

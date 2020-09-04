@@ -162,7 +162,6 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          forceIntegerTypesOnZeroScaleDecimals = true;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
-    private String[]                                                         syntheticIdentities;
     private boolean                                                          embeddablePrimaryKeys                = false;
     private boolean                                                          embeddableUniqueKeys                 = false;
     private boolean                                                          embeddableDomains                    = false;
@@ -1173,9 +1172,8 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getRecordVersionFields() {
-        if (recordVersionFields == null) {
+        if (recordVersionFields == null)
             recordVersionFields = new String[0];
-        }
 
         return recordVersionFields;
     }
@@ -1187,24 +1185,27 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getRecordTimestampFields() {
-        if (recordTimestampFields == null) {
+        if (recordTimestampFields == null)
             recordTimestampFields = new String[0];
-        }
 
         return recordTimestampFields;
     }
 
     @Override
+    @Deprecated
     public void setSyntheticPrimaryKeys(String[] syntheticPrimaryKeys) {
         if (syntheticPrimaryKeys != null) {
             for (String syntheticPrimaryKey : syntheticPrimaryKeys) {
-                log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
-                getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKeyFields(syntheticPrimaryKey));
+                if (!StringUtils.isBlank(syntheticPrimaryKey)) {
+                    log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+                    getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKeyFields(syntheticPrimaryKey));
+                }
             }
         }
     }
 
     @Override
+    @Deprecated
     public String[] getSyntheticPrimaryKeys() {
         log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
         return new String[0];
@@ -1215,29 +1216,39 @@ public abstract class AbstractDatabase implements Database {
     public void setOverridePrimaryKeys(String[] overridePrimaryKeys) {
         if (overridePrimaryKeys != null) {
             for (String overridePrimaryKey : overridePrimaryKeys) {
-                log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
-                getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKey(overridePrimaryKey));
+                if (!StringUtils.isBlank(overridePrimaryKey)) {
+                    log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+                    getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKey(overridePrimaryKey));
+                }
             }
         }
     }
 
     @Override
+    @Deprecated
     public String[] getOverridePrimaryKeys() {
         log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
         return new String[0];
     }
 
     @Override
+    @Deprecated
     public void setSyntheticIdentities(String[] syntheticIdentities) {
-        this.syntheticIdentities = syntheticIdentities;
+        if (syntheticIdentities != null) {
+            for (String syntheticIdentity : syntheticIdentities) {
+                if (!StringUtils.isBlank(syntheticIdentity)) {
+                    log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+                    getConfiguredSyntheticIdentities().add(new SyntheticIdentityType().withKeyFields(syntheticIdentity));
+                }
+            }
+        }
     }
 
     @Override
+    @Deprecated
     public final String[] getSyntheticIdentities() {
-        if (syntheticIdentities == null)
-            syntheticIdentities = new String[0];
-
-        return syntheticIdentities;
+        log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+        return new String[0];
     }
 
     @Override
@@ -2588,8 +2599,12 @@ public abstract class AbstractDatabase implements Database {
         return Collections.unmodifiableList(all);
     }
 
-    protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String e, String i, List<Filter> f) {
-        return filterExcludeInclude(definitions, new String[] { e }, new String[] { i }, f);
+    protected final <T extends Definition> List<T> filter(List<T> definitions, String include) {
+        return filterExcludeInclude(definitions, null, include);
+    }
+
+    protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String e, String i) {
+        return filterExcludeInclude(definitions, new String[] { e }, new String[] { i != null ? i : ".*" }, Collections.emptyList());
     }
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] e, String[] i, List<Filter> f) {
@@ -2859,8 +2874,8 @@ public abstract class AbstractDatabase implements Database {
             if (key.getKey() == null)
                 continue keyLoop;
 
-            for (TableDefinition table : filterExcludeInclude(getTables(), null, key.getKeyTables() != null ? key.getKeyTables() : ".*", Collections.emptyList())) {
-                for (UniqueKeyDefinition uk : filterExcludeInclude(table.getUniqueKeys(), null, key.getKey(), Collections.emptyList())) {
+            for (TableDefinition table : filter(getTables(), key.getKeyTables())) {
+                for (UniqueKeyDefinition uk : filter(table.getUniqueKeys(), key.getKey())) {
                     log.info("Overriding primary key", "" + uk);
                     r.overridePrimaryKey(uk);
                     markUsed(key);
@@ -2876,10 +2891,10 @@ public abstract class AbstractDatabase implements Database {
             if (key.getKey() != null)
                 continue keyLoop;
 
-            for (TableDefinition table : filterExcludeInclude(getTables(), null, key.getKeyTables() != null ? key.getKeyTables() : ".*", Collections.emptyList())) {
+            for (TableDefinition table : filter(getTables(), key.getKeyTables())) {
                 String keyName = key.getName() != null ? key.getName() : "SYNTHETIC_PK_" + table.getName();
 
-                List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, key.getKeyFields(), Collections.emptyList());
+                List<ColumnDefinition> columns = filter(table.getColumns(), key.getKeyFields());
                 if (!columns.isEmpty()) {
                     markUsed(key);
 
@@ -2891,7 +2906,6 @@ public abstract class AbstractDatabase implements Database {
             }
         }
     }
-
 
 
 

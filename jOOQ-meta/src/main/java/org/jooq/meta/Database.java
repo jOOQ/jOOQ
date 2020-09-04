@@ -58,7 +58,7 @@ import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
-import org.jooq.meta.jaxb.SyntheticKeysType;
+import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 
@@ -986,9 +986,9 @@ public interface Database extends AutoCloseable {
     void setEmbeddableDomains(boolean embeddableDomains);
 
     /**
-     * Configure the synthetic keys.
+     * Configure the synthetic objects.
      */
-    void setConfiguredSyntheticKeys(SyntheticKeysType configuredSyntheticKeys);
+    void setConfiguredSyntheticObjects(SyntheticObjectsType configuredSyntheticObjects);
 
     /**
      * Get the configured synthetic identities.

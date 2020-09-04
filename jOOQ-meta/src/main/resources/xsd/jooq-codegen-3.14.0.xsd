@@ -671,8 +671,8 @@ This is a Java regular expression. Use the pipe to separate several expressions.
 See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="syntheticKeys" type="tns:SyntheticKeysType" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The synthetic key configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="syntheticObjects" type="tns:SyntheticObjectsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The synthetic objects configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1">
@@ -915,8 +915,8 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     </all>
   </complexType>
   
-  <complexType name="SyntheticKeysType">
-    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Synthetic key configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+  <complexType name="SyntheticObjectsType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Synthetic objects configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="identities" type="tns:SyntheticIdentitiesType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic identity configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>

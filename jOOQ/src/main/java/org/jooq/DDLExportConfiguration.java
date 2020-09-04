@@ -44,8 +44,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
- * A configuration type for use with the various {@link DSLContext#ddl(Catalog)}
- * methods.
+ * A configuration type for use with the various {@link Meta#ddl()} methods.
  *
  * @author Lukas Eder
  */

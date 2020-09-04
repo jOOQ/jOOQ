@@ -15,19 +15,19 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
- * Synthetic key configuration.
+ * Synthetic objects configuration.
  * 
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SyntheticKeysType", propOrder = {
+@XmlType(name = "SyntheticObjectsType", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class SyntheticKeysType implements Serializable, XMLAppendable
+public class SyntheticObjectsType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31400L;
@@ -88,7 +88,7 @@ public class SyntheticKeysType implements Serializable, XMLAppendable
         this.foreignKeys = foreignKeys;
     }
 
-    public SyntheticKeysType withIdentities(SyntheticIdentityType... values) {
+    public SyntheticObjectsType withIdentities(SyntheticIdentityType... values) {
         if (values!= null) {
             for (SyntheticIdentityType value: values) {
                 getIdentities().add(value);
@@ -97,19 +97,19 @@ public class SyntheticKeysType implements Serializable, XMLAppendable
         return this;
     }
 
-    public SyntheticKeysType withIdentities(Collection<SyntheticIdentityType> values) {
+    public SyntheticObjectsType withIdentities(Collection<SyntheticIdentityType> values) {
         if (values!= null) {
             getIdentities().addAll(values);
         }
         return this;
     }
 
-    public SyntheticKeysType withIdentities(List<SyntheticIdentityType> identities) {
+    public SyntheticObjectsType withIdentities(List<SyntheticIdentityType> identities) {
         setIdentities(identities);
         return this;
     }
 
-    public SyntheticKeysType withPrimaryKeys(SyntheticPrimaryKeyType... values) {
+    public SyntheticObjectsType withPrimaryKeys(SyntheticPrimaryKeyType... values) {
         if (values!= null) {
             for (SyntheticPrimaryKeyType value: values) {
                 getPrimaryKeys().add(value);
@@ -118,19 +118,19 @@ public class SyntheticKeysType implements Serializable, XMLAppendable
         return this;
     }
 
-    public SyntheticKeysType withPrimaryKeys(Collection<SyntheticPrimaryKeyType> values) {
+    public SyntheticObjectsType withPrimaryKeys(Collection<SyntheticPrimaryKeyType> values) {
         if (values!= null) {
             getPrimaryKeys().addAll(values);
         }
         return this;
     }
 
-    public SyntheticKeysType withPrimaryKeys(List<SyntheticPrimaryKeyType> primaryKeys) {
+    public SyntheticObjectsType withPrimaryKeys(List<SyntheticPrimaryKeyType> primaryKeys) {
         setPrimaryKeys(primaryKeys);
         return this;
     }
 
-    public SyntheticKeysType withUniqueKeys(SyntheticUniqueKeyType... values) {
+    public SyntheticObjectsType withUniqueKeys(SyntheticUniqueKeyType... values) {
         if (values!= null) {
             for (SyntheticUniqueKeyType value: values) {
                 getUniqueKeys().add(value);
@@ -139,19 +139,19 @@ public class SyntheticKeysType implements Serializable, XMLAppendable
         return this;
     }
 
-    public SyntheticKeysType withUniqueKeys(Collection<SyntheticUniqueKeyType> values) {
+    public SyntheticObjectsType withUniqueKeys(Collection<SyntheticUniqueKeyType> values) {
         if (values!= null) {
             getUniqueKeys().addAll(values);
         }
         return this;
     }
 
-    public SyntheticKeysType withUniqueKeys(List<SyntheticUniqueKeyType> uniqueKeys) {
+    public SyntheticObjectsType withUniqueKeys(List<SyntheticUniqueKeyType> uniqueKeys) {
         setUniqueKeys(uniqueKeys);
         return this;
     }
 
-    public SyntheticKeysType withForeignKeys(SyntheticForeignKeyType... values) {
+    public SyntheticObjectsType withForeignKeys(SyntheticForeignKeyType... values) {
         if (values!= null) {
             for (SyntheticForeignKeyType value: values) {
                 getForeignKeys().add(value);
@@ -160,14 +160,14 @@ public class SyntheticKeysType implements Serializable, XMLAppendable
         return this;
     }
 
-    public SyntheticKeysType withForeignKeys(Collection<SyntheticForeignKeyType> values) {
+    public SyntheticObjectsType withForeignKeys(Collection<SyntheticForeignKeyType> values) {
         if (values!= null) {
             getForeignKeys().addAll(values);
         }
         return this;
     }
 
-    public SyntheticKeysType withForeignKeys(List<SyntheticForeignKeyType> foreignKeys) {
+    public SyntheticObjectsType withForeignKeys(List<SyntheticForeignKeyType> foreignKeys) {
         setForeignKeys(foreignKeys);
         return this;
     }
@@ -198,7 +198,7 @@ public class SyntheticKeysType implements Serializable, XMLAppendable
         if (getClass()!= that.getClass()) {
             return false;
         }
-        SyntheticKeysType other = ((SyntheticKeysType) that);
+        SyntheticObjectsType other = ((SyntheticObjectsType) that);
         if (identities == null) {
             if (other.identities!= null) {
                 return false;

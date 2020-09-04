@@ -105,7 +105,7 @@ import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
-import org.jooq.meta.jaxb.SyntheticKeysType;
+import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 // ...
@@ -1197,7 +1197,7 @@ public abstract class AbstractDatabase implements Database {
         if (syntheticPrimaryKeys != null) {
             for (String syntheticPrimaryKey : syntheticPrimaryKeys) {
                 if (!StringUtils.isBlank(syntheticPrimaryKey)) {
-                    log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+                    log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
                     getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKeyFields(syntheticPrimaryKey));
                 }
             }
@@ -1207,7 +1207,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     @Deprecated
     public String[] getSyntheticPrimaryKeys() {
-        log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+        log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
         return new String[0];
     }
 
@@ -1217,7 +1217,7 @@ public abstract class AbstractDatabase implements Database {
         if (overridePrimaryKeys != null) {
             for (String overridePrimaryKey : overridePrimaryKeys) {
                 if (!StringUtils.isBlank(overridePrimaryKey)) {
-                    log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+                    log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
                     getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKey(overridePrimaryKey));
                 }
             }
@@ -1227,7 +1227,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     @Deprecated
     public String[] getOverridePrimaryKeys() {
-        log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+        log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
         return new String[0];
     }
 
@@ -1237,7 +1237,7 @@ public abstract class AbstractDatabase implements Database {
         if (syntheticIdentities != null) {
             for (String syntheticIdentity : syntheticIdentities) {
                 if (!StringUtils.isBlank(syntheticIdentity)) {
-                    log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+                    log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
                     getConfiguredSyntheticIdentities().add(new SyntheticIdentityType().withKeyFields(syntheticIdentity));
                 }
             }
@@ -1247,7 +1247,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     @Deprecated
     public final String[] getSyntheticIdentities() {
-        log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticKeys/> only, instead.");
+        log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
         return new String[0];
     }
 
@@ -2767,30 +2767,30 @@ public abstract class AbstractDatabase implements Database {
 
     @SuppressWarnings("unused")
     @Override
-    public void setConfiguredSyntheticKeys(SyntheticKeysType configuredSyntheticKeys) {
-        if (configuredSyntheticKeys != null) {
+    public void setConfiguredSyntheticObjects(SyntheticObjectsType configuredSyntheticObjects) {
+        if (configuredSyntheticObjects != null) {
             // [#8512] Some implementation of this database may have already
             // configured things programmatically, so we must not set the
             // list but append it.
 
-            getConfiguredSyntheticIdentities().addAll(configuredSyntheticKeys.getIdentities());
-            getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticKeys.getPrimaryKeys());
-            getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticKeys.getUniqueKeys());
-            getConfiguredSyntheticForeignKeys().addAll(configuredSyntheticKeys.getForeignKeys());
+            getConfiguredSyntheticIdentities().addAll(configuredSyntheticObjects.getIdentities());
+            getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticObjects.getPrimaryKeys());
+            getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticObjects.getUniqueKeys());
+            getConfiguredSyntheticForeignKeys().addAll(configuredSyntheticObjects.getForeignKeys());
 
-            unusedSyntheticIdentities.addAll(configuredSyntheticKeys.getIdentities());
-            unusedSyntheticPrimaryKeys.addAll(configuredSyntheticKeys.getPrimaryKeys());
-            unusedSyntheticUniqueKeys.addAll(configuredSyntheticKeys.getUniqueKeys());
-            unusedSyntheticForeignKeys.addAll(configuredSyntheticKeys.getForeignKeys());
-
-
+            unusedSyntheticIdentities.addAll(configuredSyntheticObjects.getIdentities());
+            unusedSyntheticPrimaryKeys.addAll(configuredSyntheticObjects.getPrimaryKeys());
+            unusedSyntheticUniqueKeys.addAll(configuredSyntheticObjects.getUniqueKeys());
+            unusedSyntheticForeignKeys.addAll(configuredSyntheticObjects.getForeignKeys());
 
 
 
 
-            if (!configuredSyntheticKeys.getUniqueKeys().isEmpty())
+
+
+            if (!configuredSyntheticObjects.getUniqueKeys().isEmpty())
                 log.info("Commercial feature", "Synthetic unique keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
-            if (!configuredSyntheticKeys.getForeignKeys().isEmpty())
+            if (!configuredSyntheticObjects.getForeignKeys().isEmpty())
                 log.info("Commercial feature", "Synthetic foreign keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
         }
     }

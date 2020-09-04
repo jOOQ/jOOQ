@@ -158,11 +158,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SyntheticKeysType }
+     * Create an instance of {@link SyntheticObjectsType }
      * 
      */
-    public SyntheticKeysType createSyntheticKeysType() {
-        return new SyntheticKeysType();
+    public SyntheticObjectsType createSyntheticObjectsType() {
+        return new SyntheticObjectsType();
     }
 
     /**

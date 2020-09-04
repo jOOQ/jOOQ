@@ -120,6 +120,16 @@ final class DropViewImpl extends AbstractRowCountQuery implements
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
+
+
+
+
+
+
+
+
+
+
         ctx.visit(view);
 
         ctx.end(DROP_VIEW_TABLE);

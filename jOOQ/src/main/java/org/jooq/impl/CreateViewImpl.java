@@ -264,6 +264,16 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
+
+
+
+
+
+
+
+
+
+
         ctx.visit(view);
 
         if (rename && renameSupported) {

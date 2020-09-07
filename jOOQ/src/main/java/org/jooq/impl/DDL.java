@@ -158,9 +158,9 @@ final class DDL {
         else if (StringUtils.isBlank(options.source()))
             return q.as("");
 
-        Query query = ctx.parser().parseQuery(options.source());
-        if (query instanceof CreateViewImpl)
-            return q.as(((CreateViewImpl<?>) query).$select());
+        Query[] queries = ctx.parser().parse(options.source()).queries();
+        if (queries.length > 0 && queries[0] instanceof CreateViewImpl)
+            return q.as(((CreateViewImpl<?>) queries[0]).$select());
         else
             return q.as("");
     }

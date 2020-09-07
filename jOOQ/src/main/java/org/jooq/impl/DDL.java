@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.DDLFlag.CHECK;
 import static org.jooq.DDLFlag.COMMENT;
 import static org.jooq.DDLFlag.DOMAIN;
@@ -139,17 +138,17 @@ final class DDL {
         if (temporary && onCommit != null) {
             switch (table.getOptions().onCommit()) {
                 case DELETE_ROWS:
-                    return asList(s0.onCommitDeleteRows());
+                    return Arrays.<Query>asList(s0.onCommitDeleteRows());
                 case PRESERVE_ROWS:
-                    return asList(s0.onCommitPreserveRows());
+                    return Arrays.<Query>asList(s0.onCommitPreserveRows());
                 case DROP:
-                    return asList(s0.onCommitDrop());
+                    return Arrays.<Query>asList(s0.onCommitDrop());
                 default:
                     throw new IllegalStateException("Unsupported flag: " + onCommit);
             }
         }
 
-        return asList(s0);
+        return Arrays.<Query>asList(s0);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

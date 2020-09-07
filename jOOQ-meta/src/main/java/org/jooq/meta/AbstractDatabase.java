@@ -2604,7 +2604,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String e, String i) {
-        return filterExcludeInclude(definitions, new String[] { e }, new String[] { i != null ? i : ".*" }, Collections.emptyList());
+        return filterExcludeInclude(definitions, new String[] { e }, new String[] { i != null ? i : ".*" }, Collections.<Filter>emptyList());
     }
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] e, String[] i, List<Filter> f) {

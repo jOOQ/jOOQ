@@ -179,12 +179,13 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         this(name, schema, child, path, aliased, parameters, comment, TableOptions.table());
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
         super(options, name, schema, comment);
 
         this.fields = new Fields<>();
         this.child = child;
-        this.childPath = path;
+        this.childPath = path == null ? null : Tools.aliasedKey((ForeignKey) path, child, this);
 
         if (aliased != null) {
 

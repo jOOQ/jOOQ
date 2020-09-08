@@ -154,7 +154,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     private static final Set<SQLDialect> SUPPORT_TEMPORARY                  = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES);
     private static final Set<SQLDialect> EMULATE_COMMENT_IN_BLOCK           = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
     private static final Set<SQLDialect> REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(MARIADB, MYSQL);
 
 
 
@@ -553,10 +553,10 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
 
     private final DataType<?> columnType(Context<?> ctx, int i) {
         DataType<?> type = columnTypes.get(i);
-        
+
         if (NO_SUPPORT_NULLABLE_PRIMARY_KEY.contains(ctx.dialect()) && type.nullability() == Nullability.DEFAULT && isPrimaryKey(i))
             type = type.nullable(false);
-        
+
         return type;
     }
 
@@ -567,7 +567,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                     for (Field<?> field : ((ConstraintImpl) constraint).$primaryKey())
                         if (field.equals(columnFields.get(i)))
                             return true;
-        
+
         return false;
     }
 

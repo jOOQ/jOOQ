@@ -239,6 +239,7 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;
@@ -264,6 +265,7 @@ import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SortField;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -1391,6 +1393,19 @@ final class Tools {
         return result;
     }
 
+    static <R extends Record, O extends Record> ReferenceImpl<R, O> aliasedKey(ForeignKey<R, O> key, Table<R> child, Table<O> parent) {
+
+        // [#10603] [#5050] TODO: Solve aliasing constraints more generically
+        return new ReferenceImpl<>(
+            child,
+            key.getQualifiedName(),
+            Tools.fieldsByName(child, key.getFieldsArray()),
+            key.getKey(),
+            Tools.fieldsByName(parent, key.getKeyFieldsArray()),
+            key.enforced()
+        );
+    }
+
     static final Field<?>[] aliasedFields(Field<?>[] fields) {
         if (fields == null)
             return null;
@@ -1416,6 +1431,23 @@ final class Tools {
         else
             for (int i = 0; i < length; i++)
                 result[i] = DSL.field(name(tableName, fieldName(i)));
+
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <R extends Record> TableField<R, ?>[] fieldsByName(Table<R> tableName, Field<?>[] fieldNames) {
+        if (fieldNames == null)
+            return null;
+
+        TableField<R, ?>[] result = new TableField[fieldNames.length];
+
+        if (tableName == null)
+            for (int i = 0; i < fieldNames.length; i++)
+                result[i] = (TableField<R, ?>) DSL.field(fieldNames[i].getUnqualifiedName(), fieldNames[i].getDataType());
+        else
+            for (int i = 0; i < fieldNames.length; i++)
+                result[i] = (TableField<R, ?>) DSL.field(tableName.getQualifiedName().append(fieldNames[i].getUnqualifiedName()), fieldNames[i].getDataType());
 
         return result;
     }

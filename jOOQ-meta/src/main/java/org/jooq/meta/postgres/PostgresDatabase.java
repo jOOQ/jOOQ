@@ -1066,9 +1066,8 @@ public class PostgresDatabase extends AbstractDatabase {
         return
         create().select(PG_ENUM.ENUMLABEL)
                 .from(PG_ENUM)
-                .join(PG_TYPE).on(PG_ENUM.ENUMTYPID.eq(oid(PG_TYPE)))
-                .where(PG_TYPE.pgNamespace().NSPNAME.eq(nspname))
-                .and(PG_TYPE.TYPNAME.eq(typname))
+                .where(PG_ENUM.pgType().pgNamespace().NSPNAME.eq(nspname))
+                .and(PG_ENUM.pgType().TYPNAME.eq(typname))
                 .orderBy(orderBy)
                 .fetch(PG_ENUM.ENUMLABEL);
     }

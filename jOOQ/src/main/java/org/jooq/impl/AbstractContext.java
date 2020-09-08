@@ -53,6 +53,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION
 
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Deque;
 import java.util.LinkedHashMap;
@@ -803,6 +804,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         ScopeStackElement(int scopeLevel) {
             this.scopeLevel = scopeLevel;
+        }
+
+        @Override
+        public String toString() {
+            return Arrays.toString(positions) + ": " + joinNode;
         }
     }
 }

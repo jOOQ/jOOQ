@@ -120,6 +120,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Index;
 import org.jooq.Name;
+import org.jooq.Nullability;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -141,35 +142,36 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID                   = 8904572826501186329L;
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS           = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     NO_SUPPORT_WITH_DATA               = SQLDialect.supportedBy(H2, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect>     NO_SUPPORT_CTAS_COLUMN_NAMES       = SQLDialect.supportedBy(H2);
-    private static final Set<SQLDialect>     EMULATE_INDEXES_IN_BLOCK           = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
-    private static final Set<SQLDialect>     EMULATE_SOME_ENUM_TYPES_AS_CHECK   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE);
-    private static final Set<SQLDialect>     EMULATE_STORED_ENUM_TYPES_AS_CHECK = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
-    private static final Set<SQLDialect>     REQUIRES_WITH_DATA                 = SQLDialect.supportedBy(HSQLDB);
-    private static final Set<SQLDialect>     WRAP_SELECT_IN_PARENS              = SQLDialect.supportedBy(HSQLDB);
-    private static final Set<SQLDialect>     SUPPORT_TEMPORARY                  = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES);
-    private static final Set<SQLDialect>     EMULATE_COMMENT_IN_BLOCK           = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
-    private static final Set<SQLDialect>     REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);
+    private static final long            serialVersionUID                   = 8904572826501186329L;
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS           = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_WITH_DATA               = SQLDialect.supportedBy(H2, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES       = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> EMULATE_INDEXES_IN_BLOCK           = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect> EMULATE_SOME_ENUM_TYPES_AS_CHECK   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> EMULATE_STORED_ENUM_TYPES_AS_CHECK = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
+    private static final Set<SQLDialect> REQUIRES_WITH_DATA                 = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect> WRAP_SELECT_IN_PARENS              = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect> SUPPORT_TEMPORARY                  = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect> EMULATE_COMMENT_IN_BLOCK           = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect> REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(MYSQL);
 
 
 
 
 
-    private final Table<?>                   table;
-    private Select<?>                        select;
-    private Boolean                          withData;
-    private final List<Field<?>>             columnFields;
-    private final List<DataType<?>>          columnTypes;
-    private final List<Constraint>           constraints;
-    private final List<Index>                indexes;
-    private final boolean                    temporary;
-    private final boolean                    ifNotExists;
-    private OnCommit                         onCommit;
-    private Comment                          comment;
-    private SQL                              storage;
+    private final Table<?>               table;
+    private Select<?>                    select;
+    private Boolean                      withData;
+    private final List<Field<?>>         columnFields;
+    private final List<DataType<?>>      columnTypes;
+    private final List<Constraint>       constraints;
+    private final List<Index>            indexes;
+    private final boolean                temporary;
+    private final boolean                ifNotExists;
+    private OnCommit                     onCommit;
+    private Comment                      comment;
+    private SQL                          storage;
 
     CreateTableImpl(Configuration configuration, Table<?> table, boolean temporary, boolean ifNotExists) {
         super(configuration);
@@ -469,7 +471,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
             ctx.qualify(false);
 
             for (int i = 0; i < columnFields.size(); i++) {
-                DataType<?> type = columnTypes.get(i);
+                DataType<?> type = columnType(ctx, i);
                 if (identity == null && type.identity())
                     identity = columnFields.get(i);
 
@@ -547,6 +549,26 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                .formatNewLine()
                .sql(')');
         }
+    }
+
+    private final DataType<?> columnType(Context<?> ctx, int i) {
+        DataType<?> type = columnTypes.get(i);
+        
+        if (NO_SUPPORT_NULLABLE_PRIMARY_KEY.contains(ctx.dialect()) && type.nullability() == Nullability.DEFAULT && isPrimaryKey(i))
+            type = type.nullable(false);
+        
+        return type;
+    }
+
+    private final boolean isPrimaryKey(int i) {
+        for (Constraint constraint : constraints)
+            if (constraint instanceof ConstraintImpl)
+                if (((ConstraintImpl) constraint).$primaryKey() != null)
+                    for (Field<?> field : ((ConstraintImpl) constraint).$primaryKey())
+                        if (field.equals(columnFields.get(i)))
+                            return true;
+        
+        return false;
     }
 
     private final boolean matchingPrimaryKey(Constraint constraint, Field<?> identity) {

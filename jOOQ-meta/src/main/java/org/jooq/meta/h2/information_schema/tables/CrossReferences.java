@@ -4,6 +4,9 @@
 package org.jooq.meta.h2.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -16,6 +19,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.h2.information_schema.InformationSchema;
+import org.jooq.meta.h2.information_schema.Keys;
 
 
 /**
@@ -24,7 +28,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CrossReferences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1748978946;
+    private static final long serialVersionUID = 917541835;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code>
@@ -145,6 +149,19 @@ public class CrossReferences extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.REFERENCED_CONSTRAINT, Keys.REFERENCING_CONSTRAINT);
+    }
+
+    public Constraints referencedConstraint() {
+        return new Constraints(this, Keys.REFERENCED_CONSTRAINT);
+    }
+
+    public Constraints referencingConstraint() {
+        return new Constraints(this, Keys.REFERENCING_CONSTRAINT);
     }
 
     @Override

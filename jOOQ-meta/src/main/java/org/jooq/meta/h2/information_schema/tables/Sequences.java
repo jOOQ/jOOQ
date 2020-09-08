@@ -29,7 +29,7 @@ import org.jooq.meta.h2.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 585173913;
+    private static final long serialVersionUID = 1626961889;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SEQUENCES</code>
@@ -150,15 +150,6 @@ public class Sequences extends TableImpl<Record> {
     @Override
     public List<UniqueKey<Record>> getKeys() {
         return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SEQUENCES);
-    }
-
-    @Override
-    public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
-    }
-
-    public Schemata schemata() {
-        return new Schemata(this, Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
     }
 
     @Override

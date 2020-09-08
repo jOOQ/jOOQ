@@ -277,18 +277,14 @@ public class H2Database extends AbstractDatabase {
                     CROSS_REFERENCES.FKTABLE_SCHEMA,
                     CROSS_REFERENCES.FKCOLUMN_NAME,
                     CROSS_REFERENCES.PKCOLUMN_NAME,
-                    CONSTRAINTS.CONSTRAINT_NAME,
-                    CONSTRAINTS.TABLE_NAME,
-                    CONSTRAINTS.CONSTRAINT_SCHEMA)
+                    CROSS_REFERENCES.referencedConstraint().CONSTRAINT_NAME,
+                    CROSS_REFERENCES.referencedConstraint().TABLE_NAME,
+                    CROSS_REFERENCES.referencedConstraint().CONSTRAINT_SCHEMA)
                 .from(CROSS_REFERENCES)
-                .join(CONSTRAINTS)
-                .on(CROSS_REFERENCES.PK_NAME.equal(CONSTRAINTS.UNIQUE_INDEX_NAME))
-                .and(CROSS_REFERENCES.PKTABLE_NAME.equal(CONSTRAINTS.TABLE_NAME))
-                .and(CROSS_REFERENCES.PKTABLE_SCHEMA.equal(CONSTRAINTS.TABLE_SCHEMA))
                 .where(CROSS_REFERENCES.FKTABLE_SCHEMA.in(getInputSchemata()))
 
                 // Workaround for https://github.com/h2database/h2database/issues/1000
-                .and(CONSTRAINTS.CONSTRAINT_TYPE.in("PRIMARY KEY", "PRIMARY_KEY", "UNIQUE"))
+                .and(CROSS_REFERENCES.referencedConstraint().CONSTRAINT_TYPE.in("PRIMARY KEY", "PRIMARY_KEY", "UNIQUE"))
                 .orderBy(
                     CROSS_REFERENCES.FKTABLE_SCHEMA.asc(),
                     CROSS_REFERENCES.FK_NAME.asc(),
@@ -296,14 +292,14 @@ public class H2Database extends AbstractDatabase {
                 .fetch()) {
 
             SchemaDefinition foreignKeySchema = getSchema(record.get(CROSS_REFERENCES.FKTABLE_SCHEMA));
-            SchemaDefinition uniqueKeySchema = getSchema(record.get(CONSTRAINTS.CONSTRAINT_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(CROSS_REFERENCES.referencedConstraint().CONSTRAINT_SCHEMA));
 
             if (foreignKeySchema != null && uniqueKeySchema != null) {
                 String foreignKey = record.get(CROSS_REFERENCES.FK_NAME);
                 String foreignKeyTableName = record.get(CROSS_REFERENCES.FKTABLE_NAME);
                 String foreignKeyColumn = record.get(CROSS_REFERENCES.FKCOLUMN_NAME);
-                String uniqueKey = record.get(CONSTRAINTS.CONSTRAINT_NAME);
-                String uniqueKeyTableName = record.get(CONSTRAINTS.TABLE_NAME);
+                String uniqueKey = record.get(CROSS_REFERENCES.referencedConstraint().CONSTRAINT_NAME);
+                String uniqueKeyTableName = record.get(CROSS_REFERENCES.referencedConstraint().TABLE_NAME);
                 String uniqueKeyColumn = record.get(CROSS_REFERENCES.PKCOLUMN_NAME);
 
                 TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);

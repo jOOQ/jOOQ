@@ -4,6 +4,9 @@
 package org.jooq.meta.h2.information_schema.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -12,10 +15,12 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.h2.information_schema.InformationSchema;
+import org.jooq.meta.h2.information_schema.Keys;
 
 
 /**
@@ -24,7 +29,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Constraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1874744305;
+    private static final long serialVersionUID = 1109555495;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.CONSTRAINTS</code>
@@ -140,6 +145,16 @@ public class Constraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_CONSTRAINTS;
+    }
+
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_CONSTRAINTS, Keys.UNIQUE_INDEX_NAME);
     }
 
     @Override

@@ -4,9 +4,6 @@
 package org.jooq.meta.h2.information_schema.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -19,7 +16,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.h2.information_schema.InformationSchema;
-import org.jooq.meta.h2.information_schema.Keys;
 
 
 /**
@@ -28,7 +24,7 @@ import org.jooq.meta.h2.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Views extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -517611495;
+    private static final long serialVersionUID = 870568262;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.VIEWS</code>
@@ -124,15 +120,6 @@ public class Views extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
-    }
-
-    @Override
-    public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
-    }
-
-    public Tables tables() {
-        return new Tables(this, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
     }
 
     @Override

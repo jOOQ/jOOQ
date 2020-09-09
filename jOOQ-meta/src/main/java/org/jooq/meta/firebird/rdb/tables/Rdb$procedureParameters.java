@@ -8,16 +8,19 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
+import org.jooq.meta.firebird.rdb.Keys;
 
 
 /**
@@ -26,7 +29,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$procedureParameters extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -651180011;
+    private static final long serialVersionUID = 1990438625;
 
     /**
      * The reference instance of <code>RDB$PROCEDURE_PARAMETERS</code>
@@ -44,83 +47,84 @@ public class Rdb$procedureParameters extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PARAMETER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$PARAMETER_NAME = createField(DSL.name("RDB$PARAMETER_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$PARAMETER_NAME = createField(DSL.name("RDB$PARAMETER_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PROCEDURE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$PROCEDURE_NAME = createField(DSL.name("RDB$PROCEDURE_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$PROCEDURE_NAME = createField(DSL.name("RDB$PROCEDURE_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PARAMETER_NUMBER</code>.
      */
-    public final TableField<Record, Short> RDB$PARAMETER_NUMBER = createField(DSL.name("RDB$PARAMETER_NUMBER"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$PARAMETER_NUMBER = createField(DSL.name("RDB$PARAMETER_NUMBER"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PARAMETER_TYPE</code>.
      */
-    public final TableField<Record, Short> RDB$PARAMETER_TYPE = createField(DSL.name("RDB$PARAMETER_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$PARAMETER_TYPE = createField(DSL.name("RDB$PARAMETER_TYPE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$FIELD_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_SOURCE = createField(DSL.name("RDB$FIELD_SOURCE"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_SOURCE = createField(DSL.name("RDB$FIELD_SOURCE"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$DESCRIPTION</code>.
      */
-    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$SYSTEM_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$DEFAULT_VALUE</code>.
      */
-    public final TableField<Record, byte[]> RDB$DEFAULT_VALUE = createField(DSL.name("RDB$DEFAULT_VALUE"), org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$DEFAULT_VALUE = createField(DSL.name("RDB$DEFAULT_VALUE"), SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$DEFAULT_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$DEFAULT_SOURCE = createField(DSL.name("RDB$DEFAULT_SOURCE"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DEFAULT_SOURCE = createField(DSL.name("RDB$DEFAULT_SOURCE"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$COLLATION_ID</code>.
      */
-    public final TableField<Record, Short> RDB$COLLATION_ID = createField(DSL.name("RDB$COLLATION_ID"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$COLLATION_ID = createField(DSL.name("RDB$COLLATION_ID"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$NULL_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$NULL_FLAG = createField(DSL.name("RDB$NULL_FLAG"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$NULL_FLAG = createField(DSL.name("RDB$NULL_FLAG"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PARAMETER_MECHANISM</code>.
      */
-    public final TableField<Record, Short> RDB$PARAMETER_MECHANISM = createField(DSL.name("RDB$PARAMETER_MECHANISM"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$PARAMETER_MECHANISM = createField(DSL.name("RDB$PARAMETER_MECHANISM"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$FIELD_NAME</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PACKAGE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$PACKAGE_NAME = createField(DSL.name("RDB$PACKAGE_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$PACKAGE_NAME = createField(DSL.name("RDB$PACKAGE_NAME"), SQLDataType.CHAR(31), this, "");
 
-    /**
-     * Create a <code>RDB$PROCEDURE_PARAMETERS</code> table reference
-     */
-    public Rdb$procedureParameters() {
-        this(DSL.name("RDB$PROCEDURE_PARAMETERS"), null);
+    private Rdb$procedureParameters(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Rdb$procedureParameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -137,12 +141,15 @@ public class Rdb$procedureParameters extends TableImpl<Record> {
         this(alias, RDB$PROCEDURE_PARAMETERS);
     }
 
-    private Rdb$procedureParameters(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+    /**
+     * Create a <code>RDB$PROCEDURE_PARAMETERS</code> table reference
+     */
+    public Rdb$procedureParameters() {
+        this(DSL.name("RDB$PROCEDURE_PARAMETERS"), null);
     }
 
-    private Rdb$procedureParameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    public <O extends Record> Rdb$procedureParameters(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, RDB$PROCEDURE_PARAMETERS);
     }
 
     @Override
@@ -152,9 +159,7 @@ public class Rdb$procedureParameters extends TableImpl<Record> {
 
     @Override
     public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(
-              Internal.createUniqueKey(org.jooq.meta.firebird.rdb.tables.Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS, "RDB$INDEX_18", org.jooq.meta.firebird.rdb.tables.Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS.RDB$PACKAGE_NAME, org.jooq.meta.firebird.rdb.tables.Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS.RDB$PROCEDURE_NAME, org.jooq.meta.firebird.rdb.tables.Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS.RDB$PARAMETER_NAME)
-        );
+        return Arrays.<UniqueKey<Record>>asList(Keys.RDB$INDEX_18);
     }
 
     @Override

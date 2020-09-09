@@ -5,12 +5,15 @@ package org.jooq.meta.firebird.rdb.tables;
 
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
 
@@ -21,7 +24,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$checkConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -198721383;
+    private static final long serialVersionUID = 1433691037;
 
     /**
      * The reference instance of <code>RDB$CHECK_CONSTRAINTS</code>
@@ -39,18 +42,19 @@ public class Rdb$checkConstraints extends TableImpl<Record> {
     /**
      * The column <code>RDB$CHECK_CONSTRAINTS.RDB$CONSTRAINT_NAME</code>.
      */
-    public final TableField<Record, String> RDB$CONSTRAINT_NAME = createField(DSL.name("RDB$CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$CONSTRAINT_NAME = createField(DSL.name("RDB$CONSTRAINT_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$CHECK_CONSTRAINTS.RDB$TRIGGER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$TRIGGER_NAME = createField(DSL.name("RDB$TRIGGER_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$TRIGGER_NAME = createField(DSL.name("RDB$TRIGGER_NAME"), SQLDataType.CHAR(31), this, "");
 
-    /**
-     * Create a <code>RDB$CHECK_CONSTRAINTS</code> table reference
-     */
-    public Rdb$checkConstraints() {
-        this(DSL.name("RDB$CHECK_CONSTRAINTS"), null);
+    private Rdb$checkConstraints(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Rdb$checkConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -67,12 +71,15 @@ public class Rdb$checkConstraints extends TableImpl<Record> {
         this(alias, RDB$CHECK_CONSTRAINTS);
     }
 
-    private Rdb$checkConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+    /**
+     * Create a <code>RDB$CHECK_CONSTRAINTS</code> table reference
+     */
+    public Rdb$checkConstraints() {
+        this(DSL.name("RDB$CHECK_CONSTRAINTS"), null);
     }
 
-    private Rdb$checkConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    public <O extends Record> Rdb$checkConstraints(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, RDB$CHECK_CONSTRAINTS);
     }
 
     @Override

@@ -269,18 +269,16 @@ public class FirebirdDatabase extends AbstractDatabase {
 
         Map<Record, Result<Record>> indexes = create()
             .select(
-                i.RDB$RELATION_NAME.trim().as(i.RDB$RELATION_NAME),
-                i.RDB$INDEX_NAME.trim().as(i.RDB$INDEX_NAME),
-                i.RDB$UNIQUE_FLAG,
+                s.rdb$indices().RDB$RELATION_NAME.trim().as(i.RDB$RELATION_NAME),
+                s.rdb$indices().RDB$INDEX_NAME.trim().as(i.RDB$INDEX_NAME),
+                s.rdb$indices().RDB$UNIQUE_FLAG,
                 s.RDB$FIELD_NAME.trim().as(s.RDB$FIELD_NAME),
-                s.RDB$FIELD_POSITION
-                )
-            .from(i)
-            .join(s).on(i.RDB$INDEX_NAME.eq(s.RDB$INDEX_NAME))
-            .where(i.RDB$INDEX_NAME.notIn(select(c.RDB$CONSTRAINT_NAME).from(c)))
+                s.RDB$FIELD_POSITION)
+            .from(s)
+            .where(s.rdb$indices().RDB$INDEX_NAME.notIn(select(c.RDB$CONSTRAINT_NAME).from(c)))
             .orderBy(
-                i.RDB$RELATION_NAME,
-                i.RDB$INDEX_NAME,
+                s.rdb$indices().RDB$RELATION_NAME,
+                s.rdb$indices().RDB$INDEX_NAME,
                 s.RDB$FIELD_POSITION)
             .fetchGroups(
                 new Field[] {

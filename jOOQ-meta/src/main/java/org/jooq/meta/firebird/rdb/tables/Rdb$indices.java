@@ -8,16 +8,19 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
+import org.jooq.meta.firebird.rdb.Keys;
 
 
 /**
@@ -26,7 +29,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$indices extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1007621761;
+    private static final long serialVersionUID = 934712412;
 
     /**
      * The reference instance of <code>RDB$INDICES</code>
@@ -44,73 +47,74 @@ public class Rdb$indices extends TableImpl<Record> {
     /**
      * The column <code>RDB$INDICES.RDB$INDEX_NAME</code>.
      */
-    public final TableField<Record, String> RDB$INDEX_NAME = createField(DSL.name("RDB$INDEX_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$INDEX_NAME = createField(DSL.name("RDB$INDEX_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$INDEX_ID</code>.
      */
-    public final TableField<Record, Short> RDB$INDEX_ID = createField(DSL.name("RDB$INDEX_ID"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$INDEX_ID = createField(DSL.name("RDB$INDEX_ID"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$UNIQUE_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$UNIQUE_FLAG = createField(DSL.name("RDB$UNIQUE_FLAG"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$UNIQUE_FLAG = createField(DSL.name("RDB$UNIQUE_FLAG"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$DESCRIPTION</code>.
      */
-    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$SEGMENT_COUNT</code>.
      */
-    public final TableField<Record, Short> RDB$SEGMENT_COUNT = createField(DSL.name("RDB$SEGMENT_COUNT"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$SEGMENT_COUNT = createField(DSL.name("RDB$SEGMENT_COUNT"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$INDEX_INACTIVE</code>.
      */
-    public final TableField<Record, Short> RDB$INDEX_INACTIVE = createField(DSL.name("RDB$INDEX_INACTIVE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$INDEX_INACTIVE = createField(DSL.name("RDB$INDEX_INACTIVE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$INDEX_TYPE</code>.
      */
-    public final TableField<Record, Short> RDB$INDEX_TYPE = createField(DSL.name("RDB$INDEX_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$INDEX_TYPE = createField(DSL.name("RDB$INDEX_TYPE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$FOREIGN_KEY</code>.
      */
-    public final TableField<Record, String> RDB$FOREIGN_KEY = createField(DSL.name("RDB$FOREIGN_KEY"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FOREIGN_KEY = createField(DSL.name("RDB$FOREIGN_KEY"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$SYSTEM_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$EXPRESSION_BLR</code>.
      */
-    public final TableField<Record, byte[]> RDB$EXPRESSION_BLR = createField(DSL.name("RDB$EXPRESSION_BLR"), org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$EXPRESSION_BLR = createField(DSL.name("RDB$EXPRESSION_BLR"), SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$EXPRESSION_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$EXPRESSION_SOURCE = createField(DSL.name("RDB$EXPRESSION_SOURCE"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$EXPRESSION_SOURCE = createField(DSL.name("RDB$EXPRESSION_SOURCE"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$INDICES.RDB$STATISTICS</code>.
      */
-    public final TableField<Record, Double> RDB$STATISTICS = createField(DSL.name("RDB$STATISTICS"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
+    public final TableField<Record, Double> RDB$STATISTICS = createField(DSL.name("RDB$STATISTICS"), SQLDataType.DOUBLE, this, "");
 
-    /**
-     * Create a <code>RDB$INDICES</code> table reference
-     */
-    public Rdb$indices() {
-        this(DSL.name("RDB$INDICES"), null);
+    private Rdb$indices(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Rdb$indices(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -127,12 +131,15 @@ public class Rdb$indices extends TableImpl<Record> {
         this(alias, RDB$INDICES);
     }
 
-    private Rdb$indices(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+    /**
+     * Create a <code>RDB$INDICES</code> table reference
+     */
+    public Rdb$indices() {
+        this(DSL.name("RDB$INDICES"), null);
     }
 
-    private Rdb$indices(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    public <O extends Record> Rdb$indices(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, RDB$INDICES);
     }
 
     @Override
@@ -142,9 +149,7 @@ public class Rdb$indices extends TableImpl<Record> {
 
     @Override
     public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(
-              Internal.createUniqueKey(org.jooq.meta.firebird.rdb.tables.Rdb$indices.RDB$INDICES, "RDB$INDEX_5", org.jooq.meta.firebird.rdb.tables.Rdb$indices.RDB$INDICES.RDB$INDEX_NAME)
-        );
+        return Arrays.<UniqueKey<Record>>asList(Keys.RDB$INDEX_5);
     }
 
     @Override

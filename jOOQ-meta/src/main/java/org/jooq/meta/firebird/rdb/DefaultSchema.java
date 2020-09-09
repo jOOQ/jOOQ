@@ -4,11 +4,11 @@
 package org.jooq.meta.firebird.rdb;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Catalog;
+import org.jooq.Domain;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.firebird.rdb.tables.Rdb$checkConstraints;
@@ -31,72 +31,72 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1050592337;
+    private static final long serialVersionUID = 1452293140;
 
     /**
-     * The reference instance of <code></code>
+     * The reference instance of <code>DEFAULT_SCHEMA</code>
      */
     public static final DefaultSchema DEFAULT_SCHEMA = new DefaultSchema();
 
     /**
      * The table <code>RDB$CHECK_CONSTRAINTS</code>.
      */
-    public final Rdb$checkConstraints RDB$CHECK_CONSTRAINTS = org.jooq.meta.firebird.rdb.tables.Rdb$checkConstraints.RDB$CHECK_CONSTRAINTS;
+    public final Rdb$checkConstraints RDB$CHECK_CONSTRAINTS = Rdb$checkConstraints.RDB$CHECK_CONSTRAINTS;
 
     /**
      * The table <code>RDB$FIELDS</code>.
      */
-    public final Rdb$fields RDB$FIELDS = org.jooq.meta.firebird.rdb.tables.Rdb$fields.RDB$FIELDS;
+    public final Rdb$fields RDB$FIELDS = Rdb$fields.RDB$FIELDS;
 
     /**
      * The table <code>RDB$GENERATORS</code>.
      */
-    public final Rdb$generators RDB$GENERATORS = org.jooq.meta.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS;
+    public final Rdb$generators RDB$GENERATORS = Rdb$generators.RDB$GENERATORS;
 
     /**
      * The table <code>RDB$INDEX_SEGMENTS</code>.
      */
-    public final Rdb$indexSegments RDB$INDEX_SEGMENTS = org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments.RDB$INDEX_SEGMENTS;
+    public final Rdb$indexSegments RDB$INDEX_SEGMENTS = Rdb$indexSegments.RDB$INDEX_SEGMENTS;
 
     /**
      * The table <code>RDB$INDICES</code>.
      */
-    public final Rdb$indices RDB$INDICES = org.jooq.meta.firebird.rdb.tables.Rdb$indices.RDB$INDICES;
-
-    /**
-     * The table <code>RDB$PROCEDURES</code>.
-     */
-    public final Rdb$procedures RDB$PROCEDURES = org.jooq.meta.firebird.rdb.tables.Rdb$procedures.RDB$PROCEDURES;
+    public final Rdb$indices RDB$INDICES = Rdb$indices.RDB$INDICES;
 
     /**
      * The table <code>RDB$PROCEDURE_PARAMETERS</code>.
      */
-    public final Rdb$procedureParameters RDB$PROCEDURE_PARAMETERS = org.jooq.meta.firebird.rdb.tables.Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS;
+    public final Rdb$procedureParameters RDB$PROCEDURE_PARAMETERS = Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS;
+
+    /**
+     * The table <code>RDB$PROCEDURES</code>.
+     */
+    public final Rdb$procedures RDB$PROCEDURES = Rdb$procedures.RDB$PROCEDURES;
 
     /**
      * The table <code>RDB$REF_CONSTRAINTS</code>.
      */
-    public final Rdb$refConstraints RDB$REF_CONSTRAINTS = org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints.RDB$REF_CONSTRAINTS;
-
-    /**
-     * The table <code>RDB$RELATIONS</code>.
-     */
-    public final Rdb$relations RDB$RELATIONS = org.jooq.meta.firebird.rdb.tables.Rdb$relations.RDB$RELATIONS;
+    public final Rdb$refConstraints RDB$REF_CONSTRAINTS = Rdb$refConstraints.RDB$REF_CONSTRAINTS;
 
     /**
      * The table <code>RDB$RELATION_CONSTRAINTS</code>.
      */
-    public final Rdb$relationConstraints RDB$RELATION_CONSTRAINTS = org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS;
+    public final Rdb$relationConstraints RDB$RELATION_CONSTRAINTS = Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS;
 
     /**
      * The table <code>RDB$RELATION_FIELDS</code>.
      */
-    public final Rdb$relationFields RDB$RELATION_FIELDS = org.jooq.meta.firebird.rdb.tables.Rdb$relationFields.RDB$RELATION_FIELDS;
+    public final Rdb$relationFields RDB$RELATION_FIELDS = Rdb$relationFields.RDB$RELATION_FIELDS;
+
+    /**
+     * The table <code>RDB$RELATIONS</code>.
+     */
+    public final Rdb$relations RDB$RELATIONS = Rdb$relations.RDB$RELATIONS;
 
     /**
      * The table <code>RDB$TRIGGERS</code>.
      */
-    public final Rdb$triggers RDB$TRIGGERS = org.jooq.meta.firebird.rdb.tables.Rdb$triggers.RDB$TRIGGERS;
+    public final Rdb$triggers RDB$TRIGGERS = Rdb$triggers.RDB$TRIGGERS;
 
     /**
      * No further instances allowed
@@ -112,25 +112,25 @@ public class DefaultSchema extends SchemaImpl {
     }
 
     @Override
-    public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
+    public final List<Domain<?>> getDomains() {
+        return Arrays.<Domain<?>>asList(
+            Domains.RDB$PROCEDURE_PARAMETERS);
     }
 
-    private final List<Table<?>> getTables0() {
+    @Override
+    public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             Rdb$checkConstraints.RDB$CHECK_CONSTRAINTS,
             Rdb$fields.RDB$FIELDS,
             Rdb$generators.RDB$GENERATORS,
             Rdb$indexSegments.RDB$INDEX_SEGMENTS,
             Rdb$indices.RDB$INDICES,
-            Rdb$procedures.RDB$PROCEDURES,
             Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS,
+            Rdb$procedures.RDB$PROCEDURES,
             Rdb$refConstraints.RDB$REF_CONSTRAINTS,
-            Rdb$relations.RDB$RELATIONS,
             Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS,
             Rdb$relationFields.RDB$RELATION_FIELDS,
+            Rdb$relations.RDB$RELATIONS,
             Rdb$triggers.RDB$TRIGGERS);
     }
 }

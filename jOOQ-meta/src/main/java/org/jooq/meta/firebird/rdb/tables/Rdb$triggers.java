@@ -8,16 +8,19 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
+import org.jooq.meta.firebird.rdb.Keys;
 
 
 /**
@@ -26,7 +29,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$triggers extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 224941405;
+    private static final long serialVersionUID = 745453431;
 
     /**
      * The reference instance of <code>RDB$TRIGGERS</code>
@@ -44,78 +47,79 @@ public class Rdb$triggers extends TableImpl<Record> {
     /**
      * The column <code>RDB$TRIGGERS.RDB$TRIGGER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$TRIGGER_NAME = createField(DSL.name("RDB$TRIGGER_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$TRIGGER_NAME = createField(DSL.name("RDB$TRIGGER_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$TRIGGER_SEQUENCE</code>.
      */
-    public final TableField<Record, Short> RDB$TRIGGER_SEQUENCE = createField(DSL.name("RDB$TRIGGER_SEQUENCE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$TRIGGER_SEQUENCE = createField(DSL.name("RDB$TRIGGER_SEQUENCE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$TRIGGER_TYPE</code>.
      */
-    public final TableField<Record, Long> RDB$TRIGGER_TYPE = createField(DSL.name("RDB$TRIGGER_TYPE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> RDB$TRIGGER_TYPE = createField(DSL.name("RDB$TRIGGER_TYPE"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$TRIGGER_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$TRIGGER_SOURCE = createField(DSL.name("RDB$TRIGGER_SOURCE"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$TRIGGER_SOURCE = createField(DSL.name("RDB$TRIGGER_SOURCE"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$TRIGGER_BLR</code>.
      */
-    public final TableField<Record, byte[]> RDB$TRIGGER_BLR = createField(DSL.name("RDB$TRIGGER_BLR"), org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$TRIGGER_BLR = createField(DSL.name("RDB$TRIGGER_BLR"), SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$DESCRIPTION</code>.
      */
-    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$TRIGGER_INACTIVE</code>.
      */
-    public final TableField<Record, Short> RDB$TRIGGER_INACTIVE = createField(DSL.name("RDB$TRIGGER_INACTIVE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$TRIGGER_INACTIVE = createField(DSL.name("RDB$TRIGGER_INACTIVE"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$SYSTEM_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$FLAGS</code>.
      */
-    public final TableField<Record, Short> RDB$FLAGS = createField(DSL.name("RDB$FLAGS"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FLAGS = createField(DSL.name("RDB$FLAGS"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$VALID_BLR</code>.
      */
-    public final TableField<Record, Short> RDB$VALID_BLR = createField(DSL.name("RDB$VALID_BLR"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$VALID_BLR = createField(DSL.name("RDB$VALID_BLR"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$DEBUG_INFO</code>.
      */
-    public final TableField<Record, byte[]> RDB$DEBUG_INFO = createField(DSL.name("RDB$DEBUG_INFO"), org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$DEBUG_INFO = createField(DSL.name("RDB$DEBUG_INFO"), SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$ENGINE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$ENGINE_NAME = createField(DSL.name("RDB$ENGINE_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$ENGINE_NAME = createField(DSL.name("RDB$ENGINE_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$ENTRYPOINT</code>.
      */
-    public final TableField<Record, String> RDB$ENTRYPOINT = createField(DSL.name("RDB$ENTRYPOINT"), org.jooq.impl.SQLDataType.CHAR, this, "");
+    public final TableField<Record, String> RDB$ENTRYPOINT = createField(DSL.name("RDB$ENTRYPOINT"), SQLDataType.CHAR, this, "");
 
-    /**
-     * Create a <code>RDB$TRIGGERS</code> table reference
-     */
-    public Rdb$triggers() {
-        this(DSL.name("RDB$TRIGGERS"), null);
+    private Rdb$triggers(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Rdb$triggers(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -132,12 +136,15 @@ public class Rdb$triggers extends TableImpl<Record> {
         this(alias, RDB$TRIGGERS);
     }
 
-    private Rdb$triggers(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+    /**
+     * Create a <code>RDB$TRIGGERS</code> table reference
+     */
+    public Rdb$triggers() {
+        this(DSL.name("RDB$TRIGGERS"), null);
     }
 
-    private Rdb$triggers(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    public <O extends Record> Rdb$triggers(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, RDB$TRIGGERS);
     }
 
     @Override
@@ -147,9 +154,7 @@ public class Rdb$triggers extends TableImpl<Record> {
 
     @Override
     public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(
-              Internal.createUniqueKey(org.jooq.meta.firebird.rdb.tables.Rdb$triggers.RDB$TRIGGERS, "RDB$INDEX_8", org.jooq.meta.firebird.rdb.tables.Rdb$triggers.RDB$TRIGGERS.RDB$TRIGGER_NAME)
-        );
+        return Arrays.<UniqueKey<Record>>asList(Keys.RDB$INDEX_8);
     }
 
     @Override

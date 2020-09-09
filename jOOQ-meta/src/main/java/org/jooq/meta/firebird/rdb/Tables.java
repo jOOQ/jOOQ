@@ -19,7 +19,7 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 
 
 /**
- * Convenience access to all tables in 
+ * Convenience access to all tables in the default schema.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
@@ -50,24 +50,19 @@ public class Tables {
     public static final Rdb$indices RDB$INDICES = Rdb$indices.RDB$INDICES;
 
     /**
-     * The table <code>RDB$PROCEDURES</code>.
-     */
-    public static final Rdb$procedures RDB$PROCEDURES = Rdb$procedures.RDB$PROCEDURES;
-
-    /**
      * The table <code>RDB$PROCEDURE_PARAMETERS</code>.
      */
     public static final Rdb$procedureParameters RDB$PROCEDURE_PARAMETERS = Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS;
 
     /**
+     * The table <code>RDB$PROCEDURES</code>.
+     */
+    public static final Rdb$procedures RDB$PROCEDURES = Rdb$procedures.RDB$PROCEDURES;
+
+    /**
      * The table <code>RDB$REF_CONSTRAINTS</code>.
      */
     public static final Rdb$refConstraints RDB$REF_CONSTRAINTS = Rdb$refConstraints.RDB$REF_CONSTRAINTS;
-
-    /**
-     * The table <code>RDB$RELATIONS</code>.
-     */
-    public static final Rdb$relations RDB$RELATIONS = Rdb$relations.RDB$RELATIONS;
 
     /**
      * The table <code>RDB$RELATION_CONSTRAINTS</code>.
@@ -78,6 +73,11 @@ public class Tables {
      * The table <code>RDB$RELATION_FIELDS</code>.
      */
     public static final Rdb$relationFields RDB$RELATION_FIELDS = Rdb$relationFields.RDB$RELATION_FIELDS;
+
+    /**
+     * The table <code>RDB$RELATIONS</code>.
+     */
+    public static final Rdb$relations RDB$RELATIONS = Rdb$relations.RDB$RELATIONS;
 
     /**
      * The table <code>RDB$TRIGGERS</code>.

@@ -8,16 +8,19 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
+import org.jooq.meta.firebird.rdb.Keys;
 
 
 /**
@@ -26,7 +29,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$relationFields extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 72913382;
+    private static final long serialVersionUID = -927360807;
 
     /**
      * The reference instance of <code>RDB$RELATION_FIELDS</code>
@@ -44,113 +47,114 @@ public class Rdb$relationFields extends TableImpl<Record> {
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$FIELD_NAME</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$FIELD_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_SOURCE = createField(DSL.name("RDB$FIELD_SOURCE"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_SOURCE = createField(DSL.name("RDB$FIELD_SOURCE"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$QUERY_NAME</code>.
      */
-    public final TableField<Record, String> RDB$QUERY_NAME = createField(DSL.name("RDB$QUERY_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$QUERY_NAME = createField(DSL.name("RDB$QUERY_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$BASE_FIELD</code>.
      */
-    public final TableField<Record, String> RDB$BASE_FIELD = createField(DSL.name("RDB$BASE_FIELD"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$BASE_FIELD = createField(DSL.name("RDB$BASE_FIELD"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$EDIT_STRING</code>.
      */
-    public final TableField<Record, String> RDB$EDIT_STRING = createField(DSL.name("RDB$EDIT_STRING"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> RDB$EDIT_STRING = createField(DSL.name("RDB$EDIT_STRING"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$FIELD_POSITION</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_POSITION = createField(DSL.name("RDB$FIELD_POSITION"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_POSITION = createField(DSL.name("RDB$FIELD_POSITION"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$QUERY_HEADER</code>.
      */
-    public final TableField<Record, String> RDB$QUERY_HEADER = createField(DSL.name("RDB$QUERY_HEADER"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$QUERY_HEADER = createField(DSL.name("RDB$QUERY_HEADER"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$UPDATE_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$UPDATE_FLAG = createField(DSL.name("RDB$UPDATE_FLAG"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$UPDATE_FLAG = createField(DSL.name("RDB$UPDATE_FLAG"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$FIELD_ID</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_ID = createField(DSL.name("RDB$FIELD_ID"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_ID = createField(DSL.name("RDB$FIELD_ID"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$VIEW_CONTEXT</code>.
      */
-    public final TableField<Record, Short> RDB$VIEW_CONTEXT = createField(DSL.name("RDB$VIEW_CONTEXT"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$VIEW_CONTEXT = createField(DSL.name("RDB$VIEW_CONTEXT"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$DESCRIPTION</code>.
      */
-    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$DEFAULT_VALUE</code>.
      */
-    public final TableField<Record, byte[]> RDB$DEFAULT_VALUE = createField(DSL.name("RDB$DEFAULT_VALUE"), org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$DEFAULT_VALUE = createField(DSL.name("RDB$DEFAULT_VALUE"), SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$SYSTEM_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$SECURITY_CLASS</code>.
      */
-    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$COMPLEX_NAME</code>.
      */
-    public final TableField<Record, String> RDB$COMPLEX_NAME = createField(DSL.name("RDB$COMPLEX_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$COMPLEX_NAME = createField(DSL.name("RDB$COMPLEX_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$NULL_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$NULL_FLAG = createField(DSL.name("RDB$NULL_FLAG"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$NULL_FLAG = createField(DSL.name("RDB$NULL_FLAG"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$DEFAULT_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$DEFAULT_SOURCE = createField(DSL.name("RDB$DEFAULT_SOURCE"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DEFAULT_SOURCE = createField(DSL.name("RDB$DEFAULT_SOURCE"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$COLLATION_ID</code>.
      */
-    public final TableField<Record, Short> RDB$COLLATION_ID = createField(DSL.name("RDB$COLLATION_ID"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$COLLATION_ID = createField(DSL.name("RDB$COLLATION_ID"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$GENERATOR_NAME</code>.
      */
-    public final TableField<Record, String> RDB$GENERATOR_NAME = createField(DSL.name("RDB$GENERATOR_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$GENERATOR_NAME = createField(DSL.name("RDB$GENERATOR_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$IDENTITY_TYPE</code>.
      */
-    public final TableField<Record, Short> RDB$IDENTITY_TYPE = createField(DSL.name("RDB$IDENTITY_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$IDENTITY_TYPE = createField(DSL.name("RDB$IDENTITY_TYPE"), SQLDataType.SMALLINT, this, "");
 
-    /**
-     * Create a <code>RDB$RELATION_FIELDS</code> table reference
-     */
-    public Rdb$relationFields() {
-        this(DSL.name("RDB$RELATION_FIELDS"), null);
+    private Rdb$relationFields(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Rdb$relationFields(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -167,12 +171,15 @@ public class Rdb$relationFields extends TableImpl<Record> {
         this(alias, RDB$RELATION_FIELDS);
     }
 
-    private Rdb$relationFields(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+    /**
+     * Create a <code>RDB$RELATION_FIELDS</code> table reference
+     */
+    public Rdb$relationFields() {
+        this(DSL.name("RDB$RELATION_FIELDS"), null);
     }
 
-    private Rdb$relationFields(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    public <O extends Record> Rdb$relationFields(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, RDB$RELATION_FIELDS);
     }
 
     @Override
@@ -182,9 +189,7 @@ public class Rdb$relationFields extends TableImpl<Record> {
 
     @Override
     public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(
-              Internal.createUniqueKey(org.jooq.meta.firebird.rdb.tables.Rdb$relationFields.RDB$RELATION_FIELDS, "RDB$INDEX_15", org.jooq.meta.firebird.rdb.tables.Rdb$relationFields.RDB$RELATION_FIELDS.RDB$FIELD_NAME, org.jooq.meta.firebird.rdb.tables.Rdb$relationFields.RDB$RELATION_FIELDS.RDB$RELATION_NAME)
-        );
+        return Arrays.<UniqueKey<Record>>asList(Keys.RDB$INDEX_15);
     }
 
     @Override

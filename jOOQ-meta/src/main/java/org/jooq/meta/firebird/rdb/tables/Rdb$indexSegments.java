@@ -4,15 +4,22 @@
 package org.jooq.meta.firebird.rdb.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
+import org.jooq.meta.firebird.rdb.Keys;
 
 
 /**
@@ -21,7 +28,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$indexSegments extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -131224289;
+    private static final long serialVersionUID = -1285289609;
 
     /**
      * The reference instance of <code>RDB$INDEX_SEGMENTS</code>
@@ -39,28 +46,29 @@ public class Rdb$indexSegments extends TableImpl<Record> {
     /**
      * The column <code>RDB$INDEX_SEGMENTS.RDB$INDEX_NAME</code>.
      */
-    public final TableField<Record, String> RDB$INDEX_NAME = createField(DSL.name("RDB$INDEX_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$INDEX_NAME = createField(DSL.name("RDB$INDEX_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$INDEX_SEGMENTS.RDB$FIELD_NAME</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_POSITION = createField(DSL.name("RDB$FIELD_POSITION"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_POSITION = createField(DSL.name("RDB$FIELD_POSITION"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$INDEX_SEGMENTS.RDB$STATISTICS</code>.
      */
-    public final TableField<Record, Double> RDB$STATISTICS = createField(DSL.name("RDB$STATISTICS"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
+    public final TableField<Record, Double> RDB$STATISTICS = createField(DSL.name("RDB$STATISTICS"), SQLDataType.DOUBLE, this, "");
 
-    /**
-     * Create a <code>RDB$INDEX_SEGMENTS</code> table reference
-     */
-    public Rdb$indexSegments() {
-        this(DSL.name("RDB$INDEX_SEGMENTS"), null);
+    private Rdb$indexSegments(Name alias, Table<Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Rdb$indexSegments(Name alias, Table<Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -77,17 +85,29 @@ public class Rdb$indexSegments extends TableImpl<Record> {
         this(alias, RDB$INDEX_SEGMENTS);
     }
 
-    private Rdb$indexSegments(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+    /**
+     * Create a <code>RDB$INDEX_SEGMENTS</code> table reference
+     */
+    public Rdb$indexSegments() {
+        this(DSL.name("RDB$INDEX_SEGMENTS"), null);
     }
 
-    private Rdb$indexSegments(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    public <O extends Record> Rdb$indexSegments(Table<O> child, ForeignKey<O, Record> key) {
+        super(child, key, RDB$INDEX_SEGMENTS);
     }
 
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5);
+    }
+
+    public Rdb$indices rdb$indices() {
+        return new Rdb$indices(this, Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5);
     }
 
     @Override

@@ -446,11 +446,9 @@ final class Limit extends AbstractQueryPart {
     }
 
     final void setOffset(Number offset) {
-        if (offset.longValue() != 0L) {
-            this.offset = val(offset.longValue(), BIGINT);
-            this.offsetOrZero = this.offset;
-            this.offsetPlusOne = val(offset.longValue() + 1L, BIGINT);
-        }
+        this.offset = val(offset.longValue(), BIGINT);
+        this.offsetOrZero = this.offset;
+        this.offsetPlusOne = val(offset.longValue() + 1L, BIGINT);
     }
 
     final void setOffset(Param<? extends Number> offset) {

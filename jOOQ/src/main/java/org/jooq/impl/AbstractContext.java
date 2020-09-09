@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.JoinType.JOIN;
+import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 // ...
 // ...
 // ...
@@ -785,7 +787,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             Table<?> result = table;
 
             for (Entry<ForeignKey<?, ?>, JoinNode> e : children.entrySet())
-                result = result.leftJoin(e.getValue().joinTree()).onKey(e.getKey());
+                result = result.join(e.getValue().joinTree(), e.getKey().nullable() ? LEFT_OUTER_JOIN : JOIN).onKey(e.getKey());
 
             return result;
         }

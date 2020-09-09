@@ -84,4 +84,9 @@ public interface Key<R extends Record> extends Named {
      * Whether this key is being enforced.
      */
     boolean enforced();
+
+    /**
+     * Whether this key is (partially) nullable.
+     */
+    boolean nullable();
 }

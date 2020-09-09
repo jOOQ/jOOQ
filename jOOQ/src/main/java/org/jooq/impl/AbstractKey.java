@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Key;
 import org.jooq.Name;
@@ -92,6 +93,15 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
     @Override
     public final TableField<R, ?>[] getFieldsArray() {
         return fields;
+    }
+
+    @Override
+    public final boolean nullable() {
+        for (Field<?> field : fields)
+            if (field.getDataType().nullable())
+                return true;
+
+        return false;
     }
 
     @Override

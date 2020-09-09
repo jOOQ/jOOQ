@@ -69,12 +69,10 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${org.h2.version}</version>
         </dependency>
 
         <!-- Wildfly and JavaEE -->
@@ -206,7 +204,6 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${project.version}</version>
 
                 <executions>
                     <execution>

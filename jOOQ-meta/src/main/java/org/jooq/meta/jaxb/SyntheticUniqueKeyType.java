@@ -2,9 +2,13 @@
 package org.jooq.meta.jaxb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -23,8 +27,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="keyTables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="keyFields" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}SyntheticKeyFieldsType"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -47,10 +51,10 @@ public class SyntheticUniqueKeyType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String keyTables;
-    @XmlElement(required = true)
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String keyFields;
+    protected String tables;
+    @XmlElementWrapper(name = "fields", required = true)
+    @XmlElement(name = "field")
+    protected List<String> fields;
 
     /**
      * The optional unique key name.
@@ -72,32 +76,27 @@ public class SyntheticUniqueKeyType implements Serializable, XMLAppendable
      * A regular expression matching all tables on which to apply this synthetic unique key.
      * 
      */
-    public String getKeyTables() {
-        return keyTables;
+    public String getTables() {
+        return tables;
     }
 
     /**
      * A regular expression matching all tables on which to apply this synthetic unique key.
      * 
      */
-    public void setKeyTables(String value) {
-        this.keyTables = value;
+    public void setTables(String value) {
+        this.tables = value;
     }
 
-    /**
-     * A regular expression matching all fields on which to apply this synthetic unique key.
-     * 
-     */
-    public String getKeyFields() {
-        return keyFields;
+    public List<String> getFields() {
+        if (fields == null) {
+            fields = new ArrayList<String>();
+        }
+        return fields;
     }
 
-    /**
-     * A regular expression matching all fields on which to apply this synthetic unique key.
-     * 
-     */
-    public void setKeyFields(String value) {
-        this.keyFields = value;
+    public void setFields(List<String> fields) {
+        this.fields = fields;
     }
 
     /**
@@ -113,25 +112,37 @@ public class SyntheticUniqueKeyType implements Serializable, XMLAppendable
      * A regular expression matching all tables on which to apply this synthetic unique key.
      * 
      */
-    public SyntheticUniqueKeyType withKeyTables(String value) {
-        setKeyTables(value);
+    public SyntheticUniqueKeyType withTables(String value) {
+        setTables(value);
         return this;
     }
 
-    /**
-     * A regular expression matching all fields on which to apply this synthetic unique key.
-     * 
-     */
-    public SyntheticUniqueKeyType withKeyFields(String value) {
-        setKeyFields(value);
+    public SyntheticUniqueKeyType withFields(String... values) {
+        if (values!= null) {
+            for (String value: values) {
+                getFields().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticUniqueKeyType withFields(Collection<String> values) {
+        if (values!= null) {
+            getFields().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticUniqueKeyType withFields(List<String> fields) {
+        setFields(fields);
         return this;
     }
 
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("name", name);
-        builder.append("keyTables", keyTables);
-        builder.append("keyFields", keyFields);
+        builder.append("tables", tables);
+        builder.append("fields", "field", fields);
     }
 
     @Override
@@ -162,21 +173,21 @@ public class SyntheticUniqueKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (keyTables == null) {
-            if (other.keyTables!= null) {
+        if (tables == null) {
+            if (other.tables!= null) {
                 return false;
             }
         } else {
-            if (!keyTables.equals(other.keyTables)) {
+            if (!tables.equals(other.tables)) {
                 return false;
             }
         }
-        if (keyFields == null) {
-            if (other.keyFields!= null) {
+        if (fields == null) {
+            if (other.fields!= null) {
                 return false;
             }
         } else {
-            if (!keyFields.equals(other.keyFields)) {
+            if (!fields.equals(other.fields)) {
                 return false;
             }
         }
@@ -188,8 +199,8 @@ public class SyntheticUniqueKeyType implements Serializable, XMLAppendable
         final int prime = 31;
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
-        result = ((prime*result)+((keyTables == null)? 0 :keyTables.hashCode()));
-        result = ((prime*result)+((keyFields == null)? 0 :keyFields.hashCode()));
+        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         return result;
     }
 

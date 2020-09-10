@@ -22,8 +22,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="keyTables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="keyFields" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="fields" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -44,49 +44,49 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
 
     private final static long serialVersionUID = 31400L;
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String keyTables;
+    protected String tables;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String keyFields;
+    protected String fields;
 
     /**
      * A regular expression matching all tables on which to apply this synthetic identity.
      * 
      */
-    public String getKeyTables() {
-        return keyTables;
+    public String getTables() {
+        return tables;
     }
 
     /**
      * A regular expression matching all tables on which to apply this synthetic identity.
      * 
      */
-    public void setKeyTables(String value) {
-        this.keyTables = value;
+    public void setTables(String value) {
+        this.tables = value;
     }
 
     /**
      * A regular expression matching all fields on which to apply this synthetic identity.
      * 
      */
-    public String getKeyFields() {
-        return keyFields;
+    public String getFields() {
+        return fields;
     }
 
     /**
      * A regular expression matching all fields on which to apply this synthetic identity.
      * 
      */
-    public void setKeyFields(String value) {
-        this.keyFields = value;
+    public void setFields(String value) {
+        this.fields = value;
     }
 
     /**
      * A regular expression matching all tables on which to apply this synthetic identity.
      * 
      */
-    public SyntheticIdentityType withKeyTables(String value) {
-        setKeyTables(value);
+    public SyntheticIdentityType withTables(String value) {
+        setTables(value);
         return this;
     }
 
@@ -94,15 +94,15 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
      * A regular expression matching all fields on which to apply this synthetic identity.
      * 
      */
-    public SyntheticIdentityType withKeyFields(String value) {
-        setKeyFields(value);
+    public SyntheticIdentityType withFields(String value) {
+        setFields(value);
         return this;
     }
 
     @Override
     public final void appendTo(XMLBuilder builder) {
-        builder.append("keyTables", keyTables);
-        builder.append("keyFields", keyFields);
+        builder.append("tables", tables);
+        builder.append("fields", fields);
     }
 
     @Override
@@ -124,21 +124,21 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
             return false;
         }
         SyntheticIdentityType other = ((SyntheticIdentityType) that);
-        if (keyTables == null) {
-            if (other.keyTables!= null) {
+        if (tables == null) {
+            if (other.tables!= null) {
                 return false;
             }
         } else {
-            if (!keyTables.equals(other.keyTables)) {
+            if (!tables.equals(other.tables)) {
                 return false;
             }
         }
-        if (keyFields == null) {
-            if (other.keyFields!= null) {
+        if (fields == null) {
+            if (other.fields!= null) {
                 return false;
             }
         } else {
-            if (!keyFields.equals(other.keyFields)) {
+            if (!fields.equals(other.fields)) {
                 return false;
             }
         }
@@ -149,8 +149,8 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = ((prime*result)+((keyTables == null)? 0 :keyTables.hashCode()));
-        result = ((prime*result)+((keyFields == null)? 0 :keyFields.hashCode()));
+        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         return result;
     }
 

@@ -2,9 +2,13 @@
 package org.jooq.meta.jaxb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -23,10 +27,10 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="keyTables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="keyFields" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}SyntheticKeyFieldsType"/&gt;
  *         &lt;element name="referencedTable" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="referencedFields" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="referencedFields" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}SyntheticKeyFieldsType" minOccurs="0"/&gt;
  *         &lt;element name="referencedKey" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -50,17 +54,18 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String keyTables;
-    @XmlElement(required = true)
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String keyFields;
+    protected String tables;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String referencedTable;
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String referencedFields;
-    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String referencedKey;
+    @XmlElementWrapper(name = "fields", required = true)
+    @XmlElement(name = "field")
+    protected List<String> fields;
+    @XmlElementWrapper(name = "referencedFields")
+    @XmlElement(name = "field")
+    protected List<String> referencedFields;
 
     /**
      * The optional foreign key name.
@@ -82,32 +87,16 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
      * A regular expression matching all tables on which to apply this synthetic foreign key.
      * 
      */
-    public String getKeyTables() {
-        return keyTables;
+    public String getTables() {
+        return tables;
     }
 
     /**
      * A regular expression matching all tables on which to apply this synthetic foreign key.
      * 
      */
-    public void setKeyTables(String value) {
-        this.keyTables = value;
-    }
-
-    /**
-     * A regular expression matching all fields on which to apply this synthetic foreign key.
-     * 
-     */
-    public String getKeyFields() {
-        return keyFields;
-    }
-
-    /**
-     * A regular expression matching all fields on which to apply this synthetic foreign key.
-     * 
-     */
-    public void setKeyFields(String value) {
-        this.keyFields = value;
+    public void setTables(String value) {
+        this.tables = value;
     }
 
     /**
@@ -127,22 +116,6 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * A regular expression matching fields that are referenced by this synthetic foreign key.
-     * 
-     */
-    public String getReferencedFields() {
-        return referencedFields;
-    }
-
-    /**
-     * A regular expression matching fields that are referenced by this synthetic foreign key.
-     * 
-     */
-    public void setReferencedFields(String value) {
-        this.referencedFields = value;
-    }
-
-    /**
      * A regular expression matching a key that is referenced by this synthetic foreign key.
      * 
      */
@@ -158,6 +131,28 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
         this.referencedKey = value;
     }
 
+    public List<String> getFields() {
+        if (fields == null) {
+            fields = new ArrayList<String>();
+        }
+        return fields;
+    }
+
+    public void setFields(List<String> fields) {
+        this.fields = fields;
+    }
+
+    public List<String> getReferencedFields() {
+        if (referencedFields == null) {
+            referencedFields = new ArrayList<String>();
+        }
+        return referencedFields;
+    }
+
+    public void setReferencedFields(List<String> referencedFields) {
+        this.referencedFields = referencedFields;
+    }
+
     /**
      * The optional foreign key name.
      * 
@@ -171,17 +166,8 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
      * A regular expression matching all tables on which to apply this synthetic foreign key.
      * 
      */
-    public SyntheticForeignKeyType withKeyTables(String value) {
-        setKeyTables(value);
-        return this;
-    }
-
-    /**
-     * A regular expression matching all fields on which to apply this synthetic foreign key.
-     * 
-     */
-    public SyntheticForeignKeyType withKeyFields(String value) {
-        setKeyFields(value);
+    public SyntheticForeignKeyType withTables(String value) {
+        setTables(value);
         return this;
     }
 
@@ -195,15 +181,6 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * A regular expression matching fields that are referenced by this synthetic foreign key.
-     * 
-     */
-    public SyntheticForeignKeyType withReferencedFields(String value) {
-        setReferencedFields(value);
-        return this;
-    }
-
-    /**
      * A regular expression matching a key that is referenced by this synthetic foreign key.
      * 
      */
@@ -212,14 +189,56 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
         return this;
     }
 
+    public SyntheticForeignKeyType withFields(String... values) {
+        if (values!= null) {
+            for (String value: values) {
+                getFields().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticForeignKeyType withFields(Collection<String> values) {
+        if (values!= null) {
+            getFields().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticForeignKeyType withFields(List<String> fields) {
+        setFields(fields);
+        return this;
+    }
+
+    public SyntheticForeignKeyType withReferencedFields(String... values) {
+        if (values!= null) {
+            for (String value: values) {
+                getReferencedFields().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticForeignKeyType withReferencedFields(Collection<String> values) {
+        if (values!= null) {
+            getReferencedFields().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticForeignKeyType withReferencedFields(List<String> referencedFields) {
+        setReferencedFields(referencedFields);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("name", name);
-        builder.append("keyTables", keyTables);
-        builder.append("keyFields", keyFields);
+        builder.append("tables", tables);
         builder.append("referencedTable", referencedTable);
-        builder.append("referencedFields", referencedFields);
         builder.append("referencedKey", referencedKey);
+        builder.append("fields", "field", fields);
+        builder.append("referencedFields", "field", referencedFields);
     }
 
     @Override
@@ -250,21 +269,12 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (keyTables == null) {
-            if (other.keyTables!= null) {
+        if (tables == null) {
+            if (other.tables!= null) {
                 return false;
             }
         } else {
-            if (!keyTables.equals(other.keyTables)) {
-                return false;
-            }
-        }
-        if (keyFields == null) {
-            if (other.keyFields!= null) {
-                return false;
-            }
-        } else {
-            if (!keyFields.equals(other.keyFields)) {
+            if (!tables.equals(other.tables)) {
                 return false;
             }
         }
@@ -277,21 +287,30 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (referencedFields == null) {
-            if (other.referencedFields!= null) {
-                return false;
-            }
-        } else {
-            if (!referencedFields.equals(other.referencedFields)) {
-                return false;
-            }
-        }
         if (referencedKey == null) {
             if (other.referencedKey!= null) {
                 return false;
             }
         } else {
             if (!referencedKey.equals(other.referencedKey)) {
+                return false;
+            }
+        }
+        if (fields == null) {
+            if (other.fields!= null) {
+                return false;
+            }
+        } else {
+            if (!fields.equals(other.fields)) {
+                return false;
+            }
+        }
+        if (referencedFields == null) {
+            if (other.referencedFields!= null) {
+                return false;
+            }
+        } else {
+            if (!referencedFields.equals(other.referencedFields)) {
                 return false;
             }
         }
@@ -303,11 +322,11 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
         final int prime = 31;
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
-        result = ((prime*result)+((keyTables == null)? 0 :keyTables.hashCode()));
-        result = ((prime*result)+((keyFields == null)? 0 :keyFields.hashCode()));
+        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((referencedTable == null)? 0 :referencedTable.hashCode()));
-        result = ((prime*result)+((referencedFields == null)? 0 :referencedFields.hashCode()));
         result = ((prime*result)+((referencedKey == null)? 0 :referencedKey.hashCode()));
+        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
+        result = ((prime*result)+((referencedFields == null)? 0 :referencedFields.hashCode()));
         return result;
     }
 

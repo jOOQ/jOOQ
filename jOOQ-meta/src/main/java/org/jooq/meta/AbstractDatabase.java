@@ -1198,7 +1198,7 @@ public abstract class AbstractDatabase implements Database {
             for (String syntheticPrimaryKey : syntheticPrimaryKeys) {
                 if (!StringUtils.isBlank(syntheticPrimaryKey)) {
                     log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
-                    getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKeyFields(syntheticPrimaryKey));
+                    getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withFields(syntheticPrimaryKey));
                 }
             }
         }
@@ -1238,7 +1238,7 @@ public abstract class AbstractDatabase implements Database {
             for (String syntheticIdentity : syntheticIdentities) {
                 if (!StringUtils.isBlank(syntheticIdentity)) {
                     log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
-                    getConfiguredSyntheticIdentities().add(new SyntheticIdentityType().withKeyFields(syntheticIdentity));
+                    getConfiguredSyntheticIdentities().add(new SyntheticIdentityType().withFields(syntheticIdentity));
                 }
             }
         }
@@ -2603,6 +2603,15 @@ public abstract class AbstractDatabase implements Database {
         return filterExcludeInclude(definitions, null, include);
     }
 
+    protected final <T extends Definition> List<T> filter(List<T> definitions, List<String> include) {
+        List<T> result = new ArrayList<>();
+
+        for (String i : include)
+            result.addAll(filter(definitions, i));
+
+        return result;
+    }
+
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String e, String i) {
         return filterExcludeInclude(definitions, new String[] { e }, new String[] { i != null ? i : ".*" }, Collections.<Filter>emptyList());
     }
@@ -2874,7 +2883,7 @@ public abstract class AbstractDatabase implements Database {
             if (key.getKey() == null)
                 continue keyLoop;
 
-            for (TableDefinition table : filter(getTables(), key.getKeyTables())) {
+            for (TableDefinition table : filter(getTables(), key.getTables())) {
                 for (UniqueKeyDefinition uk : filter(table.getUniqueKeys(), key.getKey())) {
                     log.info("Overriding primary key", "" + uk);
                     r.overridePrimaryKey(uk);
@@ -2891,10 +2900,10 @@ public abstract class AbstractDatabase implements Database {
             if (key.getKey() != null)
                 continue keyLoop;
 
-            for (TableDefinition table : filter(getTables(), key.getKeyTables())) {
+            for (TableDefinition table : filter(getTables(), key.getTables())) {
                 String keyName = key.getName() != null ? key.getName() : "SYNTHETIC_PK_" + table.getName();
 
-                List<ColumnDefinition> columns = filter(table.getColumns(), key.getKeyFields());
+                List<ColumnDefinition> columns = filter(table.getColumns(), key.getFields());
                 if (!columns.isEmpty()) {
                     markUsed(key);
 
@@ -2906,7 +2915,6 @@ public abstract class AbstractDatabase implements Database {
             }
         }
     }
-
 
 
 

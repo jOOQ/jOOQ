@@ -945,11 +945,11 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
   <complexType name="SyntheticIdentityType">
     <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic identity configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
     <all>
-      <element name="keyTables" type="string" minOccurs="0" maxOccurs="1">
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic identity.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="keyFields" type="string" minOccurs="1" maxOccurs="1">
+      <element name="fields" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic identity.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
@@ -968,12 +968,12 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The optional primary key name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="keyTables" type="string" minOccurs="0" maxOccurs="1">
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic primary key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="keyFields" type="string" minOccurs="1" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this new synthetic primary key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="fields" type="tns:SyntheticKeyFieldsType" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set of regular expressions matching all fields in order on which to apply this new synthetic primary key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="key" type="string" minOccurs="0" maxOccurs="1">
@@ -995,12 +995,12 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The optional unique key name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="keyTables" type="string" minOccurs="0" maxOccurs="1">
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic unique key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="keyFields" type="string" minOccurs="1" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic unique key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="fields" type="tns:SyntheticKeyFieldsType" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set of regular expressions matching all fields in order on which to apply this synthetic unique key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -1018,20 +1018,20 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The optional foreign key name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="keyTables" type="string" minOccurs="0" maxOccurs="1">
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic foreign key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="keyFields" type="string" minOccurs="1" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic foreign key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="fields" type="tns:SyntheticKeyFieldsType" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set of regular expressions matching fields in order on which to apply this synthetic foreign key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="referencedTable" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching a table that is referenced by this synthetic foreign key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="referencedFields" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching fields that are referenced by this synthetic foreign key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="referencedFields" type="tns:SyntheticKeyFieldsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set regular of regular expressions matching fields in order that are referenced by this synthetic foreign key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="referencedKey" type="string" minOccurs="0" maxOccurs="1">
@@ -1039,7 +1039,15 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
-
+  
+  <complexType name="SyntheticKeyFieldsType">
+    <sequence>
+      <element name="field" type="string" minOccurs="1" maxOccurs="unbounded">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching a key field that is referenced by a synthetic key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </sequence>
+  </complexType>
+  
   <complexType name="CatalogMappingsType">
     <sequence>
       <element name="catalog" type="tns:CatalogMappingType" minOccurs="1" maxOccurs="unbounded"/>

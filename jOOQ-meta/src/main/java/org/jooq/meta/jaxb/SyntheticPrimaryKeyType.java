@@ -2,9 +2,13 @@
 package org.jooq.meta.jaxb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -23,8 +27,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="keyTables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="keyFields" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}SyntheticKeyFieldsType"/&gt;
  *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -48,12 +52,12 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String keyTables;
-    @XmlElement(required = true)
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String keyFields;
+    protected String tables;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String key;
+    @XmlElementWrapper(name = "fields", required = true)
+    @XmlElement(name = "field")
+    protected List<String> fields;
 
     /**
      * The optional primary key name.
@@ -75,32 +79,16 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
      * A regular expression matching all tables on which to apply this synthetic primary key.
      * 
      */
-    public String getKeyTables() {
-        return keyTables;
+    public String getTables() {
+        return tables;
     }
 
     /**
      * A regular expression matching all tables on which to apply this synthetic primary key.
      * 
      */
-    public void setKeyTables(String value) {
-        this.keyTables = value;
-    }
-
-    /**
-     * A regular expression matching all fields on which to apply this new synthetic primary key.
-     * 
-     */
-    public String getKeyFields() {
-        return keyFields;
-    }
-
-    /**
-     * A regular expression matching all fields on which to apply this new synthetic primary key.
-     * 
-     */
-    public void setKeyFields(String value) {
-        this.keyFields = value;
+    public void setTables(String value) {
+        this.tables = value;
     }
 
     /**
@@ -119,6 +107,17 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
         this.key = value;
     }
 
+    public List<String> getFields() {
+        if (fields == null) {
+            fields = new ArrayList<String>();
+        }
+        return fields;
+    }
+
+    public void setFields(List<String> fields) {
+        this.fields = fields;
+    }
+
     /**
      * The optional primary key name.
      * 
@@ -132,17 +131,8 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
      * A regular expression matching all tables on which to apply this synthetic primary key.
      * 
      */
-    public SyntheticPrimaryKeyType withKeyTables(String value) {
-        setKeyTables(value);
-        return this;
-    }
-
-    /**
-     * A regular expression matching all fields on which to apply this new synthetic primary key.
-     * 
-     */
-    public SyntheticPrimaryKeyType withKeyFields(String value) {
-        setKeyFields(value);
+    public SyntheticPrimaryKeyType withTables(String value) {
+        setTables(value);
         return this;
     }
 
@@ -155,12 +145,33 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
         return this;
     }
 
+    public SyntheticPrimaryKeyType withFields(String... values) {
+        if (values!= null) {
+            for (String value: values) {
+                getFields().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticPrimaryKeyType withFields(Collection<String> values) {
+        if (values!= null) {
+            getFields().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticPrimaryKeyType withFields(List<String> fields) {
+        setFields(fields);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("name", name);
-        builder.append("keyTables", keyTables);
-        builder.append("keyFields", keyFields);
+        builder.append("tables", tables);
         builder.append("key", key);
+        builder.append("fields", "field", fields);
     }
 
     @Override
@@ -191,21 +202,12 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (keyTables == null) {
-            if (other.keyTables!= null) {
+        if (tables == null) {
+            if (other.tables!= null) {
                 return false;
             }
         } else {
-            if (!keyTables.equals(other.keyTables)) {
-                return false;
-            }
-        }
-        if (keyFields == null) {
-            if (other.keyFields!= null) {
-                return false;
-            }
-        } else {
-            if (!keyFields.equals(other.keyFields)) {
+            if (!tables.equals(other.tables)) {
                 return false;
             }
         }
@@ -218,6 +220,15 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (fields == null) {
+            if (other.fields!= null) {
+                return false;
+            }
+        } else {
+            if (!fields.equals(other.fields)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -226,9 +237,9 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
         final int prime = 31;
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
-        result = ((prime*result)+((keyTables == null)? 0 :keyTables.hashCode()));
-        result = ((prime*result)+((keyFields == null)? 0 :keyFields.hashCode()));
+        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((key == null)? 0 :key.hashCode()));
+        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         return result;
     }
 

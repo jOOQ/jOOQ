@@ -78,8 +78,8 @@ public class DefaultColumnDefinition
         AbstractDatabase db = (AbstractDatabase) column.getDatabase();
 
         for (SyntheticIdentityType id : db.getConfiguredSyntheticIdentities()) {
-            for (TableDefinition t : db.filter(singletonList(column.getContainer()), id.getKeyTables())) {
-                for (ColumnDefinition c : db.filter(singletonList(column), id.getKeyFields())) {
+            for (TableDefinition t : db.filter(singletonList(column.getContainer()), id.getTables())) {
+                for (ColumnDefinition c : db.filter(singletonList(column), id.getFields())) {
                     log.info("Synthetic identity", column.getQualifiedName());
                     db.markUsed(id);
                     return true;

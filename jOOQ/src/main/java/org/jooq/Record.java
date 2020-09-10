@@ -98,7 +98,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * jOOQ records have a natural ordering implemented in the same way as this is
  * defined in the SQL standard. For more details, see the
- * {@link #compareTo(Record)} method
+ * {@link #compareTo(Record)} method.
  *
  * @author Lukas Eder
  * @see Result

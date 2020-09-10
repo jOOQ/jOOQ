@@ -155,9 +155,8 @@ abstract class AbstractStore extends AbstractFormattable implements Attachable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
 
         // Note: keep this implementation in-sync with AbstractRecord.compareTo()!
         if (obj instanceof AbstractStore) {
@@ -170,39 +169,33 @@ abstract class AbstractStore extends AbstractFormattable implements Attachable {
 
                     // [#1850] Only return false early. In all other cases,
                     // continue checking the remaining fields
-                    if (thisValue == null && thatValue == null) {
+                    if (thisValue == null && thatValue == null)
                         continue;
-                    }
 
-                    else if (thisValue == null || thatValue == null) {
+                    else if (thisValue == null || thatValue == null)
                         return false;
-                    }
 
                     // [#985] Compare arrays too.
                     else if (thisValue.getClass().isArray() && thatValue.getClass().isArray()) {
 
                         // Might be byte[]
                         if (thisValue.getClass() == byte[].class && thatValue.getClass() == byte[].class) {
-                            if (!Arrays.equals((byte[]) thisValue, (byte[]) thatValue)) {
+                            if (!Arrays.equals((byte[]) thisValue, (byte[]) thatValue))
                                 return false;
-                            }
                         }
 
                         // Other primitive types are not expected
                         else if (!thisValue.getClass().getComponentType().isPrimitive() &&
                                  !thatValue.getClass().getComponentType().isPrimitive()) {
-                            if (!Arrays.equals((Object[]) thisValue, (Object[]) thatValue)) {
+                            if (!Arrays.equals((Object[]) thisValue, (Object[]) thatValue))
                                 return false;
-                            }
                         }
 
-                        else {
+                        else
                             return false;
-                        }
                     }
-                    else if (!thisValue.equals(thatValue)) {
+                    else if (!thisValue.equals(thatValue))
                         return false;
-                    }
                 }
 
                 // If we got through the above loop, the two records are equal

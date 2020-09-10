@@ -1080,19 +1080,18 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     public int compareTo(Record that) {
         // Note: keep this implementation in-sync with AbstractStore.equals()!
 
-        if (that == null) {
+        if (that == this)
+            return 0;
+        if (that == null)
             throw new NullPointerException();
-        }
-        if (size() != that.size()) {
+        if (size() != that.size())
             throw new ClassCastException(String.format("Trying to compare incomparable records (wrong degree):\n%s\n%s", this, that));
-        }
 
         Class<?>[] thisTypes = this.fieldsRow().types();
         Class<?>[] thatTypes = that.fieldsRow().types();
 
-        if (!asList(thisTypes).equals(asList(thatTypes))) {
+        if (!asList(thisTypes).equals(asList(thatTypes)))
             throw new ClassCastException(String.format("Trying to compare incomparable records (type mismatch):\n%s\n%s", this, that));
-        }
 
         for (int i = 0; i < size(); i++) {
             final Object thisValue = get(i);
@@ -1100,18 +1099,15 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
             // [#1850] Only return -1/+1 early. In all other cases,
             // continue checking the remaining fields
-            if (thisValue == null && thatValue == null) {
+            if (thisValue == null && thatValue == null)
                 continue;
-            }
 
             // Order column values in a SQL NULLS LAST manner
-            else if (thisValue == null) {
+            else if (thisValue == null)
                 return 1;
-            }
 
-            else if (thatValue == null) {
+            else if (thatValue == null)
                 return -1;
-            }
 
             // [#985] Compare arrays too.
             else if (thisValue.getClass().isArray() && thatValue.getClass().isArray()) {
@@ -1120,30 +1116,26 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                 if (thisValue.getClass() == byte[].class) {
                     int compare = compare((byte[]) thisValue, (byte[]) thatValue);
 
-                    if (compare != 0) {
+                    if (compare != 0)
                         return compare;
-                    }
                 }
 
                 // Other primitive types are not expected
                 else if (!thisValue.getClass().getComponentType().isPrimitive()) {
                     int compare = compare((Object[]) thisValue, (Object[]) thatValue);
 
-                    if (compare != 0) {
+                    if (compare != 0)
                         return compare;
-                    }
                 }
 
-                else {
+                else
                     throw new ClassCastException(String.format("Unsupported data type in natural ordering: %s", thisValue.getClass()));
-                }
             }
             else {
-                int compare = ((Comparable) thisValue).compareTo(thatValue);
+                int compare = compare0(thisValue, thatValue);
 
-                if (compare != 0) {
+                if (compare != 0)
                     return compare;
-                }
             }
         }
 
@@ -1161,9 +1153,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             int v1 = (array1[i] & 0xff);
             int v2 = (array2[i] & 0xff);
 
-            if (v1 != v2) {
+            if (v1 != v2)
                 return v1 < v2 ? -1 : 1;
-            }
         }
 
         return array1.length - array2.length;
@@ -1176,14 +1167,26 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         int length = Math.min(array1.length, array2.length);
 
         for (int i = 0; i < length; i++) {
-            int compare = ((Comparable) array1[i]).compareTo(array2[i]);
+            int compare = compare0(array1[i], array2[i]);
 
-            if (compare != 0) {
+            if (compare != 0)
                 return compare;
-            }
         }
 
         return array1.length - array2.length;
+    }
+
+    /**
+     * Compare two uncomparable objects
+     */
+    final int compare0(Object object1, Object object2) {
+        return object1 == object2
+             ? 0
+             : object1 == null
+             ? -1
+             : object2 == null
+             ? 1
+             : object1.hashCode() - object2.hashCode();
     }
 
     // -------------------------------------------------------------------------

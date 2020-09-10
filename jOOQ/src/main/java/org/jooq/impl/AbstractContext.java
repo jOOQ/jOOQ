@@ -69,6 +69,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.ForeignKey;
+import org.jooq.JoinType;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -81,9 +82,11 @@ import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.ParamCastMode;
 import org.jooq.conf.ParamType;
+import org.jooq.conf.RenderImplicitJoinType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
@@ -774,7 +777,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         sb.append("]");
     }
 
-    static class JoinNode {
+    class JoinNode {
         final Table<?>                        table;
         final Map<ForeignKey<?, ?>, JoinNode> children;
 
@@ -786,8 +789,25 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         public Table<?> joinTree() {
             Table<?> result = table;
 
-            for (Entry<ForeignKey<?, ?>, JoinNode> e : children.entrySet())
-                result = result.join(e.getValue().joinTree(), e.getKey().nullable() ? LEFT_OUTER_JOIN : JOIN).onKey(e.getKey());
+            for (Entry<ForeignKey<?, ?>, JoinNode> e : children.entrySet()) {
+                JoinType type;
+
+                switch (StringUtils.defaultIfNull(settings().getRenderImplicitJoinType(),
+                    RenderImplicitJoinType.DEFAULT)) {
+                    case INNER_JOIN:
+                        type = JOIN;
+                        break;
+                    case LEFT_JOIN:
+                        type = LEFT_OUTER_JOIN;
+                        break;
+                    case DEFAULT:
+                    default:
+                        type = e.getKey().nullable() ? LEFT_OUTER_JOIN : JOIN;
+                        break;
+                }
+
+                result = result.join(e.getValue().joinTree(), type).onKey(e.getKey());
+            }
 
             return result;
         }
@@ -798,7 +818,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
     }
 
-    static class ScopeStackElement {
+    class ScopeStackElement {
         final int scopeLevel;
         int[]     positions;
         int       indent;

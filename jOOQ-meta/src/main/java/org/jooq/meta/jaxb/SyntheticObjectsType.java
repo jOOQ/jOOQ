@@ -41,7 +41,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
     @XmlElement(name = "uniqueKey")
     protected List<SyntheticUniqueKeyType> uniqueKeys;
     @XmlElementWrapper(name = "foreignKeys")
-    @XmlElement(name = "primaryKey")
+    @XmlElement(name = "foreignKey")
     protected List<SyntheticForeignKeyType> foreignKeys;
 
     public List<SyntheticIdentityType> getIdentities() {
@@ -177,7 +177,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         builder.append("identities", "identity", identities);
         builder.append("primaryKeys", "primaryKey", primaryKeys);
         builder.append("uniqueKeys", "uniqueKey", uniqueKeys);
-        builder.append("foreignKeys", "primaryKey", foreignKeys);
+        builder.append("foreignKeys", "foreignKey", foreignKeys);
     }
 
     @Override

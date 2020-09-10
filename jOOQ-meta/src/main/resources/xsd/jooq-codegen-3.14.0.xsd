@@ -1007,7 +1007,7 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
   
   <complexType name="SyntheticForeignKeysType">
     <sequence>
-      <element name="primaryKey" type="tns:SyntheticForeignKeyType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="foreignKey" type="tns:SyntheticForeignKeyType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   

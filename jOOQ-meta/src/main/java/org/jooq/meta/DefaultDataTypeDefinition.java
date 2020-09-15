@@ -44,9 +44,14 @@ import static org.jooq.impl.DefaultDataType.normalise;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.jooq.Name;
 import org.jooq.SQLDialect;
+import org.jooq.tools.StringUtils;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -345,6 +350,29 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
 
         return false;
+    }
+
+    @Override
+    public List<String> getMatchNames() {
+        Set<String> result = new LinkedHashSet<>();
+        result.add(getType());
+
+        if (getLength() != 0)
+            result.add(getType() + "(" + getLength() + ")");
+        if (getScale() == 0)
+            result.add(getType() + "(" + getPrecision() + ")");
+
+        result.add(getType() + "(" + getPrecision() + "," + getScale() + ")");
+        result.add(getType() + "(" + getPrecision() + ", " + getScale() + ")");
+
+        // [#5872] We should match user-defined types as well, in case of which the type might be reported
+        //         as USER-DEFINED (in PostgreSQL)
+        if (!StringUtils.isBlank(getUserType())) {
+            result.add(getUserType());
+            result.add(getQualifiedUserType().unquotedName().toString());
+        }
+
+        return new ArrayList<>(result);
     }
 
     @Override

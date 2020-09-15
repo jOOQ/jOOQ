@@ -37,7 +37,10 @@
  */
 package org.jooq.meta;
 
+import java.util.List;
+
 import org.jooq.Name;
+import org.jooq.meta.jaxb.ForcedType;
 
 /**
  * A definition for a data type object.
@@ -146,4 +149,9 @@ public interface DataTypeDefinition {
      */
     SchemaDefinition getSchema();
 
+    /**
+     * The various type names by which this type can be matched by a
+     * {@link ForcedType}.
+     */
+    List<String> getMatchNames();
 }

@@ -2632,6 +2632,11 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateUDT(SchemaDefinition schema, UDTDefinition udt) {
         JavaWriter out = newJavaWriter(getFile(udt));
         log.info("Generating UDT ", out.file().getName());
+
+        if (log.isDebugEnabled())
+            for (AttributeDefinition attribute : udt.getAttributes())
+                log.debug("With attribute", "name=" + attribute.getOutputName() + ", matching type names=" + attribute.getDefinedType().getMatchNames());
+
         generateUDT(udt, out);
         closeJavaWriter(out);
     }
@@ -4813,6 +4818,17 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getFile(table));
         out.refConflicts(getStrategy().getJavaIdentifiers(table.getColumns()));
         out.refConflicts(getStrategy().getJavaIdentifiers(table.getReferencedEmbeddables()));
+
+        log.info("Generating table", out.file().getName() +
+            " [input=" + table.getInputName() +
+            ", output=" + table.getOutputName() +
+            ", pk=" + (table.getPrimaryKey() != null ? table.getPrimaryKey().getName() : "N/A") +
+            "]");
+
+        if (log.isDebugEnabled())
+            for (ColumnDefinition column : table.getColumns())
+                log.debug("With column", "name=" + column.getOutputName() + ", matching type names=" + column.getDefinedType().getMatchNames());
+
         generateTable(table, out);
         closeJavaWriter(out);
     }
@@ -4838,12 +4854,6 @@ public class JavaGenerator extends AbstractGenerator {
             ? "function"
             : "table";
         final List<ParameterDefinition> parameters = table.getParameters();
-
-        log.info("Generating table", out.file().getName() +
-            " [input=" + table.getInputName() +
-            ", output=" + table.getOutputName() +
-            ", pk=" + (primaryKey != null ? primaryKey.getName() : "N/A") +
-            "]");
 
         printPackage(out, table);
 
@@ -5758,6 +5768,7 @@ public class JavaGenerator extends AbstractGenerator {
     @SuppressWarnings("unused")
     protected void generateEmbeddable(SchemaDefinition schema, EmbeddableDefinition embeddable) {
         JavaWriter out = newJavaWriter(getFile(embeddable, Mode.RECORD));
+        log.info("Generating embeddable", out.file().getName());
         generateRecord0(embeddable, out);
         closeJavaWriter(out);
     }
@@ -6733,6 +6744,11 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRoutine(SchemaDefinition schema, RoutineDefinition routine) {
         JavaWriter out = newJavaWriter(getFile(routine));
         log.info("Generating routine", out.file().getName());
+
+        if (log.isDebugEnabled())
+            for (ParameterDefinition parameter : routine.getAllParameters())
+                log.debug("With parameter", "name=" + parameter.getOutputName() + ", matching type names=" + parameter.getDefinedType().getMatchNames());
+
         generateRoutine(routine, out);
         closeJavaWriter(out);
     }

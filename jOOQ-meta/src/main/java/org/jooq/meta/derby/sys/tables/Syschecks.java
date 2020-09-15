@@ -28,7 +28,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syschecks extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1008578696;
+    private static final long serialVersionUID = -1825970802;
 
     /**
      * The reference instance of <code>SYS.SYSCHECKS</code>
@@ -57,7 +57,7 @@ public class Syschecks extends TableImpl<Record> {
      * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
      */
     @java.lang.Deprecated
-    public final TableField<Record, Object> REFERENCEDCOLUMNS = createField(DSL.name("REFERENCEDCOLUMNS"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"org.apache.derby.catalog.ReferencedColumns\"").nullable(false), this, "");
+    public final TableField<Record, Object> REFERENCEDCOLUMNS = createField(DSL.name("REFERENCEDCOLUMNS"), org.jooq.impl.SQLDataType.OTHER.nullable(false), this, "");
 
     private Syschecks(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);

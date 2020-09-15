@@ -1816,20 +1816,11 @@ public abstract class AbstractDatabase implements Database {
     }
 
     private boolean matches(DataTypeDefinition type, Pattern pattern) {
-        return  ( pattern.matcher(type.getType()).matches() )
-             || (     type.getLength() != 0
-             &&   pattern.matcher(type.getType() + "(" + type.getLength() + ")").matches() )
-             || (     type.getScale() == 0
-             &&   pattern.matcher(type.getType() + "(" + type.getPrecision() + ")").matches() )
-             || ( pattern.matcher(type.getType() + "(" + type.getPrecision() + "," + type.getScale() + ")").matches() )
-             || ( pattern.matcher(type.getType() + "(" + type.getPrecision() + ", " + type.getScale() + ")").matches() )
+        for (String matchName : type.getMatchNames())
+            if (pattern.matcher(matchName).matches())
+                return true;
 
-             // [#5872] We should match user-defined types as well, in case of which the type might be reported
-             //         as USER-DEFINED (in PostgreSQL)
-             || ( !StringUtils.isBlank(type.getUserType())
-             && ( pattern.matcher(type.getUserType()).matches()
-             ||   pattern.matcher(type.getQualifiedUserType().unquotedName().toString()).matches() )
-            );
+        return false;
     }
 
     @Override

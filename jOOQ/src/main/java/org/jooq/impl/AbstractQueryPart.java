@@ -156,17 +156,19 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
     @Override
     public boolean equals(Object that) {
-        if (this == that) {
+        if (this == that)
             return true;
-        }
 
         // This is a working default implementation. It should be overridden by
         // concrete subclasses, to improve performance
         if (that instanceof QueryPart) {
-            DSLContext dsl = configuration().dsl();
 
-            String sql1 = dsl.renderInlined(this);
-            String sql2 = dsl.renderInlined((QueryPart) that);
+            // [#10635] The two QueryParts may have different Settings attached.
+            DSLContext dsl1 = configuration().dsl();
+            DSLContext dsl2 = that instanceof AbstractQueryPart ? ((AbstractQueryPart) that).configuration().dsl() : dsl1;
+
+            String sql1 = dsl1.renderInlined(this);
+            String sql2 = dsl2.renderInlined((QueryPart) that);
 
             return sql1.equals(sql2);
         }

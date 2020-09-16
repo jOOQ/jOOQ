@@ -198,6 +198,16 @@ implements
         this.using = new QueryPartList<>();
     }
 
+    JoinTable transform(Table<?> newLhs, Table<?> newRhs) {
+        if (lhs == newLhs && rhs == newRhs)
+            return this;
+
+        JoinTable result = new JoinTable(newLhs, newRhs, type);
+
+        // TODO: Retain partitionBy clause
+        return !using.isEmpty() ? result.using(using) : result.on(condition);
+    }
+
     // ------------------------------------------------------------------------
     // Table API
     // ------------------------------------------------------------------------

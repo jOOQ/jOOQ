@@ -69,6 +69,11 @@ final class TableList extends QueryPartList<Table<?>> {
         super(wrappedList);
     }
 
+    @SafeVarargs
+    TableList(Table<?>... wrappedList) {
+        super(wrappedList);
+    }
+
     @Override
     public final boolean rendersContent(Context<?> ctx) {
         return true;

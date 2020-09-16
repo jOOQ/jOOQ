@@ -56,6 +56,9 @@ import static org.jooq.Clause.SELECT_UNION;
 import static org.jooq.Clause.SELECT_UNION_ALL;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.SELECT_WINDOW;
+import static org.jooq.JoinType.JOIN;
+import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.Operator.OR;
 // ...
 // ...
@@ -107,6 +110,7 @@ import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.regexpReplaceAll;
@@ -169,10 +173,13 @@ import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.sql.ResultSetMetaData;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1667,8 +1674,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
             tablelist = transformInlineDerivedTables(tablelist, where);
 
             context.formatSeparator()
@@ -1980,9 +1985,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             result.add(t.table());
             where.addConditions(t.condition());
         }
-        else if (table instanceof JoinTable) {
+        else if (table instanceof JoinTable)
             result.add(transformInlineDerivedTables0(table, where));
-        }
         else
             result.add(table);
     }
@@ -1994,22 +1998,180 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             where.addConditions(t.condition());
             return t.table();
         }
-        else if (table instanceof JoinTable) {
-            JoinTable join = (JoinTable) table;
-            JoinTable result = new JoinTable(
-                transformInlineDerivedTables0(join.lhs, where),
-                transformInlineDerivedTables0(join.rhs, where),
-                join.type
+        else if (table instanceof JoinTable)
+            return ((JoinTable) table).transform(
+                transformInlineDerivedTables0(((JoinTable) table).lhs, where),
+                transformInlineDerivedTables0(((JoinTable) table).rhs, where)
             );
-
-            if (!join.using.isEmpty())
-                return result.using(join.using);
-            else
-                return result.on(join.condition);
-        }
         else
             return table;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

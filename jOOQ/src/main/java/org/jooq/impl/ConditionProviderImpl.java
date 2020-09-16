@@ -69,6 +69,10 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
         return hasWhere() ? condition : noCondition();
     }
 
+    final void setWhere(Condition newCondition) {
+        this.condition = newCondition;
+    }
+
     final boolean hasWhere() {
         return condition != null && !(condition instanceof NoCondition);
     }

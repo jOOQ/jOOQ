@@ -7877,36 +7877,44 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "TRUNC")) {
             parse(ctx, '(');
             Field<?> arg1 = parseField(ctx);
-            parse(ctx, ',');
 
-            String part;
-            if ((part = parseStringLiteralIf(ctx)) != null) {
-                part = part.toUpperCase();
+            if (parseIf(ctx, ',')) {
 
-                DatePart p;
-                if ("YY".equals(part) || "YYYY".equals(part) || "YEAR".equals(part))
-                    p = DatePart.YEAR;
-                else if ("MM".equals(part) || "MONTH".equals(part))
-                    p = DatePart.MONTH;
-                else if ("DD".equals(part))
-                    p = DatePart.DAY;
-                else if ("HH".equals(part))
-                    p = DatePart.HOUR;
-                else if ("MI".equals(part))
-                    p = DatePart.MINUTE;
-                else if ("SS".equals(part))
-                    p = DatePart.SECOND;
-                else
-                    throw ctx.exception("Unsupported date part");
+                String part;
+                if ((part = parseStringLiteralIf(ctx)) != null) {
+                    part = part.toUpperCase();
 
-                parse(ctx, ')');
-                return DSL.trunc((Field) arg1, p);
+                    DatePart p;
+                    if ("YY".equals(part) || "YYYY".equals(part) || "YEAR".equals(part))
+                        p = DatePart.YEAR;
+                    else if ("MM".equals(part) || "MONTH".equals(part))
+                        p = DatePart.MONTH;
+                    else if ("DD".equals(part))
+                        p = DatePart.DAY;
+                    else if ("HH".equals(part))
+                        p = DatePart.HOUR;
+                    else if ("MI".equals(part))
+                        p = DatePart.MINUTE;
+                    else if ("SS".equals(part))
+                        p = DatePart.SECOND;
+                    else
+                        throw ctx.exception("Unsupported date part");
+
+                    parse(ctx, ')');
+                    return DSL.trunc((Field) arg1, p);
+                }
+                else {
+                    Field<?> arg2 = toField(ctx, parseNumericOp(ctx, N));
+                    parse(ctx, ')');
+                    return DSL.trunc((Field) arg1, (Field) arg2);
+                }
             }
-            else {
-                Field<?> arg2 = toField(ctx, parseNumericOp(ctx, N));
-                parse(ctx, ')');
-                return DSL.trunc((Field) arg1, (Field) arg2);
-            }
+
+            parse(ctx, ')');
+            if (arg1.getDataType().isDateTime())
+                return DSL.trunc((Field) arg1, DatePart.DAY);
+            else
+                return DSL.trunc((Field) arg1);
         }
 
         return null;

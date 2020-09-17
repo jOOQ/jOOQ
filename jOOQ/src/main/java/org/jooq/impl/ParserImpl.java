@@ -5556,7 +5556,7 @@ final class ParserImpl implements Parser {
 
         // TODO [#5306] Support FINAL TABLE (<data change statement>)
         // TOOD ONLY ( table primary )
-        if (parseFunctionNameIf(ctx, "UNNEST")) {
+        if (parseFunctionNameIf(ctx, "UNNEST") || parseFunctionNameIf(ctx, "TABLE")) {
             parse(ctx, '(');
             Field<?> f = parseField(ctx, Type.A);
 

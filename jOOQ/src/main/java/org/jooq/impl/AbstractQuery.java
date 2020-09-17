@@ -521,25 +521,26 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
         int i = 0;
         forceSettingsLoop:
         for (;;) {
-            render = new DefaultRenderContext(c);
-            render.data(DATA_FORCE_SETTINGS, true);
-
             try {
                 if (ctx.type() == DDL) {
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                    render = render(c);
                     result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
                 }
                 else if (executePreparedStatements(configuration().settings())) {
                     try {
+                        render = render(c);
                         render.data(DATA_COUNT_BIND_VALUES, true);
                         result = new Rendered(render.visit(this).render(), render.bindValues(), render.peekSkipUpdateCounts());
                     }
                     catch (DefaultRenderContext.ForceInlineSignal e) {
                         ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                        render = render(c);
                         result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
                     }
                 }
                 else {
+                    render = render(c);
                     result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
                 }
 
@@ -580,6 +581,12 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
 
         return result;
+    }
+
+    private final DefaultRenderContext render(Configuration c) {
+        DefaultRenderContext render = new DefaultRenderContext(c);
+        render.data(DATA_FORCE_SETTINGS, true);
+        return render;
     }
 
 

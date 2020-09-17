@@ -18297,6 +18297,60 @@ public class DSL {
 
 
     /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> toChar(Object value) {
+        return toChar(val(value));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> toChar(Field<?> value) {
+        return new ToChar(value, null);
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static Field<String> toChar(Object value, String formatMask) {
+        return toChar(val(value), val(formatMask));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static Field<String> toChar(Object value, Field<String> formatMask) {
+        return toChar(val(value), formatMask);
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static Field<String> toChar(Field<?> value, String formatMask) {
+        return toChar(value, val(formatMask));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static Field<String> toChar(Field<?> value, Field<String> formatMask) {
+        return new ToChar(value, formatMask);
+    }
+
+    /**
      * Parse a value to a <code>DATE</code>.
      *
      * @param value The formatted <code>DATE</code> value.

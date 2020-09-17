@@ -286,6 +286,7 @@ import static org.jooq.impl.DSL.timestamp;
 import static org.jooq.impl.DSL.timezone;
 import static org.jooq.impl.DSL.timezoneHour;
 import static org.jooq.impl.DSL.timezoneMinute;
+import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.DSL.toDate;
 import static org.jooq.impl.DSL.toTimestamp;
 import static org.jooq.impl.DSL.translate;
@@ -8990,9 +8991,11 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldToCharIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "TO_CHAR")) {
             parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx);
+            Field<?> f1 = parseField(ctx);
+            Field<String> f2 = (Field) (parseIf(ctx, ',') ? parseField(ctx) : null);
             parse(ctx, ')');
-            return cast(f1, SQLDataType.VARCHAR);
+
+            return f2 == null ? toChar(f1) : toChar(f1, f2);
         }
 
         return null;

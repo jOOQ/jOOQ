@@ -5,11 +5,17 @@
  labels: 'T: Defect'
 ---
 
-### Expected behavior and actual behavior:
+### Expected behavior
 
-### Steps to reproduce the problem (if possible, create an MCVE: https://github.com/jOOQ/jOOQ-mcve):
+### Actual behavior
 
-### Versions:
+### Steps to reproduce the problem
+
+- If the problem relates to code generation, please post your code generation configuration
+- A complete set of DDL statements can help re-create the setup you're having
+- An MCVE can be helpful to provide a complete reproduction case: https://github.com/jOOQ/jOOQ-mcve
+
+### Versions
 
 - jOOQ:
 - Java:

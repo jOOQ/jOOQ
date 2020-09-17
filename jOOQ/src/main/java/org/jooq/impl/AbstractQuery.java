@@ -54,7 +54,9 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeExceptions;
+import static org.jooq.impl.Tools.maxForceSettingsAttempts;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_SETTINGS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 
 import java.sql.PreparedStatement;
@@ -78,7 +80,9 @@ import org.jooq.conf.QueryPoolable;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.DefaultRenderContext.ForceSettingsSignal;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
 
@@ -509,29 +513,46 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
     private final Rendered getSQL0(ExecuteContext ctx) {
         Rendered result;
+        DefaultRenderContext render;
+        Configuration c = configuration;
 
         // [#3542] [#4977] Some dialects do not support bind values in DDL statements
         // [#6474] [#6929] Can this be communicated in a leaner way?
-        if (ctx.type() == DDL) {
-            ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-            DefaultRenderContext render = new DefaultRenderContext(configuration);
-            result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
-        }
-        else if (executePreparedStatements(configuration().settings())) {
+        int i = 0;
+        forceSettingsLoop:
+        for (;;) {
+            render = new DefaultRenderContext(c);
+            render.data(DATA_FORCE_SETTINGS, true);
+
             try {
-                DefaultRenderContext render = new DefaultRenderContext(configuration);
-                render.data(DATA_COUNT_BIND_VALUES, true);
-                result = new Rendered(render.visit(this).render(), render.bindValues(), render.peekSkipUpdateCounts());
+                if (ctx.type() == DDL) {
+                    ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                    result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
+                }
+                else if (executePreparedStatements(configuration().settings())) {
+                    try {
+                        render.data(DATA_COUNT_BIND_VALUES, true);
+                        result = new Rendered(render.visit(this).render(), render.bindValues(), render.peekSkipUpdateCounts());
+                    }
+                    catch (DefaultRenderContext.ForceInlineSignal e) {
+                        ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                        result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
+                    }
+                }
+                else {
+                    result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
+                }
+
+                break forceSettingsLoop;
             }
-            catch (DefaultRenderContext.ForceInlineSignal e) {
-                ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                DefaultRenderContext render = new DefaultRenderContext(configuration);
-                result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
+            catch (ForceSettingsSignal e) {
+                if (++i >= maxForceSettingsAttempts) {
+                    log.warn("Infinite loop", "There was an infinite loop trying to render a SQL query, due to ForceSettingsSignal. Please consider reporting this bug here: https://github.com/jOOQ/jOOQ/issues/new/choose");
+                    throw new DataAccessException("Too many force settings attempts");
+                }
+
+                c = c.derive(e.settings);
             }
-        }
-        else {
-            DefaultRenderContext render = new DefaultRenderContext(configuration);
-            result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
         }
 
 

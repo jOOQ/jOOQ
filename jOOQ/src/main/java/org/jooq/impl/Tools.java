@@ -282,6 +282,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
+import org.jooq.impl.DefaultRenderContext.ForceSettingsSignal;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -371,6 +372,12 @@ final class Tools {
          * </ul>
          */
         DATA_FORCE_STATIC_STATEMENT,
+
+        /**
+         * [#7312] Allow for {@link ForceSettingsSignal} to be thrown in order
+         * to override user-defined settings.
+         */
+        DATA_FORCE_SETTINGS,
 
         /**
          * [#2665] Omit the emission of clause events by {@link QueryPart}s.
@@ -711,8 +718,9 @@ final class Tools {
      * {@link #consumeExceptions(Configuration, PreparedStatement, SQLException)}
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
-    private static int                       maxConsumedExceptions          = 256;
-    private static int                       maxConsumedResults             = 65536;
+    static int                               maxForceSettingsAttempts       = 16;
+    static int                               maxConsumedExceptions          = 256;
+    static int                               maxConsumedResults             = 65536;
 
     /**
      * A pattern for the dash line syntax

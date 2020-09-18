@@ -39,8 +39,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.JoinType.JOIN;
@@ -1563,16 +1561,16 @@ final class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "GROUP BY")) {
             if (parseIf(ctx, '(')) {
                 parse(ctx, ')');
-                result.addGroupBy(emptyList());
+                result.addGroupBy();
             }
             else if (parseKeywordIf(ctx, "ROLLUP")) {
                 parse(ctx, '(');
-                result.addGroupBy(singletonList(rollup(parseFields(ctx).toArray(EMPTY_FIELD))));
+                result.addGroupBy(rollup(parseFields(ctx).toArray(EMPTY_FIELD)));
                 parse(ctx, ')');
             }
             else if (parseKeywordIf(ctx, "CUBE")) {
                 parse(ctx, '(');
-                result.addGroupBy(singletonList(cube(parseFields(ctx).toArray(EMPTY_FIELD))));
+                result.addGroupBy(cube(parseFields(ctx).toArray(EMPTY_FIELD)));
                 parse(ctx, ')');
             }
             else if (parseKeywordIf(ctx, "GROUPING SETS")) {
@@ -1583,13 +1581,13 @@ final class ParserImpl implements Parser {
                 }
                 while (parseIf(ctx, ','));
                 parse(ctx, ')');
-                result.addGroupBy(singletonList(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION))));
+                result.addGroupBy(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION)));
             }
             else {
                 groupBy = (List) parseFields(ctx);
 
                 if (parseKeywordIf(ctx, "WITH ROLLUP"))
-                    result.addGroupBy(singletonList(rollup(groupBy.toArray(EMPTY_FIELD))));
+                    result.addGroupBy(rollup(groupBy.toArray(EMPTY_FIELD)));
                 else
                     result.addGroupBy(groupBy);
             }

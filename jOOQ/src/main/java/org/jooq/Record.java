@@ -96,7 +96,29 @@ import org.jooq.tools.Convert;
  * <p>
  * jOOQ records have a natural ordering implemented in the same way as this is
  * defined in the SQL standard. For more details, see the
- * {@link #compareTo(Record)} method
+ * {@link #compareTo(Record)} method.
+ * <p>
+ * <h5>Importing Record</h5>
+ * <p>
+ * Starting from Java 14, the <code>Record</code> type conflicts with
+ * {@link java.lang.Record}, which is always imported by default. According to
+ * Java Language Specification, this means that jOOQ's <code>Record</code> type
+ * can no longer be imported on demand. This is not sufficient:
+ *
+ * <pre>
+ * <code>
+ * import org.jooq.*;
+ * </code>
+ * </pre>
+ *
+ * You have to do this instead:
+ *
+ * <pre>
+ * <code>
+ * import org.jooq.*;
+ * import org.jooq.Record;
+ * </code>
+ * </pre>
  *
  * @author Lukas Eder
  * @see Result

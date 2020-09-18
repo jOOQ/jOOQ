@@ -1129,10 +1129,6 @@ final class ParserImpl implements Parser {
         return parseSelect(ctx, null, null);
     }
 
-    private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree) {
-        return parseSelect(ctx, degree, null);
-    }
-
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree, WithImpl with) {
         ctx.scopeStart();
         SelectQueryImpl<Record> result = parseQueryExpressionBody(ctx, degree, with, null);
@@ -1472,16 +1468,6 @@ final class ParserImpl implements Parser {
         Table<?> into = null;
         List<Table<?>> from = null;
 
-
-
-
-
-        Condition where = null;
-        List<GroupField> groupBy = null;
-        Condition having = null;
-        List<WindowDefinition> windows = null;
-        Condition qualify = null;
-
         if (parseKeywordIf(ctx, "INTO"))
             into = parseTableName(ctx);
 
@@ -1498,70 +1484,8 @@ final class ParserImpl implements Parser {
             for (Table<?> table : from)
                 ctx.scope(table);
 
-        if (parseKeywordIf(ctx, "WHERE"))
-            where = parseCondition(ctx);
-
-        if (parseKeywordIf(ctx, "START WITH") && ctx.requireProEdition()) {
-
-
-
-
-
-
-        }
-        else if (parseKeywordIf(ctx, "CONNECT BY") && ctx.requireProEdition()) {
-
-
-
-
-
-
-
-        }
-
-        if (parseKeywordIf(ctx, "GROUP BY")) {
-            if (parseIf(ctx, '(')) {
-                parse(ctx, ')');
-                groupBy = emptyList();
-            }
-            else if (parseKeywordIf(ctx, "ROLLUP")) {
-                parse(ctx, '(');
-                groupBy = singletonList(rollup(parseFields(ctx).toArray(EMPTY_FIELD)));
-                parse(ctx, ')');
-            }
-            else if (parseKeywordIf(ctx, "CUBE")) {
-                parse(ctx, '(');
-                groupBy = singletonList(cube(parseFields(ctx).toArray(EMPTY_FIELD)));
-                parse(ctx, ')');
-            }
-            else if (parseKeywordIf(ctx, "GROUPING SETS")) {
-                List<List<Field<?>>> fieldSets = new ArrayList<>();
-                parse(ctx, '(');
-                do {
-                    fieldSets.add(parseFieldsOrEmptyParenthesised(ctx));
-                }
-                while (parseIf(ctx, ','));
-                parse(ctx, ')');
-                groupBy = singletonList(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION)));
-            }
-            else {
-                groupBy = (List) parseFields(ctx);
-
-                if (parseKeywordIf(ctx, "WITH ROLLUP"))
-                    groupBy = singletonList(rollup(groupBy.toArray(EMPTY_FIELD)));
-            }
-        }
-
-        if (parseKeywordIf(ctx, "HAVING"))
-            having = parseCondition(ctx);
-
-        if (parseKeywordIf(ctx, "WINDOW"))
-            windows = parseWindowDefinitions(ctx);
-
-        if (parseKeywordIf(ctx, "QUALIFY"))
-            qualify = parseCondition(ctx);
-
         SelectQueryImpl<Record> result = new SelectQueryImpl<>(ctx.dsl.configuration(), with);
+
         if (hints != null)
             result.addHint(hints);
 
@@ -1580,31 +1504,31 @@ final class ParserImpl implements Parser {
         if (from != null)
             result.addFrom(from);
 
+        if (parseKeywordIf(ctx, "WHERE"))
+            result.addConditions(parseCondition(ctx));
 
+        // [#10638] Oracle seems to support (but not document) arbitrary ordering
+        //          between these clauses
+        boolean connectBy = false;
+        boolean startWith = false;
+        boolean groupBy = false;
+        boolean having = false;
 
+        for (;;)
+            if ((connectBy || (!(connectBy = parseQueryPrimaryConnectBy(ctx, result))))
+                && (startWith || (!(startWith = parseQueryPrimaryStartWith(ctx, result))))
+                && (groupBy || (!(groupBy = parseQueryPrimaryGroupBy(ctx, result))))
+                && (having || (!(having = parseQueryPrimaryHaving(ctx, result)))))
+                break;
 
+        if (startWith && !connectBy)
+            throw ctx.expected("CONNECT BY");
 
+        if (parseKeywordIf(ctx, "WINDOW"))
+            result.addWindow(parseWindowDefinitions(ctx));
 
-
-
-
-
-
-
-        if (where != null)
-            result.addConditions(where);
-
-        if (groupBy != null)
-            result.addGroupBy(groupBy);
-
-        if (having != null)
-            result.addHaving(having);
-
-        if (windows != null)
-            result.addWindow(windows);
-
-        if (qualify != null)
-            result.addQualify(qualify);
+        if (parseKeywordIf(ctx, "QUALIFY"))
+            result.addQualify(parseCondition(ctx));
 
         if (limit != null)
             if (offset != null)
@@ -1622,6 +1546,84 @@ final class ParserImpl implements Parser {
             result.setWithTies(true);
 
         return result;
+    }
+
+    private static boolean parseQueryPrimaryHaving(ParserContext ctx, SelectQueryImpl<Record> result) {
+        if (parseKeywordIf(ctx, "HAVING")) {
+            result.addHaving(parseCondition(ctx));
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private static boolean parseQueryPrimaryGroupBy(ParserContext ctx, SelectQueryImpl<Record> result) {
+        List<GroupField> groupBy;
+
+        if (parseKeywordIf(ctx, "GROUP BY")) {
+            if (parseIf(ctx, '(')) {
+                parse(ctx, ')');
+                result.addGroupBy(emptyList());
+            }
+            else if (parseKeywordIf(ctx, "ROLLUP")) {
+                parse(ctx, '(');
+                result.addGroupBy(singletonList(rollup(parseFields(ctx).toArray(EMPTY_FIELD))));
+                parse(ctx, ')');
+            }
+            else if (parseKeywordIf(ctx, "CUBE")) {
+                parse(ctx, '(');
+                result.addGroupBy(singletonList(cube(parseFields(ctx).toArray(EMPTY_FIELD))));
+                parse(ctx, ')');
+            }
+            else if (parseKeywordIf(ctx, "GROUPING SETS")) {
+                List<List<Field<?>>> fieldSets = new ArrayList<>();
+                parse(ctx, '(');
+                do {
+                    fieldSets.add(parseFieldsOrEmptyParenthesised(ctx));
+                }
+                while (parseIf(ctx, ','));
+                parse(ctx, ')');
+                result.addGroupBy(singletonList(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION))));
+            }
+            else {
+                groupBy = (List) parseFields(ctx);
+
+                if (parseKeywordIf(ctx, "WITH ROLLUP"))
+                    result.addGroupBy(singletonList(rollup(groupBy.toArray(EMPTY_FIELD))));
+                else
+                    result.addGroupBy(groupBy);
+            }
+
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private static boolean parseQueryPrimaryConnectBy(ParserContext ctx, SelectQueryImpl<Record> result) {
+        if (parseKeywordIf(ctx, "CONNECT BY") && ctx.requireProEdition()) {
+
+
+
+
+
+
+
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private static boolean parseQueryPrimaryStartWith(ParserContext ctx, SelectQueryImpl<Record> result) {
+        if (parseKeywordIf(ctx, "START WITH") && ctx.requireProEdition()) {
+
+
+
+            return true;
+        }
+        else
+            return false;
     }
 
     private static final List<WindowDefinition> parseWindowDefinitions(ParserContext ctx) {

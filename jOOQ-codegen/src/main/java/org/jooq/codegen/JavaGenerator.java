@@ -111,6 +111,7 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
 import org.jooq.codegen.GeneratorStrategy.Mode;
+import org.jooq.codegen.GeneratorWriter.CloseResult;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractRoutine;
 // ...
@@ -265,9 +266,14 @@ public class JavaGenerator extends AbstractGenerator {
     private Map<CatalogDefinition, String>        catalogVersions;
 
     /**
-     * All files modified by this generator.
+     * All files affected by this generator run.
      */
-    private Set<File>                             files                        = new LinkedHashSet<>();
+    private Set<File>                             affectedFiles                = new LinkedHashSet<>();
+
+    /**
+     * All files modified by this generator run.
+     */
+    private Set<File>                             modifiedFiles                = new LinkedHashSet<>();
 
     /**
      * These directories were not modified by this generator, but flagged as not
@@ -427,6 +433,8 @@ public class JavaGenerator extends AbstractGenerator {
         // XXX Generating catalogs
         // ----------------------------------------------------------------------
         log.info("Generating catalogs", "Total: " + database.getCatalogs().size());
+
+        StopWatch watch = new StopWatch();
         for (CatalogDefinition catalog : database.getCatalogs()) {
             try {
                 if (generateCatalogIfEmpty(catalog))
@@ -439,11 +447,30 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        long time = watch.split();
+
+        // [#10648] Log modified files
+        log.info("Affected files: " + affectedFiles.size());
+        log.info("Modified files: " + modifiedFiles.size());
+
+        if (modifiedFiles.isEmpty()) {
+            log.info(
+                "No modified files",
+                "This code generation run has not produced any file modifications.\n"
+              + "This means, the schema has not changed, and no other parameters (jOOQ version, driver version, database version,\n"
+              + "and any configuration elements) have not changed either.\n\n"
+              + "In automated builds, it is recommended to prevent unnecessary code generation runs. This run took: " + StopWatch.format(time) + "\n"
+              + "Possible means to prevent this:\n"
+              + "- Use manual code generation and check in generated sources: https://www.jooq.org/doc/latest/manual/code-generation/codegen-version-control/\n"
+              + "- Use schema version providers: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-version-providers/\n"
+              + "- Use gradle tasks and inputs: https://github.com/etiennestuder/gradle-jooq-plugin/blob/master/README.md");
+        }
+
         // [#5556] Clean up common parent directory
         log.info("Removing excess files");
-        empty(getStrategy().getFileRoot(), (scala ? ".scala" : kotlin ? ".kt" : ".java"), files, directoriesNotForRemoval);
+        empty(getStrategy().getFileRoot(), (scala ? ".scala" : kotlin ? ".kt" : ".java"), affectedFiles, directoriesNotForRemoval);
         directoriesNotForRemoval.clear();
-        files.clear();
+        affectedFiles.clear();
     }
 
     private boolean generateCatalogIfEmpty(CatalogDefinition catalog) {
@@ -8317,7 +8344,12 @@ public class JavaGenerator extends AbstractGenerator {
 
     // [#4626] Users may need to call this method
     protected void closeJavaWriter(JavaWriter out) {
-        if (out.close())
-            files.add(out.file());
+        CloseResult result = out.close();
+
+        if (result.affected)
+            affectedFiles.add(out.file());
+
+        if (result.modified)
+            modifiedFiles.add(out.file());
     }
 }

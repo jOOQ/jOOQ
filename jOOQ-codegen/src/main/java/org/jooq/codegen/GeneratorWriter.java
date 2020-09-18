@@ -305,14 +305,33 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         return indentTabsThisLine;
     }
 
-    public boolean close() {
+    public static class CloseResult {
+
+        /**
+         * Whether closing the file affected any files at all.
+         */
+        public final boolean affected;
+
+        /**
+         * Whether closing the file modified the file.
+         */
+        public final boolean modified;
+
+        CloseResult(boolean affected, boolean modified) {
+            this.affected = affected;
+            this.modified = modified;
+        }
+    }
+
+    public CloseResult close() {
         String newContent = beforeClose(sb.toString());
 
         // [#4626] Don't write empty files
         if (StringUtils.isBlank(newContent))
-            return false;
+            return new CloseResult(false, false);
 
         try {
+
             // [#3756] Regenerate files only if there is a difference
             String oldContent = null;
             if (file.exists() && file.length() == newContent.getBytes(encoding()).length) {
@@ -343,9 +362,13 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 writer.append(newContent);
                 writer.flush();
                 writer.close();
+
+                return new CloseResult(true, true);
             }
 
-            return true;
+            // [#10648] Check all modified files by this run
+            else
+                return new CloseResult(true, false);
         }
         catch (IOException e) {
             throw new GeneratorException("Error writing " + file.getAbsolutePath(), e);

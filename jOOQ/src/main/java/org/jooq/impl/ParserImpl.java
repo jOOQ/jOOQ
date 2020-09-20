@@ -1512,12 +1512,11 @@ final class ParserImpl implements Parser {
         boolean groupBy = false;
         boolean having = false;
 
-        for (;;)
-            if ((connectBy || (!(connectBy = parseQueryPrimaryConnectBy(ctx, result))))
-                && (startWith || (!(startWith = parseQueryPrimaryStartWith(ctx, result))))
-                && (groupBy || (!(groupBy = parseQueryPrimaryGroupBy(ctx, result))))
-                && (having || (!(having = parseQueryPrimaryHaving(ctx, result)))))
-                break;
+        while ((!connectBy && (connectBy = parseQueryPrimaryConnectBy(ctx, result)))
+            || (!startWith && (startWith = parseQueryPrimaryStartWith(ctx, result)))
+            || (!groupBy && (groupBy = parseQueryPrimaryGroupBy(ctx, result)))
+            || (!having && (having = parseQueryPrimaryHaving(ctx, result))))
+            ;
 
         if (startWith && !connectBy)
             throw ctx.expected("CONNECT BY");

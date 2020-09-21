@@ -802,11 +802,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final void sql(BindingSQLContext<U> ctx, T value) throws SQLException {
             if (ctx.render().paramType() == INLINED)
                 if (value == null)
-                    ctx.render().visit(K_NULL);
+                    sqlInlineNull0(ctx);
                 else
                     sqlInline0(ctx, value);
             else
                 sqlBind0(ctx, value);
+        }
+
+        private final void sqlInlineNull0(BindingSQLContext<U> ctx) {
+            ctx.render().visit(K_NULL);
+
+
+
+
+
         }
 
         /**

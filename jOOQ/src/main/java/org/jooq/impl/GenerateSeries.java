@@ -37,14 +37,21 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.inline;
 // ...
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.unquotedName;
+import static org.jooq.impl.DSL.withRecursive;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
+import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record1;
 import org.jooq.TableOptions;
 
@@ -85,6 +92,23 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
 
 
+            case FIREBIRD:
+            case HSQLDB:
+            case SQLITE:
+            case MARIADB:
+            case MYSQL: {
+                Name v = unquotedName("v");
+                Field<Integer> f = DSL.field(v, INTEGER);
+                visitSubquery(
+                    ctx,
+                    withRecursive(N_GENERATE_SERIES, v)
+                        .as(select(from).unionAll(select(f.plus(step == null ? inline(1) : step)).from(N_GENERATE_SERIES).where(f.lt(to))))
+                        .select(f).from(N_GENERATE_SERIES),
+                    true
+                );
+
+                break;
+            }
 
 
 
@@ -102,12 +126,24 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+            case H2:
             case POSTGRES:
-            default:
+            default: {
                 if (step == null)
                     ctx.visit(table("{generate_series}({0}, {1})", from, to));
                 else
                     ctx.visit(table("{generate_series}({0}, {1}, {2})", from, to, step));
+            }
         }
     }
 

@@ -10004,7 +10004,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(int from, int to) {
         return generateSeries(val(from), val(to));
     }
@@ -10024,7 +10024,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to) {
         return generateSeries(val(from), nullSafe(to));
     }
@@ -10044,7 +10044,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to) {
         return new GenerateSeries(nullSafe(from), val(to));
     }
@@ -10064,7 +10064,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to) {
         return new GenerateSeries(nullSafe(from), nullSafe(to));
     }
@@ -10084,7 +10084,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(int from, int to, int step) {
         return generateSeries(val(from), val(to), val(step));
     }
@@ -10104,7 +10104,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to, int step) {
         return generateSeries(val(from), nullSafe(to), val(step));
     }
@@ -10124,7 +10124,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to, int step) {
         return new GenerateSeries(nullSafe(from), val(to), val(step));
     }
@@ -10144,7 +10144,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, int step) {
         return new GenerateSeries(nullSafe(from), nullSafe(to), val(step));
     }
@@ -10164,7 +10164,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(int from, int to, Field<Integer> step) {
         return generateSeries(val(from), val(to), nullSafe(step));
     }
@@ -10184,7 +10184,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to, Field<Integer> step) {
         return generateSeries(val(from), nullSafe(to), nullSafe(step));
     }
@@ -10204,7 +10204,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to, Field<Integer> step) {
         return new GenerateSeries(nullSafe(from), val(to), nullSafe(step));
     }
@@ -10224,7 +10224,7 @@ public class DSL {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
         return new GenerateSeries(nullSafe(from), nullSafe(to), nullSafe(step));
     }

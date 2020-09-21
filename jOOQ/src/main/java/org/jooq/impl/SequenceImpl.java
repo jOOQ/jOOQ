@@ -53,6 +53,7 @@ import static org.jooq.impl.Keywords.K_NEXTVAL;
 import static org.jooq.impl.Keywords.K_NEXT_VALUE_FOR;
 import static org.jooq.impl.Keywords.K_PREVIOUS_VALUE_FOR;
 import static org.jooq.impl.Names.N_CURRVAL;
+import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_GEN_ID;
 import static org.jooq.impl.Names.N_NEXTVAL;
 
@@ -186,7 +187,7 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
 
     @Override
     public final Select<Record1<T>> nextvals(int size) {
-        return DSL.select(nextval()).from(generateSeries(1, size));
+        return DSL.select(nextval()).from(generateSeries(1, size).as(N_GENERATE_SERIES));
     }
 
     private enum SequenceMethod {

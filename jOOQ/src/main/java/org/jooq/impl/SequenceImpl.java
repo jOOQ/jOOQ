@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_CURRENT_VALUE_FOR;
 import static org.jooq.impl.Keywords.K_CURRVAL;
@@ -63,8 +64,10 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.Name;
+import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -179,6 +182,11 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
     @Override
     public final Field<T> nextval() {
         return new SequenceFunction(SequenceMethod.NEXTVAL);
+    }
+
+    @Override
+    public final Select<Record1<T>> nextvals(int size) {
+        return DSL.select(nextval()).from(generateSeries(1, size));
     }
 
     private enum SequenceMethod {

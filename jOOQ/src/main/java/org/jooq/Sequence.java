@@ -111,16 +111,25 @@ public interface Sequence<T extends Number> extends Qualified, Typed<T> {
     Field<T> getCache();
 
     /**
-     * Get the current value of this sequence
+     * An expression to get the current value of this sequence.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     Field<T> currval();
 
     /**
-     * Increment the sequence and get the next value
+     * An expression to increment the sequence and get the next value.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     Field<T> nextval();
+
+    /**
+     * An expression to increment the sequence and get the next values.
+     * <p>
+     * This is done using {@link DSL#generateSeries(int, int)}.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    Select<Record1<T>> nextvals(int size);
 }

@@ -38,16 +38,13 @@
 package org.jooq.impl;
 
 // ...
-import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
 
 import org.jooq.Clause;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.TableOptions;
 
@@ -79,16 +76,9 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
+        switch (ctx.family()) {
 
-    @Override // Avoid AbstractTable implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
 
-    private final QueryPart delegate(Configuration configuration) {
-        switch (configuration.family()) {
 
 
 
@@ -115,9 +105,9 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
             case POSTGRES:
             default:
                 if (step == null)
-                    return table("{generate_series}({0}, {1})", from, to);
+                    ctx.visit(table("{generate_series}({0}, {1})", from, to));
                 else
-                    return table("{generate_series}({0}, {1}, {2})", from, to, step);
+                    ctx.visit(table("{generate_series}({0}, {1}, {2})", from, to, step));
         }
     }
 
@@ -129,6 +119,11 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
     @Override
     final Fields<Record1<Integer>> fields0() {
-        return new Fields<>(DSL.field(name("generate_series"), Integer.class));
+        return new Fields<>(DSL.field(N_GENERATE_SERIES, Integer.class));
+    }
+
+    @Override // Avoid AbstractTable implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

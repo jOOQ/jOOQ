@@ -11386,6 +11386,18 @@ public interface DSLContext extends Scope {
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
+     * Convenience method to fetch several NEXTVAL for a sequence directly from
+     * this {@link DSLContext}'s underlying JDBC {@link Connection}.
+     * <p>
+     * This is done using {@link DSL#generateSeries(int, int)}.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    <T extends Number> List<T> nextvals(Sequence<T> sequence, int size) throws DataAccessException;
+
+    /**
      * Convenience method to fetch the CURRVAL for a sequence directly from this
      * {@link DSLContext}'s underlying JDBC {@link Connection}.
      *

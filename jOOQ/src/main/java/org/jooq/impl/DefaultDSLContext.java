@@ -4126,6 +4126,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public <T extends Number> List<T> nextvals(Sequence<T> sequence, int size) {
+        return fetchValues(sequence.nextvals(size));
+    }
+
+    @Override
     public BigInteger currval(String sequence) {
         return currval(name(sequence));
     }

@@ -230,6 +230,7 @@ final class Names {
     static final Name N_SUBSTR                 = unquotedName("substr");
     static final Name N_SUBSTRING              = unquotedName("substring");
     static final Name N_SYSDATE                = unquotedName("sysdate");
+    static final Name N_SYSTEM_RANGE           = unquotedName("system_range");
     static final Name N_SYSTEM_TIME            = unquotedName("system_time");
     static final Name N_T                      = unquotedName("t");
     static final Name N_TANH                   = unquotedName("tanh");

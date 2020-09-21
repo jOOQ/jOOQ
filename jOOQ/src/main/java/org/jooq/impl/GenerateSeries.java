@@ -41,10 +41,10 @@ import static org.jooq.impl.DSL.inline;
 // ...
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.withRecursive;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
+import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -110,6 +110,14 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
                 break;
             }
 
+            case H2: {
+                if (step == null)
+                    ctx.visit(N_SYSTEM_RANGE).sql('(').visit(from).sql(", ").visit(to).sql(')');
+                else
+                    ctx.visit(N_SYSTEM_RANGE).sql('(').visit(from).sql(", ").visit(to).sql(", ").visit(step).sql(')');
+
+                break;
+            }
 
 
 
@@ -133,13 +141,13 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
 
 
-            case H2:
+
             case POSTGRES:
             default: {
                 if (step == null)
-                    ctx.visit(table("{generate_series}({0}, {1})", from, to));
+                    ctx.visit(N_GENERATE_SERIES).sql('(').visit(from).sql(", ").visit(to).sql(')');
                 else
-                    ctx.visit(table("{generate_series}({0}, {1}, {2})", from, to, step));
+                    ctx.visit(N_GENERATE_SERIES).sql('(').visit(from).sql(", ").visit(to).sql(", ").visit(step).sql(')');
             }
         }
     }

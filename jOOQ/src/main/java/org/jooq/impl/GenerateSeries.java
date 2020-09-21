@@ -103,16 +103,12 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
                     ctx,
                     withRecursive(N_GENERATE_SERIES, v)
                         .as(select(from).unionAll(select(f.plus(step == null ? inline(1) : step)).from(N_GENERATE_SERIES).where(f.lt(to))))
-                        .select(f).from(N_GENERATE_SERIES),
+                        .select(f.as(N_GENERATE_SERIES)).from(N_GENERATE_SERIES),
                     true
                 );
 
                 break;
             }
-
-
-
-
 
 
 

@@ -136,6 +136,7 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
 
 
+
             case H2:
             case POSTGRES:
             default: {

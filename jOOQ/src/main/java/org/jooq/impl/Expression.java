@@ -98,8 +98,6 @@ import static org.jooq.impl.Names.N_SQL_TSI_MONTH;
 import static org.jooq.impl.Names.N_SQL_TSI_SECOND;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPADD;
-import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
@@ -126,48 +124,26 @@ final class Expression<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID       = -5522799070693019771L;
-    private static final Set<SQLDialect>  SUPPORT_BIT_AND        = SQLDialect.supportedBy(H2, HSQLDB);
-    private static final Set<SQLDialect>  SUPPORT_BIT_OR_XOR     = SQLDialect.supportedBy(H2, HSQLDB);
-    private static final Set<SQLDialect>  EMULATE_BIT_XOR        = SQLDialect.supportedBy(SQLITE);
-    private static final Set<SQLDialect>  EMULATE_SHR_SHL        = SQLDialect.supportedBy(HSQLDB);
-    private static final Set<SQLDialect>  HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect>  SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES);
+    private static final long            serialVersionUID       = -5522799070693019771L;
+    private static final Set<SQLDialect> SUPPORT_BIT_AND        = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect> SUPPORT_BIT_OR_XOR     = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect> EMULATE_BIT_XOR        = SQLDialect.supportedBy(SQLITE);
+    private static final Set<SQLDialect> EMULATE_SHR_SHL        = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect> HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES);
 
-    private final ExpressionOperator      operator;
-    private final boolean                 internal;
-    private final Field<T>                lhs;
-    private final QueryPartList<Field<?>> rhs;
-    private final Field<?>[]              arguments;
+    private final ExpressionOperator     operator;
+    private final boolean                internal;
+    private final Field<T>               lhs;
+    private final Field<?>               rhs;
 
-    Expression(ExpressionOperator operator, boolean internal, Field<T> lhs, Field<?>... rhs) {
+    Expression(ExpressionOperator operator, boolean internal, Field<T> lhs, Field<?> rhs) {
         super(DSL.name(operator.toSQL()), lhs.getDataType());
 
         this.operator = operator;
         this.internal = internal;
         this.lhs = lhs;
-        this.rhs = new QueryPartList<>(rhs);
-        this.arguments = Tools.combine(lhs, rhs);
-    }
-
-    @Override
-    public final Field<T> add(Field<?> value) {
-        if (operator == ExpressionOperator.ADD && getDataType().isNumeric()) {
-            rhs.add(value);
-            return this;
-        }
-
-        return super.add(value);
-    }
-
-    @Override
-    public final Field<T> mul(Field<? extends Number> value) {
-        if (operator == ExpressionOperator.MULTIPLY && getDataType().isNumeric()) {
-            rhs.add(value);
-            return this;
-        }
-
-        return super.mul(value);
+        this.rhs = rhs;
     }
 
     @SuppressWarnings("unchecked")
@@ -192,17 +168,17 @@ final class Expression<T> extends AbstractField<T> {
 
         // DB2, H2 and HSQLDB know functions, instead of operators
         if (BIT_AND == operator && SUPPORT_BIT_AND.contains(ctx.dialect()))
-            ctx.visit(function("bitand", getDataType(), arguments));
+            ctx.visit(function("bitand", getDataType(), lhs, rhs));
         else if (BIT_AND == operator && FIREBIRD == family)
-            ctx.visit(function("bin_and", getDataType(), arguments));
+            ctx.visit(function("bin_and", getDataType(), lhs, rhs));
         else if (BIT_XOR == operator && SUPPORT_BIT_OR_XOR.contains(ctx.dialect()))
-            ctx.visit(function("bitxor", getDataType(), arguments));
+            ctx.visit(function("bitxor", getDataType(), lhs, rhs));
         else if (BIT_XOR == operator && FIREBIRD == family)
-            ctx.visit(function("bin_xor", getDataType(), arguments));
+            ctx.visit(function("bin_xor", getDataType(), lhs, rhs));
         else if (BIT_OR == operator && SUPPORT_BIT_OR_XOR.contains(ctx.dialect()))
-            ctx.visit(function("bitor", getDataType(), arguments));
+            ctx.visit(function("bitor", getDataType(), lhs, rhs));
         else if (BIT_OR == operator && FIREBIRD == family)
-            ctx.visit(function("bin_or", getDataType(), arguments));
+            ctx.visit(function("bin_or", getDataType(), lhs, rhs));
 
 
 
@@ -218,7 +194,7 @@ final class Expression<T> extends AbstractField<T> {
 
         else if (operator == SHL || operator == SHR) {
             if (family == H2)
-                ctx.visit(function(SHL == operator ? "lshift" : "rshift", getDataType(), arguments));
+                ctx.visit(function(SHL == operator ? "lshift" : "rshift", getDataType(), lhs, rhs));
 
 
 
@@ -227,7 +203,7 @@ final class Expression<T> extends AbstractField<T> {
 
             // Some dialects support shifts as functions
             else if (FIREBIRD == family)
-                ctx.visit(function(SHL == operator ? "bin_shl" : "bin_shr", getDataType(), arguments));
+                ctx.visit(function(SHL == operator ? "bin_shl" : "bin_shr", getDataType(), lhs, rhs));
 
             // Many dialects don't support shifts. Use multiplication/division instead
             else if (SHL == operator && EMULATE_SHR_SHL.contains(ctx.dialect()))
@@ -258,9 +234,9 @@ final class Expression<T> extends AbstractField<T> {
         // [#585] Date time arithmetic for numeric or interval RHS
         else if ((ADD == operator || SUBTRACT == operator) &&
              lhs.getDataType().isDateTime() &&
-            (rhs.get(0).getDataType().isNumeric() ||
-             rhs.get(0).getDataType().isInterval()))
-            ctx.visit(new DateExpression<>(lhs, operator, rhs.get(0)));
+            (rhs.getDataType().isNumeric() ||
+             rhs.getDataType().isInterval()))
+            ctx.visit(new DateExpression<>(lhs, operator, rhs));
 
         // ---------------------------------------------------------------------
         // XXX: Other operators
@@ -270,14 +246,6 @@ final class Expression<T> extends AbstractField<T> {
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -314,7 +282,7 @@ final class Expression<T> extends AbstractField<T> {
      */
     @SuppressWarnings("unchecked")
     private final Field<Number> rhsAsNumber() {
-        return (Field<Number>) rhs.get(0);
+        return (Field<Number>) rhs;
     }
 
     // E.g. +2 00:00:00.000000000
@@ -626,7 +594,7 @@ final class Expression<T> extends AbstractField<T> {
                 case HSQLDB:
                 case POSTGRES:
                 default:
-                    ctx.visit(new DefaultExpression<>(lhs, operator, wrap(rhs)));
+                    ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
                     break;
             }
         }
@@ -774,7 +742,7 @@ final class Expression<T> extends AbstractField<T> {
 
                 case H2:
                 default:
-                    ctx.visit(new DefaultExpression<>(lhs, operator, wrap(rhs)));
+                    ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
                     break;
             }
         }
@@ -833,13 +801,13 @@ final class Expression<T> extends AbstractField<T> {
         /**
          * Generated UID
          */
-        private static final long                       serialVersionUID = -5105004317793995419L;
+        private static final long        serialVersionUID = -5105004317793995419L;
 
-        private final Field<T>                          lhs;
-        private final ExpressionOperator                operator;
-        private final QueryPartCollectionView<Field<?>> rhs;
+        private final Field<T>           lhs;
+        private final ExpressionOperator operator;
+        private final Field<?>           rhs;
 
-        DefaultExpression(Field<T> lhs, ExpressionOperator operator, QueryPartCollectionView<Field<?>> rhs) {
+        DefaultExpression(Field<T> lhs, ExpressionOperator operator, Field<?> rhs) {
             super(operator.toName(), lhs.getDataType());
 
             this.lhs = lhs;
@@ -854,16 +822,13 @@ final class Expression<T> extends AbstractField<T> {
             if (operator == BIT_XOR && HASH_OP_FOR_BIT_XOR.contains(ctx.dialect()))
                 op = "#";
 
-            ctx.sql('(');
-            ctx.visit(lhs);
-
-            for (Field<?> field : rhs)
-                ctx.sql(' ')
-                   .sql(op)
-                   .sql(' ')
-                   .visit(field);
-
-            ctx.sql(')');
+            ctx.sql('(')
+               .visit(lhs)
+               .sql(' ')
+               .sql(op)
+               .sql(' ')
+               .visit(rhs)
+               .sql(')');
         }
     }
 }

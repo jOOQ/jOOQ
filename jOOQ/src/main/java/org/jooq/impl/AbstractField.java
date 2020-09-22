@@ -347,12 +347,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return add(Tools.field(value));
     }
 
-    /*
-     * This default implementation is known to be overridden by
-     * Expression to generate neater expressions
-     */
     @Override
-    public Field<T> add(Field<?> value) {
+    public final Field<T> add(Field<?> value) {
         return new Expression<>(ADD, false, this, nullSafe(value, getDataType()));
     }
 
@@ -371,12 +367,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return mul(Tools.field(value));
     }
 
-    /**
-     * This default implementation is known to be overridden by
-     * <code>Expression</code> to generate neater expressions
-     */
     @Override
-    public Field<T> mul(Field<? extends Number> value) {
+    public final Field<T> mul(Field<? extends Number> value) {
         return new Expression<>(MULTIPLY, false, this, nullSafe(value, getDataType()));
     }
 

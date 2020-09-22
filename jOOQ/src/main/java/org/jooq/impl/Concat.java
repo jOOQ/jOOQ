@@ -65,7 +65,6 @@ final class Concat extends AbstractField<String> {
         this.arguments = arguments;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {
 
@@ -78,10 +77,7 @@ final class Concat extends AbstractField<String> {
             return;
         }
 
-        Field<String> first = cast[0];
-        Field<String>[] others = new Field[cast.length - 1];
-        System.arraycopy(cast, 1, others, 0, others.length);
-
+        ExpressionOperator op = CONCAT;
         switch (ctx.family()) {
 
 
@@ -91,7 +87,7 @@ final class Concat extends AbstractField<String> {
             case MARIADB:
             case MYSQL:
                 ctx.visit(function("concat", SQLDataType.VARCHAR, cast));
-                break;
+                return;
 
 
 
@@ -105,9 +101,12 @@ final class Concat extends AbstractField<String> {
 
 
 
-            default:
-                ctx.visit(new Expression<>(CONCAT, false, first, others));
-                break;
         }
+
+        Field<?> expression = new Expression<>(op, false, cast[0], cast[1]);
+        for (int i = 2; i < cast.length; i++)
+            expression = new Expression<>(op, false, expression, cast[i]);
+
+        ctx.visit(expression);
     }
 }

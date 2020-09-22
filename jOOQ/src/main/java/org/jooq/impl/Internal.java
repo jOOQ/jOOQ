@@ -37,12 +37,16 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.ExpressionOperator.*;
+
 import org.jooq.Binding;
 import org.jooq.Check;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
+import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
@@ -53,6 +57,7 @@ import org.jooq.Parameter;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDT;
@@ -356,5 +361,25 @@ public final class Internal {
     @NotNull
     public static final <R extends Record, ER extends EmbeddableRecord<ER>> TableField<R, ?>[] fields(TableField<R, ER> embeddableField) {
         return ((EmbeddableTableField<R, ER>) embeddableField).fields;
+    }
+
+    @Support
+    static final <T> Field<T> add(Field<T> lhs, Field<T> rhs) {
+        return new Expression<>(ADD, true, lhs, nullSafe(rhs, lhs.getDataType()));
+    }
+
+    @Support
+    static final <T> Field<T> sub(Field<T> lhs, Field<T> rhs) {
+        return new Expression<>(SUBTRACT, true, lhs, nullSafe(rhs, lhs.getDataType()));
+    }
+
+    @Support
+    static final <T> Field<T> mul(Field<T> lhs, Field<T> rhs) {
+        return new Expression<>(MULTIPLY, true, lhs, nullSafe(rhs, lhs.getDataType()));
+    }
+
+    @Support
+    static final <T> Field<T> div(Field<T> lhs, Field<T> rhs) {
+        return new Expression<>(DIVIDE, true, lhs, nullSafe(rhs, lhs.getDataType()));
     }
 }

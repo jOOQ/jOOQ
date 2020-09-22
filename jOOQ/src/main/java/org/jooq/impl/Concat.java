@@ -106,7 +106,7 @@ final class Concat extends AbstractField<String> {
 
 
             default:
-                ctx.visit(new Expression<>(CONCAT, first, others));
+                ctx.visit(new Expression<>(CONCAT, false, first, others));
                 break;
         }
     }

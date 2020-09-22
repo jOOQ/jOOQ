@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.conf.SettingsTools.getTransformUnneededArithmeticExpressions;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
@@ -98,6 +99,7 @@ import static org.jooq.impl.Names.N_SQL_TSI_SECOND;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPADD;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
@@ -109,8 +111,11 @@ import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Param;
+// ...
 import org.jooq.SQLDialect;
+import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
@@ -129,15 +134,17 @@ final class Expression<T> extends AbstractField<T> {
     private static final Set<SQLDialect>  HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES);
     private static final Set<SQLDialect>  SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES);
 
+    private final ExpressionOperator      operator;
+    private final boolean                 internal;
     private final Field<T>                lhs;
     private final QueryPartList<Field<?>> rhs;
     private final Field<?>[]              arguments;
-    private final ExpressionOperator      operator;
 
-    Expression(ExpressionOperator operator, Field<T> lhs, Field<?>... rhs) {
+    Expression(ExpressionOperator operator, boolean internal, Field<T> lhs, Field<?>... rhs) {
         super(DSL.name(operator.toSQL()), lhs.getDataType());
 
         this.operator = operator;
+        this.internal = internal;
         this.lhs = lhs;
         this.rhs = new QueryPartList<>(rhs);
         this.arguments = Tools.combine(lhs, rhs);
@@ -166,6 +173,17 @@ final class Expression<T> extends AbstractField<T> {
     @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
         SQLDialect family = ctx.family();
 
         // ---------------------------------------------------------------------
@@ -252,6 +270,36 @@ final class Expression<T> extends AbstractField<T> {
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * In some expressions, the lhs can be safely assumed to be a single number

@@ -79,7 +79,7 @@ final class Mod<T> extends AbstractField<T> {
 
 
             case SQLITE:
-                ctx.visit(new Expression<>(MODULO, arg1, arg2));
+                ctx.visit(new Expression<>(MODULO, false, arg1, arg2));
                 break;
             default:
                 ctx.visit(K_MOD).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');

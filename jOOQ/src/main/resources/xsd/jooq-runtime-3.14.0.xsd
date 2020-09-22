@@ -190,7 +190,7 @@ For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://gith
       </element>
       
       <element name="transformAnsiJoinToTableLists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform ANSI join to table lists if possible
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform ANSI join to table lists if possible.
 <p>
 Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
 the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
@@ -205,7 +205,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="transformTableListsToAnsiJoin" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform table lists to ANSI join if possible
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform table lists to ANSI join if possible.
 <p>
 (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in 
 the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
@@ -213,7 +213,14 @@ operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) fo
 support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
 this flag enables the transformation to ANSI join syntax.
 <p>
-This flag has not been implemented yet!
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="transformUnneededArithmeticExpressions" type="jooq-runtime:TransformUnneededArithmeticExpressions" minOccurs="0" maxOccurs="1" default="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform arithmetic expressions on literals and bind variables.
+<p>
+Arithmetic expressions may be implemented by the user, or arise from emulations from within jOOQ.
+Expressions on literals and bind variables could be evaluated in the client prior to generating SQL.
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1089,6 +1096,20 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
     
       <!-- Update unchanged records by setting record values to the values from the record, e.g. SET a = :a, b = :b. This is the same as calling record.changed(true) prior to updating. -->
       <enumeration value="SET_NON_PRIMARY_KEY_TO_RECORD_VALUES"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="TransformUnneededArithmeticExpressions">
+    <restriction base="string">
+    
+      <!-- Never transform unneeded arithmetic expressions -->
+      <enumeration value="NEVER"/>
+      
+      <!-- Transform arithmetic expressions arising from jOOQ's internals -->
+      <enumeration value="INTERNAL"/>
+      
+      <!-- Transform all arithmetic expressions -->
+      <enumeration value="ALWAYS"/>
     </restriction>
   </simpleType>
 </schema>

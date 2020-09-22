@@ -18906,7 +18906,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_AND, false, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -18960,7 +18960,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_NAND, false, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -19009,7 +19009,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_OR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_OR, false, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -19061,7 +19061,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_NOR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_NOR, false, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -19110,7 +19110,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_XOR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_XOR, false, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -19162,7 +19162,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
-        return new Expression<>(ExpressionOperator.BIT_XNOR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_XNOR, false, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -19213,7 +19213,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T> field1, Field<? extends Number> field2) {
-        return new Expression<>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.SHL, false, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -19264,7 +19264,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> field1, Field<? extends Number> field2) {
-        return new Expression<>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.SHR, false, nullSafe(field1), nullSafe(field2));
     }
 
     // ------------------------------------------------------------------------

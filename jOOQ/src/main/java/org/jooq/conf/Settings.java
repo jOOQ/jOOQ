@@ -94,6 +94,9 @@ public class Settings
     protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "false")
     protected Boolean transformTableListsToAnsiJoin = false;
+    @XmlElement(defaultValue = "NEVER")
+    @XmlSchemaType(name = "string")
+    protected TransformUnneededArithmeticExpressions transformUnneededArithmeticExpressions = TransformUnneededArithmeticExpressions.NEVER;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected BackslashEscaping backslashEscaping = BackslashEscaping.DEFAULT;
@@ -778,7 +781,7 @@ public class Settings
     }
 
     /**
-     * Transform ANSI join to table lists if possible
+     * Transform ANSI join to table lists if possible.
      * <p>
      * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
      * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
@@ -813,15 +816,13 @@ public class Settings
     }
 
     /**
-     * Transform table lists to ANSI join if possible
+     * Transform table lists to ANSI join if possible.
      * <p>
      * (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in 
      * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
      * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
      * support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
      * this flag enables the transformation to ANSI join syntax.
-     * <p>
-     * This flag has not been implemented yet!
      * <p>
      * This feature is available in the commercial distribution only.
      * 
@@ -844,6 +845,32 @@ public class Settings
      */
     public void setTransformTableListsToAnsiJoin(Boolean value) {
         this.transformTableListsToAnsiJoin = value;
+    }
+
+    /**
+     * Transform arithmetic expressions on literals and bind variables.
+     * <p>
+     * Arithmetic expressions may be implemented by the user, or arise from emulations from within jOOQ.
+     * Expressions on literals and bind variables could be evaluated in the client prior to generating SQL.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public TransformUnneededArithmeticExpressions getTransformUnneededArithmeticExpressions() {
+        return transformUnneededArithmeticExpressions;
+    }
+
+    /**
+     * Transform arithmetic expressions on literals and bind variables.
+     * <p>
+     * Arithmetic expressions may be implemented by the user, or arise from emulations from within jOOQ.
+     * Expressions on literals and bind variables could be evaluated in the client prior to generating SQL.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setTransformUnneededArithmeticExpressions(TransformUnneededArithmeticExpressions value) {
+        this.transformUnneededArithmeticExpressions = value;
     }
 
     /**
@@ -2406,6 +2433,20 @@ public class Settings
     }
 
     /**
+     * Transform arithmetic expressions on literals and bind variables.
+     * <p>
+     * Arithmetic expressions may be implemented by the user, or arise from emulations from within jOOQ.
+     * Expressions on literals and bind variables could be evaluated in the client prior to generating SQL.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withTransformUnneededArithmeticExpressions(TransformUnneededArithmeticExpressions value) {
+        setTransformUnneededArithmeticExpressions(value);
+        return this;
+    }
+
+    /**
      * Whether string literals should be escaped with backslash.
      * 
      */
@@ -2977,6 +3018,7 @@ public class Settings
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformTableListsToAnsiJoin", transformTableListsToAnsiJoin);
+        builder.append("transformUnneededArithmeticExpressions", transformUnneededArithmeticExpressions);
         builder.append("backslashEscaping", backslashEscaping);
         builder.append("paramType", paramType);
         builder.append("paramCastMode", paramCastMode);
@@ -3279,6 +3321,15 @@ public class Settings
             }
         } else {
             if (!transformTableListsToAnsiJoin.equals(other.transformTableListsToAnsiJoin)) {
+                return false;
+            }
+        }
+        if (transformUnneededArithmeticExpressions == null) {
+            if (other.transformUnneededArithmeticExpressions!= null) {
+                return false;
+            }
+        } else {
+            if (!transformUnneededArithmeticExpressions.equals(other.transformUnneededArithmeticExpressions)) {
                 return false;
             }
         }
@@ -3925,6 +3976,7 @@ public class Settings
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));
+        result = ((prime*result)+((transformUnneededArithmeticExpressions == null)? 0 :transformUnneededArithmeticExpressions.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));

@@ -297,6 +297,15 @@ public final class SettingsTools {
     }
 
     /**
+     * Lazy access to {@link Settings#getTransformUnneededArithmeticExpressions()}.
+     */
+    public static final TransformUnneededArithmeticExpressions getTransformUnneededArithmeticExpressions(Settings settings) {
+        return settings.getTransformUnneededArithmeticExpressions() != null
+             ? settings.getTransformUnneededArithmeticExpressions()
+             : TransformUnneededArithmeticExpressions.NEVER;
+    }
+
+    /**
      * Retrieve the configured default settings.
      * <p>
      * <ul>

@@ -878,18 +878,35 @@ final class Expression<T> extends AbstractTransformable<T> {
 
         @Override
         public final void accept(Context<?> ctx) {
+            ctx.sql('(');
+            accept0(ctx, operator, lhs, rhs);
+            ctx.sql(')');
+        }
+
+        private static final void accept0(Context<?> ctx, ExpressionOperator operator, Field<?> lhs, Field<?> rhs) {
             String op = operator.toSQL();
 
             if (operator == BIT_XOR && HASH_OP_FOR_BIT_XOR.contains(ctx.dialect()))
                 op = "#";
 
-            ctx.sql('(')
-               .visit(lhs)
-               .sql(' ')
+            accept1(ctx, operator, lhs);
+            ctx.sql(' ')
                .sql(op)
-               .sql(' ')
-               .visit(rhs)
-               .sql(')');
+               .sql(' ');
+            accept1(ctx, operator, rhs);
+        }
+
+        private static final void accept1(Context<?> ctx, ExpressionOperator operator, Field<?> field) {
+            if (operator.associative() && field instanceof Expression) {
+                Expression<?> expr = (Expression<?>) field;
+
+                if (operator == expr.operator) {
+                    accept0(ctx, expr.operator, expr.lhs, expr.rhs);
+                    return;
+                }
+            }
+
+            ctx.visit(field);
         }
     }
 }

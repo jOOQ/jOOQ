@@ -51,12 +51,15 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.SQLDialect;
+import org.jooq.conf.TransformUnneededArithmeticExpressions;
+import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder
  */
-final class Neg<T> extends AbstractField<T> {
+final class Neg<T> extends AbstractTransformable<T> {
 
 
     /**
@@ -79,7 +82,32 @@ final class Neg<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
+    public final Field<?> transform(TransformUnneededArithmeticExpressions transform) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return this;
+    }
+
+    @Override
+    public final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
         if (operator == BIT_NOT && EMULATE_BIT_NOT.contains(ctx.dialect()))

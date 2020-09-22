@@ -59,7 +59,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.conf.SettingsTools.getTransformUnneededArithmeticExpressions;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
@@ -118,14 +117,13 @@ import org.jooq.Param;
 import org.jooq.SQLDialect;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
-final class Expression<T> extends AbstractField<T> {
+final class Expression<T> extends AbstractTransformable<T> {
 
     /**
      * Generated UID
@@ -154,23 +152,7 @@ final class Expression<T> extends AbstractField<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public final void accept(Context<?> ctx) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
         // ---------------------------------------------------------------------
@@ -256,13 +238,11 @@ final class Expression<T> extends AbstractField<T> {
         // Use the default operator expression for all other cases
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
-
-
-
-
-
     }
 
+    @Override
+    @SuppressWarnings("null")
+    public final Field<?> transform(TransformUnneededArithmeticExpressions transform) {
 
 
 
@@ -317,8 +297,8 @@ final class Expression<T> extends AbstractField<T> {
 
 
 
-
-
+        return this;
+    }
 
 
 

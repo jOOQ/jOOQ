@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Names.N_RIGHT;
 
 import org.jooq.Context;
@@ -67,7 +69,7 @@ final class Right extends AbstractField<String> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
             case DERBY:
-                ctx.visit(DSL.substring(field, field.length().add(one()).sub(length)));
+                ctx.visit(DSL.substring(field, iadd(DSL.length(field), isub(one(), length))));
                 break;
 
 

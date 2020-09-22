@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Internal.idiv;
 import static org.jooq.impl.Names.N_COT;
 
 import java.math.BigDecimal;

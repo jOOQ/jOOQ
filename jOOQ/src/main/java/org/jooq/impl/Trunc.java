@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static java.math.BigDecimal.TEN;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Names.N_ROUND;
 import static org.jooq.impl.Names.N_ROUND_DOWN;
 import static org.jooq.impl.Names.N_TRUNC;
@@ -95,10 +97,8 @@ final class Trunc<T> extends AbstractField<T> {
                 }
 
                 ctx.visit(DSL.decode()
-                    .when(field.sign().greaterOrEqual(zero()),
-                          field.mul(power).floor().div(power))
-                    .otherwise(
-                          field.mul(power).ceil().div(power)));
+                    .when(field.sign().greaterOrEqual(zero()), idiv(imul(field, power).floor(), power))
+                    .otherwise(idiv(imul(field, power).ceil(), power)));
                 break;
             }
 

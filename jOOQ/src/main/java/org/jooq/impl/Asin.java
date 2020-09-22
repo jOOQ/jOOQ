@@ -38,6 +38,10 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
+import static org.jooq.impl.Internal.ineg;
 import static org.jooq.impl.Names.N_ASIN;
 
 import java.math.BigDecimal;
@@ -65,6 +69,11 @@ final class Asin extends AbstractField<BigDecimal> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
 
 
 

@@ -40,6 +40,10 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Names.N_WIDTH_BUCKET;
 
 import org.jooq.Context;
@@ -88,8 +92,14 @@ final class WidthBucket<T extends Number> extends AbstractField<T> {
             default:
                 ctx.visit(
                     DSL.when(field.lt(low), zero())
-                       .when(field.ge(high), buckets.add(one()))
-                       .otherwise((Field<Integer>) DSL.floor(field.sub(low).mul(buckets).div(high.sub(low))).add(one()))
+                       .when(field.ge(high), iadd(buckets, one()))
+                       .otherwise((Field<Integer>) iadd(
+                           DSL.floor(idiv(
+                               imul(isub(field, low), buckets),
+                               isub(high, low)
+                           )),
+                           one()
+                       ))
                 );
                 break;
         }

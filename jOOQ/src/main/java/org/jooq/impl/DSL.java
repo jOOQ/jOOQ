@@ -87,6 +87,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
 import static org.jooq.impl.Names.N_IF;
@@ -18857,7 +18861,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
-        return new Neg<>(nullSafe(field), ExpressionOperator.BIT_NOT);
+        return new Neg<>(nullSafe(field), false, ExpressionOperator.BIT_NOT);
     }
 
     /**
@@ -20104,7 +20108,10 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> coth(Field<? extends Number> field) {
         field = nullSafe(field);
-        return exp(field.mul(2)).add(1).div(exp(field.mul(2)).sub(1));
+        return idiv(
+            iadd(exp(imul(field, two())), one()),
+            isub(exp(imul(field, two())), one())
+        );
     }
 
     /**
@@ -26096,7 +26103,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<BigDecimal> tau() {
-        return pi().times(two());
+        return imul(pi(), two());
     }
 
     /**

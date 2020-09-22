@@ -42,6 +42,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.rank;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.RankingFunction.RankingType.CUME_DIST;
 import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
 import static org.jooq.impl.SQLDataType.NUMERIC;
@@ -83,6 +85,9 @@ final class RankingFunction<T> extends AbstractWindowFunction<T> implements Orde
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
 
 
 

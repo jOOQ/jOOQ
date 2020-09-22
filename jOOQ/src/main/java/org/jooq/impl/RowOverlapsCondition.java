@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.impl.Internal.iadd;
 import static org.jooq.impl.Keywords.K_OVERLAPS;
 import static org.jooq.impl.Tools.castIfNeeded;
 
@@ -114,7 +115,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
 
             // Interval OVERLAPS predicates need some additional arithmetic
             if (intervalOverlaps)
-                ctx.visit(right1.le(left1.add(left2)).and(left1.le(right1.add(right2))));
+                ctx.visit(right1.le(iadd(left1, left2)).and(left1.le(iadd(right1, right2))));
 
             // All other OVERLAPS predicates can be emulated simply
             else
@@ -123,7 +124,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
 
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
         else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS.contains(ctx.dialect()))
-            ctx.visit(right1.le(left1.add(left2)).and(left1.le(right1.add(right2))));
+            ctx.visit(right1.le(iadd(left1, left2)).and(left1.le(iadd(right1, right2))));
 
         // Everyone else can handle OVERLAPS
         else

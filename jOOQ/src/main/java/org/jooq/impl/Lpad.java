@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_LEN;
 import static org.jooq.impl.Names.N_LENGTH;

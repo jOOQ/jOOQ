@@ -76,6 +76,10 @@ import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SHL;
 import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DAY;
@@ -162,6 +166,11 @@ final class Expression<T> extends AbstractField<T> {
 
 
 
+
+
+
+
+
         SQLDialect family = ctx.family();
 
         // ---------------------------------------------------------------------
@@ -209,12 +218,12 @@ final class Expression<T> extends AbstractField<T> {
 
             // Many dialects don't support shifts. Use multiplication/division instead
             else if (SHL == operator && EMULATE_SHR_SHL.contains(ctx.dialect()))
-                ctx.visit(lhs.mul((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
+                ctx.visit(imul(lhs, (Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
 
             // [#3962] This emulation is expensive. If this is emulated, BitCount should
             // use division instead of SHR directly
             else if (SHR == operator && EMULATE_SHR_SHL.contains(ctx.dialect()))
-                ctx.visit(lhs.div((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
+                ctx.visit(idiv(lhs, (Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
 
             // Use the default operator expression for all other cases
             else
@@ -247,7 +256,14 @@ final class Expression<T> extends AbstractField<T> {
         // Use the default operator expression for all other cases
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
+
+
+
+
+
     }
+
+
 
 
 

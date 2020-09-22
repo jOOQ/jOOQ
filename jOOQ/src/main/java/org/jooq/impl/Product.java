@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Names.N_PRODUCT;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -118,10 +119,11 @@ final class Product extends AbstractAggregateFunction<BigDecimal> {
             }
         };
 
-        ctx.visit(
-            when(zerosSum.gt(inline(BigDecimal.ZERO)), zero())
-           .when(negativesSum.mod(inline(2)).lt(inline(BigDecimal.ZERO)), inline(-1))
-           .otherwise(one()).mul(DSL.exp(logarithmsSum))
-        );
+        ctx.visit(imul(
+             when(zerosSum.gt(inline(BigDecimal.ZERO)), zero())
+            .when(negativesSum.mod(inline(2)).lt(inline(BigDecimal.ZERO)), inline(-1))
+            .otherwise(one()),
+            DSL.exp(logarithmsSum)
+        ));
     }
 }

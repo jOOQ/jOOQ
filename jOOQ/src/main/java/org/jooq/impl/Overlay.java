@@ -59,6 +59,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_PLACING;
@@ -114,9 +116,9 @@ final class Overlay extends AbstractField<String> {
             }
             else if (NO_SUPPORT.contains(ctx.dialect())) {
                 ctx.visit(
-                    DSL.substring(in, inline(1), startIndex.minus(inline(1)))
+                    DSL.substring(in, inline(1), isub(startIndex, inline(1)))
                        .concat(placing)
-                       .concat(DSL.substring(in, startIndex.plus(l)))
+                       .concat(DSL.substring(in, iadd(startIndex, l)))
                 );
             }
             else {
@@ -132,9 +134,9 @@ final class Overlay extends AbstractField<String> {
             }
             else if (NO_SUPPORT.contains(ctx.dialect())) {
                 ctx.visit(
-                    DSL.substring(in, inline(1), startIndex.minus(inline(1)))
+                    DSL.substring(in, inline(1), isub(startIndex, inline(1)))
                        .concat(placing)
-                       .concat(DSL.substring(in, startIndex.plus(DSL.length(placing))))
+                       .concat(DSL.substring(in, iadd(startIndex, DSL.length(placing))))
                 );
             }
             else {

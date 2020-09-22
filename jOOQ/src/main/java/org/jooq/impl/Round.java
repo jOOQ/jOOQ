@@ -39,6 +39,9 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Names.N_ROUND;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.Tools.castIfNeeded;
@@ -82,7 +85,7 @@ final class Round<T extends Number> extends AbstractField<T> {
             case DERBY: {
                 if (decimals == null) {
                     ctx.visit(DSL
-                        .when(argument.sub(DSL.floor(argument))
+                        .when(isub(argument, DSL.floor(argument))
                         .lessThan((T) Double.valueOf(0.5)), DSL.floor(argument))
                         .otherwise(DSL.ceil(argument)));
 
@@ -91,12 +94,12 @@ final class Round<T extends Number> extends AbstractField<T> {
                 else if (decimals instanceof Param) {
                     Integer decimalsValue = ((Param<Integer>) decimals).getValue();
                     Field<BigDecimal> factor = DSL.val(BigDecimal.ONE.movePointRight(decimalsValue));
-                    Field<T> mul = argument.mul(factor);
+                    Field<T> mul = imul(argument, factor);
 
                     ctx.visit(DSL
-                        .when(mul.sub(DSL.floor(mul))
-                        .lessThan((T) Double.valueOf(0.5)), DSL.floor(mul).div(factor))
-                        .otherwise(DSL.ceil(mul).div(factor)));
+                        .when(isub(mul, DSL.floor(mul))
+                        .lessThan((T) Double.valueOf(0.5)), idiv(DSL.floor(mul), factor))
+                        .otherwise(idiv(DSL.ceil(mul), factor)));
 
                     return;
                 }

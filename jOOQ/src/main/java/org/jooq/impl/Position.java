@@ -39,6 +39,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Names.N_CHARINDEX;
 import static org.jooq.impl.Names.N_INSTR;
@@ -89,7 +91,7 @@ final class Position extends AbstractField<Integer> {
 
 
                 default:
-                    ctx.visit(DSL.position(DSL.substring(in, startIndex), search).add(startIndex).sub(one()));
+                    ctx.visit(iadd(DSL.position(DSL.substring(in, startIndex), search), isub(startIndex, one())));
                     break;
             }
         else

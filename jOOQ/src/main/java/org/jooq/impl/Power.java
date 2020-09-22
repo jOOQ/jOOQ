@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Names.N_POWER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -76,7 +77,7 @@ final class Power extends AbstractField<BigDecimal> {
 
             case DERBY:
             case SQLITE:
-                ctx.visit(DSL.exp(DSL.ln(arg1).mul(arg2)));
+                ctx.visit(DSL.exp(imul(DSL.ln(arg1), arg2)));
                 break;
 
             default:

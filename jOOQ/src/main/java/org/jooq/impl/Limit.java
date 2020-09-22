@@ -45,6 +45,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Internal.iadd;
 import static org.jooq.impl.Keywords.K_FETCH_FIRST;
 import static org.jooq.impl.Keywords.K_FETCH_NEXT;
 import static org.jooq.impl.Keywords.K_FIRST;
@@ -423,7 +424,7 @@ final class Limit extends AbstractQueryPart {
      * The upper bound, such that ROW_NUMBER() &lt;= getUpperRownum()
      */
     final Field<?> getUpperRownum() {
-        return offsetOrZero.add(numberOfRowsOrMax);
+        return iadd(offsetOrZero, numberOfRowsOrMax);
     }
 
     /**

@@ -364,22 +364,27 @@ public final class Internal {
     }
 
     @Support
-    static final <T> Field<T> add(Field<T> lhs, Field<T> rhs) {
+    static final <T> Field<T> ineg(Field<T> field) {
+        return new Neg<>(field, true, ExpressionOperator.SUBTRACT);
+    }
+
+    @Support
+    static final <T> Field<T> iadd(Field<T> lhs, Field<?> rhs) {
         return new Expression<>(ADD, true, lhs, nullSafe(rhs, lhs.getDataType()));
     }
 
     @Support
-    static final <T> Field<T> sub(Field<T> lhs, Field<T> rhs) {
+    static final <T> Field<T> isub(Field<T> lhs, Field<?> rhs) {
         return new Expression<>(SUBTRACT, true, lhs, nullSafe(rhs, lhs.getDataType()));
     }
 
     @Support
-    static final <T> Field<T> mul(Field<T> lhs, Field<T> rhs) {
+    static final <T> Field<T> imul(Field<T> lhs, Field<?> rhs) {
         return new Expression<>(MULTIPLY, true, lhs, nullSafe(rhs, lhs.getDataType()));
     }
 
     @Support
-    static final <T> Field<T> div(Field<T> lhs, Field<T> rhs) {
+    static final <T> Field<T> idiv(Field<T> lhs, Field<?> rhs) {
         return new Expression<>(DIVIDE, true, lhs, nullSafe(rhs, lhs.getDataType()));
     }
 }

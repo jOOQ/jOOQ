@@ -39,6 +39,9 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Names.N_SINH;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -87,7 +90,10 @@ final class Sinh extends AbstractField<BigDecimal> {
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-                ctx.visit(DSL.exp(argument.mul(two())).sub(one()).div(DSL.exp(argument).mul(two())));
+                ctx.visit(idiv(
+                    isub(DSL.exp(imul(argument, two())), one()),
+                    imul(DSL.exp(argument), two())
+                ));
                 break;
 
             default:

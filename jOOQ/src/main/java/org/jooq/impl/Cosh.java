@@ -39,6 +39,9 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Names.N_COSH;
 
 import java.math.BigDecimal;
@@ -86,7 +89,13 @@ final class Cosh extends AbstractField<BigDecimal> {
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-                ctx.visit(DSL.exp(argument.mul(two())).add(one()).div(DSL.exp(argument).mul(two())));
+                ctx.visit(idiv(
+                    iadd(
+                        DSL.exp(imul(argument, two())),
+                        one()
+                    ),
+                    imul(DSL.exp(argument), two())
+                ));
                 break;
 
             default:

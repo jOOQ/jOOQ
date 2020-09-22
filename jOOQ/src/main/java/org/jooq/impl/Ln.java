@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Internal.idiv;
 import static org.jooq.impl.Names.N_LN;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -126,7 +127,7 @@ final class Ln extends AbstractField<BigDecimal> {
 
                 case DERBY:
                 case HSQLDB:
-                    ctx.visit(DSL.ln(argument).div(DSL.ln(base)));
+                    ctx.visit(idiv(DSL.ln(argument), DSL.ln(base)));
                     return;
 
                 default:

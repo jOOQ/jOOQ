@@ -43,6 +43,9 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.idiv;
+import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_DAY;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -414,44 +417,55 @@ final class Extract extends AbstractField<Integer> {
     }
 
     private final static Field<Integer> dowISOToSun1(Field<Integer> dow) {
-        return dow.mod(inline(7)).add(one());
+        return iadd(dow.mod(inline(7)), one());
     }
 
     private final static Field<Integer> dowSun1ToISO(Field<Integer> dow) {
-        return dow.add(inline(5)).mod(inline(7)).add(one());
+        return iadd(iadd(dow, inline(5)).mod(inline(7)), one());
     }
 
     private final static Field<Integer> dowSun0ToISO(Field<Integer> dow) {
-        return dow.add(inline(6)).mod(inline(7)).add(one());
+        return iadd(iadd(dow, inline(6)).mod(inline(7)), one());
     }
 
     private final void acceptDefaultEmulation(Context<?> ctx) {
         switch (datePart) {
             case DECADE:
-                ctx.visit(DSL.floor(DSL.year(field).div(inline(10))));
+                ctx.visit(DSL.floor(idiv(DSL.year(field), inline(10))));
                 break;
 
             case CENTURY:
-                ctx.visit(DSL.floor(
-                    DSL.sign(DSL.year(field))
-                       .mul(DSL.abs(DSL.year(field)).add(inline(99)))
-                       .div(inline(100))));
+                ctx.visit(DSL.floor(idiv(
+                    imul(
+                        DSL.sign(DSL.year(field)),
+                        iadd(DSL.abs(DSL.year(field)), inline(99))
+                    ),
+                    inline(100)
+                )));
                 break;
 
             case MILLENNIUM:
-                ctx.visit(DSL.floor(
-                    DSL.sign(DSL.year(field))
-                       .mul(DSL.abs(DSL.year(field)).add(inline(999)))
-                       .div(inline(1000))));
+                ctx.visit(DSL.floor(idiv(
+                    imul(
+                        DSL.sign(DSL.year(field)),
+                        iadd(DSL.abs(DSL.year(field)), inline(999))
+                    ),
+                    inline(1000)
+                )));
                 break;
 
             case QUARTER:
-                ctx.visit(DSL.floor(DSL.month(field).add(inline(2)).div(inline(3))));
+                ctx.visit(DSL.floor(idiv(
+                    iadd(DSL.month(field), inline(2)),
+                    inline(3)
+                )));
                 break;
 
             case TIMEZONE:
-                ctx.visit(DSL.extract(field, DatePart.TIMEZONE_HOUR).mul(inline(3600))
-                    .add(DSL.extract(field, DatePart.TIMEZONE_MINUTE).mul(inline(60))));
+                ctx.visit(iadd(
+                    imul(DSL.extract(field, DatePart.TIMEZONE_HOUR), inline(3600)),
+                    imul(DSL.extract(field, DatePart.TIMEZONE_MINUTE), inline(60))
+                ));
                 break;
 
             default:

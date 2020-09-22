@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_REPEAT;
 import static org.jooq.impl.Names.N_REPLACE;
@@ -79,7 +80,7 @@ final class Repeat extends AbstractField<String> {
 
 
             case FIREBIRD:
-                ctx.visit(DSL.rpad(string, DSL.length(string).mul(count), string));
+                ctx.visit(DSL.rpad(string, imul(DSL.length(string), count), string));
                 break;
 
             // Emulation of REPEAT() for SQLite currently cannot be achieved

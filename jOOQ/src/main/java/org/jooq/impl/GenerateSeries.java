@@ -43,9 +43,9 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.withRecursive;
-import static org.jooq.impl.Internal.add;
-import static org.jooq.impl.Internal.mul;
-import static org.jooq.impl.Internal.sub;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.imul;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -105,7 +105,7 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
                 visitSubquery(
                     ctx,
                     withRecursive(N_GENERATE_SERIES, v)
-                        .as(select(from).unionAll(select(f.plus(step == null ? inline(1) : step)).from(N_GENERATE_SERIES).where(f.lt(to))))
+                        .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(N_GENERATE_SERIES).where(f.lt(to))))
                         .select(f.as(N_GENERATE_SERIES)).from(N_GENERATE_SERIES),
                     true
                 );

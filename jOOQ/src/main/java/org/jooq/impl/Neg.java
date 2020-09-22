@@ -66,14 +66,16 @@ final class Neg<T> extends AbstractField<T> {
     private static final Set<SQLDialect> EMULATE_BIT_NOT  = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> SUPPORT_BIT_NOT  = SQLDialect.supportedBy(H2);
 
-    private final ExpressionOperator     operator;
     private final Field<T>               field;
+    private final boolean                internal;
+    private final ExpressionOperator     operator;
 
-    Neg(Field<T> field, ExpressionOperator operator) {
+    Neg(Field<T> field, boolean internal, ExpressionOperator operator) {
         super(operator.toName(), field.getDataType());
 
-        this.operator = operator;
         this.field = field;
+        this.internal = internal;
+        this.operator = operator;
     }
 
     @Override

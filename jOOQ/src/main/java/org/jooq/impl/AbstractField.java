@@ -329,7 +329,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Field<T> neg() {
-        return new Neg<>(this, ExpressionOperator.SUBTRACT);
+        return new Neg<>(this, false, ExpressionOperator.SUBTRACT);
     }
 
     @Override

@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Names.N_PI;
 
 import java.math.BigDecimal;

@@ -72,6 +72,7 @@ import static org.jooq.impl.ExpressionOperator.BIT_NOR;
 import static org.jooq.impl.ExpressionOperator.BIT_OR;
 import static org.jooq.impl.ExpressionOperator.BIT_XNOR;
 import static org.jooq.impl.ExpressionOperator.BIT_XOR;
+import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SHL;
 import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
@@ -114,6 +115,7 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.Tools.DataExtendedKey;
+import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
@@ -246,6 +248,69 @@ final class Expression<T> extends AbstractField<T> {
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

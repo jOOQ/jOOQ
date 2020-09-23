@@ -5806,7 +5806,7 @@ final class ParserImpl implements Parser {
         else if ((r = parseFieldUnsignedNumericLiteralIf(ctx, Sign.MINUS)) == null)
             r = toField(ctx, parseTerm(ctx, type)).neg();
 
-        if (parseIf(ctx, "(+)") && ctx.requireProEdition())
+        if (parseTokensIf(ctx, '(', '+', ')') && ctx.requireProEdition())
 
 
 
@@ -9176,7 +9176,7 @@ final class ParserImpl implements Parser {
                 return sequence(name.qualifier()).currval();
         }
 
-        if (ctx.dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && peek(ctx, '(') && !peek(ctx, "(+)")) {
+        if (ctx.dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && peek(ctx, '(') && !peekTokens(ctx, '(', '+', ')')) {
             List<Field<?>> arguments = new ArrayList<>();
 
             parse(ctx, '(');
@@ -10508,6 +10508,42 @@ final class ParserImpl implements Parser {
         ctx.position(stop);
         parseWhitespaceIf(ctx);
         return ctx.substring(start, stop);
+    }
+
+    private static final boolean parseTokens(ParserContext ctx, char... tokens) {
+        boolean result = parseTokensIf(ctx, tokens);
+
+        if (!result)
+            throw ctx.expected(new String(tokens));
+
+        return result;
+    }
+
+    private static final boolean parseTokensIf(ParserContext ctx, char... tokens) {
+        int position = ctx.position();
+
+        for (char token : tokens) {
+            if (!parseIf(ctx, token)) {
+                ctx.position(position);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static final boolean peekTokens(ParserContext ctx, char... tokens) {
+        int position = ctx.position();
+
+        for (char token : tokens) {
+            if (!parseIf(ctx, token)) {
+                ctx.position(position);
+                return false;
+            }
+        }
+
+        ctx.position(position);
+        return true;
     }
 
     private static final boolean parse(ParserContext ctx, String string) {

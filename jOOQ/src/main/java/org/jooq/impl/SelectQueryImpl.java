@@ -382,14 +382,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         SelectQueryImpl<R> result = new SelectQueryImpl<>(configuration(), with);
 
         result.condition.setWhere(condition.getWhere());
-        result.connectBy.setWhere(connectBy.getWhere());
-        result.connectByNoCycle = connectByNoCycle;
-        result.connectByStartWith.setWhere(connectByStartWith.getWhere());
+
+
+
+
+
         result.distinct = distinct;
         result.distinctOn = distinctOn;
-        result.forJSON = forJSON;
+
+
+
+
+
+
         result.forLock = forLock;
-        result.forXML = forXML;
         result.from.addAll(from);
         result.groupBy = groupBy;
         result.grouping = grouping;
@@ -400,7 +406,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         result.option = option;
         result.orderBy.addAll(orderBy);
-        result.orderBySiblings = orderBySiblings;
+
+
+
         result.qualify.setWhere(qualify.getWhere());
         result.seek.addAll(seek);
         result.select.addAll(select);
@@ -410,14 +418,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         result.unionLimit.from(unionLimit);
         result.unionOp.addAll(unionOp);
         result.unionOrderBy.addAll(unionOrderBy);
-        result.unionOrderBySiblings = unionOrderBySiblings;
+
+
+
         result.unionSeek.addAll(unionSeek);
         result.unionSeekBefore = unionSeekBefore;
 
         if (window != null)
             result.addWindow(window);
-        result.withCheckOption = withCheckOption;
-        result.withReadOnly = withReadOnly;
+
+
+
+
+
 
         return result;
     }

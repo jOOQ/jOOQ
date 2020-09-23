@@ -5364,7 +5364,7 @@ final class ParserImpl implements Parser {
                         : left instanceof Field
                             ? ((Field) left).in(EMPTY_FIELD)
                             : new RowInCondition((Row) left, new QueryPartList<>(), false);
-                else if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL") || peekKeyword(ctx, "WITH"))
+                else if (peekSelectOrWith(ctx, true))
                     result = not
                         ? left instanceof Field
                             ? ((Field) left).notIn(parseWithOrSelect(ctx, 1))
@@ -5413,7 +5413,7 @@ final class ParserImpl implements Parser {
             else if (left instanceof Field && (parseKeywordIf(ctx, "LIKE") || parseOperatorIf(ctx, "~~") || (notOp = parseOperatorIf(ctx, "!~~")))) {
                 if (parseKeywordIf(ctx, "ANY")) {
                     parse(ctx, '(');
-                    if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL") || peekKeyword(ctx, "WITH")) {
+                    if (peekSelectOrWith(ctx, true)) {
                         Select<?> select = parseWithOrSelect(ctx);
                         parse(ctx, ')');
                         LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
@@ -5438,7 +5438,7 @@ final class ParserImpl implements Parser {
                 }
                 else if (parseKeywordIf(ctx, "ALL")) {
                     parse(ctx, '(');
-                    if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL") || peekKeyword(ctx, "WITH")) {
+                    if (peekSelectOrWith(ctx, true)) {
                         Select<?> select = parseWithOrSelect(ctx);
                         parse(ctx, ')');
                         LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));

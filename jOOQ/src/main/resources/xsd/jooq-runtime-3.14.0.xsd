@@ -216,6 +216,16 @@ this flag enables the transformation to ANSI join syntax.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformRownumToLimit" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>ROWNUM</code> expressions to corresponding <code>LIMIT</code> clauses or <code>ROW_NUMBER()</code> expressions.
+<p>
+In Oracle 11g and less, <code>ROWNUM</code> filtering was the most popular way to paginate. This pseudo
+column is not supported in other RDBMS, and should be replaced in Oracle 12c by the FETCH clause. This
+transformation allows for replacing such a filter by equivalent SQL, if possible.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformUnneededArithmeticExpressions" type="jooq-runtime:TransformUnneededArithmeticExpressions" minOccurs="0" maxOccurs="1" default="NEVER">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform arithmetic expressions on literals and bind variables.
 <p>

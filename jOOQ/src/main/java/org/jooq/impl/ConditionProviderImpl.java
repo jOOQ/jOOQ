@@ -55,14 +55,15 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 final class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider, Condition {
 
     private static final long serialVersionUID = 6073328960551062973L;
 
     private Condition         condition;
 
-    ConditionProviderImpl() {
+    ConditionProviderImpl() {}
+    ConditionProviderImpl(Condition condition) {
+        this.condition = condition;
     }
 
     final Condition getWhere() {

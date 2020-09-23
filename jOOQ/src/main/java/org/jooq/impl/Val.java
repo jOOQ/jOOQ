@@ -104,6 +104,12 @@ final class Val<T> extends AbstractParam<T> {
             return (Val) this;
     }
 
+    final Val<T> copy(Object newValue) {
+        Val<T> w = new Val<>(getDataType().convert(newValue), getDataType(), getParamName());
+        w.setInline(isInline());
+        return w;
+    }
+
     private final <U> Val<U> convertTo0(DataType<U> type) {
         Val<U> w = new Val<>(type.convert(getValue()), type, getParamName());
         w.setInline(isInline());

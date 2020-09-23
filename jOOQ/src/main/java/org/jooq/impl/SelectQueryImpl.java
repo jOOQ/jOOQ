@@ -81,6 +81,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -191,6 +192,7 @@ import java.util.stream.Stream;
 
 import org.jooq.Asterisk;
 import org.jooq.Clause;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -228,6 +230,7 @@ import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
+import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -259,6 +262,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2);
+
+
 
 
 
@@ -371,6 +376,50 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (from != null)
             this.from.add(from.asTable());
+    }
+
+    SelectQueryImpl<R> copy() {
+        SelectQueryImpl<R> result = new SelectQueryImpl<>(configuration(), with);
+
+        result.condition.setWhere(condition.getWhere());
+        result.connectBy.setWhere(connectBy.getWhere());
+        result.connectByNoCycle = connectByNoCycle;
+        result.connectByStartWith.setWhere(connectByStartWith.getWhere());
+        result.distinct = distinct;
+        result.distinctOn = distinctOn;
+        result.forJSON = forJSON;
+        result.forLock = forLock;
+        result.forXML = forXML;
+        result.from.addAll(from);
+        result.groupBy = groupBy;
+        result.grouping = grouping;
+        result.having.setWhere(having.getWhere());
+        result.hint = hint;
+        result.into = into;
+        result.limit.from(limit);
+
+        result.option = option;
+        result.orderBy.addAll(orderBy);
+        result.orderBySiblings = orderBySiblings;
+        result.qualify.setWhere(qualify.getWhere());
+        result.seek.addAll(seek);
+        result.select.addAll(select);
+
+        // TODO: Should the remaining union subqueries also be copied?
+        result.union.addAll(union);
+        result.unionLimit.from(unionLimit);
+        result.unionOp.addAll(unionOp);
+        result.unionOrderBy.addAll(unionOrderBy);
+        result.unionOrderBySiblings = unionOrderBySiblings;
+        result.unionSeek.addAll(unionSeek);
+        result.unionSeekBefore = unionSeekBefore;
+
+        if (window != null)
+            result.addWindow(window);
+        result.withCheckOption = withCheckOption;
+        result.withReadOnly = withReadOnly;
+
+        return result;
     }
 
     @Override
@@ -883,16 +932,183 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
-    public final void accept(Context<?> context) {
+    public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
 
         // [#6583] Work around MySQL's self-reference-in-DML-subquery restriction
-        if (context.subqueryLevel() == 1
-            && REQUIRES_DERIVED_TABLE_DML.contains(context.dialect())
-            && (dmlTable = (Table<?>) context.data(DATA_DML_TARGET_TABLE)) != null
+        if (ctx.subqueryLevel() == 1
+            && REQUIRES_DERIVED_TABLE_DML.contains(ctx.dialect())
+            && (dmlTable = (Table<?>) ctx.data(DATA_DML_TARGET_TABLE)) != null
             && containsTable(dmlTable)) {
-            context.visit(DSL.select(asterisk()).from(asTable("t")));
+            ctx.visit(DSL.select(asterisk()).from(asTable("t")));
         }
 
 
@@ -914,8 +1130,28 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-        else
-            accept0(context);
+
+
+
+
+
+
+
+
+
+        else {
+
+
+
+
+
+
+            accept0(ctx);
+
+
+
+
+        }
     }
 
     public final void accept0(Context<?> context) {

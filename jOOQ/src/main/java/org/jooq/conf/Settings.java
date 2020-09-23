@@ -94,6 +94,8 @@ public class Settings
     protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "false")
     protected Boolean transformTableListsToAnsiJoin = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean transformRownumToLimit = false;
     @XmlElement(defaultValue = "NEVER")
     @XmlSchemaType(name = "string")
     protected TransformUnneededArithmeticExpressions transformUnneededArithmeticExpressions = TransformUnneededArithmeticExpressions.NEVER;
@@ -845,6 +847,36 @@ public class Settings
      */
     public void setTransformTableListsToAnsiJoin(Boolean value) {
         this.transformTableListsToAnsiJoin = value;
+    }
+
+    /**
+     * Transform <code>ROWNUM</code> expressions to corresponding <code>LIMIT</code> clauses or <code>ROW_NUMBER()</code> expressions.
+     * <p>
+     * In Oracle 11g and less, <code>ROWNUM</code> filtering was the most popular way to paginate. This pseudo
+     * column is not supported in other RDBMS, and should be replaced in Oracle 12c by the FETCH clause. This
+     * transformation allows for replacing such a filter by equivalent SQL, if possible.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformRownumToLimit() {
+        return transformRownumToLimit;
+    }
+
+    /**
+     * Sets the value of the transformRownumToLimit property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformRownumToLimit(Boolean value) {
+        this.transformRownumToLimit = value;
     }
 
     /**
@@ -2432,6 +2464,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformRownumToLimit(Boolean value) {
+        setTransformRownumToLimit(value);
+        return this;
+    }
+
     /**
      * Transform arithmetic expressions on literals and bind variables.
      * <p>
@@ -3018,6 +3055,7 @@ public class Settings
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformTableListsToAnsiJoin", transformTableListsToAnsiJoin);
+        builder.append("transformRownumToLimit", transformRownumToLimit);
         builder.append("transformUnneededArithmeticExpressions", transformUnneededArithmeticExpressions);
         builder.append("backslashEscaping", backslashEscaping);
         builder.append("paramType", paramType);
@@ -3321,6 +3359,15 @@ public class Settings
             }
         } else {
             if (!transformTableListsToAnsiJoin.equals(other.transformTableListsToAnsiJoin)) {
+                return false;
+            }
+        }
+        if (transformRownumToLimit == null) {
+            if (other.transformRownumToLimit!= null) {
+                return false;
+            }
+        } else {
+            if (!transformRownumToLimit.equals(other.transformRownumToLimit)) {
                 return false;
             }
         }
@@ -3976,6 +4023,7 @@ public class Settings
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));
+        result = ((prime*result)+((transformRownumToLimit == null)? 0 :transformRownumToLimit.hashCode()));
         result = ((prime*result)+((transformUnneededArithmeticExpressions == null)? 0 :transformUnneededArithmeticExpressions.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));

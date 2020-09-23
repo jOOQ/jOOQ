@@ -84,14 +84,14 @@ final class Limit extends AbstractQueryPart {
     private static final Field<Integer> ONE               = one();
     private static final Param<Integer> MAX               = DSL.inline(Integer.MAX_VALUE);
 
-    private Field<?>                    numberOfRows;
+    Param<?>                            numberOfRows;
     private Field<?>                    numberOfRowsOrMax = MAX;
-    private Field<?>                    offset;
+    Param<?>                            offset;
     private Field<?>                    offsetOrZero      = ZERO;
     private Field<?>                    offsetPlusOne     = ONE;
     private boolean                     rendersParams;
-    private boolean                     withTies;
-    private boolean                     percent;
+    boolean                             withTies;
+    boolean                             percent;
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -402,8 +402,7 @@ final class Limit extends AbstractQueryPart {
         return !limitZero()
             && !withTies()
             && !percent()
-            && numberOfRows instanceof Param
-            && Long.valueOf(1L).equals(((Param<?>) numberOfRows).getValue());
+            && Long.valueOf(1L).equals(numberOfRows.getValue());
     }
 
     /**
@@ -452,7 +451,7 @@ final class Limit extends AbstractQueryPart {
         this.offsetPlusOne = val(offset.longValue() + 1L, BIGINT);
     }
 
-    final void setOffset(Param<? extends Number> offset) {
+    final void setOffset(Param<?> offset) {
         this.offset = offset;
         this.offsetOrZero = offset;
         this.rendersParams = rendersParams |= offset.isInline();
@@ -463,7 +462,7 @@ final class Limit extends AbstractQueryPart {
         this.numberOfRowsOrMax = this.numberOfRows;
     }
 
-    final void setNumberOfRows(Param<? extends Number> numberOfRows) {
+    final void setNumberOfRows(Param<?> numberOfRows) {
         this.numberOfRows = numberOfRows;
         this.numberOfRowsOrMax = numberOfRows;
         this.rendersParams |= numberOfRows.isInline();
@@ -483,5 +482,18 @@ final class Limit extends AbstractQueryPart {
 
     final boolean withTies() {
         return withTies;
+    }
+
+    final Limit from(Limit limit) {
+        if (limit.numberOfRows != null)
+            this.setNumberOfRows(limit.numberOfRows);
+
+        if (limit.offset != null)
+            this.setOffset(limit.offset);
+
+        this.setPercent(limit.percent);
+        this.setWithTies(limit.withTies);
+
+        return this;
     }
 }

@@ -66,82 +66,66 @@ import org.jetbrains.annotations.NotNull;
 public enum Comparator {
 
     @NotNull
-
     @Support
     IN("in", false, true),
 
     @NotNull
-
     @Support
     NOT_IN("not in", false, true),
 
     @NotNull
-
     @Support
     EQUALS("=", true, true),
 
     @NotNull
-
     @Support
     NOT_EQUALS("<>", true, true),
 
     @NotNull
-
     @Support
     LESS("<", true, true),
 
     @NotNull
-
     @Support
     LESS_OR_EQUAL("<=", true, true),
 
     @NotNull
-
     @Support
     GREATER(">", true, true),
 
     @NotNull
-
     @Support
     GREATER_OR_EQUAL(">=", true, true),
 
     @NotNull
-
     @Support
     IS_DISTINCT_FROM("is distinct from", false, false),
 
     @NotNull
-
     @Support
     IS_NOT_DISTINCT_FROM("is not distinct from", false, false),
 
     @NotNull
-
     @Support
     LIKE("like", false, false),
 
     @NotNull
-
     @Support
     NOT_LIKE("not like", false, false),
 
     @NotNull
-
     @Support({ FIREBIRD, POSTGRES })
     SIMILAR_TO("similar to", false, false),
 
     @NotNull
-
     @Support({ FIREBIRD, POSTGRES })
     NOT_SIMILAR_TO("not similar to", false, false),
 
     @NotNull
-
     @Support
     LIKE_IGNORE_CASE("ilike", false, false),
 
     @NotNull
-
     @Support
     NOT_LIKE_IGNORE_CASE("not ilike", false, false),
 
@@ -173,6 +157,10 @@ public enum Comparator {
         return keyword;
     }
 
+    /**
+     * Get the inverse comparator such that <code>A [op] B</code> and
+     * <code>NOT(A [inverse op] B)</code>.
+     */
     public Comparator inverse() {
         switch (this) {
             case EQUALS:               return NOT_EQUALS;
@@ -192,6 +180,25 @@ public enum Comparator {
             case NOT_SIMILAR_TO:       return SIMILAR_TO;
             case SIMILAR_TO:           return NOT_SIMILAR_TO;
             default:                   throw new IllegalStateException();
+        }
+    }
+
+    /**
+     * Get the mirrored comparator such that <code>A [op] B</code> and
+     * <code>B [mirrored op] A</code>, or <code>null</code> if the comparator
+     * cannot be mirrored.
+     */
+    public Comparator mirror() {
+        switch (this) {
+            case EQUALS:               return EQUALS;
+            case GREATER:              return LESS;
+            case GREATER_OR_EQUAL:     return LESS_OR_EQUAL;
+            case IS_DISTINCT_FROM:     return IS_DISTINCT_FROM;
+            case IS_NOT_DISTINCT_FROM: return IS_NOT_DISTINCT_FROM;
+            case LESS:                 return GREATER;
+            case LESS_OR_EQUAL:        return GREATER_OR_EQUAL;
+            case NOT_EQUALS:           return NOT_EQUALS;
+            default:                   return null;
         }
     }
 

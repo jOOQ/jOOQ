@@ -104,10 +104,8 @@ final class CombinedCondition extends AbstractCondition {
             return noCondition();
 
         // [#9998] Otherwise, return the identity for the operator
-        else if (operator == AND)
-            return trueCondition();
         else
-            return falseCondition();
+            return identity(operator);
     }
 
     @Override
@@ -117,6 +115,36 @@ final class CombinedCondition extends AbstractCondition {
                 return true;
 
         return false;
+    }
+
+    static final Condition identity(Operator operator) {
+        return operator == AND ? trueCondition() : falseCondition();
+    }
+
+    final Condition transform(F1<? super Condition, ? extends Condition> function) {
+        List<Condition> newList = null;
+
+        for (int i = 0; i < conditions.size(); i++) {
+            Condition oldC = conditions.get(i);
+            Condition newC = oldC instanceof CombinedCondition
+                ? ((CombinedCondition) oldC).transform(function)
+                : function.apply(oldC);
+
+            if (newC != oldC) {
+                if (newList == null)
+                    newList = new ArrayList<>(conditions.subList(0, i));
+
+                if (newC != null)
+                    newList.add(newC);
+            }
+            else if (newList != null)
+                newList.add(newC);
+        }
+
+        if (newList == null)
+            return this;
+        else
+            return of(operator, newList);
     }
 
     private CombinedCondition(Operator operator, int size) {

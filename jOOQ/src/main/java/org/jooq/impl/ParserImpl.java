@@ -10072,9 +10072,10 @@ final class ParserImpl implements Parser {
                 return sequence(name.qualifier()).currval();
         }
 
-        if (ctx.dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && parseIf(ctx, '(')) {
+        if (ctx.dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && peek(ctx, '(') && !peek(ctx, "(+)")) {
             List<Field<?>> arguments = new ArrayList<>();
 
+            parse(ctx, '(');
             if (!parseIf(ctx, ')')) {
                 do {
                     arguments.add(parseField(ctx));

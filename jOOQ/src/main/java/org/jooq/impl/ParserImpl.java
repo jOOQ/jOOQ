@@ -6401,7 +6401,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field parseSumRightOperand(ParserContext ctx, Type type, FieldOrRow r, boolean add) {
-        Field f = (Field) parseFactor(ctx, type);
+        Field rhs = (Field) parseFactor(ctx, type);
         DatePart part;
 
         if ((parseKeywordIf(ctx, "YEAR") || parseKeywordIf(ctx, "YEARS")) && ctx.requireProEdition())
@@ -6419,6 +6419,8 @@ final class ParserImpl implements Parser {
         else
             part = null;
 
+        Field lhs = (Field) r;
+
 
 
 
@@ -6428,9 +6430,13 @@ final class ParserImpl implements Parser {
 
 
             if (add)
-                return ((Field) r).add(f);
+                return lhs.add(rhs);
+            else if (lhs.getDataType().isDate() && rhs.getDataType().isDate())
+                return DSL.dateDiff(lhs, rhs);
+            else if (lhs.getDataType().isTimestamp() && rhs.getDataType().isTimestamp())
+                return DSL.timestampDiff(lhs, rhs);
             else
-                return ((Field) r).sub(f);
+                return lhs.sub(rhs);
     }
 
     private static final FieldOrRow parseFactor(ParserContext ctx, Type type) {

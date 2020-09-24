@@ -8570,7 +8570,6 @@ public interface DSLContext extends Scope {
      *
      * @see BatchedConnection BatchedConnection for details.
      */
-    @Support
     void batched(BatchedRunnable runnable);
 
     /**
@@ -8579,7 +8578,6 @@ public interface DSLContext extends Scope {
      *
      * @see BatchedConnection BatchedConnection for details.
      */
-    @Support
     <T> T batchedResult(BatchedCallable<T> callable);
 
     /**

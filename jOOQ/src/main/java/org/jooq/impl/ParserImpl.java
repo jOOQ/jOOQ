@@ -7918,6 +7918,10 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
             if (arg1.getDataType().isDateTime())
                 return DSL.trunc((Field) arg1, DatePart.DAY);
+            else if (arg1.getDataType().isNumeric())
+                return DSL.trunc((Field) arg1, inline(0));
+
+            // [#9044] By default, assume historic TRUNC(date) behaviour
             else
                 return DSL.trunc((Field) arg1);
         }

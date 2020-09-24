@@ -143,6 +143,8 @@ final class CombinedCondition extends AbstractCondition {
 
         if (newList == null)
             return this;
+        else if (newList.isEmpty())
+            return noCondition();
         else
             return of(operator, newList);
     }

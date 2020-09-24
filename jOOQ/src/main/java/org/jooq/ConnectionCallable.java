@@ -66,9 +66,9 @@ public interface ConnectionCallable<T> {
      *
      * @param connection The connection.
      * @return The outcome of the callable.
-     * @throws Exception Any exception, including {@link SQLException}, that
+     * @throws Throwable Any exception, including {@link SQLException}, that
      *             will be propagated as an unchecked
      *             {@link DataAccessException}.
      */
-    T run(Connection connection) throws Exception;
+    T run(Connection connection) throws Throwable;
 }

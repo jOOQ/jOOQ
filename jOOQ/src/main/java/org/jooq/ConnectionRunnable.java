@@ -65,9 +65,9 @@ public interface ConnectionRunnable {
      * this {@link ConnectionRunnable}.
      *
      * @param connection The connection.
-     * @throws Exception Any exception, including {@link SQLException}, that
+     * @throws Throwable Any exception, including {@link SQLException}, that
      *             will be propagated as an unchecked
      *             {@link DataAccessException}.
      */
-    void run(Connection connection) throws Exception;
+    void run(Connection connection) throws Throwable;
 }

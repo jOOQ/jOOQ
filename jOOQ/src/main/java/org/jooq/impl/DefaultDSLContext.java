@@ -660,11 +660,14 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         try {
             return callable.run(connection);
         }
+        catch (Error e) {
+            throw e;
+        }
         catch (RuntimeException e) {
             throw e;
         }
-        catch (Exception e) {
-            throw new DataAccessException("Error while running ConnectionCallable", e);
+        catch (Throwable t) {
+            throw new DataAccessException("Error while running ConnectionCallable", t);
         }
         finally {
             configuration().connectionProvider().release(connection);
@@ -675,7 +678,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public void connection(final ConnectionRunnable runnable) {
         connectionResult(new ConnectionCallable<Void>() {
             @Override
-            public Void run(Connection connection) throws Exception {
+            public Void run(Connection connection) throws Throwable {
                 runnable.run(connection);
                 return null;
             }
@@ -2819,6 +2822,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
                 try {
                     return callable.run(c);
+                }
+                catch (Error e) {
+                    throw e;
+                }
+                catch (RuntimeException e) {
+                    throw e;
                 }
                 catch (Throwable t) {
                     throw new DataAccessException("Error while running BatchedCallable", t);

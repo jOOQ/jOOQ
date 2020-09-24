@@ -61,8 +61,9 @@ import java.util.regex.Pattern;
  * <p>
  * Calls to {@link PreparedStatement#executeUpdate()} or
  * {@link PreparedStatement#execute()} are replaced by
- * {@link PreparedStatement#addBatch()}. When any of the following events
- * happen, the batch is executed using {@link Statement#executeBatch()}:
+ * {@link PreparedStatement#addBatch()}. The update count of such operations is
+ * always zero, and cannot be retrieved later on. When any of the following
+ * events happen, the batch is executed using {@link Statement#executeBatch()}:
  * <ul>
  * <li>The {@link BatchedConnection#close} method is called (the call is not
  * delegated to the wrapped connection).</li>

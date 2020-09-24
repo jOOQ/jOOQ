@@ -104,6 +104,8 @@ public final class ParserCLI {
             settings.setTransformTableListsToAnsiJoin(true);
         if (a.transformUnneededArithmetic != null)
             settings.setTransformUnneededArithmeticExpressions(a.transformUnneededArithmetic);
+        if (a.transformRownum)
+            settings.setTransformRownum(a.transformRownum);
     }
 
     private static final void interactiveMode(DSLContext ctx, Args a) {
@@ -192,6 +194,12 @@ public final class ParserCLI {
                                     a.transformAnsiJoinToTableLists = Boolean.parseBoolean(arg.toLowerCase());
 
                                 displayTransformAnsiJoinToTablesLists(a);
+                            }
+                            else if ("transform-rownum".equals(flag)) {
+                                if (arg != null)
+                                    a.transformRownum = Boolean.parseBoolean(arg.toLowerCase());
+
+                                displayTransformRownum(a);
                             }
                             else if ("transform-table-lists-to-ansi-join".equals(flag)) {
                                 if (arg != null)
@@ -291,6 +299,10 @@ public final class ParserCLI {
 
     private static void displayTransformAnsiJoinToTablesLists(Args a) {
         System.out.println("Transform ANSI join to table lists : " + a.transformAnsiJoinToTableLists);
+    }
+
+    private static void displayTransformRownum(Args a) {
+        System.out.println("Transform ROWNUM                   : " + a.transformRownum);
     }
 
     private static void displayTransformTableListsToAnsiJoin(Args a) {
@@ -413,6 +425,9 @@ public final class ParserCLI {
             else if ("--transform-ansi-join-to-table-lists".equals(args[i])) {
                 result.transformAnsiJoinToTableLists = true;
             }
+            else if ("--transform-rownum".equals(args[i])) {
+                result.transformRownum = true;
+            }
             else if ("--transform-table-lists-to-ansi-join".equals(args[i])) {
                 result.transformTableListsToAnsiJoin = true;
             }
@@ -477,6 +492,7 @@ public final class ParserCLI {
         System.out.println("");
         System.out.println("Commercial distribution only features:");
         System.out.println("  --transform-ansi-join-to-table-lists");
+        System.out.println("  --transform-rownum");
         System.out.println("  --transform-table-lists-to-ansi-join");
         System.out.println("  --transform-unneeded-arithmetic           <TransformUnneededArithmeticExpressions>");
         System.out.println("");
@@ -497,6 +513,7 @@ public final class ParserCLI {
         System.out.println("");
         System.out.println("Commercial distribution only features:");
         System.out.println("  /transform-ansi-join-to-table-lists");
+        System.out.println("  /transform-rownum");
         System.out.println("  /transform-table-lists-to-ansi-join");
         System.out.println("  /transform-unneeded-arithmetic           <TransformUnneededArithmeticExpressions>");
         System.out.println("");
@@ -516,6 +533,7 @@ public final class ParserCLI {
         boolean                                interactive;
         boolean                                done;
         boolean                                transformAnsiJoinToTableLists;
+        boolean                                transformRownum;
         boolean                                transformTableListsToAnsiJoin;
         TransformUnneededArithmeticExpressions transformUnneededArithmetic = TransformUnneededArithmeticExpressions.NEVER;
     }

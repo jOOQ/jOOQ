@@ -378,7 +378,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             this.from.add(from.asTable());
     }
 
-    SelectQueryImpl<R> copy() {
+    final SelectQueryImpl<R> copy() {
         SelectQueryImpl<R> result = new SelectQueryImpl<>(configuration(), with);
 
         result.condition.setWhere(condition.getWhere());

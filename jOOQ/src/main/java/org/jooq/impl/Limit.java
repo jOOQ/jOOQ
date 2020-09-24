@@ -70,6 +70,7 @@ import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Tools.BooleanDataKey;
+import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder
@@ -80,15 +81,15 @@ final class Limit extends AbstractQueryPart {
      * Generated UID
      */
     private static final long           serialVersionUID  = 2053741242981425602L;
-    private static final Field<Integer> ZERO              = zero();
-    private static final Field<Integer> ONE               = one();
+    private static final Param<Integer> ZERO              = zero();
+    private static final Param<Integer> ONE               = one();
     private static final Param<Integer> MAX               = DSL.inline(Integer.MAX_VALUE);
 
     Param<?>                            numberOfRows;
-    private Field<?>                    numberOfRowsOrMax = MAX;
+    private Param<?>                    numberOfRowsOrMax = MAX;
     Param<?>                            offset;
-    private Field<?>                    offsetOrZero      = ZERO;
-    private Field<?>                    offsetPlusOne     = ONE;
+    private Param<?>                    offsetOrZero      = ZERO;
+    private Param<?>                    offsetPlusOne     = ONE;
     private boolean                     rendersParams;
     boolean                             withTies;
     boolean                             percent;
@@ -468,6 +469,10 @@ final class Limit extends AbstractQueryPart {
         this.rendersParams |= numberOfRows.isInline();
     }
 
+    final Long getNumberOfRows() {
+        return Convert.convert((numberOfRows != null ? numberOfRows : numberOfRowsOrMax).getValue(), long.class);
+    }
+
     final void setPercent(boolean percent) {
         this.percent = percent;
     }
@@ -485,8 +490,14 @@ final class Limit extends AbstractQueryPart {
     }
 
     final Limit from(Limit limit) {
+
+        // [#9017] Take the lower number of two LIMIT clauses, maintaining
+        //         inline flags and parameter names
         if (limit.numberOfRows != null)
-            this.setNumberOfRows(limit.numberOfRows);
+            if (numberOfRows == null)
+                this.setNumberOfRows(limit.numberOfRows);
+            else
+                this.setNumberOfRows(((Val<?>) limit.numberOfRows).copy(Math.min(getNumberOfRows(), limit.getNumberOfRows())));
 
         if (limit.offset != null)
             this.setOffset(limit.offset);

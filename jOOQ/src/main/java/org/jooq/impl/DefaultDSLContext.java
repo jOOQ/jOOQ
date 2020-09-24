@@ -101,6 +101,8 @@ import org.jooq.AlterViewStep;
 import org.jooq.Attachable;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
+import org.jooq.BatchedCallable;
+import org.jooq.BatchedRunnable;
 import org.jooq.BindContext;
 import org.jooq.Block;
 import org.jooq.Catalog;
@@ -279,6 +281,8 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.jdbc.BatchedConnection;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockCallable;
 import org.jooq.tools.jdbc.MockConfiguration;
 import org.jooq.tools.jdbc.MockDataProvider;
@@ -2795,6 +2799,38 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
+    public void batched(final BatchedRunnable runnable) {
+        batchedResult(new BatchedCallable<Void>() {
+            @Override
+            public Void run(Configuration c) throws Throwable {
+                runnable.run(c);
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public <T> T batchedResult(final BatchedCallable<T> callable) {
+        return connectionResult(new ConnectionCallable<T>() {
+            @Override
+            public T run(Connection connection) throws Exception {
+                BatchedConnection bc = new BatchedConnection(connection);
+                Configuration c = configuration().derive(bc);
+
+                try {
+                    return callable.run(c);
+                }
+                catch (Throwable t) {
+                    throw new DataAccessException("Error while running BatchedCallable", t);
+                }
+                finally {
+                    JDBCUtils.safeClose(bc);
+                }
+            }
+        });
+    }
+
+    @Override
     public Batch batch(Query... queries) {
         return new BatchMultiple(configuration(), queries);
     }
@@ -2808,9 +2844,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Batch batch(String... queries) {
         Query[] result = new Query[queries.length];
 
-        for (int i = 0; i < queries.length; i++) {
+        for (int i = 0; i < queries.length; i++)
             result[i] = query(queries[i]);
-        }
 
         return batch(result);
     }

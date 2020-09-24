@@ -44,6 +44,7 @@ import java.net.URL;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.NClob;
 import java.sql.ParameterMetaData;
@@ -74,6 +75,10 @@ public class DefaultPreparedStatement extends DefaultStatement implements Prepar
 
     protected DefaultPreparedStatement(Statement delegate) {
         super(delegate);
+    }
+
+    protected DefaultPreparedStatement(Statement delegate, Connection creator) {
+        super(delegate, creator);
     }
 
     @Override

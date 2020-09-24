@@ -100,6 +100,7 @@ import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ThreadLocalTransactionProvider;
+import org.jooq.tools.jdbc.BatchedConnection;
 import org.jooq.tools.jdbc.MockCallable;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockRunnable;
@@ -8562,6 +8563,24 @@ public interface DSLContext extends Scope {
     // -------------------------------------------------------------------------
     // XXX Batch query execution
     // -------------------------------------------------------------------------
+
+    /**
+     * Run a <code>BatchedRunnable</code> on a {@link BatchedConnection},
+     * delaying execution as long as possible before batching.
+     *
+     * @see BatchedConnection BatchedConnection for details.
+     */
+    @Support
+    void batched(BatchedRunnable runnable);
+
+    /**
+     * Run a <code>BatchedRunnable</code> on a {@link BatchedConnection},
+     * delaying execution as long as possible before batching.
+     *
+     * @see BatchedConnection BatchedConnection for details.
+     */
+    @Support
+    <T> T batchedResult(BatchedCallable<T> callable);
 
     /**
      * Create a batch statement to execute a set of queries in batch mode

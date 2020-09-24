@@ -93,7 +93,6 @@ final class CatalogMetaImpl extends AbstractMeta {
         return filterSchemas(configuration, new HashSet<>(Arrays.asList(schemas)));
     }
 
-
     static final Meta filterSchemas(Configuration configuration, final Set<Schema> schemas) {
 
         // TODO: Some schemas may belong to another catalog

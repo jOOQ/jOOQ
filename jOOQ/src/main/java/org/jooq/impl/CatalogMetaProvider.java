@@ -37,6 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_CATALOG;
+
+import java.util.Collection;
+
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.Meta;
@@ -56,6 +60,10 @@ public class CatalogMetaProvider implements MetaProvider {
     public CatalogMetaProvider(Configuration configuration, Catalog... catalogs) {
         this.configuration = configuration;
         this.catalogs = catalogs;
+    }
+
+    public CatalogMetaProvider(Configuration configuration, Collection<? extends Catalog> catalogs) {
+        this(configuration, catalogs.toArray(EMPTY_CATALOG));
     }
 
     @Override

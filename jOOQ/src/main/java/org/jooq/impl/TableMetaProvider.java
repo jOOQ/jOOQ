@@ -37,6 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_TABLE;
+
+import java.util.Collection;
+
 import org.jooq.Configuration;
 import org.jooq.Meta;
 import org.jooq.MetaProvider;
@@ -56,6 +60,10 @@ public class TableMetaProvider implements MetaProvider {
     public TableMetaProvider(Configuration configuration, Table<?>... tables) {
         this.configuration = configuration;
         this.tables = tables;
+    }
+
+    public TableMetaProvider(Configuration configuration, Collection<? extends Table<?>> tables) {
+        this(configuration, tables.toArray(EMPTY_TABLE));
     }
 
     @Override

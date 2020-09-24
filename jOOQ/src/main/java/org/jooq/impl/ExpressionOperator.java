@@ -49,12 +49,12 @@ enum ExpressionOperator {
     /**
      * Concatenation
      */
-    CONCAT("||"),
+    CONCAT("||", true, false),
 
     /**
      * Addition
      */
-    ADD("+"),
+    ADD("+", true, true),
 
     /**
      * Subtraction
@@ -64,7 +64,7 @@ enum ExpressionOperator {
     /**
      * Multiplication
      */
-    MULTIPLY("*"),
+    MULTIPLY("*", true, true),
 
     /**
      * Division
@@ -84,25 +84,25 @@ enum ExpressionOperator {
     /**
      * Bitwise and
      */
-    BIT_AND("&"),
+    BIT_AND("&", true, true),
 
     /**
      * Bitwise or
      */
-    BIT_OR("|"),
+    BIT_OR("|", true, true),
 
     /**
      * Bitwise xor
      */
-    BIT_XOR("^"),
+    BIT_XOR("^", true, true),
 
     /**
-     * Bitwise and
+     * Bitwise nand
      */
     BIT_NAND("~&"),
 
     /**
-     * Bitwise or
+     * Bitwise nor
      */
     BIT_NOR("~|"),
 
@@ -123,19 +123,35 @@ enum ExpressionOperator {
 
     ;
 
-    private final String sql;
-    private final Name name;
+    private final String  sql;
+    private final Name    name;
+    private final boolean associative;
+    private final boolean commutative;
 
     private ExpressionOperator(String sql) {
-        this.sql = sql;
-        this.name = DSL.name(name().toLowerCase());
+        this(sql, false, false);
     }
 
-    public String toSQL() {
+    private ExpressionOperator(String sql, boolean associative, boolean commutative) {
+        this.sql = sql;
+        this.name = DSL.name(name().toLowerCase());
+        this.associative = associative;
+        this.commutative = commutative;
+    }
+
+    final String toSQL() {
         return sql;
     }
 
-    public Name toName() {
+    final Name toName() {
         return name;
+    }
+
+    final boolean associative() {
+        return associative;
+    }
+
+    final boolean commutative() {
+        return commutative;
     }
 }

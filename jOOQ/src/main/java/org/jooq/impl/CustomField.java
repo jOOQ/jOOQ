@@ -102,16 +102,6 @@ public abstract class CustomField<T> extends AbstractField<T> {
     }
 
     @Override
-    public final Field<T> add(Field<?> value) {
-        return super.add(value);
-    }
-
-    @Override
-    public final Field<T> mul(Field<? extends Number> value) {
-        return super.mul(value);
-    }
-
-    @Override
     public final boolean declaresFields() {
         return super.declaresFields();
     }

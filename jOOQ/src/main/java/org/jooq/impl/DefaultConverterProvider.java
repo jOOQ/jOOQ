@@ -108,7 +108,7 @@ public final class DefaultConverterProvider implements ConverterProvider {
             || Record.class.isAssignableFrom(tWrapper)
             || Struct.class.isAssignableFrom(tWrapper) && UDTRecord.class.isAssignableFrom(uWrapper)
         ) {
-            return new Converter<T, U>() {
+            return new AbstractConverter<T, U>(tType, uType) {
 
                 /**
                  * Generated UID.
@@ -123,16 +123,6 @@ public final class DefaultConverterProvider implements ConverterProvider {
                 @Override
                 public T to(U u) {
                     return Convert.convert(u, tType);
-                }
-
-                @Override
-                public Class<T> fromType() {
-                    return tType;
-                }
-
-                @Override
-                public Class<U> toType() {
-                    return uType;
                 }
             };
         }

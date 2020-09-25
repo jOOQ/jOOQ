@@ -74,7 +74,11 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
 
     /**
      * Create an identity converter.
+     *
+     * @deprecated - [#10689] - 3.14.0 - This converter does not work. Do not
+     *             use this method, use {@link #identity(Class)} instead.
      */
+    @Deprecated
     @NotNull
     public static <T, U> Converter<T, U> of() {
         return new Converters();
@@ -82,7 +86,11 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
 
     /**
      * Create a single converter.
+     *
+     * @deprecated - [#10689] - 3.14.0 - This method does not provide any useful
+     *             functionality and will be removed in the future.
      */
+    @Deprecated
     @NotNull
     public static <T, U> Converter<T, U> of(Converter<T, U> converter) {
         return new Converters(converter);

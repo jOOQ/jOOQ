@@ -9515,9 +9515,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
-        if (array instanceof Field[])
-            return all((Field<T>[]) array);
-        return new QuantifiedSelectImpl<>(Quantifier.ALL, val(array));
+        return array instanceof Field[] ? all((Field<T>[]) array) : new QuantifiedSelectImpl<>(Quantifier.ALL, val(array));
     }
 
     /**
@@ -9599,9 +9597,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
-        if (array instanceof Field[])
-            return any((Field<T>[]) array);
-        return new QuantifiedSelectImpl<>(Quantifier.ANY, val(array));
+        return array instanceof Field[] ? any((Field<T>[]) array) : new QuantifiedSelectImpl<>(Quantifier.ANY, val(array));
     }
 
     /**

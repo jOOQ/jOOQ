@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import java.sql.Types;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.SQLDataType;
@@ -174,6 +175,23 @@ public interface DataType<T> extends Named {
      */
     @NotNull
     <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter);
+
+
+
+    /**
+     * Convenience method for converting this type using
+     * {@link Converter#of(Class, Class, Function, Function)}.
+     */
+    @NotNull
+    default <U> DataType<U> asConvertedDataType(
+        Class<U> toType,
+        Function<? super T, ? extends U> from,
+        Function<? super U, ? extends T> to
+    ) {
+        return asConvertedDataType(Converter.of(getType(), toType, from, to));
+    }
+
+
 
     /**
      * Retrieve the data type for a given binding.

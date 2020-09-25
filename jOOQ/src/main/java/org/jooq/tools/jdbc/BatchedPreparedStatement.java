@@ -77,7 +77,7 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     private void logExecution() throws SQLException {
         if (log.isDebugEnabled())
-            log.debug("BatchedStatement", "Executed " + batches + " batches: " + getBatchedConnection().lastSQL);
+            log.debug("BatchedStatement", "Executed with " + batches + " batched items: " + getBatchedConnection().lastSQL);
 
         resetBatches();
     }

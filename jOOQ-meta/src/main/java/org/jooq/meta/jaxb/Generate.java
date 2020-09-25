@@ -186,6 +186,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "CONSTANT")
     @XmlSchemaType(name = "string")
     protected GeneratedSerialVersionUID generatedSerialVersionUID = GeneratedSerialVersionUID.CONSTANT;
+    @XmlElement(defaultValue = "500")
+    protected Integer maxMembersPerInitialiser = 500;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String fullyQualifiedTypes = "";
@@ -2037,6 +2039,22 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * The maximum number of members per initialiser, to prevent reaching the 64kb byte code per method limit in generated code.
+     * 
+     */
+    public Integer getMaxMembersPerInitialiser() {
+        return maxMembersPerInitialiser;
+    }
+
+    /**
+     * The maximum number of members per initialiser, to prevent reaching the 64kb byte code per method limit in generated code.
+     * 
+     */
+    public void setMaxMembersPerInitialiser(Integer value) {
+        this.maxMembersPerInitialiser = value;
+    }
+
+    /**
      * A regular expression matching all the types in generated code that should be fully qualified.
      * <p>
      * This can be useful if you have a database object that generates a String
@@ -2574,6 +2592,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * The maximum number of members per initialiser, to prevent reaching the 64kb byte code per method limit in generated code.
+     * 
+     */
+    public Generate withMaxMembersPerInitialiser(Integer value) {
+        setMaxMembersPerInitialiser(value);
+        return this;
+    }
+
+    /**
      * A regular expression matching all the types in generated code that should be fully qualified.
      * <p>
      * This can be useful if you have a database object that generates a String
@@ -2698,6 +2725,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("javaBeansGettersAndSetters", javaBeansGettersAndSetters);
         builder.append("varargSetters", varargSetters);
         builder.append("generatedSerialVersionUID", generatedSerialVersionUID);
+        builder.append("maxMembersPerInitialiser", maxMembersPerInitialiser);
         builder.append("fullyQualifiedTypes", fullyQualifiedTypes);
         builder.append("emptyCatalogs", emptyCatalogs);
         builder.append("emptySchemas", emptySchemas);
@@ -3418,6 +3446,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (maxMembersPerInitialiser == null) {
+            if (other.maxMembersPerInitialiser!= null) {
+                return false;
+            }
+        } else {
+            if (!maxMembersPerInitialiser.equals(other.maxMembersPerInitialiser)) {
+                return false;
+            }
+        }
         if (fullyQualifiedTypes == null) {
             if (other.fullyQualifiedTypes!= null) {
                 return false;
@@ -3556,6 +3593,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((javaBeansGettersAndSetters == null)? 0 :javaBeansGettersAndSetters.hashCode()));
         result = ((prime*result)+((varargSetters == null)? 0 :varargSetters.hashCode()));
         result = ((prime*result)+((generatedSerialVersionUID == null)? 0 :generatedSerialVersionUID.hashCode()));
+        result = ((prime*result)+((maxMembersPerInitialiser == null)? 0 :maxMembersPerInitialiser.hashCode()));
         result = ((prime*result)+((fullyQualifiedTypes == null)? 0 :fullyQualifiedTypes.hashCode()));
         result = ((prime*result)+((emptyCatalogs == null)? 0 :emptyCatalogs.hashCode()));
         result = ((prime*result)+((emptySchemas == null)? 0 :emptySchemas.hashCode()));

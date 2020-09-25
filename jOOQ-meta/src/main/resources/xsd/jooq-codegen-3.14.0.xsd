@@ -1743,6 +1743,10 @@ This may lead to compilation warnings in current Java versions.]]></jxb:javadoc>
       <element name="generatedSerialVersionUID" type="tns:GeneratedSerialVersionUID" default="CONSTANT" minOccurs="0" maxOccurs="1">
       	<annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The serial version UID to be generated in all files.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="maxMembersPerInitialiser" type="int" default="500" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The maximum number of members per initialiser, to prevent reaching the 64kb byte code per method limit in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all the types in generated code that should be fully qualified.

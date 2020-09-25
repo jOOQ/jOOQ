@@ -517,6 +517,18 @@ public interface Generator {
     void setGenerateGeneratedSerialVersionUID(GeneratedSerialVersionUID generatedSerialVersionUID);
 
     /**
+     * The maximum number of members per initialiser, to prevent reaching the
+     * 64kb byte code per method limit in generated code.
+     */
+    int maxMembersPerInitialiser();
+
+    /**
+     * The maximum number of members per initialiser, to prevent reaching the
+     * 64kb byte code per method limit in generated code.
+     */
+    void setMaxMembersPerInitialiser(int maxMembersPerInitialiser);
+
+    /**
      * Whether global object references should be generated
      */
     boolean generateGlobalObjectReferences();

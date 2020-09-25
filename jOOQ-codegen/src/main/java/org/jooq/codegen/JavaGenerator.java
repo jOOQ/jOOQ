@@ -196,11 +196,6 @@ public class JavaGenerator extends AbstractGenerator {
     private static final String                   NO_FURTHER_INSTANCES_ALLOWED = "No further instances allowed";
 
     /**
-     * [#1459] Prevent large static initialisers by splitting nested classes
-     */
-    private static final int                      INITIALISER_SIZE             = 500;
-
-    /**
      * [#4429] A map providing access to SQLDataType member literals
      */
     private static final Map<DataType<?>, String> SQLDATATYPE_LITERAL_LOOKUP;
@@ -837,9 +832,9 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class %s {", referencesClassName);
 
-        // [#1459] [#10554] Distribute keys to nested classes only if necessary
-        boolean distributeUniqueKeys = database.getUniqueKeys(schema).size() > INITIALISER_SIZE;
-        boolean distributeForeignKeys = database.getForeignKeys(schema).size() > INITIALISER_SIZE;
+        // [#1459] [#10554] [#10653] Distribute keys to nested classes only if necessary
+        boolean distributeUniqueKeys = database.getUniqueKeys(schema).size() > maxMembersPerInitialiser();
+        boolean distributeForeignKeys = database.getForeignKeys(schema).size() > maxMembersPerInitialiser();
 
         List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<>();
         List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
@@ -851,7 +846,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 final String keyType = out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
                 final String keyId = getStrategy().getJavaIdentifier(uniqueKey);
-                final int block = allUniqueKeys.size() / INITIALISER_SIZE;
+                final int block = allUniqueKeys.size() / maxMembersPerInitialiser();
 
                 // [#10480] Print header before first key
                 if (allUniqueKeys.isEmpty()) {
@@ -882,7 +877,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String keyType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
                 final String referencedType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
                 final String keyId = getStrategy().getJavaIdentifier(foreignKey);
-                final int block = allForeignKeys.size() / INITIALISER_SIZE;
+                final int block = allForeignKeys.size() / maxMembersPerInitialiser();
 
                 // [#10480] Print header before first key
                 if (allForeignKeys.isEmpty()) {
@@ -905,13 +900,13 @@ public class JavaGenerator extends AbstractGenerator {
             log.error("Error while generating foreign keys for schema " + schema, e);
         }
 
-        // [#1459] Print nested classes for actual static field initialisations
+        // [#1459] [#10554] [#10653] Print nested classes for actual static field initialisations
         // keeping top-level initialiser small
         int uniqueKeyCounter = 0;
         int foreignKeyCounter = 0;
 
         if (distributeUniqueKeys || distributeForeignKeys) {
-            out.header("[#1459] distribute members to avoid static initialisers > 64kb");
+            out.header("[#1459] [#10554] [#10653] distribute members to avoid static initialisers > 64kb");
 
             // UniqueKeys
             // ----------
@@ -981,8 +976,8 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class %s {", referencesClassName);
 
-        // [#1459] [#10554] Distribute keys to nested classes only if necessary
-        boolean distributeIndexes = database.getIndexes(schema).size() > INITIALISER_SIZE;
+        // [#1459] [#10554] [#10653] Distribute keys to nested classes only if necessary
+        boolean distributeIndexes = database.getIndexes(schema).size() > maxMembersPerInitialiser();
         List<IndexDefinition> allIndexes = new ArrayList<>();
 
         out.header("INDEX definitions");
@@ -991,7 +986,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (IndexDefinition index : database.getIndexes(schema)) {
             try {
                 final String keyId = getStrategy().getJavaIdentifier(index);
-                final int block = allIndexes.size() / INITIALISER_SIZE;
+                final int block = allIndexes.size() / maxMembersPerInitialiser();
 
                 if (distributeIndexes)
                     if (scala || kotlin)
@@ -1008,11 +1003,11 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        // [#1459] Print nested classes for actual static field initialisations
+        // [#1459] [#10554] [#10653] Print nested classes for actual static field initialisations
         // keeping top-level initialiser small
         int indexCounter = 0;
         if (distributeIndexes) {
-            out.header("[#1459] distribute members to avoid static initialisers > 64kb");
+            out.header("[#1459] [#10554] [#10653] distribute members to avoid static initialisers > 64kb");
 
             // Indexes
             // -------
@@ -1042,10 +1037,10 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateIndexesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     protected void printIndex(JavaWriter out, int indexCounter, IndexDefinition index, boolean distributeIndexes) {
-        final int block = indexCounter / INITIALISER_SIZE;
+        final int block = indexCounter / maxMembersPerInitialiser();
 
         // Print new nested class
-        if (indexCounter % INITIALISER_SIZE == 0) {
+        if (indexCounter % maxMembersPerInitialiser() == 0) {
             if (indexCounter > 0)
                 out.println("}");
 
@@ -1120,10 +1115,10 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printUniqueKey(JavaWriter out, int uniqueKeyCounter, UniqueKeyDefinition uniqueKey, boolean distributeUniqueKeys) {
-        final int block = uniqueKeyCounter / INITIALISER_SIZE;
+        final int block = uniqueKeyCounter / maxMembersPerInitialiser();
 
         // Print new nested class
-        if (distributeUniqueKeys && uniqueKeyCounter % INITIALISER_SIZE == 0) {
+        if (distributeUniqueKeys && uniqueKeyCounter % maxMembersPerInitialiser() == 0) {
             if (uniqueKeyCounter > 0)
                 out.println("}");
 
@@ -1238,10 +1233,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void printForeignKey(JavaWriter out, int foreignKeyCounter, ForeignKeyDefinition foreignKey, boolean distributeForeignKey) {
-        final int block = foreignKeyCounter / INITIALISER_SIZE;
+        final int block = foreignKeyCounter / maxMembersPerInitialiser();
 
         // Print new nested class
-        if (distributeForeignKey && foreignKeyCounter % INITIALISER_SIZE == 0) {
+        if (distributeForeignKey && foreignKeyCounter % maxMembersPerInitialiser() == 0) {
             if (foreignKeyCounter > 0)
                 out.println("}");
 
@@ -6450,11 +6445,11 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala) {
                 out.println("override def get%ss: %s[%s%s] = {", type.getSimpleName(), List.class, type, generic);
 
-                if (definitions.size() > INITIALISER_SIZE) {
+                if (definitions.size() > maxMembersPerInitialiser()) {
                     out.println("val result = new %s[%s%s]", ArrayList.class, type, generic);
 
-                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE)
-                        out.println("result.addAll(get%ss%s)", type.getSimpleName(), i / INITIALISER_SIZE);
+                    for (int i = 0; i < definitions.size(); i += maxMembersPerInitialiser())
+                        out.println("result.addAll(get%ss%s)", type.getSimpleName(), i / maxMembersPerInitialiser());
 
                     out.println("result");
                 }
@@ -6464,12 +6459,12 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("}");
             }
             else if (kotlin) {
-                if (definitions.size() > INITIALISER_SIZE) {
+                if (definitions.size() > maxMembersPerInitialiser()) {
                     out.println("override fun get%ss(): %s<%s%s> {", type.getSimpleName(), out.ref(KLIST), type, generic);
                     out.println("val result = mutableListOf<%s%s>()", type, generic);
 
-                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE)
-                        out.println("result.addAll(get%ss%s())", type.getSimpleName(), i / INITIALISER_SIZE);
+                    for (int i = 0; i < definitions.size(); i += maxMembersPerInitialiser())
+                        out.println("result.addAll(get%ss%s())", type.getSimpleName(), i / maxMembersPerInitialiser());
 
                     out.println("return result");
                     out.println("}");
@@ -6485,11 +6480,11 @@ public class JavaGenerator extends AbstractGenerator {
                 printNonnullAnnotation(out);
                 out.println("public final %s<%s%s> get%ss() {", List.class, type, generic, type.getSimpleName());
 
-                if (definitions.size() > INITIALISER_SIZE) {
+                if (definitions.size() > maxMembersPerInitialiser()) {
                     out.println("%s result = new %s();", List.class, ArrayList.class);
 
-                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE)
-                        out.println("result.addAll(get%ss%s());", type.getSimpleName(), i / INITIALISER_SIZE);
+                    for (int i = 0; i < definitions.size(); i += maxMembersPerInitialiser())
+                        out.println("result.addAll(get%ss%s());", type.getSimpleName(), i / maxMembersPerInitialiser());
 
                     out.println("return result;");
                 }
@@ -6500,23 +6495,23 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("}");
             }
 
-            if (definitions.size() > INITIALISER_SIZE) {
-                for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
+            if (definitions.size() > maxMembersPerInitialiser()) {
+                for (int i = 0; i < definitions.size(); i += maxMembersPerInitialiser()) {
                     out.println();
 
                     if (scala) {
-                        out.println("private def get%ss%s(): %s[%s%s] = %s.asList[%s%s](", type.getSimpleName(), i / INITIALISER_SIZE, List.class, type, generic, Arrays.class, type, generic);
-                        out.println("[[before=\n\t\t\t][separator=,\n\t\t\t][%s]]", references.subList(i, Math.min(i + INITIALISER_SIZE, references.size())));
+                        out.println("private def get%ss%s(): %s[%s%s] = %s.asList[%s%s](", type.getSimpleName(), i / maxMembersPerInitialiser(), List.class, type, generic, Arrays.class, type, generic);
+                        out.println("[[before=\n\t\t\t][separator=,\n\t\t\t][%s]]", references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
                         out.println(")");
                     }
                     else if (kotlin) {
-                        out.println("private fun get%ss%s(): %s<%s%s> = listOf(", type.getSimpleName(), i / INITIALISER_SIZE, out.ref(KLIST), type, generic);
-                        out.println("[[before=\t][separator=,\n\t\t\t][%s]]", references.subList(i, Math.min(i + INITIALISER_SIZE, references.size())));
+                        out.println("private fun get%ss%s(): %s<%s%s> = listOf(", type.getSimpleName(), i / maxMembersPerInitialiser(), out.ref(KLIST), type, generic);
+                        out.println("[[before=\t][separator=,\n\t\t\t][%s]]", references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
                         out.println(")");
                     }
                     else {
-                        out.println("private final %s<%s%s> get%ss%s() {", List.class, type, generic, type.getSimpleName(), i / INITIALISER_SIZE);
-                        out.println("return %s.<%s%s>asList([[before=\n\t\t\t][separator=,\n\t\t\t][%s]]);", Arrays.class, type, generic, references.subList(i, Math.min(i + INITIALISER_SIZE, references.size())));
+                        out.println("private final %s<%s%s> get%ss%s() {", List.class, type, generic, type.getSimpleName(), i / maxMembersPerInitialiser());
+                        out.println("return %s.<%s%s>asList([[before=\n\t\t\t][separator=,\n\t\t\t][%s]]);", Arrays.class, type, generic, references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
                         out.println("}");
                     }
                 }

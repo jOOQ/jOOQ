@@ -749,6 +749,8 @@ public class GenerationTool {
                 generator.setGenerateSpringAnnotations(g.getGenerate().isSpringAnnotations());
             if (g.getGenerate().getGeneratedSerialVersionUID() != null)
                 generator.setGenerateGeneratedSerialVersionUID(g.getGenerate().getGeneratedSerialVersionUID());
+            if (g.getGenerate().getMaxMembersPerInitialiser() != null)
+                generator.setMaxMembersPerInitialiser(g.getGenerate().getMaxMembersPerInitialiser());
             if (g.getGenerate().isQueues() != null)
                 generator.setGenerateQueues(g.getGenerate().isQueues());
             if (g.getGenerate().isLinks() != null)

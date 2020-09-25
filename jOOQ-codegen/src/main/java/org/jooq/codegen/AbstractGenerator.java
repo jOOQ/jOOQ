@@ -105,6 +105,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateValidationAnnotations           = false;
     boolean                            generateSpringAnnotations               = false;
     GeneratedSerialVersionUID          generatedSerialVersionUID               = GeneratedSerialVersionUID.CONSTANT;
+    int                                maxMembersPerInitialiser                = 500;
     boolean                            generateQueues                          = true;
     boolean                            generateLinks                           = true;
     boolean                            generateKeys                            = true;
@@ -655,6 +656,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGeneratedSerialVersionUID(GeneratedSerialVersionUID generatedSerialVersionUID) {
         this.generatedSerialVersionUID = generatedSerialVersionUID;
+    }
+
+    @Override
+    public int maxMembersPerInitialiser() {
+        return maxMembersPerInitialiser;
+    }
+
+    @Override
+    public void setMaxMembersPerInitialiser(int maxMembersPerInitialiser) {
+        this.maxMembersPerInitialiser = maxMembersPerInitialiser;
     }
 
     @Override

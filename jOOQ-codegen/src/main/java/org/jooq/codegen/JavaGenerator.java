@@ -429,7 +429,7 @@ public class JavaGenerator extends AbstractGenerator {
         // ----------------------------------------------------------------------
         log.info("Generating catalogs", "Total: " + database.getCatalogs().size());
 
-        StopWatch watch = new StopWatch();
+        StopWatch w = new StopWatch();
         for (CatalogDefinition catalog : database.getCatalogs()) {
             try {
                 if (generateCatalogIfEmpty(catalog))
@@ -442,13 +442,14 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        long time = watch.split();
+        long time = w.split();
 
         // [#10648] Log modified files
         log.info("Affected files: " + affectedFiles.size());
         log.info("Modified files: " + modifiedFiles.size());
 
-        if (modifiedFiles.isEmpty()) {
+        // [#10648] Don't log this info if we're already using schema version providers
+        if (modifiedFiles.isEmpty() && catalogVersions.isEmpty() && schemaVersions.isEmpty()) {
             log.info(
                 "No modified files",
                 "This code generation run has not produced any file modifications.\n"

@@ -429,6 +429,10 @@ jOOQ queries, for which no specific maxRows value was specified.]]></jxb:javadoc
 jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="batchSize" type="int" minOccurs="0" maxOccurs="1" default="2147483647">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="debugInfoOnStackTrace" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5570] Whether exception stack traces should be enhanced with additional debug information.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

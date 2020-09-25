@@ -129,6 +129,9 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
         batches++;
         logBatch();
         super.addBatch();
+
+        if (batches >= getBatchedConnection().batchSize)
+            getBatchedConnection().executeLastBatch();
     }
 
     @Override

@@ -388,6 +388,15 @@ public final class SettingsTools {
     }
 
     /**
+     * Return the specified {@link Settings#getBatchSize()}.
+     */
+    public static final int getBatchSize(Settings settings) {
+        return settings.getBatchSize() != null
+             ? settings.getBatchSize()
+             : 0;
+    }
+
+    /**
      * Return <code>fetchServerOutputSize</code> if it is not <code>0</code>, or
      * the specified {@link Settings#getFetchServerOutputSize()}.
      */

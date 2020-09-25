@@ -196,6 +196,8 @@ public class Settings
     protected Integer maxRows = 0;
     @XmlElement(defaultValue = "0")
     protected Integer fetchSize = 0;
+    @XmlElement(defaultValue = "2147483647")
+    protected Integer batchSize = 2147483647;
     @XmlElement(defaultValue = "true")
     protected Boolean debugInfoOnStackTrace = true;
     @XmlElement(defaultValue = "false")
@@ -1746,6 +1748,22 @@ public class Settings
     }
 
     /**
+     * A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.
+     * 
+     */
+    public Integer getBatchSize() {
+        return batchSize;
+    }
+
+    /**
+     * A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.
+     * 
+     */
+    public void setBatchSize(Integer value) {
+        this.batchSize = value;
+    }
+
+    /**
      * [#5570] Whether exception stack traces should be enhanced with additional debug information.
      * 
      * @return
@@ -2794,6 +2812,15 @@ public class Settings
         return this;
     }
 
+    /**
+     * A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.
+     * 
+     */
+    public Settings withBatchSize(Integer value) {
+        setBatchSize(value);
+        return this;
+    }
+
     public Settings withDebugInfoOnStackTrace(Boolean value) {
         setDebugInfoOnStackTrace(value);
         return this;
@@ -3098,6 +3125,7 @@ public class Settings
         builder.append("queryTimeout", queryTimeout);
         builder.append("maxRows", maxRows);
         builder.append("fetchSize", fetchSize);
+        builder.append("batchSize", batchSize);
         builder.append("debugInfoOnStackTrace", debugInfoOnStackTrace);
         builder.append("inListPadding", inListPadding);
         builder.append("inListPadBase", inListPadBase);
@@ -3741,6 +3769,15 @@ public class Settings
                 return false;
             }
         }
+        if (batchSize == null) {
+            if (other.batchSize!= null) {
+                return false;
+            }
+        } else {
+            if (!batchSize.equals(other.batchSize)) {
+                return false;
+            }
+        }
         if (debugInfoOnStackTrace == null) {
             if (other.debugInfoOnStackTrace!= null) {
                 return false;
@@ -4066,6 +4103,7 @@ public class Settings
         result = ((prime*result)+((queryTimeout == null)? 0 :queryTimeout.hashCode()));
         result = ((prime*result)+((maxRows == null)? 0 :maxRows.hashCode()));
         result = ((prime*result)+((fetchSize == null)? 0 :fetchSize.hashCode()));
+        result = ((prime*result)+((batchSize == null)? 0 :batchSize.hashCode()));
         result = ((prime*result)+((debugInfoOnStackTrace == null)? 0 :debugInfoOnStackTrace.hashCode()));
         result = ((prime*result)+((inListPadding == null)? 0 :inListPadding.hashCode()));
         result = ((prime*result)+((inListPadBase == null)? 0 :inListPadBase.hashCode()));

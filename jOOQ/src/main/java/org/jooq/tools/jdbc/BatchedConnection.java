@@ -79,25 +79,32 @@ import java.util.regex.Pattern;
  */
 public class BatchedConnection extends DefaultConnection {
 
-    String            lastSQL;
-    PreparedStatement lastStatement;
+    final int                batchSize;
+    String                   lastSQL;
+    BatchedPreparedStatement lastStatement;
 
     public BatchedConnection(Connection delegate) {
+        this(delegate, Integer.MAX_VALUE);
+    }
+
+    public BatchedConnection(Connection delegate, int batchSize) {
         super(delegate);
+
+        this.batchSize = batchSize;
     }
 
     // -------------------------------------------------------------------------
     // XXX: Utilities
     // -------------------------------------------------------------------------
 
-    private void executeLastBatch(String sql) throws SQLException {
+    void executeLastBatch(String sql) throws SQLException {
         if (!sql.equals(lastSQL))
             executeLastBatch();
     }
 
-    private void executeLastBatch() throws SQLException {
+    void executeLastBatch() throws SQLException {
         if (lastStatement != null) {
-            if (lastStatement instanceof BatchedPreparedStatement && ((BatchedPreparedStatement) lastStatement).batches > 0)
+            if (lastStatement.batches > 0)
                 lastStatement.executeBatch();
 
             safeClose(lastStatement);
@@ -188,7 +195,7 @@ public class BatchedConnection extends DefaultConnection {
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         executeLastBatch(sql);
-        return lastStatement != null ? lastStatement : (lastStatement = prepareStatement0(lastSQL = sql));
+        return lastStatement != null ? lastStatement : prepareStatement0(sql);
     }
 
     // TODO: Can we implement this in a more sophisticated way without invoking the costly parser?
@@ -197,9 +204,12 @@ public class BatchedConnection extends DefaultConnection {
     private PreparedStatement prepareStatement0(String sql) throws SQLException {
         PreparedStatement result = super.prepareStatement(sql);
 
-        return P_DML.matcher(sql).matches()
-             ? new BatchedPreparedStatement(this, result)
-             : result;
+        if (P_DML.matcher(sql).matches()) {
+            lastSQL = sql;
+            return lastStatement = new BatchedPreparedStatement(this, result);
+        }
+        else
+            return result;
     }
 
     // -------------------------------------------------------------------------

@@ -275,6 +275,7 @@ import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
@@ -2817,7 +2818,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return connectionResult(new ConnectionCallable<T>() {
             @Override
             public T run(Connection connection) throws Exception {
-                BatchedConnection bc = new BatchedConnection(connection);
+                BatchedConnection bc = new BatchedConnection(connection, SettingsTools.getBatchSize(settings()));
                 Configuration c = configuration().derive(bc);
 
                 try {

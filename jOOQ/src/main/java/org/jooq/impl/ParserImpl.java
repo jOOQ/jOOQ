@@ -1956,19 +1956,14 @@ final class ParserImpl implements Parser {
                 }
                 while (parseIf(ctx, ','));
 
-                if (allValues.isEmpty()) {
-                    returning = onDuplicate = s1.defaultValues();
-                }
-                else {
-                    InsertValuesStepN<?> step2 = (fields != null)
-                        ? s1.columns(fields)
-                        : (InsertValuesStepN<?>) s1;
+                InsertValuesStepN<?> step2 = (fields != null)
+                    ? s1.columns(fields)
+                    : (InsertValuesStepN<?>) s1;
 
-                    for (List<Field<?>> values : allValues)
-                        step2 = step2.values(values);
+                for (List<Field<?>> values : allValues)
+                    step2 = step2.values(values);
 
-                    returning = onDuplicate = step2;
-                }
+                returning = onDuplicate = step2;
             }
             else if (parseKeywordIf(ctx, "SET")) {
                 Map<Field<?>, Object> map = parseSetClauseList(ctx);

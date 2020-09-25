@@ -53,6 +53,8 @@ import java.sql.SQLException;
  */
 public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
+    private int batches;
+
     public BatchedPreparedStatement(BatchedConnection connection, PreparedStatement delegate) {
         super(delegate, connection);
     }
@@ -105,6 +107,7 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     @Override
     public void addBatch() throws SQLException {
+        batches++;
         super.addBatch();
     }
 
@@ -200,23 +203,21 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
 
 
+    @Override
+    public ResultSet executeQuery(String sql) throws SQLException {
+        throw new UnsupportedOperationException("No static statement methods can be called");
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Unsupported result set query features
     // -------------------------------------------------------------------------
 
     @Override
     public ResultSet executeQuery() throws SQLException {
-        throw new UnsupportedOperationException("Cannot batch result queries");
-    }
-
-    @Override
-    protected ResultSet wrap(ResultSet wrapped) {
-        throw new UnsupportedOperationException("Cannot batch result queries");
-    }
-
-    @Override
-    public ResultSet executeQuery(String sql) throws SQLException {
-        throw new UnsupportedOperationException("Cannot batch result queries");
+        if (batches > 0)
+            throw new UnsupportedOperationException("Cannot batch result queries");
+        else
+            return super.executeQuery();
     }
 
     @Override

@@ -306,8 +306,12 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final InsertImpl values(Object... values) {
 
+        // [#10655] Empty INSERT INTO t VALUES () clause
+        if (values.length == 0)
+            return defaultValues();
+
         // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
-        if (fields.length > 0 && fields.length != values.length)
+        else if (fields.length > 0 && fields.length != values.length)
             throw new IllegalArgumentException("The number of values must match the number of fields");
 
         getDelegate().newRecord();
@@ -456,8 +460,12 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final InsertImpl values(Field<?>... values) {
 
+        // [#10655] Empty INSERT INTO t VALUES () clause
+        if (values.length == 0)
+            return defaultValues();
+
         // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
-        if (fields.length > 0 && fields.length != values.length)
+        else if (fields.length > 0 && fields.length != values.length)
             throw new IllegalArgumentException("The number of values must match the number of fields");
 
         getDelegate().newRecord();

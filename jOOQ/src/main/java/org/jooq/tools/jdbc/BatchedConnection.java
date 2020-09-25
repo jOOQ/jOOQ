@@ -37,6 +37,8 @@
  */
 package org.jooq.tools.jdbc;
 
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
+
 import java.sql.CallableStatement;
 import java.sql.ClientInfoStatus;
 import java.sql.Connection;
@@ -96,9 +98,14 @@ public class BatchedConnection extends DefaultConnection {
     private void executeLastBatch() throws SQLException {
         if (lastStatement != null) {
             lastStatement.executeBatch();
-            lastStatement = null;
-            lastSQL = null;
+            safeClose(lastStatement);
+            clearLastBatch();
         }
+    }
+
+    void clearLastBatch() {
+        lastStatement = null;
+        lastSQL = null;
     }
 
     // -------------------------------------------------------------------------

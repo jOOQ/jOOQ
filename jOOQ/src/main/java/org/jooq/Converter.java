@@ -138,6 +138,14 @@ public interface Converter<T, U> extends Serializable {
     }
 
     /**
+     * Turn this converter into a converter for arrays.
+     */
+    @NotNull
+    default Converter<T[], U[]> forArrays() {
+        return Converters.forArrays(this);
+    }
+
+    /**
      * Construct a new converter from functions.
      *
      * @param <T> the database type

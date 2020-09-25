@@ -37,9 +37,13 @@
  */
 package org.jooq;
 
+import static org.jooq.tools.Convert.convertArray;
+
+import java.lang.reflect.Array;
+
+import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
-
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -51,7 +55,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class Converters<T, U> implements Converter<T, U> {
+public class Converters<T, U> extends AbstractConverter<T, U> {
 
     /**
      * Generated UID
@@ -112,7 +116,7 @@ public class Converters<T, U> implements Converter<T, U> {
      * Inverse a converter.
      */
     public static <T, U> Converter<U, T> inverse(final Converter<T, U> converter) {
-        return new Converter<U, T>() {
+        return new AbstractConverter<U, T>(converter.toType(), converter.fromType()) {
 
             /**
              * Generated UID
@@ -130,24 +134,40 @@ public class Converters<T, U> implements Converter<T, U> {
             }
 
             @Override
-            public Class<U> fromType() {
-                return converter.toType();
-            }
-
-            @Override
-            public Class<T> toType() {
-                return converter.fromType();
-            }
-
-            @Override
             public String toString() {
                 return "InverseConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
             }
         };
     }
 
+    public static <T, U> Converter<T[], U[]> forArrays(final Converter<T, U> converter) {
+        return new AbstractConverter<T[], U[]>(
+            (Class<T[]>) Array.newInstance(converter.fromType(), 0).getClass(),
+            (Class<U[]>) Array.newInstance(converter.toType(), 0).getClass()
+        ) {
+
+            /**
+             * Generated UID
+             */
+            private static final long     serialVersionUID = -4307758248063822630L;
+            private final Converter<U, T> inverse          = Converters.inverse(converter);
+
+            @Override
+            public U[] from(T[] t) {
+                return convertArray(t, converter);
+            }
+
+            @Override
+            public T[] to(U[] u) {
+                return convertArray(u, inverse);
+            }
+        };
+    }
+
     Converters(Converter... chain) {
-        this.chain = chain == null ? new Converter[0] : chain;
+        super(chain[0].fromType(), chain[chain.length - 1].toType());
+
+        this.chain = chain;
     }
 
     @Override
@@ -171,22 +191,12 @@ public class Converters<T, U> implements Converter<T, U> {
     }
 
     @Override
-    public final Class<T> fromType() {
-        return chain[0].fromType();
-    }
-
-    @Override
-    public final Class<U> toType() {
-        return chain[chain.length - 1].toType();
-    }
-
-    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         String separator = " -> ";
 
         sb.append("Converters [ ");
-        sb.append(chain[0].fromType().getName());
+        sb.append(fromType().getName());
 
         for (Converter<?, ?> converter : chain) {
             sb.append(separator);

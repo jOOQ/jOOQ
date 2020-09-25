@@ -183,6 +183,9 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean javaBeansGettersAndSetters = false;
     @XmlElement(defaultValue = "false")
     protected Boolean varargSetters = false;
+    @XmlElement(defaultValue = "CONSTANT")
+    @XmlSchemaType(name = "string")
+    protected GeneratedSerialVersionUID generatedSerialVersionUID = GeneratedSerialVersionUID.CONSTANT;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String fullyQualifiedTypes = "";
@@ -2018,6 +2021,22 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * The serial version UID to be generated in all files.
+     * 
+     */
+    public GeneratedSerialVersionUID getGeneratedSerialVersionUID() {
+        return generatedSerialVersionUID;
+    }
+
+    /**
+     * The serial version UID to be generated in all files.
+     * 
+     */
+    public void setGeneratedSerialVersionUID(GeneratedSerialVersionUID value) {
+        this.generatedSerialVersionUID = value;
+    }
+
+    /**
      * A regular expression matching all the types in generated code that should be fully qualified.
      * <p>
      * This can be useful if you have a database object that generates a String
@@ -2546,6 +2565,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * The serial version UID to be generated in all files.
+     * 
+     */
+    public Generate withGeneratedSerialVersionUID(GeneratedSerialVersionUID value) {
+        setGeneratedSerialVersionUID(value);
+        return this;
+    }
+
+    /**
      * A regular expression matching all the types in generated code that should be fully qualified.
      * <p>
      * This can be useful if you have a database object that generates a String
@@ -2669,6 +2697,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("fluentSetters", fluentSetters);
         builder.append("javaBeansGettersAndSetters", javaBeansGettersAndSetters);
         builder.append("varargSetters", varargSetters);
+        builder.append("generatedSerialVersionUID", generatedSerialVersionUID);
         builder.append("fullyQualifiedTypes", fullyQualifiedTypes);
         builder.append("emptyCatalogs", emptyCatalogs);
         builder.append("emptySchemas", emptySchemas);
@@ -3380,6 +3409,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (generatedSerialVersionUID == null) {
+            if (other.generatedSerialVersionUID!= null) {
+                return false;
+            }
+        } else {
+            if (!generatedSerialVersionUID.equals(other.generatedSerialVersionUID)) {
+                return false;
+            }
+        }
         if (fullyQualifiedTypes == null) {
             if (other.fullyQualifiedTypes!= null) {
                 return false;
@@ -3517,6 +3555,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((fluentSetters == null)? 0 :fluentSetters.hashCode()));
         result = ((prime*result)+((javaBeansGettersAndSetters == null)? 0 :javaBeansGettersAndSetters.hashCode()));
         result = ((prime*result)+((varargSetters == null)? 0 :varargSetters.hashCode()));
+        result = ((prime*result)+((generatedSerialVersionUID == null)? 0 :generatedSerialVersionUID.hashCode()));
         result = ((prime*result)+((fullyQualifiedTypes == null)? 0 :fullyQualifiedTypes.hashCode()));
         result = ((prime*result)+((emptyCatalogs == null)? 0 :emptyCatalogs.hashCode()));
         result = ((prime*result)+((emptySchemas == null)? 0 :emptySchemas.hashCode()));

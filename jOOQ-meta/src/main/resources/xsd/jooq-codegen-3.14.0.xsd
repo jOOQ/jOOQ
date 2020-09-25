@@ -1739,6 +1739,10 @@ Custom GeneratorStrategy implementations are unaffected]]></jxb:javadoc></jxb:pr
 <p>
 This may lead to compilation warnings in current Java versions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="generatedSerialVersionUID" type="tns:GeneratedSerialVersionUID" default="CONSTANT" minOccurs="0" maxOccurs="1">
+      	<annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The serial version UID to be generated in all files.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all the types in generated code that should be fully qualified.
@@ -1842,5 +1846,13 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <enumeration value="JAVAX_ANNOTATION_GENERATED"/>
       <enumeration value="JAVAX_ANNOTATION_PROCESSING_GENERATED"/>
     </restriction>
+  </simpleType>
+  
+  <simpleType name="GeneratedSerialVersionUID">
+  	<restriction base="string">
+  	  <enumeration value="HASH"/>
+  	  <enumeration value="CONSTANT"/>
+  	  <enumeration value="OFF"/>
+  	</restriction>
   </simpleType>
 </schema>

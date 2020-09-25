@@ -49,6 +49,7 @@ import java.util.Set;
 
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
+import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.tools.JooqLogger;
 
 
@@ -103,6 +104,7 @@ abstract class AbstractGenerator implements Generator {
     String                             generateJPAVersion                      = "";
     boolean                            generateValidationAnnotations           = false;
     boolean                            generateSpringAnnotations               = false;
+    GeneratedSerialVersionUID          generatedSerialVersionUID               = GeneratedSerialVersionUID.CONSTANT;
     boolean                            generateQueues                          = true;
     boolean                            generateLinks                           = true;
     boolean                            generateKeys                            = true;
@@ -643,6 +645,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateSpringAnnotations(boolean generateSpringAnnotations) {
         this.generateSpringAnnotations = generateSpringAnnotations;
+    }
+
+    @Override
+    public GeneratedSerialVersionUID generatedSerialVersionUID() {
+        return generatedSerialVersionUID;
+    }
+
+    @Override
+    public void setGenerateGeneratedSerialVersionUID(GeneratedSerialVersionUID generatedSerialVersionUID) {
+        this.generatedSerialVersionUID = generatedSerialVersionUID;
     }
 
     @Override

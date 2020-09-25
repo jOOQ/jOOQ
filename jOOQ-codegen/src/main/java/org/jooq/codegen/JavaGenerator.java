@@ -8315,7 +8315,7 @@ public class JavaGenerator extends AbstractGenerator {
     // [#3880] Users may need to call this method
     protected JavaWriter newJavaWriter(File file) {
         file = fixSuffix(file);
-        JavaWriter result = new JavaWriter(file, generateFullyQualifiedTypes(), targetEncoding, generateJavadoc(), fileCache);
+        JavaWriter result = new JavaWriter(file, generateFullyQualifiedTypes(), targetEncoding, generateJavadoc(), fileCache, generatedSerialVersionUID());
 
         if (generateIndentation != null)
             result.tabString(generateIndentation);

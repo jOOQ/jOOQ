@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -29,19 +30,20 @@ import org.jooq.tools.StringUtils;
  */
 public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
-    private static final String       SERIAL_STATEMENT = "__SERIAL_STATEMENT__";
-    private static final String       IMPORT_STATEMENT = "__IMPORT_STATEMENT__";
+    private static final String             SERIAL_STATEMENT = "__SERIAL_STATEMENT__";
+    private static final String             IMPORT_STATEMENT = "__IMPORT_STATEMENT__";
 
-    private final Pattern             fullyQualifiedTypes;
-    private final boolean             javadoc;
-    private final Set<String>         refConflicts;
-    private final Set<String>         qualifiedTypes   = new TreeSet<>(qualifiedTypeComparator());
-    private final Map<String, String> unqualifiedTypes = new TreeMap<>();
-    private final String              className;
-    private String                    packageName;
-    private final boolean             isJava;
-    private final boolean             isScala;
-    private final boolean             isKotlin;
+    private final Pattern                   fullyQualifiedTypes;
+    private final boolean                   javadoc;
+    private final Set<String>               refConflicts;
+    private final Set<String>               qualifiedTypes   = new TreeSet<>(qualifiedTypeComparator());
+    private final Map<String, String>       unqualifiedTypes = new TreeMap<>();
+    private final String                    className;
+    private String                          packageName;
+    private final boolean                   isJava;
+    private final boolean                   isScala;
+    private final boolean                   isKotlin;
+    private final GeneratedSerialVersionUID generatedSerialVersionUID;
 
     public JavaWriter(File file, String fullyQualifiedTypes) {
         this(file, fullyQualifiedTypes, null);
@@ -56,6 +58,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc, Files files) {
+        this(file, fullyQualifiedTypes, encoding, javadoc, files, GeneratedSerialVersionUID.CONSTANT);
+    }
+
+    public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc, Files files, GeneratedSerialVersionUID generatedSerialVersionUID) {
         super(file, encoding, files);
 
         this.className = file.getName().replaceAll("\\.(java|scala|kt)$", "");
@@ -65,6 +71,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         this.refConflicts = new HashSet<>();
         this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
         this.javadoc = javadoc;
+        this.generatedSerialVersionUID = generatedSerialVersionUID;
 
         if (isJava || isKotlin)
             tabString("    ");
@@ -165,7 +172,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public void printSerial() {
-        if (isJava) {
+        if (isJava && generatedSerialVersionUID != GeneratedSerialVersionUID.OFF) {
             println();
             println("private static final long serialVersionUID = %s;", SERIAL_STATEMENT);
         }
@@ -233,7 +240,23 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         }
 
         string = string.replaceAll(IMPORT_STATEMENT, Matcher.quoteReplacement(importString.toString()));
-        string = string.replaceAll(SERIAL_STATEMENT, Matcher.quoteReplacement(String.valueOf(string.hashCode())));
+
+        if (isJava) {
+            switch (StringUtils.defaultIfNull(generatedSerialVersionUID, GeneratedSerialVersionUID.CONSTANT)) {
+                case HASH:
+                    string = string.replaceAll(SERIAL_STATEMENT, Matcher.quoteReplacement(String.valueOf(string.hashCode())));
+                    break;
+
+                case OFF:
+                    break;
+
+                case CONSTANT:
+                default:
+                    string = string.replaceAll(SERIAL_STATEMENT, Matcher.quoteReplacement("1L"));
+                    break;
+            }
+        }
+
         return string;
     }
 

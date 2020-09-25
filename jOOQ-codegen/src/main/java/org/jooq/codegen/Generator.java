@@ -43,6 +43,7 @@ import java.util.Locale;
 
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
+import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 
 /**
  * The Generator provides a basic interface for java code generation
@@ -504,6 +505,16 @@ public interface Generator {
      * <code>@Repository</code> or <code>@Autowired</code>
      */
     void setGenerateSpringAnnotations(boolean generateSpringAnnotations);
+
+    /**
+     * The type of <code>serialVersionUID</code> that should be generated.
+     */
+    GeneratedSerialVersionUID generatedSerialVersionUID();
+
+    /**
+     * The type of <code>serialVersionUID</code> that should be generated.
+     */
+    void setGenerateGeneratedSerialVersionUID(GeneratedSerialVersionUID generatedSerialVersionUID);
 
     /**
      * Whether global object references should be generated

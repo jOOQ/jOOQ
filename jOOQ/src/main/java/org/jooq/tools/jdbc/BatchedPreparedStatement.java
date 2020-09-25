@@ -41,6 +41,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.jooq.tools.JooqLogger;
+
 /**
  * A batched statement.
  * <p>
@@ -53,15 +55,32 @@ import java.sql.SQLException;
  */
 public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
-    private int batches;
+    private static final JooqLogger log = JooqLogger.getLogger(BatchedPreparedStatement.class);
+    int                             batches;
 
     public BatchedPreparedStatement(BatchedConnection connection, PreparedStatement delegate) {
         super(delegate, connection);
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Utilities
-    // -------------------------------------------------------------------------
+    public BatchedConnection getBatchedConnection() throws SQLException {
+        return (BatchedConnection) super.getConnection();
+    }
+
+    private void resetBatches() {
+        batches = 0;
+    }
+
+    private void logBatch() throws SQLException {
+        if (log.isDebugEnabled())
+            log.debug("BatchedStatement", "Batched " + batches + " times: " + getBatchedConnection().lastSQL);
+    }
+
+    private void logExecution() throws SQLException {
+        if (log.isDebugEnabled())
+            log.debug("BatchedStatement", "Executed " + batches + " batches: " + getBatchedConnection().lastSQL);
+
+        resetBatches();
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Executing queries
@@ -108,21 +127,18 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
     @Override
     public void addBatch() throws SQLException {
         batches++;
+        logBatch();
         super.addBatch();
     }
 
     @Override
-    public void addBatch(String sql) throws SQLException {
-        super.addBatch(sql);
-    }
-
-    @Override
     public void clearBatch() throws SQLException {
-        super.clearBatch();
+        throw new UnsupportedOperationException("Clearing a batch is not yet supported");
     }
 
     @Override
     public int[] executeBatch() throws SQLException {
+        logExecution();
         return super.executeBatch();
     }
 
@@ -130,6 +146,7 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     @Override
     public long[] executeLargeBatch() throws SQLException {
+        logExecution();
         return super.executeLargeBatch();
     }
 
@@ -138,6 +155,11 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
     // -------------------------------------------------------------------------
     // XXX: Unsupported static statement execution features
     // -------------------------------------------------------------------------
+
+    @Override
+    public void addBatch(String sql) throws SQLException {
+        throw new UnsupportedOperationException("No static statement methods can be called");
+    }
 
     @Override
     public boolean execute(String sql) throws SQLException {
@@ -214,10 +236,10 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     @Override
     public ResultSet executeQuery() throws SQLException {
-        if (batches > 0)
-            throw new UnsupportedOperationException("Cannot batch result queries");
-        else
+        if (batches == 0)
             return super.executeQuery();
+        else
+            throw new UnsupportedOperationException("Cannot batch result queries");
     }
 
     @Override

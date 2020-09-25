@@ -79,8 +79,8 @@ import java.util.regex.Pattern;
  */
 public class BatchedConnection extends DefaultConnection {
 
-    private String            lastSQL;
-    private PreparedStatement lastStatement;
+    String            lastSQL;
+    PreparedStatement lastStatement;
 
     public BatchedConnection(Connection delegate) {
         super(delegate);
@@ -90,17 +90,20 @@ public class BatchedConnection extends DefaultConnection {
     // XXX: Utilities
     // -------------------------------------------------------------------------
 
-    private void checkBatch(String sql) throws SQLException {
+    private void executeLastBatch(String sql) throws SQLException {
         if (!sql.equals(lastSQL))
             executeLastBatch();
     }
 
     private void executeLastBatch() throws SQLException {
         if (lastStatement != null) {
-            lastStatement.executeBatch();
+            if (lastStatement instanceof BatchedPreparedStatement && ((BatchedPreparedStatement) lastStatement).batches > 0)
+                lastStatement.executeBatch();
+
             safeClose(lastStatement);
-            clearLastBatch();
         }
+
+        clearLastBatch();
     }
 
     void clearLastBatch() {
@@ -184,16 +187,16 @@ public class BatchedConnection extends DefaultConnection {
 
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
-        checkBatch(sql);
+        executeLastBatch(sql);
         return lastStatement != null ? lastStatement : (lastStatement = prepareStatement0(lastSQL = sql));
     }
 
+    // TODO: Can we implement this in a more sophisticated way without invoking the costly parser?
     static final Pattern P_DML = Pattern.compile("\\s*(?i:delete|insert|merge|update).*");
 
     private PreparedStatement prepareStatement0(String sql) throws SQLException {
-
-        // TODO: More sophistication here
         PreparedStatement result = super.prepareStatement(sql);
+
         return P_DML.matcher(sql).matches()
              ? new BatchedPreparedStatement(this, result)
              : result;

@@ -57,6 +57,7 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     private static final JooqLogger log = JooqLogger.getLogger(BatchedPreparedStatement.class);
     int                             batches;
+    boolean                         executeImmediate;
 
     public BatchedPreparedStatement(BatchedConnection connection, PreparedStatement delegate) {
         super(delegate, connection);
@@ -66,8 +67,21 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
         return (BatchedConnection) super.getConnection();
     }
 
+    public boolean getExecuteImmediate() {
+        return this.executeImmediate;
+    }
+
+    public void setExecuteImmediate(boolean executeImmediate) {
+        this.executeImmediate = executeImmediate;
+    }
+
     private void resetBatches() {
         batches = 0;
+    }
+
+    private void logExecuteImmediate() throws SQLException {
+        if (log.isDebugEnabled())
+            log.debug("BatchedStatement", "Skipped batching statement: " + getBatchedConnection().lastSQL);
     }
 
     private void logBatch() throws SQLException {
@@ -83,19 +97,46 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
     }
 
     // -------------------------------------------------------------------------
+    // XXX: Wrappers
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        return BatchedPreparedStatement.class == iface ? (T) this : super.unwrap(iface);
+    }
+
+    @Override
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        return BatchedPreparedStatement.class == iface || super.isWrapperFor(iface);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX: Executing queries
     // -------------------------------------------------------------------------
 
     @Override
     public int executeUpdate() throws SQLException {
-        addBatch();
-        return 0;
+        if (executeImmediate) {
+            logExecuteImmediate();
+            return super.executeUpdate();
+        }
+        else {
+            addBatch();
+            return 0;
+        }
     }
 
     @Override
     public boolean execute() throws SQLException {
-        addBatch();
-        return false;
+        if (executeImmediate) {
+            logExecuteImmediate();
+            return super.execute();
+        }
+        else {
+            addBatch();
+            return false;
+        }
     }
 
     @Override

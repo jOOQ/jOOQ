@@ -94,6 +94,21 @@ public class BatchedConnection extends DefaultConnection {
     }
 
     // -------------------------------------------------------------------------
+    // XXX: Wrappers
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        return BatchedConnection.class == iface ? (T) this : super.unwrap(iface);
+    }
+
+    @Override
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        return BatchedConnection.class == iface || super.isWrapperFor(iface);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX: Utilities
     // -------------------------------------------------------------------------
 

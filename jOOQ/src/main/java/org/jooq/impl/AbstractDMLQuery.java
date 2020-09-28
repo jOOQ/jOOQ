@@ -91,6 +91,7 @@ import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -140,6 +141,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.BatchedPreparedStatement;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
@@ -952,7 +954,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
                     listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
+                    result = executeImmediate(ctx.statement()).executeUpdate();
                     ctx.rows(result);
                     listener.executeEnd(ctx);
 
@@ -979,7 +981,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 case CUBRID: {
                     listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
+                    result = executeImmediate(ctx.statement()).executeUpdate();
                     ctx.rows(result);
                     listener.executeEnd(ctx);
 
@@ -1153,9 +1155,20 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
     }
 
+    /**
+     * Make sure a {@link PreparedStatement}, which may be a
+     * {@link BatchedPreparedStatement}, is executed immediately, not batched.
+     */
+    private final PreparedStatement executeImmediate(PreparedStatement s) throws SQLException {
+        if (s.isWrapperFor(BatchedPreparedStatement.class))
+            s.unwrap(BatchedPreparedStatement.class).setExecuteImmediate(true);
+
+        return s;
+    }
+
     private final ResultSet executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
-        int result = ctx.statement().executeUpdate();
+        int result = executeImmediate(ctx.statement()).executeUpdate();
         ctx.rows(result);
         listener.executeEnd(ctx);
 
@@ -1166,7 +1179,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         ResultSet rs;
 
         listener.executeStart(ctx);
-        int result = ctx.statement().executeUpdate();
+        int result = executeImmediate(ctx.statement()).executeUpdate();
         ctx.rows(result);
         listener.executeEnd(ctx);
 

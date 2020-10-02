@@ -186,6 +186,11 @@ public interface Routine<T> extends Qualified, Attachable {
     <Z> Z getValue(Parameter<Z> parameter);
 
     /**
+     * @return The routine's IN value for an IN parameter.
+     */
+    <Z> Z getInValue(Parameter<Z> parameter);
+
+    /**
      * @return The routine's OUT value for an OUT parameter.
      */
     <Z> Z get(Parameter<Z> parameter);

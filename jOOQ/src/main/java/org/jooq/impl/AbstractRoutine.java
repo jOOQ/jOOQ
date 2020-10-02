@@ -1289,6 +1289,12 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         return (Z) outValues.get(parameter);
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public final <Z> Z getInValue(Parameter<Z> parameter) {
+        return (Z) inValues.get(parameter);
+    }
+
     protected final Map<Parameter<?>, Field<?>> getInValues() {
         return inValues;
     }

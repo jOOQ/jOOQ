@@ -539,8 +539,14 @@ public final class Convert {
                 }
 
                 // [#3062] Default collections if no specific collection type was requested
-                else if (Collection.class.isAssignableFrom(fromClass)){
-                    return (U) convertArray(((Collection<?>) from).toArray(), toClass);
+                else if (Collection.class.isAssignableFrom(fromClass) ) {
+                    Object[] fromArray = ((Collection<?>) from).toArray();
+
+                    // [#3443] [#10704] Conversion from Object[] to JDBC Array
+                    if (toClass == java.sql.Array.class)
+                        return (U) new MockArray(null, fromArray, fromClass);
+                    else
+                        return (U) convertArray(fromArray, toClass);
                 }
 
 

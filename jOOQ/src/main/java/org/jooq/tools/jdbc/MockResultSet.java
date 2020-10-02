@@ -37,6 +37,8 @@
  */
 package org.jooq.tools.jdbc;
 
+import static org.jooq.SQLDialect.DEFAULT;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Reader;
@@ -67,8 +69,11 @@ import java.util.Map;
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.impl.DSL;
 import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
 
 /**
  * A mock result set.
@@ -1244,6 +1249,22 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public String toString() {
-        return result == null ? "null" : result.toString();
+        if (result == null)
+            return "null";
+        else if (result.size() == 0 || index == 0 || index > size())
+            return result.toString();
+
+        String prefix = "row " + index + " -> ";
+        String prefixEmpty = StringUtils.leftPad("", prefix.length());
+
+        Result<Record> r = DSL.using(DEFAULT).newResult(result.fields());
+        r.addAll(result.subList(Math.max(0, index - 3), Math.min(result.size(), index + 2)));
+
+        StringBuilder sb = new StringBuilder();
+        String[] split = r.toString().split("\n");
+        for (int i = 0; i < split.length; i++)
+            sb.append(i - 2 == Math.min(3, index) ? prefix : prefixEmpty).append(split[i]).append('\n');
+
+        return sb.toString();
     }
 }

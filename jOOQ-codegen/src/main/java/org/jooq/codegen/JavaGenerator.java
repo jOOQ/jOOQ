@@ -2377,7 +2377,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).javadoc("The type <code>%s</code>", udt.getQualifiedOutputName());
 
             if (scala)
-                out.tab(1).println("val %s = %s", id, fullId);
+                out.tab(1).println("lazy val %s = %s", id, fullId);
             else
                 out.tab(1).println("public static %s %s = %s;", className, id, fullId);
         }
@@ -2984,7 +2984,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).javadoc(comment);
 
                 if (scala)
-                    out.tab(1).println("val %s = %s", id, referencedId);
+                    out.tab(1).println("lazy val %s = %s", id, referencedId);
                 else
                     out.tab(1).println("public static final %s %s = %s;", fullClassName, id, referencedId);
             }
@@ -4870,7 +4870,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).javadoc(schemaComment);
 
                     if (scala)
-                        out.tab(1).println("val %s = %s", schemaId, schemaShortId);
+                        out.tab(1).println("lazy val %s = %s", schemaId, schemaShortId);
                     else
                         out.tab(1).println("public final %s %s = %s;", schemaClassName, schemaId, schemaShortId);
                 }
@@ -4966,7 +4966,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).javadoc(tableComment);
 
                     if (scala)
-                        out.tab(1).println("val %s = %s", tableId, tableShortId);
+                        out.tab(1).println("lazy val %s = %s", tableId, tableShortId);
                     else
                         out.tab(1).println("public final %s %s = %s;", tableClassName, tableId, tableShortId);
 

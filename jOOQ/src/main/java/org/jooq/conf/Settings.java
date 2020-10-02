@@ -88,6 +88,10 @@ public class Settings
     protected Boolean renderOutputForSQLServerReturningClause = true;
     @XmlElement(defaultValue = "false")
     protected Boolean renderParenthesisAroundSetOperationQueries = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean bindOffsetDateTimeType = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean bindOffsetTimeType = false;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
     @XmlElement(defaultValue = "false")
@@ -751,6 +755,66 @@ public class Settings
      */
     public void setRenderParenthesisAroundSetOperationQueries(Boolean value) {
         this.renderParenthesisAroundSetOperationQueries = value;
+    }
+
+    /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetDateTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isBindOffsetDateTimeType() {
+        return bindOffsetDateTimeType;
+    }
+
+    /**
+     * Sets the value of the bindOffsetDateTimeType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setBindOffsetDateTimeType(Boolean value) {
+        this.bindOffsetDateTimeType = value;
+    }
+
+    /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isBindOffsetTimeType() {
+        return bindOffsetTimeType;
+    }
+
+    /**
+     * Sets the value of the bindOffsetTimeType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setBindOffsetTimeType(Boolean value) {
+        this.bindOffsetTimeType = value;
     }
 
     /**
@@ -2468,6 +2532,16 @@ public class Settings
         return this;
     }
 
+    public Settings withBindOffsetDateTimeType(Boolean value) {
+        setBindOffsetDateTimeType(value);
+        return this;
+    }
+
+    public Settings withBindOffsetTimeType(Boolean value) {
+        setBindOffsetTimeType(value);
+        return this;
+    }
+
     public Settings withFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         setFetchTriggerValuesAfterSQLServerOutput(value);
         return this;
@@ -3080,6 +3154,8 @@ public class Settings
         builder.append("renderOrderByRownumberForEmulatedPagination", renderOrderByRownumberForEmulatedPagination);
         builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
         builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
+        builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
+        builder.append("bindOffsetTimeType", bindOffsetTimeType);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformTableListsToAnsiJoin", transformTableListsToAnsiJoin);
@@ -3361,6 +3437,24 @@ public class Settings
             }
         } else {
             if (!renderParenthesisAroundSetOperationQueries.equals(other.renderParenthesisAroundSetOperationQueries)) {
+                return false;
+            }
+        }
+        if (bindOffsetDateTimeType == null) {
+            if (other.bindOffsetDateTimeType!= null) {
+                return false;
+            }
+        } else {
+            if (!bindOffsetDateTimeType.equals(other.bindOffsetDateTimeType)) {
+                return false;
+            }
+        }
+        if (bindOffsetTimeType == null) {
+            if (other.bindOffsetTimeType!= null) {
+                return false;
+            }
+        } else {
+            if (!bindOffsetTimeType.equals(other.bindOffsetTimeType)) {
                 return false;
             }
         }
@@ -4058,6 +4152,8 @@ public class Settings
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
         result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));
+        result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
+        result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));

@@ -131,6 +131,7 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.JDBCType;
 import java.sql.NClob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -2832,40 +2833,55 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void set0(BindingSetStatementContext<U> ctx, OffsetDateTime value) throws SQLException {
             SQLDialect family = ctx.family();
 
+            if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
+                ctx.statement().setObject(ctx.index(), value);
 
 
 
 
 
 
-            ctx.statement().setString(ctx.index(), format(value, family));
+            else
+                ctx.statement().setString(ctx.index(), format(value, family));
         }
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, OffsetDateTime value) throws SQLException {
 
+            if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
+                ctx.output().writeObject(value, JDBCType.TIMESTAMP_WITH_TIMEZONE);
 
 
 
 
 
 
-            throw new UnsupportedOperationException("Type " + dataType + " is not supported");
+
+            else
+                throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
 
         @Override
         final OffsetDateTime get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return OffsetDateTimeParser.offsetDateTime(ctx.resultSet().getString(ctx.index()));
+            if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
+                return ctx.resultSet().getObject(ctx.index(), OffsetDateTime.class);
+            else
+                return OffsetDateTimeParser.offsetDateTime(ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final OffsetDateTime get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return OffsetDateTimeParser.offsetDateTime(ctx.statement().getString(ctx.index()));
+            if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
+                return ctx.statement().getObject(ctx.index(), OffsetDateTime.class);
+            else
+                return OffsetDateTimeParser.offsetDateTime(ctx.statement().getString(ctx.index()));
         }
 
         @Override
         final OffsetDateTime get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
 
+            if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
+                return ctx.input().readObject(OffsetDateTime.class);
 
 
 
@@ -2880,12 +2896,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            throw new UnsupportedOperationException("Type " + dataType + " is not supported");
+
+            else
+                throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
 
+            // [#5779] [#9902] Use the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types by default
+            if (!FALSE.equals(configuration.settings().isBindOffsetDateTimeType()))
+                return Types.TIMESTAMP_WITH_TIMEZONE;
 
 
 
@@ -2894,8 +2915,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            // [#5779] Few JDBC drivers support the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types.
-            return Types.VARCHAR;
+            // [#5779] Revert to encoding this type as string.
+            else
+                return Types.VARCHAR;
         }
 
 
@@ -3013,7 +3035,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, OffsetTime value) throws SQLException {
-            String string = format(value);
+            if (FALSE.equals(ctx.settings().isBindOffsetTimeType())) {
+                String string = format(value);
 
 
 
@@ -3021,7 +3044,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            ctx.statement().setString(ctx.index(), string);
+                ctx.statement().setString(ctx.index(), string);
+            }
+            else
+                ctx.statement().setObject(ctx.index(), value);
         }
 
         @Override
@@ -3032,12 +3058,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final OffsetTime get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return OffsetDateTimeParser.offsetTime(ctx.resultSet().getString(ctx.index()));
+            if (!FALSE.equals(ctx.settings().isBindOffsetTimeType()))
+                return ctx.resultSet().getObject(ctx.index(), OffsetTime.class);
+            else
+                return OffsetDateTimeParser.offsetTime(ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final OffsetTime get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return OffsetDateTimeParser.offsetTime(ctx.statement().getString(ctx.index()));
+            if (!FALSE.equals(ctx.settings().isBindOffsetTimeType()))
+                return ctx.statement().getObject(ctx.index(), OffsetTime.class);
+            else
+                return OffsetDateTimeParser.offsetTime(ctx.statement().getString(ctx.index()));
         }
 
         @Override
@@ -3049,6 +3081,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
 
+            // [#5779] [#9902] Use the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types by default
+            if (!FALSE.equals(configuration.settings().isBindOffsetTimeType()))
+                return Types.TIME_WITH_TIMEZONE;
 
 
 
@@ -3057,8 +3092,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            // [#5779] Few JDBC drivers support the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types.
-            return Types.VARCHAR;
+            // [#5779] Revert to encoding this type as string.
+            else
+                return Types.VARCHAR;
         }
 
         private static final String format(OffsetTime val) {

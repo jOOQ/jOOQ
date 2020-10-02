@@ -178,6 +178,26 @@ When this setting is set to <code>true</code> the queries combined with set oper
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="bindOffsetDateTimeType" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+      	<annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetDateTime} should be bound natively to JDBC.
+<p>
+Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+<p>
+This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="bindOffsetTimeType" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+      	<annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetTime} should be bound natively to JDBC.
+<p>
+Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+<p>
+This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="fetchTriggerValuesAfterSQLServerOutput" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
 <p>

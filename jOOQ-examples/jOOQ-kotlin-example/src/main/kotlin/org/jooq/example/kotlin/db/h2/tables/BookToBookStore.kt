@@ -91,7 +91,7 @@ class BookToBookStore(
     /**
      * Create a <code>PUBLIC.BOOK_TO_BOOK_STORE</code> table reference
      */
-    constructor(): this(DSL.name("BOOK_TO_BOOK_STORE"))
+    constructor(): this(DSL.name("BOOK_TO_BOOK_STORE"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BookToBookStoreRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK_TO_BOOK_STORE, null)
     override fun getSchema(): Schema = Public.PUBLIC

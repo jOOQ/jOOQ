@@ -107,7 +107,7 @@ class Author(
     /**
      * Create a <code>PUBLIC.AUTHOR</code> table reference
      */
-    constructor(): this(DSL.name("AUTHOR"))
+    constructor(): this(DSL.name("AUTHOR"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, AuthorRecord>): this(Internal.createPathAlias(child, key), child, key, AUTHOR, null)
     override fun getSchema(): Schema = Public.PUBLIC

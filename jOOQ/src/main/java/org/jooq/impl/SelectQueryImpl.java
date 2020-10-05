@@ -2756,9 +2756,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         boolean parensRequired
     ) {
         if ('(' == parenthesis)
-            ctx.subquery(true);
+            ((AbstractContext<?>) ctx).subquery0(true, true);
         else if (')' == parenthesis)
-            ctx.subquery(false);
+            ((AbstractContext<?>) ctx).subquery0(false, true);
 
         derivedTableRequired |= derivedTableRequired
 

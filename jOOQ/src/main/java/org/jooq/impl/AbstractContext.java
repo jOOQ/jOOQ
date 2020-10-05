@@ -522,8 +522,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         return subquery > 0;
     }
 
-    @Override
-    public final C subquery(boolean s) {
+    final C subquery0(boolean s, boolean setOperation) {
         if (s) {
             subquery++;
 
@@ -531,7 +530,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             //         entering a subquery (and restored when leaving it).
             // [#2791] This works differently from the scope marking mechanism, which wraps a
             // [#7152] naming scope for aliases and other object names.
-            if (TRUE.equals(data(DATA_NESTED_SET_OPERATIONS))) {
+            // [#9961] Do this only for scalar subqueries and derived tables, not for set operation subqueries
+            if (!setOperation && TRUE.equals(data(DATA_NESTED_SET_OPERATIONS))) {
                 data().remove(DATA_NESTED_SET_OPERATIONS);
 
                 if (subqueryScopedNestedSetOperations == null)
@@ -545,16 +545,22 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         else {
             scopeEnd();
 
-            if (subqueryScopedNestedSetOperations != null &&
-                subqueryScopedNestedSetOperations.get(subquery))
-                data(DATA_NESTED_SET_OPERATIONS, true);
-            else
-                data().remove(DATA_NESTED_SET_OPERATIONS);
+            if (!setOperation)
+                if (subqueryScopedNestedSetOperations != null &&
+                    subqueryScopedNestedSetOperations.get(subquery))
+                    data(DATA_NESTED_SET_OPERATIONS, true);
+                else
+                    data().remove(DATA_NESTED_SET_OPERATIONS);
 
             subquery--;
         }
 
         return (C) this;
+    }
+
+    @Override
+    public final C subquery(boolean s) {
+        return subquery0(s, false);
     }
 
     @Override

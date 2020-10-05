@@ -1169,12 +1169,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     public final void accept0(Context<?> context) {
-        context.scopeStart();
-        for (Table<?> table : getFrom())
-            registerTable(context, table);
-
         if (context.subqueryLevel() == 0)
-            context.data(DATA_TOP_LEVEL_CTE, new TopLevelCte());
+            context.scopeStart().data(DATA_TOP_LEVEL_CTE, new TopLevelCte());
 
         SQLDialect dialect = context.dialect();
         SQLDialect family = context.family();
@@ -1469,8 +1465,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.data(DATA_SELECT_ALIASES, selectAliases);
         }
 
-
-        context.scopeEnd();
+        if (context.subqueryLevel() == 0)
+            context.scopeEnd();
     }
 
     private final void registerTable(Context<?> context, Table<?> table) {
@@ -1478,9 +1474,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             registerTable(context, ((JoinTable) table).lhs);
             registerTable(context, ((JoinTable) table).rhs);
         }
-        else if (table instanceof TableImpl) {
+        else if (table instanceof TableImpl)
             context.scopeRegister(table);
-        }
     }
 
     private final void pushWindow(Context<?> context) {
@@ -1802,6 +1797,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 unionParenthesis(context, '(', alternativeFields != null ? alternativeFields : getSelect().toArray(EMPTY_FIELD), unionParensRequired = unionOpNesting || unionParensRequired(context));
             }
         }
+
+        for (Table<?> table : getFrom())
+            registerTable(context, table);
 
         // SELECT clause
         // -------------
@@ -2731,10 +2729,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean unionParensRequired(SelectQueryImpl<?> s) {
-        return s.orderBy.size() > 0 || s.limit.isApplicable();
+        return s.orderBy.size() > 0 || s.limit.isApplicable() || s.with != null;
     }
 
     private final boolean unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields, boolean parensRequired) {
+        if ('(' == parenthesis)
+            ctx.subquery(true);
+        else if (')' == parenthesis)
+            ctx.subquery(false);
+
         boolean derivedTable =
 
             // [#3579] [#6431] [#7222] Some databases don't support nested set operations at all

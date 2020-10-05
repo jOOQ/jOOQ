@@ -539,8 +539,12 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
                 subqueryScopedNestedSetOperations.set(subquery);
             }
+
+            scopeStart();
         }
         else {
+            scopeEnd();
+
             if (subqueryScopedNestedSetOperations != null &&
                 subqueryScopedNestedSetOperations.get(subquery))
                 data(DATA_NESTED_SET_OPERATIONS, true);

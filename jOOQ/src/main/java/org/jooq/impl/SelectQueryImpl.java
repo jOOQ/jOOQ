@@ -1794,7 +1794,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // [#3676] There might be cases where nested set operations do not
                 //         imply required parentheses in some dialects, but better
                 //         play safe than sorry
-                unionParenthesis(context, '(', alternativeFields != null ? alternativeFields : getSelect().toArray(EMPTY_FIELD), unionParensRequired = unionOpNesting || unionParensRequired(context));
+                unionParenthesis(
+                    context,
+                    '(',
+                    alternativeFields != null ? alternativeFields : getSelect().toArray(EMPTY_FIELD),
+                    derivedTableRequired(context, this),
+                    unionParensRequired = unionOpNesting || unionParensRequired(context)
+                );
             }
         }
 
@@ -2105,12 +2111,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // SET operations like UNION, EXCEPT, INTERSECT
         // --------------------------------------------
         if (unionOpSize > 0) {
-            unionParenthesis(context, ')', null, unionParensRequired);
+            unionParenthesis(context, ')', null, derivedTableRequired(context, this), unionParensRequired);
 
             for (int i = 0; i < unionOpSize; i++) {
                 CombineOperator op = unionOp.get(i);
 
                 for (Select<?> other : union.get(i)) {
+                    boolean derivedTableRequired = derivedTableRequired(context, other);
+
                     context.formatSeparator()
                            .visit(op.toKeyword(family));
 
@@ -2119,14 +2127,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     else
                         context.formatSeparator();
 
-                    unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD), unionParensRequired);
+                    unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD), derivedTableRequired, unionParensRequired);
                     context.visit(other);
-                    unionParenthesis(context, ')', null, unionParensRequired);
+                    unionParenthesis(context, ')', null, derivedTableRequired, unionParensRequired);
                 }
 
                 // [#1658] Close parentheses opened previously
                 if (i < unionOpSize - 1)
-                    unionParenthesis(context, ')', null, unionParensRequired);
+                    unionParenthesis(context, ')', null, derivedTableRequired(context, this), unionParensRequired);
 
                 switch (unionOp.get(i)) {
                     case EXCEPT:        context.end(SELECT_EXCEPT);        break;
@@ -2689,7 +2697,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     private static final Set<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = SQLDialect.supportedBy(SQLITE);
-    private static final Set<SQLDialect> UNION_PARENTHESIS = SQLDialect.supportedBy(DERBY, MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_CTE_IN_UNION      = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect> UNION_PARENTHESIS            = SQLDialect.supportedBy(DERBY, MARIADB, MYSQL);
 
     final boolean hasUnions() {
         return !unionOp.isEmpty();
@@ -2706,6 +2715,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     return true;
 
         return false;
+    }
+
+    private final boolean derivedTableRequired(Context<?> context, Select<?> s1) {
+        SelectQueryImpl<?> s;
+
+        // [#10711] Some derived tables are needed if dialects don't support CTE in union subqueries
+        return NO_SUPPORT_CTE_IN_UNION.contains(context.dialect()) && (s = selectQueryImpl(s1)) != null && s.with != null;
     }
 
     private final boolean unionParensRequired(Context<?> context) {
@@ -2732,17 +2748,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return s.orderBy.size() > 0 || s.limit.isApplicable() || s.with != null;
     }
 
-    private final boolean unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields, boolean parensRequired) {
+    private final boolean unionParenthesis(
+        Context<?> ctx,
+        char parenthesis,
+        Field<?>[] fields,
+        boolean derivedTableRequired,
+        boolean parensRequired
+    ) {
         if ('(' == parenthesis)
             ctx.subquery(true);
         else if (')' == parenthesis)
             ctx.subquery(false);
 
-        boolean derivedTable =
+        derivedTableRequired |= derivedTableRequired
 
             // [#3579] [#6431] [#7222] Some databases don't support nested set operations at all
             //                         because they do not allow wrapping set op subqueries in parentheses
-            NO_SUPPORT_UNION_PARENTHESES.contains(ctx.dialect())
+            || NO_SUPPORT_UNION_PARENTHESES.contains(ctx.dialect())
 
             // [#3579] [#6431] [#7222] Nested set operations aren't supported, but parenthesised
             //                         set op subqueries are.
@@ -2753,7 +2775,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             || TRUE.equals(ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST))
             ;
 
-        parensRequired |= derivedTable;
+        parensRequired |= derivedTableRequired;
 
         if (parensRequired && ')' == parenthesis) {
             ctx.formatIndentEnd()
@@ -2763,7 +2785,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#3579] Nested set operators aren't supported in some databases. Emulate them via derived tables...
         // [#7222] Do this only in the presence of actual nested set operators
         else if (parensRequired && '(' == parenthesis) {
-            if (derivedTable) {
+            if (derivedTableRequired) {
                 ctx.formatNewLine()
                    .visit(K_SELECT).sql(' ');
 
@@ -2803,7 +2825,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         else if (parensRequired && ')' == parenthesis) {
-            if (derivedTable)
+            if (derivedTableRequired)
                 ctx.sql(" x");
         }
 

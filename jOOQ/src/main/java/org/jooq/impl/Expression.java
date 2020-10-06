@@ -889,15 +889,18 @@ final class Expression<T> extends AbstractTransformable<T> {
             if (operator == BIT_XOR && HASH_OP_FOR_BIT_XOR.contains(ctx.dialect()))
                 op = "#";
 
-            accept1(ctx, operator, lhs);
+            // [#10665] Associativity is only given for two operands of the same data type
+            boolean associativity = operator.associative() && lhs.getDataType().equals(rhs.getDataType());
+
+            accept1(ctx, operator, lhs, associativity);
             ctx.sql(' ')
                .sql(op)
                .sql(' ');
-            accept1(ctx, operator, rhs);
+            accept1(ctx, operator, rhs, associativity);
         }
 
-        private static final void accept1(Context<?> ctx, ExpressionOperator operator, Field<?> field) {
-            if (operator.associative() && field instanceof Expression) {
+        private static final void accept1(Context<?> ctx, ExpressionOperator operator, Field<?> field, boolean associativity) {
+            if (associativity && field instanceof Expression) {
                 Expression<?> expr = (Expression<?>) field;
 
                 if (operator == expr.operator) {

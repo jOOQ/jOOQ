@@ -67,6 +67,17 @@ final class DefaultUnwrapperProvider implements UnwrapperProvider {
          */
         private static int              maxUnwrappedStatements  = 256;
 
+        static final boolean isWrapperFor(Wrapper w, Class<?> iface) {
+
+            // [#10692] Some JDBC drivers do not implement this method
+            try {
+                return w.isWrapperFor(iface);
+            }
+            catch (SQLException ignore) {
+                return false;
+            }
+        }
+
         @Override
         public <T> T unwrap(Wrapper wrapper, Class<T> iface) {
             if (wrapper instanceof Connection)

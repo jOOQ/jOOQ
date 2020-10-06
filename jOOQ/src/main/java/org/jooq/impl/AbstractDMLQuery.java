@@ -95,6 +95,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Wrapper;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
@@ -138,6 +139,7 @@ import org.jooq.conf.ExecuteWithoutWhere;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DefaultUnwrapperProvider.DefaultUnwrapper;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
@@ -1160,7 +1162,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
      * {@link BatchedPreparedStatement}, is executed immediately, not batched.
      */
     private final PreparedStatement executeImmediate(PreparedStatement s) throws SQLException {
-        if (s.isWrapperFor(BatchedPreparedStatement.class))
+        if (DefaultUnwrapper.isWrapperFor(s, BatchedPreparedStatement.class))
             s.unwrap(BatchedPreparedStatement.class).setExecuteImmediate(true);
 
         return s;

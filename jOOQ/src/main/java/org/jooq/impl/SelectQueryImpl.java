@@ -1891,7 +1891,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean unionParensRequired(SelectQueryImpl<?> select) {
-        return select.orderBy.size() > 0 || select.limit.isApplicable() && select.with != null;
+        return select.orderBy.size() > 0 || select.limit.isApplicable() || select.with != null;
     }
 
     private final boolean unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields, boolean parensRequired) {

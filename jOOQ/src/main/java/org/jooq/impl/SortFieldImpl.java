@@ -109,6 +109,15 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         return nullsLast;
     }
 
+    @SuppressWarnings("unchecked")
+    final <U> SortField<U> transform(Field<U> newField) {
+        if (newField == field)
+            return (SortFieldImpl<U>) this;
+
+        SortField<U> r = newField.sort(order);
+        return nullsFirst ? r.nullsFirst() : nullsLast ? r.nullsLast() : r;
+    }
+
     @Override
     public final SortField<T> nullsFirst() {
         nullsFirst = true;

@@ -60,11 +60,12 @@ import org.jooq.Statement;
  */
 class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements Collection<T> {
 
-    private static final long serialVersionUID = -2936922742534009564L;
-    final Collection<T>       wrapped;
-    int                       indentSize;
-    Boolean                   qualify;
-    String                    separator;
+    private static final long  serialVersionUID = -2936922742534009564L;
+    final Collection<T>        wrapped;
+    int                        indentSize;
+    Boolean                    qualify;
+    String                     separator;
+    F1<? super T, ? extends T> mapper;
 
     static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
         return new QueryPartCollectionView<>(wrapped);
@@ -86,6 +87,11 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
     QueryPartCollectionView<T> qualify(boolean newQualify) {
         this.qualify = newQualify;
+        return this;
+    }
+
+    QueryPartCollectionView<T> map(F1<? super T, ? extends T> newMapper) {
+        this.mapper = newMapper;
         return this;
     }
 
@@ -140,6 +146,9 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
             for (T part : this) {
                 if (!rendersContent.get(j++))
                     continue;
+
+                if (mapper != null)
+                    part = mapper.apply(part);
 
                 if (k++ > 0) {
 

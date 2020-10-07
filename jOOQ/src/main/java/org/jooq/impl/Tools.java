@@ -1389,6 +1389,23 @@ final class Tools {
         return DSL.field(field.getUnqualifiedName(), field.getDataType());
     }
 
+    static final <T> SortField<T> unqualified(SortField<T> field) {
+        SortFieldImpl<T> i = (SortFieldImpl<T>) field;
+        return i.transform(unqualified(i.getField()));
+    }
+
+    static final SortField<?>[] unqualified(SortField<?>[] fields) {
+        if (fields == null)
+            return null;
+
+        SortField<?>[] result = new SortField[fields.length];
+
+        for (SortField<?> field : fields)
+            result[0] = unqualified(field);
+
+        return result;
+    }
+
     static final Name[] unqualifiedNames(Field<?>[] fields) {
         if (fields == null)
             return null;
@@ -5341,6 +5358,11 @@ final class Tools {
             return ((FieldAlias<T>) field).getAliasedField();
         else
             return null;
+    }
+
+    static final <R extends Record> Table<R> unalias(Table<R> table) {
+        Table<R> result = aliased(table);
+        return result != null ? result : table;
     }
 
     static final <R extends Record> Table<R> aliased(Table<R> table) {

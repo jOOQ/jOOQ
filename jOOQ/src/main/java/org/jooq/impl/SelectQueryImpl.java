@@ -116,6 +116,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
@@ -153,11 +154,13 @@ import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
 import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.unalias;
+import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
@@ -215,6 +218,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectQuery;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -1855,7 +1859,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // The default behaviour
         else {
-            context.visit(getSelectResolveUnsupportedAsterisks(family));
+            context.visit(getSelectResolveUnsupportedAsterisks(context.configuration()));
         }
 
 
@@ -2540,7 +2544,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         Field<?>[] alternativeFields,
         boolean wrapQueryExpressionInDerivedTable,
         boolean wrapQueryExpressionBodyInDerivedTable,
-        SortFieldList actualOrderBy,
+        QueryPartListView<SortField<?>> actualOrderBy,
         Limit actualLimit
     ) {
 
@@ -2567,6 +2571,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
                 ctx.sql(' ').visit(K_BY).separatorRequired(true);
+
+
+
+
+
+
+
+
 
 
 
@@ -3172,7 +3184,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final List<Field<?>> getSelect() {
-        return getSelectResolveAllAsterisks(configuration() != null ? configuration().family() : SQLDialect.DEFAULT);
+        return getSelectResolveAllAsterisks(Tools.configuration(configuration()));
     }
 
     private final Collection<? extends Field<?>> subtract(List<Field<?>> left, List<Field<?>> right) {
@@ -3209,8 +3221,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * The select list with resolved explicit asterisks (if they contain the
      * except clause and that is not supported).
      */
-    final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveUnsupportedAsterisks(SQLDialect family) {
-        return getSelectResolveSomeAsterisks0(family, false);
+    final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveUnsupportedAsterisks(Configuration c) {
+        return getSelectResolveSomeAsterisks0(c, false);
     }
 
     /**
@@ -3218,20 +3230,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * except clause and that is not supported).
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    final SelectFieldList<Field<?>> getSelectResolveAllAsterisks(SQLDialect family) {
-        return (SelectFieldList) getSelectResolveSomeAsterisks0(family, true);
+    final SelectFieldList<Field<?>> getSelectResolveAllAsterisks(Configuration c) {
+        return (SelectFieldList) getSelectResolveSomeAsterisks0(c, true);
     }
 
-    private final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveSomeAsterisks0(SQLDialect family, boolean resolveSupported) {
+    private final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveSomeAsterisks0(Configuration c, boolean resolveSupported) {
         SelectFieldList<SelectFieldOrAsterisk> result = new SelectFieldList<>();
 
         // [#7921] Only H2 supports the * EXCEPT (..) syntax
-        boolean resolveExcept = resolveSupported || family != H2;
+        boolean resolveExcept = resolveSupported || c.family() != H2;
 
         // [#7921] TODO Find a better, more efficient way to resolve asterisks
         for (SelectFieldOrAsterisk f : getSelectResolveImplicitAsterisks())
             if (f instanceof Field<?>)
-                result.add(f);
+                result.add(getResolveProjection(c, (Field<?>) f));
             else if (f instanceof QualifiedAsterisk)
                 if (((QualifiedAsteriskImpl) f).fields.isEmpty())
                     if (resolveSupported)
@@ -3256,6 +3268,26 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 throw new AssertionError("Type not supported: " + f);
 
         return result;
+    }
+
+    private final Field<?> getResolveProjection(Configuration c, Field<?> f) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return f;
     }
 
     private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result) {

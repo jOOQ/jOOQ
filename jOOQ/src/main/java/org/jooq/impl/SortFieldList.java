@@ -57,7 +57,6 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
     private static final long serialVersionUID = -1825164005148183725L;
 
     SortFieldList() {
-        // Java 6's compiler seems to be unable to infer this type
         this(Collections.<SortField<?>>emptyList());
     }
 

@@ -2539,11 +2539,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     private final void toSQLOrderBy(
-        Context<?> ctx,
-        Field<?>[] originalFields,
-        Field<?>[] alternativeFields,
-        boolean wrapQueryExpressionInDerivedTable,
-        boolean wrapQueryExpressionBodyInDerivedTable,
+        final Context<?> ctx,
+        final Field<?>[] originalFields,
+        final Field<?>[] alternativeFields,
+        final boolean wrapQueryExpressionInDerivedTable,
+        final boolean wrapQueryExpressionBodyInDerivedTable,
         QueryPartListView<SortField<?>> actualOrderBy,
         Limit actualLimit
     ) {

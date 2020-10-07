@@ -5487,6 +5487,12 @@ final class Tools {
         return array == null || array.length == 0;
     }
 
+    static final boolean nonReplacingEmbeddable(Field<?> field) {
+        return field instanceof EmbeddableTableField
+             ? !((EmbeddableTableField<?, ?>) field).replacesFields
+             : false;
+    }
+
     @SuppressWarnings("unchecked")
     static final Class<? extends AbstractRecord> embeddedRecordType(Field<?> field) {
         return field instanceof EmbeddableTableField

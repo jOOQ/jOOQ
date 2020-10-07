@@ -50,6 +50,7 @@ import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.ConstraintDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
+import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -124,8 +125,18 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     public final String getFullJavaIdentifier(Definition definition) {
         StringBuilder sb = new StringBuilder();
 
+        // Embeddable identifiers are represented by their referencing embeddable columns
+        if (definition instanceof EmbeddableDefinition) {
+            EmbeddableDefinition e = ((EmbeddableDefinition) definition);
+
+            if (getInstanceFields())
+                sb.append(getFullJavaIdentifier(e.getReferencingTable()));
+            else
+                sb.append(getFullJavaClassName(e.getReferencingTable()));
+        }
+
         // Columns
-        if (definition instanceof ColumnDefinition) {
+        else if (definition instanceof ColumnDefinition) {
             TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
 
             if (getInstanceFields())

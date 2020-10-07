@@ -83,4 +83,26 @@ public class DefaultEmbeddableColumnDefinition
     public DataTypeDefinition getDefinedType() {
         return getReferencingColumn().getDefinedType();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " (referenced by " + getReferencingColumn() + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj))
+            return false;
+
+        if (!(obj instanceof EmbeddableColumnDefinition))
+            return false;
+
+        EmbeddableColumnDefinition other = (EmbeddableColumnDefinition) obj;
+        return getReferencingColumn().equals(other.getReferencingColumn());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

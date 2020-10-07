@@ -43,8 +43,10 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.indexOrFail;
 
 import java.sql.SQLWarning;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -400,6 +402,8 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
     // -------------------------------------------------------------------------
 
     final void add(Field<?> f) {
+
+        // TODO: [#10481] Can we replace our internal Field<?>[] by an ArrayList<Field<?>>?
         Field<?>[] result = new Field[fields.length + 1];
 
         System.arraycopy(fields, 0, result, 0, fields.length);
@@ -407,6 +411,30 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
 
         fields = result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: [#8040] An abstraction over two possible return types.

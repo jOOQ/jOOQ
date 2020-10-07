@@ -71,6 +71,11 @@ implements TableField<R, E> {
         this.replacesFields = replacesFields;
         this.table = table;
         this.fields = fields;
+
+
+
+
+
     }
 
     // -------------------------------------------------------------------------

@@ -261,12 +261,12 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return getQualifiedName();
     }
 
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
 
@@ -279,10 +279,9 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     @Override
-    public final int hashCode() {
-        if (hashCode == null) {
+    public int hashCode() {
+        if (hashCode == null)
             hashCode = getQualifiedName().hashCode();
-        }
 
         return hashCode;
     }

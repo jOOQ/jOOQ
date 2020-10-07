@@ -85,7 +85,8 @@ public class DefaultEmbeddableDefinition
 
 
 
-        log.info("Commercial feature", "Embeddables replacing fields is a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+        if (replacesFields)
+            log.info("Commercial feature", "Embeddables replacing fields is a commercial only feature. Please upgrade to the jOOQ Professional Edition");
 
         for (int i = 0; i < referencingColumns.size(); i++)
             embeddableColumns.add(new DefaultEmbeddableColumnDefinition(this, definingColumnNames.get(i), referencingColumns.get(i), i + 1));
@@ -173,5 +174,28 @@ public class DefaultEmbeddableDefinition
     @Override
     public final boolean replacesFields() {
         return replacesFields;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " (referenced by " + getReferencingTable() + " " + getColumns() + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj))
+            return false;
+
+        if (!(obj instanceof EmbeddableDefinition))
+            return false;
+
+        EmbeddableDefinition other = (EmbeddableDefinition) obj;
+        return getReferencingTable().equals(other.getReferencingTable())
+            && getColumns().equals(other.getColumns());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

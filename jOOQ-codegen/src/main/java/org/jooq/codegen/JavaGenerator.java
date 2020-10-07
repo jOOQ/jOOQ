@@ -2033,7 +2033,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             for (Definition column : columns) {
-                if (column instanceof EmbeddableDefinition)
+                if (column instanceof EmbeddableDefinition) {
 
                     // TODO: Setters of X properties cannot accept X? in Kotlin: https://twitter.com/lukaseder/status/1296371561214234624
                     if (kotlin)
@@ -2042,10 +2042,25 @@ public class JavaGenerator extends AbstractGenerator {
                             getStrategy().getJavaMemberName(column, Mode.POJO),
                             out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
                             Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
+
+                    // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
+                    else if (scala)
+                        out.println("this.%s(%s)", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.DEFAULT));
                     else
-                        out.println("%s(%s)%s", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.DEFAULT), semicolon);
-                else
-                    out.println("%s(%s)%s", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.POJO), semicolon);
+                        out.println("%s(%s);", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.DEFAULT));
+                }
+                else {
+                    if (kotlin)
+                        out.println("this.%s = %s",
+                            getStrategy().getJavaMemberName(column, Mode.POJO),
+                            getStrategy().getJavaMemberName(column, Mode.POJO));
+
+                    // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
+                    else if (scala)
+                        out.println("this.%s(%s)", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.POJO));
+                    else
+                        out.println("%s(%s);", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.POJO));
+                }
             }
 
             out.println("}");
@@ -2304,7 +2319,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("def %s: %s = get(%s).asInstanceOf[%s]", getter, type, index, type);
         }
         else if (kotlin) {
-            out.tab(1).println("get() = get(%s) as %s?", index, type);
+            out.tab(1).println("get() = get(%s) as %s%s", index, type, column instanceof EmbeddableDefinition ? "" : "?");
         }
         else {
             out.overrideIf(override);
@@ -2349,7 +2364,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 out.println("get(%s).asInstanceOf[%s]", index, type);
             else if (kotlin)
-                out.tab(1).println("get(%s) as %s?", index, type);
+                out.tab(1).println("get(%s) as %s", index, type);
             else {
 
                 // [#6705] Avoid generating code with a redundant (Object) cast

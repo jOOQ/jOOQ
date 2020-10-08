@@ -43,7 +43,6 @@ import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import org.jooq.Context;
-import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -69,7 +68,9 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @SuppressWarnings({ "serial", "unchecked", "rawtypes" })
     RowField(final ROW row, Name as) {
-        super(as, (DataType) SQLDataType.RECORD, CommentImpl.NO_COMMENT, binding(new Converter<Object, REC>() {
+        super(as, (DataType) SQLDataType.RECORD, CommentImpl.NO_COMMENT, binding(new AbstractConverter<Object, REC>(
+                Object.class, (Class<REC>) RecordImpl.class
+        ) {
             @Override
             public REC from(final Object t) {
                 // So far, this is only supported for PostgreSQL
@@ -79,16 +80,6 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
             @Override
             public Object to(REC u) {
                 throw new UnsupportedOperationException("Converting from nested records to bind values is not yet supported");
-            }
-
-            @Override
-            public Class<Object> fromType() {
-                return Object.class;
-            }
-
-            @Override
-            public Class<REC> toType() {
-                return (Class<REC>) RecordImpl.class;
             }
         }));
 

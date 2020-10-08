@@ -40,6 +40,7 @@ package org.jooq;
 import java.io.Serializable;
 import java.util.function.Function;
 
+import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -149,7 +150,7 @@ public interface Converter<T, U> extends Serializable {
         Function<? super T, ? extends U> from,
         Function<? super U, ? extends T> to
     ) {
-        return new Converter<T, U>() {
+        return new AbstractConverter<T, U>(fromType, toType) {
 
             /**
              * Generated UID
@@ -164,21 +165,6 @@ public interface Converter<T, U> extends Serializable {
             @Override
             public final T to(U u) {
                 return to.apply(u);
-            }
-
-            @Override
-            public final Class<T> fromType() {
-                return fromType;
-            }
-
-            @Override
-            public final Class<U> toType() {
-                return toType;
-            }
-
-            @Override
-            public String toString() {
-                return "Converter [ " + fromType.getName() + " -> " + toType.getName() + " ]";
             }
         };
     }

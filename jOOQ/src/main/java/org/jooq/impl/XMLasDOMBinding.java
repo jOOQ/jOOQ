@@ -77,7 +77,7 @@ public class XMLasDOMBinding extends AbstractVarcharBinding<Node> {
     private final Converter<Object, Node> converter;
 
     public XMLasDOMBinding() {
-        this.converter = new Converter<Object, Node>() {
+        this.converter = new AbstractConverter<Object, Node>(Object.class, Node.class) {
 
             /**
              * Generated UID
@@ -92,16 +92,6 @@ public class XMLasDOMBinding extends AbstractVarcharBinding<Node> {
             @Override
             public Object to(Node u) {
                 return u == null ? null : XMLasDOMBinding.toString(u);
-            }
-
-            @Override
-            public Class<Object> fromType() {
-                return Object.class;
-            }
-
-            @Override
-            public Class<Node> toType() {
-                return Node.class;
             }
         };
     }

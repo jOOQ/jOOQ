@@ -37,6 +37,8 @@
  */
 package org.jooq.tools.jdbc;
 
+import static org.jooq.SQLDialect.DEFAULT;
+
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -56,6 +58,8 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
+
+// ...
 
 /**
  * A mock connection.
@@ -354,6 +358,16 @@ public class MockConnection extends JDBC41Connection implements Connection {
     }
 
     // -------------------------------------------------------------------------
+    // XXX: Object creation
+    // -------------------------------------------------------------------------
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
+        return new MockArray<>(DEFAULT, elements, (Class<? extends Object[]>) (elements == null ? Object[].class : elements.getClass()));
+    }
+
+    // -------------------------------------------------------------------------
     // XXX: Unwrapping
     // -------------------------------------------------------------------------
 
@@ -370,6 +384,19 @@ public class MockConnection extends JDBC41Connection implements Connection {
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         return iface.isInstance(this);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Vendor specific driver compatibility operations
+    // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: Unsupported operations
@@ -402,11 +429,6 @@ public class MockConnection extends JDBC41Connection implements Connection {
 
     @Override
     public SQLXML createSQLXML() throws SQLException {
-        throw new SQLFeatureNotSupportedException("Unsupported Operation");
-    }
-
-    @Override
-    public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
         throw new SQLFeatureNotSupportedException("Unsupported Operation");
     }
 

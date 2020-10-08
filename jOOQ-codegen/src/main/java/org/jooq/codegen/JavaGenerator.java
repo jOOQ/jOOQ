@@ -1635,13 +1635,11 @@ public class JavaGenerator extends AbstractGenerator {
                     printDeprecationIfUnknownType(out, colTypeFull);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                        out.println("override def field%s: %s[%s] = %s.fields(%s.%s):_*.asInstanceOf[%s [%s] ]",
+                        out.println("override def field%s: %s[%s] = field(%s):_*.asInstanceOf[%s [%s] ]",
                             i,
                             Field.class,
                             colType,
-                            Internal.class,
-                            out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
-                            getStrategy().getJavaIdentifier(tableUdtOrEmbeddable),
+                            i - 1,
                             Field.class,
                             colType
                         );
@@ -1652,18 +1650,16 @@ public class JavaGenerator extends AbstractGenerator {
                     printDeprecationIfUnknownType(out, colTypeFull);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                        out.println("override fun field%s(): %s<%s?> = %s.fields(%s.%s) as %s<%s>",
+                        out.println("override fun field%s(): %s<%s?> = field(%s) as %s<%s?>",
                             i,
                             Field.class,
                             colType,
-                            Internal.class,
-                            out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
-                            getStrategy().getJavaIdentifier(tableUdtOrEmbeddable),
+                            i - 1,
                             Field.class,
                             colType
                         );
                     else
-                        out.println("override fun field%s(): %s<%s?> = %s", i, Field.class, colType, colIdentifier);
+                        out.println("override fun field%s(): %s<%s%s> = %s", i, Field.class, colType, column instanceof EmbeddableDefinition ? "" : "?", colIdentifier);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -1763,7 +1759,7 @@ public class JavaGenerator extends AbstractGenerator {
                 else if (kotlin) {
                     out.println();
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("override fun value%s(value: %s?): %s {", i, colType, className);
+                    out.println("override fun value%s(value: %s%s): %s {", i, colType, column instanceof EmbeddableDefinition ? "" : "?", className);
                     out.println("%s = value", colMember);
                     out.println("return this");
                     out.println("}");
@@ -1795,7 +1791,7 @@ public class JavaGenerator extends AbstractGenerator {
                     calls.add("this.value" + i + "(value" + i + ")");
                 }
                 else if (kotlin) {
-                    arguments.add("value" + i + ": " + colType + "?");
+                    arguments.add("value" + i + ": " + colType + (column instanceof EmbeddableDefinition ? "" : "?"));
                     calls.add("this.value" + i + "(value" + i + ")");
                 }
                 else {
@@ -2464,7 +2460,7 @@ public class JavaGenerator extends AbstractGenerator {
             result.append(separator);
             result.append(getJavaTypeRef(column, out));
 
-            if (kotlin)
+            if (kotlin && !(column instanceof EmbeddableDefinition))
                 result.append("?");
 
             separator = ", ";
@@ -5757,9 +5753,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#7809] fieldsRow()
         // [#10481] Use the types from replaced embeddables if applicable
-        List<Definition> columnsOrReplacingEmbeddables = embeddablesOrColumns(table);
-        int degree = columnsOrReplacingEmbeddables.size();
-        String rowType = refRowType(out, columnsOrReplacingEmbeddables);
+        List<Definition> replacingEmbeddablesAndUnreplacedColumns = replacingEmbeddablesAndUnreplacedColumns(table);
+        int degree = replacingEmbeddablesAndUnreplacedColumns.size();
+        String rowType = refRowType(out, replacingEmbeddablesAndUnreplacedColumns);
 
         if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
             final String rowNType = out.ref(Row.class.getName() + degree);

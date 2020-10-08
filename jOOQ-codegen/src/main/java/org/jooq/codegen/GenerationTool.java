@@ -565,9 +565,9 @@ public class GenerationTool {
             database.setConfiguredForcedTypes(d.getForcedTypes());
             database.setConfiguredEmbeddables(d.getEmbeddables());
             database.setConfiguredSyntheticObjects(d.getSyntheticObjects());
-            database.setEmbeddablePrimaryKeys(TRUE.equals(d.isEmbeddablePrimaryKeys()));
-            database.setEmbeddableUniqueKeys(TRUE.equals(d.isEmbeddableUniqueKeys()));
-            database.setEmbeddableDomains(TRUE.equals(d.isEmbeddableDomains()));
+            database.setEmbeddablePrimaryKeys(d.getEmbeddablePrimaryKeys());
+            database.setEmbeddableUniqueKeys(d.getEmbeddableUniqueKeys());
+            database.setEmbeddableDomains(d.getEmbeddableDomains());
             database.setLogSlowQueriesAfterSeconds(defaultIfNull(d.getLogSlowQueriesAfterSeconds(), 5));
             database.setLogSlowResultsAfterSeconds(defaultIfNull(d.getLogSlowResultsAfterSeconds(), 5));
 

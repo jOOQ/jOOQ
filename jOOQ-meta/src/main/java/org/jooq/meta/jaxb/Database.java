@@ -136,12 +136,12 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String orderProvider = "";
-    @XmlElement(defaultValue = "false")
-    protected Boolean embeddablePrimaryKeys = false;
-    @XmlElement(defaultValue = "false")
-    protected Boolean embeddableUniqueKeys = false;
-    @XmlElement(defaultValue = "false")
-    protected Boolean embeddableDomains = false;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String embeddablePrimaryKeys;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String embeddableUniqueKeys;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String embeddableDomains;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
@@ -1405,74 +1405,50 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
-     * Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.
+     * A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
      */
-    public Boolean isEmbeddablePrimaryKeys() {
+    public String getEmbeddablePrimaryKeys() {
         return embeddablePrimaryKeys;
     }
 
     /**
-     * Sets the value of the embeddablePrimaryKeys property.
+     * A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
      */
-    public void setEmbeddablePrimaryKeys(Boolean value) {
+    public void setEmbeddablePrimaryKeys(String value) {
         this.embeddablePrimaryKeys = value;
     }
 
     /**
-     * Whether wrapper types should be generated for unique key columns, and for their referencing foreign keys.
+     * A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
      */
-    public Boolean isEmbeddableUniqueKeys() {
+    public String getEmbeddableUniqueKeys() {
         return embeddableUniqueKeys;
     }
 
     /**
-     * Sets the value of the embeddableUniqueKeys property.
+     * A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
      */
-    public void setEmbeddableUniqueKeys(Boolean value) {
+    public void setEmbeddableUniqueKeys(String value) {
         this.embeddableUniqueKeys = value;
     }
 
     /**
-     * Whether wrapper types should be generated for domain types.
+     * A regular expression matching all domain type declarations for which wrapper types should be generated.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
      */
-    public Boolean isEmbeddableDomains() {
+    public String getEmbeddableDomains() {
         return embeddableDomains;
     }
 
     /**
-     * Sets the value of the embeddableDomains property.
+     * A regular expression matching all domain type declarations for which wrapper types should be generated.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
      */
-    public void setEmbeddableDomains(Boolean value) {
+    public void setEmbeddableDomains(String value) {
         this.embeddableDomains = value;
     }
 
@@ -2124,17 +2100,29 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
-    public Database withEmbeddablePrimaryKeys(Boolean value) {
+    /**
+     * A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+     * 
+     */
+    public Database withEmbeddablePrimaryKeys(String value) {
         setEmbeddablePrimaryKeys(value);
         return this;
     }
 
-    public Database withEmbeddableUniqueKeys(Boolean value) {
+    /**
+     * A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+     * 
+     */
+    public Database withEmbeddableUniqueKeys(String value) {
         setEmbeddableUniqueKeys(value);
         return this;
     }
 
-    public Database withEmbeddableDomains(Boolean value) {
+    /**
+     * A regular expression matching all domain type declarations for which wrapper types should be generated.
+     * 
+     */
+    public Database withEmbeddableDomains(String value) {
         setEmbeddableDomains(value);
         return this;
     }

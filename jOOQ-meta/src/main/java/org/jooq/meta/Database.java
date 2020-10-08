@@ -956,34 +956,34 @@ public interface Database extends AutoCloseable {
     List<EmbeddableDefinitionType> getUnusedEmbeddables();
 
     /**
-     * Whether embeddable types for primary keys should be generated.
+     * A regular expression matching primary keys for which embeddable types should be generated.
      */
-    boolean embeddablePrimaryKeys();
+    String embeddablePrimaryKeys();
 
     /**
-     * Whether embeddable types for primary keys should be generated.
+     * A regular expression matching primary keys for which embeddable types should be generated.
      */
-    void setEmbeddablePrimaryKeys(boolean embeddablePrimaryKeys);
+    void setEmbeddablePrimaryKeys(String embeddablePrimaryKeys);
 
     /**
-     * Whether embeddable types for unique keys should be generated.
+     * A regular expression matching unique keys for which embeddable types should be generated.
      */
-    boolean embeddableUniqueKeys();
+    String embeddableUniqueKeys();
 
     /**
-     * Whether embeddable types for unique keys should be generated.
+     * A regular expression matching unique keys for which embeddable types should be generated.
      */
-    void setEmbeddableUniqueKeys(boolean embeddableUniqueKeys);
+    void setEmbeddableUniqueKeys(String embeddableUniqueKeys);
 
     /**
-     * Whether embeddable types for domains should be generated.
+     * A regular expression matching domain type definitions for which embeddable types should be generated.
      */
-    boolean embeddableDomains();
+    String embeddableDomains();
 
     /**
-     * Whether embeddable types for domains should be generated.
+     * A regular expression matching domain type definitions for which embeddable types should be generated.
      */
-    void setEmbeddableDomains(boolean embeddableDomains);
+    void setEmbeddableDomains(String embeddableDomains);
 
     /**
      * Configure the synthetic objects.

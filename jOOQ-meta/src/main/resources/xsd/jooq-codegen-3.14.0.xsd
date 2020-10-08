@@ -849,16 +849,16 @@ This comparator can be used to influence the order of any object that is produce
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure embeddable types.]]></jxb:javadoc></jxb:property></appinfo></annotation>      
       </element>
             
-      <element name="embeddablePrimaryKeys" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="embeddablePrimaryKeys" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="embeddableUniqueKeys" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether wrapper types should be generated for unique key columns, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="embeddableUniqueKeys" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="embeddableDomains" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether wrapper types should be generated for domain types.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="embeddableDomains" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all domain type declarations for which wrapper types should be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">

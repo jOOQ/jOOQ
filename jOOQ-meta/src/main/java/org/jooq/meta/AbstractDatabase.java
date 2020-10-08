@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
+import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
 import java.io.IOException;
@@ -162,9 +163,9 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          forceIntegerTypesOnZeroScaleDecimals = true;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
-    private boolean                                                          embeddablePrimaryKeys                = false;
-    private boolean                                                          embeddableUniqueKeys                 = false;
-    private boolean                                                          embeddableDomains                    = false;
+    private String                                                           embeddablePrimaryKeys                = null;
+    private String                                                           embeddableUniqueKeys                 = null;
+    private String                                                           embeddableDomains                    = null;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
@@ -1852,51 +1853,51 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public boolean embeddablePrimaryKeys() {
+    public String embeddablePrimaryKeys() {
         return embeddablePrimaryKeys;
     }
 
     @SuppressWarnings("unused")
     @Override
-    public void setEmbeddablePrimaryKeys(boolean embeddablePrimaryKeys) {
+    public void setEmbeddablePrimaryKeys(String embeddablePrimaryKeys) {
 
 
 
-        if (embeddablePrimaryKeys)
+        if (!isBlank(embeddablePrimaryKeys))
             log.info("Commercial feature", "Embeddable primary and unique keys are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
 
         this.embeddablePrimaryKeys = embeddablePrimaryKeys;
     }
 
     @Override
-    public boolean embeddableUniqueKeys() {
+    public String embeddableUniqueKeys() {
         return embeddableUniqueKeys;
     }
 
     @SuppressWarnings("unused")
     @Override
-    public void setEmbeddableUniqueKeys(boolean embeddableUniqueKeys) {
+    public void setEmbeddableUniqueKeys(String embeddableUniqueKeys) {
 
 
 
-        if (embeddableUniqueKeys)
+        if (!isBlank(embeddableUniqueKeys))
             log.info("Commercial feature", "Embeddable primary and unique keys are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
 
         this.embeddableUniqueKeys = embeddableUniqueKeys;
     }
 
     @Override
-    public boolean embeddableDomains() {
+    public String embeddableDomains() {
         return embeddableDomains;
     }
 
     @SuppressWarnings("unused")
     @Override
-    public void setEmbeddableDomains(boolean embeddableDomains) {
+    public void setEmbeddableDomains(String embeddableDomains) {
 
 
 
-        if (embeddableDomains)
+        if (!isBlank(embeddableDomains))
             log.info("Commercial feature", "Embeddable domains are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
 
         this.embeddableDomains = embeddableDomains;
@@ -2016,6 +2017,8 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
         }
+
+
 
 
 

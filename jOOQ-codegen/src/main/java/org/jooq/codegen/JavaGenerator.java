@@ -1635,7 +1635,7 @@ public class JavaGenerator extends AbstractGenerator {
                     printDeprecationIfUnknownType(out, colTypeFull);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                        out.println("override def field%s: %s[%s] = field(%s):_*.asInstanceOf[%s [%s] ]",
+                        out.println("override def field%s: %s[%s] = field(%s).asInstanceOf[%s [%s] ]",
                             i,
                             Field.class,
                             colType,

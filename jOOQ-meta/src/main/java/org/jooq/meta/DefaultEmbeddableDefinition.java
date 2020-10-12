@@ -80,13 +80,16 @@ public class DefaultEmbeddableDefinition
         this.referencingComment = referencingComment;
         this.referencingTable = referencingTable;
         this.embeddableColumns = new ArrayList<>();
-        this.replacesFields = replacesFields;
 
 
 
 
-        if (replacesFields)
+        if (replacesFields) {
             log.info("Commercial feature", "Embeddables replacing fields is a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+            replacesFields = false;
+        }
+
+        this.replacesFields = replacesFields;
 
         for (int i = 0; i < referencingColumns.size(); i++)
             embeddableColumns.add(new DefaultEmbeddableColumnDefinition(this, definingColumnNames.get(i), referencingColumns.get(i), i + 1));

@@ -40,6 +40,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
@@ -48,6 +49,7 @@ import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_MERGE;
+import static org.jooq.impl.Names.N_JSON_QUOTE;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
@@ -91,7 +93,7 @@ implements JSONArrayAggOrderByStep<J> {
             case MYSQL: {
                 // Workaround for https://jira.mariadb.org/browse/MDEV-21912,
                 // https://jira.mariadb.org/browse/MDEV-21914, and other issues
-                ctx.visit(N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(groupConcatEmulation()).sql(')');
+                ctx.visit(N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(groupConcatEmulation(ctx)).sql(')');
                 break;
             }
 
@@ -125,8 +127,26 @@ implements JSONArrayAggOrderByStep<J> {
         }
     }
 
-    private final Field<?> groupConcatEmulation() {
-        return DSL.concat(inline('['), groupConcatEmulationWithoutArrayWrappers(arguments.get(0), withinGroupOrderBy), inline(']'));
+    @SuppressWarnings("unchecked")
+    private final Field<?> groupConcatEmulation(Context<?> ctx) {
+        Field<?> arg = arguments.get(0);
+
+        if (arg.getDataType().isString()) {
+            switch (ctx.family()) {
+                case MARIADB:
+                case MYSQL:
+                    arg = function(N_JSON_QUOTE, getDataType(), arg);
+                    break;
+
+
+
+
+
+
+            }
+        }
+
+        return DSL.concat(inline('['), groupConcatEmulationWithoutArrayWrappers(arg, withinGroupOrderBy), inline(']'));
     }
 
     static final Field<?> groupConcatEmulationWithoutArrayWrappers(Field<?> field, SortFieldList orderBy) {

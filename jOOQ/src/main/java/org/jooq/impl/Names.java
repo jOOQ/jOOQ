@@ -138,6 +138,7 @@ final class Names {
     static final Name N_JSON_OBJECT            = unquotedName("json_object");
     static final Name N_JSON_OBJECT_AGG        = unquotedName("json_object_agg");
     static final Name N_JSON_OBJECTAGG         = unquotedName("json_objectagg");
+    static final Name N_JSON_QUOTE             = unquotedName("json_quote");
     static final Name N_JSON_TABLE             = unquotedName("json_table");
     static final Name N_JSON_VALUE             = unquotedName("json_value");
     static final Name N_JSONB_AGG              = unquotedName("jsonb_agg");

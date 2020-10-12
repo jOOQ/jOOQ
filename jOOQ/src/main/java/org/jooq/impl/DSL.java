@@ -20625,7 +20625,21 @@ public class DSL {
     }
 
     /**
-     * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
+     * <p>
+     * This is the same as calling {@link #jsonEntry(String, Field)} with
+     * {@link Field#getName()} as a key.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static <T> JSONEntry<T> jsonEntry(Field<T> value) {
+        return jsonEntry(value.getName(), value);
+    }
+
+    /**
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
@@ -20634,7 +20648,8 @@ public class DSL {
     }
 
     /**
-     * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
@@ -20665,6 +20680,24 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSON> jsonObject() {
+        return jsonObject(Tools.EMPTY_JSONENTRY);
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
+        return jsonObject(Tools.jsonEntries(entries));
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
         return jsonObject(Arrays.asList(entries));
     }
@@ -20676,6 +20709,18 @@ public class DSL {
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSON, entries);
+    }
+
+    /**
+     * The JSONB object constructor.
+     * <p>
+     * This is the same as calling {@link #jsonEntry(String, Field)} with
+     * {@link Field#getName()} as a key.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
+        return jsonbObject(Tools.jsonEntries(entries));
     }
 
     /**
@@ -20716,6 +20761,18 @@ public class DSL {
 
     /**
      * The JSON object aggregate function.
+     * <p>
+     * This is the same as calling {@link #jsonEntry(String, Field)} with
+     * {@link Field#getName()} as a key.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<?> value) {
+        return jsonObjectAgg(jsonEntry(value));
+    }
+
+    /**
+     * The JSON object aggregate function.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
@@ -20739,6 +20796,18 @@ public class DSL {
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSON, entry);
+    }
+
+    /**
+     * The JSONB object aggregate function.
+     * <p>
+     * This is the same as calling {@link #jsonEntry(String, Field)} with
+     * {@link Field#getName()} as a key.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<?> field) {
+        return jsonbObjectAgg(jsonEntry(field));
     }
 
     /**

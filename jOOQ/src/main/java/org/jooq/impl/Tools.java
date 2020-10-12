@@ -93,6 +93,7 @@ import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
+import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafeDataType;
@@ -242,6 +243,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.JSONEntry;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
@@ -317,6 +319,7 @@ final class Tools {
     static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER         = {};
     static final Field<?>[]                 EMPTY_FIELD                    = {};
     static final int[]                      EMPTY_INT                      = {};
+    static final JSONEntry<?>[]             EMPTY_JSONENTRY                = {};
     static final Name[]                     EMPTY_NAME                     = {};
     static final Param<?>[]                 EMPTY_PARAM                    = {};
     static final OrderField<?>[]            EMPTY_ORDERFIELD               = {};
@@ -2072,6 +2075,17 @@ final class Tools {
 
         if (result < 0)
             throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in RecordType " + row);
+
+        return result;
+    }
+
+    static final JSONEntry<?>[] jsonEntries(Field<?>... fields) {
+        if (fields == null)
+            return null;
+
+        JSONEntry<?>[] result = new JSONEntry[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            result[i] = jsonEntry(fields[i]);
 
         return result;
     }

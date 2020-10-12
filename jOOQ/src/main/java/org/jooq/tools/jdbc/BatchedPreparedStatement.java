@@ -58,6 +58,7 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
     private static final JooqLogger log = JooqLogger.getLogger(BatchedPreparedStatement.class);
     int                             batches;
     boolean                         executeImmediate;
+    boolean                         getMoreResults = true;
 
     public BatchedPreparedStatement(BatchedConnection connection, PreparedStatement delegate) {
         super(delegate, connection);
@@ -79,20 +80,29 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
         batches = 0;
     }
 
+    private void resetMoreResults() {
+        getMoreResults = true;
+    }
+
     private void logExecuteImmediate() throws SQLException {
         if (log.isDebugEnabled())
             log.debug("BatchedStatement", "Skipped batching statement: " + getBatchedConnection().lastSQL);
+
+        resetMoreResults();
     }
 
     private void logBatch() throws SQLException {
         if (log.isDebugEnabled())
             log.debug("BatchedStatement", "Batched " + batches + " times: " + getBatchedConnection().lastSQL);
+
+        resetMoreResults();
     }
 
     private void logExecution() throws SQLException {
         if (log.isDebugEnabled())
             log.debug("BatchedStatement", "Executed with " + batches + " batched items: " + getBatchedConnection().lastSQL);
 
+        resetMoreResults();
         resetBatches();
     }
 
@@ -129,6 +139,8 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     @Override
     public boolean execute() throws SQLException {
+        resetMoreResults();
+
         if (executeImmediate) {
             logExecuteImmediate();
             return super.execute();
@@ -141,7 +153,7 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     @Override
     public int getUpdateCount() throws SQLException {
-        return 0;
+        return getMoreResults ? 0 : -1;
     }
 
 
@@ -160,6 +172,20 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     @Override
     public void close() throws SQLException {}
+
+    // -------------------------------------------------------------------------
+    // XXX: Multi result set features
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean getMoreResults() throws SQLException {
+        return getMoreResults = false;
+    }
+
+    @Override
+    public boolean getMoreResults(int current) throws SQLException {
+        return getMoreResults();
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Batch features
@@ -280,8 +306,10 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     @Override
     public ResultSet executeQuery() throws SQLException {
-        if (batches == 0)
+        if (batches == 0) {
+            logExecuteImmediate();
             return super.executeQuery();
+        }
         else
             throw new UnsupportedOperationException("Cannot batch result queries");
     }
@@ -293,16 +321,6 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
 
     @Override
     public ResultSet getGeneratedKeys() throws SQLException {
-        throw new UnsupportedOperationException("Cannot batch result queries");
-    }
-
-    @Override
-    public boolean getMoreResults() throws SQLException {
-        throw new UnsupportedOperationException("Cannot batch result queries");
-    }
-
-    @Override
-    public boolean getMoreResults(int current) throws SQLException {
         throw new UnsupportedOperationException("Cannot batch result queries");
     }
 }

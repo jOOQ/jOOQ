@@ -35,7 +35,6 @@
         <wildfly-password>admin</wildfly-password>
 
         <!-- other plugin versions -->
-        <version.compiler.plugin>3.7.0</version.compiler.plugin>
         <version.surefire.plugin>2.10</version.surefire.plugin>
         <version.war.plugin>2.1.1</version.war.plugin>
     </properties>
@@ -125,7 +124,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.compiler.plugin}</version>
                 <configuration>
 
 
@@ -163,7 +161,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>
-                <version>1.5</version>
 
                 <configuration>
                     <skip>${maven.test.skip}</skip>

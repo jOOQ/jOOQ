@@ -57,6 +57,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Key;
 import org.jooq.Param;
+import org.jooq.Qualified;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
@@ -87,10 +88,12 @@ final class InformationSchemaExport {
         Set<Table<?>> includedTables = new LinkedHashSet<>(tables);
 
         for (Table<?> t : tables)
-            includedSchemas.add(t.getSchema());
+            if (t.getSchema() != null)
+                includedSchemas.add(t.getSchema());
 
         for (Schema s : includedSchemas)
-            includedCatalogs.add(s.getCatalog());
+            if (s.getCatalog() != null)
+                includedCatalogs.add(s.getCatalog());
 
         for (Catalog c : includedCatalogs)
             exportCatalog0(result, c);
@@ -111,7 +114,8 @@ final class InformationSchemaExport {
         Set<Table<?>> includedTables = new LinkedHashSet<>();
 
         for (Schema s : schemas) {
-            includedCatalogs.add(s.getCatalog());
+            if (s.getCatalog() != null)
+                includedCatalogs.add(s.getCatalog());
 
             for (Table<?> t : s.getTables())
                 includedTables.add(t);
@@ -169,8 +173,8 @@ final class InformationSchemaExport {
     private static final void exportDomain0(Configuration configuration, InformationSchema result, Domain<?> d) {
         org.jooq.util.xml.jaxb.Domain id = new org.jooq.util.xml.jaxb.Domain();
 
-        String catalogName = d.getCatalog().getName();
-        String schemaName = d.getSchema().getName();
+        String catalogName = catalogName(d);
+        String schemaName = schemaName(d);
         String domainName = d.getName();
 
         if (!isBlank(catalogName))
@@ -222,11 +226,14 @@ final class InformationSchemaExport {
     private static final void exportSequence0(Configuration configuration, InformationSchema result, Sequence<?> q) {
         org.jooq.util.xml.jaxb.Sequence iq = new org.jooq.util.xml.jaxb.Sequence();
 
-        if (!isBlank(q.getCatalog().getName()))
-            iq.setSequenceCatalog(q.getCatalog().getName());
+        String catalogName = catalogName(q);
+        String schemaName = schemaName(q);
 
-        if (!isBlank(q.getSchema().getName()))
-            iq.setSequenceSchema(q.getSchema().getName());
+        if (!isBlank(catalogName))
+            iq.setSequenceCatalog(catalogName);
+
+        if (!isBlank(schemaName))
+            iq.setSequenceSchema(schemaName);
 
         iq.setSequenceName(q.getName());
         iq.setDataType(q.getDataType().getTypeName(configuration));
@@ -268,8 +275,10 @@ final class InformationSchemaExport {
     private static final void exportSchema0(InformationSchema result, Schema s) {
         org.jooq.util.xml.jaxb.Schema is = new org.jooq.util.xml.jaxb.Schema();
 
-        if (!isBlank(s.getCatalog().getName()))
-            is.setCatalogName(s.getCatalog().getName());
+        String catalogName = catalogName(s);
+
+        if (!isBlank(catalogName))
+            is.setCatalogName(catalogName);
 
         if (!isBlank(s.getName())) {
             is.setSchemaName(s.getName());
@@ -281,11 +290,14 @@ final class InformationSchemaExport {
     private static final void exportTable0(Configuration configuration, InformationSchema result, Table<?> t, Set<Table<?>> includedTables) {
         org.jooq.util.xml.jaxb.Table it = new org.jooq.util.xml.jaxb.Table();
 
-        if (!isBlank(t.getCatalog().getName()))
-            it.setTableCatalog(t.getCatalog().getName());
+        String catalogName = catalogName(t);
+        String schemaName = schemaName(t);
 
-        if (!isBlank(t.getSchema().getName()))
-            it.setTableSchema(t.getSchema().getName());
+        if (!isBlank(catalogName))
+            it.setTableCatalog(catalogName);
+
+        if (!isBlank(schemaName))
+            it.setTableSchema(schemaName);
 
         switch (t.getOptions().type()) {
             case MATERIALIZED_VIEW:
@@ -305,11 +317,11 @@ final class InformationSchemaExport {
         if (t.getOptions().type() == org.jooq.TableOptions.TableType.VIEW) {
             org.jooq.util.xml.jaxb.View iv = new org.jooq.util.xml.jaxb.View();
 
-            if (!isBlank(t.getCatalog().getName()))
-                iv.setTableCatalog(t.getCatalog().getName());
+            if (!isBlank(catalogName))
+                iv.setTableCatalog(catalogName);
 
-            if (!isBlank(t.getSchema().getName()))
-                iv.setTableSchema(t.getSchema().getName());
+            if (!isBlank(schemaName))
+                iv.setTableSchema(schemaName);
 
             iv.setTableName(t.getName());
             iv.setViewDefinition(t.getOptions().source());
@@ -321,11 +333,11 @@ final class InformationSchemaExport {
             Field<?> f = fields[i];
             Column ic = new Column();
 
-            if (!isBlank(t.getCatalog().getName()))
-                ic.setTableCatalog(t.getCatalog().getName());
+            if (!isBlank(catalogName))
+                ic.setTableCatalog(catalogName);
 
-            if (!isBlank(t.getSchema().getName()))
-                ic.setTableSchema(t.getSchema().getName());
+            if (!isBlank(schemaName))
+                ic.setTableSchema(schemaName);
 
             ic.setTableName(t.getName());
             ic.setColumnName(f.getName());
@@ -368,8 +380,8 @@ final class InformationSchemaExport {
 
         CheckConstraint c = new CheckConstraint();
 
-        String catalogName = t.getCatalog().getName();
-        String schemaName = t.getSchema().getName();
+        String catalogName = catalogName(t);
+        String schemaName = schemaName(t);
 
         if (!isBlank(catalogName))
             c.setConstraintCatalog(catalogName);
@@ -385,8 +397,8 @@ final class InformationSchemaExport {
     private static final void exportIndex0(InformationSchema result, Table<?> t, Index index) {
         org.jooq.util.xml.jaxb.Index i = new org.jooq.util.xml.jaxb.Index();
 
-        String catalogName = t.getCatalog().getName();
-        String schemaName = t.getSchema().getName();
+        String catalogName = catalogName(t);
+        String schemaName = schemaName(t);
 
         if (!isBlank(catalogName))
             i.withIndexCatalog(catalogName)
@@ -427,8 +439,8 @@ final class InformationSchemaExport {
     private static final void exportKey0(InformationSchema result, Table<?> t, Key<?> key, TableConstraintType constraintType) {
         exportTableConstraint(result, t, key.getName(), constraintType);
 
-        String catalogName = t.getCatalog().getName();
-        String schemaName = t.getSchema().getName();
+        String catalogName = catalogName(t);
+        String schemaName = schemaName(t);
 
         int i = 0;
         for (Field<?> f : key.getFields()) {
@@ -455,8 +467,8 @@ final class InformationSchemaExport {
         if (constraintType == FOREIGN_KEY) {
             ReferentialConstraint rc = new ReferentialConstraint();
             UniqueKey<?> uk = ((ForeignKey<?, ?>) key).getKey();
-            String ukCatalogName = uk.getTable().getCatalog().getName();
-            String ukSchemaName = uk.getTable().getSchema().getName();
+            String ukCatalogName = catalogName(uk.getTable());
+            String ukSchemaName = schemaName(uk.getTable());
 
             if (!isBlank(catalogName))
                 rc.setConstraintCatalog(catalogName);
@@ -480,8 +492,8 @@ final class InformationSchemaExport {
     private static final void exportTableConstraint(InformationSchema result, Table<?> t, String constraintName, TableConstraintType constraintType) {
         TableConstraint tc = new TableConstraint();
 
-        String catalogName = t.getCatalog().getName();
-        String schemaName = t.getSchema().getName();
+        String catalogName = catalogName(t);
+        String schemaName = schemaName(t);
 
         tc.setConstraintName(constraintName);
         tc.setConstraintType(constraintType);
@@ -496,6 +508,18 @@ final class InformationSchemaExport {
 
         tc.setTableName(t.getName());
         result.getTableConstraints().add(tc);
+    }
+
+    private static final String catalogName(Schema s) {
+        return s.getCatalog() == null ? null : s.getCatalog().getName();
+    }
+
+    private static final String catalogName(Qualified q) {
+        return q.getCatalog() == null ? null : q.getCatalog().getName();
+    }
+
+    private static final String schemaName(Qualified q) {
+        return q.getSchema() == null ? null : q.getSchema().getName();
     }
 
     private InformationSchemaExport() {}

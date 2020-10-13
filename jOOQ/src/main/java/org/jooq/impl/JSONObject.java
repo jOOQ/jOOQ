@@ -40,7 +40,9 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.impl.DSL.asterisk;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -65,6 +67,8 @@ import org.jooq.JSONObjectNullStep;
 import org.jooq.Name;
 // ...
 import org.jooq.impl.JSONNull.JSONNullType;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -184,6 +188,12 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
                        .formatNewLine()
                        .sql(')');
                 }
+                else if (!args.isEmpty() && isJSONArray(args.get(0).value())) {
+                    ctx.visit(jsonObject(jsonEntry(
+                        args.get(0).key(),
+                        DSL.field("{0}({1}, {2})", getDataType(), N_JSON_MERGE, inline("[]"), args.get(0).value())
+                    )));
+                }
                 else
                     acceptStandard(ctx);
 
@@ -193,6 +203,12 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
                 acceptStandard(ctx);
                 break;
         }
+    }
+
+    private static final boolean isJSONArray(Field<?> field) {
+        return field instanceof JSONArray
+            || field instanceof JSONArrayAgg
+            || field instanceof ScalarSubquery && isJSONArray(((ScalarSubquery<?>) field).query.getSelect().get(0));
     }
 
     private final void acceptStandard(Context<?> ctx) {

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
@@ -79,6 +80,12 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T> {
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
 
 
 

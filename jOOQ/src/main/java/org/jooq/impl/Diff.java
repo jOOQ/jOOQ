@@ -270,7 +270,8 @@ final class Diff {
 
             if (v1 && v2) {
                 if (!Arrays.equals(t1.fields(), t2.fields())
-                    || !t1.getOptions().select().equals(t2.getOptions().select())) {
+                      || t2.getOptions().select() != null && !t2.getOptions().select().equals(t1.getOptions().select())
+                      || t2.getOptions().source() != null && !t2.getOptions().source().equals(t1.getOptions().source())) {
                     replaceView(r, t1, t2);
                     return;
                 }

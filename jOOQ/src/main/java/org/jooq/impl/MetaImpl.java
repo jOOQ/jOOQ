@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -182,6 +183,20 @@ final class MetaImpl extends AbstractMeta {
             result.add(new MetaCatalog(""));
 
         return result;
+    }
+
+    final Table<?> lookupTable(Schema schema, String tableName) {
+        switch (family()) {
+
+            // [#10741] A workaround for SQLite's case insensitivity where the
+            //          case of declared vs referenced identifiers may differ
+            // [#2656]  TODO: Solve this more thoroughly and globally
+            case SQLITE:
+                return findIgnoreCase(tableName, schema.getTables());
+
+            default:
+                return schema.getTable(tableName);
+        }
     }
 
     @Override
@@ -688,7 +703,7 @@ final class MetaImpl extends AbstractMeta {
 
                 String fkName = entry.getKey().get(3, String.class);
                 String pkName = entry.getKey().get(4, String.class);
-                Table<Record> pkTable = (Table<Record>) schema.getTable(entry.getKey().get(2, String.class));
+                Table<Record> pkTable = (Table<Record>) lookupTable(schema, entry.getKey().get(2, String.class));
                 TableField<Record, ?>[] pkFields = new TableField[entry.getValue().size()];
                 TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
 
@@ -982,7 +997,7 @@ final class MetaImpl extends AbstractMeta {
                 // [#7377] The schema may be null instead of "" in some dialects
                 Schema schema = schemas.get(defaultString(key.get(1, String.class)));
 
-                Table<Record> fkTable = (Table<Record>) schema.getTable(key.get(2, String.class));
+                Table<Record> fkTable = (Table<Record>) lookupTable(schema, key.get(2, String.class));
                 String fkName = key.get(3, String.class);
                 TableField<Record, ?>[] fkFields = new TableField[value.size()];
                 TableField<Record, ?>[] pkFields = new TableField[value.size()];

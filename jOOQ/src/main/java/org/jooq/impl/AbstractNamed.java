@@ -142,4 +142,24 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
 
         return unqualified;
     }
+
+    static final <N extends Named> N findIgnoreCase(String name, Iterable<? extends N> in) {
+        for (N n : in)
+            if (n.getName().equalsIgnoreCase(name))
+                return n;
+
+        return null;
+    }
+
+    static final <N extends Named> N findIgnoreCase(Name name, Iterable<? extends N> in) {
+        N unqualified = null;
+
+        for (N n : in)
+            if (n.getQualifiedName().equalsIgnoreCase(name))
+                return n;
+            else if (unqualified == null && n.getUnqualifiedName().equalsIgnoreCase(name.unqualifiedName()))
+                unqualified = n;
+
+        return unqualified;
+    }
 }

@@ -40,9 +40,30 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.impl.Keywords.K_TRUE;
+
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.SQLDialect;
 import org.jooq.True;
 
 /**
@@ -50,9 +71,10 @@ import org.jooq.True;
  */
 final class TrueCondition extends AbstractCondition implements True {
 
-    private static final long     serialVersionUID = 775364624704563687L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
-    static final TrueCondition    INSTANCE         = new TrueCondition();
+    private static final long     serialVersionUID   = 775364624704563687L;
+    private static final Clause[] CLAUSES            = { CONDITION, CONDITION_COMPARISON };
+    static final TrueCondition    INSTANCE           = new TrueCondition();
+    static final Set<SQLDialect>  NO_SUPPORT_BOOLEAN = SQLDialect.supportedBy(FIREBIRD, SQLITE);
 
     @Override
     final boolean isNullable() {
@@ -61,7 +83,10 @@ final class TrueCondition extends AbstractCondition implements True {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.sql("1 = 1");
+        if (NO_SUPPORT_BOOLEAN.contains(ctx.dialect()))
+            ctx.sql("1 = 1");
+        else
+            ctx.visit(K_TRUE);
     }
 
     @Override

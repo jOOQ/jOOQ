@@ -117,7 +117,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addDistinctOn(SelectFieldOrAsterisk... fields);
 
     /**
@@ -125,7 +125,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**

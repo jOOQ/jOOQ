@@ -114,6 +114,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
+import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
@@ -217,7 +218,11 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.SelectLimitPercentStep;
+import org.jooq.SelectLimitStep;
+import org.jooq.SelectOffsetStep;
 import org.jooq.SelectQuery;
+import org.jooq.SelectWithTiesStep;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -265,6 +270,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
 
 
 
@@ -1120,6 +1126,41 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    final Select<?> distinctOnEmulation() {
+
+        // [#3564] TODO: Extract and merge this with getSelectResolveSomeAsterisks0()
+        List<Field<?>> partitionBy = new ArrayList<>(distinctOn.size());
+
+        for (SelectFieldOrAsterisk f : distinctOn)
+            if (f instanceof Field)
+                partitionBy.add((Field<?>) f);
+
+        Field<Integer> rn = rowNumber().over(partitionBy(partitionBy).orderBy(orderBy)).as("rn");
+
+        SelectQueryImpl<R> copy = copy();
+        copy.distinctOn = null;
+        copy.select.add(rn);
+        copy.orderBy.clear();
+        copy.limit.clear();
+
+        SelectLimitStep<?> s1 =
+        DSL.select(qualify(table(name("t")), select))
+           .from(copy.asTable("t"))
+           .where(rn.eq(one()))
+           .orderBy(unqualified(orderBy.toArray(EMPTY_SORTFIELD)));
+
+        if (limit.numberOfRows != null) {
+            SelectLimitPercentStep<?> s2 = s1.limit((Param) limit.numberOfRows);
+            SelectWithTiesStep<?> s3 = limit.percent ? s2.percent() : s2;
+            SelectOffsetStep<?> s4 = limit.withTies ? s3.withTies() : s3;
+            return limit.offset != null ? s4.offset((Param) limit.offset) : s4;
+        }
+        else
+            return limit.offset != null ? s1.offset((Param) limit.offset) : s1;
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
@@ -1130,6 +1171,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && (dmlTable = (Table<?>) ctx.data(DATA_DML_TARGET_TABLE)) != null
             && containsTable(dmlTable)) {
             ctx.visit(DSL.select(asterisk()).from(asTable("t")));
+        }
+
+        // [#3564] Emulate DISINTCT ON queries at the top level
+        else if (Tools.isNotEmpty(distinctOn) && EMULATE_DISTINCT_ON.contains(ctx.dialect())) {
+            ctx.visit(distinctOnEmulation());
         }
 
 

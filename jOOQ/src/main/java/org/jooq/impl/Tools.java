@@ -1397,8 +1397,8 @@ final class Tools {
 
         SortField<?>[] result = new SortField[fields.length];
 
-        for (SortField<?> field : fields)
-            result[0] = unqualified(field);
+        for (int i = 0; i < result.length; i++)
+            result[i] = unqualified(fields[i]);
 
         return result;
     }

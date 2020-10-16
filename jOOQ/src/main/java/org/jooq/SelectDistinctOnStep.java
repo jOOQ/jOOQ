@@ -37,15 +37,30 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
 
 import java.util.Collection;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -117,7 +132,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * it is added explicitly via the jOOQ API.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectIntoStep<R> on(SelectFieldOrAsterisk... fields);
 
     /**
@@ -128,7 +143,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * it is added explicitly via the jOOQ API.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectIntoStep<R> on(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -136,7 +151,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * <code>SELECT DISTINCT ON (...)</code> statement.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectIntoStep<R> distinctOn(SelectFieldOrAsterisk... fields);
 
     /**
@@ -144,6 +159,6 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * <code>SELECT DISTINCT ON (...)</code> statement.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectIntoStep<R> distinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 }

@@ -507,4 +507,11 @@ final class Limit extends AbstractQueryPart {
 
         return this;
     }
+
+    final void clear() {
+        offset = null;
+        numberOfRows = null;
+        withTies = false;
+        percent = false;
+    }
 }

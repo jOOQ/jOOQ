@@ -137,26 +137,50 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         return fields.field(field);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String)}.
+     */
+    @Deprecated
     public final Field<?> field(String name) {
         return fields.field(name);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String, Class)}.
+     */
+    @Deprecated
     public final <T> Field<T> field(String name, Class<T> type) {
         return fields.field(name, type);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String, DataType)}.
+     */
+    @Deprecated
     public final <T> Field<T> field(String name, DataType<T> dataType) {
         return fields.field(name, dataType);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name)}.
+     */
+    @Deprecated
     public final Field<?> field(Name name) {
         return fields.field(name);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name, Class)}.
+     */
+    @Deprecated
     public final <T> Field<T> field(Name name, Class<T> type) {
         return fields.field(name, type);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name, DataType)}.
+     */
+    @Deprecated
     public final <T> Field<T> field(Name name, DataType<T> dataType) {
         return fields.field(name, dataType);
     }

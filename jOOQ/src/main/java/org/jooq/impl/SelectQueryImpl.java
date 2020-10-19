@@ -484,31 +484,55 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return asTable().field(field);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String)}.
+     */
+    @Deprecated
     @Override
     public final Field<?> field(String string) {
         return asTable().field(string);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String, Class)}.
+     */
+    @Deprecated
     @Override
     public final <T> Field<T> field(String name, Class<T> type) {
         return asTable().field(name, type);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String, DataType)}.
+     */
+    @Deprecated
     @Override
     public final <T> Field<T> field(String name, DataType<T> dataType) {
         return asTable().field(name, dataType);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name)}.
+     */
+    @Deprecated
     @Override
     public final Field<?> field(Name string) {
         return asTable().field(string);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name, Class)}.
+     */
+    @Deprecated
     @Override
     public final <T> Field<T> field(Name name, Class<T> type) {
         return asTable().field(name, type);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name, DataType)}.
+     */
+    @Deprecated
     @Override
     public final <T> Field<T> field(Name name, DataType<T> dataType) {
         return asTable().field(name, dataType);
@@ -1653,6 +1677,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .sql(' ')
                .visit(name("rn"));
     }
+
+
 
 
 

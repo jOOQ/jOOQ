@@ -126,31 +126,55 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
         return fields.field(field);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String)}.
+     */
+    @Deprecated
     @Override
     public final Field<?> field(String name) {
         return fields.field(name);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String, Class)}.
+     */
+    @Deprecated
     @Override
     public final <T> Field<T> field(String name, Class<T> type) {
         return fields.field(name, type);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(String, DataType)}.
+     */
+    @Deprecated
     @Override
     public final <T> Field<T> field(String name, DataType<T> dataType) {
         return fields.field(name, dataType);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name)}.
+     */
+    @Deprecated
     @Override
     public final Field<?> field(Name name) {
         return fields.field(name);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name, Class)}.
+     */
+    @Deprecated
     @Override
     public final <T> Field<T> field(Name name, Class<T> type) {
         return fields.field(name, type);
     }
 
+    /**
+     * @deprecated This method hides static import {@link DSL#field(Name, DataType)}.
+     */
+    @Deprecated
     @Override
     public final <T> Field<T> field(Name name, DataType<T> dataType) {
         return fields.field(name, dataType);

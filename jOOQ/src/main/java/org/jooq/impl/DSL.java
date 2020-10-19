@@ -509,12 +509,12 @@ public class DSL {
      * Create an executor from a JDBC connection URL.
      * <p>
      * Clients must ensure connections are closed properly by calling
-     * {@link DSLContext#close()} on the resulting {@link DSLContext}. For
-     * example:
+     * {@link CloseableDSLContext#close()} on the resulting {@link DSLContext}.
+     * For example:
      * <p>
      * <code><pre>
      * // Auto-closing DSLContext instance to free resources
-     * try (DSLContext ctx = DSL.using("jdbc:h2:~/test")) {
+     * try (CloseableDSLContext ctx = DSL.using("jdbc:h2:~/test")) {
      *
      *     // ...
      * }
@@ -539,12 +539,12 @@ public class DSL {
      * Create an executor from a JDBC connection URL.
      * <p>
      * Clients must ensure connections are closed properly by calling
-     * {@link DSLContext#close()} on the resulting {@link DSLContext}. For
-     * example:
+     * {@link CloseableDSLContext#close()} on the resulting {@link DSLContext}.
+     * For example:
      * <p>
      * <code><pre>
      * // Auto-closing DSLContext instance to free resources
-     * try (DSLContext ctx = DSL.using("jdbc:h2:~/test", "sa", "")) {
+     * try (CloseableDSLContext ctx = DSL.using("jdbc:h2:~/test", "sa", "")) {
      *
      *     // ...
      * }
@@ -571,12 +571,12 @@ public class DSL {
      * Create an executor from a JDBC connection URL.
      * <p>
      * Clients must ensure connections are closed properly by calling
-     * {@link DSLContext#close()} on the resulting {@link DSLContext}. For
-     * example:
+     * {@link CloseableDSLContext#close()} on the resulting {@link DSLContext}.
+     * For example:
      * <p>
      * <code><pre>
      * // Auto-closing DSLContext instance to free resources
-     * try (DSLContext ctx = DSL.using("jdbc:h2:~/test", properties)) {
+     * try (CloseableDSLContext ctx = DSL.using("jdbc:h2:~/test", properties)) {
      *
      *     // ...
      * }

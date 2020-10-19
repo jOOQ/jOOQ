@@ -45,7 +45,6 @@ import java.util.Collection;
 import org.jooq.BetweenAndStepN;
 import org.jooq.Comparator;
 import org.jooq.Condition;
-import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;

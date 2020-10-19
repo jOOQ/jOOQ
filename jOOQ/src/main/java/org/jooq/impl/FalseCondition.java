@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.impl.Keywords.K_FALSE;
-import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.TrueCondition.NO_SUPPORT_BOOLEAN;
 
 import org.jooq.Clause;

@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.impl.DSL.asterisk;
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonObject;
@@ -67,8 +66,6 @@ import org.jooq.JSONObjectNullStep;
 import org.jooq.Name;
 // ...
 import org.jooq.impl.JSONNull.JSONNullType;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**

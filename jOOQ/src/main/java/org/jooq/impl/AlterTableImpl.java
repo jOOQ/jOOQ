@@ -1568,6 +1568,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 ctx.end(ALTER_TABLE_ALTER_DEFAULT);
             }
             else if (alterColumnNullability != null) {
+                ctx.start(ALTER_TABLE_ALTER_NULL);
+
                 switch (ctx.family()) {
 
 
@@ -1576,15 +1578,12 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-
-
                     default:
-                        ctx.start(ALTER_TABLE_ALTER_NULL)
-                           .sql(' ').visit(alterColumnNullability.nullable() ? K_DROP_NOT_NULL : K_SET_NOT_NULL)
-                           .end(ALTER_TABLE_ALTER_NULL);
-
+                        ctx.sql(' ').visit(alterColumnNullability.nullable() ? K_DROP_NOT_NULL : K_SET_NOT_NULL);
                         break;
                 }
+
+                ctx.end(ALTER_TABLE_ALTER_NULL);
             }
 
 

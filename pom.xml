@@ -32,6 +32,9 @@
         <derby.version>10.14.2.0</derby.version>
         <hsqldb.version>2.5.1</hsqldb.version>
 
+        <!-- JDBC drivers for jOOQ-xyz-extensions modules -->
+        <postgres.version>42.2.16</postgres.version>
+
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>2.3.1</jaxb.version>
         <javax.activation.version>1.2.0</javax.activation.version>
@@ -81,6 +84,11 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-postgres-extensions</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -298,6 +306,12 @@
                 <artifactId>hsqldb</artifactId>
                 <version>${hsqldb.version}</version>
             </dependency>
+	        <dependency>
+	            <groupId>org.postgresql</groupId>
+	            <artifactId>postgresql</artifactId>
+	            <version>${postgres.version}</version>
+	        </dependency>
+
 
             <!-- jooq-meta-extensions and integration tests have this dependency -->
             <dependency>
@@ -621,6 +635,9 @@
 
         <module>jOOQ-checker</module>
 
+
+        <module>jOOQ-postgres-extensions</module>
+
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-meta-extensions-hibernate</module>
@@ -637,7 +654,11 @@
         <module>jOOQ-xtend</module>
 
 
+        <!-- [#10150] Turn off building jOOQ with jOOQ-refaster module until this works with JDK 15
         <module>jOOQ-refaster</module>
+          -->
+
+
 
 
 

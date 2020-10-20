@@ -28,7 +28,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *       &lt;all&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}SyntheticKeyFieldsType"/&gt;
+ *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.14.0.xsd}SyntheticKeyFieldsType"/&gt;
  *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;

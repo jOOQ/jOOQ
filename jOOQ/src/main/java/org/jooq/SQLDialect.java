@@ -50,12 +50,26 @@ import org.jetbrains.annotations.Nullable;
  * Dialects and dialect families as supported by jOOQ.
  * <p>
  * The commercial jOOQ distributions support a variety of dialects, which are
- * grouped into dialect families. For instance, the SQL Server dialect family
+ * grouped into dialect families. For instance, the PostgreSQL dialect family
  * {@link #POSTGRES} is specialised by its dialects
  * <ul>
  * <li>{@link #POSTGRES_9_3}</li>
  * <li>{@link #POSTGRES_9_4}</li>
+ * <li>{@link #POSTGRES_9_5}</li>
+ * <li>{@link #POSTGRES_10}</li>
+ * <li>{@link #POSTGRES_11}</li>
+ * <li>{@link #POSTGRES_12}</li>
  * </ul>
+ * <p>
+ * The open source jOOQ distributions only support the dialect family, which
+ * corresponds to the latest supported dialect version of the commercial
+ * distribution.
+ * <p>
+ * If a dialect is documented but does not seem to be available in your jOOQ
+ * Edition, you may be using the wrong edition, e.g. because of a transitive
+ * dependency introduced by Spring Boot. See this article about how to exclude
+ * such transitive dependencies from your classpath <a href=
+ * "https://blog.jooq.org/2019/06/26/how-to-use-jooqs-commercial-distributions-with-spring-boot/">https://blog.jooq.org/2019/06/26/how-to-use-jooqs-commercial-distributions-with-spring-boot/</a>.
  *
  * @author Lukas Eder
  */

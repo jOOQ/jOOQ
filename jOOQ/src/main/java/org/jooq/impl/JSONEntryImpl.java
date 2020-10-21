@@ -42,8 +42,12 @@ import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_VALUE;
+import static org.jooq.impl.SQLDataType.VARCHAR;
+
+import java.util.UUID;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONEntry;
 
@@ -106,8 +110,32 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T> {
                 break;
 
             default:
-                ctx.visit(K_KEY).sql(' ').visit(key).sql(' ').visit(K_VALUE).sql(' ').visit(value);
+                ctx.visit(K_KEY).sql(' ').visit(key).sql(' ').visit(K_VALUE).sql(' ').visit(jsonCast(ctx, value));
                 break;
         }
+    }
+
+    static final F1<Field<?>, Field<?>> jsonCastMapper(final Context<?> ctx) {
+        return new F1<Field<?>, Field<?>>() {
+            @Override
+            public Field<?> apply(Field<?> field) {
+                return jsonCast(ctx, field);
+            }
+        };
+    }
+
+    static final Field<?> jsonCast(Context<?> ctx, Field<?> field) {
+        switch (ctx.family()) {
+
+            // [#10769] Some dialects don't support auto conversions from X to JSON
+            case H2: {
+                DataType<?> type = field.getDataType();
+
+                if (type.getType() == UUID.class)
+                    return field.cast(VARCHAR(36));
+            }
+        }
+
+        return field;
     }
 }

@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.values;
+import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_JSON_ARRAY;
@@ -115,8 +116,10 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
             case POSTGRES:
                 if (nullType == ABSENT_ON_NULL) {
                     Row1[] rows = new Row1[args.size()];
+
                     for (int i = 0; i < rows.length; i++)
                         rows[i] = row(args.get(i));
+
                     Table<?> t = values(rows).as("t", "a");
                     Field<?> a = t.field("a");
                     ctx.visit(DSL.field(select(jsonArrayAgg(a)).from(t).where(a.isNotNull())));
@@ -136,7 +139,7 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
                 else
                     jsonNull = new JSONNull(nullType);
 
-                ctx.visit(K_JSON_ARRAY).sql('(').visit(wrap(args, jsonNull).separator("")).sql(')');
+                ctx.visit(K_JSON_ARRAY).sql('(').visit(wrap(wrap(args).map(jsonCastMapper(ctx)), jsonNull).separator("")).sql(')');
                 break;
             }
         }

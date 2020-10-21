@@ -54,8 +54,10 @@ import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import org.jooq.Context;
 import org.jooq.DataType;

@@ -92,7 +92,7 @@ public final class Rows {
     public static <T, T1> Collector<T, ?, Row1<T1>[]> collectingArray(
         Function<? super T, ? extends T1> f1
     ) {
-        return Collectors.collectingAndThen(collecting(f1), l -> l.toArray(Row1[]::new));
+        return Collectors.collectingAndThen(collecting(f1), l -> l.toArray(new Row1[0]));
     }
 
     /**
@@ -119,7 +119,7 @@ public final class Rows {
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2), l -> l.toArray(Row2[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2), l -> l.toArray(new Row2[0]));
     }
 
     /**
@@ -148,7 +148,7 @@ public final class Rows {
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3), l -> l.toArray(Row3[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3), l -> l.toArray(new Row3[0]));
     }
 
     /**
@@ -179,7 +179,7 @@ public final class Rows {
         Function<? super T, ? extends T3> f3,
         Function<? super T, ? extends T4> f4
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4), l -> l.toArray(Row4[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4), l -> l.toArray(new Row4[0]));
     }
 
     /**
@@ -212,7 +212,7 @@ public final class Rows {
         Function<? super T, ? extends T4> f4,
         Function<? super T, ? extends T5> f5
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5), l -> l.toArray(Row5[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5), l -> l.toArray(new Row5[0]));
     }
 
     /**
@@ -247,7 +247,7 @@ public final class Rows {
         Function<? super T, ? extends T5> f5,
         Function<? super T, ? extends T6> f6
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6), l -> l.toArray(Row6[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6), l -> l.toArray(new Row6[0]));
     }
 
     /**
@@ -284,7 +284,7 @@ public final class Rows {
         Function<? super T, ? extends T6> f6,
         Function<? super T, ? extends T7> f7
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7), l -> l.toArray(Row7[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7), l -> l.toArray(new Row7[0]));
     }
 
     /**
@@ -323,7 +323,7 @@ public final class Rows {
         Function<? super T, ? extends T7> f7,
         Function<? super T, ? extends T8> f8
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8), l -> l.toArray(Row8[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8), l -> l.toArray(new Row8[0]));
     }
 
     /**
@@ -364,7 +364,7 @@ public final class Rows {
         Function<? super T, ? extends T8> f8,
         Function<? super T, ? extends T9> f9
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9), l -> l.toArray(Row9[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9), l -> l.toArray(new Row9[0]));
     }
 
     /**
@@ -407,7 +407,7 @@ public final class Rows {
         Function<? super T, ? extends T9> f9,
         Function<? super T, ? extends T10> f10
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10), l -> l.toArray(Row10[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10), l -> l.toArray(new Row10[0]));
     }
 
     /**
@@ -452,7 +452,7 @@ public final class Rows {
         Function<? super T, ? extends T10> f10,
         Function<? super T, ? extends T11> f11
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11), l -> l.toArray(Row11[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11), l -> l.toArray(new Row11[0]));
     }
 
     /**
@@ -499,7 +499,7 @@ public final class Rows {
         Function<? super T, ? extends T11> f11,
         Function<? super T, ? extends T12> f12
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12), l -> l.toArray(Row12[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12), l -> l.toArray(new Row12[0]));
     }
 
     /**
@@ -548,7 +548,7 @@ public final class Rows {
         Function<? super T, ? extends T12> f12,
         Function<? super T, ? extends T13> f13
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13), l -> l.toArray(Row13[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13), l -> l.toArray(new Row13[0]));
     }
 
     /**
@@ -599,7 +599,7 @@ public final class Rows {
         Function<? super T, ? extends T13> f13,
         Function<? super T, ? extends T14> f14
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14), l -> l.toArray(Row14[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14), l -> l.toArray(new Row14[0]));
     }
 
     /**
@@ -652,7 +652,7 @@ public final class Rows {
         Function<? super T, ? extends T14> f14,
         Function<? super T, ? extends T15> f15
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15), l -> l.toArray(Row15[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15), l -> l.toArray(new Row15[0]));
     }
 
     /**
@@ -707,7 +707,7 @@ public final class Rows {
         Function<? super T, ? extends T15> f15,
         Function<? super T, ? extends T16> f16
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16), l -> l.toArray(Row16[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16), l -> l.toArray(new Row16[0]));
     }
 
     /**
@@ -764,7 +764,7 @@ public final class Rows {
         Function<? super T, ? extends T16> f16,
         Function<? super T, ? extends T17> f17
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17), l -> l.toArray(Row17[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17), l -> l.toArray(new Row17[0]));
     }
 
     /**
@@ -823,7 +823,7 @@ public final class Rows {
         Function<? super T, ? extends T17> f17,
         Function<? super T, ? extends T18> f18
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18), l -> l.toArray(Row18[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18), l -> l.toArray(new Row18[0]));
     }
 
     /**
@@ -884,7 +884,7 @@ public final class Rows {
         Function<? super T, ? extends T18> f18,
         Function<? super T, ? extends T19> f19
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19), l -> l.toArray(Row19[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19), l -> l.toArray(new Row19[0]));
     }
 
     /**
@@ -947,7 +947,7 @@ public final class Rows {
         Function<? super T, ? extends T19> f19,
         Function<? super T, ? extends T20> f20
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20), l -> l.toArray(Row20[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20), l -> l.toArray(new Row20[0]));
     }
 
     /**
@@ -1012,7 +1012,7 @@ public final class Rows {
         Function<? super T, ? extends T20> f20,
         Function<? super T, ? extends T21> f21
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21), l -> l.toArray(Row21[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21), l -> l.toArray(new Row21[0]));
     }
 
     /**
@@ -1079,7 +1079,7 @@ public final class Rows {
         Function<? super T, ? extends T21> f21,
         Function<? super T, ? extends T22> f22
     ) {
-        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21, f22), l -> l.toArray(Row22[]::new));
+        return Collectors.collectingAndThen(collecting(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21, f22), l -> l.toArray(new Row22[0]));
     }
 
     /**

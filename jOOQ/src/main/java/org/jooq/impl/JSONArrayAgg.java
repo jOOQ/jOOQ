@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_JSONB_AGG;
@@ -157,7 +158,7 @@ implements JSONArrayAggOrderByStep<J> {
 
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(N_JSON_ARRAYAGG).sql('(');
-        ctx.visit(arguments.get(0));
+        ctx.visit(jsonCast(ctx, arguments.get(0)));
         acceptOrderBy(ctx);
 
         JSONNull jsonNull = new JSONNull(nullType);

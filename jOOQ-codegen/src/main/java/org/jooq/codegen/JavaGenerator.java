@@ -1760,7 +1760,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println();
                     printDeprecationIfUnknownType(out, colTypeFull);
                     out.println("override fun value%s(value: %s%s): %s {", i, colType, column instanceof EmbeddableDefinition ? "" : "?", className);
-                    out.println("%s = value", colMember);
+                    out.println("this.%s = value", colMember);
                     out.println("return this");
                     out.println("}");
                 }

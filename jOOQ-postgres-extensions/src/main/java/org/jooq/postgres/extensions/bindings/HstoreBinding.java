@@ -39,7 +39,6 @@ package org.jooq.postgres.extensions.bindings;
 
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Map;
 
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.BindingGetStatementContext;
@@ -47,6 +46,7 @@ import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.HstoreConverter;
+import org.jooq.postgres.extensions.types.Hstore;
 
 /**
  * A binding for the PostgreSQL <code>hstore</code> data type.
@@ -54,16 +54,16 @@ import org.jooq.postgres.extensions.converters.HstoreConverter;
  * @author Dmitry Baev
  * @author Lukas Eder
  */
-public class HstoreBinding extends AbstractPostgresBinding<Object, Map<String, String>> {
+public class HstoreBinding extends AbstractPostgresBinding<Object, Hstore> {
 
     /**
      * Generated UID
      */
-    private static final long                                   serialVersionUID = 5809336497608771915L;
-    private static final Converter<Object, Map<String, String>> CONVERTER        = new HstoreConverter();
+    private static final long                      serialVersionUID = 5809336497608771915L;
+    private static final Converter<Object, Hstore> CONVERTER        = new HstoreConverter();
 
     @Override
-    public Converter<Object, Map<String, String>> converter() {
+    public Converter<Object, Hstore> converter() {
         return CONVERTER;
     }
 
@@ -73,12 +73,12 @@ public class HstoreBinding extends AbstractPostgresBinding<Object, Map<String, S
     }
 
     @Override
-    public void register(final BindingRegisterContext<Map<String, String>> ctx) throws SQLException {
+    public void register(final BindingRegisterContext<Hstore> ctx) throws SQLException {
         ctx.statement().registerOutParameter(ctx.index(), Types.VARCHAR);
     }
 
     @Override
-    public void set(final BindingSetStatementContext<Map<String, String>> ctx) throws SQLException {
+    public void set(final BindingSetStatementContext<Hstore> ctx) throws SQLException {
         Object value = ctx.convert(converter()).value();
 
         ctx.statement().setString(ctx.index(), value == null ? null : "" + value);
@@ -86,12 +86,12 @@ public class HstoreBinding extends AbstractPostgresBinding<Object, Map<String, S
 
 
     @Override
-    public void get(final BindingGetResultSetContext<Map<String, String>> ctx) throws SQLException {
+    public void get(final BindingGetResultSetContext<Hstore> ctx) throws SQLException {
         ctx.convert(converter()).value(ctx.resultSet().getString(ctx.index()));
     }
 
     @Override
-    public void get(final BindingGetStatementContext<Map<String, String>> ctx) throws SQLException {
+    public void get(final BindingGetStatementContext<Hstore> ctx) throws SQLException {
         ctx.convert(converter()).value(ctx.statement().getString(ctx.index()));
     }
 }

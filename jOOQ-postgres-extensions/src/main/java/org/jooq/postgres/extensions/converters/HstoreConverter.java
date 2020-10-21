@@ -37,9 +37,10 @@
  */
 package org.jooq.postgres.extensions.converters;
 
-import java.util.Map;
+import static org.jooq.postgres.extensions.types.Hstore.hstore;
 
 import org.jooq.impl.AbstractConverter;
+import org.jooq.postgres.extensions.types.Hstore;
 
 /**
  * A binding for the PostgreSQL <code>hstore</code> data type.
@@ -47,25 +48,24 @@ import org.jooq.impl.AbstractConverter;
  * @author Dmitry Baev
  * @author Lukas Eder
  */
-public class HstoreConverter extends AbstractConverter<Object, Map<String, String>> {
+public class HstoreConverter extends AbstractConverter<Object, Hstore> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -2852275331366617696L;
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public HstoreConverter() {
-        super(Object.class, (Class<Map<String, String>>) (Class) Map.class);
+        super(Object.class, Hstore.class);
     }
 
     @Override
-    public Map<String, String> from(Object t) {
-        return t == null ? null : org.postgresql.util.HStoreConverter.fromString("" + t);
+    public Hstore from(Object t) {
+        return t == null ? null : hstore(org.postgresql.util.HStoreConverter.fromString("" + t));
     }
 
     @Override
-    public Object to(Map<String, String> u) {
-        return u == null ? null : org.postgresql.util.HStoreConverter.toString(u);
+    public Object to(Hstore u) {
+        return u == null ? null : org.postgresql.util.HStoreConverter.toString(u.data());
     }
 }

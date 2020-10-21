@@ -111,6 +111,29 @@ import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
 import org.jooq.Result;
+import org.jooq.Row;
+import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Row9;
+import org.jooq.Row10;
+import org.jooq.Row11;
+import org.jooq.Row12;
+import org.jooq.Row13;
+import org.jooq.Row14;
+import org.jooq.Row15;
+import org.jooq.Row16;
+import org.jooq.Row17;
+import org.jooq.Row18;
+import org.jooq.Row19;
+import org.jooq.Row20;
+import org.jooq.Row21;
+import org.jooq.Row22;
 import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.SelectField;
@@ -301,6 +324,462 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final InsertImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17, T18 value18, T19 value19, T20 value20, T21 value21, T22 value22) {
         return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20, value21, value22 });
+    }
+
+    @Override
+    public final InsertImpl values(Row1<T1> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row1<T1>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row2<T1, T2> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row2<T1, T2>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row3<T1, T2, T3> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row3<T1, T2, T3>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row4<T1, T2, T3, T4> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row4<T1, T2, T3, T4>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row5<T1, T2, T3, T4, T5> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row5<T1, T2, T3, T4, T5>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row6<T1, T2, T3, T4, T5, T6> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row6<T1, T2, T3, T4, T5, T6>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row7<T1, T2, T3, T4, T5, T6, T7> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row7<T1, T2, T3, T4, T5, T6, T7>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row8<T1, T2, T3, T4, T5, T6, T7, T8> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... values) {
+    	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record1<T1> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record1<T1>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record2<T1, T2> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record2<T1, T2>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record3<T1, T2, T3> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record3<T1, T2, T3>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record4<T1, T2, T3, T4> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record4<T1, T2, T3, T4>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record5<T1, T2, T3, T4, T5> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record5<T1, T2, T3, T4, T5>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record6<T1, T2, T3, T4, T5, T6> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record6<T1, T2, T3, T4, T5, T6>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record7<T1, T2, T3, T4, T5, T6, T7> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record7<T1, T2, T3, T4, T5, T6, T7>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record8<T1, T2, T3, T4, T5, T6, T7, T8> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record8<T1, T2, T3, T4, T5, T6, T7, T8>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... values) {
+    	return valuesOfRecords(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(Collection values) {
+    	for (Object row : values)
+    	    values(((Row) row).fields());
+
+        return this;
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Collection values) {
+    	for (Object record : values)
+    	    values(((Record) record).intoArray());
+
+        return this;
     }
 
     @Override

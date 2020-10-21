@@ -60,25 +60,81 @@ import org.jetbrains.annotations.NotNull;
 public interface InsertValuesStep7<R extends Record, T1, T2, T3, T4, T5, T6, T7> extends InsertOnDuplicateStep<R> {
 
     /**
-     * Add values to the insert statement.
+     * Add a single row of values to the insert statement.
      */
     @NotNull
     @Support
     InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7);
 
     /**
-     * Add values to the insert statement.
+     * Add a single row of values to the insert statement.
      */
     @NotNull
     @Support
     InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7);
 
     /**
-     * Add values to the insert statement.
+     * Add a single row of values to the insert statement.
      */
     @NotNull
     @Support
     InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> values(Collection<?> values);
+
+    /**
+     * Add a single row of values to the insert statement.
+     */
+    @NotNull
+    @Support
+    InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> values(Row7<T1, T2, T3, T4, T5, T6, T7> values);
+
+    /**
+     * Add a single row of values to the insert statement.
+     */
+    @NotNull
+    @Support
+    InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> values(Record7<T1, T2, T3, T4, T5, T6, T7> values);
+
+    /**
+     * Add multiple rows of values to the insert statement.
+     * <p>
+     * This is equivalent to calling the other values clauses multiple times, but
+     * allows for dynamic construction of row arrays.
+     */
+    @NotNull
+    @Support
+    @SuppressWarnings("unchecked")
+    InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> valuesOfRows(Row7<T1, T2, T3, T4, T5, T6, T7>... values);
+
+    /**
+     * Add multiple rows of values to the insert statement.
+     * <p>
+     * This is equivalent to calling the other values clauses multiple times, but
+     * allows for dynamic construction of row arrays.
+     */
+    @NotNull
+    @Support
+    InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> valuesOfRows(Collection<? extends Row7<T1, T2, T3, T4, T5, T6, T7>> values);
+
+    /**
+     * Add multiple rows of values to the insert statement.
+     * <p>
+     * This is equivalent to calling the other values clauses multiple times, but
+     * allows for dynamic construction of row arrays.
+     */
+    @NotNull
+    @Support
+    @SuppressWarnings("unchecked")
+    InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> valuesOfRecords(Record7<T1, T2, T3, T4, T5, T6, T7>... values);
+
+    /**
+     * Add multiple rows of values to the insert statement.
+     * <p>
+     * This is equivalent to calling the other values clauses multiple times, but
+     * allows for dynamic construction of row arrays.
+     */
+    @NotNull
+    @Support
+    InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> valuesOfRecords(Collection<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> values);
 
     /**
      * Use a <code>SELECT</code> statement as the source of values for the

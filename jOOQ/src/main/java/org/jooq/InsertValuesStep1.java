@@ -60,25 +60,81 @@ import org.jetbrains.annotations.NotNull;
 public interface InsertValuesStep1<R extends Record, T1> extends InsertOnDuplicateStep<R> {
 
     /**
-     * Add values to the insert statement.
+     * Add a single row of values to the insert statement.
      */
     @NotNull
     @Support
     InsertValuesStep1<R, T1> values(T1 value1);
 
     /**
-     * Add values to the insert statement.
+     * Add a single row of values to the insert statement.
      */
     @NotNull
     @Support
     InsertValuesStep1<R, T1> values(Field<T1> value1);
 
     /**
-     * Add values to the insert statement.
+     * Add a single row of values to the insert statement.
      */
     @NotNull
     @Support
     InsertValuesStep1<R, T1> values(Collection<?> values);
+
+    /**
+     * Add a single row of values to the insert statement.
+     */
+    @NotNull
+    @Support
+    InsertValuesStep1<R, T1> values(Row1<T1> values);
+
+    /**
+     * Add a single row of values to the insert statement.
+     */
+    @NotNull
+    @Support
+    InsertValuesStep1<R, T1> values(Record1<T1> values);
+
+    /**
+     * Add multiple rows of values to the insert statement.
+     * <p>
+     * This is equivalent to calling the other values clauses multiple times, but
+     * allows for dynamic construction of row arrays.
+     */
+    @NotNull
+    @Support
+    @SuppressWarnings("unchecked")
+    InsertValuesStep1<R, T1> valuesOfRows(Row1<T1>... values);
+
+    /**
+     * Add multiple rows of values to the insert statement.
+     * <p>
+     * This is equivalent to calling the other values clauses multiple times, but
+     * allows for dynamic construction of row arrays.
+     */
+    @NotNull
+    @Support
+    InsertValuesStep1<R, T1> valuesOfRows(Collection<? extends Row1<T1>> values);
+
+    /**
+     * Add multiple rows of values to the insert statement.
+     * <p>
+     * This is equivalent to calling the other values clauses multiple times, but
+     * allows for dynamic construction of row arrays.
+     */
+    @NotNull
+    @Support
+    @SuppressWarnings("unchecked")
+    InsertValuesStep1<R, T1> valuesOfRecords(Record1<T1>... values);
+
+    /**
+     * Add multiple rows of values to the insert statement.
+     * <p>
+     * This is equivalent to calling the other values clauses multiple times, but
+     * allows for dynamic construction of row arrays.
+     */
+    @NotNull
+    @Support
+    InsertValuesStep1<R, T1> valuesOfRecords(Collection<? extends Record1<T1>> values);
 
     /**
      * Use a <code>SELECT</code> statement as the source of values for the

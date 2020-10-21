@@ -7787,6 +7787,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala)
                     out.println("value = %s(", out.ref("scala.Array"));
+                else if (kotlin)
+                    out.println("value = [");
                 else
                     out.println("value = {");
 
@@ -7800,6 +7802,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala)
                     out.println("),");
+                else if (kotlin)
+                    out.println("],");
                 else
                     out.println("},");
 
@@ -7810,6 +7814,8 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 if (scala)
                     out.println("value = %s(", out.ref("scala.Array"));
+                else if (kotlin)
+                    out.println("value = [");
                 else
                     out.println("value = {");
 
@@ -7818,6 +7824,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala)
                     out.println("),");
+                else if (kotlin)
+                    out.println("],");
                 else
                     out.println("},");
 

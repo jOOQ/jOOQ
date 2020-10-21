@@ -60,7 +60,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link RowN}.
      */
     @SafeVarargs
-    public static <T> Collector<? super T, ?, RowN[]> collectingArray(
+    public static <T> Collector<T, ?, RowN[]> collectingArray(
         Function<? super T, ?>... functions
     ) {
         return Collectors.collectingAndThen(collecting(functions), l -> l.toArray(RowN[]::new));
@@ -70,7 +70,7 @@ public final class Rows {
      * Create a collector that can collect into a list of {@link RowN}.
      */
     @SafeVarargs
-    public static <T, T1> Collector<? super T, ?, List<RowN>> collecting(
+    public static <T, T1> Collector<T, ?, List<RowN>> collecting(
         Function<? super T, ?>... functions
     ) {
         return Collector.of(
@@ -89,7 +89,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row1}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1> Collector<? super T, ?, Row1<T1>[]> collectingArray(
+    public static <T, T1> Collector<T, ?, Row1<T1>[]> collectingArray(
         Function<? super T, ? extends T1> f1
     ) {
         return Collectors.collectingAndThen(collecting(f1), l -> l.toArray(Row1[]::new));
@@ -98,7 +98,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row1}.
      */
-    public static <T, T1> Collector<? super T, ?, List<Row1<T1>>> collecting(
+    public static <T, T1> Collector<T, ?, List<Row1<T1>>> collecting(
         Function<? super T, ? extends T1> f1
     ) {
         return Collector.of(
@@ -115,7 +115,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row2}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2> Collector<? super T, ?, Row2<T1, T2>[]> collectingArray(
+    public static <T, T1, T2> Collector<T, ?, Row2<T1, T2>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2
     ) {
@@ -125,7 +125,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row2}.
      */
-    public static <T, T1, T2> Collector<? super T, ?, List<Row2<T1, T2>>> collecting(
+    public static <T, T1, T2> Collector<T, ?, List<Row2<T1, T2>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2
     ) {
@@ -143,7 +143,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row3}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3> Collector<? super T, ?, Row3<T1, T2, T3>[]> collectingArray(
+    public static <T, T1, T2, T3> Collector<T, ?, Row3<T1, T2, T3>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3
@@ -154,7 +154,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row3}.
      */
-    public static <T, T1, T2, T3> Collector<? super T, ?, List<Row3<T1, T2, T3>>> collecting(
+    public static <T, T1, T2, T3> Collector<T, ?, List<Row3<T1, T2, T3>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3
@@ -173,7 +173,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row4}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4> Collector<? super T, ?, Row4<T1, T2, T3, T4>[]> collectingArray(
+    public static <T, T1, T2, T3, T4> Collector<T, ?, Row4<T1, T2, T3, T4>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -185,7 +185,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row4}.
      */
-    public static <T, T1, T2, T3, T4> Collector<? super T, ?, List<Row4<T1, T2, T3, T4>>> collecting(
+    public static <T, T1, T2, T3, T4> Collector<T, ?, List<Row4<T1, T2, T3, T4>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -205,7 +205,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row5}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5> Collector<? super T, ?, Row5<T1, T2, T3, T4, T5>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5> Collector<T, ?, Row5<T1, T2, T3, T4, T5>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -218,7 +218,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row5}.
      */
-    public static <T, T1, T2, T3, T4, T5> Collector<? super T, ?, List<Row5<T1, T2, T3, T4, T5>>> collecting(
+    public static <T, T1, T2, T3, T4, T5> Collector<T, ?, List<Row5<T1, T2, T3, T4, T5>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -239,7 +239,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row6}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6> Collector<? super T, ?, Row6<T1, T2, T3, T4, T5, T6>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6> Collector<T, ?, Row6<T1, T2, T3, T4, T5, T6>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -253,7 +253,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row6}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6> Collector<? super T, ?, List<Row6<T1, T2, T3, T4, T5, T6>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6> Collector<T, ?, List<Row6<T1, T2, T3, T4, T5, T6>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -275,7 +275,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row7}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7> Collector<? super T, ?, Row7<T1, T2, T3, T4, T5, T6, T7>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7> Collector<T, ?, Row7<T1, T2, T3, T4, T5, T6, T7>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -290,7 +290,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row7}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7> Collector<? super T, ?, List<Row7<T1, T2, T3, T4, T5, T6, T7>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7> Collector<T, ?, List<Row7<T1, T2, T3, T4, T5, T6, T7>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -313,7 +313,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row8}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8> Collector<? super T, ?, Row8<T1, T2, T3, T4, T5, T6, T7, T8>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8> Collector<T, ?, Row8<T1, T2, T3, T4, T5, T6, T7, T8>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -329,7 +329,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row8}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8> Collector<? super T, ?, List<Row8<T1, T2, T3, T4, T5, T6, T7, T8>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8> Collector<T, ?, List<Row8<T1, T2, T3, T4, T5, T6, T7, T8>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -353,7 +353,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row9}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9> Collector<? super T, ?, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9> Collector<T, ?, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -370,7 +370,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row9}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9> Collector<? super T, ?, List<Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9> Collector<T, ?, List<Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -395,7 +395,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row10}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Collector<? super T, ?, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Collector<T, ?, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -413,7 +413,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row10}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Collector<? super T, ?, List<Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Collector<T, ?, List<Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -439,7 +439,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row11}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Collector<? super T, ?, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Collector<T, ?, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -458,7 +458,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row11}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Collector<? super T, ?, List<Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Collector<T, ?, List<Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -485,7 +485,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row12}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Collector<? super T, ?, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Collector<T, ?, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -505,7 +505,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row12}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Collector<? super T, ?, List<Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Collector<T, ?, List<Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -533,7 +533,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row13}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Collector<? super T, ?, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Collector<T, ?, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -554,7 +554,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row13}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Collector<? super T, ?, List<Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Collector<T, ?, List<Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -583,7 +583,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row14}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Collector<? super T, ?, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Collector<T, ?, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -605,7 +605,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row14}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Collector<? super T, ?, List<Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Collector<T, ?, List<Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -635,7 +635,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row15}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Collector<? super T, ?, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Collector<T, ?, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -658,7 +658,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row15}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Collector<? super T, ?, List<Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Collector<T, ?, List<Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -689,7 +689,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row16}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Collector<? super T, ?, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Collector<T, ?, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -713,7 +713,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row16}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Collector<? super T, ?, List<Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Collector<T, ?, List<Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -745,7 +745,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row17}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Collector<? super T, ?, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Collector<T, ?, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -770,7 +770,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row17}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Collector<? super T, ?, List<Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Collector<T, ?, List<Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -803,7 +803,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row18}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Collector<? super T, ?, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Collector<T, ?, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -829,7 +829,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row18}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Collector<? super T, ?, List<Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Collector<T, ?, List<Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -863,7 +863,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row19}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Collector<? super T, ?, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Collector<T, ?, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -890,7 +890,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row19}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Collector<? super T, ?, List<Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Collector<T, ?, List<Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -925,7 +925,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row20}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Collector<? super T, ?, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Collector<T, ?, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -953,7 +953,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row20}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Collector<? super T, ?, List<Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Collector<T, ?, List<Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -989,7 +989,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row21}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Collector<? super T, ?, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Collector<T, ?, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -1018,7 +1018,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row21}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Collector<? super T, ?, List<Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Collector<T, ?, List<Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -1055,7 +1055,7 @@ public final class Rows {
      * Create a collector that can collect into an array of {@link Row22}.
      */
     @SuppressWarnings("unchecked")
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Collector<? super T, ?, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>[]> collectingArray(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Collector<T, ?, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>[]> collectingArray(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,
@@ -1085,7 +1085,7 @@ public final class Rows {
     /**
      * Create a collector that can collect into a list of {@link Row22}.
      */
-    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Collector<? super T, ?, List<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>> collecting(
+    public static <T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Collector<T, ?, List<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>> collecting(
         Function<? super T, ? extends T1> f1,
         Function<? super T, ? extends T2> f2,
         Function<? super T, ? extends T3> f3,

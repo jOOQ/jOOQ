@@ -132,6 +132,7 @@ final class Names {
     static final Name N_JSON_AGG               = unquotedName("json_agg");
     static final Name N_JSON_ARRAY             = unquotedName("json_array");
     static final Name N_JSON_ARRAYAGG          = unquotedName("json_arrayagg");
+    static final Name N_JSON_BUILD_ARRAY       = unquotedName("json_build_array");
     static final Name N_JSON_CONTAINS_PATH     = unquotedName("json_contains_path");
     static final Name N_JSON_EXTRACT           = unquotedName("json_extract");
     static final Name N_JSON_MERGE             = unquotedName("json_merge");
@@ -142,6 +143,7 @@ final class Names {
     static final Name N_JSON_TABLE             = unquotedName("json_table");
     static final Name N_JSON_VALUE             = unquotedName("json_value");
     static final Name N_JSONB_AGG              = unquotedName("jsonb_agg");
+    static final Name N_JSONB_BUILD_ARRAY      = unquotedName("jsonb_build_array");
     static final Name N_JSONB_OBJECT           = unquotedName("jsonb_object");
     static final Name N_JSONB_OBJECT_AGG       = unquotedName("jsonb_object_agg");
     static final Name N_JSONB_OBJECTAGG        = unquotedName("jsonb_objectagg");

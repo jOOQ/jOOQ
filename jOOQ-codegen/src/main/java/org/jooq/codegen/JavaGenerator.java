@@ -4831,9 +4831,12 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType(resolver(out)), out);
+                final boolean array = isArrayType(columnType);
 
                 if (columnType.equals("scala.Array[scala.Byte]"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
+                else if (array)
+                    out.println("sb%s.append(\"[\").append(if (this.%s == null) \"\" else %s.mkString(\", \")).append(\"]\")", separator, columnMember, columnMember);
                 else
                     out.println("sb%s.append(%s)", separator, columnMember);
 

@@ -1244,7 +1244,7 @@ extends
      * @throws TooManyRowsException if the query returned more than one record
      * @see DefaultRecordMapper
      */
-    @Nullable
+    // [#10774] This is @Nullable in rare cases, which can be annoying for Kotlin users in most cases
     <E> E fetchSingleInto(Class<? extends E> type) throws DataAccessException, MappingException, NoDataFoundException, TooManyRowsException;
 
     /**

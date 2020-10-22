@@ -4680,8 +4680,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return false");
                 out.println("}");
 
-                if (getJavaType(column.getType(resolver(out)), out).endsWith("[]"))
-                    out.println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
+                if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
+                    out.println("else if (!(%s sameElements other.%s))", columnMember, columnMember);
                 else
                     out.println("else if (!%s.equals(other.%s))", columnMember, columnMember);
 
@@ -4710,7 +4710,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return false");
                 out.println("}");
 
-                if (getJavaType(column.getType(resolver(out)), out).endsWith("[]"))
+                if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
                     out.println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
                 else
                     out.println("else if (%s != other.%s)", columnMember, columnMember);
@@ -4741,7 +4741,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return false;");
                 out.println("}");
 
-                if (getJavaType(column.getType(resolver(out)), out).endsWith("[]"))
+                if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
                     out.println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
                 else
                     out.println("else if (!%s.equals(other.%s))", columnMember, columnMember);
@@ -4763,10 +4763,10 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                if (getJavaType(column.getType(resolver(out)), out).endsWith("[]"))
-                    out.println("result = prime * result + (if (this.%s == null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
+                if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
+                    out.println("result = prime * result + (if (this.%s == null) 0 else %s.toSeq.hashCode)", columnMember, columnMember);
                 else
-                    out.println("result = prime * result + (if (this.%s == null) 0 else this.%s.hashCode())", columnMember, columnMember);
+                    out.println("result = prime * result + (if (this.%s == null) 0 else this.%s.hashCode)", columnMember, columnMember);
             }
 
             out.println("return result");
@@ -4780,7 +4780,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                if (getJavaType(column.getType(resolver(out)), out).endsWith("[]"))
+                if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
                     out.println("result = prime * result + (if (this.%s === null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
                 else
                     out.println("result = prime * result + (if (this.%s === null) 0 else this.%s.hashCode())", columnMember, columnMember);
@@ -4798,7 +4798,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                if (getJavaType(column.getType(resolver(out)), out).endsWith("[]"))
+                if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
                     out.println("result = prime * result + ((this.%s == null) ? 0 : %s.hashCode(this.%s));", columnMember, Arrays.class, columnMember);
                 else
                     out.println("result = prime * result + ((this.%s == null) ? 0 : this.%s.hashCode());", columnMember, columnMember);
@@ -4831,9 +4831,12 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType(resolver(out)), out);
+                final boolean array = isArrayType(columnType);
 
                 if (columnType.equals("scala.Array[scala.Byte]"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
+                else if (array)
+                    out.println("sb%s.append(\"[\").append(if (this.%s == null) \"\" else %s.mkString(\", \")).append(\"]\")", separator, columnMember, columnMember);
                 else
                     out.println("sb%s.append(%s)", separator, columnMember);
 
@@ -4855,7 +4858,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType(resolver(out)), out);
-                final boolean array = columnType.endsWith("[]");
+                final boolean array = isArrayType(columnType);
 
                 if (array && columnType.equals("kotlin.ByteArray"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
@@ -4882,7 +4885,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType(resolver(out)), out);
-                final boolean array = columnType.endsWith("[]");
+                final boolean array = isArrayType(columnType);
 
                 if (array && columnType.equals("byte[]"))
                     out.println("sb%s.append(\"[binary...]\");", separator);
@@ -8065,6 +8068,10 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected JavaTypeResolver resolver(JavaWriter out, Mode mode) {
         return new Resolver(out, mode);
+    }
+
+    protected boolean isArrayType(String javaType) {
+        return javaType.endsWith("[]") || javaType.startsWith("kotlin.Array") || javaType.startsWith("scala.Array");
     }
 
     protected String getJavaType(DataTypeDefinition type, JavaWriter out) {

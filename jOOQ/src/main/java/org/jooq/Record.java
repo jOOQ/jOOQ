@@ -1018,7 +1018,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @see #from(Object)
      * @see DefaultRecordMapper
      */
-    @Nullable
+    // [#10774] This is @Nullable in rare cases, which can be annoying for Kotlin users in most cases
     <E> E into(Class<? extends E> type) throws MappingException;
 
     /**

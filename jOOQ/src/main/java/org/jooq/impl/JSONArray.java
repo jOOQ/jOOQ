@@ -39,16 +39,19 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.DSL.jsonArrayAgg;
+import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_JSON_ARRAY;
+import static org.jooq.impl.Names.N_JSONB_BUILD_ARRAY;
 import static org.jooq.impl.Names.N_JSON_ARRAY;
+import static org.jooq.impl.Names.N_JSON_BUILD_ARRAY;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.SQLDataType.JSON;
 
 import java.util.Collection;
 
@@ -122,10 +125,14 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
 
                     Table<?> t = values(rows).as("t", "a");
                     Field<?> a = t.field("a");
-                    ctx.visit(DSL.field(select(jsonArrayAgg(a)).from(t).where(a.isNotNull())));
+                    ctx.visit(DSL.field(
+                        select((Field<?>) (getDataType() == JSON ? jsonArrayAgg(a) : jsonbArrayAgg(a)))
+                        .from(t)
+                        .where(a.isNotNull())
+                    ));
                 }
                 else {
-                    ctx.visit(unquotedName("json_build_array")).sql('(').visit(args).sql(')');
+                    ctx.visit(getDataType() == JSON ? N_JSON_BUILD_ARRAY : N_JSONB_BUILD_ARRAY).sql('(').visit(args).sql(')');
                 }
 
                 break;

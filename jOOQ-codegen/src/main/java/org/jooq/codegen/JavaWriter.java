@@ -329,14 +329,37 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         return result;
     }
 
+    private static final Pattern KOTLIN_ARRAY_PATTERN = Pattern.compile("kotlin.Array<([^?>]*)\\?>");
+
     private String patchKotlinClasses(String c) {
+        // [#10768] TODO: Is this the right place to patch these classes?
+
+        Matcher m;
         if (isKotlin) {
             if (c.endsWith("[]"))
                 c = "kotlin.Array<" + patchKotlinClasses(c.substring(0, c.length() - 2)) + "?>";
+            else if (Byte.class.getName().equals(c))
+                c = "kotlin.Byte";
+            else if (Short.class.getName().equals(c))
+                c = "kotlin.Short";
             else if (Integer.class.getName().equals(c))
                 c = "kotlin.Int";
+            else if (Long.class.getName().equals(c))
+                c = "kotlin.Long";
+            else if (Float.class.getName().equals(c))
+                c = "kotlin.Float";
+            else if (Double.class.getName().equals(c))
+                c = "kotlin.Double";
+            else if (Boolean.class.getName().equals(c))
+                c = "kotlin.Boolean";
+            else if (Character.class.getName().equals(c))
+                c = "kotlin.Char";
+            else if (String.class.getName().equals(c))
+                c = "kotlin.String";
             else if (Object.class.getName().equals(c))
                 c = "kotlin.Any";
+            else if ((m = KOTLIN_ARRAY_PATTERN.matcher(c)).matches())
+                c = m.replaceAll("kotlin.Array<" + ref(patchKotlinClasses(m.group(1))) + "?>");
         }
 
         return c;

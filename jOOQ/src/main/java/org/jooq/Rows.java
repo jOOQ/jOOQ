@@ -63,7 +63,7 @@ public final class Rows {
     public static <T> Collector<T, ?, RowN[]> collectingArray(
         Function<? super T, ?>... functions
     ) {
-        return Collectors.collectingAndThen(collecting(functions), l -> l.toArray(RowN[]::new));
+        return Collectors.collectingAndThen(collecting(functions), l -> l.toArray(new RowN[0]));
     }
 
     /**

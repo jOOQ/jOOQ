@@ -219,6 +219,7 @@ public class JavaGenerator extends AbstractGenerator {
     private static final String                   KMUTABLELIST                 = "kotlin.collections.MutableList";
 
     private static final Set<String>              PRIMITIVE_WRAPPERS           = new HashSet<>(Arrays.asList(
+        Byte.class.getName(),
         Short.class.getName(),
         Integer.class.getName(),
         Long.class.getName(),

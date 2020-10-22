@@ -2307,6 +2307,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
         printValidationAnnotation(out, column);
         printNullableOrNonnullAnnotation(out, column);
         boolean override = generateInterfaces();
@@ -6644,93 +6645,96 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("@%s", out.ref("javax.persistence.Entity"));
 
             // Since JPA 1.0
-            out.print("@%s(name = \"", out.ref("javax.persistence.Table"));
+            out.println("@%s(", out.ref("javax.persistence.Table"));
+            out.print("name = \"", out.ref("javax.persistence.Table"));
             out.print(escapeString(table.getName()));
             out.print("\"");
 
             if (!schema.isDefaultSchema()) {
-                out.print(", schema = \"");
+                out.println(",");
+                out.print("schema = \"");
                 out.print(escapeString(schema.getOutputName()));
                 out.print("\"");
             }
 
-            StringBuilder sb1 = new StringBuilder();
-            String glue1 = generateNewline();
+            List<UniqueKeyDefinition> keys = table.getUniqueKeys();
 
-            for (UniqueKeyDefinition uk : table.getUniqueKeys()) {
-                sb1.append(glue1);
-                sb1.append(out.tabString())
-                   .append(scala ? "new " : "@")
+            if (!keys.isEmpty()) {
+                out.println(",");
+                out.print("uniqueConstraints = ");
+                out.println(scala ? "Array(" : kotlin ? "[" : "{");
 
-                   // Since JPA 1.0
-                   .append(out.ref("javax.persistence.UniqueConstraint"))
-                   .append("(");
+                for (int i = 0; i < keys.size(); i++) {
+                    UniqueKeyDefinition uk = keys.get(i);
+                    out.print(scala ? "new " : kotlin ? "" : "@")
 
-                if (!StringUtils.isBlank(uk.getOutputName()))
-                    sb1.append("name = \"" + escapeString(uk.getOutputName()) + "\", ");
+                       // Since JPA 1.0
+                       .print(out.ref("javax.persistence.UniqueConstraint"))
+                       .print("(");
 
-                sb1.append("columnNames = ")
-                   .append(scala ? "Array(" : "{");
+                    if (!StringUtils.isBlank(uk.getOutputName()))
+                        out.print("name = \"" + escapeString(uk.getOutputName()) + "\", ");
 
-                String glue1Inner = "";
-                for (ColumnDefinition column : uk.getKeyColumns()) {
-                    sb1.append(glue1Inner);
-                    sb1.append("\"");
-                    sb1.append(escapeString(column.getName()));
-                    sb1.append("\"");
+                    out.print("columnNames = ")
+                       .print(scala ? "Array(" : kotlin ? "[ " : "{ ");
 
-                    glue1Inner = ", ";
+                    List<ColumnDefinition> columns = uk.getKeyColumns();
+                    for (int j = 0; j < columns.size(); j++) {
+                        out.print(j > 0 ? ", " : "");
+                        out.print("\"");
+                        out.print(escapeString(columns.get(j).getName()));
+                        out.print("\"");
+                    }
+
+                    out.print(scala ? ")" : kotlin ? " ]" : " }").print(")").println(i < keys.size() - 1 ? "," : "");
                 }
 
-                sb1.append(scala ? ")" : "}").append(")");
-
-                glue1 = "," + generateNewline();
-            }
-
-            if (sb1.length() > 0) {
-                out.println(", uniqueConstraints = %s%s", (scala ? "Array(" : "{"), sb1.toString());
-                out.print("%s", (scala ? ")" : "}"));
+                out.print(scala ? ")" : kotlin ? "]" : "}");
             }
 
             if (StringUtils.isBlank(generateJPAVersion()) || "2.1".compareTo(generateJPAVersion()) <= 0) {
-                StringBuilder sb2 = new StringBuilder();
-                String glue2 = generateNewline();
+                List<IndexDefinition> indexes = table.getIndexes();
 
-                for (IndexDefinition index : table.getIndexes()) {
-                    sb2.append(glue2);
-                    sb2.append(out.tabString())
-                       .append(scala ? "new " : "@")
-                       .append(out.ref("javax.persistence.Index"))
-                       .append("(name = \"").append(escapeString(index.getOutputName())).append("\"");
+                if (!indexes.isEmpty()) {
+                    out.println(",");
+                    out.print("indexes = ").println(scala ? "Array(" : kotlin ? "[" : "{");
 
-                    if (index.isUnique())
-                        sb2.append(", unique = true");
+                    for (int i = 0; i < indexes.size(); i++) {
+                        IndexDefinition index = indexes.get(i);
 
-                    sb2.append(", columnList = \"");
+                        out.print(scala ? "new " : kotlin ? "" : "@");
+                        out.print(out.ref("javax.persistence.Index"));
+                        out.print("(name = \"").print(escapeString(index.getOutputName())).print("\"");
 
-                    String glue2Inner = "";
-                    for (IndexColumnDefinition column : index.getIndexColumns()) {
-                        sb2.append(glue2Inner)
-                           .append(escapeString(column.getOutputName()));
+                        if (index.isUnique())
+                            out.print(", unique = true");
 
-                        if (column.getSortOrder() == SortOrder.ASC)
-                            sb2.append(" ASC");
-                        else if (column.getSortOrder() == SortOrder.DESC)
-                            sb2.append(" DESC");
+                        out.print(", columnList = \"");
 
-                        glue2Inner = ", ";
+                        List<IndexColumnDefinition> columns = index.getIndexColumns();
+
+                        for (int j = 0; j < columns.size(); j++) {
+                            IndexColumnDefinition column = columns.get(j);
+
+                            if (j > 0)
+                                out.print(", ");
+
+                            out.print(escapeString(column.getOutputName()));
+
+                            if (column.getSortOrder() == SortOrder.ASC)
+                                out.print(" ASC");
+                            else if (column.getSortOrder() == SortOrder.DESC)
+                                out.print(" DESC");
+                        }
+
+                        out.print("\")").println(i < indexes.size() - 1 ? "," : "");
                     }
 
-                    sb2.append("\")");
-                    glue2 = "," + generateNewline();
-                }
-
-                if (sb2.length() > 0) {
-                    out.println(", indexes = %s%s", (scala ? "Array(" : "{"), sb2.toString());
-                    out.print("%s", (scala ? ")" : "}"));
+                    out.print(scala ? ")" : kotlin ? "]" : "}");
                 }
             }
 
+            out.println();
             out.println(")");
         }
 
@@ -6742,6 +6746,9 @@ public class JavaGenerator extends AbstractGenerator {
         int indent = out.indent();
 
         if (generateJPAAnnotations()) {
+            if (kotlin)
+                out.indentInc();
+
             UniqueKeyDefinition pk = column.getPrimaryKey();
 
             if (pk != null) {
@@ -6789,6 +6796,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.print(precision);
             out.print(scale);
             out.println(")");
+
+            if (kotlin)
+                out.indentDec();
         }
 
         // [#10196] The above logic triggers an indent level of -1, incorrectly

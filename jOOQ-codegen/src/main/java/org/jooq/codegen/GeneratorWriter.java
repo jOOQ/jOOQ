@@ -286,6 +286,18 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     @SuppressWarnings("unchecked")
+    public W indentInc() {
+        this.indentTabsAllLines++;
+        return (W) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public W indentDec() {
+        this.indentTabsAllLines--;
+        return (W) this;
+    }
+
+    @SuppressWarnings("unchecked")
     public W indent(int tabs) {
         this.indentTabsAllLines = tabs;
         return (W) this;

@@ -44,7 +44,10 @@ import org.jooq.impl.DSL;
  * The {@link SQLDialect#H2} specific DSL.
  *
  * @author Lukas Eder
+ * @deprecated - 3.15.0 - [#10796] - This class will be removed, soon, no more
+ *             vendor specific DSL API will be added.
  */
+@Deprecated
 public class H2DSL extends DSL {
 
     /**

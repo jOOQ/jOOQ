@@ -197,7 +197,6 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         return result;
     }
 
-    @SuppressWarnings("deprecation")
     public static final DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType, JavaTypeResolver resolver) {
         DataTypeDefinition result = definedType;
         Database db = container.getDatabase();
@@ -229,8 +228,8 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                         child.getSchema(),
                         forcedDataType.getTypeName(),
                         0, 0, 0,
-                        result.isNullable(), result.getDefaultValue(), (Name) null, null,
-                        binding
+                        result.isNullable(), result.getDefaultValue(), result.isIdentity(), (Name) null, null,
+                        binding, null
                     );
                 }
             }
@@ -276,6 +275,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
                 boolean n = result.isNullable();
                 String d = result.getDefaultValue();
+                boolean i = result.isIdentity();
 
                 int l = 0;
                 int p = 0;
@@ -304,7 +304,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     if (customType != null)
                         log.warn("Custom type conflict", child + " has custom type " + customType + " forced by " + forcedType + " but a data type rewrite applies");
 
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), uType, l, p, s, n, d, (Name) null, converter, binding);
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), uType, l, p, s, n, d, i, (Name) null, converter, binding, null);
                 }
 
                 // Other forced types are UDT's, enums, etc.
@@ -314,7 +314,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     s = result.getScale();
                     String t = result.getType();
                     Name u = result.getQualifiedUserType();
-                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, l, p, s, n, d, u, converter, binding, uType);
+                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, l, p, s, n, d, i, u, converter, binding, uType);
                 }
 
                 // [#4597] If we don't have a type-rewrite (forcedDataType) or a

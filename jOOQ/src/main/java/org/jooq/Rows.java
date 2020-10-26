@@ -70,7 +70,7 @@ public final class Rows {
      * Create a collector that can collect into a list of {@link RowN}.
      */
     @SafeVarargs
-    public static <T, T1> Collector<T, ?, List<RowN>> collecting(
+    public static <T> Collector<T, ?, List<RowN>> collecting(
         Function<? super T, ?>... functions
     ) {
         return Collector.of(

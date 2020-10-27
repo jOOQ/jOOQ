@@ -48,10 +48,14 @@ import org.jooq.impl.DSL;
 
 /**
  * An auxiliary class for constructing {@link Row} collections.
+ * <p>
+ * The current implementation is in draft stage. It may be changed incompatibly
+ * in the future. Use at your own risk.
  *
  * @author Dmitry Baev
  * @author Lukas Eder
  */
+@Internal
 public final class Rows {
 
 

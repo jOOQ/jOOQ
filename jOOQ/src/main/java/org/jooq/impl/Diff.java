@@ -427,27 +427,29 @@ final class Diff {
 
                 private final boolean precisionDifference(DataType<?> type1, DataType<?> type2) {
 
-                    // [#10807] One type has an implicit default precision
-                    return type1.precisionDefined() != type2.precisionDefined()
+                    // [#10807] Only one type has a default precision defined
+                    boolean d1 = defaultPrecision(type1);
+                    boolean d2 = defaultPrecision(type2);
 
-                    //          ... and the other type has an explicit default precision
-                        && !defaultPrecision(type1)
-                        && !defaultPrecision(type2)
-                        || type1.precision() != type2.precision();
+                    if (d1 || d2)
+                        return d1 != d2;
+                    else
+                        return type1.precision() != type2.precision();
                 }
 
                 private final boolean defaultPrecision(DataType<?> type) {
                     if (!type.isDateTime())
                         return false;
 
+                    if (!type.precisionDefined())
+                        return true;
+
                     if (FALSE.equals(ctx.settings().isMigrationIgnoreDefaultTimestampPrecisionDiffs()))
                         return false;
 
                     switch (ctx.family()) {
 
-
-
-                        case POSTGRES:
+                        // [#10807] TODO: Alternative defaults will be listed here as they are discovered
                         default:
                             return type.precision() == 6;
                     }

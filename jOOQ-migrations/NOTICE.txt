@@ -1,0 +1,10 @@
+Third party NOTICE.txt contents
+===============================
+
+Contents of https://github.com/apache/commons-lang/blob/master/NOTICE.txt
+-------------------------------------------------------------------------
+Apache Commons Lang
+Copyright 2001-2019 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).

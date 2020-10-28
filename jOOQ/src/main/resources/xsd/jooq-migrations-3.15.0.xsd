@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-migrations-3.15.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-migrations-3.15.0.xsd"
+    elementFormDefault="qualified">
+
+    <element name="migrations" type="tns:MigrationsType"/>
+    
+    <complexType name="MigrationsType">
+        <all>
+            <element name="commits" type="tns:CommitsType" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+
+    <complexType name="CommitsType">
+        <sequence>
+            <element name="commit" type="tns:CommitType" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="CommitType">
+        <all>
+            <element name="parents" type="tns:ParentsType" minOccurs="0" maxOccurs="1" />
+            <element name="id" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="message" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="files" type="tns:FilesType" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <complexType name="ParentsType">
+        <sequence>
+            <element name="parent" type="tns:ParentType" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+   
+    <!-- TOD: This is a bit verbose. Can we make it simpler? MiniJAXB can't handle this yet, nor xs:list -->
+    <complexType name="ParentType">
+        <all>
+            <element name="id" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <complexType name="FilesType">
+        <sequence>
+            <element name="file" type="tns:FileType" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+    
+    <complexType name="FileType">
+        <sequence>
+            <element name="path" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="content" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="contentType" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="change" type="tns:ChangeType" minOccurs="1" maxOccurs="1" />
+        </sequence>
+    </complexType>
+    
+    <simpleType name="ChangeType">
+        <restriction base="string">
+            <enumeration value="ADD"/>
+            <enumeration value="MODIFY"/>
+            <enumeration value="DELETE"/>
+            <enumeration value="RENAME"/>
+            <enumeration value="COPY"/>
+        </restriction>
+    </simpleType>
+</schema>

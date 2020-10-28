@@ -37,11 +37,15 @@
  */
 package org.jooq.impl;
 
+import java.util.Collections;
+import java.util.Set;
+
+import org.jooq.Commit;
 import org.jooq.Configuration;
 import org.jooq.MigrationContext;
 import org.jooq.Queries;
 import org.jooq.Query;
-import org.jooq.Version;
+import org.jooq.Schema;
 
 /**
  * A default implementation for {@link MigrationContext}.
@@ -50,16 +54,25 @@ import org.jooq.Version;
  */
 final class DefaultMigrationContext extends AbstractScope implements MigrationContext {
 
-    final Version migrationFrom;
-    final Version migrationTo;
-    final Queries migrationQueries;
-    final Queries revertUntrackedQueries;
+    final Set<Schema> migratedSchemas;
+    final Commit      migrationFrom;
+    final Commit      migrationTo;
+    final Queries     migrationQueries;
+    final Queries     revertUntrackedQueries;
 
-    Query         query;
+    Query             query;
 
-    DefaultMigrationContext(Configuration configuration, Version migrationFrom, Version migrationTo, Queries migrationQueries, Queries revertUntrackedQueries) {
+    DefaultMigrationContext(
+        Configuration configuration,
+        Set<Schema> migratedSchemas,
+        Commit migrationFrom,
+        Commit migrationTo,
+        Queries migrationQueries,
+        Queries revertUntrackedQueries
+    ) {
         super(configuration);
 
+        this.migratedSchemas = migratedSchemas;
         this.migrationFrom = migrationFrom;
         this.migrationTo = migrationTo;
         this.migrationQueries = migrationQueries;
@@ -67,41 +80,46 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
     }
 
     @Override
-    public Version migrationFrom() {
+    public final Set<Schema> migratedSchemas() {
+        return Collections.unmodifiableSet(migratedSchemas);
+    }
+
+    @Override
+    public final Commit migrationFrom() {
         return migrationFrom;
     }
 
     @Override
-    public Version migrationTo() {
+    public final Commit migrationTo() {
         return migrationTo;
     }
 
     @Override
-    public Queries migrationQueries() {
+    public final Queries migrationQueries() {
         return migrationQueries;
     }
 
     @Override
-    public Version queriesFrom() {
+    public final Commit queriesFrom() {
         return migrationFrom;
     }
 
     @Override
-    public Version queriesTo() {
+    public final Commit queriesTo() {
         return migrationTo;
     }
 
     @Override
-    public Queries queries() {
+    public final Queries queries() {
         return migrationQueries;
     }
 
     @Override
-    public Query query() {
+    public final Query query() {
         return query;
     }
 
-    void query(Query q) {
+    final void query(Query q) {
         this.query = q;
     }
 }

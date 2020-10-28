@@ -69,7 +69,7 @@ public final class Constants {
     /**
      * The current jooq-runtime XSD file name.
      */
-    public static final String XSD_RUNTIME    = "jooq-runtime-3.14.0.xsd";
+    public static final String XSD_RUNTIME    = "jooq-runtime-3.15.0.xsd";
 
     /**
      * The current jooq-runtime XML namespace.
@@ -110,6 +110,21 @@ public final class Constants {
      * The current jooq-meta XSD classpath location.
      */
     public static final String CP_META        = "/xsd/" + XSD_META;
+
+    /**
+     * The current jooq-migrations XSD file name.
+     */
+    public static final String XSD_MIGRATIONS = "jooq-migrations-3.15.0.xsd";
+
+    /**
+     * The current jooq-migrations XML namespace.
+     */
+    public static final String NS_MIGRATIONS  = "http://www.jooq.org/xsd/" + XSD_META;
+
+    /**
+     * The current jooq-migrations XSD classpath location.
+     */
+    public static final String CP_MIGRATIONS  = "/xsd/" + XSD_META;
 
     /**
      * The current jooq-codegen XSD file name.

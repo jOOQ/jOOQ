@@ -33,7 +33,7 @@
         <hsqldb.version>2.5.1</hsqldb.version>
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules -->
-        <postgres.version>42.2.16</postgres.version>
+        <postgres.version>42.2.18</postgres.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>2.3.1</jaxb.version>
@@ -644,6 +644,9 @@
         <module>jOOQ-meta-extensions-liquibase</module>
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
+
+        <module>jOOQ-migrations</module>
+
         <module>jOOQ-kotlin</module>
         <module>jOOQ-scala_2.13</module>
 
@@ -652,19 +655,6 @@
 
 
         <module>jOOQ-xtend</module>
-
-
-        <!-- [#10150] Turn off building jOOQ with jOOQ-refaster module until this works with JDK 15
-        <module>jOOQ-refaster</module>
-          -->
-
-
-
-
-
-
-
-
 
 
 

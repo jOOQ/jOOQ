@@ -54,6 +54,7 @@ import java.util.concurrent.Executor;
 import javax.sql.DataSource;
 
 import org.jooq.CharsetProvider;
+import org.jooq.CommitProvider;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
@@ -80,7 +81,6 @@ import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
 import org.jooq.Unwrapper;
 import org.jooq.UnwrapperProvider;
-import org.jooq.VersionProvider;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
@@ -88,6 +88,7 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
 import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
 import org.jooq.impl.Tools.DataCacheKey;
+import org.jooq.migrations.xml.jaxb.MigrationsType;
 
 /**
  * A default implementation for configurations within a {@link DSLContext}, if no
@@ -116,7 +117,7 @@ public class DefaultConfiguration implements Configuration {
     private transient ConnectionProvider                interpreterConnectionProvider;
     private transient ConnectionProvider                systemConnectionProvider;
     private transient MetaProvider                      metaProvider;
-    private transient VersionProvider                   versionProvider;
+    private transient CommitProvider                    commitProvider;
     private transient ExecutorProvider                  executorProvider;
     private transient TransactionProvider               transactionProvider;
     private transient RecordMapperProvider              recordMapperProvider;
@@ -207,7 +208,7 @@ public class DefaultConfiguration implements Configuration {
             configuration.interpreterConnectionProvider,
             configuration.systemConnectionProvider,
             configuration.metaProvider,
-            configuration.versionProvider,
+            configuration.commitProvider,
             configuration.executorProvider,
             configuration.transactionProvider,
             configuration.recordMapperProvider,
@@ -243,7 +244,7 @@ public class DefaultConfiguration implements Configuration {
         ConnectionProvider interpreterConnectionProvider,
         ConnectionProvider systemConnectionProvider,
         MetaProvider metaProvider,
-        VersionProvider versionProvider,
+        CommitProvider commitProvider,
         ExecutorProvider executorProvider,
         TransactionProvider transactionProvider,
         RecordMapperProvider recordMapperProvider,
@@ -268,7 +269,7 @@ public class DefaultConfiguration implements Configuration {
         setInterpreterConnectionProvider(interpreterConnectionProvider);
         setSystemConnectionProvider(systemConnectionProvider);
         set(metaProvider);
-        set(versionProvider);
+        set(commitProvider);
         set(executorProvider);
         set(transactionProvider);
         set(recordMapperProvider);
@@ -328,7 +329,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -358,7 +359,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             newMetaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -382,13 +383,13 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final Configuration derive(VersionProvider newVersionProvider) {
+    public final Configuration derive(CommitProvider newCommitProvider) {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            newVersionProvider,
+            newCommitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -423,7 +424,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             newExecutorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -453,7 +454,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             newTransactionProvider,
             recordMapperProvider,
@@ -488,7 +489,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             newRecordMapperProvider,
@@ -523,7 +524,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -558,7 +559,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -593,7 +594,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -628,7 +629,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -663,7 +664,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -698,7 +699,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -733,7 +734,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -768,7 +769,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -798,7 +799,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -828,7 +829,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -859,7 +860,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -888,7 +889,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -918,7 +919,7 @@ public class DefaultConfiguration implements Configuration {
             interpreterConnectionProvider,
             systemConnectionProvider,
             metaProvider,
-            versionProvider,
+            commitProvider,
             executorProvider,
             transactionProvider,
             recordMapperProvider,
@@ -980,8 +981,8 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final Configuration set(VersionProvider newVersionProvider) {
-        this.versionProvider = newVersionProvider;
+    public final Configuration set(CommitProvider newCommitProvider) {
+        this.commitProvider = newCommitProvider;
         return this;
     }
 
@@ -1224,10 +1225,10 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
-     * @see #set(MetaProvider)
+     * @see #set(CommitProvider)
      */
-    public final void setVersionProvider(VersionProvider newVersionProvider) {
-        set(newVersionProvider);
+    public final void setVersionProvider(CommitProvider newCommitProvider) {
+        set(newCommitProvider);
     }
 
     /**
@@ -1429,10 +1430,10 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final VersionProvider versionProvider() {
-        return versionProvider != null
-             ? versionProvider
-             : new DefaultVersionProvider(this);
+    public final CommitProvider commitProvider() {
+        return commitProvider != null
+             ? commitProvider
+             : new DefaultCommitProvider(this, new MigrationsType());
     }
 
     @Override
@@ -1596,8 +1597,8 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(metaProvider instanceof Serializable
             ? metaProvider
             : null);
-        oos.writeObject(versionProvider instanceof Serializable
-            ? versionProvider
+        oos.writeObject(commitProvider instanceof Serializable
+            ? commitProvider
             : null);
         oos.writeObject(transactionProvider instanceof Serializable
             ? transactionProvider
@@ -1661,7 +1662,7 @@ public class DefaultConfiguration implements Configuration {
         interpreterConnectionProvider = (ConnectionProvider) ois.readObject();
         systemConnectionProvider = (ConnectionProvider) ois.readObject();
         metaProvider = (MetaProvider) ois.readObject();
-        versionProvider = (VersionProvider) ois.readObject();
+        commitProvider = (CommitProvider) ois.readObject();
         transactionProvider = (TransactionProvider) ois.readObject();
         recordMapperProvider = (RecordMapperProvider) ois.readObject();
         recordUnmapperProvider = (RecordUnmapperProvider) ois.readObject();

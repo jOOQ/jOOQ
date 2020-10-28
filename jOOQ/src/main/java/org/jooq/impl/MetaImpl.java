@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+// ...
 // ...
 // ...
 // ...
@@ -46,6 +48,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
@@ -112,7 +115,7 @@ final class MetaImpl extends AbstractMeta {
     private static final JooqLogger      log                              = JooqLogger.getLogger(MetaImpl.class);
     private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(H2, POSTGRES);
     private static final Set<SQLDialect> ENCODED_TIMESTAMP_PRECISION      = SQLDialect.supportedBy(HSQLDB, MARIADB);
     private static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION   = SQLDialect.supportedBy(MYSQL, SQLITE);
 
@@ -900,8 +903,20 @@ final class MetaImpl extends AbstractMeta {
                         try {
 
                             // [#7194] Some databases report all default values as expressions, not as values
-                            if (EXPRESSION_COLUMN_DEFAULT.contains(dialect()))
-                                type = type.defaultValue(DSL.field(defaultValue, type));
+                            if (EXPRESSION_COLUMN_DEFAULT.contains(dialect())) {
+                                if (FALSE.equals(settings().isParseMetaDefaultExpressions())) {
+                                    type = type.defaultValue(DSL.field(defaultValue, type));
+                                }
+                                else {
+                                    try {
+                                        type = type.defaultValue(dsl().parser().parseField(defaultValue));
+                                    }
+                                    catch (ParserException e) {
+                                        log.info("Cannot parse default expression: " + defaultValue, e);
+                                        type = type.defaultValue(DSL.field(defaultValue, type));
+                                    }
+                                }
+                            }
 
                             // [#5574] MySQL mixes constant value expressions with other column expressions here
                             else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(dialect()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))

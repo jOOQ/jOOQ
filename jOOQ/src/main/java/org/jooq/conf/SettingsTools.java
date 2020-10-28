@@ -335,6 +335,8 @@ public final class SettingsTools {
             result.renderFormatting = (RenderFormatting) result.renderFormatting.clone();
         if (result.parseSearchPath != null)
             result.parseSearchPath = new ArrayList<>(result.parseSearchPath);
+        if (result.migrationSchemata != null)
+            result.migrationSchemata = new ArrayList<>(result.migrationSchemata);
 
         return result;
     }

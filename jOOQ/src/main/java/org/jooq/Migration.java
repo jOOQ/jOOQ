@@ -41,7 +41,7 @@ import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationValidationException;
 
 /**
- * An executable migration between two {@link Version} instances.
+ * An executable migration between two {@link Commit} instances.
  * <p>
  * This is EXPERIMENTAL functionality and subject to change in future jOOQ
  * versions.
@@ -54,12 +54,12 @@ public interface Migration extends Scope {
     /**
      * The version that is being migrated from.
      */
-    Version from();
+    Commit from();
 
     /**
      * The version that is being migrated to.
      */
-    Version to();
+    Commit to();
 
     /**
      * The queries that are executed by the migration.

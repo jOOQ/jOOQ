@@ -53,13 +53,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @Internal
-public interface Version {
-
-    /**
-     * The version ID, which is unique in the version graph.
-     */
-    @NotNull
-    String id();
+public interface Version extends Node<Version> {
 
     /**
      * The version's {@link Meta} representation of the database.
@@ -83,18 +77,6 @@ public interface Version {
      */
     @NotNull
     Queries migrateTo(Version version);
-
-    /**
-     * Get the root version of this graph.
-     */
-    @NotNull
-    Version root();
-
-    /**
-     * Get the parent versions of this version.
-     */
-    @NotNull
-    List<Version> parents();
 
     /**
      * Commit a new {@link Meta} representation to the version graph.

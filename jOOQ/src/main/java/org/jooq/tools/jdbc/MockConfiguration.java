@@ -45,6 +45,7 @@ import java.util.concurrent.Executor;
 import javax.sql.DataSource;
 
 import org.jooq.CharsetProvider;
+import org.jooq.CommitProvider;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
@@ -69,7 +70,6 @@ import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
 import org.jooq.Unwrapper;
 import org.jooq.UnwrapperProvider;
-import org.jooq.VersionProvider;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
@@ -147,8 +147,8 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public VersionProvider versionProvider() {
-        return delegate.versionProvider();
+    public CommitProvider commitProvider() {
+        return delegate.commitProvider();
     }
 
     @Override
@@ -254,8 +254,8 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration set(VersionProvider newVersionProvider) {
-        return delegate.set(newVersionProvider);
+    public Configuration set(CommitProvider newCommitProvider) {
+        return delegate.set(newCommitProvider);
     }
 
     @Override
@@ -426,8 +426,8 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration derive(VersionProvider newVersionProvider) {
-        return delegate.derive(newVersionProvider);
+    public Configuration derive(CommitProvider newCommitProvider) {
+        return delegate.derive(newCommitProvider);
     }
 
     @Override

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
@@ -55,14 +56,19 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.Commit;
+import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ContextTransactionalRunnable;
 import org.jooq.Field;
+import org.jooq.Files;
 import org.jooq.Meta;
+import org.jooq.Meta.Predicate;
 import org.jooq.Migration;
 import org.jooq.MigrationListener;
 import org.jooq.Name;
@@ -73,9 +79,8 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-import org.jooq.Version;
-import org.jooq.Versions;
 import org.jooq.conf.InterpreterSearchSchema;
+import org.jooq.conf.MigrationSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationValidationException;
@@ -91,45 +96,47 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     // TODO: Make this table and its schema configurable
     private static final JooqMigrationsChangelog CHANGELOG = JooqMigrationsChangelog.JOOQ_MIGRATIONS_CHANGELOG;
-    private final Version                        to;
-    private Version                              from;
+    private final Commit                         to;
+    private Commit                               from;
     private Queries                              queries;
-    private Versions                             versions;
+    private Commits                              commits;
 
-    MigrationImpl(Configuration configuration, Version to) {
+    MigrationImpl(Configuration configuration, Commit to) {
         super(configuration.derive(new ThreadLocalTransactionProvider(configuration.systemConnectionProvider())));
 
         this.to = to;
     }
 
     @Override
-    public final Version from() {
+    public final Commit from() {
         if (from == null)
 
             // TODO: Use pessimistic locking so no one else can migrate in between
-            from = currentVersion();
+            from = currentCommit();
 
         return from;
     }
 
     @Override
-    public final Version to() {
+    public final Commit to() {
         return to;
     }
 
     @Override
     public final Queries queries() {
-        if (queries == null)
-            queries = from().migrateTo(to());
+        if (queries == null) {
+            Files files = from().migrateTo(to());
+            queries = files.from().migrateTo(files.to());
+        }
 
         return queries;
     }
 
-    private final Versions versions() {
-        if (versions == null)
-            versions = configuration().versionProvider().provide();
+    private final Commits commits() {
+        if (commits == null)
+            commits = configuration().commitProvider().provide();
 
-        return versions;
+        return commits;
     }
 
     @Override
@@ -141,20 +148,24 @@ final class MigrationImpl extends AbstractScope implements Migration {
         JooqMigrationsChangelogRecord currentRecord = currentChangelogRecord();
 
         if (currentRecord != null) {
-            Version currentVersion = versions().get(currentRecord.getMigratedTo());
+            Commit currentCommit = commits().get(currentRecord.getMigratedTo());
 
-            if (currentVersion == null)
-                throw new DataMigrationValidationException("Version currently installed is not available from VersionProvider: " + currentRecord.getMigratedTo());
+            if (currentCommit == null)
+                throw new DataMigrationValidationException("Version currently installed is not available from CommitProvider: " + currentRecord.getMigratedTo());
         }
 
-        validateVersionProvider(from());
-        validateVersionProvider(to());
-        revertUntracked(ctx, null);
+        validateCommitProvider(ctx, from());
+        validateCommitProvider(ctx, to());
+        revertUntracked(ctx, null, currentRecord);
     }
 
-    private final void validateVersionProvider(Version version) {
-        if (versions().get(version.id()) == null)
-            throw new DataMigrationValidationException("Version is not available from VersionProvider: " + version.id());
+    private final void validateCommitProvider(DefaultMigrationContext ctx, Commit commit) {
+        if (commits().get(commit.id()) == null)
+            throw new DataMigrationValidationException("Commit is not available from CommitProvider: " + commit.id());
+
+        for (Schema schema : lookup(commit.meta().getSchemas()))
+            if (!ctx.migratedSchemas().contains(schema))
+                throw new DataMigrationValidationException("Schema is referenced from commit, but not configured for migration: " + schema);
     }
 
     private final Collection<Schema> lookup(List<Schema> schemas) {
@@ -177,19 +188,25 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return result;
     }
 
-    private final Queries revertUntrackedQueries() {
-        Version currentVersion = currentVersion();
-        Meta currentMeta = currentVersion.meta();
+    private final Queries revertUntrackedQueries(final Set<Schema> includedSchemas) {
+        Commit currentCommit = currentCommit();
+        Meta currentMeta = currentCommit.meta();
+        Meta existingMeta = dsl().meta().filterSchemas(new Predicate<Schema>() {
+            @Override
+            public boolean test(Schema s) {
+                return includedSchemas.contains(s);
+            }
+        });
 
         Set<Schema> expectedSchemas = new HashSet<>();
         expectedSchemas.addAll(lookup(from().meta().getSchemas()));
         expectedSchemas.addAll(lookup(to().meta().getSchemas()));
+        expectedSchemas.retainAll(includedSchemas);
 
-        // TODO Add a settings governing what schemas we're including in the migration
-        //      The current implementation will default to migrating all schemas that are
-        //      touched by the from() or to() version
-        Meta existingMeta = dsl().meta();
+        schemaLoop:
         for (Schema schema : existingMeta.getSchemas()) {
+            if (!includedSchemas.contains(schema))
+                continue schemaLoop;
 
             // TODO Why is this qualification necessary?
             existingMeta = existingMeta.apply(dropTableIfExists(schema.getQualifiedName().append(CHANGELOG.getUnqualifiedName())).cascade());
@@ -203,16 +220,38 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return existingMeta.migrateTo(currentMeta);
     }
 
-    private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener) {
+    private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, JooqMigrationsChangelogRecord currentRecord) {
         if (ctx.revertUntrackedQueries.queries().length > 0)
             if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked()))
-                throw new DataMigrationValidationException("Non-empty difference between actual schema and migration from schema: " + ctx.revertUntrackedQueries);
+                throw new DataMigrationValidationException(
+                    "Non-empty difference between actual schema and migration from schema: " + ctx.revertUntrackedQueries +
+                    (currentRecord == null ? ("\n\nUse Settings.migrationAutoBaseline to automatically set a baseline") : "")
+                );
             else if (listener != null)
                 execute(ctx, listener, ctx.revertUntrackedQueries);
     }
 
     private final DefaultMigrationContext migrationContext() {
-        return new DefaultMigrationContext(configuration(), from(), to(), queries(), revertUntrackedQueries());
+        Set<Schema> schemas = schemas();
+
+        return new DefaultMigrationContext(
+            configuration(),
+            schemas,
+            from(),
+            to(),
+            queries(),
+            revertUntrackedQueries(schemas)
+        );
+    }
+
+    private final Set<Schema> schemas() {
+        Set<Schema> set = new LinkedHashSet<>();
+
+        for (MigrationSchema schema : configuration.settings().getMigrationSchemata())
+            for (Schema s : lookup(asList(schema(name(schema.getCatalog(), schema.getSchema())))))
+                set.add(s);
+
+        return set;
     }
 
     @Override
@@ -237,7 +276,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         return;
                     }
 
-                    // TODO: What to do if we're about to install things on a non-empty schema
                     // TODO: Implement preconditions
                     // TODO: Implement a listener with a variety of pro / oss features
                     // TODO: Implement additional out-of-the-box sanity checks
@@ -262,7 +300,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                     try {
                         log(watch, record, REVERTING);
-                        revertUntracked(ctx, listener);
+                        revertUntracked(ctx, listener, record);
                         log(watch, record, MIGRATING);
                         execute(ctx, listener, queries());
                         log(watch, record, SUCCESS);
@@ -359,22 +397,22 @@ final class MigrationImpl extends AbstractScope implements Migration {
             : null;
     }
 
-    private final Version currentVersion() {
+    private final Commit currentCommit() {
         JooqMigrationsChangelogRecord currentRecord = currentChangelogRecord();
 
         if (currentRecord == null) {
-            Version result = to().root();
+            Commit result = TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();
 
             if (result == null)
-                throw new DataMigrationValidationException("VersionProvider did not provide a root version for " + to().id());
+                throw new DataMigrationValidationException("CommitProvider did not provide a root version for " + to().id());
 
             return result;
         }
         else {
-            Version result = versions().get(currentRecord.getMigratedTo());
+            Commit result = commits().get(currentRecord.getMigratedTo());
 
             if (result == null)
-                throw new DataMigrationValidationException("VersionProvider did not provide a version for " + currentRecord.getMigratedTo());
+                throw new DataMigrationValidationException("CommitProvider did not provide a version for " + currentRecord.getMigratedTo());
 
             return result;
         }

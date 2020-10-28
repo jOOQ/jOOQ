@@ -325,10 +325,10 @@ public interface Configuration extends Serializable {
     MetaProvider metaProvider();
 
     /**
-     * Get this configuration's underlying meta provider.
+     * Get this configuration's underlying commit provider.
      */
     @NotNull
-    VersionProvider versionProvider();
+    CommitProvider commitProvider();
 
     /**
      * Get this configuration's underlying executor provider.
@@ -593,17 +593,17 @@ public interface Configuration extends Serializable {
     Configuration set(MetaProvider newMetaProvider);
 
     /**
-     * Change this configuration to hold a new version provider.
+     * Change this configuration to hold a new commit provider.
      * <p>
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
      *
-     * @param newVersionProvider The new version provider to be contained in the
+     * @param newCommitProvider The new commit provider to be contained in the
      *            changed configuration.
      * @return The changed configuration.
      */
     @NotNull
-    Configuration set(VersionProvider newVersionProvider);
+    Configuration set(CommitProvider newCommitProvider);
 
     /**
      * Change this configuration to hold a new executor provider.
@@ -1054,14 +1054,14 @@ public interface Configuration extends Serializable {
     Configuration derive(MetaProvider newMetaProvider);
 
     /**
-     * Create a derived configuration from this one, with a new version provider.
+     * Create a derived configuration from this one, with a new commit provider.
      *
-     * @param newVersionProvider The new version provider to be contained in the
+     * @param newCommitProvider The new commit provider to be contained in the
      *            derived configuration.
      * @return The derived configuration.
      */
     @NotNull
-    Configuration derive(VersionProvider newVersionProvider);
+    Configuration derive(CommitProvider newCommitProvider);
 
     /**
      * Create a derived configuration from this one, with a new executor.

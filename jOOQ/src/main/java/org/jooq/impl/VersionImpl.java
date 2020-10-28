@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.createSchema;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,7 +53,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
 import org.jooq.Meta;
 import org.jooq.Queries;
@@ -65,16 +65,16 @@ import org.jooq.exception.DataDefinitionException;
 /**
  * @author Lukas Eder
  */
-final class VersionImpl implements Version {
+final class VersionImpl extends AbstractNode<Version> implements Version {
 
     private final DSLContext   ctx;
-    private final String       id;
     private final Meta         meta;
     private final List<Parent> parents;
 
     private VersionImpl(DSLContext ctx, String id, Meta meta, List<Parent> parents) {
+        super(id, null);
+
         this.ctx = ctx;
-        this.id = id;
         this.meta = meta != null ? meta : init(ctx);
         this.parents = parents;
     }
@@ -110,33 +110,23 @@ final class VersionImpl implements Version {
     }
 
     @Override
-    public final String id() {
-        return id;
-    }
-
-    @Override
     public final Meta meta() {
         return meta;
     }
 
     @Override
-    public final Version root() {
-        VersionImpl result = this;
-
-        while (result.parents.size() > 0)
-            result = result.parents.get(0).version;
-
-        return result;
-    }
-
-    @Override
     public final List<Version> parents() {
-        List<Version> result = new ArrayList<>(parents.size());
+        return new AbstractList<Version>() {
+            @Override
+            public Version get(int index) {
+                return parents.get(index).version;
+            }
 
-        for (Parent parent : parents)
-            result.add(parent.version);
-
-        return unmodifiableList(result);
+            @Override
+            public int size() {
+                return parents.size();
+            }
+        };
     }
 
     @Override
@@ -185,7 +175,7 @@ final class VersionImpl implements Version {
                 if (list == null)
                     list = new ArrayList<>();
 
-                list.add(new Parent(new VersionImpl(ctx, parent.version.id, parent.version.meta, Collections.<Parent>emptyList()), parent.queries));
+                list.add(new Parent(new VersionImpl(ctx, parent.version.id(), parent.version.meta, Collections.<Parent>emptyList()), parent.queries));
             }
             else {
                 VersionImpl p = parent.version.subgraphTo(ancestor);
@@ -199,7 +189,7 @@ final class VersionImpl implements Version {
             }
         }
 
-        return list == null ? null : new VersionImpl(ctx, id, meta, list);
+        return list == null ? null : new VersionImpl(ctx, id(), meta, list);
     }
 
     private final Queries migrateTo(VersionImpl target, Queries result) {
@@ -209,10 +199,10 @@ final class VersionImpl implements Version {
         for (Parent parent : target.parents) {
             result = migrateTo(parent.version, result);
 
-            if (!forceApply(parent.queries))
-                result = result.concat(parent.version.meta().migrateTo(target.meta()));
-            else
+            if (parent.queries != null)
                 result = result.concat(parent.queries);
+            else
+                result = result.concat(parent.version.meta().migrateTo(target.meta()));
         }
 
         return result;
@@ -220,19 +210,10 @@ final class VersionImpl implements Version {
 
     private final boolean forceApply() {
         for (Parent parent : parents)
-            if (forceApply(parent.queries))
+            if (parent.queries != null)
                 return true;
             else if (parent.version.forceApply())
                 return true;
-
-        return false;
-    }
-
-    private static final boolean forceApply(Queries queries) {
-        if (queries != null)
-            for (Query query : queries.queries())
-                if (!(query instanceof DDLQuery))
-                    return true;
 
         return false;
     }
@@ -252,53 +233,9 @@ final class VersionImpl implements Version {
         return new VersionImpl(ctx, newId, newMeta, new Version[] { this });
     }
 
-    private static final Version commonAncestor(Version v1, Version v2) {
-        if (v1.id().equals(v2.id()))
-            return v1;
-
-        // TODO: Find a better solution than the brute force one
-        // See e.g. https://en.wikipedia.org/wiki/Lowest_common_ancestor
-
-        Map<Version, Integer> a1 = ancestors(v1, new HashMap<>(), 1);
-        Map<Version, Integer> a2 = ancestors(v2, new HashMap<>(), 1);
-
-        Version version = null;
-        Integer distance = null;
-
-        for (Entry<Version, Integer> entry : a1.entrySet()) {
-            if (a2.containsKey(entry.getKey())) {
-
-                // TODO: What if there are several conflicting paths?
-                if (distance == null || distance > entry.getValue()) {
-                    version = entry.getKey();
-                    distance = entry.getValue();
-                }
-            }
-        }
-
-        if (version == null)
-            throw new DataDefinitionException("Versions " + v1.id() + " and " + v2.id() + " do not have a common ancestor");
-
-        return version;
-    }
-
-    private static Map<Version, Integer> ancestors(Version v, Map<Version, Integer> result, int distance) {
-        VersionImpl current = (VersionImpl) v;
-        Integer previous = result.get(current);
-
-        if (previous == null || previous > distance) {
-            result.put(current, distance);
-
-            for (Parent parent : current.parents)
-                ancestors(parent.version, result, distance + 1);
-        }
-
-        return result;
-    }
-
     @Override
     public final Version merge(String newId, Version with) {
-        Meta m = commonAncestor(this, with).meta();
+        Meta m = commonAncestor(with).meta();
         return new VersionImpl(ctx, newId, m.apply(m.migrateTo(meta()).concat(m.migrateTo(with.meta()))), new Version[] { this, with });
     }
 
@@ -306,7 +243,7 @@ final class VersionImpl implements Version {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((id() == null) ? 0 : id().hashCode());
         return result;
     }
 
@@ -319,11 +256,11 @@ final class VersionImpl implements Version {
         if (getClass() != obj.getClass())
             return false;
         VersionImpl other = (VersionImpl) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (id() == null) {
+            if (other.id() != null)
                 return false;
         }
-        else if (!id.equals(other.id))
+        else if (!id().equals(other.id()))
             return false;
         return true;
     }

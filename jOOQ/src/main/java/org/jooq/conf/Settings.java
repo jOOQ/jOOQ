@@ -36,7 +36,7 @@ public class Settings
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31400L;
+    private final static long serialVersionUID = 31500L;
     @XmlElement(defaultValue = "true")
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")
@@ -233,8 +233,12 @@ public class Settings
     protected Boolean migrationAllowsUndo = false;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationRevertUntracked = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean migrationAutoBaseline = false;
     @XmlElement(defaultValue = "true")
     protected Boolean migrationAutoValidation = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean migrationIgnoreDefaultTimestampPrecisionDiffs = true;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale locale;
@@ -265,10 +269,15 @@ public class Settings
     @XmlElement(defaultValue = "[jooq ignore stop]")
     protected String parseIgnoreCommentStop = "[jooq ignore stop]";
     @XmlElement(defaultValue = "true")
+    protected Boolean parseMetaDefaultExpressions = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean applyWorkaroundFor7962 = true;
     @XmlElementWrapper(name = "interpreterSearchPath")
     @XmlElement(name = "schema")
     protected List<InterpreterSearchSchema> interpreterSearchPath;
+    @XmlElementWrapper(name = "migrationSchemata")
+    @XmlElement(name = "schema")
+    protected List<MigrationSchema> migrationSchemata;
     @XmlElementWrapper(name = "parseSearchPath")
     @XmlElement(name = "schema")
     protected List<ParseSearchSchema> parseSearchPath;
@@ -2084,6 +2093,30 @@ public class Settings
     }
 
     /**
+     * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationAutoBaseline() {
+        return migrationAutoBaseline;
+    }
+
+    /**
+     * Sets the value of the migrationAutoBaseline property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationAutoBaseline(Boolean value) {
+        this.migrationAutoBaseline = value;
+    }
+
+    /**
      * Whether a migration automatically runs a validation first.
      * 
      * @return
@@ -2105,6 +2138,30 @@ public class Settings
      */
     public void setMigrationAutoValidation(Boolean value) {
         this.migrationAutoValidation = value;
+    }
+
+    /**
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between <code>TIMESTAMP</code> and <code>TIMESTAMP(6)</code>, if 6 is the default precision for timestamps on the configured dialect.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationIgnoreDefaultTimestampPrecisionDiffs() {
+        return migrationIgnoreDefaultTimestampPrecisionDiffs;
+    }
+
+    /**
+     * Sets the value of the migrationIgnoreDefaultTimestampPrecisionDiffs property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationIgnoreDefaultTimestampPrecisionDiffs(Boolean value) {
+        this.migrationIgnoreDefaultTimestampPrecisionDiffs = value;
     }
 
     /**
@@ -2300,6 +2357,30 @@ public class Settings
     }
 
     /**
+     * [#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isParseMetaDefaultExpressions() {
+        return parseMetaDefaultExpressions;
+    }
+
+    /**
+     * Sets the value of the parseMetaDefaultExpressions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setParseMetaDefaultExpressions(Boolean value) {
+        this.parseMetaDefaultExpressions = value;
+    }
+
+    /**
      * [#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys
      * 
      * @return
@@ -2332,6 +2413,17 @@ public class Settings
 
     public void setInterpreterSearchPath(List<InterpreterSearchSchema> interpreterSearchPath) {
         this.interpreterSearchPath = interpreterSearchPath;
+    }
+
+    public List<MigrationSchema> getMigrationSchemata() {
+        if (migrationSchemata == null) {
+            migrationSchemata = new ArrayList<MigrationSchema>();
+        }
+        return migrationSchemata;
+    }
+
+    public void setMigrationSchemata(List<MigrationSchema> migrationSchemata) {
+        this.migrationSchemata = migrationSchemata;
     }
 
     public List<ParseSearchSchema> getParseSearchPath() {
@@ -2988,8 +3080,18 @@ public class Settings
         return this;
     }
 
+    public Settings withMigrationAutoBaseline(Boolean value) {
+        setMigrationAutoBaseline(value);
+        return this;
+    }
+
     public Settings withMigrationAutoValidation(Boolean value) {
         setMigrationAutoValidation(value);
+        return this;
+    }
+
+    public Settings withMigrationIgnoreDefaultTimestampPrecisionDiffs(Boolean value) {
+        setMigrationIgnoreDefaultTimestampPrecisionDiffs(value);
         return this;
     }
 
@@ -3084,6 +3186,11 @@ public class Settings
         return this;
     }
 
+    public Settings withParseMetaDefaultExpressions(Boolean value) {
+        setParseMetaDefaultExpressions(value);
+        return this;
+    }
+
     public Settings withApplyWorkaroundFor7962(Boolean value) {
         setApplyWorkaroundFor7962(value);
         return this;
@@ -3107,6 +3214,27 @@ public class Settings
 
     public Settings withInterpreterSearchPath(List<InterpreterSearchSchema> interpreterSearchPath) {
         setInterpreterSearchPath(interpreterSearchPath);
+        return this;
+    }
+
+    public Settings withMigrationSchemata(MigrationSchema... values) {
+        if (values!= null) {
+            for (MigrationSchema value: values) {
+                getMigrationSchemata().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Settings withMigrationSchemata(Collection<MigrationSchema> values) {
+        if (values!= null) {
+            getMigrationSchemata().addAll(values);
+        }
+        return this;
+    }
+
+    public Settings withMigrationSchemata(List<MigrationSchema> migrationSchemata) {
+        setMigrationSchemata(migrationSchemata);
         return this;
     }
 
@@ -3215,7 +3343,9 @@ public class Settings
         builder.append("interpreterDelayForeignKeyDeclarations", interpreterDelayForeignKeyDeclarations);
         builder.append("migrationAllowsUndo", migrationAllowsUndo);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
+        builder.append("migrationAutoBaseline", migrationAutoBaseline);
         builder.append("migrationAutoValidation", migrationAutoValidation);
+        builder.append("migrationIgnoreDefaultTimestampPrecisionDiffs", migrationIgnoreDefaultTimestampPrecisionDiffs);
         builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
         builder.append("parseLocale", parseLocale);
@@ -3227,8 +3357,10 @@ public class Settings
         builder.append("parseIgnoreComments", parseIgnoreComments);
         builder.append("parseIgnoreCommentStart", parseIgnoreCommentStart);
         builder.append("parseIgnoreCommentStop", parseIgnoreCommentStop);
+        builder.append("parseMetaDefaultExpressions", parseMetaDefaultExpressions);
         builder.append("applyWorkaroundFor7962", applyWorkaroundFor7962);
         builder.append("interpreterSearchPath", "schema", interpreterSearchPath);
+        builder.append("migrationSchemata", "schema", migrationSchemata);
         builder.append("parseSearchPath", "schema", parseSearchPath);
     }
 
@@ -3989,12 +4121,30 @@ public class Settings
                 return false;
             }
         }
+        if (migrationAutoBaseline == null) {
+            if (other.migrationAutoBaseline!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAutoBaseline.equals(other.migrationAutoBaseline)) {
+                return false;
+            }
+        }
         if (migrationAutoValidation == null) {
             if (other.migrationAutoValidation!= null) {
                 return false;
             }
         } else {
             if (!migrationAutoValidation.equals(other.migrationAutoValidation)) {
+                return false;
+            }
+        }
+        if (migrationIgnoreDefaultTimestampPrecisionDiffs == null) {
+            if (other.migrationIgnoreDefaultTimestampPrecisionDiffs!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationIgnoreDefaultTimestampPrecisionDiffs.equals(other.migrationIgnoreDefaultTimestampPrecisionDiffs)) {
                 return false;
             }
         }
@@ -4097,6 +4247,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseMetaDefaultExpressions == null) {
+            if (other.parseMetaDefaultExpressions!= null) {
+                return false;
+            }
+        } else {
+            if (!parseMetaDefaultExpressions.equals(other.parseMetaDefaultExpressions)) {
+                return false;
+            }
+        }
         if (applyWorkaroundFor7962 == null) {
             if (other.applyWorkaroundFor7962 != null) {
                 return false;
@@ -4112,6 +4271,15 @@ public class Settings
             }
         } else {
             if (!interpreterSearchPath.equals(other.interpreterSearchPath)) {
+                return false;
+            }
+        }
+        if (migrationSchemata == null) {
+            if (other.migrationSchemata!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationSchemata.equals(other.migrationSchemata)) {
                 return false;
             }
         }
@@ -4213,7 +4381,9 @@ public class Settings
         result = ((prime*result)+((interpreterDelayForeignKeyDeclarations == null)? 0 :interpreterDelayForeignKeyDeclarations.hashCode()));
         result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
+        result = ((prime*result)+((migrationAutoBaseline == null)? 0 :migrationAutoBaseline.hashCode()));
         result = ((prime*result)+((migrationAutoValidation == null)? 0 :migrationAutoValidation.hashCode()));
+        result = ((prime*result)+((migrationIgnoreDefaultTimestampPrecisionDiffs == null)? 0 :migrationIgnoreDefaultTimestampPrecisionDiffs.hashCode()));
         result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseLocale == null)? 0 :parseLocale.hashCode()));
@@ -4225,8 +4395,10 @@ public class Settings
         result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStart == null)? 0 :parseIgnoreCommentStart.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));
+        result = ((prime*result)+((parseMetaDefaultExpressions == null)? 0 :parseMetaDefaultExpressions.hashCode()));
         result = ((prime*result)+((applyWorkaroundFor7962 == null)? 0 :applyWorkaroundFor7962 .hashCode()));
         result = ((prime*result)+((interpreterSearchPath == null)? 0 :interpreterSearchPath.hashCode()));
+        result = ((prime*result)+((migrationSchemata == null)? 0 :migrationSchemata.hashCode()));
         result = ((prime*result)+((parseSearchPath == null)? 0 :parseSearchPath.hashCode()));
         return result;
     }

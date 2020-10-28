@@ -247,6 +247,36 @@ public interface DSLContext extends Scope {
     Version version(String id);
 
     /**
+     * Initialise a {@link Versions} graph.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Internal
+    @NotNull
+    Versions versions();
+
+    /**
+     * Initialise a {@link Version}.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Internal
+    @NotNull
+    Commit commit(String id);
+
+    /**
+     * Initialise a {@link Commits} graph.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Internal
+    @NotNull
+    Commits commits();
+
+    /**
      * Create a migration from the currently installed version to a new version.
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
@@ -254,7 +284,7 @@ public interface DSLContext extends Scope {
      */
     @Internal
     @NotNull
-    Migration migrateTo(Version to);
+    Migration migrateTo(Commit to);
 
     /**
      * Access the database meta data.

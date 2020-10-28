@@ -382,7 +382,7 @@ final class Interpreter {
             mu = mrf.primaryKey;
 
         if (mu == null)
-            throw primaryKeyNotExists();
+            throw primaryKeyNotExists(impl.$referencesTable());
 
         boolean enforced = true ;
         mt.foreignKeys.add(new MutableForeignKey(
@@ -690,7 +690,7 @@ final class Interpreter {
             if (existing.primaryKey != null)
                 existing.primaryKey = null;
             else
-                throw primaryKeyNotExists();
+                throw primaryKeyNotExists(table);
         }
         else
             throw unsupportedQuery(query);
@@ -1185,8 +1185,8 @@ final class Interpreter {
         return new DataDefinitionException(named.getClass().getSimpleName() + " already exists: " + named.getQualifiedName());
     }
 
-    private static final DataDefinitionException primaryKeyNotExists() {
-        return new DataDefinitionException("Primary key does not exist");
+    private static final DataDefinitionException primaryKeyNotExists(Named named) {
+        return new DataDefinitionException("Primary key does not exist on table: " + named);
     }
 
     // -------------------------------------------------------------------------

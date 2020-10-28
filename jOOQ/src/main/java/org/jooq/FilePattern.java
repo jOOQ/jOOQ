@@ -83,6 +83,8 @@ public final class FilePattern {
     private final File              basedir;
     private final String            pattern;
     private final String            encoding;
+    private final Pattern           regexForMatches;
+    private final Pattern           regexForLoad;
 
     public FilePattern() {
         this(
@@ -104,6 +106,9 @@ public final class FilePattern {
         this.basedir = basedir == null ? new File(".") : basedir;
         this.pattern = pattern;
         this.encoding = encoding;
+
+        this.regexForMatches = Pattern.compile("^" + regex() + "$");
+        this.regexForLoad = Pattern.compile("^.*?" + regex() + "$");
     }
 
     public final Sort sort() {
@@ -182,6 +187,13 @@ public final class FilePattern {
     }
 
     /**
+     * Whether a given path matches the pattern.
+     */
+    public final boolean matches(String path) {
+        return regexForMatches.matcher(path.replace("\\", "/")).matches();
+    }
+
+    /**
      * Retrieve a set of {@link Source} items from this pattern.
      *
      * @throws IOException if something goes wrong while loading file contents.
@@ -246,17 +258,7 @@ public final class FilePattern {
                     if (!file.isAbsolute())
                         file = new File(basedir, prefix).getAbsoluteFile();
 
-                    Pattern regex = Pattern.compile("^.*?"
-                       + pattern
-                        .replace("\\", "/")
-                        .replace(".", "\\.")
-                        .replace("?", "[^/]")
-                        .replace("**", ".+?")
-                        .replace("*", "[^/]*")
-                       + "$"
-                    );
-
-                    load(file, comparator, regex, loader);
+                    load(file, comparator, regexForLoad, loader);
                     loaded = true;
                 }
             }
@@ -272,6 +274,15 @@ public final class FilePattern {
 
         if (!loaded)
             log.error("Could not find source(s) : " + pattern);
+    }
+
+    private String regex() {
+        return pattern
+            .replace("\\", "/")
+            .replace(".", "\\.")
+            .replace("?", "[^/]")
+            .replace("**", ".+?")
+            .replace("*", "[^/]*");
     }
 
     private final void load(

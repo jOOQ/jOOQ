@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
 import static org.jooq.impl.Comparators.CHECK_COMP;
 import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;
@@ -416,12 +417,40 @@ final class Diff {
                         r.queries.add(ctx.alterTable(t1).alter(f1).setDefault((Field) d2));
 
                     if ((type1.hasLength() && type2.hasLength() && (type1.lengthDefined() != type2.lengthDefined() || type1.length() != type2.length()))
-                        || (type1.hasPrecision() && type2.hasPrecision() && (type1.precisionDefined() != type2.precisionDefined() || type1.precision() != type2.precision()))
+                        || (type1.hasPrecision() && type2.hasPrecision() && precisionDifference(type1, type2))
                         || (type1.hasScale() && type2.hasScale() && (type1.scaleDefined() != type2.scaleDefined() || type1.scale() != type2.scale())))
                         r.queries.add(ctx.alterTable(t1).alter(f1).set(type2));
 
                     // [#9656] TODO: Change collation
                     // [#9656] TODO: Change character set
+                }
+
+                private final boolean precisionDifference(DataType<?> type1, DataType<?> type2) {
+
+                    // [#10807] One type has an implicit default precision
+                    return type1.precisionDefined() != type2.precisionDefined()
+
+                    //          ... and the other type has an explicit default precision
+                        && !defaultPrecision(type1)
+                        && !defaultPrecision(type2)
+                        || type1.precision() != type2.precision();
+                }
+
+                private final boolean defaultPrecision(DataType<?> type) {
+                    if (!type.isDateTime())
+                        return false;
+
+                    if (FALSE.equals(ctx.settings().isMigrationIgnoreDefaultTimestampPrecisionDiffs()))
+                        return false;
+
+                    switch (ctx.family()) {
+
+
+
+                        case POSTGRES:
+                        default:
+                            return type.precision() == 6;
+                    }
                 }
             }
         );

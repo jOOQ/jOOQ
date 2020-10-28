@@ -37,6 +37,10 @@
  */
 package org.jooq;
 
+import java.util.Set;
+
+import org.jooq.conf.Settings;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -52,19 +56,16 @@ import org.jetbrains.annotations.NotNull;
 public interface MigrationContext extends Scope {
 
     /**
-     * The {@link Version} from which a {@link Migration} has started.
-     * <p>
-     * {@link #migrationFrom()} and {@link #migrationTo()} versions need not be
-     * consecutive versions for any given migration. If a migration jumps a few
-     * versions, these two methods will only return the endpoints.
+     * The set of schemas that are being migrated, as specified in
+     * {@link Settings#getMigration()}.
      * <p>
      * This is available on all {@link MigrationListener} events.
      */
     @NotNull
-    Version migrationFrom();
+    Set<Schema> migratedSchemas();
 
     /**
-     * The {@link Version} to which a {@link Migration} is headed.
+     * The {@link Commit} from which a {@link Migration} has started.
      * <p>
      * {@link #migrationFrom()} and {@link #migrationTo()} versions need not be
      * consecutive versions for any given migration. If a migration jumps a few
@@ -73,7 +74,19 @@ public interface MigrationContext extends Scope {
      * This is available on all {@link MigrationListener} events.
      */
     @NotNull
-    Version migrationTo();
+    Commit migrationFrom();
+
+    /**
+     * The {@link Commit} to which a {@link Migration} is headed.
+     * <p>
+     * {@link #migrationFrom()} and {@link #migrationTo()} versions need not be
+     * consecutive versions for any given migration. If a migration jumps a few
+     * versions, these two methods will only return the endpoints.
+     * <p>
+     * This is available on all {@link MigrationListener} events.
+     */
+    @NotNull
+    Commit migrationTo();
 
     /**
      * The complete set of {@link Queries} that are executed between
@@ -100,7 +113,7 @@ public interface MigrationContext extends Scope {
      * </ul>
      */
     @NotNull
-    Version queriesFrom();
+    Commit queriesFrom();
 
     /**
      * The {@link Version} to which an individual set of {@link Queries} is
@@ -118,7 +131,7 @@ public interface MigrationContext extends Scope {
      * </ul>
      */
     @NotNull
-    Version queriesTo();
+    Commit queriesTo();
 
     /**
      * The complete set of {@link Queries} that are executed between

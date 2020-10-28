@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
@@ -107,6 +108,8 @@ import org.jooq.BindContext;
 import org.jooq.Block;
 import org.jooq.Catalog;
 import org.jooq.CommentOnIsStep;
+import org.jooq.Commit;
+import org.jooq.Commits;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -135,6 +138,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Explain;
 import org.jooq.Field;
+import org.jooq.File;
 import org.jooq.Index;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
@@ -250,6 +254,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.Version;
+import org.jooq.Versions;
 import org.jooq.WithAsStep;
 import org.jooq.WithAsStep1;
 import org.jooq.WithAsStep10;
@@ -396,7 +401,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public Migration migrateTo(Version to) {
+    public Versions versions() {
+        return new VersionsImpl(version("init"));
+    }
+
+    @Override
+    public Commit commit(String id) {
+        return new CommitImpl(configuration, id, null, Collections.<Commit>emptyList(), Collections.<File>emptyList());
+    }
+
+    @Override
+    public Commits commits() {
+        return new CommitsImpl(configuration, commit("init"));
+    }
+
+    @Override
+    public Migration migrateTo(Commit to) {
         return new MigrationImpl(configuration, to);
     }
 

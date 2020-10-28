@@ -175,7 +175,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     /**
-     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String, String, String)} instead.
+     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String, String, String)}  instead.
      */
     @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter, String binding, String javaType) {
@@ -183,10 +183,6 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding, String javaType) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, false, userType, converter, binding, javaType);
-    }
-
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, boolean isIdentity, Name userType, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
@@ -216,7 +212,6 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.scale = scale == null ? 0 : scale.intValue();
         this.nullable = nullable == null ? true : nullable.booleanValue();
         this.defaultValue = defaultValue;
-        this.isIdentity = isIdentity;
     }
 
     @Override

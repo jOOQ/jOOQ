@@ -153,12 +153,10 @@ import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.JavaTypeResolver;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.ParameterDefinition;
-import org.jooq.meta.PositionedDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-import org.jooq.meta.TableElementDefinition;
 import org.jooq.meta.TypedElementDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
@@ -8043,6 +8041,24 @@ public class JavaGenerator extends AbstractGenerator {
                 case JAVA:
                 default:
                     return (generic ? "(" + out.ref(Class.class) + "<" + out.ref(type) + ">) (" + out.ref(Class.class) + ") " : "") + out.ref(rawtype) + ".class";
+            }
+        }
+
+        @Override
+        public String constructorCall(String type) {
+            String rawtype = type.replaceAll("<.*>", "").replaceAll("\\[.*\\]", "");
+            String typeParams = type.replace(rawtype, "");
+
+            switch (language) {
+                case SCALA:
+                    return "new " + out.ref(rawtype) + typeParams.replace("<", "[").replace(">", "]");
+
+                case KOTLIN:
+                    return out.ref(rawtype) + typeParams;
+
+                case JAVA:
+                default:
+                    return "new " + out.ref(rawtype) + typeParams;
             }
         }
 

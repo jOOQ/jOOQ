@@ -66,6 +66,18 @@ public interface JavaTypeResolver {
     String classLiteral(String type);
 
     /**
+     * Get a language dependent constructor call for a type.
+     * <p>
+     * <table>
+     * <tr><th>Language</th><th>Output for <code>String</code></th></tr>
+     * <tr><td>Java</td><td><code>new EnumConverter&lt;A, B&gt;</code></td></tr>
+     * <tr><td>Scala</td><td><code>new EnumConverter[A, B]</code></td></tr>
+     * <tr><td>Kotlin</td><td><code>EnumConverter&lt;A, B&gt;</code></td></tr>
+     * </table>
+     */
+    String constructorCall(String type);
+
+    /**
      * Get the unqualified type reference and add an import for the qualified
      * type, if necessary.
      */

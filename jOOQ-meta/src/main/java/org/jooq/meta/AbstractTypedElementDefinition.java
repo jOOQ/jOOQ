@@ -153,6 +153,11 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 public String classLiteral(String type) {
                     return type + ".class";
                 }
+
+                @Override
+                public String constructorCall(String type) {
+                    return "new " + type;
+                }
             });
 
         return type;
@@ -252,7 +257,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 if (Boolean.TRUE.equals(customType.isEnumConverter()) ||
                     EnumConverter.class.getName().equals(customType.getConverter())) {
                     String tType = tType(db, resolver, definedType);
-                    converter = "new " + EnumConverter.class.getName() + "<" + tType + ", " + uType + ">(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
+                    converter = resolver.constructorCall(EnumConverter.class.getName() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
                 }
                 else if (customType.getLambdaConverter() != null) {
                     LambdaConverter c = customType.getLambdaConverter();

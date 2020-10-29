@@ -630,8 +630,13 @@ final class MetaImpl extends AbstractMeta {
                     it.remove();
 
                 // In H2, system indexes are called PRIMARY_KEY_xx_y
-                else if (family() == H2 && indexName.startsWith("PRIMARY_KEY_"))
-                    it.remove();
+                else switch (family()) {
+                    case H2:
+                        if (indexName.startsWith("PRIMARY_KEY_") || indexName.startsWith("FK_INDEX_"))
+                            it.remove();
+
+                        break;
+                }
             }
 
             return result;

@@ -491,7 +491,7 @@ final class Diff {
         );
     }
 
-    private final <K extends Named> Merge<K> keyMerge(final Table<?> t1, final Create<K> create, final Drop<K> drop, ConstraintType type) {
+    private final <K extends Named> Merge<K> keyMerge(final Table<?> t1, final Create<K> create, final Drop<K> drop, final ConstraintType type) {
         return new Merge<K>() {
             @Override
             public void merge(DiffResult r, K k1, K k2) {

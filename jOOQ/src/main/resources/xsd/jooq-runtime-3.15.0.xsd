@@ -501,6 +501,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="metaIncludeSystemIndexes" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="migrationSchemata" type="jooq-runtime:MigrationSchemata" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The database objects that are included in the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

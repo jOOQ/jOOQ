@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
@@ -65,6 +66,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -566,7 +568,7 @@ final class MetaImpl extends AbstractMeta {
         @Override
         public final List<Index> getIndexes() {
             final String schema = getSchema() == null ? null : getSchema().getName();
-            Result<Record> result = meta(new MetaFunction() {
+            Result<Record> result = removeSystemIndexes(meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
                     ResultSet rs;
@@ -601,11 +603,38 @@ final class MetaImpl extends AbstractMeta {
                         String.class   // FILTER_CONDITION
                     );
                 }
-            });
+            }));
 
             // Sort by INDEX_NAME (5), ORDINAL_POSITION (7)
             result.sortAsc(7).sortAsc(5);
             return createIndexes(result);
+        }
+
+        private final Result<Record> removeSystemIndexes(Result<Record> result) {
+            if (TRUE.equals(settings().isMetaIncludeSystemIndexes()))
+                return result;
+
+            // [#8655] [#9627] TODO Re-use more precise, dialect-specific logic from jOOQ-meta's Database::getIncludeSystemReferences
+            Set<String> constraints = new HashSet<>();
+            for (UniqueKey<?> key : getKeys())
+                constraints.add(key.getName());
+            for (ForeignKey<?, ?> key : getReferences())
+                constraints.add(key.getName());
+
+            Iterator<Record> it = result.iterator();
+            while (it.hasNext()) {
+                String indexName = it.next().get(5, String.class);
+
+                // It's generally a good heuristic to assume an index that shares the name of the constraint is system generated
+                if (constraints.contains(indexName))
+                    it.remove();
+
+                // In H2, system indexes are called PRIMARY_KEY_xx_y
+                else if (family() == H2 && indexName.startsWith("PRIMARY_KEY_"))
+                    it.remove();
+            }
+
+            return result;
         }
 
         @Override
@@ -870,7 +899,9 @@ final class MetaImpl extends AbstractMeta {
                 DataType type = null;
                 try {
                     type = DefaultDataType.getDataType(family(), typeName, precision, scale);
-                    type = type.getSQLDataType();
+
+                    if (type.getSQLDataType() != null)
+                        type = type.getSQLDataType();
 
                     // JDBC doesn't distinguish between precision and length
                     if (type.hasPrecision() && type.hasScale())

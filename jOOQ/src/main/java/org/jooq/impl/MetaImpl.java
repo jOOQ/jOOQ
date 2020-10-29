@@ -870,6 +870,7 @@ final class MetaImpl extends AbstractMeta {
                 DataType type = null;
                 try {
                     type = DefaultDataType.getDataType(family(), typeName, precision, scale);
+                    type = type.getSQLDataType();
 
                     // JDBC doesn't distinguish between precision and length
                     if (type.hasPrecision() && type.hasScale())

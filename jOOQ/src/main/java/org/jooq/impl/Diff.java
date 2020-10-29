@@ -459,6 +459,8 @@ final class Diff {
                         return false;
 
                     switch (ctx.family()) {
+                        case MARIADB:
+                            return type.precision() == 0;
 
                         // [#10807] TODO: Alternative defaults will be listed here as they are discovered
                         default:

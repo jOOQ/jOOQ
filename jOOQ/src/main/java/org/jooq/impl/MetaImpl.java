@@ -891,6 +891,11 @@ final class MetaImpl extends AbstractMeta {
                 int nullable = column.get(10, int.class);                // NULLABLE
                 String remarks = column.get(11, String.class);           // REMARKS
                 String defaultValue = column.get(12, String.class);      // COLUMN_DEF
+
+                // [#10817] Some dialects may produce NULL (the expression) rather than NULL (the value)
+                if ("null".equalsIgnoreCase(defaultValue))
+                    defaultValue = null;
+
                 boolean isAutoIncrement = column.size() >= 23
                     ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
                     : false;

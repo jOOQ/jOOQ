@@ -39,11 +39,16 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.*;
 import static org.jooq.impl.Comparators.CHECK_COMP;
 import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;
 import static org.jooq.impl.Comparators.INDEX_COMP;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
+import static org.jooq.impl.ConstraintType.CHECK;
+import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
+import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
+import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -78,6 +83,7 @@ import org.jooq.Named;
 import org.jooq.Nullability;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -91,6 +97,7 @@ import org.jooq.UniqueKey;
  */
 final class Diff {
 
+    private static final Set<SQLDialect> NO_SUPPORT_PK_NAMES = SQLDialect.supportedBy(MARIADB, MYSQL);
     private final MigrationConfiguration migrateConf;
     private final DDLExportConfiguration exportConf;
     private final DSLContext             ctx;
@@ -491,7 +498,7 @@ final class Diff {
         return append(result, pk1, pk2, KEY_COMP,
             create,
             drop,
-            keyMerge(t1, create, drop),
+            keyMerge(t1, create, drop, PRIMARY_KEY),
             true
         );
     }
@@ -514,12 +521,12 @@ final class Diff {
         return append(result, uk1, uk2, KEY_COMP,
             create,
             drop,
-            keyMerge(t1, create, drop),
+            keyMerge(t1, create, drop, UNIQUE),
             true
         );
     }
 
-    private final <K extends Named> Merge<K> keyMerge(final Table<?> t1, final Create<K> create, final Drop<K> drop) {
+    private final <K extends Named> Merge<K> keyMerge(final Table<?> t1, final Create<K> create, final Drop<K> drop, ConstraintType type) {
         return new Merge<K>() {
             @Override
             public void merge(DiffResult r, K k1, K k2) {
@@ -534,7 +541,10 @@ final class Diff {
                 }
 
                 if (NAMED_COMP.compare(k1, k2) != 0)
-                    r.queries.add(ctx.alterTable(t1).renameConstraint(n1).to(n2));
+
+                    // [#10813] Don't rename constraints in MySQL
+                    if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect()))
+                        r.queries.add(ctx.alterTable(t1).renameConstraint(n1).to(n2));
 
 
 
@@ -589,7 +599,7 @@ final class Diff {
         return append(result, fk1, fk2, FOREIGN_KEY_COMP,
             create,
             drop,
-            keyMerge(t1, create, drop),
+            keyMerge(t1, create, drop, FOREIGN_KEY),
             true
         );
     }
@@ -612,7 +622,7 @@ final class Diff {
         return append(result, c1, c2, CHECK_COMP,
             create,
             drop,
-            keyMerge(t1, create, drop),
+            keyMerge(t1, create, drop, CHECK),
             true
         );
     }

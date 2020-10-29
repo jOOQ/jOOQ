@@ -45,6 +45,7 @@ import static org.jooq.impl.Comparators.INDEX_COMP;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isEmpty;
@@ -442,6 +443,9 @@ final class Diff {
                         return false;
 
                     if (!type.precisionDefined())
+                        return true;
+
+                    if (NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
                         return true;
 
                     if (FALSE.equals(ctx.settings().isMigrationIgnoreDefaultTimestampPrecisionDiffs()))

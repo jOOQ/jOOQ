@@ -3456,14 +3456,14 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%s(\"%s\")%s", identifiers.get(i), literals.get(i), (i == literals.size() - 1) ? ";" : ",");
 
             out.println("override fun getCatalog(): %s? = %s",
-                Catalog.class, enumHasNoSchema ? "null" : "getSchema() == null ? null : getSchema().getCatalog()");
+                Catalog.class, enumHasNoSchema ? "null" : "schema.catalog");
 
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
-            out.println("override fun getSchema(): %s? = %s",
-                Schema.class, enumHasNoSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+            out.println("override fun getSchema(): %s%s = %s",
+                Schema.class, enumHasNoSchema ? "?" : "", enumHasNoSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
 
-            out.println("override fun getName(): %s? = %s",
-                String.class, e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
+            out.println("override fun getName(): %s%s = %s",
+                String.class, e.isSynthetic() ? "?" : "", e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
 
             out.println("override fun getLiteral(): String = literal");
 
@@ -3492,7 +3492,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (enumHasNoSchema)
                 out.println("return null;");
             else
-                out.println("return getSchema() == null ? null : getSchema().getCatalog();");
+                out.println("return getSchema().getCatalog();");
 
             out.println("}");
 

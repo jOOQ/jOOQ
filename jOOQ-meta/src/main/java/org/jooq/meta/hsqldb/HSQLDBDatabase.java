@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.meta.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.DOMAIN_CONSTRAINTS;
@@ -69,12 +70,14 @@ import java.util.Map.Entry;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Record4;
+import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -91,6 +94,7 @@ import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
+import org.jooq.meta.ResultQueryDatabase;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -108,7 +112,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-public class HSQLDBDatabase extends AbstractDatabase {
+public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
     @Override
     protected DSLContext create0() {
@@ -200,7 +204,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("PRIMARY KEY")) {
+        for (Record record : primaryKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
@@ -214,7 +218,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("UNIQUE")) {
+        for (Record record : uniqueKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
@@ -226,22 +230,33 @@ public class HSQLDBDatabase extends AbstractDatabase {
         }
     }
 
-    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
+        return keys(schemas, "PRIMARY KEY");
+    }
+
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas) {
+        return keys(schemas, "UNIQUE");
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keys(List<String> schemas, String constraintType) {
         return create()
             .select(
+                KEY_COLUMN_USAGE.TABLE_CATALOG,
                 KEY_COLUMN_USAGE.TABLE_SCHEMA,
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
                 KEY_COLUMN_USAGE.TABLE_NAME,
-                KEY_COLUMN_USAGE.COLUMN_NAME)
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.COLUMN_NAME,
+                KEY_COLUMN_USAGE.ORDINAL_POSITION.coerce(INTEGER))
             .from(KEY_COLUMN_USAGE)
-            .where(KEY_COLUMN_USAGE.tableConstraints().CONSTRAINT_TYPE.equal(constraintType))
-            .and(KEY_COLUMN_USAGE.tableConstraints().TABLE_SCHEMA.in(getInputSchemata()))
+            .where(KEY_COLUMN_USAGE.tableConstraints().CONSTRAINT_TYPE.eq(inline(constraintType)))
+            .and(KEY_COLUMN_USAGE.tableConstraints().TABLE_SCHEMA.in(schemas))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
                 KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
-                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
-            .fetch();
+                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc());
     }
 
     @Override

@@ -133,6 +133,7 @@ final class MetaImpl extends AbstractMeta {
 
     private static final Pattern         P_SYSINDEX_DERBY                 = Pattern.compile("^(?:SQL\\d{14,}).*$");
     private static final Pattern         P_SYSINDEX_H2                    = Pattern.compile("^(?:PRIMARY_KEY_|UK_INDEX_|FK_INDEX_).*$");
+    private static final Pattern         P_SYSINDEX_HSQLDB                = Pattern.compile("^(?:SYS_IDX_(?:PK|UK|FK)_).*$");
 
     private final DatabaseMetaData       databaseMetaData;
     private final boolean                inverseSchemaCatalog;
@@ -697,6 +698,9 @@ final class MetaImpl extends AbstractMeta {
                         break;
                     case H2:
                         if (P_SYSINDEX_H2.matcher(indexName).matches()) it.remove();
+                        break;
+                    case HSQLDB:
+                        if (P_SYSINDEX_HSQLDB.matcher(indexName).matches()) it.remove();
                         break;
                 }
             }

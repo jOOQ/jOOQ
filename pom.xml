@@ -647,6 +647,7 @@
 
         <module>jOOQ-migrations</module>
 
+
         <module>jOOQ-kotlin</module>
         <module>jOOQ-scala_2.13</module>
 
@@ -655,6 +656,10 @@
 
 
         <module>jOOQ-xtend</module>
+
+
+
+
 
 
 

@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
@@ -59,6 +60,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
@@ -67,12 +69,14 @@ import org.jooq.Record;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -87,6 +91,7 @@ import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
+import org.jooq.meta.ResultQueryDatabase;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -99,7 +104,7 @@ import org.jooq.tools.csv.CSVReader;
 /**
  * @author Lukas Eder
  */
-public class MySQLDatabase extends AbstractDatabase {
+public class MySQLDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
     private static Boolean is8;
     private static Boolean is8_0_16;
@@ -129,11 +134,7 @@ public class MySQLDatabase extends AbstractDatabase {
                 STATISTICS.COLUMN_NAME,
                 STATISTICS.SEQ_IN_INDEX)
             .from(from)
-            // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-            .where(STATISTICS.TABLE_SCHEMA.in(getInputSchemata()).or(
-                  getInputSchemata().size() == 1
-                ? STATISTICS.TABLE_SCHEMA.in(getInputSchemata())
-                : falseCondition()))
+            .where(STATISTICS.TABLE_SCHEMA.in(workaroundFor5213(getInputSchemata())))
             .and(getIncludeSystemIndexes()
                 ? noCondition()
                 : TABLE_CONSTRAINTS.CONSTRAINT_NAME.isNull()
@@ -203,7 +204,7 @@ public class MySQLDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys(true)) {
+        for (Record record : keysQuery(getInputSchemata(), true)) {
             SchemaDefinition schema = getSchema(record.get(STATISTICS.TABLE_SCHEMA));
             String constraintName = record.get(STATISTICS.INDEX_NAME);
             String tableName = record.get(STATISTICS.TABLE_NAME);
@@ -219,7 +220,7 @@ public class MySQLDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys(false)) {
+        for (Record record : uniqueKeysQuery(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(STATISTICS.TABLE_SCHEMA));
             String constraintName = record.get(STATISTICS.INDEX_NAME);
             String tableName = record.get(STATISTICS.TABLE_NAME);
@@ -255,24 +256,29 @@ public class MySQLDatabase extends AbstractDatabase {
         return is8_0_16;
     }
 
-    private Result<?> fetchKeys(boolean primary) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas) {
+        return keysQuery(schemas, false);
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keysQuery(List<String> inputSchemata, boolean primary) {
 
         // [#3560] It has been shown that querying the STATISTICS table is much faster on
         // very large databases than going through TABLE_CONSTRAINTS and KEY_COLUMN_USAGE
         // [#2059] In MemSQL primary key indexes are typically duplicated
         // (once with INDEX_TYPE = 'SHARD' and once with INDEX_TYPE = 'BTREE)
         return create().selectDistinct(
+
+                           // Don't use the actual catalog value, which is meaningless.
+                           // Besides, MetaImpl will rely on the TABLE_SCHEMA acting as the catalog.
+                           inline(null, STATISTICS.TABLE_CATALOG).as(STATISTICS.TABLE_CATALOG),
                            STATISTICS.TABLE_SCHEMA,
                            STATISTICS.TABLE_NAME,
-                           STATISTICS.COLUMN_NAME,
                            STATISTICS.INDEX_NAME,
-                           STATISTICS.SEQ_IN_INDEX)
+                           STATISTICS.COLUMN_NAME,
+                           STATISTICS.SEQ_IN_INDEX.coerce(INTEGER))
                        .from(STATISTICS)
-                       // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-                       .where(STATISTICS.TABLE_SCHEMA.in(getInputSchemata()).or(
-                             getInputSchemata().size() == 1
-                           ? STATISTICS.TABLE_SCHEMA.in(getInputSchemata())
-                           : falseCondition()))
+                       .where(STATISTICS.TABLE_SCHEMA.in(workaroundFor5213(inputSchemata)))
                        .and(primary
                            ? STATISTICS.INDEX_NAME.eq(inline("PRIMARY"))
                            : STATISTICS.INDEX_NAME.ne(inline("PRIMARY")).and(STATISTICS.NON_UNIQUE.eq(inline(0))))
@@ -280,8 +286,7 @@ public class MySQLDatabase extends AbstractDatabase {
                            STATISTICS.TABLE_SCHEMA,
                            STATISTICS.TABLE_NAME,
                            STATISTICS.INDEX_NAME,
-                           STATISTICS.SEQ_IN_INDEX)
-                       .fetch();
+                           STATISTICS.SEQ_IN_INDEX);
     }
 
     @Override
@@ -299,11 +304,7 @@ public class MySQLDatabase extends AbstractDatabase {
                 .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA))
                 .and(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
                 .and(REFERENTIAL_CONSTRAINTS.TABLE_NAME.equal(KEY_COLUMN_USAGE.TABLE_NAME))
-                // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-                .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.in(getInputSchemata()).or(
-                      getInputSchemata().size() == 1
-                    ? REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.in(getInputSchemata())
-                    : falseCondition()))
+                .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.in(workaroundFor5213(getInputSchemata())))
                 .orderBy(
                     KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.asc(),
                     KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
@@ -429,12 +430,7 @@ public class MySQLDatabase extends AbstractDatabase {
             .leftJoin(VIEWS)
                 .on(TABLES.TABLE_SCHEMA.eq(VIEWS.TABLE_SCHEMA))
                 .and(TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
-
-            // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-            .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()).or(
-                  getInputSchemata().size() == 1
-                ? TABLES.TABLE_SCHEMA.in(getInputSchemata())
-                : falseCondition()))
+            .where(TABLES.TABLE_SCHEMA.in(workaroundFor5213(getInputSchemata())))
 
             // [#9291] MariaDB treats sequences as tables
             .and(TABLES.TABLE_TYPE.ne(inline("SEQUENCE")))
@@ -469,11 +465,7 @@ public class MySQLDatabase extends AbstractDatabase {
             .from(COLUMNS)
             .where(
                 COLUMNS.COLUMN_TYPE.like("enum(%)").and(
-                // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-                COLUMNS.TABLE_SCHEMA.in(getInputSchemata()).or(
-                      getInputSchemata().size() == 1
-                    ? COLUMNS.TABLE_SCHEMA.in(getInputSchemata())
-                    : falseCondition())))
+                COLUMNS.TABLE_SCHEMA.in(workaroundFor5213(getInputSchemata()))))
             .orderBy(
                 COLUMNS.TABLE_SCHEMA.asc(),
                 COLUMNS.TABLE_NAME.asc(),
@@ -617,5 +609,20 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected boolean exists0(Table<?> table) {
         return exists1(table, TABLES.TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
+    }
+
+    private List<Field<String>> workaroundFor5213(List<String> inputSchemata) {
+        // [#5213] Add a dummy schema to single element lists to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
+
+        List<Field<String>> schemas = new ArrayList<>();
+
+        for (String schema : inputSchemata)
+            schemas.add(DSL.val(schema));
+
+        // Random UUID generated by fair dice roll
+        if (schemas.size() == 1)
+            schemas.add(DSL.inline("ee7f6174-34f2-484b-8d81-20a4d9fc866d"));
+
+        return schemas;
     }
 }

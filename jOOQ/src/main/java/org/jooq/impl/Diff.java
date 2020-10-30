@@ -89,6 +89,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
+import org.jooq.tools.StringUtils;
 
 /**
  * A class producing a diff between two {@link Meta} objects.
@@ -147,7 +148,8 @@ final class Diff {
         @Override
         public void drop(DiffResult r, Schema s) {
             if (s.getTables().isEmpty() && s.getSequences().isEmpty()) {
-                r.queries.add(ctx.dropSchema(s));
+                if (!StringUtils.isEmpty(s.getName()))
+                    r.queries.add(ctx.dropSchema(s));
             }
             else if (migrateConf.dropSchemaCascade()) {
 
@@ -157,7 +159,8 @@ final class Diff {
                         for (ForeignKey<?, ?> fk : uk.getReferences())
                             r.droppedFks.add(fk);
 
-                r.queries.add(ctx.dropSchema(s).cascade());
+                if (!StringUtils.isEmpty(s.getName()))
+                    r.queries.add(ctx.dropSchema(s).cascade());
             }
             else {
                 for (Table<?> t : s.getTables())
@@ -166,7 +169,8 @@ final class Diff {
                 for (Sequence<?> seq : s.getSequences())
                     DROP_SEQUENCE.drop(r, seq);
 
-                r.queries.add(ctx.dropSchema(s));
+                if (!StringUtils.isEmpty(s.getName()))
+                    r.queries.add(ctx.dropSchema(s));
             }
         }
     };

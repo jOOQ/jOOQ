@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.h2.information_schema.Tables.CONSTRAINTS;
 import static org.jooq.meta.h2.information_schema.Tables.CROSS_REFERENCES;
@@ -63,6 +64,7 @@ import static org.jooq.meta.h2.information_schema.Tables.VIEWS;
 import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -71,7 +73,9 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record4;
+import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SortOrder;
@@ -97,6 +101,7 @@ import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
+import org.jooq.meta.ResultQueryDatabase;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -111,7 +116,7 @@ import org.jooq.util.h2.H2DataType;
  *
  * @author Espen Stromsnes
  */
-public class H2Database extends AbstractDatabase {
+public class H2Database extends AbstractDatabase implements ResultQueryDatabase {
 
     private static final long DEFAULT_SEQUENCE_CACHE    = 32;
     private static final long DEFAULT_SEQUENCE_MAXVALUE = Long.MAX_VALUE;
@@ -217,7 +222,7 @@ public class H2Database extends AbstractDatabase {
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
 
         // Workaround for https://github.com/h2database/h2database/issues/1000
-        for (Record record : fetchKeys("PRIMARY KEY", "PRIMARY_KEY")) {
+        for (Record record : keysQuery(getInputSchemata(), Arrays.<Field<String>>asList(inline("PRIMARY KEY"), inline("PRIMARY_KEY")))) {
             SchemaDefinition schema = getSchema(record.get(CONSTRAINTS.TABLE_SCHEMA));
 
             if (schema != null) {
@@ -234,7 +239,7 @@ public class H2Database extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("UNIQUE")) {
+        for (Record record : uniqueKeysQuery(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(CONSTRAINTS.TABLE_SCHEMA));
 
             if (schema != null) {
@@ -249,24 +254,30 @@ public class H2Database extends AbstractDatabase {
         }
     }
 
-    private Result<Record4<String, String, String, String>> fetchKeys(String... constraintTypes) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas) {
+        return keysQuery(schemas, Arrays.<Field<String>>asList(inline("UNIQUE")));
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keysQuery(List<String> schemas, List<Field<String>> constraintTypes) {
         return create().select(
+                    CONSTRAINTS.TABLE_CATALOG,
                     CONSTRAINTS.TABLE_SCHEMA,
                     CONSTRAINTS.TABLE_NAME,
                     CONSTRAINTS.CONSTRAINT_NAME,
-                    INDEXES.COLUMN_NAME)
+                    INDEXES.COLUMN_NAME,
+                    INDEXES.ORDINAL_POSITION.coerce(INTEGER))
                 .from(CONSTRAINTS)
                 .join(INDEXES)
                 .on(CONSTRAINTS.TABLE_SCHEMA.eq(INDEXES.TABLE_SCHEMA))
                 .and(CONSTRAINTS.TABLE_NAME.eq(INDEXES.TABLE_NAME))
                 .and(CONSTRAINTS.UNIQUE_INDEX_NAME.eq(INDEXES.INDEX_NAME))
-                .where(CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
+                .where(CONSTRAINTS.TABLE_SCHEMA.in(schemas))
                 .and(CONSTRAINTS.CONSTRAINT_TYPE.in(constraintTypes))
                 .orderBy(
                     CONSTRAINTS.TABLE_SCHEMA,
                     CONSTRAINTS.CONSTRAINT_NAME,
-                    INDEXES.ORDINAL_POSITION)
-                .fetch();
+                    INDEXES.ORDINAL_POSITION);
     }
 
     @Override

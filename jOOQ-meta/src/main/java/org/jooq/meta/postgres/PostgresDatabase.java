@@ -102,10 +102,10 @@ import org.jooq.Name;
 // ...
 import org.jooq.Record;
 import org.jooq.Record2;
-import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SortOrder;
@@ -133,6 +133,7 @@ import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
+import org.jooq.meta.ResultQueryDatabase;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -157,7 +158,7 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-public class PostgresDatabase extends AbstractDatabase {
+public class PostgresDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
     private static final JooqLogger log = JooqLogger.getLogger(PostgresDatabase.class);
 
@@ -259,7 +260,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("PRIMARY KEY")) {
+        for (Record record : keysQuery(getInputSchemata(), inline("PRIMARY KEY"))) {
             SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
@@ -273,7 +274,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("UNIQUE")) {
+        for (Record record : uniqueKeysQuery(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
@@ -285,22 +286,28 @@ public class PostgresDatabase extends AbstractDatabase {
         }
     }
 
-    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas) {
+        return keysQuery(schemas, inline("UNIQUE"));
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keysQuery(List<String> schemas, Field<String> constraintType) {
         return create()
             .select(
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.TABLE_CATALOG,
                 KEY_COLUMN_USAGE.TABLE_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_NAME,
-                KEY_COLUMN_USAGE.COLUMN_NAME)
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.COLUMN_NAME,
+                KEY_COLUMN_USAGE.ORDINAL_POSITION)
             .from(KEY_COLUMN_USAGE)
-            .where(KEY_COLUMN_USAGE.tableConstraints().CONSTRAINT_TYPE.equal(constraintType))
-            .and(KEY_COLUMN_USAGE.tableConstraints().TABLE_SCHEMA.in(getInputSchemata()))
+            .where(KEY_COLUMN_USAGE.tableConstraints().CONSTRAINT_TYPE.eq(constraintType))
+            .and(KEY_COLUMN_USAGE.tableConstraints().TABLE_SCHEMA.in(schemas))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
                 KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
-                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
-            .fetch();
+                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc());
     }
 
     @Override

@@ -321,6 +321,7 @@ final class Tools {
     static final int[]                      EMPTY_INT                      = {};
     static final JSONEntry<?>[]             EMPTY_JSONENTRY                = {};
     static final Name[]                     EMPTY_NAME                     = {};
+    static final Object[]                   EMPTY_OBJECT                   = {};
     static final Param<?>[]                 EMPTY_PARAM                    = {};
     static final OrderField<?>[]            EMPTY_ORDERFIELD               = {};
     static final Query[]                    EMPTY_QUERY                    = {};

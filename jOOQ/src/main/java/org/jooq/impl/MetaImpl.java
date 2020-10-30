@@ -43,6 +43,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -55,16 +56,17 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultString;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -72,6 +74,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
+import java.util.Properties;
 import java.util.Set;
 
 import org.jooq.Catalog;
@@ -103,6 +107,8 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * An implementation of the public {@link Meta} type.
  * <p>
@@ -120,13 +126,27 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(H2, POSTGRES);
     private static final Set<SQLDialect> ENCODED_TIMESTAMP_PRECISION      = SQLDialect.supportedBy(HSQLDB, MARIADB);
     private static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION   = SQLDialect.supportedBy(MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_SCHEMAS               = SQLDialect.supportedBy(FIREBIRD, SQLITE);
 
 
 
 
+    private static final Pattern         P_DERBY_SYSINDEX                 = Pattern.compile("^(?:SQL\\d{14,}).*$");
+    private static final Pattern         P_H2_SYSINDEX                    = Pattern.compile("^(?:PRIMARY_KEY_|UK_INDEX_|FK_INDEX_).*$");
 
     private final DatabaseMetaData       databaseMetaData;
     private final boolean                inverseSchemaCatalog;
+
+    private static final Properties      META_SQL                         = new Properties();
+
+    static {
+        try {
+            META_SQL.load(MetaImpl.class.getResourceAsStream("/meta/metasql.properties"));
+        }
+        catch (IOException e) {
+            log.error("Cannot load metasql.properties", e);
+        }
+    }
 
     MetaImpl(Configuration configuration, DatabaseMetaData databaseMetaData) {
         super(configuration);
@@ -326,6 +346,7 @@ final class MetaImpl extends AbstractMeta {
          */
         private static final long                            serialVersionUID = -2621899850912554198L;
         private transient volatile Map<Name, Result<Record>> columnCache;
+        private transient volatile Map<Name, Result<Record>> ukCache;
 
         MetaSchema(String name, Catalog catalog) {
             super(name, catalog);
@@ -423,7 +444,7 @@ final class MetaImpl extends AbstractMeta {
                     : TableType.TABLE;
 
 
-                result.add(new MetaTable(name, this, getColumns(catalog, schema, name), tableType));
+                result.add(new MetaTable(name, this, getColumns(catalog, schema, name), getUks(catalog, schema, name), tableType));
 
 //              TODO: Find a more efficient way to do this
 //              Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
@@ -433,6 +454,47 @@ final class MetaImpl extends AbstractMeta {
             }
 
             return result;
+        }
+
+        private final Result<Record> getUks(final String catalog, final String schema, final String table) {
+            if (ukCache == null) {
+                final String sql = META_SQL.getProperty("uniqueKeysQuery." + family());
+
+                if (sql != null) {
+                    Result<Record> result = meta(new MetaFunction() {
+                        @Override
+                        public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                            return DSL.using(meta.getConnection(), family()).resultQuery(
+                                sql,
+                                NO_SUPPORT_SCHEMAS.contains(dialect())
+                                    ? EMPTY_OBJECT
+                                    : inverseSchemaCatalog
+                                    ? new Object[] { catalog }
+                                    : new Object[] { schema }
+                            ).fetch();
+                        }
+                    });
+
+                    // TODO Support catalogs as well
+                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
+                    ukCache = new LinkedHashMap<>();
+
+                    for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
+                        Record key = entry.getKey();
+                        Result<Record> value = entry.getValue();
+                        ukCache.put(name(
+                            catalog == null ? null : key.get(0, String.class),
+                            key.get(1, String.class),
+                            key.get(2, String.class)
+                        ), value);
+                    }
+                }
+            }
+
+            if (ukCache != null)
+                return ukCache.get(name(catalog, schema, table));
+            else
+                return null;
         }
 
         @SuppressWarnings("unchecked")
@@ -554,15 +616,18 @@ final class MetaImpl extends AbstractMeta {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 4843841667753000233L;
+        private static final long    serialVersionUID = 4843841667753000233L;
+        private final Result<Record> uks;
 
-        MetaTable(String name, Schema schema, Result<Record> columns, TableType tableType) {
+        MetaTable(String name, Schema schema, Result<Record> columns, Result<Record> uks, TableType tableType) {
             super(name(name), schema, null, null, null, null, null, TableOptions.of(tableType));
 
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM
             if (columns != null)
-                init(columns);
+                initColumns(columns);
+
+            this.uks = uks;
         }
 
         @Override
@@ -629,10 +694,16 @@ final class MetaImpl extends AbstractMeta {
                 if (constraints.contains(indexName))
                     it.remove();
 
-                // In H2, system indexes are called PRIMARY_KEY_xx_y
+                //
                 else switch (family()) {
+                    case DERBY:
+                        if (P_DERBY_SYSINDEX.matcher(indexName).matches())
+                            it.remove();
+
+                        break;
+
                     case H2:
-                        if (indexName.startsWith("PRIMARY_KEY_") || indexName.startsWith("FK_INDEX_"))
+                        if (P_H2_SYSINDEX.matcher(indexName).matches())
                             it.remove();
 
                         break;
@@ -642,10 +713,26 @@ final class MetaImpl extends AbstractMeta {
             return result;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public final List<UniqueKey<Record>> getKeys() {
+            List<UniqueKey<Record>> result = new ArrayList<>();
+
             UniqueKey<Record> pk = getPrimaryKey();
-            return pk == null ? Collections.<UniqueKey<Record>>emptyList() : Collections.<UniqueKey<Record>>singletonList(pk);
+            if (pk != null)
+                result.add(pk);
+
+            if (uks != null) {
+                Map<String, Result<Record>> groups = uks.intoGroups((Field<String>) uks.field(3));
+
+                for (Entry<String, Result<Record>> group : groups.entrySet()) {
+                    Result<Record> columns = group.getValue();
+                    columns.sortAsc(5);
+                    result.add(createUniqueKey(columns, 4, 3, false));
+                }
+            }
+
+            return result;
         }
 
         @Override
@@ -689,12 +776,12 @@ final class MetaImpl extends AbstractMeta {
 
             // Sort by KEY_SEQ
             result.sortAsc(4);
-            return createPrimaryKey(result, 3);
+            return createUniqueKey(result, 3, 5, true);
         }
 
         @Override
         @SuppressWarnings("unchecked")
-        public List<ForeignKey<Record, ?>> getReferences() {
+        public final List<ForeignKey<Record, ?>> getReferences() {
             Result<Record> result = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
@@ -754,7 +841,7 @@ final class MetaImpl extends AbstractMeta {
                     this,
                     name(fkName),
                     fkFields,
-                    new MetaPrimaryKey(pkTable, pkName, pkFields),
+                    new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
                     pkFields,
                     true
                 ));
@@ -808,7 +895,7 @@ final class MetaImpl extends AbstractMeta {
 
 
         @SuppressWarnings("unchecked")
-        private final UniqueKey<Record> createPrimaryKey(Result<Record> result, int columnName) {
+        private final UniqueKey<Record> createUniqueKey(Result<Record> result, int columnName, int keyName, boolean isPrimary) {
             if (result.size() > 0) {
                 TableField<Record, ?>[] f = new TableField[result.size()];
 
@@ -826,8 +913,8 @@ final class MetaImpl extends AbstractMeta {
                                 f[i] = (TableField<Record, ?>) field;
                 }
 
-                String indexName = result.get(0).get(5, String.class);
-                return new MetaPrimaryKey(this, indexName, f);
+                String indexName = result.get(0).get(keyName, String.class);
+                return new MetaUniqueKey(this, indexName, f, isPrimary);
             }
             else {
                 return null;
@@ -880,7 +967,7 @@ final class MetaImpl extends AbstractMeta {
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
-        private final void init(Result<Record> columns) {
+        private final void initColumns(Result<Record> columns) {
             boolean hasAutoIncrement = false;
 
             for (Record column : columns) {
@@ -989,20 +1076,23 @@ final class MetaImpl extends AbstractMeta {
         }
     }
 
-    private final class MetaPrimaryKey extends AbstractKey<Record> implements UniqueKey<Record> {
+    private final class MetaUniqueKey extends AbstractKey<Record> implements UniqueKey<Record> {
 
         /**
          * Generated UID
          */
-        private static final long             serialVersionUID = 6997258619475953490L;
+        private static final long serialVersionUID = 6997258619475953490L;
+        private final boolean     isPrimary;
 
-        MetaPrimaryKey(Table<Record> table, String pkName, TableField<Record, ?>[] fields) {
-            super(table, pkName == null ? null : name(pkName), fields, true);
+        MetaUniqueKey(Table<Record> table, String name, TableField<Record, ?>[] fields, boolean isPrimary) {
+            super(table, name == null ? null : name(name), fields, true);
+
+            this.isPrimary = isPrimary;
         }
 
         @Override
         public final boolean isPrimary() {
-            return true;
+            return isPrimary;
         }
 
         @Override

@@ -50,6 +50,8 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FIELDS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$GENERATORS;
@@ -70,9 +72,10 @@ import java.util.Map.Entry;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Record3;
 import org.jooq.Record4;
+import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.TableOptions.TableType;
@@ -93,6 +96,7 @@ import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
+import org.jooq.meta.ResultQueryDatabase;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -112,7 +116,7 @@ import org.jooq.util.firebird.FirebirdDataType;
 /**
  * @author Sugiharto Lim - Initial contribution
  */
-public class FirebirdDatabase extends AbstractDatabase {
+public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
     private static Boolean is30;
 
@@ -131,10 +135,10 @@ public class FirebirdDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations r) throws SQLException {
-        for (Record record : fetchKeys("PRIMARY KEY")) {
-            String tableName = record.get(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim());
-            String fieldName = record.get(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim());
-            String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
+        for (Record record : keysQuery("PRIMARY KEY")) {
+            String tableName = record.get(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME);
+            String fieldName = record.get(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME);
+            String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME);
 
             TableDefinition td = getTable(this.getSchemata().get(0), tableName);
             if (td != null)
@@ -144,10 +148,10 @@ public class FirebirdDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
-        for (Record record : fetchKeys("UNIQUE")) {
-            String tableName = record.get(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim());
-            String fieldName = record.get(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim());
-            String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
+        for (Record record : keysQuery("UNIQUE")) {
+            String tableName = record.get(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME);
+            String fieldName = record.get(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME);
+            String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME);
 
             TableDefinition td = getTable(this.getSchemata().get(0), tableName);
             if (td != null)
@@ -155,20 +159,27 @@ public class FirebirdDatabase extends AbstractDatabase {
         }
     }
 
-    private Result<Record3<String, String, String>> fetchKeys(String constraintType) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas) {
+        return keysQuery("UNIQUE");
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keysQuery(String constraintType) {
         return create()
             .select(
-                RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim(),
-                RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim(),
-                RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim())
+                inline(null, VARCHAR).as("catalog"),
+                inline(null, VARCHAR).as("schema"),
+                RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim().as(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME),
+                RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim().as(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME),
+                RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim().as(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME),
+                RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION.coerce(INTEGER))
             .from(RDB$RELATION_CONSTRAINTS)
             .join(RDB$INDEX_SEGMENTS)
             .on(RDB$INDEX_SEGMENTS.RDB$INDEX_NAME.eq(RDB$RELATION_CONSTRAINTS.RDB$INDEX_NAME))
-            .where(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_TYPE.eq(constraintType))
+            .where(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_TYPE.eq(inline(constraintType)))
             .orderBy(
                 RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.asc(),
-                RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION.asc())
-            .fetch();
+                RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION.asc());
     }
 
     @Override

@@ -39,7 +39,10 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
-import static org.jooq.SQLDialect.*;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.Comparators.CHECK_COMP;
 import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;
 import static org.jooq.impl.Comparators.INDEX_COMP;
@@ -50,7 +53,6 @@ import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -720,9 +722,7 @@ final class Diff {
             new Merge<Index>() {
                 @Override
                 public void merge(DiffResult r, Index ix1, Index ix2) {
-                    if (ix1.getUnique() != ix2.getUnique()
-                            || !ix1.getFields().equals(ix2.getFields())
-                            || !defaultIfNull(ix1.getWhere(), noCondition()).equals(defaultIfNull(ix2.getWhere(), noCondition()))) {
+                    if (INDEX_COMP.compare(ix1, ix2) != 0) {
                         drop.drop(r, ix1);
                         create.create(r, ix2);
                     }

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SortOrder.ASC;
+import static org.jooq.SortOrder.DEFAULT;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -49,6 +51,9 @@ import org.jooq.Index;
 import org.jooq.Key;
 import org.jooq.Named;
 import org.jooq.SortField;
+import org.jooq.SortOrder;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Commonly used comparators and related utilities.
@@ -138,7 +143,9 @@ final class Comparators {
                 if (c != 0)
                     return c;
 
-                c = s1.getOrder().compareTo(s2.getOrder());
+                SortOrder d1 = s1.getOrder(); if (d1 == DEFAULT) d1 = ASC;
+                SortOrder d2 = s2.getOrder(); if (d2 == DEFAULT) d2 = ASC;
+                c = d1.compareTo(d2);
                 if (c != 0)
                     return c;
             }

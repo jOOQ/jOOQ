@@ -122,7 +122,7 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(H2, POSTGRES);
     private static final Set<SQLDialect> ENCODED_TIMESTAMP_PRECISION      = SQLDialect.supportedBy(HSQLDB, MARIADB);
-    private static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION   = SQLDialect.supportedBy(MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION   = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_SCHEMAS               = SQLDialect.supportedBy(FIREBIRD, SQLITE);
 
 

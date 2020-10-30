@@ -441,25 +441,27 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         //         be a lot of data types constructed with a 0 value instead of
         //         a null value, historically, so removing this check would
         //         introduce a lot of regressions!
-        if (lengthDefined() && length() > 0)
+        if (lengthDefined() && length() > 0) {
             return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
-
-
-
-
-
-
-        else if (precisionDefined() && (isTimestamp() || precision() > 0))
+        }
+        else if (precisionDefined() && (isTimestamp() || precision() > 0)) {
 
             // [#8029] Not all dialects support precision on timestamp
             // syntax, possibly despite there being explicit or implicit
             // precision support in DDL.
             if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
                 return castTypePrefix0() + castTypeSuffix0();
+
+
+
+
+
+
             else if (scaleDefined() && scale() > 0)
                 return castTypePrefix0() + "(" + precision() + ", " + scale() + ")" + castTypeSuffix0();
             else
                 return castTypePrefix0() + "(" + precision() + ")" + castTypeSuffix0();
+        }
         else
             return castTypeName0();
     }

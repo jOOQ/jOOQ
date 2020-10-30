@@ -65,6 +65,7 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$TRIGGERS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -135,7 +136,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations r) throws SQLException {
-        for (Record record : keysQuery("PRIMARY KEY")) {
+        for (Record record : primaryKeys(Collections.<String>emptyList())) {
             String tableName = record.get(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME);
             String fieldName = record.get(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME);
             String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME);
@@ -148,7 +149,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
-        for (Record record : keysQuery("UNIQUE")) {
+        for (Record record : uniqueKeys(Collections.<String>emptyList())) {
             String tableName = record.get(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME);
             String fieldName = record.get(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME);
             String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME);
@@ -160,11 +161,16 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
-    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas) {
-        return keysQuery("UNIQUE");
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
+        return keys("PRIMARY KEY");
     }
 
-    private ResultQuery<Record6<String, String, String, String, String, Integer>> keysQuery(String constraintType) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas) {
+        return keys("UNIQUE");
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keys(String constraintType) {
         return create()
             .select(
                 inline(null, VARCHAR).as("catalog"),

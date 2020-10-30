@@ -204,7 +204,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : keysQuery(getInputSchemata(), true)) {
+        for (Record record : primaryKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(STATISTICS.TABLE_SCHEMA));
             String constraintName = record.get(STATISTICS.INDEX_NAME);
             String tableName = record.get(STATISTICS.TABLE_NAME);
@@ -220,7 +220,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : uniqueKeysQuery(getInputSchemata())) {
+        for (Record record : uniqueKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(STATISTICS.TABLE_SCHEMA));
             String constraintName = record.get(STATISTICS.INDEX_NAME);
             String tableName = record.get(STATISTICS.TABLE_NAME);
@@ -257,11 +257,16 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
     }
 
     @Override
-    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas) {
-        return keysQuery(schemas, false);
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
+        return keys(schemas, true);
     }
 
-    private ResultQuery<Record6<String, String, String, String, String, Integer>> keysQuery(List<String> inputSchemata, boolean primary) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas) {
+        return keys(schemas, false);
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keys(List<String> inputSchemata, boolean primary) {
 
         // [#3560] It has been shown that querying the STATISTICS table is much faster on
         // very large databases than going through TABLE_CONSTRAINTS and KEY_COLUMN_USAGE

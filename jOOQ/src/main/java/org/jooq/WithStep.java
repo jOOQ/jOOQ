@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 // ...
@@ -47,6 +44,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -64,6 +62,8 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**

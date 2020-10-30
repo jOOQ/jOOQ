@@ -57,7 +57,7 @@ import org.jooq.ResultQuery;
 public interface ResultQueryDatabase {
 
     /**
-     * A query that produces unique keys for a set of input schemas.
+     * A query that produces primary keys for a set of input schemas.
      * <p>
      * The resulting columns are:
      * <ol>
@@ -69,5 +69,21 @@ public interface ResultQueryDatabase {
      * <li>Column sequence</li>
      * </ol>
      */
-    ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas);
+    ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas);
+
+    /**
+     * A query that produces (non-primary) unique keys for a set of input
+     * schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Table name</li>
+     * <li>Constraint name</li>
+     * <li>Column name</li>
+     * <li>Column sequence</li>
+     * </ol>
+     */
+    ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas);
 }

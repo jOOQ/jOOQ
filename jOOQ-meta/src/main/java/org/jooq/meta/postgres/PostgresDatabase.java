@@ -260,7 +260,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : keysQuery(getInputSchemata(), inline("PRIMARY KEY"))) {
+        for (Record record : primaryKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
@@ -274,7 +274,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : uniqueKeysQuery(getInputSchemata())) {
+        for (Record record : uniqueKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
@@ -287,11 +287,16 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
-    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas) {
-        return keysQuery(schemas, inline("UNIQUE"));
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
+        return keys(schemas, inline("PRIMARY KEY"));
     }
 
-    private ResultQuery<Record6<String, String, String, String, String, Integer>> keysQuery(List<String> schemas, Field<String> constraintType) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas) {
+        return keys(schemas, inline("UNIQUE"));
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keys(List<String> schemas, Field<String> constraintType) {
         return create()
             .select(
                 KEY_COLUMN_USAGE.TABLE_CATALOG,

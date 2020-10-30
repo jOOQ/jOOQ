@@ -56,11 +56,11 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.MetaSQL.M_UNIQUE_KEYS;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultString;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -74,9 +74,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.regex.Pattern;
-import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.jooq.Catalog;
 import org.jooq.Condition;
@@ -107,8 +106,6 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * An implementation of the public {@link Meta} type.
  * <p>
@@ -131,22 +128,12 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-    private static final Pattern         P_DERBY_SYSINDEX                 = Pattern.compile("^(?:SQL\\d{14,}).*$");
-    private static final Pattern         P_H2_SYSINDEX                    = Pattern.compile("^(?:PRIMARY_KEY_|UK_INDEX_|FK_INDEX_).*$");
+
+    private static final Pattern         P_SYSINDEX_DERBY                 = Pattern.compile("^(?:SQL\\d{14,}).*$");
+    private static final Pattern         P_SYSINDEX_H2                    = Pattern.compile("^(?:PRIMARY_KEY_|UK_INDEX_|FK_INDEX_).*$");
 
     private final DatabaseMetaData       databaseMetaData;
     private final boolean                inverseSchemaCatalog;
-
-    private static final Properties      META_SQL                         = new Properties();
-
-    static {
-        try {
-            META_SQL.load(MetaImpl.class.getResourceAsStream("/meta/metasql.properties"));
-        }
-        catch (IOException e) {
-            log.error("Cannot load metasql.properties", e);
-        }
-    }
 
     MetaImpl(Configuration configuration, DatabaseMetaData databaseMetaData) {
         super(configuration);
@@ -458,7 +445,7 @@ final class MetaImpl extends AbstractMeta {
 
         private final Result<Record> getUks(final String catalog, final String schema, final String table) {
             if (ukCache == null) {
-                final String sql = META_SQL.getProperty("uniqueKeysQuery." + family());
+                final String sql = M_UNIQUE_KEYS.get(family());
 
                 if (sql != null) {
                     Result<Record> result = meta(new MetaFunction() {
@@ -694,18 +681,17 @@ final class MetaImpl extends AbstractMeta {
                 if (constraints.contains(indexName))
                     it.remove();
 
-                //
                 else switch (family()) {
+
+
+
+
+
                     case DERBY:
-                        if (P_DERBY_SYSINDEX.matcher(indexName).matches())
-                            it.remove();
-
+                        if (P_SYSINDEX_DERBY.matcher(indexName).matches()) it.remove();
                         break;
-
                     case H2:
-                        if (P_H2_SYSINDEX.matcher(indexName).matches())
-                            it.remove();
-
+                        if (P_SYSINDEX_H2.matcher(indexName).matches()) it.remove();
                         break;
                 }
             }

@@ -220,9 +220,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-
-        // Workaround for https://github.com/h2database/h2database/issues/1000
-        for (Record record : keysQuery(getInputSchemata(), Arrays.<Field<String>>asList(inline("PRIMARY KEY"), inline("PRIMARY_KEY")))) {
+        for (Record record : uniqueKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(CONSTRAINTS.TABLE_SCHEMA));
 
             if (schema != null) {
@@ -239,7 +237,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : uniqueKeysQuery(getInputSchemata())) {
+        for (Record record : uniqueKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(CONSTRAINTS.TABLE_SCHEMA));
 
             if (schema != null) {
@@ -255,11 +253,18 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     }
 
     @Override
-    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeysQuery(List<String> schemas) {
-        return keysQuery(schemas, Arrays.<Field<String>>asList(inline("UNIQUE")));
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
+
+        // Workaround for https://github.com/h2database/h2database/issues/1000
+        return keys(schemas, Arrays.<Field<String>>asList(inline("PRIMARY KEY"), inline("PRIMARY_KEY")));
     }
 
-    private ResultQuery<Record6<String, String, String, String, String, Integer>> keysQuery(List<String> schemas, List<Field<String>> constraintTypes) {
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas) {
+        return keys(schemas, Arrays.<Field<String>>asList(inline("UNIQUE")));
+    }
+
+    private ResultQuery<Record6<String, String, String, String, String, Integer>> keys(List<String> schemas, List<Field<String>> constraintTypes) {
         return create().select(
                     CONSTRAINTS.TABLE_CATALOG,
                     CONSTRAINTS.TABLE_SCHEMA,

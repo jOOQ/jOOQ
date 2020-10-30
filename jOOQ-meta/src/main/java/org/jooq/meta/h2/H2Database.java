@@ -220,7 +220,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : uniqueKeys(getInputSchemata())) {
+        for (Record record : primaryKeys(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(CONSTRAINTS.TABLE_SCHEMA));
 
             if (schema != null) {

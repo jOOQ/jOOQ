@@ -37,6 +37,7 @@
  */
 package org.jooq.migrations.jgit;
 
+import static java.util.Arrays.asList;
 import static org.eclipse.jgit.diff.DiffEntry.ChangeType.ADD;
 import static org.eclipse.jgit.diff.DiffEntry.ChangeType.DELETE;
 import static org.eclipse.jgit.diff.DiffEntry.ChangeType.RENAME;
@@ -46,7 +47,9 @@ import static org.jooq.ContentType.SCHEMA;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -140,6 +143,10 @@ public final class GitCommitProvider implements CommitProvider {
                     else {
                         Commit[] parents = new Commit[revCommit.getParentCount()];
 
+                        // It seems the parents are not ordered deterministically in the order of which they were merged
+                        List<RevCommit> l = new ArrayList<>(asList(revCommit.getParents()));
+                        l.sort(COMMIT_COMPARATOR);
+
                         for (int i = 0; i < parents.length; i++)
                             if ((parents[i] = commits.get(revCommit.getParents()[i].getName())) == null)
                                 continue commitLoop;
@@ -166,6 +173,13 @@ public final class GitCommitProvider implements CommitProvider {
 
         return commits;
     }
+
+    private static final Comparator<RevCommit> COMMIT_COMPARATOR = new Comparator<RevCommit>() {
+        @Override
+        public int compare(RevCommit o1, RevCommit o2) {
+            return o1.getCommitTime() - o2.getCommitTime();
+        }
+    };
 
     private final Commit commit(Commit commit, Status status) {
         List<File> files = new ArrayList<>();

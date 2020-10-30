@@ -1017,7 +1017,7 @@ final class MetaImpl extends AbstractMeta {
                     if (!isAutoIncrement && !StringUtils.isEmpty(defaultValue)) {
                         try {
 
-                            // [#7194] Some databases report all default values as expressions, not as values
+                            // [#7194] [#8469] Some databases report all default values as expressions, not as values
                             if (EXPRESSION_COLUMN_DEFAULT.contains(dialect())) {
                                 if (FALSE.equals(settings().isParseMetaDefaultExpressions())) {
                                     type = type.defaultValue(DSL.field(defaultValue, type));

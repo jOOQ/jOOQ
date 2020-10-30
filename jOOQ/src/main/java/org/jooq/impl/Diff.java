@@ -49,6 +49,7 @@ import static org.jooq.impl.ConstraintType.CHECK;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -377,6 +378,36 @@ final class Diff {
         return result;
     }
 
+    private final boolean isSynthetic(Field<?> f) {
+        switch (ctx.family()) {
+
+
+
+
+
+        }
+
+        return false;
+    }
+
+    private final boolean isSynthetic(UniqueKey<?> pk) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        return false;
+    }
+
     private final DiffResult appendColumns(DiffResult result, final Table<?> t1, List<? extends Field<?>> l1, List<? extends Field<?>> l2) {
         final List<Field<?>> add = new ArrayList<>();
         final List<Field<?>> drop = new ArrayList<>();
@@ -385,7 +416,11 @@ final class Diff {
             new Create<Field<?>>() {
                 @Override
                 public void create(DiffResult r, Field<?> f) {
-                    if (migrateConf.alterTableAddMultiple())
+
+                    // Ignore synthetic columns
+                    if (isSynthetic(f))
+                        ;
+                    else if (migrateConf.alterTableAddMultiple())
                         add.add(f);
                     else
                         r.queries.add(ctx.alterTable(t1).add(f));
@@ -395,7 +430,11 @@ final class Diff {
             new Drop<Field<?>>() {
                 @Override
                 public void drop(DiffResult r, Field<?> f) {
-                    if (migrateConf.alterTableDropMultiple())
+
+                    // Ignore synthetic columns
+                    if (isSynthetic(f))
+                        ;
+                    else if (migrateConf.alterTableDropMultiple())
                         drop.add(f);
                     else
                         r.queries.add(ctx.alterTable(t1).drop(f));
@@ -487,14 +526,19 @@ final class Diff {
         final Create<UniqueKey<?>> create = new Create<UniqueKey<?>>() {
             @Override
             public void create(DiffResult r, UniqueKey<?> pk) {
-                r.queries.add(ctx.alterTable(t1).add(pk.constraint()));
+                if (isSynthetic(pk))
+                    ;
+                else
+                    r.queries.add(ctx.alterTable(t1).add(pk.constraint()));
             }
         };
 
         final Drop<UniqueKey<?>> drop = new Drop<UniqueKey<?>>() {
             @Override
             public void drop(DiffResult r, UniqueKey<?> pk) {
-                if (isEmpty(pk.getName()))
+                if (isSynthetic(pk))
+                    ;
+                else if (isEmpty(pk.getName()))
                     r.queries.add(ctx.alterTable(t1).dropPrimaryKey());
                 else
                     r.queries.add(ctx.alterTable(t1).dropPrimaryKey(pk.constraint()));

@@ -43,6 +43,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -124,6 +125,7 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> ENCODED_TIMESTAMP_PRECISION      = SQLDialect.supportedBy(HSQLDB, MARIADB);
     private static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION   = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_SCHEMAS               = SQLDialect.supportedBy(FIREBIRD, SQLITE);
+
 
 
 
@@ -682,6 +684,9 @@ final class MetaImpl extends AbstractMeta {
                     it.remove();
 
                 else switch (family()) {
+
+
+
 
 
 

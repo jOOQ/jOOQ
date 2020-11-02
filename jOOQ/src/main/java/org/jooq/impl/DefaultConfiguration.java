@@ -1138,10 +1138,7 @@ public class DefaultConfiguration implements Configuration {
 
     @Override
     public final Configuration set(ConverterProvider newConverterProvider) {
-        this.converterProvider = newConverterProvider != null
-            ? newConverterProvider
-            : new DefaultConverterProvider();
-
+        this.converterProvider = newConverterProvider;
         return this;
     }
 
@@ -1519,7 +1516,9 @@ public class DefaultConfiguration implements Configuration {
 
     @Override
     public final ConverterProvider converterProvider() {
-        return converterProvider;
+        return converterProvider != null
+            ? converterProvider
+            : new DefaultConverterProvider();
     }
 
 

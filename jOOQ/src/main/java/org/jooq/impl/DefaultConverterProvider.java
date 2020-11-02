@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Struct;
@@ -67,7 +68,12 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public final class DefaultConverterProvider implements ConverterProvider {
+public final class DefaultConverterProvider implements ConverterProvider, Serializable {
+
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 2937225066265868374L;
 
     @Nullable
     @Override

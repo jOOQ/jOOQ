@@ -916,13 +916,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                         // and wants to query HSQLDB (default to upper case), they may choose
                         // to overwrite casing using RenderNameCase.
                         if (style == RenderNameCase.UPPER)
-                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, true))
+                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
                                 names.add(f.getName().toUpperCase(renderLocale(configuration().settings())));
                         else if (style == RenderNameCase.LOWER)
-                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, true))
+                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
                                 names.add(f.getName().toLowerCase(renderLocale(configuration().settings())));
                         else
-                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, true))
+                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
                                 names.add(f.getName());
 
                         ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(EMPTY_STRING)));

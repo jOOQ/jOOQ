@@ -83,6 +83,7 @@ import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
@@ -906,7 +907,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 case HSQLDB:
                 default: {
                     if (ctx.statement() == null) {
-                        String[] names = new String[returningResolvedAsterisks.size()];
+                        List<String> names = new ArrayList<>(returningResolvedAsterisks.size());
                         RenderNameCase style = SettingsTools.getRenderNameCase(configuration().settings());
 
                         // [#2845] Field names should be passed to JDBC in the case
@@ -915,15 +916,16 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                         // and wants to query HSQLDB (default to upper case), they may choose
                         // to overwrite casing using RenderNameCase.
                         if (style == RenderNameCase.UPPER)
-                            for (int i = 0; i < names.length; i++)
-                                names[i] = returningResolvedAsterisks.get(i).getName().toUpperCase(renderLocale(configuration().settings()));
+                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
+                                names.add(f.getName().toUpperCase(renderLocale(configuration().settings())));
                         else if (style == RenderNameCase.LOWER)
-                            for (int i = 0; i < names.length; i++)
-                                names[i] = returningResolvedAsterisks.get(i).getName().toLowerCase(renderLocale(configuration().settings()));
+                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
+                                names.add(f.getName().toLowerCase(renderLocale(configuration().settings())));
                         else
-                            for (int i = 0; i < names.length; i++)
-                                names[i] = returningResolvedAsterisks.get(i).getName();
-                        ctx.statement(connection.prepareStatement(ctx.sql(), names));
+                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
+                                names.add(f.getName());
+
+                        ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(EMPTY_STRING)));
                     }
 
                     break;

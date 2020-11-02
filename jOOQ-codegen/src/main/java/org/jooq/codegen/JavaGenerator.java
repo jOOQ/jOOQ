@@ -1474,7 +1474,7 @@ public class JavaGenerator extends AbstractGenerator {
                 );
         else if (kotlin)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("class %s() : %s<%s>(*%s.fields(%s.%s))[[before=, ][%s]] {",
+                out.println("open class %s() : %s<%s>(*%s.fields(%s.%s))[[before=, ][%s]] {",
                     className,
                     baseClass,
                     className,
@@ -1484,7 +1484,7 @@ public class JavaGenerator extends AbstractGenerator {
                     interfaces
                 );
             else
-                out.println("class %s() : %s<%s>(%s)[[before=, ][%s]] {",
+                out.println("open class %s() : %s<%s>(%s)[[before=, ][%s]] {",
                     className,
                     baseClass,
                     className,
@@ -3904,7 +3904,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("class %s(configuration: %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][separator= with ][%s]] {",
                 className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
         else if (kotlin)
-            out.println("class %s(configuration: %s?) : %s<%s, %s, %s>(%s, %s::class.java, configuration)[[before=, ][%s]] {",
+            out.println("open class %s(configuration: %s?) : %s<%s, %s, %s>(%s, %s::class.java, configuration)[[before=, ][%s]] {",
                 className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
         else
             out.println("public class %s extends %s<%s, %s, %s>[[before= implements ][%s]] {", className, daoImpl, tableRecord, pType, tType, interfaces);
@@ -5025,7 +5025,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")[[before= with ][separator= with ][%s]] {", interfaces);
         }
         else if (kotlin) {
-            out.println("class %s(", className);
+            out.println("open class %s(", className);
             out.println("alias: %s,", Name.class);
             out.println("child: %s<out %s>?,", Table.class, Record.class);
             out.println("path: %s<out %s, %s>?,", ForeignKey.class, Record.class, recordType);
@@ -6211,7 +6211,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("class %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {", className, CatalogImpl.class, catalog.getOutputName(), interfaces);
         }
         else if (kotlin) {
-            out.println("class %s : %s(\"%s\")[[before=, ][%s]] {", className, CatalogImpl.class, catalog.getOutputName(), interfaces);
+            out.println("open class %s : %s(\"%s\")[[before=, ][%s]] {", className, CatalogImpl.class, catalog.getOutputName(), interfaces);
 
             out.println("companion object {");
             out.javadoc("The reference instance of <code>%s</code>", catalogName);
@@ -6320,7 +6320,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("class %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
         }
         else if (kotlin) {
-            out.println("class %s : %s(\"%s\", %s)[[before=, ][%s]] {", className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
+            out.println("open class %s : %s(\"%s\", %s)[[before=, ][%s]] {", className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
 
             out.println("companion object {");
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
@@ -6963,7 +6963,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             if (kotlin) {
-                out.println("class %s : %s<%s>(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before=, ][%s]] {",
+                out.println("open class %s : %s<%s>(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before=, ][%s]] {",
                     className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
             }
             else {

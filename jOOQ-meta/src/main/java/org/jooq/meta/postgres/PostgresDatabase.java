@@ -59,6 +59,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DECIMAL_INTEGER;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -102,6 +103,7 @@ import org.jooq.Name;
 // ...
 import org.jooq.Record;
 import org.jooq.Record11;
+import org.jooq.Record12;
 import org.jooq.Record2;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -610,34 +612,34 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
-    public ResultQuery<Record11<String, String, String, String, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
-        return null;
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+        return create()
+            .select(
+                inline(null, VARCHAR).as("catalog"),
+                SEQUENCES.SEQUENCE_SCHEMA,
+                SEQUENCES.SEQUENCE_NAME,
+                SEQUENCES.DATA_TYPE,
+                SEQUENCES.NUMERIC_PRECISION,
+                SEQUENCES.NUMERIC_SCALE,
+                nullif(SEQUENCES.START_VALUE.cast(BIGINT), inline(1L)).as(SEQUENCES.START_VALUE),
+                nullif(SEQUENCES.INCREMENT.cast(BIGINT), inline(1L)).as(SEQUENCES.INCREMENT),
+                nullif(SEQUENCES.MINIMUM_VALUE.cast(BIGINT), inline(1L)).as(SEQUENCES.MINIMUM_VALUE),
+                nullif(SEQUENCES.MAXIMUM_VALUE.cast(DECIMAL_INTEGER),
+                    power(cast(inline(2L), DECIMAL_INTEGER), cast(SEQUENCES.NUMERIC_PRECISION.minus(inline(1L)), DECIMAL_INTEGER)).minus(inline(1L))).coerce(BIGINT).as(SEQUENCES.MAXIMUM_VALUE),
+                SEQUENCES.CYCLE_OPTION.cast(BOOLEAN).as(SEQUENCES.CYCLE_OPTION),
+                inline(null, BIGINT).as("cache"))
+            .from(SEQUENCES)
+            .where(SEQUENCES.SEQUENCE_SCHEMA.in(schemas))
+            .orderBy(
+                SEQUENCES.SEQUENCE_SCHEMA,
+                SEQUENCES.SEQUENCE_NAME);
     }
 
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<>();
 
-        for (Record record : create()
-                .select(
-                    SEQUENCES.SEQUENCE_SCHEMA,
-                    SEQUENCES.SEQUENCE_NAME,
-                    SEQUENCES.DATA_TYPE,
-                    SEQUENCES.NUMERIC_PRECISION,
-                    SEQUENCES.NUMERIC_SCALE,
-                    nullif(SEQUENCES.START_VALUE.cast(DECIMAL_INTEGER), one()).as(SEQUENCES.START_VALUE),
-                    nullif(SEQUENCES.INCREMENT.cast(DECIMAL_INTEGER), one()).as(SEQUENCES.INCREMENT),
-                    nullif(SEQUENCES.MINIMUM_VALUE.cast(DECIMAL_INTEGER), one()).as(SEQUENCES.MINIMUM_VALUE),
-                    nullif(SEQUENCES.MAXIMUM_VALUE.cast(DECIMAL_INTEGER),
-                        power(cast(inline(2), DECIMAL_INTEGER), cast(SEQUENCES.NUMERIC_PRECISION.minus(1), DECIMAL_INTEGER)).minus(1)).as(SEQUENCES.MAXIMUM_VALUE),
-                    SEQUENCES.CYCLE_OPTION.cast(BOOLEAN).as(SEQUENCES.CYCLE_OPTION))
-                .from(SEQUENCES)
-                .where(SEQUENCES.SEQUENCE_SCHEMA.in(getInputSchemata()))
-                .orderBy(
-                    SEQUENCES.SEQUENCE_SCHEMA,
-                    SEQUENCES.SEQUENCE_NAME)
-                .fetch()) {
-
+        for (Record record : sequences(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(SEQUENCES.SEQUENCE_SCHEMA));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(

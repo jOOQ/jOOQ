@@ -42,6 +42,7 @@ import java.util.List;
 import org.jooq.Internal;
 import org.jooq.Meta;
 import org.jooq.Record11;
+import org.jooq.Record12;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 
@@ -101,6 +102,7 @@ public interface ResultQueryDatabase {
      * <li>Sequence name</li>
      * <li>Data type name</li>
      * <li>Data type precision</li>
+     * <li>Data type scale</li>
      * <li>Start value</li>
      * <li>Increment</li>
      * <li>Min value</li>
@@ -110,5 +112,5 @@ public interface ResultQueryDatabase {
      * </ol>
      */
     @Internal
-    ResultQuery<Record11<String, String, String, String, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas);
+    ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas);
 }

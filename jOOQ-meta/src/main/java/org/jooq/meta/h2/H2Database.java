@@ -76,6 +76,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record11;
+import org.jooq.Record12;
 import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
@@ -412,7 +413,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     }
 
     @Override
-    public ResultQuery<Record11<String, String, String, String, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
         return create()
             .select(
                 inline(null, VARCHAR).as("catalog"),
@@ -420,6 +421,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 SEQUENCES.SEQUENCE_NAME,
                 inline("BIGINT").as("type_name"),
                 inline(null, INTEGER).as("precision"),
+                inline(null, INTEGER).as("scale"),
                 inline(null, BIGINT).as("start_value"),
                 nullif(SEQUENCES.INCREMENT, inline(1L)).as(SEQUENCES.INCREMENT),
                 nullif(SEQUENCES.MIN_VALUE, inline(1L)).as(SEQUENCES.MIN_VALUE),

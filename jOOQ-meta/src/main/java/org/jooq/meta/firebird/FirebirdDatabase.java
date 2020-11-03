@@ -45,11 +45,11 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nullif;
-import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
@@ -73,7 +73,7 @@ import java.util.Map.Entry;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Record11;
+import org.jooq.Record12;
 import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
@@ -367,28 +367,36 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
-    public ResultQuery<Record11<String, String, String, String, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
-        return null;
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+        return create()
+            .select(
+                inline(null, VARCHAR).as("catalog"),
+                inline(null, VARCHAR).as("schema"),
+                trim(RDB$GENERATORS.RDB$GENERATOR_NAME).as(RDB$GENERATORS.RDB$GENERATOR_NAME),
+                inline("BIGINT").as("type_name"),
+                inline(null, INTEGER).as("numeric_precision"),
+                inline(null, INTEGER).as("numeric_scale"),
+                (is30()
+                    ? nullif(RDB$GENERATORS.RDB$INITIAL_VALUE, inline(0L))
+                    : inline(0L))
+                .as(RDB$GENERATORS.RDB$INITIAL_VALUE),
+                (is30()
+                    ? nullif(RDB$GENERATORS.RDB$GENERATOR_INCREMENT, inline(1))
+                    : inline(1)).coerce(BIGINT).as(RDB$GENERATORS.RDB$GENERATOR_INCREMENT),
+                inline(null, BIGINT).as("min_value"),
+                inline(null, BIGINT).as("max_value"),
+                inline(null, BOOLEAN).as("cycle"),
+                inline(null, BIGINT).as("cache")
+            )
+            .from(RDB$GENERATORS)
+            .orderBy(RDB$GENERATORS.RDB$GENERATOR_NAME);
     }
 
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<>();
 
-        for (Record record : create()
-                .select(
-                    trim(RDB$GENERATORS.RDB$GENERATOR_NAME).as(RDB$GENERATORS.RDB$GENERATOR_NAME),
-                    (is30()
-                        ? nullif(RDB$GENERATORS.RDB$INITIAL_VALUE, zero())
-                        : zero())
-                    .as(RDB$GENERATORS.RDB$INITIAL_VALUE),
-                    (is30()
-                        ? nullif(RDB$GENERATORS.RDB$GENERATOR_INCREMENT, one())
-                        : one()).as(RDB$GENERATORS.RDB$GENERATOR_INCREMENT)
-                )
-                .from(RDB$GENERATORS)
-                .orderBy(1)) {
-
+        for (Record record : sequences(getInputSchemata())) {
             SchemaDefinition schema = getSchemata().get(0);
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this, schema, FirebirdDataType.BIGINT.getTypeName()

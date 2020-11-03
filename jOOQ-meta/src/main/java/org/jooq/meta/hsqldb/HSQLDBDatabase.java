@@ -38,6 +38,7 @@
 
 package org.jooq.meta.hsqldb;
 
+import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -46,7 +47,10 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.DOMAIN_CONSTRAINTS;
@@ -71,6 +75,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record11;
+import org.jooq.Record12;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -391,26 +396,33 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
     }
 
     @Override
-    public ResultQuery<Record11<String, String, String, String, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
-        return null;
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+        return create()
+            .select(
+                inline(null, VARCHAR).as("catalog"),
+                SEQUENCES.SEQUENCE_SCHEMA,
+                SEQUENCES.SEQUENCE_NAME,
+                SEQUENCES.DATA_TYPE,
+                SEQUENCES.NUMERIC_PRECISION.coerce(INTEGER),
+                SEQUENCES.NUMERIC_SCALE.coerce(INTEGER),
+                SEQUENCES.START_WITH.coerce(BIGINT),
+                SEQUENCES.INCREMENT.coerce(BIGINT),
+                SEQUENCES.MINIMUM_VALUE.coerce(BIGINT),
+                SEQUENCES.MAXIMUM_VALUE.coerce(BIGINT),
+                decode(SEQUENCES.CYCLE_OPTION, inline("YES"), inline(true), inline(false)).as(SEQUENCES.CYCLE_OPTION),
+                inline(null, BIGINT).as("cache"))
+            .from(SEQUENCES)
+            .where(SEQUENCES.SEQUENCE_SCHEMA.in(schemas))
+            .orderBy(
+                SEQUENCES.SEQUENCE_SCHEMA,
+                SEQUENCES.SEQUENCE_NAME);
     }
 
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<>();
 
-        for (Record record : create()
-                .select(
-                    SEQUENCES.SEQUENCE_SCHEMA,
-                    SEQUENCES.SEQUENCE_NAME,
-                    SEQUENCES.DATA_TYPE)
-                .from(SEQUENCES)
-                .where(SEQUENCES.SEQUENCE_SCHEMA.in(getInputSchemata()))
-                .orderBy(
-                    SEQUENCES.SEQUENCE_SCHEMA,
-                    SEQUENCES.SEQUENCE_NAME)
-                .fetch()) {
-
+        for (Record record : sequences(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(SEQUENCES.SEQUENCE_SCHEMA));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(

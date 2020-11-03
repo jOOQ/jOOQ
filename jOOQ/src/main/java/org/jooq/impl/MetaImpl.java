@@ -554,13 +554,13 @@ final class MetaImpl extends AbstractMeta {
                     list.add(Internal.createSequence(
                         record.get(2, String.class),
                         this,
-                        (DataType<Number>) DefaultDataType.getDataType(family(), record.get(3, String.class), record.get(4, int.class), 0),
-                        record.get(5, Long.class),
+                        (DataType<Number>) DefaultDataType.getDataType(family(), record.get(3, String.class), record.get(4, int.class), record.get(5, int.class)),
                         record.get(6, Long.class),
                         record.get(7, Long.class),
                         record.get(8, Long.class),
-                        (boolean) record.get(9, boolean.class),
-                        record.get(10, Long.class)
+                        record.get(9, Long.class),
+                        (boolean) record.get(10, boolean.class),
+                        record.get(11, Long.class)
                     ));
                 }
             }
@@ -581,7 +581,7 @@ final class MetaImpl extends AbstractMeta {
                     });
 
                     // TODO Support catalogs as well
-                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
+                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
                     sequenceCache = new LinkedHashMap<>();
 
                     for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
@@ -596,7 +596,7 @@ final class MetaImpl extends AbstractMeta {
             }
 
             if (sequenceCache != null)
-                return sequenceCache.get(MetaSchema.this.getQualifiedName());
+                return sequenceCache.get(name(MetaSchema.this.getCatalog().getName(), MetaSchema.this.getName()));
             else
                 return null;
         }

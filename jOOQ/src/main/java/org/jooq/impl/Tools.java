@@ -5295,7 +5295,7 @@ final class Tools {
     }
 
     @SuppressWarnings("serial")
-    static final QueryPartList<SelectFieldOrAsterisk> qualify(final Table<?> table, SelectFieldList<SelectFieldOrAsterisk> fields) {
+    static final QueryPartList<SelectFieldOrAsterisk> qualify(final Table<?> table, Iterable<SelectFieldOrAsterisk> fields) {
         QueryPartList<SelectFieldOrAsterisk> result = new QueryPartList<SelectFieldOrAsterisk>() {
             @Override
             public final boolean rendersContent(Context<?> ctx) {

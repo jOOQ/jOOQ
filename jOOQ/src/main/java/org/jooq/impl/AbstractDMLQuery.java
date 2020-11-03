@@ -84,6 +84,8 @@ import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
+import static org.jooq.impl.Tools.flattenCollection;
+import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
@@ -337,6 +339,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             ctx.visit(w).formatSeparator();
 
         boolean previousDeclareFields = ctx.declareFields();
+
 
 
 

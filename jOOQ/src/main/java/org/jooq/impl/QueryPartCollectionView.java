@@ -241,6 +241,13 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         return wrapped.containsAll(c);
     }
 
+    final void addAll(Iterable<? extends T> c) {
+        if (c != null)
+            for (T t : c)
+                if (t != null)
+                    add(t);
+    }
+
     @Override
     public final boolean addAll(Collection<? extends T> c) {
         return wrapped.addAll(removeNulls(c));

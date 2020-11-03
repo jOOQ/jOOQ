@@ -98,11 +98,6 @@ final class TableMetaImpl extends AbstractMeta {
     }
 
     @Override
-    final List<Sequence<?>> getSequences0() {
-        return Collections.emptyList();
-    }
-
-    @Override
     final List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 

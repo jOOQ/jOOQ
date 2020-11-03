@@ -101,6 +101,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 // ...
 import org.jooq.Record;
+import org.jooq.Record11;
 import org.jooq.Record2;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -606,6 +607,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         }
 
         return result;
+    }
+
+    @Override
+    public ResultQuery<Record11<String, String, String, String, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+        return null;
     }
 
     @Override

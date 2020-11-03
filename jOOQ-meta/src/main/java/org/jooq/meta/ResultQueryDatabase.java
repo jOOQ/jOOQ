@@ -41,6 +41,7 @@ import java.util.List;
 
 import org.jooq.Internal;
 import org.jooq.Meta;
+import org.jooq.Record11;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 
@@ -48,8 +49,9 @@ import org.jooq.ResultQuery;
  * An interface for all {@link AbstractDatabase} implementations that can
  * produce {@link ResultQuery} objects to query meta data.
  * <p>
- * These queries will be used to generate some queries in the core library's
- * {@link Meta} API.
+ * These queries will be used to generate some internal queries in the core
+ * library's {@link Meta} API. The return types of the various methods are
+ * subject to change and should not be relied upon.
  *
  * @author Lukas Eder
  */
@@ -69,6 +71,7 @@ public interface ResultQueryDatabase {
      * <li>Column sequence</li>
      * </ol>
      */
+    @Internal
     ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas);
 
     /**
@@ -85,5 +88,27 @@ public interface ResultQueryDatabase {
      * <li>Column sequence</li>
      * </ol>
      */
+    @Internal
     ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas);
+
+    /**
+     * A query that produces sequences for a set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Sequence name</li>
+     * <li>Data type name</li>
+     * <li>Data type precision</li>
+     * <li>Start value</li>
+     * <li>Increment</li>
+     * <li>Min value</li>
+     * <li>Max value</li>
+     * <li>Cycle</li>
+     * <li>Cache</li>
+     * </ol>
+     */
+    @Internal
+    ResultQuery<Record11<String, String, String, String, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas);
 }

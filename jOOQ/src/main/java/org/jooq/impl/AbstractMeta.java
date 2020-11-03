@@ -285,7 +285,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    List<Sequence<?>> getSequences0() {
+    final List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
 
         for (Schema schema : getSchemas())

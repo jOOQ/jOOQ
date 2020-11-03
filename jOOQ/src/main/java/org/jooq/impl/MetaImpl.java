@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_UNIQUE_KEYS;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -236,16 +237,6 @@ final class MetaImpl extends AbstractMeta {
     }
 
     @Override
-    final List<Sequence<?>> getSequences0() {
-        List<Sequence<?>> result = new ArrayList<>();
-
-        for (Schema schema : getSchemas())
-            result.addAll(schema.getSequences());
-
-        return result;
-    }
-
-    @Override
     final List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 
@@ -338,6 +329,7 @@ final class MetaImpl extends AbstractMeta {
         private static final long                            serialVersionUID = -2621899850912554198L;
         private transient volatile Map<Name, Result<Record>> columnCache;
         private transient volatile Map<Name, Result<Record>> ukCache;
+        private transient volatile Map<Name, Result<Record>> sequenceCache;
 
         MetaSchema(String name, Catalog catalog) {
             super(name, catalog);
@@ -549,6 +541,64 @@ final class MetaImpl extends AbstractMeta {
                         : dsl().fetch(rs, GET_COLUMNS_EXTENDED);
                 }
             });
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public List<Sequence<?>> getSequences() {
+            List<Sequence<?>> list = new ArrayList<>();
+
+            Result<Record> result = getSequences0();
+            if (result != null) {
+                for (Record record : result) {
+                    list.add(Internal.createSequence(
+                        record.get(2, String.class),
+                        this,
+                        (DataType<Number>) DefaultDataType.getDataType(family(), record.get(3, String.class), record.get(4, int.class), 0),
+                        record.get(5, Long.class),
+                        record.get(6, Long.class),
+                        record.get(7, Long.class),
+                        record.get(8, Long.class),
+                        (boolean) record.get(9, boolean.class),
+                        record.get(10, Long.class)
+                    ));
+                }
+            }
+
+            return list;
+        }
+
+        private final Result<Record> getSequences0() {
+            if (sequenceCache == null) {
+                final String sql = M_SEQUENCES.get(family());
+
+                if (sql != null) {
+                    Result<Record> result = meta(new MetaFunction() {
+                        @Override
+                        public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                            return DSL.using(meta.getConnection(), family()).resultQuery(sql, MetaSchema.this.getName()).fetch();
+                        }
+                    });
+
+                    // TODO Support catalogs as well
+                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
+                    sequenceCache = new LinkedHashMap<>();
+
+                    for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
+                        Record key = entry.getKey();
+                        Result<Record> value = entry.getValue();
+                        sequenceCache.put(name(
+                            key.get(0, String.class),
+                            key.get(1, String.class)
+                        ), value);
+                    }
+                }
+            }
+
+            if (sequenceCache != null)
+                return sequenceCache.get(MetaSchema.this.getQualifiedName());
+            else
+                return null;
         }
     }
 

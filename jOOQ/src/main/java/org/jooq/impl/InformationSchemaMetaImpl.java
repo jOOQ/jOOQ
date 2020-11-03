@@ -620,11 +620,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         return (List) domains;
     }
 
-    @Override
-    final List<Sequence<?>> getSequences0() {
-        return sequences;
-    }
-
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final List<UniqueKey<?>> getPrimaryKeys0() {

@@ -797,7 +797,7 @@ final class Interpreter {
 
     private final void accept0(CreateViewImpl<?> query) {
         Table<?> table = query.$view();
-        MutableSchema schema = getSchema(table.getSchema());
+        MutableSchema schema = getSchema(table.getSchema(), true);
 
         MutableTable existing = schema.table(table);
         if (existing != null) {
@@ -858,7 +858,7 @@ final class Interpreter {
 
     private final void accept0(CreateSequenceImpl query) {
         Sequence<?> sequence = query.$sequence();
-        MutableSchema schema = getSchema(sequence.getSchema());
+        MutableSchema schema = getSchema(sequence.getSchema(), true);
 
         MutableSequence existing = schema.sequence(sequence);
         if (existing != null) {
@@ -1002,7 +1002,7 @@ final class Interpreter {
 
     private final void accept0(CreateDomainImpl<?> query) {
         Domain<?> domain = query.$domain();
-        MutableSchema schema = getSchema(domain.getSchema());
+        MutableSchema schema = getSchema(domain.getSchema(), true);
 
         MutableDomain existing = schema.domain(domain);
         if (existing != null) {

@@ -73,6 +73,7 @@ import java.util.Map.Entry;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record11;
 import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
@@ -363,6 +364,11 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
         List<SchemaDefinition> result = new ArrayList<>();
         result.add(new SchemaDefinition(this, "", ""));
         return result;
+    }
+
+    @Override
+    public ResultQuery<Record11<String, String, String, String, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+        return null;
     }
 
     @Override

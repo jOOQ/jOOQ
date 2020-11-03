@@ -8073,11 +8073,6 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    private static final String classLiteral(String type) {
-        String rawtype = type.replaceAll("<.*>", "").replaceAll("\\[.*\\]", "");
-        return (rawtype.equals(type) ? "" : "(java.lang.Class) ") + rawtype + ".class";
-    }
-
     protected JavaTypeResolver resolver(JavaWriter out) {
         return new Resolver(out, null);
     }

@@ -256,50 +256,62 @@ class GenerationUtil {
     )));
 
     /**
-     * Take a character and determine if it's a valid "Scala Letter"
-     * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
-     *
-     * These consist of all printable ASCII characters \u0020 - \u007F which are in none of the sets above, mathematical symbols (Sm) and other symbols (So).
-     *
+     * Check if a character is a valid "scala operator".
+     * <p>
+     * See <a href=
+     * "http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html">http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html</a>
      */
     private static Boolean isScalaOperator(char c) {
         return (c >= 0x0020 && c <= 0x007F && !Character.isLetter(c) && !Character.isDigit(c) && !SCALA_DELIMITER.contains(c) && !SCALA_PARENTHESES.contains(c) && !SCALA_WHITESPACE.contains(c)) || Character.getType(c) == Character.MATH_SYMBOL /* Sm */ || Character.getType(c) == Character.OTHER_SYMBOL /* So */;
     }
 
     /**
-     * Take a character and determine if it's a valid "Scala Letter"
-     * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
-     *
-     * Letters, which include lower case letters (Ll), upper case letters (Lu), titlecase letters (Lt), other letters (Lo), letter numerals (Nl) and the two characters \u0024 ‘$’ and \u005F ‘_’, which both count as upper case letters.
-     *
-     * Character.isLetter handles the Ll, Lu, Lt, Lo, and Nl, supplement with _ and $
-     *
+     * Check if a character is a valid "scala letter".
+     * <p>
+     * See <a href=
+     * "http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html">http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html</a>
      */
     private static Boolean isScalaLetter(char c) {
         return Character.isLetter(c) || c == '_' || c == '$';
     }
 
     /**
-     * Take a character and determine if its a valid start of a scala identifier
-     * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
-     *
-     * Defines as a "scala letter", we're ignoring any identifiers that might starts with an operational character
-     *
+     * Check if a character can be used in a scala identifier.
+     * <p>
+     * See <a href=
+     * "http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html">http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html</a>
      */
     private static Boolean isScalaIdentifierStart(char c) {
         return isScalaLetter(c);
     }
 
     /**
-     * Take a character and determine if its a valid start of a scala identifier
-     * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
-     *
-     * Letters, which include lower case letters (Ll), upper case letters (Lu), titlecase letters (Lt), other letters (Lo), letter numerals (Nl) and the two characters \u0024 ‘$’ and \u005F ‘_’, which both count as upper case letters.
-     *
-     * Character.isLetter handles the Ll, Lu, Lt, Lo, and Nl, supplement with _ and $
+     * Check if a character can be used in a scala identifier.
+     * <p>
+     * See <a href=
+     * "http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html">http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html</a>
      */
     private static Boolean isScalaIdentifierPart(char c) {
         return isScalaIdentifierStart(c) || Character.isDigit(c);
+    }
+
+    /**
+     * Check if a character can be used in a kotlin identifier.
+     * <p>
+     * See <a href=
+     * "https://kotlinlang.org/spec/syntax-and-grammar.html#grammar-rule-QuotedSymbol">https://kotlinlang.org/spec/syntax-and-grammar.html#grammar-rule-QuotedSymbol</a>
+     */
+    private static boolean isKotlinIdentifierPart(char c) {
+        return c != '\r'
+            && c != '\n'
+            && c != '`'
+            && c != '('
+            && c != ')'
+            && c != '{'
+            && c != '}'
+            && c != '['
+            && c != ']'
+            && c != '.';
     }
 
     /**
@@ -363,6 +375,10 @@ class GenerationUtil {
                 sb.append("_").append(c);
             else if (language == JAVA && i == 0 && !Character.isJavaIdentifierStart(c))
                 sb.append("_").append(c);
+
+            // [#10837] Some characters are not allowed, even in kotlin quoted identifiers
+            else if (language == KOTLIN && !isKotlinIdentifierPart(c))
+                sb.append(escape(c));
 
             // TODO: Should we do this for Scala as well?
             else if (language == KOTLIN && !Character.isJavaIdentifierPart(c))

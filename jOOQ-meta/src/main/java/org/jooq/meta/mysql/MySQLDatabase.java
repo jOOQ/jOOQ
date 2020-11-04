@@ -40,6 +40,8 @@ package org.jooq.meta.mysql;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
@@ -111,15 +113,6 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
     protected List<IndexDefinition> getIndexes0() throws SQLException {
         List<IndexDefinition> result = new ArrayList<>();
 
-        // Workaround for MemSQL bug
-        // https://www.memsql.com/forum/t/wrong-query-result-on-information-schema-query/1423/2
-        Table<?> from = getIncludeSystemIndexes()
-            ? STATISTICS
-            : STATISTICS.leftJoin(TABLE_CONSTRAINTS)
-                .on(STATISTICS.INDEX_SCHEMA.eq(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA))
-                .and(STATISTICS.TABLE_NAME.eq(TABLE_CONSTRAINTS.TABLE_NAME))
-                .and(STATISTICS.INDEX_NAME.eq(TABLE_CONSTRAINTS.CONSTRAINT_NAME));
-
         // Same implementation as in H2Database and HSQLDBDatabase
         Map<Record, Result<Record>> indexes = create()
             // [#2059] In MemSQL primary key indexes are typically duplicated
@@ -131,11 +124,14 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 STATISTICS.NON_UNIQUE,
                 STATISTICS.COLUMN_NAME,
                 STATISTICS.SEQ_IN_INDEX)
-            .from(from)
+            .from(STATISTICS)
             .where(STATISTICS.TABLE_SCHEMA.in(workaroundFor5213(getInputSchemata())))
             .and(getIncludeSystemIndexes()
                 ? noCondition()
-                : TABLE_CONSTRAINTS.CONSTRAINT_NAME.isNull()
+                : row(STATISTICS.INDEX_SCHEMA, STATISTICS.TABLE_NAME, STATISTICS.INDEX_NAME).notIn(
+                    select(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, TABLE_CONSTRAINTS.TABLE_NAME, TABLE_CONSTRAINTS.CONSTRAINT_NAME)
+                    .from(TABLE_CONSTRAINTS)
+                  )
             )
             .orderBy(
                 STATISTICS.TABLE_SCHEMA,

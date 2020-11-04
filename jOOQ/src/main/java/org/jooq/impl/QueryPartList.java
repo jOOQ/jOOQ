@@ -61,12 +61,10 @@ class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
         this(asList(wrappedList));
     }
 
-    QueryPartList(Collection<? extends T> wrappedList) {
+    QueryPartList(Iterable<? extends T> wrappedList) {
         super(new ArrayList<>());
 
-        // [#4664] Don't allocate the backing array if not necessary!
-        if (wrappedList != null && !wrappedList.isEmpty())
-            addAll(wrappedList);
+        addAll(wrappedList);
     }
 
     @Override

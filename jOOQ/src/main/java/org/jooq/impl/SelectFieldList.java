@@ -38,8 +38,6 @@
 
 package org.jooq.impl;
 
-import java.util.Collection;
-
 import org.jooq.Context;
 import org.jooq.SelectFieldOrAsterisk;
 
@@ -54,7 +52,7 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
         super();
     }
 
-    SelectFieldList(Collection<? extends F> wrappedList) {
+    SelectFieldList(Iterable<? extends F> wrappedList) {
         super(wrappedList);
     }
 

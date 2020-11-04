@@ -43,6 +43,7 @@ import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.indexFail;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.resetChangedOnNotNull;
 import static org.jooq.impl.Tools.settings;
@@ -249,12 +250,16 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(Field<T> field) {
-        if (Tools.nonReplacingEmbeddable(field))
+        int index = fieldsRow().indexOf(field);
+
+        if (index >= 0)
+            return (T) get(index);
+        else if (Tools.nonReplacingEmbeddable(field))
             return (T) Tools
                 .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
                 .operate(new TransferRecordState<Record>(embeddedFields(field)));
         else
-            return (T) get(indexOrFail(fieldsRow(), field));
+            throw Tools.indexFail(fieldsRow(), field);
     }
 
     @Override
@@ -329,7 +334,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> void set(Field<T> field, T value) {
-        if (Tools.nonReplacingEmbeddable(field)) {
+        int index = fields.indexOf(field);
+
+        if (index >= 0)
+            set(index, field, value);
+        else if (Tools.nonReplacingEmbeddable(field)) {
             Field<?>[] f = embeddedFields(field);
             Object[] v = value instanceof EmbeddableRecord
                 ? ((EmbeddableRecord) value).intoArray()
@@ -339,7 +348,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                 set(indexOrFail(fields, f[i]), f[i], v[i]);
         }
         else
-            set(indexOrFail(fields, field), field, value);
+            throw indexFail(fields, field);
     }
 
     final void set(int index, Field<?> field, Object value) {

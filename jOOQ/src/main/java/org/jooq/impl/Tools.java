@@ -1996,41 +1996,41 @@ final class Tools {
         return result;
     }
 
-    /**
-     * A utility method that fails with an exception if
-     * {@link Row#indexOf(Field)} doesn't return any index.
-     */
+    static final IllegalArgumentException indexFail(Row row, Field<?> field) {
+        return new IllegalArgumentException("Field (" + field + ") is not contained in Row " + row);
+    }
+
     static final int indexOrFail(Row row, Field<?> field) {
         int result = row.indexOf(field);
 
         if (result < 0)
-            throw new IllegalArgumentException("Field (" + field + ") is not contained in Row " + row);
+            throw indexFail(row, field);
 
         return result;
     }
 
-    /**
-     * A utility method that fails with an exception if
-     * {@link Row#indexOf(String)} doesn't return any index.
-     */
+    static final IllegalArgumentException indexFail(Row row, String fieldName) {
+        throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
+    }
+
     static final int indexOrFail(Row row, String fieldName) {
         int result = row.indexOf(fieldName);
 
         if (result < 0)
-            throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
+            throw indexFail(row, fieldName);
 
         return result;
     }
 
-    /**
-     * A utility method that fails with an exception if
-     * {@link Row#indexOf(Name)} doesn't return any index.
-     */
+    static final IllegalArgumentException indexFail(Row row, Name fieldName) {
+        throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
+    }
+
     static final int indexOrFail(Row row, Name fieldName) {
         int result = row.indexOf(fieldName);
 
         if (result < 0)
-            throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
+            throw indexFail(row, fieldName);
 
         return result;
     }

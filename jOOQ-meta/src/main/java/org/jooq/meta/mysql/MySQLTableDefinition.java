@@ -86,7 +86,11 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                     COLUMNS.IS_NULLABLE,
                     COLUMNS.COLUMN_DEFAULT,
                     COLUMNS.CHARACTER_MAXIMUM_LENGTH,
-                    coalesce(COLUMNS.NUMERIC_PRECISION, COLUMNS.DATETIME_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
+
+                    // [#10856] Some older versions of MySQL 5.7 don't have the DATETIME_PRECISION column yet
+                    getDatabase().exists(COLUMNS.DATETIME_PRECISION)
+                        ? coalesce(COLUMNS.NUMERIC_PRECISION, COLUMNS.DATETIME_PRECISION).as(COLUMNS.NUMERIC_PRECISION)
+                        : COLUMNS.NUMERIC_PRECISION,
                     COLUMNS.NUMERIC_SCALE,
                     COLUMNS.EXTRA)
                 .from(COLUMNS)

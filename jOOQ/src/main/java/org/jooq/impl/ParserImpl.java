@@ -4164,7 +4164,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final DDLQuery parseCreateType(ParserContext ctx) {
-        Name name = parseIdentifier(ctx);
+        Name name = parseName(ctx);
         parseKeyword(ctx, "AS ENUM");
         List<String> values = new ArrayList<>();
         parse(ctx, '(');

@@ -53,17 +53,17 @@ class BookToBookStoreRecord() : UpdatableRecordImpl<BookToBookStoreRecord>(BookT
     override fun value3(): Int? = stock
 
     override fun value1(value: String?): BookToBookStoreRecord {
-        bookStoreName = value
+        this.bookStoreName = value
         return this
     }
 
     override fun value2(value: Int?): BookToBookStoreRecord {
-        bookId = value
+        this.bookId = value
         return this
     }
 
     override fun value3(value: Int?): BookToBookStoreRecord {
-        stock = value
+        this.stock = value
         return this
     }
 
@@ -78,8 +78,8 @@ class BookToBookStoreRecord() : UpdatableRecordImpl<BookToBookStoreRecord>(BookT
      * Create a detached, initialised BookToBookStoreRecord
      */
     constructor(bookStoreName: String? = null, bookId: Int? = null, stock: Int? = null): this() {
-        set(0, bookStoreName)
-        set(1, bookId)
-        set(2, stock)
+        this.bookStoreName = bookStoreName
+        this.bookId = bookId
+        this.stock = stock
     }
 }

@@ -111,57 +111,57 @@ class BookRecord() : UpdatableRecordImpl<BookRecord>(Book.BOOK), Record11<Int?, 
     override fun value11(): LocalDateTime? = recTimestamp
 
     override fun value1(value: Int?): BookRecord {
-        id = value
+        this.id = value
         return this
     }
 
     override fun value2(value: Int?): BookRecord {
-        authorId = value
+        this.authorId = value
         return this
     }
 
     override fun value3(value: Int?): BookRecord {
-        coAuthorId = value
+        this.coAuthorId = value
         return this
     }
 
     override fun value4(value: Int?): BookRecord {
-        detailsId = value
+        this.detailsId = value
         return this
     }
 
     override fun value5(value: String?): BookRecord {
-        title = value
+        this.title = value
         return this
     }
 
     override fun value6(value: Int?): BookRecord {
-        publishedIn = value
+        this.publishedIn = value
         return this
     }
 
     override fun value7(value: Int?): BookRecord {
-        languageId = value
+        this.languageId = value
         return this
     }
 
     override fun value8(value: String?): BookRecord {
-        contentText = value
+        this.contentText = value
         return this
     }
 
     override fun value9(value: ByteArray?): BookRecord {
-        contentPdf = value
+        this.contentPdf = value
         return this
     }
 
     override fun value10(value: Int?): BookRecord {
-        recVersion = value
+        this.recVersion = value
         return this
     }
 
     override fun value11(value: LocalDateTime?): BookRecord {
-        recTimestamp = value
+        this.recTimestamp = value
         return this
     }
 
@@ -184,16 +184,16 @@ class BookRecord() : UpdatableRecordImpl<BookRecord>(Book.BOOK), Record11<Int?, 
      * Create a detached, initialised BookRecord
      */
     constructor(id: Int? = null, authorId: Int? = null, coAuthorId: Int? = null, detailsId: Int? = null, title: String? = null, publishedIn: Int? = null, languageId: Int? = null, contentText: String? = null, contentPdf: ByteArray? = null, recVersion: Int? = null, recTimestamp: LocalDateTime? = null): this() {
-        set(0, id)
-        set(1, authorId)
-        set(2, coAuthorId)
-        set(3, detailsId)
-        set(4, title)
-        set(5, publishedIn)
-        set(6, languageId)
-        set(7, contentText)
-        set(8, contentPdf)
-        set(9, recVersion)
-        set(10, recTimestamp)
+        this.id = id
+        this.authorId = authorId
+        this.coAuthorId = coAuthorId
+        this.detailsId = detailsId
+        this.title = title
+        this.publishedIn = publishedIn
+        this.languageId = languageId
+        this.contentText = contentText
+        this.contentPdf = contentPdf
+        this.recVersion = recVersion
+        this.recTimestamp = recTimestamp
     }
 }

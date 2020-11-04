@@ -76,32 +76,32 @@ class AuthorRecord() : UpdatableRecordImpl<AuthorRecord>(Author.AUTHOR), Record6
     override fun value6(): String? = address
 
     override fun value1(value: Int?): AuthorRecord {
-        id = value
+        this.id = value
         return this
     }
 
     override fun value2(value: String?): AuthorRecord {
-        firstName = value
+        this.firstName = value
         return this
     }
 
     override fun value3(value: String?): AuthorRecord {
-        lastName = value
+        this.lastName = value
         return this
     }
 
     override fun value4(value: LocalDate?): AuthorRecord {
-        dateOfBirth = value
+        this.dateOfBirth = value
         return this
     }
 
     override fun value5(value: Int?): AuthorRecord {
-        yearOfBirth = value
+        this.yearOfBirth = value
         return this
     }
 
     override fun value6(value: String?): AuthorRecord {
-        address = value
+        this.address = value
         return this
     }
 
@@ -119,11 +119,11 @@ class AuthorRecord() : UpdatableRecordImpl<AuthorRecord>(Author.AUTHOR), Record6
      * Create a detached, initialised AuthorRecord
      */
     constructor(id: Int? = null, firstName: String? = null, lastName: String? = null, dateOfBirth: LocalDate? = null, yearOfBirth: Int? = null, address: String? = null): this() {
-        set(0, id)
-        set(1, firstName)
-        set(2, lastName)
-        set(3, dateOfBirth)
-        set(4, yearOfBirth)
-        set(5, address)
+        this.id = id
+        this.firstName = firstName
+        this.lastName = lastName
+        this.dateOfBirth = dateOfBirth
+        this.yearOfBirth = yearOfBirth
+        this.address = address
     }
 }

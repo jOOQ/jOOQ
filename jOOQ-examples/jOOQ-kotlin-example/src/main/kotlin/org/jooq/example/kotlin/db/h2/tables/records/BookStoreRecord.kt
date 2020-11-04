@@ -38,7 +38,7 @@ class BookStoreRecord() : UpdatableRecordImpl<BookStoreRecord>(BookStore.BOOK_ST
     override fun value1(): String? = name
 
     override fun value1(value: String?): BookStoreRecord {
-        name = value
+        this.name = value
         return this
     }
 
@@ -51,6 +51,6 @@ class BookStoreRecord() : UpdatableRecordImpl<BookStoreRecord>(BookStore.BOOK_ST
      * Create a detached, initialised BookStoreRecord
      */
     constructor(name: String? = null): this() {
-        set(0, name)
+        this.name = name
     }
 }

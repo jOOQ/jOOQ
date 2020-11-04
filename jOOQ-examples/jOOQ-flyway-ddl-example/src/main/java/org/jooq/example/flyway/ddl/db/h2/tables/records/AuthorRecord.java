@@ -283,11 +283,11 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements R
     public AuthorRecord(Integer id, String firstName, String lastName, LocalDate dateOfBirth, Integer yearOfBirth, String address) {
         super(Author.AUTHOR);
 
-        set(0, id);
-        set(1, firstName);
-        set(2, lastName);
-        set(3, dateOfBirth);
-        set(4, yearOfBirth);
-        set(5, address);
+        setId(id);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setDateOfBirth(dateOfBirth);
+        setYearOfBirth(yearOfBirth);
+        setAddress(address);
     }
 }

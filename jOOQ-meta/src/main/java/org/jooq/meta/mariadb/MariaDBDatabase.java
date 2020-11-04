@@ -40,7 +40,10 @@ package org.jooq.meta.mariadb;
 
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullif;
+import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.meta.mysql.information_schema.Tables.TABLES;
 
 import java.sql.SQLException;
@@ -50,6 +53,8 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record12;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -73,6 +78,13 @@ public class MariaDBDatabase extends MySQLDatabase {
     }
 
     @Override
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+
+        // [#10844] [#10854] TODO We need a way to create a dynamic FROM clause in order to group the below sequences in a single one
+        return null;
+    }
+
+    @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<>();
 
@@ -88,31 +100,32 @@ public class MariaDBDatabase extends MySQLDatabase {
                 DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     this,
                     schema,
-                    MariaDBDataType.BIGINT.getTypeName()
+                    BIGINT.getTypeName()
                 );
 
-                Field<Long> startWith = nullif(field("start_value", Long.class), inline(1L));
-                Field<Long> incrementBy = nullif(field("increment", Long.class), inline(1L));
-                Field<Long> minValue = inline(field("minimum_value", Long.class), inline(1L));
-                Field<Long> maxValue = nullif(field("maximum_value", Long.class), inline(DEFAULT_SEQUENCE_MAXVALUE));
-                Field<Boolean> cycle = field("cycle_option", Boolean.class);
-                Field<Long> cache = nullif(field("cache_size", Long.class), inline(DEFAULT_SEQUENCE_CACHE));
+                Field<Long> startWith = nullif(field("start_value", BIGINT), inline(1L));
+                Field<Long> incrementBy = nullif(field("increment", BIGINT), inline(1L));
+                Field<Long> minValue = inline(field("minimum_value", BIGINT), inline(1L));
+                Field<Long> maxValue = nullif(field("maximum_value", BIGINT), inline(DEFAULT_SEQUENCE_MAXVALUE));
+                Field<Boolean> cycle = field("cycle_option", BOOLEAN);
+                Field<Long> cache = nullif(field("cache_size", BIGINT), inline(DEFAULT_SEQUENCE_CACHE));
 
-                Record flagsRecord = create()
+                Record flags = create()
                     .select(startWith, incrementBy, minValue, maxValue, cycle, cache)
-                    .from(DSL.name(schema.getName(), name))
+                    .from(name(schema.getName(), name))
                     .fetchOne();
+
                 result.add(new DefaultSequenceDefinition(
                     schema,
                     name,
                     type,
                     null,
-                    flagsRecord.get(startWith),
-                    flagsRecord.get(incrementBy),
-                    flagsRecord.get(minValue),
-                    flagsRecord.get(maxValue),
-                    flagsRecord.get(cycle),
-                    flagsRecord.get(cache)
+                    flags.get(startWith),
+                    flags.get(incrementBy),
+                    flags.get(minValue),
+                    flags.get(maxValue),
+                    flags.get(cycle),
+                    flags.get(cache)
                 ));
             }
         }

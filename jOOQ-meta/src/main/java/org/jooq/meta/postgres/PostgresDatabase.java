@@ -102,7 +102,6 @@ import org.jooq.Field;
 import org.jooq.Name;
 // ...
 import org.jooq.Record;
-import org.jooq.Record11;
 import org.jooq.Record12;
 import org.jooq.Record2;
 import org.jooq.Record5;

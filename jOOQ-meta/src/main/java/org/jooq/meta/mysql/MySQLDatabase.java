@@ -38,7 +38,6 @@
 
 package org.jooq.meta.mysql;
 
-import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
@@ -60,13 +59,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Record11;
 import org.jooq.Record12;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -78,7 +75,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;

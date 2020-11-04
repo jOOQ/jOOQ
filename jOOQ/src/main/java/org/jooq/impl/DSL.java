@@ -26211,6 +26211,15 @@ public class DSL {
         return new CurrentSchema();
     }
 
+    /**
+     * Get the <code>current_catalog()</code> function.
+     */
+    @NotNull
+    @Support({ FIREBIRD, POSTGRES, SQLITE })
+    public static Field<String> currentCatalog() {
+        return new CurrentCatalog();
+    }
+
     // -------------------------------------------------------------------------
     // XXX utility API
     // -------------------------------------------------------------------------

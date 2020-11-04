@@ -66,7 +66,7 @@ implements
     private final Schema  schema;
     private final boolean dropSchemaIfExists;
     private       Boolean cascade;
-    
+
     DropSchemaImpl(
         Configuration configuration,
         Schema schema,
@@ -100,7 +100,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final DropSchemaImpl cascade() {
         this.cascade = true;

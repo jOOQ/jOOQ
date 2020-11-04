@@ -48,6 +48,9 @@ import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.derby.sys.Tables.SYSCHECKS;
 import static org.jooq.meta.derby.sys.Tables.SYSCONGLOMERATES;
@@ -67,12 +70,16 @@ import java.util.regex.Pattern;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record12;
 import org.jooq.Record5;
+import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -88,6 +95,7 @@ import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
+import org.jooq.meta.ResultQueryDatabase;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -97,7 +105,7 @@ import org.jooq.meta.UDTDefinition;
 /**
  * @author Lukas Eder
  */
-public class DerbyDatabase extends AbstractDatabase {
+public class DerbyDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
@@ -130,6 +138,16 @@ public class DerbyDatabase extends AbstractDatabase {
                 for (int index : decode(descriptor))
                     relations.addUniqueKey(key, table, table.getColumn(index));
         }
+    }
+
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
+        return null;
+    }
+
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas) {
+        return null;
     }
 
     private Result<Record5<String, String, String, String, String>> fetchKeys(String constraintType) {
@@ -337,35 +355,42 @@ public class DerbyDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected List<SequenceDefinition> getSequences0() throws SQLException {
-        List<SequenceDefinition> result = new ArrayList<>();
-
-        for (Record record : create().select(
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+        return create().select(
+                    inline(null, VARCHAR).cast(VARCHAR).as("catalog"),
                     SYSSEQUENCES.sysschemas().SCHEMANAME,
                     SYSSEQUENCES.SEQUENCENAME,
                     SYSSEQUENCES.SEQUENCEDATATYPE,
-                    nullif(SYSSEQUENCES.STARTVALUE, one()).as(SYSSEQUENCES.STARTVALUE),
-                    nullif(SYSSEQUENCES.INCREMENT, one()).as(SYSSEQUENCES.INCREMENT),
+                    inline(null, INTEGER).cast(INTEGER).as("numeric_precision"),
+                    inline(null, INTEGER).cast(INTEGER).as("numeric_scale"),
+                    nullif(SYSSEQUENCES.STARTVALUE, inline(1L)).as(SYSSEQUENCES.STARTVALUE),
+                    nullif(SYSSEQUENCES.INCREMENT, inline(1L)).as(SYSSEQUENCES.INCREMENT),
                     nullif(SYSSEQUENCES.MINIMUMVALUE, case_(cast(SYSSEQUENCES.SEQUENCEDATATYPE, VARCHAR))
                         .when(inline("SMALLINT"), inline((long) Short.MIN_VALUE))
                         .when(inline("INTEGER"), inline((long) Integer.MIN_VALUE))
                         .when(inline("BIGINT"), inline(Long.MIN_VALUE))
-                   ).as(SYSSEQUENCES.MINIMUMVALUE),
+                    ).as(SYSSEQUENCES.MINIMUMVALUE),
                     nullif(SYSSEQUENCES.MAXIMUMVALUE, case_(cast(SYSSEQUENCES.SEQUENCEDATATYPE, VARCHAR))
                         .when(inline("SMALLINT"), inline((long) Short.MAX_VALUE))
                         .when(inline("INTEGER"), inline((long) Integer.MAX_VALUE))
                         .when(inline("BIGINT"), inline(Long.MAX_VALUE))
-                   ).as(SYSSEQUENCES.MAXIMUMVALUE),
-                    SYSSEQUENCES.CYCLEOPTION
+                    ).as(SYSSEQUENCES.MAXIMUMVALUE),
+                    SYSSEQUENCES.CYCLEOPTION.coerce(BOOLEAN),
+                    inline(null, BIGINT).cast(BIGINT).as("cache")
                 )
                 .from(SYSSEQUENCES)
                 // [#6797] The cast is necessary if a non-standard collation is used
-                .where(SYSSEQUENCES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+                .where(SYSSEQUENCES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(schemas))
                 .orderBy(
                     SYSSEQUENCES.sysschemas().SCHEMANAME,
-                    SYSSEQUENCES.SEQUENCENAME)
-                .fetch()) {
+                    SYSSEQUENCES.SEQUENCENAME);
+    }
 
+    @Override
+    protected List<SequenceDefinition> getSequences0() throws SQLException {
+        List<SequenceDefinition> result = new ArrayList<>();
+
+        for (Record record : sequences(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(SYSSEQUENCES.sysschemas().SCHEMANAME));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(

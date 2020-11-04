@@ -104,6 +104,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
 import static org.jooq.impl.DSL.cube;
 import static org.jooq.impl.DSL.cumeDist;
+import static org.jooq.impl.DSL.currentCatalog;
 import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.currentSchema;
 import static org.jooq.impl.DSL.currentTime;
@@ -6608,6 +6609,10 @@ final class ParserImpl implements Parser {
                 if (S.is(type))
                     if ((field = parseFieldConcatIf(ctx)) != null)
                         return field;
+                    else if ((parseFunctionNameIf(ctx, "CURRENT_CATALOG") && parse(ctx, '(') && parse(ctx, ')')))
+                        return currentCatalog();
+                    else if ((parseFunctionNameIf(ctx, "CURRENT_DATABASE") && parse(ctx, '(') && parse(ctx, ')')))
+                        return currentCatalog();
                     else if ((parseKeywordIf(ctx, "CURRENT_SCHEMA") || parseKeywordIf(ctx, "CURRENT SCHEMA")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentSchema();
                     else if ((parseKeywordIf(ctx, "CURRENT_USER") || parseKeywordIf(ctx, "CURRENT USER")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
@@ -6680,6 +6685,12 @@ final class ParserImpl implements Parser {
                 break;
 
             case 'D':
+                if (S.is(type))
+                    if ((parseFunctionNameIf(ctx, "DB_NAME") && parse(ctx, '(') && parse(ctx, ')')))
+                        return currentCatalog();
+                    else if ((parseFunctionNameIf(ctx, "DBINFO") && parse(ctx, '(') && parseStringLiteral(ctx, "dbname") != null && parse(ctx, ')')))
+                        return currentCatalog();
+
                 if (D.is(type))
                     if ((field = parseFieldDateLiteralIf(ctx)) != null)
                         return field;
@@ -10779,6 +10790,15 @@ final class ParserImpl implements Parser {
 
     private static final Comment parseComment(ParserContext ctx) {
         return DSL.comment(parseStringLiteral(ctx));
+    }
+
+    private static final String parseStringLiteral(ParserContext ctx, String literal) {
+        String value = parseStringLiteral(ctx);
+
+        if (!literal.equals(value))
+            throw ctx.expected("String literal: '" + literal + "'");
+
+        return value;
     }
 
     private static final String parseStringLiteral(ParserContext ctx) {

@@ -87,6 +87,8 @@ final class Names {
     static final Name N_COUNT                  = unquotedName("count");
     static final Name N_COUNTSET               = unquotedName("countset");
     static final Name N_CURRENT_BIGDATETIME    = unquotedName("current_bigdatetime");
+    static final Name N_CURRENT_CATALOG        = unquotedName("current_catalog");
+    static final Name N_CURRENT_DATABASE       = unquotedName("current_database");
     static final Name N_CURRENT_DATE           = unquotedName("current_date");
     static final Name N_CURRENT_SCHEMA         = unquotedName("current_schema");
     static final Name N_CURRENT_TIME           = unquotedName("current_time");

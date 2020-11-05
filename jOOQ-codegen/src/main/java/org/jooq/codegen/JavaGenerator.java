@@ -6021,16 +6021,20 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    private String escapeString(String comment) {
+    private String escapeString(String string) {
 
-        if (comment == null)
+        if (string == null)
             return null;
 
         // [#3450] Escape also the escape sequence, among other things that break Java strings.
-        String result = comment.replace("\\", "\\\\")
-                               .replace("\"", "\\\"")
-                               .replace("\n", "\\n")
-                               .replace("\r", "\\r");
+        String result = string.replace("\\", "\\\\")
+                              .replace("\"", "\\\"")
+                              .replace("\n", "\\n")
+                              .replace("\r", "\\r");
+
+        // [#10869] Prevent string interpolation in Kotlin
+        if (kotlin)
+            result = result.replace("$", "\\$");
 
         // [#10007] [#10318] Very long strings cannot be handled by the javac compiler.
         int max = 16384;

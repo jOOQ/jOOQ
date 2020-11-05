@@ -160,6 +160,7 @@ import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonExists;
 import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
+import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
 import static org.jooq.impl.DSL.lastValue;
@@ -7790,8 +7791,7 @@ final class ParserImpl implements Parser {
         else
             parse(ctx, ',');
 
-        Field<?> value = parseField(ctx);
-        return jsonEntry(key, value);
+        return key(key).value(parseField(ctx));
     }
 
     private static final Field<?> parseArrayValueConstructorIf(ParserContext ctx) {

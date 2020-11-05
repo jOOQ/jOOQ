@@ -50,6 +50,9 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONEntry;
+import org.jooq.JSONEntryValueStep;
+import org.jooq.Record1;
+import org.jooq.Select;
 
 
 /**
@@ -57,7 +60,7 @@ import org.jooq.JSONEntry;
  *
  * @author Lukas Eder
  */
-final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T> {
+final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, JSONEntryValueStep {
 
     /**
      * Generated UID
@@ -65,6 +68,10 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T> {
     private static final long   serialVersionUID = 6734093632906565848L;
     private final Field<String> key;
     private final Field<T>      value;
+
+    JSONEntryImpl(Field<String> key) {
+        this(key, null);
+    }
 
     JSONEntryImpl(Field<String> key, Field<T> value) {
         this.key = key;
@@ -79,6 +86,21 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T> {
     @Override
     public final Field<T> value() {
         return value;
+    }
+
+    @Override
+    public final <X> JSONEntry<X> value(X newValue) {
+        return value(Tools.field(newValue));
+    }
+
+    @Override
+    public final <X> JSONEntry<X> value(Field<X> newValue) {
+        return new JSONEntryImpl<>(key, newValue);
+    }
+
+    @Override
+    public final <X> JSONEntry<X> value(Select<? extends Record1<X>> newValue) {
+        return value(DSL.field(newValue));
     }
 
     @Override

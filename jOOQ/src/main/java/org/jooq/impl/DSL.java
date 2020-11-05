@@ -246,6 +246,7 @@ import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayNullStep;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
+import org.jooq.JSONEntryValueStep;
 import org.jooq.JSONExistsOnStep;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
@@ -20628,6 +20629,28 @@ public class DSL {
      * A constructor for JSON entries to be used with
      * {@link #jsonObject(JSONEntry...)}.
      * <p>
+     * This is the same as calling {@link #jsonEntry(String, Field)}.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONEntryValueStep key(String key) {
+        return key(Tools.field(key));
+    }
+
+    /**
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
+     * <p>
+     * This is the same as calling {@link #jsonEntry(Field, Field)}.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONEntryValueStep key(Field<String> key) {
+        return new JSONEntryImpl<>(key);
+    }
+
+    /**
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
+     * <p>
      * This is the same as calling {@link #jsonEntry(String, Field)} with
      * {@link Field#getName()} as a key.
      */
@@ -20655,6 +20678,16 @@ public class DSL {
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
         return new JSONEntryImpl<>(key, value);
+    }
+
+    /**
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static <T> JSONEntry<T> jsonEntry(Field<String> key, T value) {
+        return jsonEntry(key, Tools.field(value));
     }
 
     /**

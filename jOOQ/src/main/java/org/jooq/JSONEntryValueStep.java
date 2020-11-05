@@ -40,21 +40,27 @@ package org.jooq;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A JSON entry for JSON objects.
+ * A step in the creation of {@link JSONEntry} values.
  *
  * @author Lukas Eder
  */
-public interface JSONEntry<T> extends QueryPart {
-
-    /**
-     * The JSON entry key.
-     */
-    @NotNull
-    Field<String> key();
+public interface JSONEntryValueStep {
 
     /**
      * The JSON entry value.
      */
     @NotNull
-    Field<T> value();
+    <T> JSONEntry<T> value(T value);
+
+    /**
+     * The JSON entry value.
+     */
+    @NotNull
+    <T> JSONEntry<T> value(Field<T> value);
+
+    /**
+     * The JSON entry value.
+     */
+    @NotNull
+    <T> JSONEntry<T> value(Select<? extends Record1<T>> value);
 }

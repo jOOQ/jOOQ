@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonObject;
+import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
@@ -188,10 +189,9 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
                        .sql(')');
                 }
                 else if (!args.isEmpty() && isJSONArray(args.get(0).value())) {
-                    ctx.visit(jsonObject(jsonEntry(
-                        args.get(0).key(),
-                        DSL.field("{0}({1}, {2})", getDataType(), N_JSON_MERGE, inline("[]"), args.get(0).value())
-                    )));
+                    ctx.visit(jsonObject(
+                        key(args.get(0).key()).value(DSL.field("{0}({1}, {2})", getDataType(), N_JSON_MERGE, inline("[]"), args.get(0).value()))
+                    ));
                 }
                 else
                     acceptStandard(ctx);

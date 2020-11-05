@@ -385,6 +385,10 @@ class GenerationUtil {
                 return "`" + literal + "`";
             else if (language == KOTLIN && i == 0 && !Character.isJavaIdentifierStart(c))
                 return "`" + literal + "`";
+
+            // [#10867] The $ character is not allowed in Kotlin unquoted identifiers
+            else if (language == KOTLIN && c == '$')
+                return "`" + literal + "`";
             else
                 sb.append(c);
         }

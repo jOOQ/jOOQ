@@ -29,7 +29,7 @@ import org.jooq.meta.postgres.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1135725221;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.tables</code>

@@ -15,6 +15,7 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
@@ -28,7 +29,7 @@ import org.jooq.meta.postgres.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CheckConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1318152086;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.check_constraints</code>
@@ -102,12 +103,13 @@ public class CheckConstraints extends TableImpl<Record> {
     }
 
     @Override
-    public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.CHECK_CONSTRAINTS__SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS);
+    public UniqueKey<Record> getPrimaryKey() {
+        return Keys.SYNTHETIC_PK_CHECK_CONSTRAINTS;
     }
 
-    public TableConstraints tableConstraints() {
-        return new TableConstraints(this, Keys.CHECK_CONSTRAINTS__SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS);
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_CHECK_CONSTRAINTS);
     }
 
     @Override

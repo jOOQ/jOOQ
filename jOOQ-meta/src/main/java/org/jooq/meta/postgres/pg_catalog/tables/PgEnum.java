@@ -28,7 +28,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgEnum extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1870532870;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>pg_catalog.pg_enum</code>
@@ -103,11 +103,11 @@ public class PgEnum extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_ENUM__REFERENCING_CONSTRAINT);
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
     }
 
     public PgType pgType() {
-        return new PgType(this, Keys.PG_ENUM__REFERENCING_CONSTRAINT);
+        return new PgType(this, Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
     }
 
     @Override

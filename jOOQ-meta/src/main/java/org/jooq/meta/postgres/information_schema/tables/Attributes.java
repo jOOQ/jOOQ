@@ -24,7 +24,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Attributes extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1746890016;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.attributes</code>

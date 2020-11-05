@@ -28,7 +28,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgConstraint extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 404160814;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>pg_catalog.pg_constraint</code>
@@ -209,11 +209,15 @@ public class PgConstraint extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE);
+        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);
     }
 
     public PgNamespace pgNamespace() {
         return new PgNamespace(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE);
+    }
+
+    public PgClass pgClass() {
+        return new PgClass(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);
     }
 
     @Override

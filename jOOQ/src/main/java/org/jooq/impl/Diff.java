@@ -43,6 +43,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.*;
 import static org.jooq.impl.Comparators.CHECK_COMP;
 import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;
 import static org.jooq.impl.Comparators.INDEX_COMP;
@@ -52,12 +53,12 @@ import static org.jooq.impl.ConstraintType.CHECK;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isEmpty;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -102,6 +103,7 @@ import org.jooq.tools.StringUtils;
 final class Diff {
 
     private static final Set<SQLDialect> NO_SUPPORT_PK_NAMES = SQLDialect.supportedBy(MARIADB, MYSQL);
+
     private final MigrationConfiguration migrateConf;
     private final DDLExportConfiguration exportConf;
     private final DSLContext             ctx;
@@ -457,7 +459,7 @@ final class Diff {
                     // TODO: Some dialects support changing nullability and types in one statement
                     //       We should produce a single statement as well, and handle derived things
                     //       like nullability through emulations
-                    if (!type1.getTypeName().equals(type2.getTypeName()))
+                    if (typeNameDifference(type1, type2))
                         r.queries.add(ctx.alterTable(t1).alter(f1).set(type2.nullability(Nullability.DEFAULT)));
 
                     if (type1.nullable() && !type2.nullable())
@@ -480,6 +482,17 @@ final class Diff {
 
                     // [#9656] TODO: Change collation
                     // [#9656] TODO: Change character set
+                }
+
+                private final boolean typeNameDifference(DataType<?> type1, DataType<?> type2) {
+                    if (type1.getTypeName().equals(type2.getTypeName()))
+                        return false;
+
+                    // [#10864] In most dialects, DECIMAL and NUMERIC are aliases and don't need to be changed into each other
+                    else if (type1.getType() == BigDecimal.class && type2.getType() == BigDecimal.class)
+                        return false;
+                    else
+                        return true;
                 }
 
                 private final boolean precisionDifference(DataType<?> type1, DataType<?> type2) {

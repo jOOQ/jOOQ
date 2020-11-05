@@ -31,7 +31,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgCatalog extends SchemaImpl {
 
-    private static final long serialVersionUID = 1085930158;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>pg_catalog</code>

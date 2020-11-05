@@ -18,7 +18,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FormatType extends AbstractRoutine<String> {
 
-    private static final long serialVersionUID = 1896410112;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The parameter <code>pg_catalog.format_type.RETURN_VALUE</code>.

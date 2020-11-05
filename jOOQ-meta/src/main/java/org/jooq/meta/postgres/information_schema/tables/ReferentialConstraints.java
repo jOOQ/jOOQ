@@ -4,9 +4,6 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -19,7 +16,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
-import org.jooq.meta.postgres.information_schema.Keys;
 
 
 /**
@@ -28,7 +24,7 @@ import org.jooq.meta.postgres.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReferentialConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 2065806373;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.referential_constraints</code>
@@ -124,19 +120,6 @@ public class ReferentialConstraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
-    }
-
-    @Override
-    public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.REFERENTIAL_CONSTRAINTS__REFERENCING_CONSTRAINT, Keys.REFERENTIAL_CONSTRAINTS__REFERENCED_CONSTRAINT);
-    }
-
-    public TableConstraints referencingConstraint() {
-        return new TableConstraints(this, Keys.REFERENTIAL_CONSTRAINTS__REFERENCING_CONSTRAINT);
-    }
-
-    public TableConstraints referencedConstraint() {
-        return new TableConstraints(this, Keys.REFERENTIAL_CONSTRAINTS__REFERENCED_CONSTRAINT);
     }
 
     @Override

@@ -73,7 +73,6 @@ import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.meta.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.postgres.information_schema.Tables.TABLES;
-import static org.jooq.meta.postgres.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.meta.postgres.information_schema.Tables.VIEWS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CONSTRAINT;
@@ -143,8 +142,8 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
+import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
-import org.jooq.meta.postgres.information_schema.tables.TableConstraints;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
@@ -179,6 +178,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         PgIndex i = PG_INDEX.as("i");
         PgClass trel = PG_CLASS.as("trel");
+        PgConstraint c = PG_CONSTRAINT.as("c");
 
         indexLoop:
         for (Record6<String, String, String, Boolean, String[], Integer[]> record : create()
@@ -200,8 +200,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 .and(getIncludeSystemIndexes()
                     ? noCondition()
                     : row(trel.pgNamespace().NSPNAME, i.indexClass().RELNAME).notIn(
-                        select(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, TABLE_CONSTRAINTS.CONSTRAINT_NAME)
-                        .from(TABLE_CONSTRAINTS)
+                        select(c.pgNamespace().NSPNAME, c.CONNAME).from(c)
                       ))
                 .orderBy(1, 2, 3)) {
 
@@ -290,31 +289,39 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     public ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
-        return keys(schemas, inline("PRIMARY KEY"));
+        return keys(schemas, inline("p"));
     }
 
     @Override
     public ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas) {
-        return keys(schemas, inline("UNIQUE"));
+        return keys(schemas, inline("u"));
     }
 
     private ResultQuery<Record6<String, String, String, String, String, Integer>> keys(List<String> schemas, Field<String> constraintType) {
+        KeyColumnUsage k = KEY_COLUMN_USAGE.as("k");
+        PgConstraint c = PG_CONSTRAINT.as("c");
+
         return create()
             .select(
-                KEY_COLUMN_USAGE.TABLE_CATALOG,
-                KEY_COLUMN_USAGE.TABLE_SCHEMA,
-                KEY_COLUMN_USAGE.TABLE_NAME,
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
-                KEY_COLUMN_USAGE.COLUMN_NAME,
-                KEY_COLUMN_USAGE.ORDINAL_POSITION)
-            .from(KEY_COLUMN_USAGE)
-            .where(KEY_COLUMN_USAGE.tableConstraints().CONSTRAINT_TYPE.eq(constraintType))
-            .and(KEY_COLUMN_USAGE.tableConstraints().TABLE_SCHEMA.in(schemas))
+                k.TABLE_CATALOG,
+                k.TABLE_SCHEMA,
+                k.TABLE_NAME,
+                k.CONSTRAINT_NAME,
+                k.COLUMN_NAME,
+                k.ORDINAL_POSITION)
+            .from(c)
+            .join(k)
+                .on(k.TABLE_SCHEMA.eq(c.pgClass().pgNamespace().NSPNAME))
+                .and(k.TABLE_NAME.eq(c.pgClass().RELNAME))
+                .and(k.CONSTRAINT_SCHEMA.eq(c.pgNamespace().NSPNAME))
+                .and(k.CONSTRAINT_NAME.eq(c.CONNAME))
+            .where(c.CONTYPE.eq(constraintType))
+            .and(c.pgNamespace().NSPNAME.in(schemas))
             .orderBy(
-                KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
-                KEY_COLUMN_USAGE.TABLE_NAME.asc(),
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
-                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc());
+                k.TABLE_SCHEMA.asc(),
+                k.TABLE_NAME.asc(),
+                k.CONSTRAINT_NAME.asc(),
+                k.ORDINAL_POSITION.asc());
     }
 
     @Override
@@ -364,48 +371,44 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
-        TableConstraints tc = TABLE_CONSTRAINTS.as("tc");
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
-
-        PgNamespace pn = PG_NAMESPACE.as("pn");
-        PgClass pt = PG_CLASS.as("pt");
         PgConstraint pc = PG_CONSTRAINT.as("pc");
 
         for (Record record : create()
             .select(
-                pn.NSPNAME.as(tc.TABLE_SCHEMA),
-                pt.RELNAME.as(tc.TABLE_NAME),
+                pc.pgClass().pgNamespace().NSPNAME,
+                pc.pgClass().RELNAME,
                 pc.CONNAME.as(cc.CONSTRAINT_NAME),
                 replace(field("pg_get_constraintdef({0}.oid)", VARCHAR, pc), inline("CHECK "), inline("")).as(cc.CHECK_CLAUSE))
-            .from(pn)
-            .join(pt).on(pn.OID.eq(pt.RELNAMESPACE))
-            .join(pc).on(pt.OID.eq(pc.CONRELID))
-            .where(pn.NSPNAME.in(getInputSchemata()))
+            .from(pc)
+            .where(pc.pgClass().pgNamespace().NSPNAME.in(getInputSchemata()))
             .and(pc.CONTYPE.eq(inline("c")))
             .unionAll(
                 getIncludeSystemCheckConstraints()
               ? select(
-                    tc.TABLE_SCHEMA,
-                    tc.TABLE_NAME,
+                    pc.pgClass().pgNamespace().NSPNAME,
+                    pc.pgClass().RELNAME,
                     cc.CONSTRAINT_NAME,
                     cc.CHECK_CLAUSE
                 )
-                .from(tc)
+                .from(pc)
                 .join(cc)
-                .using(tc.CONSTRAINT_CATALOG, tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME)
-                .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
-                .and(row(tc.TABLE_SCHEMA, tc.TABLE_NAME, cc.CONSTRAINT_NAME).notIn(
-                    select(pn.NSPNAME, pt.RELNAME, pc.CONNAME)
+                .on(pc.CONNAME.eq(cc.CONSTRAINT_NAME))
+                .and(pc.pgNamespace().NSPNAME.eq(cc.CONSTRAINT_NAME))
+                .where(pc.pgNamespace().NSPNAME.in(getInputSchemata()))
+                .and(row(pc.pgClass().pgNamespace().NSPNAME, pc.pgClass().RELNAME, cc.CONSTRAINT_NAME).notIn(
+                    select(
+                        pc.pgClass().pgNamespace().NSPNAME,
+                        pc.pgClass().RELNAME,
+                        pc.CONNAME)
                     .from(pc)
-                    .join(pt).on(pc.CONRELID.eq(oid(pt)))
-                    .join(pn).on(pc.CONNAMESPACE.eq(oid(pn)))
                     .where(pc.CONTYPE.eq(inline("c")))
                 ))
               : select(inline(""), inline(""), inline(""), inline("")).where(falseCondition()))
             .orderBy(1, 2, 3)
         ) {
-            SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));
-            TableDefinition table = getTable(schema, record.get(tc.TABLE_NAME));
+            SchemaDefinition schema = getSchema(record.get(pc.pgClass().pgNamespace().NSPNAME));
+            TableDefinition table = getTable(schema, record.get(pc.pgClass().RELNAME));
 
             if (table != null) {
                 relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(

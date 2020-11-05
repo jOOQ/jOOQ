@@ -28,7 +28,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgIndex extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1715995978;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>pg_catalog.pg_index</code>

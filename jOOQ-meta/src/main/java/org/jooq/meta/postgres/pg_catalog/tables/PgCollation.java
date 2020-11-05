@@ -24,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgCollation extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1853827620;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>pg_catalog.pg_collation</code>

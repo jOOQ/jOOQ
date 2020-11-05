@@ -29,7 +29,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgClass extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -218505687;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>pg_catalog.pg_class</code>

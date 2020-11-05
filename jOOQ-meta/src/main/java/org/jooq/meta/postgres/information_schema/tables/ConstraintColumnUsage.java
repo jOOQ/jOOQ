@@ -24,7 +24,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConstraintColumnUsage extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1916631194;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.constraint_column_usage</code>

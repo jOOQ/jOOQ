@@ -5,8 +5,6 @@ package org.jooq.meta.postgres.information_schema.tables;
 
 
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -16,12 +14,10 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
-import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
-import org.jooq.meta.postgres.information_schema.Keys;
 
 
 /**
@@ -30,7 +26,7 @@ import org.jooq.meta.postgres.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1881319768;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.routines</code>
@@ -491,16 +487,6 @@ public class Routines extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
-    }
-
-    @Override
-    public UniqueKey<Record> getPrimaryKey() {
-        return Keys.SYNTHETIC_PK_ROUTINES;
-    }
-
-    @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_ROUTINES);
     }
 
     @Override

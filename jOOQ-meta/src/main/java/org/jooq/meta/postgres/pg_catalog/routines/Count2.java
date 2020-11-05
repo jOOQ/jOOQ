@@ -17,7 +17,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Count2 extends AbstractRoutine<Long> {
 
-    private static final long serialVersionUID = -693114807;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The parameter <code>pg_catalog.count.RETURN_VALUE</code>.

@@ -24,7 +24,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgAttrdef extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 430142938;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>pg_catalog.pg_attrdef</code>

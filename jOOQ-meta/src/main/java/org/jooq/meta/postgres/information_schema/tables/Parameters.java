@@ -4,9 +4,6 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -19,7 +16,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
-import org.jooq.meta.postgres.information_schema.Keys;
 
 
 /**
@@ -28,7 +24,7 @@ import org.jooq.meta.postgres.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Parameters extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -208102988;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.parameters</code>
@@ -239,15 +235,6 @@ public class Parameters extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
-    }
-
-    @Override
-    public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PARAMETERS__SYNTHETIC_FK_PARAMETERS__SYNTHETIC_PK_ROUTINES);
-    }
-
-    public Routines routines() {
-        return new Routines(this, Keys.PARAMETERS__SYNTHETIC_FK_PARAMETERS__SYNTHETIC_PK_ROUTINES);
     }
 
     @Override

@@ -201,7 +201,8 @@ class GenerationUtil {
         "val",
         "var",
         "when",
-        "while"
+        "while",
+        "yield"
     )));
 
     private static Set<Character> SCALA_WHITESPACE = unmodifiableSet(new HashSet<>(asList(

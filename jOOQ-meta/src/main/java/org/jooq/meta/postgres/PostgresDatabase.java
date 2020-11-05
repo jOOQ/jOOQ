@@ -1067,21 +1067,26 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     private List<String> enumLabels(String nspname, String typname) {
-        Field<Object> cast = field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname));
+
+        // [#10821] Avoid the cast if pg_enum.enumsortorder is available (PG 9.1+)
+        Field<?> orderBy =
+            exists(PG_ENUM.ENUMSORTORDER)
+          ? PG_ENUM.ENUMSORTORDER
+          : field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname));
 
         if (canCastToEnumType == null) {
 
             // [#2917] Older versions of PostgreSQL don't support the above cast
             try {
                 canCastToEnumType = true;
-                return enumLabels(nspname, typname, cast);
+                return enumLabels(nspname, typname, orderBy);
             }
             catch (DataAccessException e) {
                 canCastToEnumType = false;
             }
         }
 
-        return canCastToEnumType ? enumLabels(nspname, typname, cast) : enumLabels(nspname, typname, PG_ENUM.ENUMLABEL);
+        return canCastToEnumType ? enumLabels(nspname, typname, orderBy) : enumLabels(nspname, typname, PG_ENUM.ENUMLABEL);
     }
 
     private List<String> enumLabels(String nspname, String typname, Field<?> orderBy) {

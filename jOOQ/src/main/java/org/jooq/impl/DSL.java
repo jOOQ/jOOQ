@@ -20631,6 +20631,7 @@ public class DSL {
      * <p>
      * This is the same as calling {@link #jsonEntry(String, Field)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONEntryValueStep key(String key) {
         return key(Tools.field(key));
@@ -20642,6 +20643,7 @@ public class DSL {
      * <p>
      * This is the same as calling {@link #jsonEntry(Field, Field)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONEntryValueStep key(Field<String> key) {
         return new JSONEntryImpl<>(key);

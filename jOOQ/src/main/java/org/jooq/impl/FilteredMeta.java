@@ -350,7 +350,8 @@ final class FilteredMeta extends AbstractMeta {
                 keys = new ArrayList<>();
 
                 for (UniqueKey<R> key : delegate.getKeys())
-                    keys.add(key(key));
+                    if (!key.isPrimary() || primaryKeyFilter == null || primaryKeyFilter.test(key))
+                        keys.add(key(key));
 
                 UniqueKey<R> pk = delegate.getPrimaryKey();
                 if (pk != null)

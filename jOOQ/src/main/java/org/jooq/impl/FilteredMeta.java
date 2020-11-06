@@ -318,8 +318,8 @@ final class FilteredMeta extends AbstractMeta {
 
         private final Table<R>                   delegate;
         private transient List<Index>            indexes;
-        private transient List<UniqueKey<R>>     keys;
         private transient UniqueKey<R>           primaryKey;
+        private transient List<UniqueKey<R>>     uniqueKeys;
         private transient List<ForeignKey<R, ?>> references;
 
         private FilteredTable(FilteredSchema schema, Table<R> delegate) {
@@ -344,21 +344,18 @@ final class FilteredMeta extends AbstractMeta {
             return Collections.unmodifiableList(indexes);
         }
 
-        @Override
-        public final List<UniqueKey<R>> getKeys() {
-            if (keys == null) {
-                keys = new ArrayList<>();
+        private final void initKeys() {
+            if (uniqueKeys == null) {
+                uniqueKeys = new ArrayList<>();
 
-                for (UniqueKey<R> key : delegate.getKeys())
-                    keys.add(key(key));
+                for (UniqueKey<R> key : delegate.getUniqueKeys())
+                    uniqueKeys.add(key(key));
 
                 UniqueKey<R> pk = delegate.getPrimaryKey();
                 if (pk != null)
                     if (primaryKeyFilter == null || primaryKeyFilter.test(pk))
                         primaryKey = key(pk);
             }
-
-            return Collections.unmodifiableList(keys);
         }
 
         @SuppressWarnings("unchecked")
@@ -374,8 +371,14 @@ final class FilteredMeta extends AbstractMeta {
 
         @Override
         public final UniqueKey<R> getPrimaryKey() {
-            getKeys();
+            initKeys();
             return primaryKey;
+        }
+
+        @Override
+        public final List<UniqueKey<R>> getUniqueKeys() {
+            initKeys();
+            return Collections.unmodifiableList(uniqueKeys);
         }
 
         @SuppressWarnings("unchecked")

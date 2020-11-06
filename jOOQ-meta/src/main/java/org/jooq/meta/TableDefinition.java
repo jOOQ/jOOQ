@@ -101,6 +101,16 @@ public interface TableDefinition extends Definition {
     UniqueKeyDefinition getUniqueKey(String name);
 
     /**
+     * Get the unique keys and primary keys for this table.
+     */
+    List<UniqueKeyDefinition> getKeys();
+
+    /**
+     * Get the unique key or primary key for this table by name.
+     */
+    UniqueKeyDefinition getKey(String name);
+
+    /**
      * Get the foreign keys for this table.
      */
     List<ForeignKeyDefinition> getForeignKeys();

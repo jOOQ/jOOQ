@@ -57,12 +57,14 @@ public class DefaultRelations implements Relations {
 
     private final Map<Key, UniqueKeyDefinition>                             primaryKeys      = new LinkedHashMap<>();
     private final Map<Key, UniqueKeyDefinition>                             uniqueKeys       = new LinkedHashMap<>();
+    private final Map<Key, UniqueKeyDefinition>                             keys             = new LinkedHashMap<>();
     private final Map<Key, ForeignKeyDefinition>                            foreignKeys      = new LinkedHashMap<>();
     private final Map<Key, CheckConstraintDefinition>                       checkConstraints = new LinkedHashMap<>();
     private final Set<Key>                                                  incompleteKeys   = new HashSet<>();
 
     private transient Map<ColumnDefinition, UniqueKeyDefinition>            primaryKeysByColumn;
     private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>      uniqueKeysByColumn;
+    private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>      keysByColumn;
     private transient Map<ColumnDefinition, List<ForeignKeyDefinition>>     foreignKeysByColumn;
     private transient Map<TableDefinition, List<CheckConstraintDefinition>> checkConstraintsByTable;
 
@@ -82,7 +84,7 @@ public class DefaultRelations implements Relations {
             if (table != null) {
                 incompleteKeys.add(key);
                 primaryKeys.remove(key);
-                uniqueKeys.remove(key);
+                keys.remove(key);
             }
 
             return;
@@ -114,6 +116,7 @@ public class DefaultRelations implements Relations {
             if (table != null) {
                 incompleteKeys.add(key);
                 uniqueKeys.remove(key);
+                keys.remove(key);
             }
 
             return;
@@ -135,6 +138,7 @@ public class DefaultRelations implements Relations {
         // Remove the existing key from the column -> key mapping
         primaryKeysByColumn = null;
         uniqueKeysByColumn = null;
+        keysByColumn = null;
 
         // Remove the existing key from the primary key mapping (not from the unique key mapping!)
         Iterator<Entry<Key, UniqueKeyDefinition>> it = primaryKeys.entrySet().iterator();
@@ -154,7 +158,12 @@ public class DefaultRelations implements Relations {
             return;
 
         primaryKeys.put(mapKey, key);
-        uniqueKeys.put(mapKey, key);
+        keys.put(mapKey, key);
+        uniqueKeys.remove(mapKey);
+
+        if (old != null)
+            uniqueKeys.put(mapKey, old);
+
         log.info("Overriding primary key", "Table : " + key.getTable() +
                  ", previous key : " + ((old == null) ? "none" : old.getName()) +
                  ", new key : " + key.getName());
@@ -162,14 +171,16 @@ public class DefaultRelations implements Relations {
 
     private UniqueKeyDefinition getUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean isPK, boolean enforced) {
         Key key = key(table, keyName);
-        UniqueKeyDefinition result = uniqueKeys.get(key);
+        UniqueKeyDefinition result = keys.get(key);
 
         if (result == null) {
             result = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, table, isPK, enforced);
-            uniqueKeys.put(key, result);
+            keys.put(key, result);
 
             if (isPK)
                 primaryKeys.put(key, result);
+            else
+                uniqueKeys.put(key, result);
         }
 
         return result;
@@ -192,7 +203,7 @@ public class DefaultRelations implements Relations {
         TableDefinition uniqueKeyTable,
         boolean enforced
     ) {
-        UniqueKeyDefinition uk = uniqueKeys.get(key(uniqueKeyTable, uniqueKeyName));
+        UniqueKeyDefinition uk = keys.get(key(uniqueKeyTable, uniqueKeyName));
         Key key = key(foreignKeyTable, foreignKeyName);
 
         if (uk == null) {
@@ -263,7 +274,7 @@ public class DefaultRelations implements Relations {
         ForeignKeyDefinition foreignKey = foreignKeys.get(key);
 
         if (foreignKey == null) {
-            UniqueKeyDefinition uniqueKey = uniqueKeys.get(key(uniqueKeyTable, uniqueKeyName));
+            UniqueKeyDefinition uniqueKey = keys.get(key(uniqueKeyTable, uniqueKeyName));
 
             // If the unique key is not loaded, ignore this foreign key
             if (uniqueKey != null) {
@@ -349,6 +360,54 @@ public class DefaultRelations implements Relations {
     @Override
     public List<UniqueKeyDefinition> getUniqueKeys() {
         return new ArrayList<>(uniqueKeys.values());
+    }
+
+    @Override
+    public List<UniqueKeyDefinition> getKeys(ColumnDefinition column) {
+        if (keysByColumn == null) {
+            keysByColumn = new LinkedHashMap<>();
+
+            for (UniqueKeyDefinition uniqueKey : keys.values()) {
+                for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns()) {
+                    List<UniqueKeyDefinition> list = keysByColumn.get(keyColumn);
+
+                    if (list == null) {
+                        list = new ArrayList<>();
+                        keysByColumn.put(keyColumn, list);
+                    }
+
+                    list.add(uniqueKey);
+                }
+            }
+        }
+
+        List<UniqueKeyDefinition> list = keysByColumn.get(column);
+        return list != null ? list : Collections.<UniqueKeyDefinition>emptyList();
+    }
+
+    @Override
+    public List<UniqueKeyDefinition> getKeys(TableDefinition table) {
+        Set<UniqueKeyDefinition> result = new LinkedHashSet<>();
+
+        for (ColumnDefinition column : table.getColumns())
+            result.addAll(getKeys(column));
+
+        return new ArrayList<>(result);
+    }
+
+    @Override
+    public List<UniqueKeyDefinition> getKeys(SchemaDefinition schema) {
+        Set<UniqueKeyDefinition> result = new LinkedHashSet<>();
+
+        for (TableDefinition table : schema.getDatabase().getTables(schema))
+            result.addAll(getKeys(table));
+
+        return new ArrayList<>(result);
+    }
+
+    @Override
+    public List<UniqueKeyDefinition> getKeys() {
+        return new ArrayList<>(keys.values());
     }
 
     @Override

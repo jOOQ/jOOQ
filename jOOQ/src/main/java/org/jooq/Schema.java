@@ -87,10 +87,10 @@ public interface Schema extends Named {
     @Nullable
     Catalog getCatalog();
 
+
     /**
      * Stream all tables contained in this schema.
      */
-
     @NotNull
     Stream<Table<?>> tableStream();
 
@@ -114,6 +114,112 @@ public interface Schema extends Named {
      */
     @Nullable
     Table<?> getTable(Name name);
+
+
+    /**
+     * Stream all primary keys contained in this schema.
+     */
+    @NotNull
+    Stream<UniqueKey<?>> primaryKeyStream();
+
+
+    /**
+     * List all primary keys contained in this schema.
+     */
+    @NotNull
+    List<UniqueKey<?>> getPrimaryKeys();
+
+    /**
+     * Get primary keys by their name (case-sensitive) in this schema.
+     */
+    @NotNull
+    List<UniqueKey<?>> getPrimaryKeys(String name);
+
+    /**
+     * Get primary keys by their qualified or unqualified name in this schema.
+     */
+    @NotNull
+    List<UniqueKey<?>> getPrimaryKeys(Name name);
+
+
+    /**
+     * Stream all unique keys (including primary keys) contained in this schema.
+     */
+    @NotNull
+    Stream<UniqueKey<?>> uniqueKeyStream();
+
+
+    /**
+     * List all unique keys (including primary keys) contained in this schema.
+     */
+    @NotNull
+    List<UniqueKey<?>> getUniqueKeys();
+
+    /**
+     * Get unique keys (including primary keys) by their name (case-sensitive)
+     * in this schema.
+     */
+    @NotNull
+    List<UniqueKey<?>> getUniqueKeys(String name);
+
+    /**
+     * Get unique keys (including primary keys) by their qualified or
+     * unqualified name in this schema.
+     */
+    @NotNull
+    List<UniqueKey<?>> getUniqueKeys(Name name);
+
+
+    /**
+     * Stream all foreign keys contained in this schema.
+     */
+    @NotNull
+    Stream<ForeignKey<?, ?>> foreignKeyStream();
+
+
+    /**
+     * List all foreign keys contained in this schema.
+     */
+    @NotNull
+    List<ForeignKey<?, ?>> getForeignKeys();
+
+    /**
+     * Get foreign keys by their name (case-sensitive) in this schema.
+     */
+    @NotNull
+    List<ForeignKey<?, ?>> getForeignKeys(String name);
+
+    /**
+     * Get foreign keys by their qualified or unqualified name in this schema.
+     */
+    @NotNull
+    List<ForeignKey<?, ?>> getForeignKeys(Name name);
+
+
+    /**
+     * Stream all indexes contained in this schema.
+     */
+    @NotNull
+    Stream<Index> indexStream();
+
+
+    /**
+     * List all indexes contained in this schema.
+     */
+    @NotNull
+    List<Index> getIndexes();
+
+    /**
+     * Get indexes by their name (case-sensitive) in this schema.
+     */
+    @NotNull
+    List<Index> getIndexes(String name);
+
+    /**
+     * Get indexes by their qualified or unqualified name in this schema.
+     */
+    @NotNull
+    List<Index> getIndexes(Name name);
 
 
     /**
@@ -143,10 +249,10 @@ public interface Schema extends Named {
     @Nullable
     UDT<?> getUDT(Name name);
 
+
     /**
      * Stream all domains contained in this schema.
      */
-
     @NotNull
     Stream<Domain<?>> domainStream();
 
@@ -171,10 +277,10 @@ public interface Schema extends Named {
     @Nullable
     Domain<?> getDomain(Name name);
 
+
     /**
      * Stream all sequences contained in this schema.
      */
-
     @NotNull
     Stream<Sequence<?>> sequenceStream();
 

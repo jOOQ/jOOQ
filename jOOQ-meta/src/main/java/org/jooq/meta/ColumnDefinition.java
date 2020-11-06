@@ -61,6 +61,11 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
     List<UniqueKeyDefinition> getUniqueKeys();
 
     /**
+     * All definitions of unique and primary keys that this column is part of.
+     */
+    List<UniqueKeyDefinition> getKeys();
+
+    /**
      * All definitions of foreign keys that this column is part of.
      */
     List<ForeignKeyDefinition> getForeignKeys();

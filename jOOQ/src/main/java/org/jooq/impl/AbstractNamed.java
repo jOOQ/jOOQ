@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jooq.Comment;
 import org.jooq.Name;
 import org.jooq.Named;
@@ -121,6 +124,26 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
 
     static final Name qualify(Named qualifier, Name name) {
         return qualifier == null || name.qualified() ? name : qualifier.getQualifiedName().append(name);
+    }
+
+    static final <N extends Named> List<N> findAll(String name, Iterable<? extends N> in) {
+        List<N> result = new ArrayList<>();
+
+        for (N n : in)
+            if (n.getName().equals(name))
+                result.add(n);
+
+        return result;
+    }
+
+    static final <N extends Named> List<N> findAll(Name name, Iterable<? extends N> in) {
+        List<N> result = new ArrayList<>();
+
+        for (N n : in)
+            if (n.getQualifiedName().equals(name) || n.getUnqualifiedName().equals(name))
+                result.add(n);
+
+        return result;
     }
 
     static final <N extends Named> N find(String name, Iterable<? extends N> in) {

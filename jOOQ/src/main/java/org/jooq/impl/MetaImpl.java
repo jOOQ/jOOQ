@@ -767,12 +767,8 @@ final class MetaImpl extends AbstractMeta {
 
         @SuppressWarnings("unchecked")
         @Override
-        public final List<UniqueKey<Record>> getKeys() {
+        public final List<UniqueKey<Record>> getUniqueKeys() {
             List<UniqueKey<Record>> result = new ArrayList<>();
-
-            UniqueKey<Record> pk = getPrimaryKey();
-            if (pk != null)
-                result.add(pk);
 
             if (uks != null) {
                 Map<String, Result<Record>> groups = uks.intoGroups((Field<String>) uks.field(3));

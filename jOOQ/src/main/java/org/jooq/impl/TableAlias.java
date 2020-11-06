@@ -118,8 +118,8 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final List<UniqueKey<R>> getKeys() {
-        return alias.wrapped().getKeys();
+    public final List<UniqueKey<R>> getUniqueKeys() {
+        return alias.wrapped().getUniqueKeys();
     }
 
     @Override

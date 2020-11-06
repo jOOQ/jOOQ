@@ -508,10 +508,27 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     /**
      * {@inheritDoc}
      * <p>
-     * Subclasses should override this method
+     * Subclasses should no longer override this method, which may be made final
+     * in the future.
      */
     @Override
     public List<UniqueKey<R>> getKeys() {
+        List<UniqueKey<R>> result = new ArrayList<>(getUniqueKeys());
+
+        UniqueKey<R> pk = getPrimaryKey();
+        if (pk != null)
+            result.add(pk);
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses should override this method
+     */
+    @Override
+    public List<UniqueKey<R>> getUniqueKeys() {
         return Collections.emptyList();
     }
 

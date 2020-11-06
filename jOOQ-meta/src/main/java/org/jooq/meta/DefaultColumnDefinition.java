@@ -101,8 +101,13 @@ public class DefaultColumnDefinition
     }
 
     @Override
-    public List<UniqueKeyDefinition> getUniqueKeys() {
+    public final List<UniqueKeyDefinition> getUniqueKeys() {
         return getDatabase().getRelations().getUniqueKeys(this);
+    }
+
+    @Override
+    public final List<UniqueKeyDefinition> getKeys() {
+        return getDatabase().getRelations().getKeys(this);
     }
 
     @Override

@@ -132,7 +132,7 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
     }
 
     @Override
-    public List<UniqueKey<R>> getKeys() {
+    public List<UniqueKey<R>> getUniqueKeys() {
         return super.getKeys();
     }
 

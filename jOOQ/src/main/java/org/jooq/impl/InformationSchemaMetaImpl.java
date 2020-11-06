@@ -101,7 +101,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     private final List<Sequence<?>>                             sequences;
     private final Map<Schema, List<Sequence<?>>>                sequencesPerSchema;
     private final List<UniqueKeyImpl<Record>>                   primaryKeys;
-    private final Map<Name, UniqueKeyImpl<Record>>              uniqueKeysByName;
+    private final Map<Name, UniqueKeyImpl<Record>>              keysByName;
     private final Map<Name, Name>                               referentialKeys;
     private final Map<Name, IndexImpl>                          indexesByName;
 
@@ -123,7 +123,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         this.sequences = new ArrayList<>();
         this.sequencesPerSchema = new HashMap<>();
         this.primaryKeys = new ArrayList<>();
-        this.uniqueKeysByName = new HashMap<>();
+        this.keysByName = new HashMap<>();
         this.referentialKeys = new HashMap<>();
         this.indexesByName = new HashMap<>();
 
@@ -437,9 +437,10 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                         table.primaryKey = key;
                         primaryKeys.add(key);
                     }
+                    else
+                        table.uniqueKeys.add(key);
 
-                    table.uniqueKeys.add(key);
-                    uniqueKeysByName.put(constraintName, key);
+                    keysByName.put(constraintName, key);
                     break;
                 }
             }
@@ -472,7 +473,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                         continue tableConstraintLoop;
                     }
 
-                    UniqueKeyImpl<Record> uniqueKey = uniqueKeysByName.get(referentialKeys.get(constraintName));
+                    UniqueKeyImpl<Record> uniqueKey = keysByName.get(referentialKeys.get(constraintName));
 
                     if (uniqueKey == null) {
                         errors.add(String.format("No unique key defined for foreign key " + constraintName));
@@ -536,7 +537,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             Boolean cycle = xs.isCycleOption();
             BigInteger cache = xs.getCache();
 
-            @SuppressWarnings({ "rawtypes", "unchecked" })
             InformationSchemaSequence is = new InformationSchemaSequence(
                 xs.getSequenceName(),
                 schema,
@@ -698,7 +698,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         }
 
         @Override
-        public List<UniqueKey<Record>> getKeys() {
+        public List<UniqueKey<Record>> getUniqueKeys() {
             return InformationSchemaMetaImpl.<UniqueKey<Record>>unmodifiableList(uniqueKeys);
         }
 

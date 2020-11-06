@@ -213,13 +213,12 @@ final class Snapshot extends AbstractMeta {
                 indexes.add(Internal.createIndex(index.getQualifiedName(), this, copiedFields, index.getUnique()));
             }
 
-            for (UniqueKey<R> uk : table.getKeys())
+            for (UniqueKey<R> uk : table.getUniqueKeys())
                 uniqueKeys.add(Internal.createUniqueKey(this, uk.getQualifiedName(), fields(uk.getFieldsArray()), uk.enforced()));
 
             UniqueKey<R> pk = table.getPrimaryKey();
-            for (UniqueKey<R> uk : uniqueKeys)
-                if (uk.equals(pk))
-                    primaryKey = uk;
+            if (pk != null)
+                primaryKey = Internal.createUniqueKey(this, pk.getQualifiedName(), fields(pk.getFieldsArray()), pk.enforced());
 
             foreignKeys.addAll(table.getReferences());
             checks.addAll(table.getChecks());
@@ -265,7 +264,7 @@ final class Snapshot extends AbstractMeta {
         }
 
         @Override
-        public final List<UniqueKey<R>> getKeys() {
+        public final List<UniqueKey<R>> getUniqueKeys() {
             return Collections.unmodifiableList(uniqueKeys);
         }
 

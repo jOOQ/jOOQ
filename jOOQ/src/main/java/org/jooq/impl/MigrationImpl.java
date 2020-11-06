@@ -559,13 +559,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
         public UniqueKey<JooqMigrationsChangelogRecord> getPrimaryKey() {
             return Internal.createUniqueKey(JOOQ_MIGRATIONS_CHANGELOG, "JOOQ_MIGRATIONS_CHANGELOG_PK", JOOQ_MIGRATIONS_CHANGELOG.ID);
         }
-
-        @Override
-        public List<UniqueKey<JooqMigrationsChangelogRecord>> getKeys() {
-            return Arrays.<UniqueKey<JooqMigrationsChangelogRecord>>asList(
-                  Internal.createUniqueKey(JOOQ_MIGRATIONS_CHANGELOG, "JOOQ_MIGRATIONS_CHANGELOG_PK", JOOQ_MIGRATIONS_CHANGELOG.ID)
-            );
-        }
     }
 
     /**

@@ -246,21 +246,27 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     /**
      * Retrieve all of the table's indexes.
      *
-     * @return All indexes. This is never <code>null</code>. This method returns
-     *         an unmodifiable list.
+     * @return All indexes. This is never <code>null</code>.
      */
     @NotNull
     List<Index> getIndexes();
 
     /**
-     * Retrieve all of the table's unique keys.
+     * Retrieve all of the table's primary and unique keys.
      *
      * @return All keys. This is never <code>null</code>. This is never empty
-     *         for a {@link Table} with a {@link Table#getPrimaryKey()}. This
-     *         method returns an unmodifiable list.
+     *         for a {@link Table} with a {@link Table#getPrimaryKey()}.
      */
     @NotNull
     List<UniqueKey<R>> getKeys();
+
+    /**
+     * Retrieve all of the table's unique keys.
+     *
+     * @return All keys. This is never <code>null</code>.
+     */
+    @NotNull
+    List<UniqueKey<R>> getUniqueKeys();
 
     /**
      * Get a list of <code>FOREIGN KEY</code>'s of a specific table, referencing
@@ -271,8 +277,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @param <O> The other table's record type
      * @param other The other table of the foreign key relationship
      * @return Some other table's <code>FOREIGN KEY</code>'s towards an this
-     *         table. This is never <code>null</code>. This method returns an
-     *         unmodifiable list.
+     *         table. This is never <code>null</code>.
      */
     @NotNull
     <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other);

@@ -239,7 +239,7 @@ public class XMLGenerator extends AbstractGenerator {
                     }
                 }
 
-                for (UniqueKeyDefinition u : db.getUniqueKeys(s)) {
+                for (UniqueKeyDefinition u : db.getKeys(s)) {
                     String constraintName = u.getOutputName();
                     TableDefinition table = u.getTable();
                     List<ColumnDefinition> columns = u.getKeyColumns();

@@ -44,12 +44,15 @@ import org.jooq.Catalog;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Domain;
+import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Internal;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
+import org.jooq.UniqueKey;
 
 /**
  * A schema that references a lazy initialisable {@link Schema} singleton, for
@@ -105,15 +108,6 @@ public final class LazySchema extends AbstractNamed implements Schema {
         return schema().getCatalog();
     }
 
-
-
-    @Override
-    public final Stream<Table<?>> tableStream() {
-        return schema().tableStream();
-    }
-
-
-
     @Override
     public final List<Table<?>> getTables() {
         return schema().getTables();
@@ -129,14 +123,65 @@ public final class LazySchema extends AbstractNamed implements Schema {
         return schema().getTable(name);
     }
 
-
-
     @Override
-    public final Stream<UDT<?>> udtStream() {
-        return schema().udtStream();
+    public final List<UniqueKey<?>> getPrimaryKeys() {
+        return schema().getPrimaryKeys();
     }
 
+    @Override
+    public final List<UniqueKey<?>> getPrimaryKeys(String name) {
+        return schema().getPrimaryKeys(name);
+    }
 
+    @Override
+    public final List<UniqueKey<?>> getPrimaryKeys(Name name) {
+        return schema().getPrimaryKeys(name);
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getUniqueKeys() {
+        return schema().getUniqueKeys();
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getUniqueKeys(String name) {
+        return schema().getUniqueKeys(name);
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getUniqueKeys(Name name) {
+        return schema().getUniqueKeys(name);
+    }
+
+    @Override
+    public final List<ForeignKey<?, ?>> getForeignKeys() {
+        return schema().getForeignKeys();
+    }
+
+    @Override
+    public final List<ForeignKey<?, ?>> getForeignKeys(String name) {
+        return schema().getForeignKeys(name);
+    }
+
+    @Override
+    public final List<ForeignKey<?, ?>> getForeignKeys(Name name) {
+        return schema().getForeignKeys(name);
+    }
+
+    @Override
+    public final List<Index> getIndexes() {
+        return schema().getIndexes();
+    }
+
+    @Override
+    public final List<Index> getIndexes(String name) {
+        return schema().getIndexes(name);
+    }
+
+    @Override
+    public final List<Index> getIndexes(Name name) {
+        return schema().getIndexes(name);
+    }
 
     @Override
     public final List<UDT<?>> getUDTs() {
@@ -153,15 +198,6 @@ public final class LazySchema extends AbstractNamed implements Schema {
         return schema().getUDT(name);
     }
 
-
-
-    @Override
-    public final Stream<Domain<?>> domainStream() {
-        return schema().domainStream();
-    }
-
-
-
     @Override
     public final List<Domain<?>> getDomains() {
         return schema().getDomains();
@@ -177,15 +213,6 @@ public final class LazySchema extends AbstractNamed implements Schema {
         return schema().getDomain(name);
     }
 
-
-
-    @Override
-    public final Stream<Sequence<?>> sequenceStream() {
-        return schema().sequenceStream();
-    }
-
-
-
     @Override
     public final List<Sequence<?>> getSequences() {
         return schema().getSequences();
@@ -200,4 +227,49 @@ public final class LazySchema extends AbstractNamed implements Schema {
     public final Sequence<?> getSequence(Name name) {
         return schema().getSequence(name);
     }
+
+
+
+    @Override
+    public final Stream<Table<?>> tableStream() {
+        return schema().tableStream();
+    }
+
+    @Override
+    public final Stream<UniqueKey<?>> primaryKeyStream() {
+        return schema().primaryKeyStream();
+    }
+
+    @Override
+    public final Stream<UniqueKey<?>> uniqueKeyStream() {
+        return schema().uniqueKeyStream();
+    }
+
+    @Override
+    public final Stream<ForeignKey<?, ?>> foreignKeyStream() {
+        return schema().foreignKeyStream();
+    }
+
+    @Override
+    public final Stream<Index> indexStream() {
+        return schema().indexStream();
+    }
+
+    @Override
+    public final Stream<UDT<?>> udtStream() {
+        return schema().udtStream();
+    }
+
+    @Override
+    public final Stream<Domain<?>> domainStream() {
+        return schema().domainStream();
+    }
+
+    @Override
+    public final Stream<Sequence<?>> sequenceStream() {
+        return schema().sequenceStream();
+    }
+
+
+
 }

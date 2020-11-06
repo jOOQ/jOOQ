@@ -43,6 +43,7 @@ import static org.jooq.Clause.SCHEMA_REFERENCE;
 import static org.jooq.impl.CatalogImpl.DEFAULT_CATALOG;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -52,11 +53,14 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Domain;
+import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
+import org.jooq.UniqueKey;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -142,6 +146,46 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     }
 
     @Override
+    public final List<UniqueKey<?>> getPrimaryKeys(String name) {
+        return findAll(name, getPrimaryKeys());
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getPrimaryKeys(Name name) {
+        return findAll(name, getPrimaryKeys());
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getUniqueKeys(String name) {
+        return findAll(name, getUniqueKeys());
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getUniqueKeys(Name name) {
+        return findAll(name, getUniqueKeys());
+    }
+
+    @Override
+    public final List<ForeignKey<?, ?>> getForeignKeys(String name) {
+        return findAll(name, getForeignKeys());
+    }
+
+    @Override
+    public final List<ForeignKey<?, ?>> getForeignKeys(Name name) {
+        return findAll(name, getForeignKeys());
+    }
+
+    @Override
+    public final List<Index> getIndexes(String name) {
+        return findAll(name, getIndexes());
+    }
+
+    @Override
+    public final List<Index> getIndexes(Name name) {
+        return findAll(name, getIndexes());
+    }
+
+    @Override
     public final UDT<?> getUDT(String name) {
         return find(name, getUDTs());
     }
@@ -184,6 +228,67 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     /**
      * {@inheritDoc}
      * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public List<UniqueKey<?>> getPrimaryKeys() {
+        List<UniqueKey<?>> result = new ArrayList<>();
+
+        for (Table<?> table : getTables())
+            if (table.getPrimaryKey() != null)
+                result.add(table.getPrimaryKey());
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public List<UniqueKey<?>> getUniqueKeys() {
+        List<UniqueKey<?>> result = new ArrayList<>();
+
+        for (Table<?> table : getTables())
+            result.addAll(table.getKeys());
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public List<ForeignKey<?, ?>> getForeignKeys() {
+        List<ForeignKey<?, ?>> result = new ArrayList<>();
+
+        for (Table<?> table : getTables())
+            result.addAll(table.getReferences());
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public List<Index> getIndexes() {
+        List<Index> result = new ArrayList<>();
+
+        for (Table<?> table : getTables())
+            result.addAll(table.getIndexes());
+
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
      * Subclasses should override this method
      */
     @Override
@@ -212,9 +317,30 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     }
 
 
+
     @Override
     public final Stream<Table<?>> tableStream() {
         return getTables().stream();
+    }
+
+    @Override
+    public final Stream<UniqueKey<?>> primaryKeyStream() {
+        return getPrimaryKeys().stream();
+    }
+
+    @Override
+    public final Stream<UniqueKey<?>> uniqueKeyStream() {
+        return getUniqueKeys().stream();
+    }
+
+    @Override
+    public final Stream<ForeignKey<?, ?>> foreignKeyStream() {
+        return getForeignKeys().stream();
+    }
+
+    @Override
+    public final Stream<Index> indexStream() {
+        return getIndexes().stream();
     }
 
     @Override
@@ -231,6 +357,7 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     public final Stream<Sequence<?>> sequenceStream() {
         return getSequences().stream();
     }
+
 
 
     // ------------------------------------------------------------------------

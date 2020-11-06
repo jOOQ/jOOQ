@@ -1797,12 +1797,8 @@ final class Interpreter {
             }
 
             @Override
-            public final List<UniqueKey<Record>> getKeys() {
+            public final List<UniqueKey<Record>> getUniqueKeys() {
                 List<UniqueKey<Record>> result = new ArrayList<>();
-                UniqueKey<Record> pk = getPrimaryKey();
-
-                if (pk != null)
-                    result.add(pk);
 
                 for (MutableUniqueKey uk : MutableTable.this.uniqueKeys)
                     result.add(uk.interpretedKey());

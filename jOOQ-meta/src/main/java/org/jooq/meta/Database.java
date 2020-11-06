@@ -135,6 +135,16 @@ public interface Database extends AutoCloseable {
     List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema);
 
     /**
+     * The unique and primary keys contained in this database.
+     */
+    List<UniqueKeyDefinition> getKeys();
+
+    /**
+     * The unique and primary keys contained in this database.
+     */
+    List<UniqueKeyDefinition> getKeys(SchemaDefinition schema);
+
+    /**
      * The foreign keys contained in this database.
      */
     List<ForeignKeyDefinition> getForeignKeys();

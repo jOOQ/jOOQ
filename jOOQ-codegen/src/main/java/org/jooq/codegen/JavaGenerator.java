@@ -820,7 +820,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         boolean empty = true;
         JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, ConstraintDefinition.class));
-        out.refConflicts(getStrategy().getJavaIdentifiers(database.getUniqueKeys(schema)));
+        out.refConflicts(getStrategy().getJavaIdentifiers(database.getKeys(schema)));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getForeignKeys(schema)));
         printGlobalReferencesPackage(out, schema, ConstraintDefinition.class);
 
@@ -838,7 +838,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("public class %s {", referencesClassName);
 
         // [#1459] [#10554] [#10653] Distribute keys to nested classes only if necessary
-        boolean distributeUniqueKeys = database.getUniqueKeys(schema).size() > maxMembersPerInitialiser();
+        boolean distributeUniqueKeys = database.getKeys(schema).size() > maxMembersPerInitialiser();
         boolean distributeForeignKeys = database.getForeignKeys(schema).size() > maxMembersPerInitialiser();
 
         List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<>();
@@ -846,7 +846,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Unique keys
         try {
-            for (UniqueKeyDefinition uniqueKey : database.getUniqueKeys(schema)) {
+            for (UniqueKeyDefinition uniqueKey : database.getKeys(schema)) {
                 empty = false;
 
                 final String keyType = out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
@@ -4098,7 +4098,7 @@ public class JavaGenerator extends AbstractGenerator {
             // fetchOneBy[Column]([T])
             // -----------------------
             ukLoop:
-            for (UniqueKeyDefinition uk : column.getUniqueKeys()) {
+            for (UniqueKeyDefinition uk : column.getKeys()) {
 
                 // If column is part of a single-column unique key...
                 if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column)) {
@@ -5469,16 +5469,16 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         out.println();
-                        out.println("override def getKeys: %s[ %s[%s] ] = %s.asList[ %s[%s] ]([[%s]])",
+                        out.println("override def getUniqueKeys: %s[ %s[%s] ] = %s.asList[ %s[%s] ]([[%s]])",
                             List.class, UniqueKey.class, recordType, Arrays.class, UniqueKey.class, recordType, keyFullIds);
                     }
                     else if (kotlin) {
-                        out.println("public override fun getKeys(): %s<%s<%s>> = listOf([[%s]])", out.ref(KLIST), UniqueKey.class, recordType, keyFullIds);
+                        out.println("public override fun getUniqueKeys(): %s<%s<%s>> = listOf([[%s]])", out.ref(KLIST), UniqueKey.class, recordType, keyFullIds);
                     }
                     else {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
-                        out.println("public %s<%s<%s>> getKeys() {", List.class, UniqueKey.class, recordType);
+                        out.println("public %s<%s<%s>> getUniqueKeys() {", List.class, UniqueKey.class, recordType);
                         out.println("return %s.<%s<%s>>asList([[%s]]);", Arrays.class, UniqueKey.class, recordType, keyFullIds);
                         out.println("}");
                     }
@@ -5488,7 +5488,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         out.println();
-                        out.println("override def getKeys: %s[ %s[%s] ] = %s.asList[ %s[%s] ](",
+                        out.println("override def getUniqueKeys: %s[ %s[%s] ] = %s.asList[ %s[%s] ](",
                             List.class, UniqueKey.class, recordType, Arrays.class, UniqueKey.class, recordType);
 
                         for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
@@ -5501,7 +5501,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.println(")");
                     }
                     else if (kotlin) {
-                        out.println("public override fun getKeys(): %s<%s<%s>> = listOf(", out.ref(KLIST), UniqueKey.class, recordType);
+                        out.println("public override fun getUniqueKeys(): %s<%s<%s>> = listOf(", out.ref(KLIST), UniqueKey.class, recordType);
 
                         for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
                             out.print("%s", separator);
@@ -5515,7 +5515,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
-                        out.println("public %s<%s<%s>> getKeys() {", List.class, UniqueKey.class, recordType);
+                        out.println("public %s<%s<%s>> getUniqueKeys() {", List.class, UniqueKey.class, recordType);
                         out.println("return %s.<%s<%s>>asList(", Arrays.class, UniqueKey.class, recordType);
 
                         for (UniqueKeyDefinition uniqueKey : uniqueKeys) {

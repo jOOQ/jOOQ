@@ -208,6 +208,7 @@ public abstract class AbstractDatabase implements Database {
     private List<IdentityDefinition>                                         identities;
     private List<IndexDefinition>                                            indexes;
     private List<UniqueKeyDefinition>                                        uniqueKeys;
+    private List<UniqueKeyDefinition>                                        keys;
     private List<ForeignKeyDefinition>                                       foreignKeys;
     private List<CheckConstraintDefinition>                                  checkConstraints;
     private List<TableDefinition>                                            tables;
@@ -225,6 +226,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<IndexDefinition>>           indexesBySchema;
     private transient Map<TableDefinition, List<IndexDefinition>>            indexesByTable;
     private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       uniqueKeysBySchema;
+    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       keysBySchema;
     private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
     private transient Map<SchemaDefinition, List<CheckConstraintDefinition>> checkConstraintsBySchema;
     private transient Map<SchemaDefinition, List<TableDefinition>>           tablesBySchema;
@@ -1617,6 +1619,31 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final List<UniqueKeyDefinition> getKeys() {
+        if (keys == null) {
+            keys = new ArrayList<>();
+
+            if (getIncludeUniqueKeys() || getIncludePrimaryKeys())
+                for (SchemaDefinition s : getSchemata())
+                    for (TableDefinition table : getTables(s))
+                        for (UniqueKeyDefinition key : table.getKeys())
+                            keys.add(key);
+
+            sort(keys);
+        }
+
+        return keys;
+    }
+
+    @Override
+    public final List<UniqueKeyDefinition> getKeys(SchemaDefinition schema) {
+        if (keysBySchema == null)
+            keysBySchema = new LinkedHashMap<>();
+
+        return filterSchema(getKeys(), schema, keysBySchema);
+    }
+
+    @Override
     public final List<ForeignKeyDefinition> getForeignKeys() {
         if (foreignKeys == null) {
             foreignKeys = new ArrayList<>();
@@ -2878,7 +2905,7 @@ public abstract class AbstractDatabase implements Database {
                 continue keyLoop;
 
             for (TableDefinition table : filter(getTables(), key.getTables())) {
-                for (UniqueKeyDefinition uk : filter(table.getUniqueKeys(), key.getKey())) {
+                for (UniqueKeyDefinition uk : filter(table.getKeys(), key.getKey())) {
                     log.info("Overriding primary key", "" + uk);
                     r.overridePrimaryKey(uk);
                     markUsed(key);

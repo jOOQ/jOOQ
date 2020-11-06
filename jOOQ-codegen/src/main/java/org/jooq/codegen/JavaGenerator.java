@@ -6604,7 +6604,7 @@ public class JavaGenerator extends AbstractGenerator {
             //         Referencing the singleton identifier with 2 identifier segments
             //         doesn't work in Kotlin if the identifier conflicts with the
             //         members in this class. Java can resolve the ambiguity.
-            if ((scala || kotlin) && first instanceof TableDefinition) {
+            if ((scala || kotlin) && (first instanceof TableDefinition || first instanceof UDTDefinition)) {
                 final Set<String> memberNames = getMemberNames(first.getSchema());
 
                 for (Definition table : definitions)

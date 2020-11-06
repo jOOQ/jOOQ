@@ -68,16 +68,18 @@ final class FilteredMeta extends AbstractMeta {
     /**
      * Generated UID
      */
-    private static final long                     serialVersionUID = 2589476339574534267L;
+    private static final long                         serialVersionUID = 2589476339574534267L;
 
-    private final AbstractMeta                    meta;
-    private final Predicate<? super Catalog>      catalogFilter;
-    private final Predicate<? super Schema>       schemaFilter;
-    private final Predicate<? super Table<?>>     tableFilter;
-    private final Predicate<? super Domain<?>>    domainFilter;
-    private final Predicate<? super Sequence<?>>  sequenceFilter;
-    private final Predicate<? super UniqueKey<?>> primaryKeyFilter;
-    private final Predicate<? super Index>        indexFilter;
+    private final AbstractMeta                        meta;
+    private final Predicate<? super Catalog>          catalogFilter;
+    private final Predicate<? super Schema>           schemaFilter;
+    private final Predicate<? super Table<?>>         tableFilter;
+    private final Predicate<? super Domain<?>>        domainFilter;
+    private final Predicate<? super Sequence<?>>      sequenceFilter;
+    private final Predicate<? super UniqueKey<?>>     primaryKeyFilter;
+    private final Predicate<? super UniqueKey<?>>     uniqueKeyFilter;
+    private final Predicate<? super ForeignKey<?, ?>> foreignKeyFilter;
+    private final Predicate<? super Index>            indexFilter;
 
     FilteredMeta(
         AbstractMeta meta,
@@ -87,6 +89,8 @@ final class FilteredMeta extends AbstractMeta {
         Predicate<? super Domain<?>> domainFilter,
         Predicate<? super Sequence<?>> sequenceFilter,
         Predicate<? super UniqueKey<?>> primaryKeyFilter,
+        Predicate<? super UniqueKey<?>> uniqueKeyFilter,
+        Predicate<? super ForeignKey<?, ?>> foreignKeyFilter,
         Predicate<? super Index> indexFilter
     ) {
         super(meta.configuration());
@@ -98,6 +102,8 @@ final class FilteredMeta extends AbstractMeta {
         this.domainFilter = domainFilter;
         this.sequenceFilter = sequenceFilter;
         this.primaryKeyFilter = primaryKeyFilter;
+        this.uniqueKeyFilter = uniqueKeyFilter;
+        this.foreignKeyFilter = foreignKeyFilter;
         this.indexFilter = indexFilter;
     }
 
@@ -122,6 +128,8 @@ final class FilteredMeta extends AbstractMeta {
             domainFilter,
             sequenceFilter,
             primaryKeyFilter,
+            uniqueKeyFilter,
+            foreignKeyFilter,
             indexFilter
         );
     }
@@ -136,6 +144,8 @@ final class FilteredMeta extends AbstractMeta {
             domainFilter,
             sequenceFilter,
             primaryKeyFilter,
+            uniqueKeyFilter,
+            foreignKeyFilter,
             indexFilter
         );
     }
@@ -150,6 +160,8 @@ final class FilteredMeta extends AbstractMeta {
             domainFilter,
             sequenceFilter,
             primaryKeyFilter,
+            uniqueKeyFilter,
+            foreignKeyFilter,
             indexFilter
         );
     }
@@ -164,6 +176,8 @@ final class FilteredMeta extends AbstractMeta {
             domainFilter != null ? new And<>(domainFilter, filter) : filter,
             sequenceFilter,
             primaryKeyFilter,
+            uniqueKeyFilter,
+            foreignKeyFilter,
             indexFilter
         );
     }
@@ -178,6 +192,8 @@ final class FilteredMeta extends AbstractMeta {
             domainFilter,
             sequenceFilter != null ? new And<>(sequenceFilter, filter) : filter,
             primaryKeyFilter,
+            uniqueKeyFilter,
+            foreignKeyFilter,
             indexFilter
         );
     }
@@ -192,6 +208,40 @@ final class FilteredMeta extends AbstractMeta {
             domainFilter,
             sequenceFilter,
             primaryKeyFilter != null ? new And<>(primaryKeyFilter, filter) : filter,
+            uniqueKeyFilter,
+            foreignKeyFilter,
+            indexFilter
+        );
+    }
+
+    @Override
+    public final Meta filterUniqueKeys(Predicate<? super UniqueKey<?>> filter) {
+        return new FilteredMeta(
+            meta,
+            catalogFilter,
+            schemaFilter,
+            tableFilter,
+            domainFilter,
+            sequenceFilter,
+            primaryKeyFilter,
+            uniqueKeyFilter != null ? new And<>(uniqueKeyFilter, filter) : filter,
+            foreignKeyFilter,
+            indexFilter
+        );
+    }
+
+    @Override
+    public final Meta filterForeignKeys(Predicate<? super ForeignKey<?, ?>> filter) {
+        return new FilteredMeta(
+            meta,
+            catalogFilter,
+            schemaFilter,
+            tableFilter,
+            domainFilter,
+            sequenceFilter,
+            primaryKeyFilter,
+            uniqueKeyFilter,
+            foreignKeyFilter != null ? new And<>(foreignKeyFilter, filter) : filter,
             indexFilter
         );
     }
@@ -206,6 +256,8 @@ final class FilteredMeta extends AbstractMeta {
             domainFilter,
             sequenceFilter,
             primaryKeyFilter,
+            uniqueKeyFilter,
+            foreignKeyFilter,
             indexFilter != null ? new And<>(indexFilter, filter) : filter
         );
     }
@@ -348,8 +400,9 @@ final class FilteredMeta extends AbstractMeta {
             if (uniqueKeys == null) {
                 uniqueKeys = new ArrayList<>();
 
-                for (UniqueKey<R> key : delegate.getUniqueKeys())
-                    uniqueKeys.add(key(key));
+                for (UniqueKey<R> uk : delegate.getUniqueKeys())
+                    if (uniqueKeyFilter == null || uniqueKeyFilter.test(uk))
+                        uniqueKeys.add(key(uk));
 
                 UniqueKey<R> pk = delegate.getPrimaryKey();
                 if (pk != null)
@@ -389,9 +442,15 @@ final class FilteredMeta extends AbstractMeta {
 
                 fkLoop:
                 for (ForeignKey<R, ?> fk : delegate.getReferences()) {
-                    UniqueKey<?> uk = lookupUniqueKey(fk);
+                    if (foreignKeyFilter != null && !foreignKeyFilter.test(fk))
+                        continue fkLoop;
 
+                    UniqueKey<?> uk = lookupUniqueKey(fk);
                     if (uk == null)
+                        continue fkLoop;
+                    else if (uk.isPrimary() && primaryKeyFilter != null && !primaryKeyFilter.test(uk))
+                        continue fkLoop;
+                    else if (!uk.isPrimary() && uniqueKeyFilter != null && !uniqueKeyFilter.test(uk))
                         continue fkLoop;
 
                     TableField<R, ?>[] fields1 = fk.getFieldsArray();

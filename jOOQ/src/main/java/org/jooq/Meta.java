@@ -408,6 +408,18 @@ public interface Meta extends Scope {
     Meta filterPrimaryKeys(Predicate<? super UniqueKey<?>> filter);
 
     /**
+     * Create a wrapper {@link Meta} instance filtering out some unique keys.
+     */
+    @NotNull
+    Meta filterUniqueKeys(Predicate<? super UniqueKey<?>> filter);
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some foreign keys.
+     */
+    @NotNull
+    Meta filterForeignKeys(Predicate<? super ForeignKey<?, ?>> filter);
+
+    /**
      * Create a wrapper {@link Meta} instance filtering out some indexes.
      */
     @NotNull

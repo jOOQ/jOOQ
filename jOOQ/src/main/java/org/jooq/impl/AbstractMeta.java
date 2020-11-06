@@ -516,6 +516,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+            null,
+            null,
             null
         );
     }
@@ -526,6 +528,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             this,
             null,
             filter,
+            null,
+            null,
             null,
             null,
             null,
@@ -544,6 +548,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+            null,
+            null,
             null
         );
     }
@@ -556,6 +562,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             filter,
+            null,
+            null,
             null,
             null,
             null
@@ -572,6 +580,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             filter,
             null,
+            null,
+            null,
             null
         );
     }
@@ -586,6 +596,40 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             filter,
+            null,
+            null,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterUniqueKeys(Predicate<? super UniqueKey<?>> filter) {
+        return new FilteredMeta(
+            this,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            filter,
+            null,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterForeignKeys(Predicate<? super ForeignKey<?, ?>> filter) {
+        return new FilteredMeta(
+            this,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            filter,
             null
         );
     }
@@ -594,6 +638,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     public Meta filterIndexes(Predicate<? super Index> filter) {
         return new FilteredMeta(
             this,
+            null,
+            null,
             null,
             null,
             null,

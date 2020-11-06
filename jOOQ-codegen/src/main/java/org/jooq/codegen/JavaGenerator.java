@@ -2330,7 +2330,7 @@ public class JavaGenerator extends AbstractGenerator {
         boolean override = generateInterfaces();
 
         if (scala) {
-            out.println("def %s: %s = get(%s).asInstanceOf[%s]", getter, type, index, type);
+            out.println("def %s(): %s = get(%s).asInstanceOf[%s]", getter, type, index, type);
         }
         else if (kotlin) {
             String nullable = column instanceof EmbeddableDefinition ? "" : "?";

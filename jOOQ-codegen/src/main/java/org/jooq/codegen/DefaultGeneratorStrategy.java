@@ -351,6 +351,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
                 packageName = packageName + "." + className + ".references";
             else if (RoutineDefinition.class.isAssignableFrom(objectType))
                 packageName = packageName + "." + className + ".references";
+            else if (UDTDefinition.class.isAssignableFrom(objectType))
+                packageName = packageName + "." + className + ".references";
             else
                 packageName = packageName + "." + className;
         }

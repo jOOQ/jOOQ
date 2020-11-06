@@ -801,6 +801,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
+
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
         for (TableDefinition table : database.getTables(schema)) {
             if (table.isTableValuedFunction()) {
@@ -2805,7 +2809,16 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", null, %s, %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), packageId, synthetic, interfaces);
+            out.println("class %s extends %s[%s](\"%s\", null, %s, %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+        }
+        else if (kotlin) {
+            out.println("public open class %s : %s<%s>(\"%s\", null, %s, %s)[[before=, ][%s]] {", className, UDTImpl.class, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+
+            out.println();
+            out.println("public companion object {");
+            out.javadoc("The reference instance of <code>%s</code>", udt.getQualifiedOutputName());
+            out.println("public val %s: %s = %s()", getStrategy().getJavaIdentifier(udt), className, className);
+            out.println("}");
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTImpl.class, recordType, interfaces);
@@ -2824,18 +2837,18 @@ public class JavaGenerator extends AbstractGenerator {
             final List<String> converter = out.ref(list(attribute.getType(resolver(out)).getConverter()));
             final List<String> binding = out.ref(list(attribute.getType(resolver(out)).getBinding()));
 
-            if (scala) {
-                printDeprecationIfUnknownType(out, attrTypeFull);
-                out.println("private val %s: %s[%s, %s] = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, attrName, attrTypeRef, escapeString(""), converter, binding);
-            }
-            else {
-                if (!printDeprecationIfUnknownType(out, attrTypeFull))
-                    out.javadoc("The attribute <code>%s</code>.[[before= ][%s]]", attribute.getQualifiedOutputName(), list(escapeEntities(comment(attribute))));
+            if (!printDeprecationIfUnknownType(out, attrTypeFull))
+                out.javadoc("The attribute <code>%s</code>.[[before= ][%s]]", attribute.getQualifiedOutputName(), list(escapeEntities(comment(attribute))));
 
+            if (scala)
+                out.println("private val %s: %s[%s, %s] = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), converter, binding);
+            else if (kotlin)
+                out.println("public val %s: %s<%s, %s> = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), converter, binding);
+            else
                 out.println("public static final %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    UDTField.class, recordType, attrType, attrId, DSL.class, attrName, attrTypeRef, udtId, escapeString(""), converter, binding);
-            }
+                    UDTField.class, recordType, attrType, attrId, DSL.class, escapeString(attrName), attrTypeRef, udtId, escapeString(""), converter, binding);
         }
 
         // [#799] Oracle UDT's can have member procedures
@@ -2862,7 +2875,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (scala) {
+        if (scala || kotlin) {
         }
         else {
             out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
@@ -2874,6 +2887,10 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.println();
             out.println("override def getSchema: %s = %s", Schema.class, schemaId);
+        }
+        else if (kotlin) {
+            out.println();
+            out.println("public override fun getSchema(): %s = %s", Schema.class, schemaId);
         }
         else {
             out.overrideInherit();
@@ -3222,6 +3239,22 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateArray(ArrayDefinition array, JavaWriter out) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3692,6 +3725,16 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePackage(PackageDefinition pkg, JavaWriter out) {
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6545,7 +6588,7 @@ public class JavaGenerator extends AbstractGenerator {
             //         Referencing the singleton identifier with 2 identifier segments
             //         doesn't work in Kotlin if the identifier conflicts with the
             //         members in this class. Java can resolve the ambiguity.
-            if ((scala || kotlin) && first instanceof TableDefinition) {
+            if ((scala || kotlin) && (first instanceof TableDefinition || first instanceof UDTDefinition)) {
                 final Set<String> memberNames = getMemberNames(first.getSchema());
 
                 for (Definition table : definitions)
@@ -7083,20 +7126,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         }
 
-        if (routine.getOverload() != null) {
-            if (scala)
-                out.println("setOverloaded(true)");
-            else if (kotlin)
-                out.println("overloaded = true");
-            else
-                out.println("setOverloaded(true);");
-        }
-
-
-
-
-
-
+        if (routine.getOverload() != null)
+            out.println("setOverloaded(true)%s", semicolon);
 
 
 
@@ -7967,7 +7998,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected String refExtendsNumberType(JavaWriter out, DataTypeDefinition type) {
         if (type.isGenericNumberType())
-            return (scala ? "_ <: " : "? extends ") + out.ref(Number.class);
+            return (scala ? "_ <: " : kotlin ? "out ": "? extends ") + out.ref(Number.class);
         else
             return out.ref(getJavaType(type, out));
     }

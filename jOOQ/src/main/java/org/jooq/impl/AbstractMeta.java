@@ -71,20 +71,26 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  */
 abstract class AbstractMeta extends AbstractScope implements Meta, Serializable {
 
-    private static final long            serialVersionUID = 910484713008245977L;
+    private static final long                 serialVersionUID = 910484713008245977L;
 
     // [#9010] TODO: Allow for opting out of this cache
-    private Map<Name, Catalog>           cachedCatalogs;
-    private Map<Name, Schema>            cachedQualifiedSchemas;
-    private Map<Name, Table<?>>          cachedQualifiedTables;
-    private Map<Name, Domain<?>>         cachedQualifiedDomains;
-    private Map<Name, Sequence<?>>       cachedQualifiedSequences;
-    private Map<Name, List<Schema>>      cachedUnqualifiedSchemas;
-    private Map<Name, List<Table<?>>>    cachedUnqualifiedTables;
-    private Map<Name, List<Domain<?>>>   cachedUnqualifiedDomains;
-    private Map<Name, List<Sequence<?>>> cachedUnqualifiedSequences;
-    private List<UniqueKey<?>>           cachedPrimaryKeys;
-    private List<Index>                  cachedIndexes;
+    private Map<Name, Catalog>                cachedCatalogs;
+    private Map<Name, Schema>                 cachedQualifiedSchemas;
+    private Map<Name, Table<?>>               cachedQualifiedTables;
+    private Map<Name, Domain<?>>              cachedQualifiedDomains;
+    private Map<Name, Sequence<?>>            cachedQualifiedSequences;
+    private Map<Name, UniqueKey<?>>           cachedQualifiedPrimaryKeys;
+    private Map<Name, UniqueKey<?>>           cachedQualifiedUniqueKeys;
+    private Map<Name, ForeignKey<?, ?>>       cachedQualifiedForeignKeys;
+    private Map<Name, Index>                  cachedQualifiedIndexes;
+    private Map<Name, List<Schema>>           cachedUnqualifiedSchemas;
+    private Map<Name, List<Table<?>>>         cachedUnqualifiedTables;
+    private Map<Name, List<Domain<?>>>        cachedUnqualifiedDomains;
+    private Map<Name, List<Sequence<?>>>      cachedUnqualifiedSequences;
+    private Map<Name, List<UniqueKey<?>>>     cachedUnqualifiedPrimaryKeys;
+    private Map<Name, List<UniqueKey<?>>>     cachedUnqualifiedUniqueKeys;
+    private Map<Name, List<ForeignKey<?, ?>>> cachedUnqualifiedForeignKeys;
+    private Map<Name, List<Index>>            cachedUnqualifiedIndexes;
 
     AbstractMeta(Configuration configuration) {
         super(configuration);
@@ -295,14 +301,38 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
+    public final List<UniqueKey<?>> getPrimaryKeys(String name) {
+        return getPrimaryKeys(name(name));
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getPrimaryKeys(Name name) {
+        initPrimaryKeys();
+        return get(name, new Iterable<UniqueKey<?>>() {
+            @Override
+            public Iterator<UniqueKey<?>> iterator() {
+                return getPrimaryKeys().iterator();
+            }
+        }, cachedQualifiedPrimaryKeys, cachedUnqualifiedPrimaryKeys);
+    }
+
+    @Override
     public final List<UniqueKey<?>> getPrimaryKeys() {
         initPrimaryKeys();
-        return Collections.unmodifiableList(cachedPrimaryKeys);
+        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedPrimaryKeys.values()));
     }
 
     private final void initPrimaryKeys() {
-        if (cachedPrimaryKeys == null)
-            cachedPrimaryKeys = new ArrayList<>(getPrimaryKeys0());
+        if (cachedQualifiedPrimaryKeys == null) {
+            cachedQualifiedPrimaryKeys = new LinkedHashMap<>();
+            cachedUnqualifiedPrimaryKeys = new LinkedHashMap<>();
+            get(name(""), new Iterable<UniqueKey<?>>() {
+                @Override
+                public Iterator<UniqueKey<?>> iterator() {
+                    return getPrimaryKeys0().iterator();
+                }
+            }, cachedQualifiedPrimaryKeys, cachedUnqualifiedPrimaryKeys);
+        }
     }
 
     List<UniqueKey<?>> getPrimaryKeys0() {
@@ -316,14 +346,126 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
+    public final List<UniqueKey<?>> getUniqueKeys(String name) {
+        return getUniqueKeys(name(name));
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getUniqueKeys(Name name) {
+        initUniqueKeys();
+        return get(name, new Iterable<UniqueKey<?>>() {
+            @Override
+            public Iterator<UniqueKey<?>> iterator() {
+                return getUniqueKeys().iterator();
+            }
+        }, cachedQualifiedUniqueKeys, cachedUnqualifiedUniqueKeys);
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getUniqueKeys() {
+        initUniqueKeys();
+        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedUniqueKeys.values()));
+    }
+
+    private final void initUniqueKeys() {
+        if (cachedQualifiedUniqueKeys == null) {
+            cachedQualifiedUniqueKeys = new LinkedHashMap<>();
+            cachedUnqualifiedUniqueKeys = new LinkedHashMap<>();
+            get(name(""), new Iterable<UniqueKey<?>>() {
+                @Override
+                public Iterator<UniqueKey<?>> iterator() {
+                    return getUniqueKeys0().iterator();
+                }
+            }, cachedQualifiedUniqueKeys, cachedUnqualifiedUniqueKeys);
+        }
+    }
+
+    List<UniqueKey<?>> getUniqueKeys0() {
+        List<UniqueKey<?>> result = new ArrayList<>();
+
+        for (Table<?> table : getTables())
+            result.addAll(table.getUniqueKeys());
+
+        return result;
+    }
+
+    @Override
+    public final List<ForeignKey<?, ?>> getForeignKeys(String name) {
+        return getForeignKeys(name(name));
+    }
+
+    @Override
+    public final List<ForeignKey<?, ?>> getForeignKeys(Name name) {
+        initForeignKeys();
+        return get(name, new Iterable<ForeignKey<?, ?>>() {
+            @Override
+            public Iterator<ForeignKey<?, ?>> iterator() {
+                return getForeignKeys().iterator();
+            }
+        }, cachedQualifiedForeignKeys, cachedUnqualifiedForeignKeys);
+    }
+
+    @Override
+    public final List<ForeignKey<?, ?>> getForeignKeys() {
+        initForeignKeys();
+        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedForeignKeys.values()));
+    }
+
+    private final void initForeignKeys() {
+        if (cachedQualifiedForeignKeys == null) {
+            cachedQualifiedForeignKeys = new LinkedHashMap<>();
+            cachedUnqualifiedForeignKeys = new LinkedHashMap<>();
+            get(name(""), new Iterable<ForeignKey<?, ?>>() {
+                @Override
+                public Iterator<ForeignKey<?, ?>> iterator() {
+                    return getForeignKeys0().iterator();
+                }
+            }, cachedQualifiedForeignKeys, cachedUnqualifiedForeignKeys);
+        }
+    }
+
+    List<ForeignKey<?, ?>> getForeignKeys0() {
+        List<ForeignKey<?, ?>> result = new ArrayList<>();
+
+        for (Table<?> table : getTables())
+            result.addAll(table.getReferences());
+
+        return result;
+    }
+
+    @Override
+    public final List<Index> getIndexes(String name) {
+        return getIndexes(name(name));
+    }
+
+    @Override
+    public final List<Index> getIndexes(Name name) {
+        initIndexes();
+        return get(name, new Iterable<Index>() {
+            @Override
+            public Iterator<Index> iterator() {
+                return getIndexes().iterator();
+            }
+        }, cachedQualifiedIndexes, cachedUnqualifiedIndexes);
+    }
+
+    @Override
     public final List<Index> getIndexes() {
         initIndexes();
-        return Collections.unmodifiableList(cachedIndexes);
+        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedIndexes.values()));
     }
 
     private final void initIndexes() {
-        if (cachedIndexes == null)
-            cachedIndexes = new ArrayList<>(getIndexes0());
+        if (cachedQualifiedIndexes == null) {
+            cachedQualifiedIndexes = new LinkedHashMap<>();
+            cachedUnqualifiedIndexes = new LinkedHashMap<>();
+            get(name(""), new Iterable<Index>() {
+                @Override
+                public Iterator<Index> iterator() {
+                    return getIndexes0().iterator();
+                }
+            }, cachedQualifiedIndexes, cachedUnqualifiedIndexes);
+        }
     }
 
     List<Index> getIndexes0() {

@@ -513,12 +513,13 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      */
     @Override
     public List<UniqueKey<R>> getKeys() {
-        List<UniqueKey<R>> result = new ArrayList<>(getUniqueKeys());
+        List<UniqueKey<R>> result = new ArrayList<>();
 
         UniqueKey<R> pk = getPrimaryKey();
         if (pk != null)
             result.add(pk);
 
+        result.addAll(getUniqueKeys());
         return result;
     }
 

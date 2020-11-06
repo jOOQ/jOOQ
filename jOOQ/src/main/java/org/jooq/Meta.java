@@ -252,6 +252,86 @@ public interface Meta extends Scope {
     List<UniqueKey<?>> getPrimaryKeys() throws DataAccessException;
 
     /**
+     * Get all primary keys from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<UniqueKey<?>> getPrimaryKeys(String name) throws DataAccessException;
+
+    /**
+     * Get all primary keys from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<UniqueKey<?>> getPrimaryKeys(Name name) throws DataAccessException;
+
+    /**
+     * Get all unique keys from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<UniqueKey<?>> getUniqueKeys() throws DataAccessException;
+
+    /**
+     * Get all unique keys from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<UniqueKey<?>> getUniqueKeys(String name) throws DataAccessException;
+
+    /**
+     * Get all unique keys from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<UniqueKey<?>> getUniqueKeys(Name name) throws DataAccessException;
+
+    /**
+     * Get all foreign keys from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<ForeignKey<?, ?>> getForeignKeys() throws DataAccessException;
+
+    /**
+     * Get all foreign keys from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<ForeignKey<?, ?>> getForeignKeys(String name) throws DataAccessException;
+
+    /**
+     * Get all foreign keys from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<ForeignKey<?, ?>> getForeignKeys(Name name) throws DataAccessException;
+
+    /**
      * Get all indexes from the underlying meta data sources.
      *
      * @throws DataAccessException If something went wrong fetching the meta
@@ -260,6 +340,26 @@ public interface Meta extends Scope {
     @NotNull
     @Support
     List<Index> getIndexes() throws DataAccessException;
+
+    /**
+     * Get all indexes from the underlying meta data sources.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<Index> getIndexes(String name) throws DataAccessException;
+
+    /**
+     * Get all indexes from the underlying meta data sources.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support
+    List<Index> getIndexes(Name name) throws DataAccessException;
 
     /**
      * A predicate to filter out query parts of a given type from meta data.

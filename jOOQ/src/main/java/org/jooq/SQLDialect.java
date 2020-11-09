@@ -63,7 +63,9 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * The open source jOOQ distributions only support the dialect family, which
  * corresponds to the latest supported dialect version of the commercial
- * distribution.
+ * distribution. A full list of mappings between dialect families and latest
+ * supported version can be seen here <a href=
+ * "https://www.jooq.org/download/support-matrix">https://www.jooq.org/download/support-matrix</a>.
  * <p>
  * If a dialect is documented but does not seem to be available in your jOOQ
  * Edition, you may be using the wrong edition, e.g. because of a transitive

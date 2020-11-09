@@ -4505,28 +4505,15 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> CompletionStage<Result<R>> fetchAsync(ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.fetchAsync();
-        }
-        finally {
-            query.attach(previous);
-        }
+        return fetchAsync(Tools.configuration(configuration()).executorProvider().provide(), query);
     }
 
     @Override
     public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.fetchAsync(executor);
-        }
-        finally {
-            query.attach(previous);
-        }
+        return ExecutorProviderCompletionStage.of(
+            CompletableFuture.supplyAsync(blocking(() -> fetch(query))),
+            () -> executor
+        );
     }
 
     @Override

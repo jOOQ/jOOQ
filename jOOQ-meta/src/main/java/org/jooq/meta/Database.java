@@ -510,6 +510,16 @@ public interface Database extends AutoCloseable {
     boolean getIncludeSystemCheckConstraints();
 
     /**
+     * whether system generated sequences should be included.
+     */
+    void setIncludeSystemSequences(boolean systemSequences);
+
+    /**
+     * whether system generated sequences should be included.
+     */
+    boolean getIncludeSystemSequences();
+
+    /**
      * whether indexes should be included.
      */
     void setIncludeIndexes(boolean includeIndexes);

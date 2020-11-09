@@ -30,7 +30,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticObjectsType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31400L;
+    private final static long serialVersionUID = 31500L;
     @XmlElementWrapper(name = "identities")
     @XmlElement(name = "identity")
     protected List<SyntheticIdentityType> identities;

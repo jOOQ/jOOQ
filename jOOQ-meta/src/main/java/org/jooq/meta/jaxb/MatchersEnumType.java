@@ -27,7 +27,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class MatchersEnumType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31400L;
+    private final static long serialVersionUID = 31500L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
     protected MatcherRule enumClass;

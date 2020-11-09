@@ -544,6 +544,7 @@ public class GenerationTool {
             database.setIncludeCheckConstraints(!FALSE.equals(d.isIncludeCheckConstraints()));
             database.setIncludeSystemIndexes(TRUE.equals(d.isIncludeSystemIndexes()));
             database.setIncludeSystemCheckConstraints(TRUE.equals(d.isIncludeSystemCheckConstraints()));
+            database.setIncludeSystemSequences(TRUE.equals(d.isIncludeSystemSequences()));
             database.setIncludeInvisibleColumns(!FALSE.equals(d.isIncludeInvisibleColumns()));
             database.setIncludePrimaryKeys(!FALSE.equals(d.isIncludePrimaryKeys()));
             database.setIncludeRoutines(!FALSE.equals(d.isIncludeRoutines()));

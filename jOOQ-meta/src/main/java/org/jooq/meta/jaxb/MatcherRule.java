@@ -23,7 +23,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="transform" type="{http://www.jooq.org/xsd/jooq-codegen-3.14.0.xsd}MatcherTransformType" minOccurs="0"/&gt;
+ *         &lt;element name="transform" type="{http://www.jooq.org/xsd/jooq-codegen-3.15.0.xsd}MatcherTransformType" minOccurs="0"/&gt;
  *         &lt;element name="expression" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -43,7 +43,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class MatcherRule implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31400L;
+    private final static long serialVersionUID = 31500L;
     @XmlSchemaType(name = "string")
     protected MatcherTransformType transform;
     @XmlElement(required = true)

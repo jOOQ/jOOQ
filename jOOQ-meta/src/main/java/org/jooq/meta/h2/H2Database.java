@@ -429,7 +429,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
             )
             .from(SEQUENCES)
             .where(SEQUENCES.SEQUENCE_SCHEMA.in(schemas))
-            .and(upper(SEQUENCES.SEQUENCE_NAME).notLike(inline("SYSTEM!_SEQUENCE!_%"), '!'))
+            .and(!getIncludeSystemSequences() ? upper(SEQUENCES.SEQUENCE_NAME).notLike(inline("SYSTEM!_SEQUENCE!_%"), '!') : noCondition())
             .orderBy(
                 SEQUENCES.SEQUENCE_SCHEMA,
                 SEQUENCES.SEQUENCE_NAME);

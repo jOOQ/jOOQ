@@ -632,6 +632,15 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 inline(null, BIGINT).as("cache"))
             .from(SEQUENCES)
             .where(SEQUENCES.SEQUENCE_SCHEMA.in(schemas))
+            .and(!getIncludeSystemSequences()
+                ? row(SEQUENCES.SEQUENCE_SCHEMA, SEQUENCES.SEQUENCE_NAME).notIn(
+                    select(COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME).concat(inline("_seq")))
+                    .from(COLUMNS)
+                    .where(COLUMNS.COLUMN_DEFAULT.eq(
+                        inline("nextval('").concat(COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME).concat(inline("_seq"))).concat(inline("_seq'::regclass)"))
+                    ))
+                  )
+                : noCondition())
             .orderBy(
                 SEQUENCES.SEQUENCE_SCHEMA,
                 SEQUENCES.SEQUENCE_NAME);

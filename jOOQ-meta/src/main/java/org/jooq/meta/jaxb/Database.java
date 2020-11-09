@@ -33,7 +33,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Database implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31400L;
+    private final static long serialVersionUID = 31500L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlList
@@ -87,6 +87,8 @@ public class Database implements Serializable, XMLAppendable
     protected Boolean includeSystemIndexes = false;
     @XmlElement(defaultValue = "false")
     protected Boolean includeSystemCheckConstraints = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean includeSystemSequences = false;
     @XmlElement(defaultValue = "true")
     protected Boolean includeInvisibleColumns = true;
     @XmlElement(defaultValue = "")
@@ -860,6 +862,30 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeSystemCheckConstraints(Boolean value) {
         this.includeSystemCheckConstraints = value;
+    }
+
+    /**
+     * This flag indicates whether system generated sequences should be included in output produced by this database
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeSystemSequences() {
+        return includeSystemSequences;
+    }
+
+    /**
+     * Sets the value of the includeSystemSequences property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeSystemSequences(Boolean value) {
+        this.includeSystemSequences = value;
     }
 
     /**
@@ -1871,6 +1897,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withIncludeSystemSequences(Boolean value) {
+        setIncludeSystemSequences(value);
+        return this;
+    }
+
     public Database withIncludeInvisibleColumns(Boolean value) {
         setIncludeInvisibleColumns(value);
         return this;
@@ -2335,6 +2366,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includeCheckConstraints", includeCheckConstraints);
         builder.append("includeSystemIndexes", includeSystemIndexes);
         builder.append("includeSystemCheckConstraints", includeSystemCheckConstraints);
+        builder.append("includeSystemSequences", includeSystemSequences);
         builder.append("includeInvisibleColumns", includeInvisibleColumns);
         builder.append("recordVersionFields", recordVersionFields);
         builder.append("recordTimestampFields", recordTimestampFields);
@@ -2612,6 +2644,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeSystemCheckConstraints.equals(other.includeSystemCheckConstraints)) {
+                return false;
+            }
+        }
+        if (includeSystemSequences == null) {
+            if (other.includeSystemSequences!= null) {
+                return false;
+            }
+        } else {
+            if (!includeSystemSequences.equals(other.includeSystemSequences)) {
                 return false;
             }
         }
@@ -2953,6 +2994,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includeCheckConstraints == null)? 0 :includeCheckConstraints.hashCode()));
         result = ((prime*result)+((includeSystemIndexes == null)? 0 :includeSystemIndexes.hashCode()));
         result = ((prime*result)+((includeSystemCheckConstraints == null)? 0 :includeSystemCheckConstraints.hashCode()));
+        result = ((prime*result)+((includeSystemSequences == null)? 0 :includeSystemSequences.hashCode()));
         result = ((prime*result)+((includeInvisibleColumns == null)? 0 :includeInvisibleColumns.hashCode()));
         result = ((prime*result)+((recordVersionFields == null)? 0 :recordVersionFields.hashCode()));
         result = ((prime*result)+((recordTimestampFields == null)? 0 :recordTimestampFields.hashCode()));

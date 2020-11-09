@@ -4691,13 +4691,10 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePojoEqualsAndHashCode(Definition tableOrUDT, JavaWriter out) {
-        if (scala && generatePojosAsScalaCaseClasses())
-            return;
-        if (kotlin && generatePojosAsKotlinDataClasses())
-            return;
-        if (java && generatePojosAsJavaRecordClasses())
-            return;
-
+        // [#10805] We used to prevent equals and hash code when generating case classes, data classes
+        //          or record classes. There isn't really a good reason for this. Users can define
+        //          the flags themselves to their liking, and in some cases, overriding is still required
+        //          e.g. in the presence of arrays.
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
 
         out.println();
@@ -4851,13 +4848,6 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePojoToString(Definition tableOrUDT, JavaWriter out) {
-        if (scala && generatePojosAsScalaCaseClasses())
-            return;
-        if (kotlin && generatePojosAsKotlinDataClasses())
-            return;
-        if (java && generatePojosAsJavaRecordClasses())
-            return;
-
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
 
         out.println();

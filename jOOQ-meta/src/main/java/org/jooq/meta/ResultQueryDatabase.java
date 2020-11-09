@@ -56,7 +56,7 @@ import org.jooq.ResultQuery;
  * @author Lukas Eder
  */
 @Internal
-public interface ResultQueryDatabase {
+public interface ResultQueryDatabase extends Database {
 
     /**
      * A query that produces primary keys for a set of input schemas.

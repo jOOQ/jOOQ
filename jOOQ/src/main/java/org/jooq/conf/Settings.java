@@ -232,6 +232,8 @@ public class Settings
     @XmlElement(defaultValue = "false")
     protected Boolean metaIncludeSystemIndexes = false;
     @XmlElement(defaultValue = "false")
+    protected Boolean metaIncludeSystemSequences = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean migrationAllowsUndo = false;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationRevertUntracked = false;
@@ -2071,6 +2073,30 @@ public class Settings
     }
 
     /**
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated sequences, by default.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMetaIncludeSystemSequences() {
+        return metaIncludeSystemSequences;
+    }
+
+    /**
+     * Sets the value of the metaIncludeSystemSequences property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMetaIncludeSystemSequences(Boolean value) {
+        this.metaIncludeSystemSequences = value;
+    }
+
+    /**
      * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
      * 
      * @return
@@ -3101,6 +3127,11 @@ public class Settings
         return this;
     }
 
+    public Settings withMetaIncludeSystemSequences(Boolean value) {
+        setMetaIncludeSystemSequences(value);
+        return this;
+    }
+
     public Settings withMigrationAllowsUndo(Boolean value) {
         setMigrationAllowsUndo(value);
         return this;
@@ -3373,6 +3404,7 @@ public class Settings
         builder.append("interpreterLocale", interpreterLocale);
         builder.append("interpreterDelayForeignKeyDeclarations", interpreterDelayForeignKeyDeclarations);
         builder.append("metaIncludeSystemIndexes", metaIncludeSystemIndexes);
+        builder.append("metaIncludeSystemSequences", metaIncludeSystemSequences);
         builder.append("migrationAllowsUndo", migrationAllowsUndo);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
         builder.append("migrationAutoBaseline", migrationAutoBaseline);
@@ -4144,6 +4176,15 @@ public class Settings
                 return false;
             }
         }
+        if (metaIncludeSystemSequences == null) {
+            if (other.metaIncludeSystemSequences!= null) {
+                return false;
+            }
+        } else {
+            if (!metaIncludeSystemSequences.equals(other.metaIncludeSystemSequences)) {
+                return false;
+            }
+        }
         if (migrationAllowsUndo == null) {
             if (other.migrationAllowsUndo!= null) {
                 return false;
@@ -4421,6 +4462,7 @@ public class Settings
         result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
         result = ((prime*result)+((interpreterDelayForeignKeyDeclarations == null)? 0 :interpreterDelayForeignKeyDeclarations.hashCode()));
         result = ((prime*result)+((metaIncludeSystemIndexes == null)? 0 :metaIncludeSystemIndexes.hashCode()));
+        result = ((prime*result)+((metaIncludeSystemSequences == null)? 0 :metaIncludeSystemSequences.hashCode()));
         result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
         result = ((prime*result)+((migrationAutoBaseline == null)? 0 :migrationAutoBaseline.hashCode()));

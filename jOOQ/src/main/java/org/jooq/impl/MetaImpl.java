@@ -59,6 +59,7 @@ import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
+import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_UNIQUE_KEYS;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -573,7 +574,9 @@ final class MetaImpl extends AbstractMeta {
 
         private final Result<Record> getSequences0() {
             if (sequenceCache == null) {
-                final String sql = M_SEQUENCES.get(family());
+                final String sql = TRUE.equals(settings().isMetaIncludeSystemSequences())
+                    ? M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.get(family())
+                    : M_SEQUENCES.get(family());
 
                 if (sql != null) {
                     Result<Record> result = meta(new MetaFunction() {

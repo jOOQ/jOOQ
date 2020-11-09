@@ -637,7 +637,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     select(COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME).concat(inline("_seq")))
                     .from(COLUMNS)
                     .where(COLUMNS.COLUMN_DEFAULT.eq(
-                        inline("nextval('").concat(COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME).concat(inline("_seq"))).concat(inline("_seq'::regclass)"))
+                        inline("nextval('").concat(COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME)).concat(inline("_seq'::regclass)"))
                     ))
                   )
                 : noCondition())

@@ -258,7 +258,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("PRIMARY KEY")) {
+        for (Record record : fetchKeys("p")) {
             SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
@@ -272,7 +272,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("UNIQUE")) {
+        for (Record record : fetchKeys("u")) {
             SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);

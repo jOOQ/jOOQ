@@ -3079,7 +3079,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("The type <code>%s</code>", udt.getQualifiedOutputName());
 
             if (scala)
-                out.println("lazy val %s = %s", id, fullId);
+                out.println("def %s = %s", id, fullId);
             else if (kotlin)
                 out.println("val %s = %s", id, fullId);
             else
@@ -3841,7 +3841,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc(isBlank(comment) ? "The table <code>" + table.getQualifiedOutputName() + "</code>." : comment);
 
             if (scala)
-                out.println("lazy val %s = %s", id, referencedId);
+                out.println("def %s = %s", id, referencedId);
             else if (kotlin)
                 out.println("val %s = %s", id, referencedId);
             else
@@ -6285,7 +6285,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.javadoc(isBlank(schemaComment) ? ("The schema <code>" + (!schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId) + "</code>.") : schemaComment);
 
                     if (scala)
-                        out.println("lazy val %s = %s", schemaId, schemaShortId);
+                        out.println("def %s = %s", schemaId, schemaShortId);
                     else if (kotlin)
                         out.println("val %s get() = %s", schemaId, schemaShortId);
                     else
@@ -6392,7 +6392,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc(isBlank(tableComment) ? "The table <code>" + table.getQualifiedOutputName() + "</code>." : tableComment);
 
                 if (scala)
-                    out.println("lazy val %s = %s", tableId, tableShortId);
+                    out.println("def %s = %s", tableId, tableShortId);
                 else if (kotlin)
                     out.println("val %s get() = %s", tableId, tableShortId);
                 else

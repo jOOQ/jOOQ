@@ -2126,6 +2126,12 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 out.println();
+
+                if (column instanceof ColumnDefinition)
+                    printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
+                printValidationAnnotation(out, column);
+
                 out.println("%svar %s: %s?",
                     (generateInterfaces() ? "override " : ""), member, type);
                 out.tab(1).println("set(value) = set(%s, value)", index);
@@ -2305,20 +2311,16 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
-        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
-            out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
+        if (!kotlin) {
+            if (!printDeprecationIfUnknownType(out, typeFull))
+                out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
-        if (column instanceof ColumnDefinition) {
-            if (kotlin)
-                out.indentInc();
+            if (column instanceof ColumnDefinition)
+                printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
-            printColumnJPAAnnotation(out, (ColumnDefinition) column);
-
-            if (kotlin)
-                out.indentDec();
+            printValidationAnnotation(out, column);
         }
 
-        printValidationAnnotation(out, column);
         printNullableOrNonnullAnnotation(out, column);
         boolean override = generateInterfaces();
 
@@ -4238,6 +4240,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (column instanceof ColumnDefinition)
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
+                printValidationAnnotation(out, column);
 
                 out.println("%s%s %s: %s? = null%s",
                     generateInterfaces() ? "override " : "",
@@ -6799,19 +6803,22 @@ public class JavaGenerator extends AbstractGenerator {
         int indent = out.indent();
 
         if (generateJPAAnnotations()) {
+            String prefix = kotlin ? "get:" : "";
             UniqueKeyDefinition pk = column.getPrimaryKey();
 
             if (pk != null) {
                 if (pk.getKeyColumns().size() == 1) {
 
                     // Since JPA 1.0
-                    out.println("@%s", out.ref("javax.persistence.Id"));
+                    out.println("@%s%s", prefix, out.ref("javax.persistence.Id"));
 
                     // Since JPA 1.0
                     if (pk.getKeyColumns().get(0).isIdentity())
-                        out.println("@%s(strategy = %s.IDENTITY)",
+                        out.println("@%s%s(strategy = %s.IDENTITY)",
+                            prefix,
                             out.ref("javax.persistence.GeneratedValue"),
-                            out.ref("javax.persistence.GenerationType"));
+                            out.ref("javax.persistence.GenerationType")
+                        );
                 }
             }
 
@@ -6838,7 +6845,7 @@ public class JavaGenerator extends AbstractGenerator {
             //         the table's @UniqueConstraint section.
 
             // Since JPA 1.0
-            out.print("@%s(name = \"", out.ref("javax.persistence.Column"));
+            out.print("@%s%s(name = \"", prefix, out.ref("javax.persistence.Column"));
             out.print(escapeString(column.getName()));
             out.print("\"");
             out.print(nullable);
@@ -6862,20 +6869,21 @@ public class JavaGenerator extends AbstractGenerator {
 
     private void printValidationAnnotation(JavaWriter out, TypedElementDefinition<?> column) {
         if (generateValidationAnnotations()) {
+            String prefix = kotlin ? "get:" : "";
             DataTypeDefinition type = column.getType(resolver(out));
 
             // [#5128] defaulted columns are nullable in Java
             if (!column.getType(resolver(out)).isNullable() &&
                 !column.getType(resolver(out)).isDefaulted() &&
                 !column.getType(resolver(out)).isIdentity())
-                out.println("@%s", out.ref("javax.validation.constraints.NotNull"));
+                out.println("@%s%s", prefix, out.ref("javax.validation.constraints.NotNull"));
 
             String javaType = getJavaType(type, out);
             if ("java.lang.String".equals(javaType) || "byte[]".equals(javaType)) {
                 int length = type.getLength();
 
                 if (length > 0)
-                    out.println("@%s(max = %s)", out.ref("javax.validation.constraints.Size"), length);
+                    out.println("@%s%s(max = %s)", prefix, out.ref("javax.validation.constraints.Size"), length);
             }
         }
     }

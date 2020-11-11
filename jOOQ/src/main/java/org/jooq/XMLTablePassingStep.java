@@ -37,14 +37,13 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A step in the construction of an <code>XMLTABLE</code> expression.

@@ -2308,8 +2308,15 @@ public class JavaGenerator extends AbstractGenerator {
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
-        if (column instanceof ColumnDefinition)
+        if (column instanceof ColumnDefinition) {
+            if (kotlin)
+                out.indentInc();
+
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
+            if (kotlin)
+                out.indentDec();
+        }
 
         printValidationAnnotation(out, column);
         printNullableOrNonnullAnnotation(out, column);
@@ -4220,18 +4227,25 @@ public class JavaGenerator extends AbstractGenerator {
         else if (kotlin) {
             out.println("%sclass %s(", (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
 
-            String separator = "  ";
-            for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable)) {
+            String separator = ", ";
+            List<? extends TypedElementDefinition<? extends Definition>> typedElements = getTypedElements(tableUdtOrEmbeddable);
+            for (int i = 0; i < typedElements.size(); i++) {
+                if (i + 1 == typedElements.size())
+                    separator = "";
+
+                TypedElementDefinition<?> column = typedElements.get(i);
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                out.println("%s%s%s %s: %s? = null",
-                    separator,
+                if (column instanceof ColumnDefinition)
+                    printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
+                out.println("%s%s %s: %s? = null%s",
                     generateInterfaces() ? "override " : "",
                     generateImmutablePojos() ? "val" : "var",
                     member,
-                    out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)));
-
-                separator = ", ";
+                    out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
+                    separator
+                );
             }
 
             out.println(")[[before=: ][%s]] {", superTypes);
@@ -6785,9 +6799,6 @@ public class JavaGenerator extends AbstractGenerator {
         int indent = out.indent();
 
         if (generateJPAAnnotations()) {
-            if (kotlin)
-                out.indentInc();
-
             UniqueKeyDefinition pk = column.getPrimaryKey();
 
             if (pk != null) {
@@ -6835,9 +6846,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.print(precision);
             out.print(scale);
             out.println(")");
-
-            if (kotlin)
-                out.indentDec();
         }
 
         // [#10196] The above logic triggers an indent level of -1, incorrectly

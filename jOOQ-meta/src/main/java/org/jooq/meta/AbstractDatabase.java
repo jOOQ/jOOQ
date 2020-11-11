@@ -208,6 +208,7 @@ public abstract class AbstractDatabase implements Database {
     private List<SequenceDefinition>                                         sequences;
     private List<IdentityDefinition>                                         identities;
     private List<IndexDefinition>                                            indexes;
+    private List<UniqueKeyDefinition>                                        primaryKeys;
     private List<UniqueKeyDefinition>                                        uniqueKeys;
     private List<UniqueKeyDefinition>                                        keys;
     private List<ForeignKeyDefinition>                                       foreignKeys;
@@ -226,6 +227,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<IdentityDefinition>>        identitiesBySchema;
     private transient Map<SchemaDefinition, List<IndexDefinition>>           indexesBySchema;
     private transient Map<TableDefinition, List<IndexDefinition>>            indexesByTable;
+    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       primaryKeysBySchema;
     private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       uniqueKeysBySchema;
     private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       keysBySchema;
     private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
@@ -1609,7 +1611,7 @@ public abstract class AbstractDatabase implements Database {
         if (uniqueKeys == null) {
             uniqueKeys = new ArrayList<>();
 
-            if (getIncludeUniqueKeys() || getIncludePrimaryKeys())
+            if (getIncludeUniqueKeys())
                 for (SchemaDefinition s : getSchemata())
                     for (TableDefinition table : getTables(s))
                         for (UniqueKeyDefinition uniqueKey : table.getUniqueKeys())
@@ -1619,6 +1621,31 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return uniqueKeys;
+    }
+
+    @Override
+    public final List<UniqueKeyDefinition> getPrimaryKeys(SchemaDefinition schema) {
+        if (primaryKeysBySchema == null)
+            primaryKeysBySchema = new LinkedHashMap<>();
+
+        return filterSchema(getPrimaryKeys(), schema, primaryKeysBySchema);
+    }
+
+    @Override
+    public final List<UniqueKeyDefinition> getPrimaryKeys() {
+        if (primaryKeys == null) {
+            primaryKeys = new ArrayList<>();
+
+            if (getIncludePrimaryKeys())
+                for (SchemaDefinition s : getSchemata())
+                    for (TableDefinition table : getTables(s))
+                        if (table.getPrimaryKey() != null)
+                            primaryKeys.add(table.getPrimaryKey());
+
+            sort(primaryKeys);
+        }
+
+        return primaryKeys;
     }
 
     @Override

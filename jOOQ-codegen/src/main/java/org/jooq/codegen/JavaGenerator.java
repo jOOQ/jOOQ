@@ -2144,6 +2144,8 @@ public class JavaGenerator extends AbstractGenerator {
                 if (column instanceof ColumnDefinition)
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
+                printValidationAnnotation(out, column);
+
                 out.println("public %svar %s: %s?",
                     (generateInterfaces() ? "override " : ""), member, type);
                 out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
@@ -2323,13 +2325,16 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
-        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
-            out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
+        if (!kotlin) {
+            if (!printDeprecationIfUnknownType(out, typeFull))
+                out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
-        if (!kotlin && column instanceof ColumnDefinition)
-            printColumnJPAAnnotation(out, (ColumnDefinition) column);
+            if (column instanceof ColumnDefinition)
+                printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
-        printValidationAnnotation(out, column);
+            printValidationAnnotation(out, column);
+        }
+
         printNullableOrNonnullAnnotation(out, column);
         boolean override = generateInterfaces();
 
@@ -4251,6 +4256,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (column instanceof ColumnDefinition)
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
+                printValidationAnnotation(out, column);
 
                 out.println("public %s%s %s: %s? = null%s",
                     generateInterfaces() ? "override " : "",
@@ -6878,20 +6885,21 @@ public class JavaGenerator extends AbstractGenerator {
 
     private void printValidationAnnotation(JavaWriter out, TypedElementDefinition<?> column) {
         if (generateValidationAnnotations()) {
+            String prefix = kotlin ? "get:" : "";
             DataTypeDefinition type = column.getType(resolver(out));
 
             // [#5128] defaulted columns are nullable in Java
             if (!column.getType(resolver(out)).isNullable() &&
                 !column.getType(resolver(out)).isDefaulted() &&
                 !column.getType(resolver(out)).isIdentity())
-                out.println("@%s", out.ref("javax.validation.constraints.NotNull"));
+                out.println("@%s%s", prefix, out.ref("javax.validation.constraints.NotNull"));
 
             String javaType = getJavaType(type, out);
             if ("java.lang.String".equals(javaType) || "byte[]".equals(javaType)) {
                 int length = type.getLength();
 
                 if (length > 0)
-                    out.println("@%s(max = %s)", out.ref("javax.validation.constraints.Size"), length);
+                    out.println("@%s%s(max = %s)", prefix, out.ref("javax.validation.constraints.Size"), length);
             }
         }
     }

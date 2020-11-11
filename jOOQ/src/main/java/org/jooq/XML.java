@@ -40,6 +40,7 @@ package org.jooq;
 import java.io.Serializable;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An XML wrapper type for XML data obtained from the database.
@@ -81,6 +82,15 @@ public final class XML implements Serializable {
     @NotNull
     public static final XML xml(String data) {
         return new XML(data);
+    }
+
+    /**
+     * Create a new {@link XML} instance from string data input, or
+     * <code>null</code> if the input is <code>null</code>.
+     */
+    @Nullable
+    public static final XML xmlOrNull(String data) {
+        return data == null ? null : xml(data);
     }
 
     @Override

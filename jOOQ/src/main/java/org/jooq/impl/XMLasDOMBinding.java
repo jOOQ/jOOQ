@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.XML.xml;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
@@ -54,6 +56,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.jooq.Converter;
+import org.jooq.XML;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
@@ -67,17 +70,17 @@ import org.xml.sax.SAXException;
  *
  * @author Lukas Eder
  */
-public class XMLasDOMBinding extends AbstractVarcharBinding<Node> {
+public class XMLasDOMBinding extends AbstractXMLBinding<Node> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -2153155338260706262L;
+    private static final long          serialVersionUID = -2153155338260706262L;
 
-    private final Converter<Object, Node> converter;
+    private final Converter<XML, Node> converter;
 
     public XMLasDOMBinding() {
-        this.converter = new AbstractConverter<Object, Node>(Object.class, Node.class) {
+        this.converter = new AbstractConverter<XML, Node>(XML.class, Node.class) {
 
             /**
              * Generated UID
@@ -85,19 +88,19 @@ public class XMLasDOMBinding extends AbstractVarcharBinding<Node> {
             private static final long serialVersionUID = -2153155338260706262L;
 
             @Override
-            public Node from(Object t) {
-                return t == null ? null : XMLasDOMBinding.fromString("" + t);
+            public Node from(XML t) {
+                return t == null ? null : XMLasDOMBinding.fromString(t.data());
             }
 
             @Override
-            public Object to(Node u) {
-                return u == null ? null : XMLasDOMBinding.toString(u);
+            public XML to(Node u) {
+                return u == null ? null : xml(XMLasDOMBinding.toString(u));
             }
         };
     }
 
     @Override
-    public final Converter<Object, Node> converter() {
+    public final Converter<XML, Node> converter() {
         return converter;
     }
 

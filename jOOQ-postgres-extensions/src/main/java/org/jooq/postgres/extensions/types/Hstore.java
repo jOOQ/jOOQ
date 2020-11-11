@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A data type representing the PostgreSQL <code>hstore</code> type.
@@ -78,6 +79,15 @@ public final class Hstore implements Serializable {
     @NotNull
     public static final Hstore hstore(Map<String, String> data) {
         return new Hstore(data);
+    }
+
+    /**
+     * Create a new {@link Hstore} instance from string data input, or
+     * <code>null</code> if the input is <code>null</code>.
+     */
+    @Nullable
+    public static final Hstore hstoreOrNull(Map<String, String> data) {
+        return data == null ? null : new Hstore(data);
     }
 
     @Override

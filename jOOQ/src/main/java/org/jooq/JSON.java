@@ -40,6 +40,7 @@ package org.jooq;
 import java.io.Serializable;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A JSON wrapper type for JSON data obtained from the database.
@@ -81,6 +82,15 @@ public final class JSON implements Serializable {
     @NotNull
     public static final JSON json(String data) {
         return new JSON(data);
+    }
+
+    /**
+     * Create a new {@link JSON} instance from string data input, or
+     * <code>null</code> if the input is <code>null</code>.
+     */
+    @Nullable
+    public static final JSON jsonOrNull(String data) {
+        return data == null ? null : json(data);
     }
 
     @Override

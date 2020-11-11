@@ -56,6 +56,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import org.jooq.Converter;
+import org.jooq.XML;
 
 /**
  * A binding that binds JAXB-annotated {@link Object} types to {@link SQLXML}
@@ -65,7 +66,7 @@ import org.jooq.Converter;
  *
  * @author Lukas Eder
  */
-public class AbstractXMLasObjectBinding<T> extends AbstractVarcharBinding<T> {
+public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
 
 
     /**
@@ -73,18 +74,18 @@ public class AbstractXMLasObjectBinding<T> extends AbstractVarcharBinding<T> {
      */
     private static final long          serialVersionUID = -2153155338260706262L;
 
-    private final Converter<Object, T> converter;
+    private final Converter<XML, T> converter;
 
     protected AbstractXMLasObjectBinding(final Class<T> theType) {
         this.converter = new XMLasObjectConverter<>(theType);
     }
 
     @Override
-    public final Converter<Object, T> converter() {
+    public final Converter<XML, T> converter() {
         return converter;
     }
 
-    private static final class XMLasObjectConverter<T> implements Converter<Object, T> {
+    private static final class XMLasObjectConverter<T> implements Converter<XML, T> {
 
         /**
          * Generated UID
@@ -111,7 +112,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractVarcharBinding<T> {
         }
 
         @Override
-        public T from(Object t) {
+        public T from(XML t) {
             if (t == null)
                 return null;
 
@@ -119,7 +120,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractVarcharBinding<T> {
         }
 
         @Override
-        public Object to(T u) {
+        public XML to(T u) {
             if (u == null)
                 return null;
 
@@ -134,7 +135,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractVarcharBinding<T> {
                 Marshaller m = ctx.createMarshaller();
                 m.setProperty(Marshaller.JAXB_FRAGMENT, true);
                 m.marshal(o, s);
-                return s.toString();
+                return XML.xml(s.toString());
             }
             catch (JAXBException e) {
                 throw new DataBindingException(e);
@@ -142,8 +143,8 @@ public class AbstractXMLasObjectBinding<T> extends AbstractVarcharBinding<T> {
         }
 
         @Override
-        public Class<Object> fromType() {
-            return Object.class;
+        public Class<XML> fromType() {
+            return XML.class;
         }
 
         @Override

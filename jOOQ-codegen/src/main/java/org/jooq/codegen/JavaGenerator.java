@@ -2325,7 +2325,7 @@ public class JavaGenerator extends AbstractGenerator {
         boolean override = generateInterfaces();
 
         if (scala) {
-            out.println("def %s(): %s = get(%s).asInstanceOf[%s]", getter, type, index, type);
+            out.println("def %s: %s = get(%s).asInstanceOf[%s]", scalaWhitespaceSuffix(getter), type, index, type);
         }
         else if (kotlin) {
             out.tab(1).println("get() = get(%s) as %s%s", index, type, column instanceof EmbeddableDefinition ? "" : "?");
@@ -2359,7 +2359,7 @@ public class JavaGenerator extends AbstractGenerator {
         boolean override = generateInterfaces();
 
         if (scala) {
-            out.print("def %s: %s = ", getter, type);
+            out.print("def %s: %s = ", scalaWhitespaceSuffix(getter), type);
         }
         else if (kotlin) {
             out.tab(1).print("get() = ");
@@ -2695,7 +2695,7 @@ public class JavaGenerator extends AbstractGenerator {
         printNonnullAnnotation(out);
 
         if (scala)
-            out.println("def %s: %s", getter, type);
+            out.println("def %s: %s", scalaWhitespaceSuffix(getter), type);
         else if (kotlin)
             out.println("%s %s: %s", (generateImmutableInterfaces() ? "val" : "var"), member, type);
         else
@@ -2728,7 +2728,7 @@ public class JavaGenerator extends AbstractGenerator {
         printNullableOrNonnullAnnotation(out, column);
 
         if (scala)
-            out.println("def %s: %s", getter, type);
+            out.println("def %s: %s", scalaWhitespaceSuffix(getter), type);
         else if (kotlin)
             out.println("%s %s: %s?", (generateImmutableInterfaces() ? "val" : "var"), member, type);
         else
@@ -4487,7 +4487,7 @@ public class JavaGenerator extends AbstractGenerator {
         printNonnullAnnotation(out);
 
         if (scala)
-            out.println("def %s: %s = new %s(", columnGetter, columnType, columnType);
+            out.println("def %s: %s = new %s(", scalaWhitespaceSuffix(columnGetter), columnType, columnType);
         else if (kotlin)
             out.tab(1).println("get() = %s(", columnType);
         else {
@@ -4541,7 +4541,7 @@ public class JavaGenerator extends AbstractGenerator {
         printNullableOrNonnullAnnotation(out, column);
 
         if (scala) {
-            out.println("def %s: %s = this.%s", columnGetter, columnType, columnMember);
+            out.println("def %s: %s = this.%s", scalaWhitespaceSuffix(columnGetter), columnType, columnMember);
         }
         else {
             out.overrideIf(generateInterfaces());
@@ -5558,7 +5558,7 @@ public class JavaGenerator extends AbstractGenerator {
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
                         if (scala) {
-                            out.println("def %s: %s = new %s(this, %s)", keyMethodName, referencedTableClassName, referencedTableClassName, keyFullId);
+                            out.println("def %s: %s = new %s(this, %s)", scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
                         }
                         else if (kotlin) {
                             out.println("fun %s(): %s = %s(this, %s)", keyMethodName, referencedTableClassName, referencedTableClassName, keyFullId);
@@ -7214,7 +7214,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.javadoc("Get the <code>%s</code> parameter OUT value from the routine", paramName);
 
                 if (scala) {
-                    out.println("def %s: %s = get(%s.%s)", paramGetter, paramType, className, paramId);
+                    out.println("def %s: %s = get(%s.%s)", scalaWhitespaceSuffix(paramGetter), paramType, className, paramId);
                 }
                 else if (kotlin) {
                     out.println("fun %s(): %s? = get(%s)", paramGetter, paramType, paramId);
@@ -8532,6 +8532,16 @@ public class JavaGenerator extends AbstractGenerator {
             file = new File(file.getParentFile(), file.getName().replace(".java", ".kt"));
 
         return file;
+    }
+
+    private static final Pattern P_SCALA_WHITESPACE_SUFFIX = Pattern.compile("^.*[^a-zA-Z0-9]$");
+
+    private String scalaWhitespaceSuffix(String string) {
+        return string == null
+             ? null
+             : P_SCALA_WHITESPACE_SUFFIX.matcher(string).matches()
+             ? (string + " ")
+             : string;
     }
 
     // [#4626] Users may need to call this method

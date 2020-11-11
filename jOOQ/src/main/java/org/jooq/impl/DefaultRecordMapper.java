@@ -63,6 +63,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
+import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -832,16 +833,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         Class<?> mType = method.getParameterTypes()[0];
                         Object value = record.get(i, mType);
 
-                        // [#3082] Map nested collection types
-                        if (value instanceof Collection && List.class.isAssignableFrom(mType)) {
-                            Class componentType = (Class) ((ParameterizedType) method.getGenericParameterTypes()[0]).getActualTypeArguments()[0];
-                            method.invoke(result, Convert.convert((Collection) value, componentType));
-                        }
-
-                        // Default reference types (including arrays)
-                        else {
+                        // [#3082] [#10910] Try mapping nested collection types
+                        Object list = tryConvertToList(value, mType, method.getGenericParameterTypes()[0]);
+                        if (list != null)
+                            method.invoke(result, list);
+                        else
                             method.invoke(result, record.get(i, mType));
-                        }
                     }
                 }
 
@@ -904,17 +901,22 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             else {
                 Object value = record.get(index, mType);
 
-                // [#3082] Map nested collection types
-                if (value instanceof Collection && List.class.isAssignableFrom(mType)) {
-                    Class componentType = (Class) ((ParameterizedType) member.getGenericType()).getActualTypeArguments()[0];
-                    member.set(result, Convert.convert((Collection) value, componentType));
-                }
-
-                // Default reference types (including arrays)
-                else {
+                // [#3082] [#10910] Try mapping nested collection types
+                Object list = tryConvertToList(value, mType, member.getGenericType());
+                if (list != null)
+                    member.set(result, list);
+                else
                     map(value, result, member);
-                }
             }
+        }
+
+        private final List<?> tryConvertToList(Object value, Class<?> mType, Type genericType) {
+            if (value instanceof Collection && (mType == List.class || mType == ArrayList.class) && genericType instanceof ParameterizedType) {
+                Class<?> componentType = (Class<?>) ((ParameterizedType) genericType).getActualTypeArguments()[0];
+                return Convert.convert((Collection<?>) value, componentType);
+            }
+            else
+                return null;
         }
 
         private final void map(Object value, Object result, java.lang.reflect.Field member) throws IllegalAccessException {

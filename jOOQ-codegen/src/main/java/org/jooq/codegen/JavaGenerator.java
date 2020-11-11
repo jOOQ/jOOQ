@@ -2140,6 +2140,10 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 out.println();
+
+                if (column instanceof ColumnDefinition)
+                    printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
                 out.println("public %svar %s: %s?",
                     (generateInterfaces() ? "override " : ""), member, type);
                 out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
@@ -2322,15 +2326,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
-        if (column instanceof ColumnDefinition) {
-            if (kotlin)
-                out.indentInc();
-
+        if (!kotlin && column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
-
-            if (kotlin)
-                out.indentDec();
-        }
 
         printValidationAnnotation(out, column);
         printNullableOrNonnullAnnotation(out, column);
@@ -6815,19 +6812,22 @@ public class JavaGenerator extends AbstractGenerator {
         int indent = out.indent();
 
         if (generateJPAAnnotations()) {
+            String prefix = kotlin ? "get:" : "";
             UniqueKeyDefinition pk = column.getPrimaryKey();
 
             if (pk != null) {
                 if (pk.getKeyColumns().size() == 1) {
 
                     // Since JPA 1.0
-                    out.println("@%s", out.ref("javax.persistence.Id"));
+                    out.println("@%s%s", prefix, out.ref("javax.persistence.Id"));
 
                     // Since JPA 1.0
                     if (pk.getKeyColumns().get(0).isIdentity())
-                        out.println("@%s(strategy = %s.IDENTITY)",
+                        out.println("@%s%s(strategy = %s.IDENTITY)",
+                            prefix,
                             out.ref("javax.persistence.GeneratedValue"),
-                            out.ref("javax.persistence.GenerationType"));
+                            out.ref("javax.persistence.GenerationType")
+                        );
                 }
             }
 
@@ -6854,7 +6854,7 @@ public class JavaGenerator extends AbstractGenerator {
             //         the table's @UniqueConstraint section.
 
             // Since JPA 1.0
-            out.print("@%s(name = \"", out.ref("javax.persistence.Column"));
+            out.print("@%s%s(name = \"", prefix, out.ref("javax.persistence.Column"));
             out.print(escapeString(column.getName()));
             out.print("\"");
             out.print(nullable);

@@ -617,7 +617,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateUDTs() && generatePojos() && database.getUDTs(schema).size() > 0)
             generateUDTPojos(schema);
 
-        if (generateUDTs() && generateRecords() && database.getUDTs(schema).size() > 0)
+        if (generateUDTs() && database.getUDTs(schema).size() > 0)
             generateUDTRecords(schema);
 
         if (generateUDTs() && generateInterfaces() && database.getUDTs(schema).size() > 0)

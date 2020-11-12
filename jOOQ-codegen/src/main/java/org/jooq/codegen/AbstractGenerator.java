@@ -50,6 +50,7 @@ import java.util.Set;
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
+import org.jooq.meta.jaxb.VisibilityModifier;
 import org.jooq.tools.JooqLogger;
 
 
@@ -68,6 +69,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRelations                       = true;
     boolean                            generateImplicitJoinPathsToOne          = true;
     boolean                            generateInstanceFields                  = true;
+    VisibilityModifier                 generateVisibilityModifier              = VisibilityModifier.DEFAULT;
     boolean                            generateGeneratedAnnotation             = false;
     GeneratedAnnotationType            generatedGeneratedAnnotationType        = GeneratedAnnotationType.DETECT_FROM_JDK;
     boolean                            generateGeneratedAnnotationDate         = true;
@@ -292,6 +294,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateInstanceFields(boolean generateInstanceFields) {
         this.generateInstanceFields = generateInstanceFields;
+    }
+
+    @Override
+    public void setGenerateVisibilityModifier(VisibilityModifier generateVisibilityModifier) {
+        this.generateVisibilityModifier = generateVisibilityModifier;
+    }
+
+    @Override
+    public VisibilityModifier generateVisibilityModifier() {
+        return generateVisibilityModifier;
     }
 
     @Override

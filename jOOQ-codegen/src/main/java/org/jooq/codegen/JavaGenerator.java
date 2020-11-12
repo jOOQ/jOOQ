@@ -284,6 +284,7 @@ public class JavaGenerator extends AbstractGenerator {
     private final String                          emptyparens;
     private final String                          tokenVoid;
     private final Files                           fileCache;
+    private String                                visibility;
 
     static {
         SQLDATATYPE_LITERAL_LOOKUP = new IdentityHashMap<>();
@@ -332,6 +333,41 @@ public class JavaGenerator extends AbstractGenerator {
         this.semicolon = (scala || kotlin ? "" : ";");
         this.emptyparens = (scala ? "" : "()");
         this.fileCache = new Files();
+    }
+
+    private String visibilityPublic() {
+        if (scala)
+            return "";
+        else if (scala || kotlin)
+            return "".equals(visibility()) ? visibility() : "public ";
+        else
+            return "public ";
+    }
+
+    private String visibility(boolean effectivelyPublic) {
+        return effectivelyPublic ? visibilityPublic() : visibility();
+    }
+
+    private String visibility() {
+        if (visibility == null) {
+            switch (generateVisibilityModifier()) {
+                case NONE:
+                    visibility = "";
+                    break;
+                case PUBLIC:
+                    visibility = scala ? "" : "public ";
+                    break;
+                case INTERNAL:
+                    visibility = scala ? "" : kotlin ? "internal " : "public ";
+                    break;
+                case DEFAULT:
+                default:
+                    visibility = scala || kotlin ? "" : "public ";
+                    break;
+            }
+        }
+
+        return visibility;
     }
 
     @Override
@@ -832,10 +868,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, ConstraintDefinition.class);
 
         if (scala)
-            out.println("object %s {", referencesClassName);
+            out.println("%sobject %s {", visibility(), referencesClassName);
         else if (kotlin) {}
         else
-            out.println("public class %s {", referencesClassName);
+            out.println("%sclass %s {", visibility(), referencesClassName);
 
         // [#1459] [#10554] [#10653] Distribute keys to nested classes only if necessary
         boolean distributeUniqueKeys = database.getKeys(schema).size() > maxMembersPerInitialiser();
@@ -861,11 +897,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (distributeUniqueKeys)
                     if (scala)
-                        out.println("val %s = UniqueKeys%s.%s", keyId, block, keyId);
+                        out.println("%sval %s = UniqueKeys%s.%s", visibility(), keyId, block, keyId);
                     else if (kotlin)
-                        out.println("public val %s: %s<%s> = UniqueKeys%s.%s", keyId, UniqueKey.class, keyType, block, keyId);
+                        out.println("%sval %s: %s<%s> = UniqueKeys%s.%s", visibility(), keyId, UniqueKey.class, keyType, block, keyId);
                     else
-                        out.println("public static final %s<%s> %s = UniqueKeys%s.%s;", UniqueKey.class, keyType, keyId, block, keyId);
+                        out.println("%sstatic final %s<%s> %s = UniqueKeys%s.%s;", visibility(), UniqueKey.class, keyType, keyId, block, keyId);
                 else
                     printUniqueKey(out, -1, uniqueKey, distributeUniqueKeys);
 
@@ -894,11 +930,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (distributeForeignKeys)
                     if (scala)
-                        out.println("val %s = ForeignKeys%s.%s", keyId, block, keyId);
+                        out.println("%sval %s = ForeignKeys%s.%s", visibility(), keyId, block, keyId);
                     else if (kotlin)
-                        out.println("public val %s: %s<%s, %s> = ForeignKeys%s.%s", keyId, ForeignKey.class, keyType, referencedType, block, keyId);
+                        out.println("%sval %s: %s<%s, %s> = ForeignKeys%s.%s", visibility(), keyId, ForeignKey.class, keyType, referencedType, block, keyId);
                     else
-                        out.println("public static final %s<%s, %s> %s = ForeignKeys%s.%s;", ForeignKey.class, keyType, referencedType, keyId, block, keyId);
+                        out.println("%sstatic final %s<%s, %s> %s = ForeignKeys%s.%s;", visibility(), ForeignKey.class, keyType, referencedType, keyId, block, keyId);
                 else
                     printForeignKey(out, -1, foreignKey, distributeForeignKeys);
 
@@ -980,10 +1016,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, IndexDefinition.class);
 
         if (scala)
-            out.println("object %s {", referencesClassName);
+            out.println("%sobject %s {", visibility(), referencesClassName);
         else if (kotlin) {}
         else
-            out.println("public class %s {", referencesClassName);
+            out.println("%sclass %s {", visibility(), referencesClassName);
 
         // [#1459] [#10554] [#10653] Distribute keys to nested classes only if necessary
         boolean distributeIndexes = database.getIndexes(schema).size() > maxMembersPerInitialiser();
@@ -999,11 +1035,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (distributeIndexes)
                     if (scala)
-                        out.println("val %s = Indexes%s.%s", keyId, block, keyId);
+                        out.println("%sval %s = Indexes%s.%s", visibility(), keyId, block, keyId);
                     else if (kotlin)
-                        out.println("public val %s: %s = Indexes%s.%s", keyId, Index.class, block, keyId);
+                        out.println("%sval %s: %s = Indexes%s.%s", visibility(), keyId, Index.class, block, keyId);
                     else
-                        out.println("public static final %s %s = Indexes%s.%s;", Index.class, keyId, block, keyId);
+                        out.println("%sstatic final %s %s = Indexes%s.%s;", visibility(), Index.class, keyId, block, keyId);
                 else
                     printIndex(out, -1, index, distributeIndexes);
 
@@ -1064,19 +1100,20 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.print("val %s: %s = ",
+            out.print("%sval %s: %s = ",
+                visibility(),
                 getStrategy().getJavaIdentifier(index),
                 Index.class
             );
         else if (kotlin)
             out.print("%sval %s: %s = ",
-                distributeIndexes ? "" : "public ",
+                visibility(),
                 getStrategy().getJavaIdentifier(index),
                 Index.class
             );
         else
             out.print("%sstatic final %s %s = ",
-                distributeIndexes ? "" : "public ",
+                visibility(),
                 Index.class,
                 getStrategy().getJavaIdentifier(index)
             );
@@ -1148,19 +1185,20 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.print("val %s: %s[%s] = ",
+            out.print("%sval %s: %s[%s] = ",
+                visibility(),
                 getStrategy().getJavaIdentifier(uniqueKey),
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)));
         else if (kotlin)
             out.print("%sval %s: %s<%s> = ",
-                distributeUniqueKeys ? "" : "public ",
+                visibility(),
                 getStrategy().getJavaIdentifier(uniqueKey),
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)));
         else
             out.print("%sstatic final %s<%s> %s = ",
-                distributeUniqueKeys ? "" : "public ",
+                visibility(),
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 getStrategy().getJavaIdentifier(uniqueKey));
@@ -1267,21 +1305,22 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.print("val %s: %s[%s, %s] = ",
+            out.print("%sval %s: %s[%s, %s] = ",
+                visibility(),
                 getStrategy().getJavaIdentifier(foreignKey),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)));
         else if (kotlin)
             out.print("%sval %s: %s<%s, %s> = ",
-                distributeForeignKey ? "" : "public ",
+                visibility(),
                 getStrategy().getJavaIdentifier(foreignKey),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)));
         else
             out.print("%sstatic final %s<%s, %s> %s = ",
-                distributeForeignKey ? "" : "public ",
+                visibility(),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
@@ -1473,7 +1512,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("class %s extends %s[%s](%s.fields(%s.%s):_*)[[before= with ][separator= with ][%s]] {",
+                out.println("%sclass %s extends %s[%s](%s.fields(%s.%s):_*)[[before= with ][separator= with ][%s]] {",
+                    visibility(),
                     className,
                     baseClass,
                     className,
@@ -1483,7 +1523,8 @@ public class JavaGenerator extends AbstractGenerator {
                     interfaces
                 );
             else
-                out.println("class %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {",
+                out.println("%sclass %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {",
+                    visibility(),
                     className,
                     baseClass,
                     className,
@@ -1492,7 +1533,8 @@ public class JavaGenerator extends AbstractGenerator {
                 );
         else if (kotlin)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("public open class %s() : %s<%s>(*%s.fields(%s.%s))[[before=, ][%s]] {",
+                out.println("%sopen class %s() : %s<%s>(*%s.fields(%s.%s))[[before=, ][%s]] {",
+                    visibility(),
                     className,
                     baseClass,
                     className,
@@ -1502,7 +1544,8 @@ public class JavaGenerator extends AbstractGenerator {
                     interfaces
                 );
             else
-                out.println("public open class %s() : %s<%s>(%s)[[before=, ][%s]] {",
+                out.println("%sopen class %s() : %s<%s>(%s)[[before=, ][%s]] {",
+                    visibility(),
                     className,
                     baseClass,
                     className,
@@ -1510,7 +1553,7 @@ public class JavaGenerator extends AbstractGenerator {
                     interfaces
                 );
         else
-            out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, baseClass, className, interfaces);
+            out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, baseClass, className, interfaces);
 
         out.printSerial();
 
@@ -1554,16 +1597,16 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     out.println();
-                    out.println("override def key: %s[%s] = super.key.asInstanceOf[ %s[%s] ]", recordNType, keyType, recordNType, keyType);
+                    out.println("%soverride def key: %s[%s] = super.key.asInstanceOf[ %s[%s] ]", visibilityPublic(), recordNType, keyType, recordNType, keyType);
                 }
                 else if (kotlin) {
                     out.println();
-                    out.println("public override fun key(): %s<%s> = super.key() as %s<%s>", recordNType, keyType, recordNType, keyType);
+                    out.println("%soverride fun key(): %s<%s> = super.key() as %s<%s>", visibilityPublic(), recordNType, keyType, recordNType, keyType);
                 }
                 else {
                     out.overrideInherit();
                     printNonnullAnnotation(out);
-                    out.println("public %s<%s> key() {", recordNType, keyType);
+                    out.println("%s%s<%s> key() {", visibilityPublic(), recordNType, keyType);
                     out.println("return (%s) super.key();", recordNType);
                     out.println("}");
                 }
@@ -1592,7 +1635,8 @@ public class JavaGenerator extends AbstractGenerator {
                         }
                     }
 
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     log.error("Error while generating routine " + routine, e);
                 }
             }
@@ -1607,16 +1651,16 @@ public class JavaGenerator extends AbstractGenerator {
             // fieldsRow()
             if (scala) {
                 out.println();
-                out.println("override def fieldsRow: %s[%s] = super.fieldsRow.asInstanceOf[ %s[%s] ]", recordNType, rowType, recordNType, rowType);
+                out.println("%soverride def fieldsRow: %s[%s] = super.fieldsRow.asInstanceOf[ %s[%s] ]", visibilityPublic(), recordNType, rowType, recordNType, rowType);
             }
             else if (kotlin) {
                 out.println();
-                out.println("public override fun fieldsRow(): %s<%s> = super.fieldsRow() as %s<%s>", recordNType, rowType, recordNType, rowType);
+                out.println("%soverride fun fieldsRow(): %s<%s> = super.fieldsRow() as %s<%s>", visibilityPublic(), recordNType, rowType, recordNType, rowType);
             }
             else {
                 out.overrideInherit();
                 printNonnullAnnotation(out);
-                out.println("public %s<%s> fieldsRow() {", recordNType, rowType);
+                out.println("%s%s<%s> fieldsRow() {", visibilityPublic(), recordNType, rowType);
                 out.println("return (%s) super.fieldsRow();", recordNType);
                 out.println("}");
             }
@@ -1624,15 +1668,15 @@ public class JavaGenerator extends AbstractGenerator {
             // valuesRow()
             if (scala) {
                 out.println();
-                out.println("override def valuesRow: %s[%s] = super.valuesRow.asInstanceOf[ %s[%s] ]", recordNType, rowType, recordNType, rowType);
+                out.println("%soverride def valuesRow: %s[%s] = super.valuesRow.asInstanceOf[ %s[%s] ]", visibilityPublic(), recordNType, rowType, recordNType, rowType);
             }
             else if (kotlin) {
-                out.println("public override fun valuesRow(): %s<%s> = super.valuesRow() as %s<%s>", recordNType, rowType, recordNType, rowType);
+                out.println("%soverride fun valuesRow(): %s<%s> = super.valuesRow() as %s<%s>", visibilityPublic(), recordNType, rowType, recordNType, rowType);
             }
             else {
                 out.overrideInherit();
                 printNonnullAnnotation(out);
-                out.println("public %s<%s> valuesRow() {", recordNType, rowType);
+                out.println("%s%s<%s> valuesRow() {", visibilityPublic(), recordNType, rowType);
                 out.println("return (%s) super.valuesRow();", recordNType);
                 out.println("}");
             }
@@ -1653,7 +1697,8 @@ public class JavaGenerator extends AbstractGenerator {
                     printDeprecationIfUnknownType(out, colTypeFull);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                        out.println("override def field%s: %s[%s] = field(%s).asInstanceOf[%s [%s] ]",
+                        out.println("%soverride def field%s: %s[%s] = field(%s).asInstanceOf[%s [%s] ]",
+                            visibilityPublic(),
                             i,
                             Field.class,
                             colType,
@@ -1662,13 +1707,14 @@ public class JavaGenerator extends AbstractGenerator {
                             colType
                         );
                     else
-                        out.println("override def field%s: %s[%s] = %s", i, Field.class, colType, colIdentifierFull);
+                        out.println("%soverride def field%s: %s[%s] = %s", visibilityPublic(), i, Field.class, colType, colIdentifierFull);
                 }
                 else if (kotlin) {
                     printDeprecationIfUnknownType(out, colTypeFull);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                        out.println("public override fun field%s(): %s<%s?> = field(%s) as %s<%s?>",
+                        out.println("%soverride fun field%s(): %s<%s?> = field(%s) as %s<%s?>",
+                            visibilityPublic(),
                             i,
                             Field.class,
                             colType,
@@ -1677,9 +1723,9 @@ public class JavaGenerator extends AbstractGenerator {
                             colType
                         );
                     else if (tableUdtOrEmbeddable instanceof UDTDefinition)
-                        out.println("public override fun field%s(): %s<%s%s> = %s.%s", i, Field.class, colType, column instanceof EmbeddableDefinition ? "" : "?", out.ref(getStrategy().getFullJavaIdentifier(((AttributeDefinition) column).getContainer()), 2), colIdentifier);
+                        out.println("%soverride fun field%s(): %s<%s%s> = %s.%s", visibilityPublic(), i, Field.class, colType, column instanceof EmbeddableDefinition ? "" : "?", out.ref(getStrategy().getFullJavaIdentifier(((AttributeDefinition) column).getContainer()), 2), colIdentifier);
                     else
-                        out.println("public override fun field%s(): %s<%s%s> = %s", i, Field.class, colType, column instanceof EmbeddableDefinition ? "" : "?", colIdentifierFull);
+                        out.println("%soverride fun field%s(): %s<%s%s> = %s", visibilityPublic(), i, Field.class, colType, column instanceof EmbeddableDefinition ? "" : "?", colIdentifierFull);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -1688,7 +1734,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
 
                     printNonnullAnnotation(out);
-                    out.println("public %s<%s> field%s() {", Field.class, colType, i);
+                    out.println("%s%s<%s> field%s() {", visibilityPublic(), Field.class, colType, i);
 
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
                         out.println("return (%s<%s>) field(%s);", Field.class, colType, i - 1);
@@ -1710,11 +1756,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("override def component%s: %s = %s", i, colType, colGetter);
+                    out.println("%soverride def component%s: %s = %s", visibilityPublic(), i, colType, colGetter);
                 }
                 else if (kotlin) {
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("public override fun component%s(): %s? = %s", i, colType, colMember);
+                    out.println("%soverride fun component%s(): %s? = %s", visibilityPublic(), i, colType, colMember);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -1723,7 +1769,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
 
                     printNullableOrNonnullAnnotation(out, column);
-                    out.println("public %s component%s() {", colType, i);
+                    out.println("%s%s component%s() {", visibilityPublic(), colType, i);
                     out.println("return %s();", colGetter);
                     out.println("}");
                 }
@@ -1740,11 +1786,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("override def value%s: %s = %s", i, colType, colGetter);
+                    out.println("%soverride def value%s: %s = %s", visibilityPublic(), i, colType, colGetter);
                 }
                 else if (kotlin) {
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("public override fun value%s(): %s? = %s", i, colType, colMember);
+                    out.println("%soverride fun value%s(): %s? = %s", visibilityPublic(), i, colType, colMember);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -1753,7 +1799,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
 
                     printNullableOrNonnullAnnotation(out, column);
-                    out.println("public %s value%s() {", colType, i);
+                    out.println("%s%s value%s() {", visibilityPublic(), colType, i);
                     out.println("return %s();", colGetter);
                     out.println("}");
                 }
@@ -1771,7 +1817,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala) {
                     out.println();
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("override def value%s(value: %s): %s = {", i, colType, className);
+                    out.println("%soverride def value%s(value: %s): %s = {", visibilityPublic(), i, colType, className);
                     out.println("%s(value)", colSetter);
                     out.println("this");
                     out.println("}");
@@ -1779,7 +1825,7 @@ public class JavaGenerator extends AbstractGenerator {
                 else if (kotlin) {
                     out.println();
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("public override fun value%s(value: %s%s): %s {", i, colType, column instanceof EmbeddableDefinition ? "" : "?", className);
+                    out.println("%soverride fun value%s(value: %s%s): %s {", visibilityPublic(), i, colType, column instanceof EmbeddableDefinition ? "" : "?", className);
                     out.println("this.%s = value", colMember);
                     out.println("return this");
                     out.println("}");
@@ -1793,7 +1839,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
 
                     printNonnullAnnotation(out);
-                    out.println("public %s value%s([[before=@][after= ][%s]]%s value) {", className, i, list(nullableAnnotation), varargsIfArray(colType));
+                    out.println("%s%s value%s([[before=@][after= ][%s]]%s value) {", visibilityPublic(), className, i, list(nullableAnnotation), varargsIfArray(colType));
                     out.println("%s(value);", colSetter);
                     out.println("return this;");
                     out.println("}");
@@ -1824,7 +1870,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.println();
-                out.println("override def values([[%s]]): %s = {", arguments, className);
+                out.println("%soverride def values([[%s]]): %s = {", visibilityPublic(), arguments, className);
 
                 for (String call : calls)
                     out.println(call);
@@ -1834,7 +1880,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 out.println();
-                out.println("public override fun values([[%s]]): %s {", arguments, className);
+                out.println("%soverride fun values([[%s]]): %s {", visibilityPublic(), arguments, className);
 
                 for (String call : calls)
                     out.println(call);
@@ -1845,7 +1891,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 out.overrideInherit();
                 printNonnullAnnotation(out);
-                out.println("public %s values([[%s]]) {", className, arguments);
+                out.println("%s%s values([[%s]]) {", visibilityPublic(), className, arguments);
 
                 for (String call : calls)
                     out.println(call);
@@ -1862,7 +1908,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.header("Constructors");
             out.javadoc("Create a detached %s", className);
-            out.println("public %s() {", className);
+            out.println("%s%s() {", visibility(), className);
 
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
                 out.println("super(%s.fields(%s.%s));",
@@ -2027,18 +2073,18 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Create a detached, initialised %s", className);
 
             if (scala) {
-                out.println("def this([[%s]]) = {", arguments);
+                out.println("%sdef this([[%s]]) = {", visibility(), arguments);
                 out.println("this()", tableIdentifier);
                 out.println();
             }
             else if (kotlin) {
-                out.println("public constructor([[%s]]): this() {", arguments);
+                out.println("%sconstructor([[%s]]): this() {", visibility(), arguments);
             }
             else {
                 if (generateConstructorPropertiesAnnotationOnRecords())
                     out.println("@%s({ [[%s]] })", ConstructorProperties.class, properties);
 
-                out.println("public %s([[%s]]) {", className, arguments);
+                out.println("%s%s([[%s]]) {", visibility(), className, arguments);
 
                 if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
                     out.println("this();", tableIdentifier);
@@ -2133,7 +2179,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
             if (scala) {
-                out.println("def %s(value: %s): %s = {", setter, type, setterReturnType);
+                out.println("%sdef %s(value: %s): %s = {", visibility(override), setter, type, setterReturnType);
                 out.println("set(%s, value)", index);
 
                 if (generateFluentSetters())
@@ -2149,15 +2195,14 @@ public class JavaGenerator extends AbstractGenerator {
 
                 printValidationAnnotation(out, column);
 
-                out.println("public %svar %s: %s?",
-                    (generateInterfaces() ? "override " : ""), member, type);
+                out.println("%s%svar %s: %s?", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type);
                 out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
             }
             else {
                 final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
 
                 out.overrideIf(override);
-                out.println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nullableAnnotation), varargsIfArray(type));
+                out.println("%s%s %s([[before=@][after= ][%s]]%s value) {", visibility(override), setterReturnType, setter, list(nullableAnnotation), varargsIfArray(type));
                 out.println("set(%s, value);", index);
 
                 if (generateFluentSetters())
@@ -2181,7 +2226,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala) {
                 // [#3082] TODO Handle <interfaces/> + ARRAY also for Scala
 
-                out.println("def %s(value: %s): %s = {", setter, columnTypeInterface, setterReturnType);
+                out.println("%sdef %s(value: %s): %s = {", visibility(), setter, columnTypeInterface, setterReturnType);
                 out.println("if (value == null)");
                 out.println("set(%s, null)", index);
                 out.println("else");
@@ -2198,7 +2243,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
 
-                out.println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nullableAnnotation), varargsIfArray(columnTypeInterface));
+                out.println("%s%s %s([[before=@][after= ][%s]]%s value) {", visibility(), setterReturnType, setter, list(nullableAnnotation), varargsIfArray(columnTypeInterface));
                 out.println("if (value == null)");
                 out.println("set(%s, null);", index);
 
@@ -2251,17 +2296,16 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Setter for the embeddable <code>%s</code>.", name);
 
         if (scala) {
-            out.println("def %s(value: %s): %s = {", setter, type, setterReturnType);
+            out.println("%sdef %s(value: %s): %s = {", visibility(override), setter, type, setterReturnType);
         }
         else if (kotlin) {
             out.println();
-            out.println("public %svar %s: %s",
-                (generateInterfaces() ? "override " : ""), member, type);
+            out.println("%s%svar %s: %s", visibility(override), (generateInterfaces() ? "override " : ""), member, type);
             out.tab(1).println("set(value): %s {", setterReturnType);
         }
         else {
             out.overrideIf(override);
-            out.println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nonnullAnnotation(out)), type);
+            out.println("%s%s %s([[before=@][after= ][%s]]%s value) {", visibility(override), setterReturnType, setter, list(nonnullAnnotation(out)), type);
         }
 
         if (index > -1) {
@@ -2342,7 +2386,7 @@ public class JavaGenerator extends AbstractGenerator {
         boolean override = generateInterfaces();
 
         if (scala) {
-            out.println("def %s: %s = get(%s).asInstanceOf[%s]", scalaWhitespaceSuffix(getter), type, index, type);
+            out.println("%sdef %s: %s = get(%s).asInstanceOf[%s]", visibility(override), scalaWhitespaceSuffix(getter), type, index, type);
         }
         else if (kotlin) {
             String nullable = column instanceof EmbeddableDefinition ? "" : "?";
@@ -2350,7 +2394,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.overrideIf(override);
-            out.println("public %s %s() {", type, getter);
+            out.println("%s%s %s() {", visibility(override), type, getter);
 
             // [#6705] Avoid generating code with a redundant (Object) cast
             if (Object.class.getName().equals(typeFull))
@@ -2378,14 +2422,14 @@ public class JavaGenerator extends AbstractGenerator {
         boolean override = generateInterfaces();
 
         if (scala) {
-            out.print("def %s: %s = ", scalaWhitespaceSuffix(getter), type);
+            out.print("%sdef %s: %s = ", visibility(override), scalaWhitespaceSuffix(getter), type);
         }
         else if (kotlin) {
             out.tab(1).print("get(): %s = ", declaredType);
         }
         else {
             out.overrideIf(override);
-            out.println("public %s %s() {", type, getter);
+            out.println("%s%s %s() {", visibility(override), type, getter);
         }
 
         if (index > -1) {
@@ -2507,7 +2551,8 @@ public class JavaGenerator extends AbstractGenerator {
         for (TableDefinition table : database.getTables(schema)) {
             try {
                 generateInterface(table);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating table interface " + table, e);
             }
         }
@@ -2562,11 +2607,11 @@ public class JavaGenerator extends AbstractGenerator {
             printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
         if (scala)
-            out.println("trait %s[[before= extends ][%s]] {", className, interfaces);
+            out.println("%strait %s[[before= extends ][%s]] {", visibility(), className, interfaces);
         else if (kotlin)
-            out.println("public interface %s[[before= : ][%s]] {", className, interfaces);
+            out.println("%sinterface %s[[before= : ][%s]] {", visibility(), className, interfaces);
         else
-            out.println("public interface %s[[before= extends ][%s]] {", className, interfaces);
+            out.println("%sinterface %s[[before= extends ][%s]] {", visibility(), className, interfaces);
 
         List<? extends TypedElementDefinition<?>> typedElements = getTypedElements(tableUdtOrEmbeddable);
         for (int i = 0; i < typedElements.size(); i++) {
@@ -2604,11 +2649,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Load data from another generated Record/POJO implementing the common interface %s", local);
 
             if (scala)
-                out.println("def from(from: %s)", qualified);
+                out.println("%sdef from(from: %s)", visibilityPublic(), qualified);
             else if (kotlin)
-                out.println("public fun from(from: %s)", qualified);
+                out.println("%sfun from(from: %s)", visibilityPublic(), qualified);
             else
-                out.println("public void from(%s from);", qualified);
+                out.println("%svoid from(%s from);", visibilityPublic(), qualified);
 
             // [#10191] Java and Kotlin can produce overloads for this method despite
             // generic type erasure, but Scala cannot, see
@@ -2618,9 +2663,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Copy data into another generated Record/POJO implementing the common interface %s", local);
 
                 if (kotlin)
-                    out.println("public fun <E : %s> into(into: E): E", qualified);
+                    out.println("%sfun <E : %s> into(into: E): E", visibilityPublic(), qualified);
                 else
-                    out.println("public <E extends %s> E into(E into);", qualified);
+                    out.println("%s<E extends %s> E into(E into);", visibilityPublic(), qualified);
             }
         }
 
@@ -2656,11 +2701,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Setter for <code>%s</code>.", embeddable.getQualifiedOutputName());
 
         if (scala)
-            out.println("def %s(value: %s): %s", setter, type, setterReturnType);
+            out.println("%sdef %s(value: %s): %s", visibilityPublic(), setter, type, setterReturnType);
         // The property is already defined in the getter
         else if (kotlin) {}
         else
-            out.println("public %s %s([[before=@][after= ][%s]]%s value);", setterReturnType, setter, list(nonnullAnnotation(out)), type);
+            out.println("%s%s %s([[before=@][after= ][%s]]%s value);", visibilityPublic(), setterReturnType, setter, list(nonnullAnnotation(out)), type);
     }
 
     /**
@@ -2682,11 +2727,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
         if (scala)
-            out.println("def %s(value: %s): %s", setter, type, setterReturnType);
+            out.println("%sdef %s(value: %s): %s", visibilityPublic(), setter, type, setterReturnType);
         // The property is already defined in the getter
         else if (kotlin) {}
         else
-            out.println("public %s %s([[before=@][after= ][%s]]%s value);", setterReturnType, setter, list(nullableOrNonnullAnnotation(out, column)), varargsIfArray(type));
+            out.println("%s%s %s([[before=@][after= ][%s]]%s value);", visibilityPublic(), setterReturnType, setter, list(nullableOrNonnullAnnotation(out, column)), varargsIfArray(type));
     }
 
     /**
@@ -2714,11 +2759,11 @@ public class JavaGenerator extends AbstractGenerator {
         printNonnullAnnotation(out);
 
         if (scala)
-            out.println("def %s: %s", scalaWhitespaceSuffix(getter), type);
+            out.println("%sdef %s: %s", visibilityPublic(), scalaWhitespaceSuffix(getter), type);
         else if (kotlin)
-            out.println("public %s %s: %s", (generateImmutableInterfaces() ? "val" : "var"), member, type);
+            out.println("%s%s %s: %s", visibilityPublic(), (generateImmutableInterfaces() ? "val" : "var"), member, type);
         else
-            out.println("public %s %s();", type, getter);
+            out.println("%s%s %s();", visibilityPublic(), type, getter);
     }
 
     /**
@@ -2747,11 +2792,11 @@ public class JavaGenerator extends AbstractGenerator {
         printNullableOrNonnullAnnotation(out, column);
 
         if (scala)
-            out.println("def %s: %s", scalaWhitespaceSuffix(getter), type);
+            out.println("%sdef %s: %s", visibilityPublic(), scalaWhitespaceSuffix(getter), type);
         else if (kotlin)
-            out.println("public %s %s: %s?", (generateImmutableInterfaces() ? "val" : "var"), member, type);
+            out.println("%s%s %s: %s?", visibilityPublic(), (generateImmutableInterfaces() ? "val" : "var"), member, type);
         else
-            out.println("public %s %s();", type, getter);
+            out.println("%s%s %s();", visibilityPublic(), type, getter);
     }
 
     /**
@@ -2837,10 +2882,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", null, %s, %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+            out.println("%sclass %s extends %s[%s](\"%s\", null, %s, %s)[[before= with ][separator= with ][%s]] {", visibility(), className, UDTImpl.class, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
         }
         else if (kotlin) {
-            out.println("public open class %s : %s<%s>(\"%s\", null, %s, %s)[[before=, ][%s]] {", className, UDTImpl.class, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+            out.println("%sopen class %s : %s<%s>(\"%s\", null, %s, %s)[[before=, ][%s]] {", visibility(), className, UDTImpl.class, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
 
             out.println();
             out.println("public companion object {");
@@ -2849,7 +2894,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else {
-            out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTImpl.class, recordType, interfaces);
+            out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, UDTImpl.class, recordType, interfaces);
             out.printSerial();
             printSingletonInstance(out, udt);
         }
@@ -2872,11 +2917,11 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("private val %s: %s[%s, %s] = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
                     attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), converter, binding);
             else if (kotlin)
-                out.println("public val %s: %s<%s, %s> = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), converter, binding);
+                out.println("%sval %s: %s<%s, %s> = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                    visibility(), attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), converter, binding);
             else
-                out.println("public static final %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    UDTField.class, recordType, attrType, attrId, DSL.class, escapeString(attrName), attrTypeRef, udtId, escapeString(""), converter, binding);
+                out.println("%sstatic final %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                    visibility(), UDTField.class, recordType, attrType, attrId, DSL.class, escapeString(attrName), attrTypeRef, udtId, escapeString(""), converter, binding);
         }
 
         // [#799] Oracle UDT's can have member procedures
@@ -2897,8 +2942,8 @@ public class JavaGenerator extends AbstractGenerator {
                     printConvenienceMethodFunctionAsField(out, routine, false);
                     printConvenienceMethodFunctionAsField(out, routine, true);
                 }
-
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating routine " + routine, e);
             }
         }
@@ -2914,15 +2959,15 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println();
-            out.println("override def getSchema: %s = %s", Schema.class, schemaId);
+            out.println("%soverride def getSchema: %s = %s", visibilityPublic(), Schema.class, schemaId);
         }
         else if (kotlin) {
             out.println();
-            out.println("public override fun getSchema(): %s = %s", Schema.class, schemaId);
+            out.println("%s override fun getSchema(): %s = %s", visibilityPublic(), Schema.class, schemaId);
         }
         else {
             out.overrideInherit();
-            out.println("public %s getSchema() {", Schema.class);
+            out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
             out.println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, schema.getOutputName());
             out.println("}");
         }
@@ -3058,7 +3103,8 @@ public class JavaGenerator extends AbstractGenerator {
                             log.error("Error while generating member routines " + routine, e);
                         }
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     log.error("Error while generating UDT " + udt, e);
                 }
 
@@ -3084,10 +3130,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schemaOrPackage, UDTDefinition.class);
 
         if (scala)
-            out.println("object %s {", referencesClassName);
+            out.println("%sobject %s {", visibility(), referencesClassName);
         else if (kotlin) {}
         else
-            out.println("public class %s {", referencesClassName);
+            out.println("%sclass %s {", visibility(), referencesClassName);
 
         List<UDTDefinition> udts = new ArrayList<>();
 
@@ -3107,11 +3153,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("The type <code>%s</code>", udt.getQualifiedOutputName());
 
             if (scala)
-                out.println("def %s = %s", id, fullId);
+                out.println("%sdef %s = %s", visibility(), id, fullId);
             else if (kotlin)
-                out.println("public val %s: %s = %s", id, className, fullId);
+                out.println("%sval %s: %s = %s", visibility(), id, className, fullId);
             else
-                out.println("public static final %s %s = %s;", className, id, fullId);
+                out.println("%sstatic final %s %s = %s;", visibility(), className, id, fullId);
         }
 
         generateUDTReferencesClassFooter(schemaOrPackage, out);
@@ -3159,10 +3205,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, DomainDefinition.class);
 
         if (scala)
-            out.println("object %s {", referencesClassName);
+            out.println("%sobject %s {", visibility(), referencesClassName);
         else if (kotlin) {}
         else
-            out.println("public class %s {", referencesClassName);
+            out.println("%sclass %s {", visibility(), referencesClassName);
 
         for (DomainDefinition domain : database.getDomains(schema)) {
             final String id = getStrategy().getJavaIdentifier(domain);
@@ -3173,7 +3219,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("The domain <code>%s</code>.", domain.getQualifiedOutputName());
 
             if (scala) {
-                out.println("val %s: %s[%s] = %s.createDomain(", id, Domain.class, domainType, Internal.class);
+                out.println("%sval %s: %s[%s] = %s.createDomain(", visibility(), id, Domain.class, domainType, Internal.class);
                 out.println("  schema");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
@@ -3184,7 +3230,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(")");
             }
             else if (kotlin) {
-                out.println("public val %s: %s<%s> = %s.createDomain(", id, Domain.class, domainType, Internal.class);
+                out.println("%sval %s: %s<%s> = %s.createDomain(", visibility(), id, Domain.class, domainType, Internal.class);
                 out.println("  schema()");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
@@ -3195,7 +3241,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(")");
             }
             else {
-                out.println("public static final %s<%s> %s = %s.createDomain(", Domain.class, domainType, id, Internal.class);
+                out.println("%sstatic final %s<%s> %s = %s.createDomain(", visibility(), Domain.class, domainType, id, Internal.class);
                 out.println("  schema()");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
@@ -3405,7 +3451,8 @@ public class JavaGenerator extends AbstractGenerator {
         for (EnumDefinition e : database.getEnums(schema)) {
             try {
                 generateEnum(e);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 log.error("Error while generating enum " + e, ex);
             }
         }
@@ -3509,29 +3556,29 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             interfaces.add(out.ref(EnumType.class));
-            out.println("public enum class %s(@get:JvmName(\"literal\") public val literal: String)[[before= : ][%s]] {", className, interfaces);
+            out.println("%senum class %s(@get:JvmName(\"literal\") public val literal: String)[[before= : ][%s]] {", visibility(), className, interfaces);
 
             for (int i = 0; i < literals.size(); i++)
                 out.println("%s(\"%s\")%s", identifiers.get(i), literals.get(i), (i == literals.size() - 1) ? ";" : ",");
 
-            out.println("public override fun getCatalog(): %s? = %s",
-                Catalog.class, enumHasNoSchema ? "null" : "schema.catalog");
+            out.println("%soverride fun getCatalog(): %s? = %s",
+                visibilityPublic(), Catalog.class, enumHasNoSchema ? "null" : "schema.catalog");
 
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
-            out.println("public override fun getSchema(): %s%s = %s",
-                Schema.class, enumHasNoSchema ? "?" : "", enumHasNoSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+            out.println("%soverride fun getSchema(): %s%s = %s",
+                visibilityPublic(), Schema.class, enumHasNoSchema ? "?" : "", enumHasNoSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
 
-            out.println("public override fun getName(): %s%s = %s",
-                String.class, e.isSynthetic() ? "?" : "", e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
+            out.println("%soverride fun getName(): %s%s = %s",
+                visibilityPublic(), String.class, e.isSynthetic() ? "?" : "", e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
 
-            out.println("public override fun getLiteral(): String = literal");
+            out.println("%soverride fun getLiteral(): String = literal", visibilityPublic());
 
             generateEnumClassFooter(e, out);
             out.println("}");
         }
         else {
             interfaces.add(out.ref(EnumType.class));
-            out.println("public enum %s[[before= implements ][%s]] {", className, interfaces);
+            out.println("%senum %s[[before= implements ][%s]] {", visibilityPublic(), className, interfaces);
 
             for (int i = 0; i < literals.size(); i++) {
                 out.println();
@@ -3546,7 +3593,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
 
             out.overrideInherit();
-            out.println("public %s getCatalog() {", Catalog.class);
+            out.println("%s%s getCatalog() {", visibilityPublic(), Catalog.class);
 
             if (enumHasNoSchema)
                 out.println("return null;");
@@ -3557,7 +3604,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
             out.overrideInherit();
-            out.println("public %s getSchema() {", Schema.class);
+            out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
             out.println("return %s;",
                 enumHasNoSchema
                     ? "null"
@@ -3565,12 +3612,12 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
 
             out.overrideInherit();
-            out.println("public %s getName() {", String.class);
+            out.println("%s%s getName() {", visibilityPublic(), String.class);
             out.println("return %s;", e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
             out.println("}");
 
             out.overrideInherit();
-            out.println("public %s getLiteral() {", String.class);
+            out.println("%s%s getLiteral() {", visibilityPublic(), String.class);
             out.println("return literal;");
             out.println("}");
 
@@ -3635,10 +3682,10 @@ public class JavaGenerator extends AbstractGenerator {
             final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, RoutineDefinition.class);
 
             if (scala)
-                out.println("object %s {", referencesClassName);
+                out.println("%sobject %s {", visibility(), referencesClassName);
             else if (kotlin) {}
             else
-                out.println("public class %s {", referencesClassName);
+                out.println("%sclass %s {", visibility(), referencesClassName);
 
             for (RoutineDefinition routine : database.getRoutines(schema))
                 printRoutine(out, routine);
@@ -3699,6 +3746,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
+
     }
 
     protected void printRoutine(JavaWriter out, RoutineDefinition routine) {
@@ -3727,6 +3778,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePackages(SchemaDefinition schema) {
+
 
 
 
@@ -3845,10 +3897,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, TableDefinition.class);
 
         if (scala)
-            out.println("object %s {", referencesClassName);
+            out.println("%sobject %s {", visibility(), referencesClassName);
         else if (kotlin) {}
         else
-            out.println("public class %s {", referencesClassName);
+            out.println("%sclass %s {", visibility(), referencesClassName);
 
         for (TableDefinition table : database.getTables(schema)) {
             final String className = getStrategy().getJavaClassName(table);
@@ -3869,11 +3921,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc(isBlank(comment) ? "The table <code>" + table.getQualifiedOutputName() + "</code>." : comment);
 
             if (scala)
-                out.println("def %s = %s", id, referencedId);
+                out.println("%sdef %s = %s", visibility(), id, referencedId);
             else if (kotlin)
-                out.println("public val %s: %s = %s", id, fullClassName, referencedId);
+                out.println("%sval %s: %s = %s", visibility(), id, fullClassName, referencedId);
             else
-                out.println("public static final %s %s = %s;", fullClassName, id, referencedId);
+                out.println("%sstatic final %s %s = %s;", visibility(), fullClassName, id, referencedId);
 
             // [#3797] Table-valued functions generate two different literals in
             // globalObjectReferences
@@ -3972,26 +4024,27 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("@%s", out.ref("org.springframework.stereotype.Repository"));
 
         if (scala)
-            out.println("class %s(configuration: %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][separator= with ][%s]] {",
-                className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
+            out.println("%sclass %s(configuration: %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][separator= with ][%s]] {",
+                visibility(), className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
         else if (kotlin)
-            out.println("public open class %s(configuration: %s?) : %s<%s, %s, %s>(%s, %s::class.java, configuration)[[before=, ][%s]] {",
-                className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
+            out.println("%sopen class %s(configuration: %s?) : %s<%s, %s, %s>(%s, %s::class.java, configuration)[[before=, ][%s]] {",
+                visibility(), className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
         else
-            out.println("public class %s extends %s<%s, %s, %s>[[before= implements ][%s]] {", className, daoImpl, tableRecord, pType, tType, interfaces);
+            out.println("%sclass %s extends %s<%s, %s, %s>[[before= implements ][%s]] {",
+                visibility(), className, daoImpl, tableRecord, pType, tType, interfaces);
 
         // Default constructor
         // -------------------
         out.javadoc("Create a new %s without any configuration", className);
 
         if (scala) {
-            out.println("def this() = this(null)");
+            out.println("%sdef this() = this(null)", visibility());
         }
         else if (kotlin) {
-            out.println("public constructor(): this(null)");
+            out.println("%sconstructor(): this(null)", visibility());
         }
         else {
-            out.println("public %s() {", className);
+            out.println("%s%s() {", visibility(), className);
             out.println("super(%s, %s.class);", tableIdentifier, pType);
             out.println("}");
         }
@@ -4005,7 +4058,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (generateSpringAnnotations())
                 out.println("@%s", out.ref("org.springframework.beans.factory.annotation.Autowired"));
 
-            out.println("public %s(%s configuration) {", className, Configuration.class);
+            out.println("%s%s(%s configuration) {", visibility(), className, Configuration.class);
             out.println("super(%s, %s.class, configuration);", tableIdentifier, pType);
             out.println("}");
         }
@@ -4014,16 +4067,16 @@ public class JavaGenerator extends AbstractGenerator {
         // -------------------------------
         if (scala) {
             out.println();
-            out.print("override def getId(o: %s): %s = ", pType, tType);
+            out.print("%soverride def getId(o: %s): %s = ", visibilityPublic(), pType, tType);
         }
         else if (kotlin) {
             out.println();
-            out.print("public override fun getId(o: %s): %s? = ", pType, tType);
+            out.print("%soverride fun getId(o: %s): %s? = ", visibilityPublic(), pType, tType);
         }
         else {
             out.overrideInherit();
             printNonnullAnnotation(out);
-            out.println("public %s getId(%s object) {", tType, pType);
+            out.println("%s%s getId(%s object) {", visibilityPublic(), tType, pType);
         }
 
         if (keyColumns.size() == 1) {
@@ -4074,16 +4127,16 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Fetch records that have <code>%s BETWEEN lowerInclusive AND upperInclusive</code>", colName);
 
             if (scala) {
-                out.println("def fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, lowerInclusive, upperInclusive)",
-                    colClass, colType, colType, List.class, pType, colIdentifier);
+                out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, lowerInclusive, upperInclusive)",
+                    visibility(), colClass, colType, colType, List.class, pType, colIdentifier);
             }
             else if (kotlin) {
-                out.println("public fun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
-                    colClass, colType, colType, out.ref(KLIST), pType, colIdentifier);
+                out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
+                    visibility(), colClass, colType, colType, out.ref(KLIST), pType, colIdentifier);
             }
             else {
                 printNonnullAnnotation(out);
-                out.println("public %s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", List.class, pType, colClass, colType, colType);
+                out.println("%s%s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", visibility(), List.class, pType, colClass, colType, colType);
                 out.println("return fetchRange(%s, lowerInclusive, upperInclusive);", colIdentifier);
                 out.println("}");
             }
@@ -4094,15 +4147,17 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Fetch records that have <code>%s IN (values)</code>", colName);
 
             if (scala) {
-                out.println("def fetchBy%s(values: %s*): %s[%s] = fetch(%s, values:_*)", colClass, colType, List.class, pType, colIdentifier);
+                out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values:_*)",
+                    visibility(), colClass, colType, List.class, pType, colIdentifier);
             }
             else if (kotlin) {
                 String toTypedArray = PRIMITIVE_WRAPPERS.contains(colTypeFull) ? ".toTypedArray()" : "";
-                out.println("public fun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)", colClass, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
+                out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)",
+                    visibility(), colClass, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
             }
             else {
                 printNonnullAnnotation(out);
-                out.println("public %s<%s> fetchBy%s(%s... values) {", List.class, pType, colClass, colType);
+                out.println("%s%s<%s> fetchBy%s(%s... values) {", visibility(), List.class, pType, colClass, colType);
                 out.println("return fetch(%s, values);", colIdentifier);
                 out.println("}");
             }
@@ -4118,14 +4173,14 @@ public class JavaGenerator extends AbstractGenerator {
                         out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
                     if (scala) {
-                        out.println("def fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", colClass, colType, pType, colIdentifier);
+                        out.println("%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), colClass, colType, pType, colIdentifier);
                     }
                     else if (kotlin) {
-                        out.println("public fun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", colClass, colType, pType, colIdentifier);
+                        out.println("%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), colClass, colType, pType, colIdentifier);
                     }
                     else {
                         printNullableAnnotation(out);
-                        out.println("public %s fetchOneBy%s(%s value) {", pType, colClass, colType);
+                        out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colClass, colType);
                         out.println("return fetchOne(%s, value);", colIdentifier);
                         out.println("}");
                     }
@@ -4230,12 +4285,13 @@ public class JavaGenerator extends AbstractGenerator {
             maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)).length());
 
         if (scala) {
-            out.println("%sclass %s(", (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
+            out.println("%s%sclass %s(", visibility(), (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
 
             String separator = "  ";
             for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable)) {
-                out.println("%s%s %s: %s",
+                out.println("%s%s%s %s: %s",
                     separator,
+                    visibility(generateInterfaces()),
                     generateImmutablePojos() ? "val" : "var",
                     getStrategy().getJavaMemberName(column, Mode.POJO),
                     out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)));
@@ -4246,7 +4302,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", first(superTypes), remaining(superTypes));
         }
         else if (kotlin) {
-            out.println("public %sclass %s(", (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
+            out.println("%s%sclass %s(", visibility(), (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
 
             String separator = ", ";
             List<? extends TypedElementDefinition<? extends Definition>> typedElements = getTypedElements(tableUdtOrEmbeddable);
@@ -4262,7 +4318,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 printValidationAnnotation(out, column);
 
-                out.println("public %s%s %s: %s? = null%s",
+                out.println("%s%s%s %s: %s? = null%s",
+                    visibility(generateInterfaces()),
                     generateInterfaces() ? "override " : "",
                     generateImmutablePojos() ? "val" : "var",
                     member,
@@ -4274,7 +4331,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")[[before=: ][%s]] {", superTypes);
         }
         else {
-            out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
+            out.println("%sclass %s[[before= extends ][%s]][[before= implements ][%s]] {", visibility(), className, list(superName), interfaces);
 
             if (generateSerializablePojos() || generateSerializableInterfaces())
                 out.printSerial();
@@ -4377,7 +4434,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (generateConstructorPropertiesAnnotationOnPojos())
                 out.println("@%s({ [[%s]] })", ConstructorProperties.class, properties);
 
-            out.print("public %s(", className);
+            out.print("%s%s(", visibility(), className);
 
             String separator1 = "";
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
@@ -4416,7 +4473,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
 
         if (scala) {
-            out.println("def this(value: %s) = this(", generateInterfaces() ? interfaceName : className);
+            out.println("%sdef this(value: %s) = this(", visibility(), generateInterfaces() ? interfaceName : className);
 
             String separator = "  ";
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
@@ -4432,7 +4489,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")");
         }
         else {
-            out.println("public %s(%s value) {", className, generateInterfaces() ? interfaceName : className);
+            out.println("%s%s(%s value) {", visibility(), className, generateInterfaces() ? interfaceName : className);
 
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 out.println("this.%s = value.%s%s;",
@@ -4479,7 +4536,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#6248] [#10288] The no-args constructor isn't needed because we have named, defaulted parameters
         else if (kotlin) {}
         else {
-            out.println("public %s() {}", className);
+            out.println("%s%s() {}", visibility(), className);
         }
     }
 
@@ -4506,12 +4563,12 @@ public class JavaGenerator extends AbstractGenerator {
         printNonnullAnnotation(out);
 
         if (scala)
-            out.println("def %s: %s = new %s(", scalaWhitespaceSuffix(columnGetter), columnType, columnType);
+            out.println("%sdef %s: %s = new %s(", visibility(generateInterfaces()), scalaWhitespaceSuffix(columnGetter), columnType, columnType);
         else if (kotlin)
             out.tab(1).println("get(): %s = %s(", columnType, columnType);
         else {
             out.overrideIf(generateInterfaces());
-            out.println("public %s %s() {", columnType, columnGetter);
+            out.println("%s%s %s() {", visibility(generateInterfaces()), columnType, columnGetter);
             out.println("return new %s(", columnType);
         }
 
@@ -4560,11 +4617,11 @@ public class JavaGenerator extends AbstractGenerator {
         printNullableOrNonnullAnnotation(out, column);
 
         if (scala) {
-            out.println("def %s: %s = this.%s", scalaWhitespaceSuffix(columnGetter), columnType, columnMember);
+            out.println("%sdef %s: %s = this.%s", visibility(generateInterfaces()), scalaWhitespaceSuffix(columnGetter), columnType, columnMember);
         }
         else {
             out.overrideIf(generateInterfaces());
-            out.println("public %s %s() {", columnType, columnGetter);
+            out.println("%s%s %s() {", visibility(generateInterfaces()), columnType, columnGetter);
             out.println("return this.%s;", columnMember);
             out.println("}");
         }
@@ -4588,20 +4645,21 @@ public class JavaGenerator extends AbstractGenerator {
         final String columnSetter = getStrategy().getJavaSetterName(embeddable, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
         final String name = embeddable.getQualifiedOutputName();
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces();
 
         if (!kotlin && !printDeprecationIfUnknownType(out, columnTypeFull))
             out.javadoc("Setter for <code>%s</code>.", name);
 
         if (scala) {
-            out.println("def %s(value: %s): %s = {", columnSetter, columnType, columnSetterReturnType);
+            out.println("%sdef %s(value: %s): %s = {", visibility(override), columnSetter, columnType, columnSetterReturnType);
         }
         else if (kotlin) {
-            out.println("public var %s: %s", columnMember, columnType);
+            out.println("%svar %s: %s", visibility(override), columnMember, columnType);
             out.tab(1).println("set(value): %s {", columnSetterReturnType);
         }
         else {
-            out.overrideIf(generateInterfaces() && !generateImmutableInterfaces());
-            out.println("public %s %s([[before=@][after= ][%s]]%s value) {", columnSetterReturnType, columnSetter, list(nonnullAnnotation(out)), columnType);
+            out.overrideIf(override);
+            out.println("%s%s %s([[before=@][after= ][%s]]%s value) {", visibility(), columnSetterReturnType, columnSetter, list(nonnullAnnotation(out)), columnType);
         }
 
         if (kotlin) {
@@ -4654,7 +4712,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
             if (scala) {
-                out.println("def %s(%s: %s): %s = {", columnSetter, columnMember, columnType, columnSetterReturnType);
+                out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, columnMember, columnType, columnSetterReturnType);
                 out.println("this.%s = %s", columnMember, columnMember);
 
                 if (generateFluentSetters())
@@ -4666,7 +4724,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
 
                 out.overrideIf(generateInterfaces() && !generateImmutableInterfaces() && !isUDT);
-                out.println("public %s %s([[before=@][after= ][%s]]%s %s) {", columnSetterReturnType, columnSetter, list(nullableAnnotation), varargsIfArray(columnType), columnMember);
+                out.println("%s%s %s([[before=@][after= ][%s]]%s %s) {", visibility(), columnSetterReturnType, columnSetter, list(nullableAnnotation), varargsIfArray(columnType), columnMember);
                 out.println("this.%s = %s;", columnMember, columnMember);
 
                 if (generateFluentSetters())
@@ -4685,7 +4743,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala) {
                 // [#3082] TODO Handle <interfaces/> + ARRAY also for Scala
 
-                out.println("def %s(%s: %s): %s = {", columnSetter, columnMember, columnTypeInterface, columnSetterReturnType);
+                out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, columnMember, columnTypeInterface, columnSetterReturnType);
                 out.println("if (%s == null)", columnMember);
                 out.println("this.%s = null", columnMember);
                 out.println("else");
@@ -4698,7 +4756,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.override();
-                out.println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, varargsIfArray(columnTypeInterface), columnMember);
+                out.println("%s%s %s(%s %s) {", visibility(), columnSetterReturnType, columnSetter, varargsIfArray(columnTypeInterface), columnMember);
                 out.println("if (%s == null)", columnMember);
                 out.println("this.%s = null;", columnMember);
 
@@ -4737,7 +4795,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
 
         if (scala) {
-            out.println("override def equals(obj: Any): scala.Boolean = {");
+            out.println("%soverride def equals(obj: Any): scala.Boolean = {", visibilityPublic());
             out.println("if (this eq obj.asInstanceOf[AnyRef])");
             out.println("return true");
             out.println("if (obj == null)");
@@ -4767,7 +4825,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else if (kotlin) {
-            out.println("public override fun equals(obj: Any?): Boolean {");
+            out.println("%soverride fun equals(obj: Any?): Boolean {", visibilityPublic());
             out.println("if (this === obj)");
             out.println("return true");
             out.println("if (obj === null)");
@@ -4798,7 +4856,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.println("@Override");
-            out.println("public boolean equals(%s obj) {", Object.class);
+            out.println("%sboolean equals(%s obj) {", visibilityPublic(), Object.class);
             out.println("if (this == obj)");
             out.println("return true;");
             out.println("if (obj == null)");
@@ -4831,7 +4889,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
 
         if (scala) {
-            out.println("override def hashCode: Int = {");
+            out.println("%soverride def hashCode: Int = {", visibilityPublic());
             out.println("val prime = 31");
             out.println("var result = 1");
 
@@ -4848,7 +4906,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else if (kotlin) {
-            out.println("public override fun hashCode(): Int {");
+            out.println("%soverride fun hashCode(): Int {", visibilityPublic());
             out.println("val prime = 31");
             out.println("var result = 1");
 
@@ -4866,7 +4924,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.println("@Override");
-            out.println("public int hashCode() {");
+            out.println("%sint hashCode() {", visibilityPublic());
             out.println("final int prime = 31;");
             out.println("int result = 1;");
 
@@ -4890,7 +4948,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
 
         if (scala) {
-            out.println("override def toString: String = {");
+            out.println("%soverride def toString: String = {", visibilityPublic());
 
             out.println("val sb = new %s(\"%s (\")", StringBuilder.class, className);
             out.println();
@@ -4918,7 +4976,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else if (kotlin) {
-            out.println("public override fun toString(): String {");
+            out.println("%soverride fun toString(): String {", visibilityPublic());
             out.println("val sb = %s(\"%s (\")", StringBuilder.class, className);
             out.println();
 
@@ -4945,7 +5003,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.println("@Override");
-            out.println("public String toString() {");
+            out.println("%sString toString() {", visibilityPublic());
             out.println("%s sb = new %s(\"%s (\");", StringBuilder.class, StringBuilder.class, className);
             out.println();
 
@@ -5071,7 +5129,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, table, Mode.DEFAULT);
 
         if (scala) {
-            out.println("class %s(", className);
+            out.println("%sclass %s(", visibility(), className);
             out.println("alias: %s,", Name.class);
             out.println("child: %s[_ <: %s],", Table.class, Record.class);
             out.println("path: %s[_ <: %s, %s],", ForeignKey.class, Record.class, recordType);
@@ -5095,7 +5153,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")[[before= with ][separator= with ][%s]] {", interfaces);
         }
         else if (kotlin) {
-            out.println("public open class %s(", className);
+            out.println("%sopen class %s(", visibility(), className);
             out.println("alias: %s,", Name.class);
             out.println("child: %s<out %s>?,", Table.class, Record.class);
             out.println("path: %s<out %s, %s>?,", ForeignKey.class, Record.class, recordType);
@@ -5117,12 +5175,12 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println(")[[before=, ][%s]] {", interfaces);
 
-            out.println("public companion object {");
+            out.println("%scompanion object {", visibility());
             printSingletonInstance(out, table);
             out.println("}");
         }
         else {
-            out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, TableImpl.class, recordType, interfaces);
+            out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, TableImpl.class, recordType, interfaces);
             out.printSerial();
             printSingletonInstance(out, table);
         }
@@ -5142,9 +5200,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-                scala ?
-                "" :
-                "public ";
+                visibility();
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.javadoc("The column <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));
@@ -5178,14 +5234,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("The embeddable type <code>%s</code>.[[before= ][%s]]", embeddable.getOutputName(), list(escapeEntities(referencingComment(embeddable))));
 
             if (scala)
-                out.println("val %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
-                    columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+                out.println("%sval %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
+                    visibility(), columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
             else if (kotlin)
-                out.println("public val %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, [[%s]])",
-                    columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+                out.println("%sval %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, [[%s]])",
+                    visibility(), columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
             else
-                out.println("public final %s<%s, %s> %s = %s.createEmbeddable(%s.name(\"%s\"), %s.class, %s, this, [[%s]]);",
-                    TableField.class, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+                out.println("%sfinal %s<%s, %s> %s = %s.createEmbeddable(%s.name(\"%s\"), %s.class, %s, this, [[%s]]);",
+                    visibility(), TableField.class, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
         }
 
         out.println();
@@ -5233,17 +5289,17 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("def this(alias: %s) = this(%s.name(alias), %s)", String.class, DSL.class, tableId);
+            out.println("%sdef this(alias: %s) = this(%s.name(alias), %s)", visibility(), String.class, DSL.class, tableId);
 
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("def this(alias: %s) = this(alias, %s)", Name.class, tableId);
+            out.println("%sdef this(alias: %s) = this(alias, %s)", visibility(), Name.class, tableId);
         }
         else if (kotlin) {
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("public constructor(alias: %s): this(%s.name(alias))", String.class, DSL.class);
+            out.println("%sconstructor(alias: %s): this(%s.name(alias))", visibility(), String.class, DSL.class);
 
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("public constructor(alias: %s): this(alias, null)", Name.class, tableId);
+            out.println("%sconstructor(alias: %s): this(alias, null)", visibility(), Name.class, tableId);
         }
 
         // [#117] With instance fields, it makes sense to create a
@@ -5252,30 +5308,30 @@ public class JavaGenerator extends AbstractGenerator {
         // be public, as tables are no longer singletons
         else if (generateInstanceFields()) {
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("public %s(%s alias) {", className, String.class);
+            out.println("%s%s(%s alias) {", visibility(), className, String.class);
             out.println("this(%s.name(alias), %s);", DSL.class, tableId);
             out.println("}");
 
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("public %s(%s alias) {", className, Name.class);
+            out.println("%s%s(%s alias) {", visibility(), className, Name.class);
             out.println("this(alias, %s);", tableId);
             out.println("}");
         }
 
         if (scala) {
             out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("def this() = this(%s.name(\"%s\"), null)", DSL.class, escapeString(table.getOutputName()));
+            out.println("%sdef this() = this(%s.name(\"%s\"), null)", visibility(), DSL.class, escapeString(table.getOutputName()));
         }
         else if (kotlin) {
             out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("public constructor(): this(%s.name(\"%s\"), null)", DSL.class, escapeString(table.getOutputName()));
+            out.println("%sconstructor(): this(%s.name(\"%s\"), null)", visibility(), DSL.class, escapeString(table.getOutputName()));
         }
         else {
             // [#1255] With instance fields, the table constructor may
             // be public, as tables are no longer singletons
             if (generateInstanceFields()) {
                 out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
-                out.println("public %s() {", className);
+                out.println("%s%s() {", visibility(), className);
             }
             else {
                 out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
@@ -5290,15 +5346,15 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala) {
-                out.println("def this(child: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(child, key), child, key, %s, null)",
-                    Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
+                out.println("%sdef this(child: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(child, key), child, key, %s, null)",
+                    visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
             }
             else if (kotlin) {
-                out.println("public constructor(child: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(child, key), child, key, %s, null)",
-                    Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
+                out.println("%sconstructor(child: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(child, key), child, key, %s, null)",
+                    visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
             }
             else {
-                out.println("public <O extends %s> %s(%s<O> child, %s<O, %s> key) {", Record.class, className, Table.class, ForeignKey.class, recordType);
+                out.println("%s<O extends %s> %s(%s<O> child, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType);
                 out.println("super(child, key, %s);", tableId);
                 out.println("}");
             }
@@ -5306,15 +5362,15 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println();
-            out.println("override def getSchema: %s = %s", Schema.class, schemaId);
+            out.println("%soverride def getSchema: %s = %s", visibilityPublic(), Schema.class, schemaId);
         }
         else if (kotlin) {
-            out.println("public override fun getSchema(): %s = %s", Schema.class, schemaId);
+            out.println("%soverride fun getSchema(): %s = %s", visibilityPublic(), Schema.class, schemaId);
         }
         else {
             out.overrideInherit();
             printNonnullAnnotation(out);
-            out.println("public %s getSchema() {", Schema.class);
+            out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
             out.println("return %s;", schemaId);
             out.println("}");
         }
@@ -5331,16 +5387,16 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         out.println();
-                        out.println("override def getIndexes: %s[%s] = %s.asList[ %s ]([[%s]])",
-                            List.class, Index.class, Arrays.class, Index.class, indexFullIds);
+                        out.println("%soverride def getIndexes: %s[%s] = %s.asList[ %s ]([[%s]])",
+                            visibilityPublic(), List.class, Index.class, Arrays.class, Index.class, indexFullIds);
                     }
                     else if (kotlin) {
-                        out.println("public override fun getIndexes(): %s<%s> = listOf([[%s]])", out.ref(KLIST), Index.class, indexFullIds);
+                        out.println("%soverride fun getIndexes(): %s<%s> = listOf([[%s]])", visibilityPublic(), out.ref(KLIST), Index.class, indexFullIds);
                     }
                     else {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
-                        out.println("public %s<%s> getIndexes() {", List.class, Index.class);
+                        out.println("%s%s<%s> getIndexes() {", visibilityPublic(), List.class, Index.class);
                         out.println("return %s.<%s>asList([[%s]]);", Arrays.class, Index.class, indexFullIds);
                         out.println("}");
                     }
@@ -5350,7 +5406,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         out.println();
-                        out.println("override def getIndexes: %s[%s] = %s.asList[%s](", List.class, Index.class, Arrays.class, Index.class);
+                        out.println("%soverride def getIndexes: %s[%s] = %s.asList[%s](", visibilityPublic(), List.class, Index.class, Arrays.class, Index.class);
 
                         for (IndexDefinition index : indexes) {
                             out.print("%s", separator);
@@ -5362,7 +5418,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.println(")");
                     }
                     else if (kotlin) {
-                        out.println("public override fun getIndexes(): %s<%s> = listOf(", out.ref(KLIST), Index.class);
+                        out.println("%soverride fun getIndexes(): %s<%s> = listOf(", visibilityPublic(), out.ref(KLIST), Index.class);
 
                         for (IndexDefinition index : indexes) {
                             out.print("%s", separator);
@@ -5376,7 +5432,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
-                        out.println("public %s<%s> getIndexes() {", List.class, Index.class);
+                        out.println("%s%s<%s> getIndexes() {", visibilityPublic(), List.class, Index.class);
                         out.println("return %s.<%s>asList(", Arrays.class, Index.class);
 
                         for (IndexDefinition index : indexes) {
@@ -5406,11 +5462,13 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println();
 
                     printDeprecationIfUnknownType(out, identityTypeFull);
-                    out.println("override def getIdentity: %s[%s, %s] = super.getIdentity.asInstanceOf[ %s[%s, %s] ]", Identity.class, recordType, identityType, Identity.class, recordType, identityType);
+                    out.println("%soverride def getIdentity: %s[%s, %s] = super.getIdentity.asInstanceOf[ %s[%s, %s] ]",
+                        visibilityPublic(), Identity.class, recordType, identityType, Identity.class, recordType, identityType);
                 }
                 else if (kotlin) {
                     printDeprecationIfUnknownType(out, identityTypeFull);
-                    out.println("public override fun getIdentity(): %s<%s, %s?> = super.getIdentity() as %s<%s, %s?>", Identity.class, recordType, identityType, Identity.class, recordType, identityType);
+                    out.println("%soverride fun getIdentity(): %s<%s, %s?> = super.getIdentity() as %s<%s, %s?>",
+                        visibilityPublic(), Identity.class, recordType, identityType, Identity.class, recordType, identityType);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, identityTypeFull))
@@ -5419,7 +5477,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
 
                     printNonnullAnnotation(out);
-                    out.println("public %s<%s, %s> getIdentity() {", Identity.class, recordType, identityType);
+                    out.println("%s%s<%s, %s> getIdentity() {", visibilityPublic(), Identity.class, recordType, identityType);
                     out.println("return (%s<%s, %s>) super.getIdentity();", Identity.class, recordType, identityType);
                     out.println("}");
                 }
@@ -5435,7 +5493,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     out.println();
-                    out.print("override def getPrimaryKey: %s[%s] = ", UniqueKey.class, recordType);
+                    out.print("%soverride def getPrimaryKey: %s[%s] = ", visibilityPublic(), UniqueKey.class, recordType);
 
                     if (keyFullId != null)
                         out.print("%s", keyFullId);
@@ -5445,7 +5503,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println();
                 }
                 else if (kotlin) {
-                    out.print("public override fun getPrimaryKey(): %s<%s> = ", UniqueKey.class, recordType);
+                    out.print("%soverride fun getPrimaryKey(): %s<%s> = ", visibilityPublic(), UniqueKey.class, recordType);
 
                     if (keyFullId != null)
                         out.print("%s", keyFullId);
@@ -5457,7 +5515,7 @@ public class JavaGenerator extends AbstractGenerator {
                 else {
                     out.overrideInherit();
                     printNonnullAnnotation(out);
-                    out.println("public %s<%s> getPrimaryKey() {", UniqueKey.class, recordType);
+                    out.println("%s%s<%s> getPrimaryKey() {", visibilityPublic(), UniqueKey.class, recordType);
                     out.print("return ");
 
                     if (keyFullId != null)
@@ -5480,16 +5538,17 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         out.println();
-                        out.println("override def getUniqueKeys: %s[ %s[%s] ] = %s.asList[ %s[%s] ]([[%s]])",
-                            List.class, UniqueKey.class, recordType, Arrays.class, UniqueKey.class, recordType, keyFullIds);
+                        out.println("%soverride def getUniqueKeys: %s[ %s[%s] ] = %s.asList[ %s[%s] ]([[%s]])",
+                            visibilityPublic(), List.class, UniqueKey.class, recordType, Arrays.class, UniqueKey.class, recordType, keyFullIds);
                     }
                     else if (kotlin) {
-                        out.println("public override fun getUniqueKeys(): %s<%s<%s>> = listOf([[%s]])", out.ref(KLIST), UniqueKey.class, recordType, keyFullIds);
+                        out.println("%soverride fun getUniqueKeys(): %s<%s<%s>> = listOf([[%s]])",
+                            visibilityPublic(), out.ref(KLIST), UniqueKey.class, recordType, keyFullIds);
                     }
                     else {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
-                        out.println("public %s<%s<%s>> getUniqueKeys() {", List.class, UniqueKey.class, recordType);
+                        out.println("%s%s<%s<%s>> getUniqueKeys() {", visibilityPublic(), List.class, UniqueKey.class, recordType);
                         out.println("return %s.<%s<%s>>asList([[%s]]);", Arrays.class, UniqueKey.class, recordType, keyFullIds);
                         out.println("}");
                     }
@@ -5499,8 +5558,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         out.println();
-                        out.println("override def getUniqueKeys: %s[ %s[%s] ] = %s.asList[ %s[%s] ](",
-                            List.class, UniqueKey.class, recordType, Arrays.class, UniqueKey.class, recordType);
+                        out.println("%soverride def getUniqueKeys: %s[ %s[%s] ] = %s.asList[ %s[%s] ](",
+                            visibilityPublic(), List.class, UniqueKey.class, recordType, Arrays.class, UniqueKey.class, recordType);
 
                         for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
                             out.print("%s", separator);
@@ -5512,7 +5571,8 @@ public class JavaGenerator extends AbstractGenerator {
                         out.println(")");
                     }
                     else if (kotlin) {
-                        out.println("public override fun getUniqueKeys(): %s<%s<%s>> = listOf(", out.ref(KLIST), UniqueKey.class, recordType);
+                        out.println("%soverride fun getUniqueKeys(): %s<%s<%s>> = listOf(",
+                            visibilityPublic(), out.ref(KLIST), UniqueKey.class, recordType);
 
                         for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
                             out.print("%s", separator);
@@ -5526,7 +5586,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
-                        out.println("public %s<%s<%s>> getUniqueKeys() {", List.class, UniqueKey.class, recordType);
+                        out.println("%s%s<%s<%s>> getUniqueKeys() {", visibilityPublic(), List.class, UniqueKey.class, recordType);
                         out.println("return %s.<%s<%s>>asList(", Arrays.class, UniqueKey.class, recordType);
 
                         for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
@@ -5553,16 +5613,17 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     out.println();
-                    out.println("override def getReferences: %s[ %s[%s, _] ] = %s.asList[ %s[%s, _] ]([[%s]])",
-                        List.class, ForeignKey.class, recordType, Arrays.class, ForeignKey.class, recordType, keyFullIds);
+                    out.println("%soverride def getReferences: %s[ %s[%s, _] ] = %s.asList[ %s[%s, _] ]([[%s]])",
+                        visibilityPublic(), List.class, ForeignKey.class, recordType, Arrays.class, ForeignKey.class, recordType, keyFullIds);
                 }
                 else if (kotlin) {
-                    out.println("public override fun getReferences(): %s<%s<%s, *>> = listOf([[%s]])", out.ref(KLIST), ForeignKey.class, recordType, keyFullIds);
+                    out.println("%soverride fun getReferences(): %s<%s<%s, *>> = listOf([[%s]])",
+                        visibilityPublic(), out.ref(KLIST), ForeignKey.class, recordType, keyFullIds);
                 }
                 else {
                     out.overrideInherit();
                     printNonnullAnnotation(out);
-                    out.println("public %s<%s<%s, ?>> getReferences() {", List.class, ForeignKey.class, recordType);
+                    out.println("%s%s<%s<%s, ?>> getReferences() {", visibilityPublic(), List.class, ForeignKey.class, recordType);
                     out.println("return %s.<%s<%s, ?>>asList([[%s]]);", Arrays.class, ForeignKey.class, recordType, keyFullIds);
                     out.println("}");
                 }
@@ -5577,14 +5638,14 @@ public class JavaGenerator extends AbstractGenerator {
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
                         if (scala) {
-                            out.println("def %s: %s = new %s(this, %s)", scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
+                            out.println("%sdef %s: %s = new %s(this, %s)", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
                         }
                         else if (kotlin) {
-                            out.println("public fun %s(): %s = %s(this, %s)", keyMethodName, referencedTableClassName, referencedTableClassName, keyFullId);
+                            out.println("%sfun %s(): %s = %s(this, %s)", visibility(), keyMethodName, referencedTableClassName, referencedTableClassName, keyFullId);
                         }
                         else {
                             out.println();
-                            out.println("public %s %s() {", referencedTableClassName, keyMethodName);
+                            out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);
                             out.println("return new %s(this, %s);", referencedTableClassName, keyFullId);
                             out.println("}");
                         }
@@ -5597,17 +5658,17 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (!cc.isEmpty()) {
             if (scala) {
-                out.println("override def getChecks: %s[ %s[%s] ] = %s.asList[ %s[%s] ](",
-                    List.class, Check.class, recordType, Arrays.class, Check.class, recordType);
+                out.println("%soverride def getChecks: %s[ %s[%s] ] = %s.asList[ %s[%s] ](",
+                    visibilityPublic(), List.class, Check.class, recordType, Arrays.class, Check.class, recordType);
             }
             else if (kotlin) {
-                out.println("public override fun getChecks(): %s<%s<%s>> = listOf(",
-                    out.ref(KLIST), Check.class, recordType);
+                out.println("%soverride fun getChecks(): %s<%s<%s>> = listOf(",
+                    visibilityPublic(), out.ref(KLIST), Check.class, recordType);
             }
             else {
                 out.overrideInherit();
                 printNonnullAnnotation(out);
-                out.println("public %s<%s<%s>> getChecks() {", List.class, Check.class, recordType);
+                out.println("%s%s<%s<%s>> getChecks() {", visibilityPublic(), List.class, Check.class, recordType);
                 out.println("return %s.<%s<%s>>asList(", Arrays.class, Check.class, recordType);
             }
 
@@ -5642,11 +5703,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         printDeprecationIfUnknownType(out, columnTypeFull);
-                        out.println("override def getRecordVersion: %s[%s, %s] = %s", TableField.class, recordType, columnType, columnId);
+                        out.println("%soverride def getRecordVersion: %s[%s, %s] = %s", visibilityPublic(), TableField.class, recordType, columnType, columnId);
                     }
                     else if (kotlin) {
                         printDeprecationIfUnknownType(out, columnTypeFull);
-                        out.println("public override fun getRecordVersion(): %s<%s, %s?> = %s", TableField.class, recordType, columnType, columnId);
+                        out.println("%soverride fun getRecordVersion(): %s<%s, %s?> = %s", visibilityPublic(), TableField.class, recordType, columnType, columnId);
                     }
                     else {
                         if (printDeprecationIfUnknownType(out, columnTypeFull))
@@ -5655,7 +5716,7 @@ public class JavaGenerator extends AbstractGenerator {
                             out.overrideInherit();
 
                         printNonnullAnnotation(out);
-                        out.println("public %s<%s, %s> getRecordVersion() {", TableField.class, recordType, columnType);
+                        out.println("%s%s<%s, %s> getRecordVersion() {", visibilityPublic(), TableField.class, recordType, columnType);
                         out.println("return %s;", columnId);
                         out.println("}");
                     }
@@ -5679,11 +5740,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         printDeprecationIfUnknownType(out, columnTypeFull);
-                        out.println("override def getRecordTimestamp: %s[%s, %s] = %s", TableField.class, recordType, columnType, columnId);
+                        out.println("%soverride def getRecordTimestamp: %s[%s, %s] = %s", visibilityPublic(), TableField.class, recordType, columnType, columnId);
                     }
                     else if (kotlin) {
                         printDeprecationIfUnknownType(out, columnTypeFull);
-                        out.println("public override fun getRecordTimestamp(): %s<%s, %s?> = %s", TableField.class, recordType, columnType, columnId);
+                        out.println("%soverride fun getRecordTimestamp(): %s<%s, %s?> = %s", visibilityPublic(), TableField.class, recordType, columnType, columnId);
                     }
                     else {
                         if (printDeprecationIfUnknownType(out, columnTypeFull))
@@ -5692,7 +5753,7 @@ public class JavaGenerator extends AbstractGenerator {
                             out.overrideInherit();
 
                         printNonnullAnnotation(out);
-                        out.println("public %s<%s, %s> getRecordTimestamp() {", TableField.class, recordType, columnType);
+                        out.println("%s%s<%s, %s> getRecordTimestamp() {", visibilityPublic(), TableField.class, recordType, columnType);
                         out.println("return %s;", columnId);
                         out.println("}");
                     }
@@ -5704,14 +5765,14 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala) {
-            out.print("override def as(alias: %s): %s = ", String.class, className);
+            out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), String.class, className);
 
             if (table.isTableValuedFunction())
                 out.println("new %s(%s.name(alias), null, null, this, parameters)", className, DSL.class);
             else
                 out.println("new %s(%s.name(alias), this)", className, DSL.class);
 
-            out.print("override def as(alias: %s): %s = ", Name.class, className);
+            out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), Name.class, className);
 
             if (table.isTableValuedFunction())
                 out.println("new %s(alias, null, null, this, parameters)", className);
@@ -5719,14 +5780,14 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("new %s(alias, this)", className);
         }
         else if (kotlin) {
-            out.print("public override fun `as`(alias: %s): %s = ", String.class, className);
+            out.print("%soverride fun `as`(alias: %s): %s = ", visibilityPublic(), String.class, className);
 
             if (table.isTableValuedFunction())
                 out.println("%s(%s.name(alias), this, parameters)", className, DSL.class);
             else
                 out.println("%s(%s.name(alias), this)", className, DSL.class);
 
-            out.print("public override fun `as`(alias: %s): %s = ", Name.class, className);
+            out.print("%soverride fun `as`(alias: %s): %s = ", visibilityPublic(), Name.class, className);
 
             if (table.isTableValuedFunction())
                 out.println("%s(alias, this, parameters)", className);
@@ -5739,7 +5800,7 @@ public class JavaGenerator extends AbstractGenerator {
         else if (generateInstanceFields()) {
             out.overrideInherit();
             printNonnullAnnotation(out);
-            out.println("public %s as(%s alias) {", className, String.class);
+            out.println("%s%s as(%s alias) {", visibilityPublic(), className, String.class);
 
             if (table.isTableValuedFunction())
                 out.println("return new %s(%s.name(alias), this, parameters);", className, DSL.class);
@@ -5751,7 +5812,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.overrideInherit();
             printNonnullAnnotation(out);
-            out.println("public %s as(%s alias) {", className, Name.class);
+            out.println("%s%s as(%s alias) {", visibilityPublic(), className, Name.class);
 
             if (table.isTableValuedFunction())
                 out.println("return new %s(alias, this, parameters);", className);
@@ -5763,7 +5824,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.javadoc("Rename this table");
-            out.print("override def rename(name: %s): %s = ", String.class, className);
+            out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), String.class, className);
 
             if (table.isTableValuedFunction())
                 out.println("new %s(%s.name(name), null, null, null, parameters)", className, DSL.class);
@@ -5771,7 +5832,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("new %s(%s.name(name), null)", className, DSL.class);
 
             out.javadoc("Rename this table");
-            out.print("override def rename(name: %s): %s = ", Name.class, className);
+            out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), Name.class, className);
 
             if (table.isTableValuedFunction())
                 out.println("new %s(name, null, null, null, parameters)", className);
@@ -5781,7 +5842,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         else if (kotlin) {
             out.javadoc("Rename this table");
-            out.print("public override fun rename(name: %s): %s = ", String.class, className);
+            out.print("%soverride fun rename(name: %s): %s = ", visibilityPublic(), String.class, className);
 
             if (table.isTableValuedFunction())
                 out.println("%s(%s.name(name), null, parameters)", className, DSL.class);
@@ -5789,7 +5850,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%s(%s.name(name), null)", className, DSL.class);
 
             out.javadoc("Rename this table");
-            out.print("public override fun rename(name: %s): %s = ", Name.class, className);
+            out.print("%soverride fun rename(name: %s): %s = ", visibilityPublic(), Name.class, className);
 
             if (table.isTableValuedFunction())
                 out.println("%s(name, null, parameters)", className);
@@ -5802,7 +5863,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Rename this table");
             out.override();
             printNonnullAnnotation(out);
-            out.println("public %s rename(%s name) {", className, String.class);
+            out.println("%s%s rename(%s name) {", visibilityPublic(), className, String.class);
 
             if (table.isTableValuedFunction())
                 out.println("return new %s(%s.name(name), null, parameters);", className, DSL.class);
@@ -5814,7 +5875,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Rename this table");
             out.override();
             printNonnullAnnotation(out);
-            out.println("public %s rename(%s name) {", className, Name.class);
+            out.println("%s%s rename(%s name) {", visibilityPublic(), className, Name.class);
 
             if (table.isTableValuedFunction())
                 out.println("return new %s(name, null, parameters);", className);
@@ -5835,15 +5896,17 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.header("Row%s type methods", degree);
             if (scala) {
-                out.println("override def fieldsRow: %s[%s] = super.fieldsRow.asInstanceOf[ %s[%s] ]", rowNType, rowType, rowNType, rowType);
+                out.println("%soverride def fieldsRow: %s[%s] = super.fieldsRow.asInstanceOf[ %s[%s] ]",
+                    visibilityPublic(), rowNType, rowType, rowNType, rowType);
             }
             else if (kotlin) {
-                out.println("public override fun fieldsRow(): %s<%s> = super.fieldsRow() as %s<%s>", rowNType, rowType, rowNType, rowType);
+                out.println("%soverride fun fieldsRow(): %s<%s> = super.fieldsRow() as %s<%s>",
+                    visibilityPublic(), rowNType, rowType, rowNType, rowType);
             }
             else {
                 out.overrideInherit();
                 printNonnullAnnotation(out);
-                out.println("public %s<%s> fieldsRow() {", rowNType, rowType);
+                out.println("%s%s<%s> fieldsRow() {", visibilityPublic(), rowNType, rowType);
                 out.println("return (%s) super.fieldsRow();", rowNType);
                 out.println("}");
             }
@@ -5860,7 +5923,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Call this table-valued function");
 
                 if (scala) {
-                    out.print("def call(").printlnIf(!parameters.isEmpty());
+                    out.print("%sdef call(", visibility()).printlnIf(!parameters.isEmpty());
                     printParameterDeclarations(out, parameters, parametersAsField, "  ");
                     out.print("): %s = ", className);
 
@@ -5885,7 +5948,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("))).map(r => if (aliased()) r.as(getUnqualifiedName) else r).get");
                 }
                 else if (kotlin) {
-                    out.print("public fun call(").printlnIf(!parameters.isEmpty());
+                    out.print("%sfun call(", visibility()).printlnIf(!parameters.isEmpty());
                     printParameterDeclarations(out, parameters, parametersAsField, "  ");
                     out.print("): %s = %s(%s.name(\"%s\"), null, arrayOf(", className, className, DSL.class, escapeString(table.getOutputName()), Field.class).printlnIf(!parameters.isEmpty());
 
@@ -5907,7 +5970,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println(")).let { if (aliased()) it.`as`(unqualifiedName) else it }");
                 }
                 else {
-                    out.print("public %s call(", className).printlnIf(!parameters.isEmpty());
+                    out.print("%s%s call(", visibility(), className).printlnIf(!parameters.isEmpty());
                     printParameterDeclarations(out, parameters, parametersAsField, "  ");
                     out.println(") {");
 
@@ -6021,7 +6084,8 @@ public class JavaGenerator extends AbstractGenerator {
         for (EmbeddableDefinition embeddable : embeddables(schema)) {
             try {
                 generateEmbeddableInterface(embeddable);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating embeddable interface " + embeddable, e);
             }
         }
@@ -6152,10 +6216,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String referencesClassName = getStrategy().getGlobalReferencesJavaClassName(schema, SequenceDefinition.class);
 
         if (scala)
-            out.println("object %s {", referencesClassName);
+            out.println("%sobject %s {", visibility(), referencesClassName);
         else if (kotlin) {}
         else
-            out.println("public class %s {", referencesClassName);
+            out.println("%sclass %s {", visibility(), referencesClassName);
 
         for (SequenceDefinition sequence : database.getSequences(schema)) {
             final String seqTypeFull = getJavaType(sequence.getType(resolver(out)), out);
@@ -6171,7 +6235,8 @@ public class JavaGenerator extends AbstractGenerator {
             boolean flags = generateSequenceFlags();
 
             if (scala)
-                out.println("val %s: %s[%s] = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s)",
+                out.println("%sval %s: %s[%s] = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s)",
+                    visibility(),
                     seqId,
                     Sequence.class,
                     seqType,
@@ -6187,7 +6252,8 @@ public class JavaGenerator extends AbstractGenerator {
                     flags ? numberLiteral(sequence.getCache()) : "null"
                 );
             else if (kotlin)
-                out.println("public val %s: %s<%s> = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s)",
+                out.println("%sval %s: %s<%s> = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s)",
+                    visibility(),
                     seqId,
                     Sequence.class,
                     seqType,
@@ -6203,7 +6269,8 @@ public class JavaGenerator extends AbstractGenerator {
                     flags ? numberLiteral(sequence.getCache()) : "null"
                 );
             else
-                out.println("public static final %s<%s> %s = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s);",
+                out.println("%sstatic final %s<%s> %s = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s);",
+                    visibility(),
                     Sequence.class,
                     seqType,
                     seqId,
@@ -6282,21 +6349,23 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, catalog, Mode.DEFAULT);
 
         if (scala) {
-            out.println("class %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {", className, CatalogImpl.class, catalog.getOutputName(), interfaces);
+            out.println("%sclass %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {",
+                visibility(), className, CatalogImpl.class, catalog.getOutputName(), interfaces);
         }
         else if (kotlin) {
-            out.println("public open class %s : %s(\"%s\")[[before=, ][%s]] {", className, CatalogImpl.class, catalog.getOutputName(), interfaces);
+            out.println("%sopen class %s : %s(\"%s\")[[before=, ][%s]] {",
+                visibility(), className, CatalogImpl.class, catalog.getOutputName(), interfaces);
 
-            out.println("public companion object {");
+            out.println("%scompanion object {", visibility());
             out.javadoc("The reference instance of <code>%s</code>", catalogName);
             out.println("public val %s: %s = %s()", catalogId, className, className);
             out.println("}");
         }
         else {
-            out.println("public class %s extends %s[[before= implements ][%s]] {", className, CatalogImpl.class, interfaces);
+            out.println("%sclass %s extends %s[[before= implements ][%s]] {", visibility(), className, CatalogImpl.class, interfaces);
             out.printSerial();
             out.javadoc("The reference instance of <code>%s</code>", catalogName);
-            out.println("public static final %s %s = new %s();", className, catalogId, className);
+            out.println("%sstatic final %s %s = new %s();", visibility(), className, catalogId, className);
         }
 
         List<SchemaDefinition> schemas = new ArrayList<>();
@@ -6322,11 +6391,11 @@ public class JavaGenerator extends AbstractGenerator {
                     out.javadoc(isBlank(schemaComment) ? ("The schema <code>" + (!schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId) + "</code>.") : schemaComment);
 
                     if (scala)
-                        out.println("def %s = %s", schemaId, schemaShortId);
+                        out.println("%sdef %s = %s", visibility(), schemaId, schemaShortId);
                     else if (kotlin)
-                        out.println("public val %s: %s get(): %s = %s", schemaId, schemaClassName, schemaClassName, schemaShortId);
+                        out.println("%sval %s: %s get(): %s = %s", visibility(), schemaId, schemaClassName, schemaClassName, schemaShortId);
                     else
-                        out.println("public final %s %s = %s;", schemaClassName, schemaId, schemaShortId);
+                        out.println("%sfinal %s %s = %s;", visibility(), schemaClassName, schemaId, schemaShortId);
                 }
             }
         }
@@ -6391,21 +6460,23 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema, Mode.DEFAULT);
 
         if (scala) {
-            out.println("class %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
+            out.println("%sclass %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {",
+                visibility(), className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
         }
         else if (kotlin) {
-            out.println("public open class %s : %s(\"%s\", %s)[[before=, ][%s]] {", className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
+            out.println("%sopen class %s : %s(\"%s\", %s)[[before=, ][%s]] {",
+                visibility(), className, SchemaImpl.class, escapeString(schema.getOutputName()), catalogId, interfaces);
 
             out.println("public companion object {");
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
-            out.println("public val %s: %s = %s()", schemaId, className, className);
+            out.println("%sval %s: %s = %s()", visibility(), schemaId, className, className);
             out.println("}");
         }
         else {
-            out.println("public class %s extends %s[[before= implements ][%s]] {", className, SchemaImpl.class, interfaces);
+            out.println("%sclass %s extends %s[[before= implements ][%s]] {", visibility(), className, SchemaImpl.class, interfaces);
             out.printSerial();
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
-            out.println("public static final %s %s = new %s();", className, schemaId, className);
+            out.println("%sstatic final %s %s = new %s();", visibility(), className, schemaId, className);
         }
 
         if (generateGlobalTableReferences()) {
@@ -6429,11 +6500,11 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc(isBlank(tableComment) ? "The table <code>" + table.getQualifiedOutputName() + "</code>." : tableComment);
 
                 if (scala)
-                    out.println("def %s = %s", tableId, tableShortId);
+                    out.println("%sdef %s = %s", visibility(), tableId, tableShortId);
                 else if (kotlin)
-                    out.println("public val %s: %s get() = %s", tableId, tableClassName, tableShortId);
+                    out.println("%sval %s: %s get() = %s", visibility(), tableId, tableClassName, tableShortId);
                 else
-                    out.println("public final %s %s = %s;", tableClassName, tableId, tableShortId);
+                    out.println("%sfinal %s %s = %s;", visibility(), tableClassName, tableId, tableShortId);
 
                 // [#3797] Table-valued functions generate two different literals in
                 // globalObjectReferences
@@ -6451,15 +6522,15 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println();
         if (scala) {
-            out.println("override def getCatalog: %s = %s", Catalog.class, catalogId);
+            out.println("%soverride def getCatalog: %s = %s", visibilityPublic(), Catalog.class, catalogId);
         }
         else if (kotlin) {
-            out.println("public override fun getCatalog(): %s = %s", Catalog.class, catalogId);
+            out.println("%soverride fun getCatalog(): %s = %s", visibilityPublic(),Catalog.class, catalogId);
         }
         else {
             out.overrideInherit();
             printNonnullAnnotation(out);
-            out.println("public %s getCatalog() {", Catalog.class);
+            out.println("%s%s getCatalog() {", visibilityPublic(), Catalog.class);
             out.println("return %s;", catalogId);
             out.println("}");
         }
@@ -6541,15 +6612,15 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println();
-            out.println("%sdef from(from: %s) {", (override ? "override " : ""), qualified);
+            out.println("%s%sdef from(from: %s) {", visibilityPublic(), (override ? "override " : ""), qualified);
         }
         else if (kotlin) {
             out.println();
-            out.println("public %sfun from(from: %s) {", (override ? "override " : ""), qualified);
+            out.println("%s%sfun from(from: %s) {", visibilityPublic(), (override ? "override " : ""), qualified);
         }
         else {
             out.overrideInheritIf(override);
-            out.println("public void from(%s from) {", qualified);
+            out.println("%svoid from(%s from) {", visibilityPublic(), qualified);
         }
 
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
@@ -6577,7 +6648,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala) {
                 if (mode != Mode.POJO) {
                     out.println();
-                    out.println("override def into [E](into: E): E = {", qualified);
+                    out.println("%soverride def into [E](into: E): E = {", visibilityPublic(), qualified);
                     out.println("if (into.isInstanceOf[%s])", qualified);
                     out.println("into.asInstanceOf[%s].from(this)", qualified);
                     out.println("else");
@@ -6588,14 +6659,14 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 out.println();
-                out.println("public %sfun <E : %s> into(into: E): E {", (override ? "override " : ""), qualified);
+                out.println("%s%sfun <E : %s> into(into: E): E {", visibilityPublic(), (override ? "override " : ""), qualified);
                 out.println("into.from(this)");
                 out.println("return into");
                 out.println("}");
             }
             else {
                 out.overrideInherit();
-                out.println("public <E extends %s> E into(E into) {", qualified);
+                out.println("%s<E extends %s> E into(E into) {", visibilityPublic(), qualified);
                 out.println("into.from(this);");
                 out.println("return into;");
                 out.println("}");
@@ -6636,7 +6707,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala) {
-                out.println("override def get%ss: %s[%s%s] = {", type.getSimpleName(), List.class, type, generic);
+                out.println("%soverride def get%ss: %s[%s%s] = {", visibilityPublic(), type.getSimpleName(), List.class, type, generic);
 
                 if (definitions.size() > maxMembersPerInitialiser()) {
                     out.println("val result = new %s[%s%s]", ArrayList.class, type, generic);
@@ -6653,7 +6724,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 if (definitions.size() > maxMembersPerInitialiser()) {
-                    out.println("public override fun get%ss(): %s<%s%s> {", type.getSimpleName(), out.ref(KLIST), type, generic);
+                    out.println("%soverride fun get%ss(): %s<%s%s> {", visibilityPublic(), type.getSimpleName(), out.ref(KLIST), type, generic);
                     out.println("val result = mutableListOf<%s%s>()", type, generic);
 
                     for (int i = 0; i < definitions.size(); i += maxMembersPerInitialiser())
@@ -6663,7 +6734,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("}");
                 }
                 else {
-                    out.println("public override fun get%ss(): %s<%s%s> = listOf(", type.getSimpleName(), out.ref(KLIST), type, generic);
+                    out.println("%soverride fun get%ss(): %s<%s%s> = listOf(", visibilityPublic(), type.getSimpleName(), out.ref(KLIST), type, generic);
                     out.println("[[separator=,\n\t\t][%s]]", references);
                     out.println(")");
                 }
@@ -6671,7 +6742,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 out.override();
                 printNonnullAnnotation(out);
-                out.println("public final %s<%s%s> get%ss() {", List.class, type, generic, type.getSimpleName());
+                out.println("%sfinal %s<%s%s> get%ss() {", visibilityPublic(), List.class, type, generic, type.getSimpleName());
 
                 if (definitions.size() > maxMembersPerInitialiser()) {
                     out.println("%s result = new %s();", List.class, ArrayList.class);
@@ -7030,22 +7101,22 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, routine, Mode.DEFAULT);
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",
-                className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
+            out.println("%sclass %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",
+                visibility(), className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
         }
         else {
             if (kotlin) {
-                out.println("public open class %s : %s<%s>(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before=, ][%s]] {",
-                    className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
+                out.println("%sopen class %s : %s<%s>(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before=, ][%s]] {",
+                    visibility(), className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
             }
             else {
-                out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
-                    className, AbstractRoutine.class, returnType, interfaces);
+                out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {",
+                    visibility(), className, AbstractRoutine.class, returnType, interfaces);
                 out.printSerial();
             }
 
             if (kotlin)
-                out.println("public companion object {");
+                out.println("%scompanion object {", visibility());
 
             for (ParameterDefinition parameter : routine.getAllParameters()) {
                 final String paramTypeFull = getJavaType(parameter.getType(resolver(out)), out);
@@ -7062,11 +7133,11 @@ public class JavaGenerator extends AbstractGenerator {
                     out.javadoc("The parameter <code>%s</code>.[[before= ][%s]]", parameter.getQualifiedOutputName(), list(escapeEntities(comment(parameter))));
 
                 if (kotlin)
-                    out.println("public val %s: %s<%s?> = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        paramId, Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                    out.println("%sval %s: %s<%s?> = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        visibility(), paramId, Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
                 else
-                    out.println("public static final %s<%s> %s = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                        Parameter.class, paramType, paramId, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                    out.println("%sstatic final %s<%s> %s = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        visibility(), Parameter.class, paramType, paramId, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
 
             if (kotlin)
@@ -7081,7 +7152,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.javadoc("Create a new routine call instance");
-            out.println("public %s() {", className);
+            out.println("%s%s() {", visibility(), className);
             out.println("super(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ");", routine.getName(), schemaId, packageId, returnTypeRef, returnConverter, returnBinding);
 
 
@@ -7172,15 +7243,15 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Set the <code>%s</code> parameter IN value to the routine", parameter.getOutputName());
 
             if (scala) {
-                out.println("def %s(%s: %s) : Unit = set%s(%s.%s, %s)",
-                    setter, paramName, refNumberType(out, parameter.getType(resolver(out))), numberValue, className, paramId, paramName);
+                out.println("%sdef %s(%s: %s) : Unit = set%s(%s.%s, %s)",
+                    visibility(), setter, paramName, refNumberType(out, parameter.getType(resolver(out))), numberValue, className, paramId, paramName);
             }
             else if (kotlin) {
-                out.println("public fun %s(%s: %s?): Unit = set%s(%s, %s)",
-                    setter, paramName, refNumberType(out, parameter.getType(resolver(out))), numberValue, paramId, paramName);
+                out.println("%sfun %s(%s: %s?): Unit = set%s(%s, %s)",
+                    visibility(), setter, paramName, refNumberType(out, parameter.getType(resolver(out))), numberValue, paramId, paramName);
             }
             else {
-                out.println("public void %s(%s %s) {", setter, varargsIfArray(refNumberType(out, parameter.getType(resolver(out)))), paramName);
+                out.println("%svoid %s(%s %s) {", visibility(), setter, varargsIfArray(refNumberType(out, parameter.getType(resolver(out)))), paramName);
                 out.println("set%s(%s, %s);", numberValue, paramId, paramName);
                 out.println("}");
             }
@@ -7189,7 +7260,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Set the <code>%s</code> parameter to the function to be used with a {@link org.jooq.Select} statement", parameter.getOutputName());
 
                 if (scala) {
-                    out.println("def %s(field: %s[%s]): %s = {", setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))), setterReturnType);
+                    out.println("%sdef %s(field: %s[%s]): %s = {", visibility(), setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))), setterReturnType);
                     out.println("set%s(%s.%s, field)", numberField, className, paramId);
 
                     if (generateFluentSetters())
@@ -7198,7 +7269,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("}");
                 }
                 else if (kotlin) {
-                    out.println("public fun %s(field: %s<%s?>): %s {", setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))), setterReturnType);
+                    out.println("%sfun %s(field: %s<%s?>): %s {", visibility(), setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))), setterReturnType);
                     out.println("set%s(%s, field)", numberField, paramId);
 
                     if (generateFluentSetters())
@@ -7207,7 +7278,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("}");
                 }
                 else {
-                    out.println("public %s %s(%s<%s> field) {", setterReturnType, setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))));
+                    out.println("%s%s %s(%s<%s> field) {", visibility(), setterReturnType, setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))));
                     out.println("set%s(%s, field);", numberField, paramId);
 
                     if (generateFluentSetters())
@@ -7233,13 +7304,13 @@ public class JavaGenerator extends AbstractGenerator {
                     out.javadoc("Get the <code>%s</code> parameter OUT value from the routine", paramName);
 
                 if (scala) {
-                    out.println("def %s: %s = get(%s.%s)", scalaWhitespaceSuffix(paramGetter), paramType, className, paramId);
+                    out.println("%sdef %s: %s = get(%s.%s)", visibility(), scalaWhitespaceSuffix(paramGetter), paramType, className, paramId);
                 }
                 else if (kotlin) {
-                    out.println("public fun %s(): %s? = get(%s)", paramGetter, paramType, paramId);
+                    out.println("%sfun %s(): %s? = get(%s)", visibility(), paramGetter, paramType, paramId);
                 }
                 else {
-                    out.println("public %s %s() {", paramType, paramGetter);
+                    out.println("%s%s %s() {", visibility(), paramType, paramGetter);
                     out.println("return get(%s);", paramId);
                     out.println("}");
                 }
@@ -7290,11 +7361,12 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Get <code>%s</code> as a field.", function.getQualifiedOutputName());
 
         if (scala)
-            out.print("def %s(", methodName);
+            out.print("%sdef %s(", visibility(), methodName);
         else if (kotlin)
-            out.print("public fun %s(", methodName);
+            out.print("%sfun %s(", visibility(), methodName);
         else
-            out.print("public static %s<%s> %s(",
+            out.print("%sstatic %s<%s> %s(",
+                visibility(),
                 function.isAggregate() ? AggregateFunction.class : Field.class,
                 functionType,
                 methodName);
@@ -7362,11 +7434,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Get <code>%s</code> as a table.", function.getQualifiedOutputName());
 
         if (scala)
-            out.print("def %s(", methodName);
+            out.print("%sdef %s(", visibility(), methodName);
         else if (kotlin)
-            out.print("public fun %s(", methodName);
+            out.print("%sfun %s(", visibility(), methodName);
         else
-            out.print("public static %s %s(", className, methodName);
+            out.print("%sstatic %s %s(", visibility(), className, methodName);
 
         if (!function.getParameters().isEmpty())
             out.println();
@@ -7461,11 +7533,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Call <code>%s</code>", functionName);
 
         if (scala)
-            out.println("def %s(", methodName);
+            out.println("%sdef %s(", visibility(), methodName);
         else if (kotlin)
-            out.println("public fun %s(", methodName);
+            out.println("%sfun %s(", visibility(), methodName);
         else
-            out.println("public %s%s %s(", !instance ? "static " : "", functionType, methodName);
+            out.println("%s%s%s %s(", visibility(), !instance ? "static " : "", functionType, methodName);
 
         String separator = "  ";
         if (!instance) {
@@ -7552,11 +7624,12 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
 
         if (scala)
-            out.println("def %s(", methodName);
+            out.println("%sdef %s(", visibility(), methodName);
         else if (kotlin)
-            out.println("public fun %s(", methodName);
+            out.println("%sfun %s(", visibility(), methodName);
         else {
-            out.println("public %s%s %s(",
+            out.println("%s%s%s %s(",
+                visibility(),
                 !instance ? "static " : "",
                 outParams.size() == 0 ? "void" : outParams.size() == 1 ? firstOutParamType : className,
                 methodName
@@ -7672,11 +7745,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Call <code>%s</code>.", function.getQualifiedOutputName());
 
         if (scala)
-            out.println("def %s(", methodName);
+            out.println("%sdef %s(", visibility(), methodName);
         else if (kotlin)
-            out.println("public fun %s(", methodName);
+            out.println("%sfun %s(", visibility(), methodName);
         else
-            out.println("public static %s<%s> %s(", Result.class, recordClassName, methodName);
+            out.println("%sstatic %s<%s> %s(", visibility(), Result.class, recordClassName, methodName);
 
         String separator = "  ";
         if (scala || kotlin)
@@ -7717,15 +7790,15 @@ public class JavaGenerator extends AbstractGenerator {
         out.javadoc("The class holding records for this type");
 
         if (scala) {
-            out.println("override def getRecordType: %s[%s] = classOf[%s]", Class.class, className, className);
+            out.println("%soverride def getRecordType: %s[%s] = classOf[%s]", visibilityPublic(), Class.class, className, className);
         }
         else if (kotlin) {
-            out.println("public override fun getRecordType(): %s<%s> = %s::class.java", Class.class, className, className);
+            out.println("%soverride fun getRecordType(): %s<%s> = %s::class.java", visibilityPublic(), Class.class, className, className);
         }
         else {
             out.override();
             printNonnullAnnotation(out);
-            out.println("public %s<%s> getRecordType() {", Class.class, className);
+            out.println("%s%s<%s> getRecordType() {", visibilityPublic(), Class.class, className);
             out.println("return %s.class;", className);
             out.println("}");
         }
@@ -7738,11 +7811,11 @@ public class JavaGenerator extends AbstractGenerator {
         out.javadoc("The reference instance of <code>%s</code>", definition.getQualifiedOutputName());
 
         if (scala)
-            out.println("val %s = new %s", identifier, className);
+            out.println("%sval %s = new %s", visibility(), identifier, className);
         else if (kotlin)
-            out.println("public val %s: %s = %s()", identifier, className, className);
+            out.println("%sval %s: %s = %s()", visibility(), identifier, className, className);
         else
-            out.println("public static final %s %s = new %s();", className, identifier, className);
+            out.println("%sstatic final %s %s = new %s();", visibility(), className, identifier, className);
     }
 
     protected final String escapeEntities(String comment) {

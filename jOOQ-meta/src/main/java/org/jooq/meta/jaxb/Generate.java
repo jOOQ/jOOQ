@@ -44,6 +44,9 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean deprecationOnUnknownTypes = true;
     @XmlElement(defaultValue = "true")
     protected Boolean instanceFields = true;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected VisibilityModifier visibilityModifier = VisibilityModifier.DEFAULT;
     @XmlElement(defaultValue = "false")
     protected Boolean generatedAnnotation = false;
     @XmlElement(defaultValue = "DETECT_FROM_JDK")
@@ -374,6 +377,22 @@ public class Generate implements Serializable, XMLAppendable
     @Deprecated
     public void setInstanceFields(Boolean value) {
         this.instanceFields = value;
+    }
+
+    /**
+     * The visibility modifier to be used with generated code.
+     * 
+     */
+    public VisibilityModifier getVisibilityModifier() {
+        return visibilityModifier;
+    }
+
+    /**
+     * The visibility modifier to be used with generated code.
+     * 
+     */
+    public void setVisibilityModifier(VisibilityModifier value) {
+        this.visibilityModifier = value;
     }
 
     /**
@@ -2220,6 +2239,15 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The visibility modifier to be used with generated code.
+     * 
+     */
+    public Generate withVisibilityModifier(VisibilityModifier value) {
+        setVisibilityModifier(value);
+        return this;
+    }
+
     public Generate withGeneratedAnnotation(Boolean value) {
         setGeneratedAnnotation(value);
         return this;
@@ -2655,6 +2683,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("deprecated", deprecated);
         builder.append("deprecationOnUnknownTypes", deprecationOnUnknownTypes);
         builder.append("instanceFields", instanceFields);
+        builder.append("visibilityModifier", visibilityModifier);
         builder.append("generatedAnnotation", generatedAnnotation);
         builder.append("generatedAnnotationType", generatedAnnotationType);
         builder.append("generatedAnnotationDate", generatedAnnotationDate);
@@ -2813,6 +2842,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!instanceFields.equals(other.instanceFields)) {
+                return false;
+            }
+        }
+        if (visibilityModifier == null) {
+            if (other.visibilityModifier!= null) {
+                return false;
+            }
+        } else {
+            if (!visibilityModifier.equals(other.visibilityModifier)) {
                 return false;
             }
         }
@@ -3523,6 +3561,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((deprecated == null)? 0 :deprecated.hashCode()));
         result = ((prime*result)+((deprecationOnUnknownTypes == null)? 0 :deprecationOnUnknownTypes.hashCode()));
         result = ((prime*result)+((instanceFields == null)? 0 :instanceFields.hashCode()));
+        result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
         result = ((prime*result)+((generatedAnnotation == null)? 0 :generatedAnnotation.hashCode()));
         result = ((prime*result)+((generatedAnnotationType == null)? 0 :generatedAnnotationType.hashCode()));
         result = ((prime*result)+((generatedAnnotationDate == null)? 0 :generatedAnnotationDate.hashCode()));

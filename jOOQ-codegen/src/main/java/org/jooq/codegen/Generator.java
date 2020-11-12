@@ -44,6 +44,7 @@ import java.util.Locale;
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
+import org.jooq.meta.jaxb.VisibilityModifier;
 
 /**
  * The Generator provides a basic interface for java code generation
@@ -146,6 +147,16 @@ public interface Generator {
      * generated.
      */
     boolean generateGeneratedAnnotation();
+
+    /**
+     * The {@link VisibilityModifier} that should be used in generated code.
+     */
+    void setGenerateVisibilityModifier(VisibilityModifier generateVisibilityModifier);
+
+    /**
+     * The {@link VisibilityModifier} that should be used in generated code.
+     */
+    VisibilityModifier generateVisibilityModifier();
 
     /**
      * Whether the {@link javax.annotation.Generated} or

@@ -1425,6 +1425,10 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
           </appinfo>
         </annotation>
       </element>
+      
+      <element name="visibilityModifier" type="tns:VisibilityModifier" default="DEFAULT" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The visibility modifier to be used with generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="generatedAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
@@ -1845,6 +1849,15 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <enumeration value="ALL"/>
       <enumeration value="NULL"/>
       <enumeration value="NOT_NULL"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="VisibilityModifier">
+    <restriction base="string">
+      <enumeration value="DEFAULT"/>
+      <enumeration value="NONE"/>
+      <enumeration value="PUBLIC"/>
+      <enumeration value="INTERNAL"/>
     </restriction>
   </simpleType>
   

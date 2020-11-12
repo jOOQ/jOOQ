@@ -684,6 +684,8 @@ public class GenerationTool {
                 generator.setGenerateDeprecationOnUnknownTypes(g.getGenerate().isDeprecationOnUnknownTypes());
             if (g.getGenerate().isInstanceFields() != null)
                 generator.setGenerateInstanceFields(g.getGenerate().isInstanceFields());
+            if (g.getGenerate().getVisibilityModifier() != null)
+                generator.setGenerateVisibilityModifier(g.getGenerate().getVisibilityModifier());
             if (g.getGenerate().isGeneratedAnnotation() != null)
                 generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
             if (g.getGenerate().getGeneratedAnnotationType() != null)

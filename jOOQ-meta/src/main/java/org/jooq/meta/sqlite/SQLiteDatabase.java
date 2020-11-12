@@ -53,18 +53,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.Check;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
+import org.jooq.conf.SettingsTools;
+import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.ParserException;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
+import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DomainDefinition;
@@ -79,6 +86,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
+import org.jooq.tools.JooqLogger;
 
 /**
  * SQLite implementation of {@link AbstractDatabase}
@@ -86,6 +94,8 @@ import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
  * @author Lukas Eder
  */
 public class SQLiteDatabase extends AbstractDatabase {
+
+    private static final JooqLogger log = JooqLogger.getLogger(SQLiteDatabase.class);
 
     public SQLiteDatabase() {
 
@@ -293,7 +303,47 @@ public class SQLiteDatabase extends AbstractDatabase {
 
     @Override
     protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
-        // Currently not supported
+        DSLContext ctx = create()
+            .configuration()
+            .derive(SettingsTools.clone(create().settings()).withInterpreterDelayForeignKeyDeclarations(true))
+            .dsl();
+
+        SchemaDefinition schema = getSchemata().get(0);
+
+        for (Record record : ctx
+                .select(SQLiteMaster.TBL_NAME, SQLiteMaster.SQL)
+                .from(SQLITE_MASTER)
+                .where(SQLiteMaster.SQL.likeIgnoreCase("%CHECK%"))
+                .orderBy(SQLiteMaster.TBL_NAME)) {
+
+            TableDefinition table = getTable(schema, record.get(SQLiteMaster.TBL_NAME));
+
+            if (table != null) {
+                String sql = record.get(SQLiteMaster.SQL);
+
+                try {
+                    Query query = ctx.parser().parseQuery(sql);
+
+                    for (Table<?> t : ctx.meta(query).getTables(table.getName())) {
+                        for (Check<?> check : t.getChecks()) {
+                            r.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                                schema,
+                                table,
+                                check.getName(),
+                                ctx.renderInlined(check.condition()),
+                                check.enforced()
+                            ));
+                        }
+                    }
+                }
+                catch (ParserException e) {
+                    log.info("Cannot parse SQL: " + sql, e);
+                }
+                catch (DataDefinitionException e) {
+                    log.info("Cannot interpret SQL: " + sql, e);
+                }
+            }
+        }
     }
 
     @Override

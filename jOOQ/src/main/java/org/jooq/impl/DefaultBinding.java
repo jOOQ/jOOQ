@@ -3438,7 +3438,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings("unchecked")
         private static final <T> T pgFromString(Converter<?, T> converter, String string) {
-            Class<T> type = converter.toType();
+            Class<T> type = (Class<T>) Reflect.wrapper(converter.toType());
 
             if (string == null)
                 return null;

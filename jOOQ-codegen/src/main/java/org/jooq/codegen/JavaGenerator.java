@@ -1646,7 +1646,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 final String colTypeFull = getJavaType(column, out);
                 final String colType = out.ref(colTypeFull);
-                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+                final String colIdentifierFull = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+                final String colIdentifier = getStrategy().getJavaIdentifier(column);
 
                 if (scala) {
                     printDeprecationIfUnknownType(out, colTypeFull);
@@ -1661,7 +1662,7 @@ public class JavaGenerator extends AbstractGenerator {
                             colType
                         );
                     else
-                        out.println("override def field%s: %s[%s] = %s", i, Field.class, colType, colIdentifier);
+                        out.println("override def field%s: %s[%s] = %s", i, Field.class, colType, colIdentifierFull);
                 }
                 else if (kotlin) {
                     printDeprecationIfUnknownType(out, colTypeFull);
@@ -1675,8 +1676,10 @@ public class JavaGenerator extends AbstractGenerator {
                             Field.class,
                             colType
                         );
+                    else if (tableUdtOrEmbeddable instanceof UDTDefinition)
+                        out.println("public override fun field%s(): %s<%s%s> = %s.%s", i, Field.class, colType, column instanceof EmbeddableDefinition ? "" : "?", out.ref(getStrategy().getFullJavaIdentifier(((AttributeDefinition) column).getContainer()), 2), colIdentifier);
                     else
-                        out.println("public override fun field%s(): %s<%s%s> = %s", i, Field.class, colType, column instanceof EmbeddableDefinition ? "" : "?", colIdentifier);
+                        out.println("public override fun field%s(): %s<%s%s> = %s", i, Field.class, colType, column instanceof EmbeddableDefinition ? "" : "?", colIdentifierFull);
                 }
                 else {
                     if (printDeprecationIfUnknownType(out, colTypeFull))
@@ -1690,7 +1693,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
                         out.println("return (%s<%s>) field(%s);", Field.class, colType, i - 1);
                     else
-                        out.println("return %s;", colIdentifier);
+                        out.println("return %s;", colIdentifierFull);
 
                     out.println("}");
                 }

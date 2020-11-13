@@ -37,11 +37,11 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The step in the {@link Constraint} construction DSL API that allows for
@@ -70,23 +70,17 @@ import org.jetbrains.annotations.*;
  */
 public interface ConstraintEnforcementStep extends ConstraintFinalStep {
 
+    /**
+     * Add the <code>ENFORCED</code> clause to the constraint.
+     */
+    @NotNull
+    @Support({ MYSQL })
+    ConstraintFinalStep enforced();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Add the <code>NOT ENFORCED</code> clause to the constraint.
+     */
+    @NotNull
+    @Support({ MYSQL })
+    ConstraintFinalStep notEnforced();
 }

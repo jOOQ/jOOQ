@@ -446,11 +446,6 @@ final class DDL {
     }
 
     private final Constraint enforced(ConstraintEnforcementStep check, boolean enforced) {
-
-
-
-
-
-        return check;
+        return enforced ? check : check.notEnforced();
     }
 }

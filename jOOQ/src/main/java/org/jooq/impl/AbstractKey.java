@@ -110,12 +110,7 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
     }
 
     private final Constraint enforced(ConstraintEnforcementStep key) {
-
-
-
-
-
-        return key;
+        return enforced() ? key : key.notEnforced();
     }
 
     @Override

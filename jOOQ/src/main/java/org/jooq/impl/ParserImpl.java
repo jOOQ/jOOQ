@@ -4197,18 +4197,12 @@ final class ParserImpl implements Parser {
         if (!deferrable)
             parseConstraintDeferrableIf(ctx);
 
-        if ((parseKeywordIf(ctx, "ENABLE") || parseKeywordIf(ctx, "ENFORCED")) && ctx.requireProEdition())
-
-
-
-            ;
-        else if ((parseKeywordIf(ctx, "DISABLE") || parseKeywordIf(ctx, "NOT ENFORCED")) && ctx.requireProEdition())
-
-
-
-            ;
-
-        return e;
+        if ((parseKeywordIf(ctx, "ENABLE") || parseKeywordIf(ctx, "ENFORCED")))
+            return e.enforced();
+        else if ((parseKeywordIf(ctx, "DISABLE") || parseKeywordIf(ctx, "NOT ENFORCED")))
+            return e.notEnforced();
+        else
+            return e;
     }
 
     private static final boolean parseConstraintDeferrableIf(ParserContext ctx) {

@@ -164,10 +164,7 @@ implements
     private Action                       onDelete;
     private Action                       onUpdate;
     private Condition                    check;
-
-
-
-
+    private boolean                      enforced = true;
 
     ConstraintImpl() {
         this(null);
@@ -185,10 +182,7 @@ implements
     final Action      $onDelete()        { return onDelete; }
     final Action      $onUpdate()        { return onUpdate; }
     final Condition   $check()           { return check; }
-
-
-
-
+    final boolean     $enforced()        { return enforced; }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -291,10 +285,8 @@ implements
                    .sql(')');
             }
 
-
-
-
-
+            if (!enforced)
+                acceptEnforced(ctx, enforced);
 
             if (named) {
 
@@ -312,6 +304,8 @@ implements
         }
     }
 
+    static void acceptEnforced(Context<?> ctx, boolean enforced) {
+        switch (ctx.family()) {
 
 
 
@@ -325,16 +319,16 @@ implements
 
 
 
+            case MYSQL:
+            default:
+                if (enforced)
+                    ctx.sql(' ').visit(K_ENFORCED);
+                else
+                    ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ENFORCED);
 
-
-
-
-
-
-
-
-
-
+                break;
+        }
+    }
 
     // ------------------------------------------------------------------------
     // XXX: Constraint API
@@ -1150,21 +1144,17 @@ implements
 
 
 
+    @Override
+    public final ConstraintImpl enforced() {
+        this.enforced = true;
+        return this;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final ConstraintImpl notEnforced() {
+        this.enforced = false;
+        return this;
+    }
 
     enum Action {
         NO_ACTION("no action"),

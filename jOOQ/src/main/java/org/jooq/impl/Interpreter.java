@@ -384,9 +384,8 @@ final class Interpreter {
         if (mu == null)
             throw primaryKeyNotExists(impl.$referencesTable());
 
-        boolean enforced = true ;
         mt.foreignKeys.add(new MutableForeignKey(
-            (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate(), enforced
+            (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate(), impl.$enforced()
         ));
     }
 
@@ -592,11 +591,9 @@ final class Interpreter {
             else
                 mc.name((UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName());
         }
-
-
-
-
-
+        else if (query.$alterConstraint() != null) {
+            existing.constraint(query.$alterConstraint(), true).enforced = query.$alterConstraintEnforced();
+        }
         else if (query.$dropColumns() != null) {
             List<MutableField> fields = existing.fields(query.$dropColumns().toArray(EMPTY_FIELD), false);
 
@@ -746,18 +743,17 @@ final class Interpreter {
         if (!impl.getUnqualifiedName().empty() && existing.constraint(impl) != null)
             throw alreadyExists(impl);
 
-        boolean enforced = true ;
         if (impl.$primaryKey() != null)
             if (existing.primaryKey != null)
                 throw alreadyExists(impl);
             else
-                existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true), enforced);
+                existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true), impl.$enforced());
         else if (impl.$unique() != null)
-            existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true), enforced));
+            existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true), impl.$enforced()));
         else if (impl.$foreignKey() != null)
             addForeignKey(existing, impl);
         else if (impl.$check() != null)
-            existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check(), enforced));
+            existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check(), impl.$enforced()));
         else
             throw unsupportedQuery(query);
     }
@@ -1985,7 +1981,7 @@ final class Interpreter {
                 (UnqualifiedName) constraint.getUnqualifiedName(),
                 null,
                 ((ConstraintImpl) constraint).$check(),
-                true
+                ((ConstraintImpl) constraint).$enforced()
             );
         }
 

@@ -165,7 +165,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.AlterTableAddStep;
-// ...
+import org.jooq.AlterTableAlterConstraintStep;
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
@@ -205,9 +205,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     AlterTableAddStep,
     AlterTableDropStep,
     AlterTableAlterStep,
-
-
-
+    AlterTableAlterConstraintStep,
     AlterTableUsingIndexStep,
     AlterTableRenameColumnToStep,
     AlterTableRenameIndexToStep,
@@ -266,10 +264,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-
-
-
-
+    private Constraint                       alterConstraint;
+    private boolean                          alterConstraintEnforced;
     private Field<?>                         alterColumn;
     private Nullability                      alterColumnNullability;
     private DataType<?>                      alterColumnType;
@@ -308,12 +304,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     final DataType<?>              $alterColumnType()         { return alterColumnType; }
     final Field<?>                 $alterColumnDefault()      { return alterColumnDefault; }
     final boolean                  $alterColumnDropDefault()  { return alterColumnDropDefault; }
-
-
-
-
-
-
+    final Constraint               $alterConstraint()         { return alterConstraint; }
+    final boolean                  $alterConstraintEnforced() { return alterConstraintEnforced; }
     final Table<?>                 $renameTo()                { return renameTo; }
     final Field<?>                 $renameColumn()            { return renameColumn; }
     final Field<?>                 $renameColumnTo()          { return renameColumnTo; }
@@ -652,42 +644,38 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         return this;
     }
 
+    @Override
+    public final AlterTableImpl alter(Constraint constraint) {
+        return alterConstraint(constraint);
+    }
 
+    @Override
+    public final AlterTableImpl alterConstraint(Name constraint) {
+        return alterConstraint(constraint(constraint));
+    }
 
+    @Override
+    public final AlterTableImpl alterConstraint(String constraint) {
+        return alterConstraint(constraint(constraint));
+    }
 
+    @Override
+    public final AlterTableImpl alterConstraint(Constraint constraint) {
+        alterConstraint = constraint;
+        return this;
+    }
 
+    @Override
+    public final AlterTableImpl enforced() {
+        alterConstraintEnforced = true;
+        return this;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final AlterTableImpl notEnforced() {
+        alterConstraintEnforced = false;
+        return this;
+    }
 
     @Override
     public final AlterTableImpl set(DataType type) {
@@ -1397,28 +1385,28 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.end(ALTER_TABLE_ADD);
         }
 
+        else if (alterConstraint != null) {
+            ctx.start(ALTER_TABLE_ALTER);
+            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
+
+            switch (family) {
 
 
 
 
 
 
+                default:
+                    ctx.visit(K_ALTER);
+                    break;
+            }
 
+            ctx.sql(' ').visit(K_CONSTRAINT).sql(' ').visit(alterConstraint);
+            ConstraintImpl.acceptEnforced(ctx, alterConstraintEnforced);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
+            ctx.end(ALTER_TABLE_ALTER);
+        }
 
         else if (alterColumn != null) {
             ctx.start(ALTER_TABLE_ALTER);

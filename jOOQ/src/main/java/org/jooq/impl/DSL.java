@@ -7059,7 +7059,7 @@ public class DSL {
      * Create an unnamed (system named) <code>CHECK</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support
     public static ConstraintEnforcementStep check(Condition condition) {
         return constraint().check(condition);
     }

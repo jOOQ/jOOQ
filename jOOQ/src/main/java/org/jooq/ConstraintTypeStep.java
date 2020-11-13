@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -621,6 +622,6 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
      * Create a <code>CHECK</code> constraint.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support
     ConstraintEnforcementStep check(Condition condition);
 }

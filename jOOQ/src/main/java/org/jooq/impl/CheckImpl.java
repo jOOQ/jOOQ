@@ -88,12 +88,7 @@ final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R
     }
 
     private final Constraint enforced(ConstraintEnforcementStep key) {
-
-
-
-
-
-        return key;
+        return enforced() ? key : key.notEnforced();
     }
 
     @Override

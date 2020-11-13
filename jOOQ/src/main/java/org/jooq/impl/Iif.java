@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Names.N_IF;
+import static org.jooq.impl.Names.N_IIF;
+
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -71,12 +74,17 @@ final class Iif<T> extends AbstractField<T> {
 
 
 
-
-
             case MARIADB:
             case MYSQL:
-                ctx.visit(getUnqualifiedName()).sql('(').visit(condition).sql(", ").visit(ifTrue).sql(", ").visit(ifFalse).sql(')');
+                ctx.visit(N_IF).sql('(').visit(condition).sql(", ").visit(ifTrue).sql(", ").visit(ifFalse).sql(')');
                 break;
+
+
+
+
+
+
+
 
             default:
                 ctx.visit(DSL.when(condition, ifTrue).otherwise(ifFalse));

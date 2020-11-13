@@ -82,6 +82,9 @@ public class Settings
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected RenderImplicitJoinType renderImplicitJoinType = RenderImplicitJoinType.DEFAULT;
+    @XmlElement(defaultValue = "IMPLICIT_NULL")
+    @XmlSchemaType(name = "string")
+    protected RenderDefaultNullability renderDefaultNullability = RenderDefaultNullability.IMPLICIT_NULL;
     @XmlElement(defaultValue = "true")
     protected Boolean renderOrderByRownumberForEmulatedPagination = true;
     @XmlElement(defaultValue = "true")
@@ -667,6 +670,22 @@ public class Settings
      */
     public void setRenderImplicitJoinType(RenderImplicitJoinType value) {
         this.renderImplicitJoinType = value;
+    }
+
+    /**
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * 
+     */
+    public RenderDefaultNullability getRenderDefaultNullability() {
+        return renderDefaultNullability;
+    }
+
+    /**
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * 
+     */
+    public void setRenderDefaultNullability(RenderDefaultNullability value) {
+        this.renderDefaultNullability = value;
     }
 
     /**
@@ -2661,6 +2680,15 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * 
+     */
+    public Settings withRenderDefaultNullability(RenderDefaultNullability value) {
+        setRenderDefaultNullability(value);
+        return this;
+    }
+
     public Settings withRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         setRenderOrderByRownumberForEmulatedPagination(value);
         return this;
@@ -3341,6 +3369,7 @@ public class Settings
         builder.append("renderOptionalOuterKeyword", renderOptionalOuterKeyword);
         builder.append("renderScalarSubqueriesForStoredFunctions", renderScalarSubqueriesForStoredFunctions);
         builder.append("renderImplicitJoinType", renderImplicitJoinType);
+        builder.append("renderDefaultNullability", renderDefaultNullability);
         builder.append("renderOrderByRownumberForEmulatedPagination", renderOrderByRownumberForEmulatedPagination);
         builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
         builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
@@ -3606,6 +3635,15 @@ public class Settings
             }
         } else {
             if (!renderImplicitJoinType.equals(other.renderImplicitJoinType)) {
+                return false;
+            }
+        }
+        if (renderDefaultNullability == null) {
+            if (other.renderDefaultNullability!= null) {
+                return false;
+            }
+        } else {
+            if (!renderDefaultNullability.equals(other.renderDefaultNullability)) {
                 return false;
             }
         }
@@ -4399,6 +4437,7 @@ public class Settings
         result = ((prime*result)+((renderOptionalOuterKeyword == null)? 0 :renderOptionalOuterKeyword.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((renderImplicitJoinType == null)? 0 :renderImplicitJoinType.hashCode()));
+        result = ((prime*result)+((renderDefaultNullability == null)? 0 :renderDefaultNullability.hashCode()));
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
         result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));

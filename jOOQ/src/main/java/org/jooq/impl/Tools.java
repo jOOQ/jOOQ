@@ -62,11 +62,13 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.conf.RenderDefaultNullability.IMPLICIT_NULL;
 import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
@@ -275,6 +277,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.XML;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.ParseNameCase;
+import org.jooq.conf.RenderDefaultNullability;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.ThrowExceptions;
@@ -833,6 +836,10 @@ final class Tools {
     private static final Set<SQLDialect> DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
     private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX               = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
+
+
+
+
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
@@ -4924,13 +4931,48 @@ final class Tools {
         if (DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
             toSQLDDLTypeDeclarationDefault(ctx, type);
 
-        if (!type.nullable())
-            ctx.sql(' ').visit(K_NOT_NULL);
+        switch (type.nullability()) {
+            case NOT_NULL:
+                ctx.sql(' ').visit(K_NOT_NULL);
+                break;
 
-            // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
-            // [#3400] [#4321] [#7392] ... but not in Derby, Firebird, HSQLDB
-        else if (!NO_SUPPORT_NULL.contains(ctx.dialect()))
-            ctx.sql(' ').visit(K_NULL);
+            case NULL:
+
+                // [#3400] [#4321] [#7392] E.g. Derby, Firebird, HSQLDB do not support explicit nullability.
+                if (!NO_SUPPORT_NULL.contains(ctx.dialect()))
+                    ctx.sql(' ').visit(K_NULL);
+
+                break;
+
+            // [#10937] The behaviour has been re-defined via Settings.renderDefaultNullability
+            case DEFAULT:
+                RenderDefaultNullability nullability = StringUtils.defaultIfNull(ctx.settings().getRenderDefaultNullability(), IMPLICIT_NULL);
+
+                switch (nullability) {
+                    case EXPLICIT_NULL:
+                        if (!NO_SUPPORT_NULL.contains(ctx.dialect()))
+                            ctx.sql(' ').visit(K_NULL);
+
+                        break;
+
+                    case IMPLICIT_DEFAULT:
+                        break;
+
+                    case IMPLICIT_NULL:
+
+
+
+
+                        break;
+
+                    default:
+                        throw new UnsupportedOperationException("Nullability not supported: " + nullability);
+                }
+                break;
+
+            default:
+                throw new UnsupportedOperationException("Nullability not supported: " + type.nullability());
+        }
 
         if (!DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
             toSQLDDLTypeDeclarationDefault(ctx, type);

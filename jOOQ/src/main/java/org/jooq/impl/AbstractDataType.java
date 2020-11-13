@@ -138,6 +138,16 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
+    public final DataType<T> null_() {
+        return nullable(true);
+    }
+
+    @Override
+    public DataType<T> notNull() {
+        return nullable(false);
+    }
+
+    @Override
     public final DataType<T> collation(Collation c) {
         return construct(precision0(), scale0(), length0(), nullability(), c, characterSet(), identity(), defaultValue());
     }

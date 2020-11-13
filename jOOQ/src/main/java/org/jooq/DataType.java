@@ -327,6 +327,22 @@ public interface DataType<T> extends Named {
     boolean nullable();
 
     /**
+     * Synonym for {@link #nullable(boolean)}, passing <code>true</code> as an
+     * argument.
+     */
+    @NotNull
+    @Support
+    DataType<T> null_();
+
+    /**
+     * Synonym for {@link #nullable(boolean)}, passing <code>false</code> as an
+     * argument.
+     */
+    @NotNull
+    @Support
+    DataType<T> notNull();
+
+    /**
      * Return a new data type like this, with a new collation.
      */
     @NotNull

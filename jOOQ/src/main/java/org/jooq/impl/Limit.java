@@ -90,7 +90,6 @@ final class Limit extends AbstractQueryPart {
     Param<?>                            offset;
     private Param<?>                    offsetOrZero      = ZERO;
     private Param<?>                    offsetPlusOne     = ONE;
-    private boolean                     rendersParams;
     boolean                             withTies;
     boolean                             percent;
 
@@ -435,17 +434,6 @@ final class Limit extends AbstractQueryPart {
         return offset != null || numberOfRows != null;
     }
 
-    /**
-     * Whether this LIMIT clause renders {@link Param} objects. This indicates
-     * to the <code>SELECT</code> statement, that it may need to prefer
-     * <code>ROW_NUMBER()</code> filtering over a <code>TOP</code> clause to
-     * allow for named parameters in the query, as the <code>TOP</code> clause
-     * may not accept bind variables.
-     */
-    final boolean rendersParams() {
-        return rendersParams;
-    }
-
     final void setOffset(Number offset) {
         this.offset = val(offset.longValue(), BIGINT);
         this.offsetOrZero = this.offset;
@@ -455,7 +443,6 @@ final class Limit extends AbstractQueryPart {
     final void setOffset(Param<?> offset) {
         this.offset = offset;
         this.offsetOrZero = offset;
-        this.rendersParams = rendersParams |= offset.isInline();
     }
 
     final void setNumberOfRows(Number numberOfRows) {
@@ -466,7 +453,6 @@ final class Limit extends AbstractQueryPart {
     final void setNumberOfRows(Param<?> numberOfRows) {
         this.numberOfRows = numberOfRows;
         this.numberOfRowsOrMax = numberOfRows;
-        this.rendersParams |= numberOfRows.isInline();
     }
 
     final Long getNumberOfRows() {

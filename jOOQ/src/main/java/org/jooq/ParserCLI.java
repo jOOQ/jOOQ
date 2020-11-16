@@ -491,9 +491,9 @@ public final class ParserCLI {
         System.out.println("  -s / --sql                                <String>            Specify the input SQL string");
         System.out.println("");
         System.out.println("Commercial distribution only features:");
-        System.out.println("  --transform-ansi-join-to-table-lists");
-        System.out.println("  --transform-rownum");
-        System.out.println("  --transform-table-lists-to-ansi-join");
+        System.out.println("  --transform-ansi-join-to-table-lists      <boolean>");
+        System.out.println("  --transform-rownum                        <boolean>");
+        System.out.println("  --transform-table-lists-to-ansi-join      <boolean>");
         System.out.println("  --transform-unneeded-arithmetic           <TransformUnneededArithmeticExpressions>");
         System.out.println("");
         System.out.println("  -I / --interactive                                            Start interactive mode");
@@ -512,9 +512,9 @@ public final class ParserCLI {
         System.out.println("                                           <String>            Specify the input SQL string");
         System.out.println("");
         System.out.println("Commercial distribution only features:");
-        System.out.println("  /transform-ansi-join-to-table-lists");
-        System.out.println("  /transform-rownum");
-        System.out.println("  /transform-table-lists-to-ansi-join");
+        System.out.println("  /transform-ansi-join-to-table-lists      <boolean>");
+        System.out.println("  /transform-rownum                        <boolean>");
+        System.out.println("  /transform-table-lists-to-ansi-join      <boolean>");
         System.out.println("  /transform-unneeded-arithmetic           <TransformUnneededArithmeticExpressions>");
         System.out.println("");
         System.out.println("  /q  or  /quit                                                Quit");

@@ -326,7 +326,12 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 //         matching customType, the user probably malconfigured
                 //         their <forcedTypes/> or <customTypes/>
                 else {
-                    log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
+
+                    // [#7373] [#10944] Refer to <customType/> only if someone is still using the feature
+                    if (db.getConfiguredCustomTypes().isEmpty())
+                        log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching SQLDataType found: " + forcedType);
+                    else
+                        log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
                 }
             }
         }

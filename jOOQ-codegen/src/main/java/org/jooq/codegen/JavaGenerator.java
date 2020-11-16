@@ -8499,7 +8499,9 @@ public class JavaGenerator extends AbstractGenerator {
 
                 sb.append(", ")
                   .append(sqlDataTypeRef)
-                  .append("))");
+                  .append(")")
+                  .append(kotlin && dataType.getType() == Object.class ? " as Any?" : "")
+                  .append(")");
             }
         }
 

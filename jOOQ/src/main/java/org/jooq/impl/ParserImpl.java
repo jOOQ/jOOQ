@@ -1928,8 +1928,6 @@ final class ParserImpl implements Parser {
         InsertOnDuplicateStep<?> onDuplicate;
         InsertReturningStep<?> returning;
 
-        ctx.scopeEnd();
-        ctx.scopeStart();
         try {
             if (parseKeywordIf(ctx, "VALUES")) {
                 List<List<Field<?>>> allValues = new ArrayList<>();
@@ -1972,6 +1970,12 @@ final class ParserImpl implements Parser {
                 returning = onDuplicate =  s1.set(map);
             }
             else if (peekSelect(ctx, true)){
+
+                // [#10954] These are moved into the INSERT .. SELECT clause handling. They should not be necessary here
+                //          either, but it seems we currently don't correctly implement nesting scopes?
+                ctx.scopeEnd();
+                ctx.scopeStart();
+
                 SelectQueryImpl<Record> select = parseSelect(ctx);
 
                 returning = onDuplicate = (fields == null)

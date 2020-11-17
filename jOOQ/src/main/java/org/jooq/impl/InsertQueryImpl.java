@@ -305,46 +305,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         if (onDuplicateKeyUpdate) {
             switch (ctx.family()) {
 
-                // MySQL has a nice syntax for this
-
-
-
-
-                case CUBRID:
-                case MARIADB:
-                case MYSQL: {
-
-                    // [#2508] In H2, this syntax is supported in MySQL MODE (we're assuming users will
-                    //         set this mode in order to profit from this functionality). Up until
-                    //         H2 1.4.197, qualification of columns in the ON DUPLICATE KEY UPDATE clause
-                    //         wasn't supported (see https://github.com/h2database/h2database/issues/1027)
-                    boolean oldQualify = ctx.qualify();
-                    boolean newQualify = ctx.family() == H2 ? false : oldQualify;
-
-                    toSQLInsert(ctx);
-                    ctx.formatSeparator()
-                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .visit(K_ON_DUPLICATE_KEY_UPDATE)
-                       .formatIndentStart()
-                       .formatSeparator()
-                       .qualify(newQualify);
-
-                    // [#8479] Emulate WHERE clause using CASE
-                    if (condition.hasWhere())
-                        ctx.data(DATA_ON_DUPLICATE_KEY_WHERE, condition.getWhere());
-
-                    ctx.visit(updateMap);
-
-                    if (condition.hasWhere())
-                        ctx.data().remove(DATA_ON_DUPLICATE_KEY_WHERE);
-
-                    ctx.qualify(oldQualify)
-                       .formatIndentEnd()
-                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
-
-                    break;
-                }
-
 
 
 
@@ -450,8 +410,46 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     break;
                 }
 
-                default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.dialect());
+                // MySQL has a nice syntax for this
+
+
+
+
+                case CUBRID:
+                case MARIADB:
+                case MYSQL:
+                default: {
+
+                    // [#2508] In H2, this syntax is supported in MySQL MODE (we're assuming users will
+                    //         set this mode in order to profit from this functionality). Up until
+                    //         H2 1.4.197, qualification of columns in the ON DUPLICATE KEY UPDATE clause
+                    //         wasn't supported (see https://github.com/h2database/h2database/issues/1027)
+                    boolean oldQualify = ctx.qualify();
+                    boolean newQualify = ctx.family() == H2 ? false : oldQualify;
+
+                    toSQLInsert(ctx);
+                    ctx.formatSeparator()
+                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                       .visit(K_ON_DUPLICATE_KEY_UPDATE)
+                       .formatIndentStart()
+                       .formatSeparator()
+                       .qualify(newQualify);
+
+                    // [#8479] Emulate WHERE clause using CASE
+                    if (condition.hasWhere())
+                        ctx.data(DATA_ON_DUPLICATE_KEY_WHERE, condition.getWhere());
+
+                    ctx.visit(updateMap);
+
+                    if (condition.hasWhere())
+                        ctx.data().remove(DATA_ON_DUPLICATE_KEY_WHERE);
+
+                    ctx.qualify(oldQualify)
+                       .formatIndentEnd()
+                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+
+                    break;
+                }
             }
         }
 

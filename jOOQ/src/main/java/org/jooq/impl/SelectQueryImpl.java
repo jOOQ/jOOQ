@@ -2653,6 +2653,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final void toSQLOrderBy(
         final Context<?> ctx,
         final Field<?>[] originalFields,

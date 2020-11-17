@@ -42,6 +42,7 @@ import java.lang.reflect.Method;
 import javax.persistence.AttributeConverter;
 
 import org.jooq.exception.MappingException;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.reflect.Reflect;
 
 
@@ -63,6 +64,7 @@ public final class JPAConverter<T, U> extends AbstractConverter<T, U> {
      * Generated UID
      */
     private static final long              serialVersionUID = -8359212595180862077L;
+    private static final JooqLogger        log              = JooqLogger.getLogger(JPAConverter.class);
 
     private final AttributeConverter<U, T> delegate;
 
@@ -79,18 +81,40 @@ public final class JPAConverter<T, U> extends AbstractConverter<T, U> {
 
     @SuppressWarnings("unchecked")
     private static final <T> Class<T> fromType(Class<? extends AttributeConverter<?, T>> klass) {
-        for (Method method : klass.getMethods())
+        Method candidate = null;
+
+        // [#10951] Try finding the bridge method, skip the inherited method if applicable
+        for (Method method : klass.getDeclaredMethods())
             if ("convertToDatabaseColumn".equals(method.getName()))
-                return (Class<T>) method.getReturnType();
+                if (method.getReturnType() == Object.class)
+                    candidate = method;
+                else
+                    return (Class<T>) method.getReturnType();
+
+        if (candidate != null) {
+            log.warn("Couldn't find bridge method to detect generic type bound for " + klass.getName() + "::convertToDatabaseColumn");
+            return (Class<T>) candidate.getReturnType();
+        }
 
         throw new IllegalArgumentException();
     }
 
     @SuppressWarnings("unchecked")
     private static final <U> Class<U> toType(Class<? extends AttributeConverter<U, ?>> klass) {
-        for (Method method : klass.getMethods())
+        Method candidate = null;
+
+        // [#10951] Try finding the bridge method, skip the inherited method if applicable
+        for (Method method : klass.getDeclaredMethods())
             if ("convertToEntityAttribute".equals(method.getName()))
-                return (Class<U>) method.getReturnType();
+                if (method.getReturnType() == Object.class)
+                    candidate = method;
+                else
+                    return (Class<U>) method.getReturnType();
+
+        if (candidate != null) {
+            log.warn("Couldn't find bridge method to detect generic type bound for " + klass.getName() + "::convertToEntityAttribute");
+            return (Class<U>) candidate.getReturnType();
+        }
 
         throw new IllegalArgumentException();
     }

@@ -94,11 +94,13 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.ConfigurationException;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.ParserException;
 import org.jooq.impl.ThreadLocalTransactionProvider;
 import org.jooq.tools.jdbc.BatchedConnection;
 import org.jooq.tools.jdbc.MockCallable;
@@ -348,9 +350,13 @@ public interface DSLContext extends Scope {
      * This is convenience for wrapping all argument {@link String}s in
      * {@link Source}. The same set of content types are supported as in
      * {@link #meta(Source...)}.
+     *
+     * @throws DataDefinitionException if the sources do not produce consistent
+     *             meta data.
+     * @throws ParserException if there is a parser error parsing the sources.
      */
     @NotNull
-    Meta meta(String... sources);
+    Meta meta(String... sources) throws DataDefinitionException, ParserException;
 
     /**
      * Create meta data from a set of sources.
@@ -366,18 +372,25 @@ public interface DSLContext extends Scope {
      * <p>
      * This will not connect to your database to get live meta information,
      * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
+     *
+     * @throws DataDefinitionException if the sources do not produce consistent
+     *             meta data.
+     * @throws ParserException if there is a parser error parsing the sources.
      */
     @NotNull
-    Meta meta(Source... sources);
+    Meta meta(Source... sources) throws DataDefinitionException, ParserException;
 
     /**
      * Create meta data from a set of DDL queries.
      * <p>
      * This works the same way as {@link #meta(Source...)}, without the need of
      * parsing the DDL scripts.
+     *
+     * @throws DataDefinitionException if the sources do not produce consistent
+     *             meta data.
      */
     @NotNull
-    Meta meta(Query... queries);
+    Meta meta(Query... queries) throws DataDefinitionException;
 
     /**
      * Convenience method for {@link Meta#informationSchema()}.

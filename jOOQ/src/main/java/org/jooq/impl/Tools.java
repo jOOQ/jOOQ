@@ -836,6 +836,7 @@ final class Tools {
     private static final Set<SQLDialect> DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
     private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX               = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect> DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
 
 
 
@@ -4962,6 +4963,13 @@ final class Tools {
 
 
 
+
+
+
+                        // [#10937] MariaDB applies NOT NULL DEFAULT CURRENT_TIMESTAMP on
+                        //          TIMESTAMP columns in the absence of explicit nullability
+                        if (DEFAULT_TIMESTAMP_NOT_NULL.contains(ctx.dialect()) && type.isTimestamp())
+                            ctx.sql(' ').visit(K_NULL);
 
                         break;
 

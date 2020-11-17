@@ -725,11 +725,13 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
     static final void formatJSONMap0(Record record, Fields<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
         String separator = "";
+        boolean wrapRecords = format.wrapSingleColumnRecords() || fields.fields.length > 1;
 
-        if (format.format())
-            writer.append(format.indentString(recordLevel)).append('{');
-        else
-            writer.append('{');
+        if (wrapRecords)
+            if (format.format())
+                writer.append(format.indentString(recordLevel)).append('{');
+            else
+                writer.append('{');
 
         for (int index = 0; index < fields.fields.length; index++) {
             writer.append(separator);
@@ -737,28 +739,33 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             if (format.format())
                 writer.append(format.newline()).append(format.indentString(recordLevel + 1));
 
-            JSONValue.writeJSONString(record.field(index).getName(), writer);
-            writer.append(':');
-            if (format.format())
-                writer.append(' ');
+            if (wrapRecords) {
+                JSONValue.writeJSONString(record.field(index).getName(), writer);
+                writer.append(':');
+
+                if (format.format())
+                    writer.append(' ');
+            }
 
             formatJSON0(record.get(index), writer, format);
             separator = ",";
         }
 
-        if (format.format())
-            writer.append(format.newline()).append(format.indentString(recordLevel));
-
-        writer.append('}');
+        if (wrapRecords)
+            if (format.format())
+                writer.append(format.newline()).append(format.indentString(recordLevel)).append('}');
+            else
+                writer.append('}');
     }
 
     static final void formatJSONArray0(Record record, Fields<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
         String separator = "";
 
-        if (format.format())
-            writer.append(format.indentString(recordLevel)).append('[');
-        else
-            writer.append('[');
+        if (format.wrapSingleColumnRecords() || fields.fields.length > 1)
+            if (format.format())
+                writer.append(format.indentString(recordLevel)).append('[');
+            else
+                writer.append('[');
 
         for (int index = 0; index < fields.fields.length; index++) {
             writer.append(separator);
@@ -770,10 +777,11 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             separator = ",";
         }
 
-        if (format.format())
-            writer.append(format.newline()).append(format.indentString(recordLevel));
-
-        writer.append(']');
+        if (format.wrapSingleColumnRecords() || fields.fields.length > 1)
+            if (format.format())
+                writer.append(format.newline()).append(format.indentString(recordLevel)).append(']');
+            else
+                writer.append(']');
     }
 
     @Override

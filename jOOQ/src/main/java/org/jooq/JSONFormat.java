@@ -74,6 +74,7 @@ public final class JSONFormat {
     final String[]                 indented;
     final boolean                  header;
     final RecordFormat             recordFormat;
+    final boolean                  wrapSingleColumnRecords;
     final boolean                  quoteNested;
 
     public JSONFormat() {
@@ -84,6 +85,7 @@ public final class JSONFormat {
             null,
             true,
             RecordFormat.ARRAY,
+            true,
             false
         );
     }
@@ -95,6 +97,7 @@ public final class JSONFormat {
         String[] indented,
         boolean header,
         RecordFormat recordFormat,
+        boolean wrapSingleColumnRecords,
         boolean quoteNested
     ) {
         this.format = format;
@@ -108,6 +111,7 @@ public final class JSONFormat {
         };
         this.header = header;
         this.recordFormat = recordFormat;
+        this.wrapSingleColumnRecords = wrapSingleColumnRecords;
         this.quoteNested = quoteNested;
     }
 
@@ -122,6 +126,7 @@ public final class JSONFormat {
             null,
             header,
             recordFormat,
+            wrapSingleColumnRecords,
             quoteNested
         );
     }
@@ -144,6 +149,7 @@ public final class JSONFormat {
             indented,
             header,
             recordFormat,
+            wrapSingleColumnRecords,
             quoteNested
         );
     }
@@ -166,6 +172,7 @@ public final class JSONFormat {
             null,
             header,
             recordFormat,
+            wrapSingleColumnRecords,
             quoteNested
         );
     }
@@ -201,6 +208,7 @@ public final class JSONFormat {
             indented,
             newHeader,
             recordFormat,
+            wrapSingleColumnRecords,
             quoteNested
         );
     }
@@ -225,6 +233,7 @@ public final class JSONFormat {
             indented,
             header,
             newRecordFormat,
+            wrapSingleColumnRecords,
             quoteNested
         );
     }
@@ -235,6 +244,29 @@ public final class JSONFormat {
      */
     public final RecordFormat recordFormat() {
         return recordFormat;
+    }
+
+    /**
+     * Whether to wrap single column records in the {@link #recordFormat()}.
+     */
+    public final JSONFormat wrapSingleColumnRecords(boolean newWrapSingleColumnRecords) {
+        return new JSONFormat(
+            format,
+            newline,
+            indent,
+            indented,
+            header,
+            recordFormat,
+            newWrapSingleColumnRecords,
+            quoteNested
+        );
+    }
+
+    /**
+     * Whether to wrap single column records in the {@link #recordFormat()}.
+     */
+    public final boolean wrapSingleColumnRecords() {
+        return wrapSingleColumnRecords;
     }
 
     /**
@@ -249,6 +281,7 @@ public final class JSONFormat {
             indented,
             header,
             recordFormat,
+            wrapSingleColumnRecords,
             newQuoteNested
         );
     }

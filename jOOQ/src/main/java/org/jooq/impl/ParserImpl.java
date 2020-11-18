@@ -4003,15 +4003,23 @@ final class ParserImpl implements Parser {
                 }
                 else if (parseKeywordIf(ctx, "DEFAULT")) {
 
-                    // TODO: [#10116] Support this clause also in the jOOQ API
-                    parseKeywordIf(ctx, "ON NULL");
+                    // [#10963] Special case nextval('<id>_seq'::regclass)
+                    if (parseSerialIf(ctx)) {
+                        type = type.identity(true);
+                    }
+                    else {
 
-                    type = type.defaultValue((Field) toField(ctx, parseConcat(ctx, null)));
+                        // TODO: [#10116] Support this clause also in the jOOQ API
+                        parseKeywordIf(ctx, "ON NULL");
 
-                    // TODO: [#10115] Support this clause also in the jOOQ API
-                    parseKeywordIf(ctx, "WITH VALUES");
+                        type = type.defaultValue((Field) toField(ctx, parseConcat(ctx, null)));
 
-                    defaultValue = true;
+                        // TODO: [#10115] Support this clause also in the jOOQ API
+                        parseKeywordIf(ctx, "WITH VALUES");
+
+                        defaultValue = true;
+                    }
+
                     continue;
                 }
                 else if (!identity && parseKeywordIf(ctx, "GENERATED")) {
@@ -4157,6 +4165,23 @@ final class ParserImpl implements Parser {
         }
 
         return new ParseInlineConstraints(type, fieldComment, primary, identity);
+    }
+
+    private static final boolean parseSerialIf(ParserContext ctx) {
+        int i = ctx.position();
+
+        String s;
+        if (parseFunctionNameIf(ctx, "NEXTVAL")
+            && parseIf(ctx, '(')
+            && ((s = parseStringLiteralIf(ctx)) != null)
+            && s.toLowerCase().endsWith("_seq")
+            && parseIf(ctx, "::")
+            && parseKeywordIf(ctx, "REGCLASS")
+            && parseIf(ctx, ')'))
+            return true;
+
+        ctx.position(i);
+        return false;
     }
 
     private static final boolean parsePrimaryKeyClusteredNonClusteredKeywordIf(ParserContext ctx) {

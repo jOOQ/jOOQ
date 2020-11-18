@@ -342,6 +342,7 @@ import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
@@ -1133,6 +1134,10 @@ final class ParserImpl implements Parser {
         ctx.scopeStart();
         SelectQueryImpl<Record> result = parseQueryExpressionBody(ctx, degree, with, null);
         List<SortField<?>> orderBy = null;
+
+        for (Field<?> field : result.getSelect())
+            if (aliased(field) != null)
+                ctx.scope(field);
 
         if (parseKeywordIf(ctx, "ORDER")) {
             if (parseKeywordIf(ctx, "SIBLINGS BY") && ctx.requireProEdition()) {
@@ -12141,6 +12146,7 @@ final class ParserContext {
     private int                                     bindIndex       = 0;
     private String                                  delimiter       = ";";
     private final ScopeStack<String, Table<?>>      tableScope      = new ScopeStack<>(null);
+    private final ScopeStack<String, Field<?>>      fieldScope      = new ScopeStack<>(null);
     private final ScopeStack<String, FieldProxy<?>> lookupFields    = new ScopeStack<>(null);
     private boolean                                 scopeClear      = false;
 
@@ -12433,8 +12439,13 @@ final class ParserContext {
         tableScope.set(table.getName(), table);
     }
 
+    void scope(Field<?> field) {
+        fieldScope.set(field.getName(), field);
+    }
+
     void scopeStart() {
         tableScope.scopeStart();
+        fieldScope.scopeStart();
         lookupFields.scopeStart();
         lookupFields.setAll(null);
     }
@@ -12446,8 +12457,19 @@ final class ParserContext {
         for (FieldProxy<?> f : lookupFields) {
             Field<?> f1 = null;
 
+            for (Field<?> a : fieldScope) {
+                if (a.getName().equals(f.getName())) {
+                    if (f1 != null) {
+                        position(f.position());
+                        throw exception("Ambiguous field identifier");
+                    }
+
+                    f1 = a;
+                }
+            }
             for (Table<?> t : tableScope) {
                 Field<?> f2;
+
                 if ((f2 = t.field(f.getName())) != null) {
                     if (f1 != null) {
                         position(f.position());
@@ -12466,6 +12488,7 @@ final class ParserContext {
 
         lookupFields.scopeEnd();
         tableScope.scopeEnd();
+        fieldScope.scopeEnd();
 
         for (FieldProxy<?> r : retain)
             if (lookupFields.get(r.getName()) == null)

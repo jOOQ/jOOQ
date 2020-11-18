@@ -42,6 +42,7 @@ import org.jetbrains.annotations.*;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -62,13 +63,13 @@ public interface ArrayAggOrderByStep<T> extends AggregateFilterStep<T> {
      * Add an <code>ORDER BY</code> clause to the function.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     AggregateFilterStep<T> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     AggregateFilterStep<T> orderBy(Collection<? extends OrderField<?>> fields);
 }

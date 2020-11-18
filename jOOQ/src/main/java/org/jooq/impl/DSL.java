@@ -21098,7 +21098,7 @@ public class DSL {
      * Get the <code>array_agg()</code> aggregate function.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAgg(Field<T> field) {
         return new ArrayAgg(false, nullSafe(field));
     }
@@ -21107,7 +21107,7 @@ public class DSL {
      * Get the <code>array_agg()</code> aggregate function.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
         return new ArrayAgg(true, nullSafe(field));
     }

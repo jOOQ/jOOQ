@@ -1353,7 +1353,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final SelectQueryImpl<Record> parseQueryExpressionBody(ParserContext ctx, Integer degree, WithImpl with, SelectQueryImpl<Record> prefix) {
-        SelectQueryImpl<Record> result = parseQueryTerm(ctx, degree, with, prefix);
+        SelectQueryImpl<Record> lhs = parseQueryTerm(ctx, degree, with, prefix);
 
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(ctx, false)) != null) {
@@ -1361,31 +1361,32 @@ final class ParserImpl implements Parser {
             ctx.scopeStart();
 
             if (degree == null)
-                degree = Tools.degree(result);
+                degree = Tools.degree(lhs);
 
+            SelectQueryImpl<Record> rhs = degreeCheck(ctx, degree, parseQueryTerm(ctx, degree, null, null));
             switch (combine) {
                 case UNION:
-                    result = (SelectQueryImpl<Record>) result.union(parseQueryTerm(ctx, degree, null, null));
+                    lhs = (SelectQueryImpl<Record>) lhs.union(rhs);
                     break;
                 case UNION_ALL:
-                    result = (SelectQueryImpl<Record>) result.unionAll(parseQueryTerm(ctx, degree, null, null));
+                    lhs = (SelectQueryImpl<Record>) lhs.unionAll(rhs);
                     break;
                 case EXCEPT:
-                    result = (SelectQueryImpl<Record>) result.except(parseQueryTerm(ctx, degree, null, null));
+                    lhs = (SelectQueryImpl<Record>) lhs.except(rhs);
                     break;
                 case EXCEPT_ALL:
-                    result = (SelectQueryImpl<Record>) result.exceptAll(parseQueryTerm(ctx, degree, null, null));
+                    lhs = (SelectQueryImpl<Record>) lhs.exceptAll(rhs);
                     break;
                 default:
                     throw ctx.internalError();
             }
         }
 
-        return result;
+        return lhs;
     }
 
     private static final SelectQueryImpl<Record> parseQueryTerm(ParserContext ctx, Integer degree, WithImpl with, SelectQueryImpl<Record> prefix) {
-        SelectQueryImpl<Record> result = prefix != null ? prefix : parseQueryPrimary(ctx, degree, with);
+        SelectQueryImpl<Record> lhs = prefix != null ? prefix : parseQueryPrimary(ctx, degree, with);
 
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(ctx, true)) != null) {
@@ -1393,21 +1394,36 @@ final class ParserImpl implements Parser {
             ctx.scopeStart();
 
             if (degree == null)
-                degree = Tools.degree(result);
+                degree = Tools.degree(lhs);
 
+            SelectQueryImpl<Record> rhs = degreeCheck(ctx, degree, parseQueryPrimary(ctx, degree, null));
             switch (combine) {
                 case INTERSECT:
-                    result = (SelectQueryImpl<Record>) result.intersect(parseQueryPrimary(ctx, degree, null));
+                    lhs = (SelectQueryImpl<Record>) lhs.intersect(rhs);
                     break;
                 case INTERSECT_ALL:
-                    result = (SelectQueryImpl<Record>) result.intersectAll(parseQueryPrimary(ctx, degree, null));
+                    lhs = (SelectQueryImpl<Record>) lhs.intersectAll(rhs);
                     break;
                 default:
                     throw ctx.internalError();
             }
         }
 
-        return result;
+        return lhs;
+    }
+
+    private static SelectQueryImpl<Record> degreeCheck(ParserContext ctx, int expected, SelectQueryImpl<Record> s) {
+        if (expected == 0)
+            return s;
+
+        int actual = Tools.degree(s);
+        if (actual == 0)
+            return s;
+
+        if (expected != actual)
+            throw ctx.exception("Select list must contain " + expected + " columns. Got: " + actual);
+
+        return s;
     }
 
     private static final SelectQueryImpl<Record> parseQueryPrimary(ParserContext ctx, Integer degree, WithImpl with) {
@@ -1468,7 +1484,7 @@ final class ParserImpl implements Parser {
         List<SelectFieldOrAsterisk> select = parseSelectList(ctx);
 
         degreeCheck:
-        if (degree != null && select.size() != degree) {
+        if (degree != null && !degree.equals(0) && !degree.equals(select.size())) {
             for (SelectFieldOrAsterisk s : select)
                 if (!(s instanceof Field<?>))
                     break degreeCheck;

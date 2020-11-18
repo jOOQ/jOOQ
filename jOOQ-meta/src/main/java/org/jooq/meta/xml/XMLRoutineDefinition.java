@@ -40,6 +40,8 @@ package org.jooq.meta.xml;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.util.Arrays;
+
 import org.jooq.Name;
 import org.jooq.meta.AbstractRoutineDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -131,7 +133,7 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
                 parameter.getSpecificName()
             );
 
-            if (getQualifiedNamePart().equals(parameterRoutineName)) {
+            if (getOverloadRoutineNamePart().equals(parameterRoutineName)) {
                 DataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
                     getSchema(),
@@ -165,6 +167,18 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
                         break;
                 }
             }
+        }
+    }
+
+    private Name getOverloadRoutineNamePart() {
+        Name qualifiedName = getQualifiedNamePart();
+        String lastName = qualifiedName.last();
+        if (lastName == null) {
+            return qualifiedName;
+        } else {
+            Name[] previousPath = Arrays.copyOf(qualifiedName.parts(), qualifiedName.parts().length - 1);
+            String overloadLastName = lastName + (isBlank(getOverload()) ? "" : "_" + getOverload());
+            return name(previousPath).append(overloadLastName);
         }
     }
 }

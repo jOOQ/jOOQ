@@ -8520,7 +8520,8 @@ final class ParserImpl implements Parser {
 
         switch (character) {
             case 'C':
-                if (parseKeywordIf(ctx, "CENTURY"))
+                if (parseKeywordIf(ctx, "CENTURY") ||
+                    parseKeywordIf(ctx, "CENTURIES"))
                     return DatePart.CENTURY;
 
                 break;
@@ -8536,10 +8537,12 @@ final class ParserImpl implements Parser {
                     parseKeywordIf(ctx, "DW"))
                     return DatePart.DAY_OF_WEEK;
                 else if (parseKeywordIf(ctx, "DAY") ||
+                    parseKeywordIf(ctx, "DAYS") ||
                     parseKeywordIf(ctx, "DD") ||
                     parseKeywordIf(ctx, "D"))
                     return DatePart.DAY;
-                else if (parseKeywordIf(ctx, "DECADE"))
+                else if (parseKeywordIf(ctx, "DECADE") ||
+                    parseKeywordIf(ctx, "DECADES"))
                     return DatePart.DECADE;
 
                 break;
@@ -8552,6 +8555,7 @@ final class ParserImpl implements Parser {
 
             case 'H':
                 if (parseKeywordIf(ctx, "HOUR") ||
+                    parseKeywordIf(ctx, "HOURS") ||
                     parseKeywordIf(ctx, "HH"))
                     return DatePart.HOUR;
 
@@ -8564,17 +8568,23 @@ final class ParserImpl implements Parser {
 
             case 'M':
                 if (parseKeywordIf(ctx, "MINUTE") ||
+                    parseKeywordIf(ctx, "MINUTES") ||
                     parseKeywordIf(ctx, "MI"))
                     return DatePart.MINUTE;
-                else if (parseKeywordIf(ctx, "MILLENNIUM"))
+                else if (parseKeywordIf(ctx, "MILLENNIUM") ||
+                    parseKeywordIf(ctx, "MILLENNIUMS") ||
+                    parseKeywordIf(ctx, "MILLENNIA"))
                     return DatePart.MILLENNIUM;
                 else if (parseKeywordIf(ctx, "MICROSECOND") ||
+                    parseKeywordIf(ctx, "MICROSECONDS") ||
                     parseKeywordIf(ctx, "MCS"))
                     return DatePart.MICROSECOND;
                 else if (parseKeywordIf(ctx, "MILLISECOND") ||
+                    parseKeywordIf(ctx, "MILLISECONDS") ||
                     parseKeywordIf(ctx, "MS"))
                     return DatePart.MILLISECOND;
                 else if (parseKeywordIf(ctx, "MONTH") ||
+                    parseKeywordIf(ctx, "MONTHS") ||
                     parseKeywordIf(ctx, "MM") ||
                     parseKeywordIf(ctx, "M"))
                     return DatePart.MONTH;
@@ -8585,6 +8595,7 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "N"))
                     return DatePart.MINUTE;
                 else if (parseKeywordIf(ctx, "NANOSECOND") ||
+                    parseKeywordIf(ctx, "NANOSECONDS") ||
                     parseKeywordIf(ctx, "NS"))
                     return DatePart.NANOSECOND;
 
@@ -8592,6 +8603,7 @@ final class ParserImpl implements Parser {
 
             case 'Q':
                 if (parseKeywordIf(ctx, "QUARTER") ||
+                    parseKeywordIf(ctx, "QUARTERS") ||
                     parseKeywordIf(ctx, "QQ") ||
                     parseKeywordIf(ctx, "Q"))
                     return DatePart.QUARTER;
@@ -8600,6 +8612,7 @@ final class ParserImpl implements Parser {
 
             case 'S':
                 if (parseKeywordIf(ctx, "SECOND") ||
+                    parseKeywordIf(ctx, "SECONDS") ||
                     parseKeywordIf(ctx, "SS") ||
                     parseKeywordIf(ctx, "S"))
                     return DatePart.SECOND;
@@ -8618,6 +8631,7 @@ final class ParserImpl implements Parser {
 
             case 'W':
                 if (parseKeywordIf(ctx, "WEEK") ||
+                    parseKeywordIf(ctx, "WEEKS") ||
                     parseKeywordIf(ctx, "WK") ||
                     parseKeywordIf(ctx, "WW"))
                     return DatePart.WEEK;
@@ -8629,6 +8643,7 @@ final class ParserImpl implements Parser {
 
             case 'Y':
                 if (parseKeywordIf(ctx, "YEAR") ||
+                    parseKeywordIf(ctx, "YEARS") ||
                     parseKeywordIf(ctx, "YYYY") ||
                     parseKeywordIf(ctx, "YY"))
                     return DatePart.YEAR;

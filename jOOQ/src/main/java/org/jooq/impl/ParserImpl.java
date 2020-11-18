@@ -1352,6 +1352,9 @@ final class ParserImpl implements Parser {
 
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(ctx, false)) != null) {
+            ctx.scopeEnd();
+            ctx.scopeStart();
+
             if (degree == null)
                 degree = Tools.degree(result);
 
@@ -1381,6 +1384,9 @@ final class ParserImpl implements Parser {
 
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(ctx, true)) != null) {
+            ctx.scopeEnd();
+            ctx.scopeStart();
+
             if (degree == null)
                 degree = Tools.degree(result);
 

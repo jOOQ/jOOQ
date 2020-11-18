@@ -7945,7 +7945,11 @@ final class ParserImpl implements Parser {
             }
 
             parse(ctx, ')');
-            if (arg1.getDataType().isDateTime())
+
+            // [#10668] Ignore TRUNC() when calling TRUNC(CURRENT_DATE) or TRUNC(SYSDATE) in Oracle
+            if (arg1 instanceof CurrentDate)
+                return arg1;
+            else if (arg1.getDataType().isDateTime())
                 return DSL.trunc((Field) arg1, DatePart.DAY);
             else if (arg1.getDataType().isNumeric())
                 return DSL.trunc((Field) arg1, inline(0));

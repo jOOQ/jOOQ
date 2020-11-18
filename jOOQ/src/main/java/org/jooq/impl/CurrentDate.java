@@ -43,7 +43,6 @@ import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Names.N_CONVERT;
 import static org.jooq.impl.Names.N_CURRENT_DATE;
 import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
-import static org.jooq.impl.Names.N_SYSDATE;
 import static org.jooq.impl.Names.N_TRUNC;
 
 import org.jooq.Context;

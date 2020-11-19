@@ -114,6 +114,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 
@@ -445,13 +446,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case DERBY:
                 case FIREBIRD:
                 case H2:
-                case HSQLDB: {
+                case HSQLDB:
+                default: {
                     ctx.visit(toMerge(ctx.configuration()));
                     break;
                 }
-
-                default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.dialect());
             }
         }
 

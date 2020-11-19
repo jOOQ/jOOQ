@@ -60,6 +60,7 @@ import org.jooq.util.xml.jaxb.Routine;
 public class XMLRoutineDefinition extends AbstractRoutineDefinition {
 
     private final InformationSchema info;
+    private final Name              specificName;
 
     public XMLRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, InformationSchema info, Routine routine) {
         this(schema, pkg, info, routine, "");
@@ -69,6 +70,12 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
         super(schema, pkg, routine.getRoutineName(), comment, overload(info, routine));
 
         this.info = info;
+        this.specificName = name(
+            routine.getSpecificCatalog(),
+            routine.getSpecificSchema(),
+            routine.getSpecificPackage(),
+            routine.getSpecificName()
+        );
 
         if (!isBlank(routine.getDataType())) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
@@ -131,7 +138,7 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
                 parameter.getSpecificName()
             );
 
-            if (getQualifiedNamePart().equals(parameterRoutineName)) {
+            if (specificName.equals(parameterRoutineName)) {
                 DataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
                     getSchema(),

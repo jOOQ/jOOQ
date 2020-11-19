@@ -76,4 +76,8 @@ abstract class AbstractMatcher extends BugChecker implements MethodInvocationTre
 
         return null;
     }
+
+    static Description nullSafe(Description d) {
+        return d == null ? Description.NO_MATCH : d;
+    }
 }

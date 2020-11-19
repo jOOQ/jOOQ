@@ -89,6 +89,7 @@
                         <configuration>
                             <compilerId>javac-with-errorprone</compilerId>
                             <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                            <fork>false</fork>
                             <source>1.8</source>
                             <target>1.8</target>
                             <annotationProcessorPaths>

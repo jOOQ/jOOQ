@@ -47,7 +47,7 @@
         <liquibase.version>3.8.8</liquibase.version>
         <spring.version>5.2.5.RELEASE</spring.version>
         <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
-        <errorprone.version>2.4.0</errorprone.version>
+        <errorprone.version>2.3.4</errorprone.version>
     </properties>
 
     <licenses>

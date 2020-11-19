@@ -71,11 +71,11 @@ public class SQLDialectMatcher extends AbstractMatcher {
 
     @Override
     public Description matchMethodInvocation(MethodInvocationTree node, VisitorState state) {
-        return Tools.checkSQLDialect(
+        return nullSafe(Tools.checkSQLDialect(
             node,
             () -> Tools.enclosing(state.getPath()),
             message -> error(node, message),
             printer -> print(printer)
-        );
+        ));
     }
 }

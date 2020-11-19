@@ -71,11 +71,11 @@ public class PlainSQLMatcher extends AbstractMatcher {
 
     @Override
     public Description matchMethodInvocation(MethodInvocationTree node, VisitorState state) {
-        return Tools.checkPlainSQL(
+        return nullSafe(Tools.checkPlainSQL(
             node,
             () -> Tools.enclosing(state.getPath()),
             message -> error(node, message),
             printer -> print(printer)
-        );
+        ));
     }
 }

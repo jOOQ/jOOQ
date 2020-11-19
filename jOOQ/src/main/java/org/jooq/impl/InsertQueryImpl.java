@@ -89,6 +89,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -113,7 +114,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
-import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 
@@ -586,8 +586,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-
-
                 case DERBY:
                 case H2:
                 case HSQLDB: {
@@ -779,30 +777,48 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     private final QueryPart toInsertSelect(Configuration configuration) {
         List<List<? extends Field<?>>> keys = conflictingKeys(configuration);
 
         if (!keys.isEmpty()) {
-
-            // [#5089] Multi-row inserts need to explicitly generate UNION ALL
-            //         here. TODO: Refactor this logic to be more generally
-            //         reusable - i.e. ordinary UNION ALL emulation should be
-            //         re-used.
-
             Select<Record> rows = null;
-            for (Map<Field<?>, Field<?>> map : insertMaps.maps()) {
-                Select<Record> row =
-                    select(aliasedFields(map.values().toArray(EMPTY_FIELD)))
+
+            // [#10989] INSERT .. SELECT .. ON DUPLICATE KEY IGNORE
+            if (select != null) {
+                Map<Field<?>, Field<?>> map = new HashMap<>();
+                Field<?>[] names = Tools.fields(select.fields().length);
+                List<Field<?>> fields = new ArrayList<>(insertMaps.fields());
+                for (int i = 0; i < fields.size() && i < names.length; i++)
+                    map.put(fields.get(i), names[i]);
+
+                rows = (Select<Record>) selectFrom(select.asTable(DSL.table(name("t")), names))
                     .whereNotExists(
                         selectOne()
                         .from(table())
                         .where(matchByConflictingKeys(configuration, map))
                     );
+            }
 
-                if (rows == null)
-                    rows = row;
-                else
-                    rows = rows.unionAll(row);
+            // [#5089] Multi-row inserts need to explicitly generate UNION ALL
+            //         here. TODO: Refactor this logic to be more generally
+            //         reusable - i.e. ordinary UNION ALL emulation should be
+            //         re-used.
+            else {
+                for (Map<Field<?>, Field<?>> map : insertMaps.maps()) {
+                    Select<Record> row =
+                        select(aliasedFields(map.values().toArray(EMPTY_FIELD)))
+                        .whereNotExists(
+                            selectOne()
+                            .from(table())
+                            .where(matchByConflictingKeys(configuration, map))
+                        );
+
+                    if (rows == null)
+                        rows = row;
+                    else
+                        rows = rows.unionAll(row);
+                }
             }
 
             return configuration.dsl()

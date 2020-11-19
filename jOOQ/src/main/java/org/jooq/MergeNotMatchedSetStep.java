@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -52,8 +49,11 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+// ...
 
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the {@link Merge}'s DSL API.

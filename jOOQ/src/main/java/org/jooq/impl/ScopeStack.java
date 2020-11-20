@@ -158,12 +158,16 @@ final class ScopeStack<K, V> implements Iterable<V> {
     final V getOrCreate(K key) {
         List<V> list = list(key);
         V result = get0(list);
+        return result != null ? result : create0(list);
+    }
 
-        if (result == null) {
-            result = constructor.create(scopeLevel);
-            set0(list, result);
-        }
+    final V create(K key) {
+        return create0(list(key));
+    }
 
+    private final V create0(List<V> list) {
+        V result = constructor.create(scopeLevel);
+        set0(list, result);
         return result;
     }
 

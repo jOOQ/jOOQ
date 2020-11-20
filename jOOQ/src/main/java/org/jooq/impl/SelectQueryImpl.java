@@ -1537,7 +1537,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             registerTable(context, ((JoinTable) table).rhs);
         }
         else if (table instanceof TableImpl)
-            context.scopeRegister(table);
+            context.scopeRegister(table, true);
     }
 
     private final void pushWindow(Context<?> context) {

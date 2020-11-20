@@ -189,7 +189,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
-    public RenderContext scopeRegister(QueryPart part) {
+    public RenderContext scopeRegister(QueryPart part, boolean forceNew) {
         if (scopeStack.inScope()) {
             if (part instanceof TableImpl) {
                 Table<?> root = (Table<?>) part;
@@ -201,7 +201,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     root = child;
                 }
 
-                ScopeStackElement e = scopeStack.getOrCreate(root);
+                ScopeStackElement e = forceNew
+                    ? scopeStack.create(root)
+                    : scopeStack.getOrCreate(root);
+
                 if (e.joinNode == null)
                     e.joinNode = new JoinNode(root);
 

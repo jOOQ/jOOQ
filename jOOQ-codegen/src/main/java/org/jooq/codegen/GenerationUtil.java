@@ -174,6 +174,8 @@ class GenerationUtil {
     )));
 
     private static Set<String> KOTLIN_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
+
+        // Hard keywords https://kotlinlang.org/docs/reference/keyword-reference.html
         "as",
         "break",
         "class",
@@ -202,7 +204,56 @@ class GenerationUtil {
         "var",
         "when",
         "while",
-        "yield"
+        "yield",
+
+        // Soft keywords (most seem not to produce conflicts in generated code)
+        // "catch",
+        "constructor",
+        // "delegate",
+        // "dynamic",
+        // "field",
+        // "file",
+        // "finally",
+        // "get",
+        // "import",
+        "init",
+        // "param",
+        // "property",
+        // "receiver",
+        // "set",
+        // "setparam",
+        // "where",
+
+        // Modifier keywords
+        "actual",
+        "abstract",
+        "annotation",
+        "companion",
+        "const",
+        "crossinline",
+        "data",
+        "enum",
+        "expect",
+        "external",
+        "final",
+        "infix",
+        "inline",
+        "inner",
+        "internal",
+        "lateinit",
+        "noinline",
+        "open",
+        "operator",
+        "out",
+        "override",
+        "private",
+        "protected",
+        "public",
+        "reified",
+        "sealed",
+        "suspend",
+        "tailrec",
+        "vararg"
     )));
 
     private static Set<Character> SCALA_WHITESPACE = unmodifiableSet(new HashSet<>(asList(

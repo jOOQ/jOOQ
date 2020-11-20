@@ -366,6 +366,26 @@ public interface Generator {
     void setGenerateRecordsImplementingRecordN(boolean generateRecordsImplementingRecordN);
 
     /**
+     * Whether enums generated as Scala sealed traits by the
+     * {@link ScalaGenerator}.
+     *
+     * @deprecated - [#10998] - 3.15.0 - This is maintained for backwards
+     *             compatibility only. Do not reuse this feature, if possible
+     */
+    @Deprecated
+    boolean generateEnumsAsScalaSealedTraits();
+
+    /**
+     * Whether enums generated as Scala sealed traits by the
+     * {@link ScalaGenerator}.
+     *
+     * @deprecated - [#10998] - 3.15.0 - This is maintained for backwards
+     *             compatibility only. Do not reuse this feature, if possible
+     */
+    @Deprecated
+    void setGenerateEnumsAsScalaSealedTraits(boolean generateEnumsAsScalaSealedTraits);
+
+    /**
      * Whether POJO's should be generated in addition to records
      */
     boolean generatePojos();

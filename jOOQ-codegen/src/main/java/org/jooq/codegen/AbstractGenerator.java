@@ -90,6 +90,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateEmbeddables                     = true;
     boolean                            generateRecords                         = true;
     boolean                            generateRecordsImplementingRecordN      = true;
+    boolean                            generateEnumsAsScalaSealedTraits        = false;
     boolean                            generatePojos                           = false;
     boolean                            generatePojosAsJavaRecordClasses        = false;
     boolean                            generatePojosAsScalaCaseClasses         = true;
@@ -155,10 +156,11 @@ abstract class AbstractGenerator implements Generator {
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                          = "UTF-8";
     protected boolean                  targetClean                             = true;
-    final Language                     language;
+    final Language                     languageConfigured;
+    Language                           language;
 
     AbstractGenerator(Language language) {
-        this.language = language;
+        this.languageConfigured = this.language = language;
     }
 
     enum Language {
@@ -513,6 +515,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRecordsImplementingRecordN(boolean generateRecordsImplementingRecordN) {
         this.generateRecordsImplementingRecordN = generateRecordsImplementingRecordN;
+    }
+
+    @Override
+    public boolean generateEnumsAsScalaSealedTraits() {
+        return generateEnumsAsScalaSealedTraits;
+    }
+
+    @Override
+    public void setGenerateEnumsAsScalaSealedTraits(boolean generateEnumsAsScalaSealedTraits) {
+        this.generateEnumsAsScalaSealedTraits = generateEnumsAsScalaSealedTraits;
     }
 
     @Override

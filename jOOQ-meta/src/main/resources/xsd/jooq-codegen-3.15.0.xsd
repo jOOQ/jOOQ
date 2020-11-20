@@ -1511,6 +1511,18 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
       <element name="recordsImplementingRecordN" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate TableRecord classes that implement Record[N] super types]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="enumsAsScalaSealedTraits" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Activate the legacy Scala sealed trait enum emulation]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
 
       <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>

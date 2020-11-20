@@ -277,9 +277,10 @@ public class JavaGenerator extends AbstractGenerator {
      */
     private Set<File>                             directoriesNotForRemoval     = new LinkedHashSet<>();
 
-    private final boolean                         java;
-    private final boolean                         scala;
-    private final boolean                         kotlin;
+    private boolean                               scala;
+    private final boolean                         scalaConfigured;
+    private boolean                               kotlin;
+    private final boolean                         kotlinConfigured;
     private final String                          semicolon;
     private final String                          emptyparens;
     private final String                          tokenVoid;
@@ -326,9 +327,8 @@ public class JavaGenerator extends AbstractGenerator {
     JavaGenerator(Language language) {
         super(language);
 
-        this.scala = (language == SCALA);
-        this.kotlin = (language == KOTLIN);
-        this.java = (language == JAVA);
+        this.scalaConfigured = this.scala = (language == SCALA);
+        this.kotlinConfigured = this.kotlin = (language == KOTLIN);
         this.tokenVoid = (scala || kotlin ? "Unit" : "void");
         this.semicolon = (scala || kotlin ? "" : ";");
         this.emptyparens = (scala ? "" : "()");
@@ -3467,10 +3467,24 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateDomains(SchemaDefinition schema) {}
 
     protected void generateEnum(EnumDefinition e) {
-        JavaWriter out = newJavaWriter(getFile(e, Mode.ENUM));
-        log.info("Generating ENUM", out.file().getName());
-        generateEnum(e, out);
-        closeJavaWriter(out);
+        boolean s = scala;
+        Language l = language;
+
+        try {
+            if (!generateEnumsAsScalaSealedTraits()) {
+                scala = false;
+                language = l == SCALA ? JAVA : l;
+            }
+
+            JavaWriter out = newJavaWriter(getFile(e, Mode.ENUM));
+            log.info("Generating ENUM", out.file().getName());
+            generateEnum(e, out);
+            closeJavaWriter(out);
+        }
+        finally {
+            scala = s;
+            language = l;
+        }
     }
 
     protected void generateEnum(EnumDefinition e, JavaWriter out) {
@@ -3605,10 +3619,18 @@ public class JavaGenerator extends AbstractGenerator {
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
             out.overrideInherit();
             out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
-            out.println("return %s;",
-                enumHasNoSchema
-                    ? "null"
-                    : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+
+            // [#10998] The ScalaGenerator's schema reference is a method
+            if (scalaConfigured) {
+                out.println("return %s%s;",
+                    enumHasNoSchema ? "null" : getStrategy().getFullJavaIdentifier(e.getSchema()).replaceFirst("^(.*)\\.(.*?)$", "$1\\$.MODULE\\$.$2"),
+                    enumHasNoSchema ? "" : "()"
+                );
+            }
+            else {
+                out.println("return %s;",
+                    enumHasNoSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+            }
             out.println("}");
 
             out.overrideInherit();

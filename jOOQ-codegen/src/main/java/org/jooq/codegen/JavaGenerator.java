@@ -4077,9 +4077,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (!scala && !kotlin) {
             out.javadoc("Create a new %s with an attached configuration", className);
 
-            if (generateSpringAnnotations())
-                out.println("@%s", out.ref("org.springframework.beans.factory.annotation.Autowired"));
-
+            printDaoConstructorAnnotations(table, out);
             out.println("%s%s(%s configuration) {", visibility(), className, Configuration.class);
             out.println("super(%s, %s.class, configuration);", tableIdentifier, pType);
             out.println("}");
@@ -4214,6 +4212,15 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateDaoClassFooter(table, out);
         out.println("}");
+    }
+
+    /**
+     * Subclasses may override this method to provide alternative DAO
+     * constructor annotations, such as DI annotations. [#10801]
+     */
+    protected void printDaoConstructorAnnotations(TableDefinition table, JavaWriter out) {
+        if (generateSpringAnnotations())
+            out.println("@%s", out.ref("org.springframework.beans.factory.annotation.Autowired"));
     }
 
     /**

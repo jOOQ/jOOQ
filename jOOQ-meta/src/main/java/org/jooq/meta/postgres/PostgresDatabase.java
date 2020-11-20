@@ -360,45 +360,43 @@ public class PostgresDatabase extends AbstractDatabase {
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
 
         // [#10940] [#10992] Workaround for issue caused by re-using implicit join paths
-        PgConstraint pc1 = PG_CONSTRAINT.as("pc1");
-        PgConstraint pc2 = PG_CONSTRAINT.as("pc2");
-        PgConstraint pc3 = PG_CONSTRAINT.as("pc3");
+        PgConstraint pc = PG_CONSTRAINT.as("pc");
 
         for (Record record : create()
             .select(
-                pc1.pgClass().pgNamespace().NSPNAME,
-                pc1.pgClass().RELNAME,
-                pc1.CONNAME.as(cc.CONSTRAINT_NAME),
-                replace(field("pg_get_constraintdef({0}.oid)", VARCHAR, pc1), inline("CHECK "), inline("")).as(cc.CHECK_CLAUSE))
-            .from(pc1)
-            .where(pc1.pgClass().pgNamespace().NSPNAME.in(getInputSchemata()))
-            .and(pc1.CONTYPE.eq(inline("c")))
+                pc.pgClass().pgNamespace().NSPNAME,
+                pc.pgClass().RELNAME,
+                pc.CONNAME.as(cc.CONSTRAINT_NAME),
+                replace(field("pg_get_constraintdef({0}.oid)", VARCHAR, pc), inline("CHECK "), inline("")).as(cc.CHECK_CLAUSE))
+            .from(pc)
+            .where(pc.pgClass().pgNamespace().NSPNAME.in(getInputSchemata()))
+            .and(pc.CONTYPE.eq(inline("c")))
             .unionAll(
                 getIncludeSystemCheckConstraints()
               ? select(
-                    pc2.pgClass().pgNamespace().NSPNAME,
-                    pc2.pgClass().RELNAME,
+                    pc.pgClass().pgNamespace().NSPNAME,
+                    pc.pgClass().RELNAME,
                     cc.CONSTRAINT_NAME,
                     cc.CHECK_CLAUSE
                 )
-                .from(pc2)
+                .from(pc)
                 .join(cc)
-                .on(pc2.CONNAME.eq(cc.CONSTRAINT_NAME))
-                .and(pc2.pgNamespace().NSPNAME.eq(cc.CONSTRAINT_NAME))
-                .where(pc2.pgNamespace().NSPNAME.in(getInputSchemata()))
-                .and(row(pc2.pgClass().pgNamespace().NSPNAME, pc2.pgClass().RELNAME, cc.CONSTRAINT_NAME).notIn(
+                .on(pc.CONNAME.eq(cc.CONSTRAINT_NAME))
+                .and(pc.pgNamespace().NSPNAME.eq(cc.CONSTRAINT_NAME))
+                .where(pc.pgNamespace().NSPNAME.in(getInputSchemata()))
+                .and(row(pc.pgClass().pgNamespace().NSPNAME, pc.pgClass().RELNAME, cc.CONSTRAINT_NAME).notIn(
                     select(
-                        pc3.pgClass().pgNamespace().NSPNAME,
-                        pc3.pgClass().RELNAME,
-                        pc3.CONNAME)
-                    .from(pc3)
-                    .where(pc3.CONTYPE.eq(inline("c")))
+                        pc.pgClass().pgNamespace().NSPNAME,
+                        pc.pgClass().RELNAME,
+                        pc.CONNAME)
+                    .from(pc)
+                    .where(pc.CONTYPE.eq(inline("c")))
                 ))
               : select(inline(""), inline(""), inline(""), inline("")).where(falseCondition()))
             .orderBy(1, 2, 3)
         ) {
-            SchemaDefinition schema = getSchema(record.get(pc1.pgClass().pgNamespace().NSPNAME));
-            TableDefinition table = getTable(schema, record.get(pc1.pgClass().RELNAME));
+            SchemaDefinition schema = getSchema(record.get(pc.pgClass().pgNamespace().NSPNAME));
+            TableDefinition table = getTable(schema, record.get(pc.pgClass().RELNAME));
 
             if (table != null) {
                 relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(

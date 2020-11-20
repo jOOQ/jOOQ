@@ -12147,8 +12147,8 @@ final class ParserContext {
     private final Object[]                          bindings;
     private int                                     bindIndex       = 0;
     private String                                  delimiter       = ";";
-    private final ScopeStack<String, Table<?>>      tableScope      = new ScopeStack<>(null);
-    private final ScopeStack<String, Field<?>>      fieldScope      = new ScopeStack<>(null);
+    private final ScopeStack<Name, Table<?>>        tableScope      = new ScopeStack<>(null);
+    private final ScopeStack<Name, Field<?>>        fieldScope      = new ScopeStack<>(null);
     private final ScopeStack<String, FieldProxy<?>> lookupFields    = new ScopeStack<>(null);
     private boolean                                 scopeClear      = false;
 
@@ -12438,11 +12438,11 @@ final class ParserContext {
     }
 
     void scope(Table<?> table) {
-        tableScope.set(table.getName(), table);
+        tableScope.set(table.getQualifiedName(), table);
     }
 
     void scope(Field<?> field) {
-        fieldScope.set(field.getName(), field);
+        fieldScope.set(field.getQualifiedName(), field);
     }
 
     void scopeStart() {

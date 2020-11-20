@@ -572,7 +572,12 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
-    public /* non-final */ C scopeRegister(QueryPart part) {
+    public final C scopeRegister(QueryPart part) {
+        return scopeRegister(part, false);
+    }
+
+    @Override
+    public /* non-final */ C scopeRegister(QueryPart part, boolean forceNew) {
         return (C) this;
     }
 

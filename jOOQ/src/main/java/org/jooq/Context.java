@@ -181,10 +181,22 @@ public interface Context<C extends Context<C>> extends Scope {
     C scopeMarkStart(QueryPart part);
 
     /**
-     * Register a "special" query part in the scope.
+     * Register a "special" query part in the scope, reusing the object from a
+     * higher scope, if available.
      */
     @NotNull
     C scopeRegister(QueryPart part);
+
+    /**
+     * Register a "special" query part in the scope, allowing to force
+     * registering the object in the new scope, if a higher scope already has
+     * the object.
+     * <p>
+     * [#10992] This is necessary to allow for hiding identifiers from nested
+     * scopes.
+     */
+    @NotNull
+    C scopeRegister(QueryPart part, boolean forceNew);
 
     /**
      * Mark the end of a scoped query part.

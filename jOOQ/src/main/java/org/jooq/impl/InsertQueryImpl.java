@@ -586,10 +586,20 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-                case DERBY:
                 case H2:
                 case HSQLDB: {
                     ctx.visit(toMerge(ctx.configuration()));
+                    break;
+                }
+
+                case DERBY: {
+
+                    // [#10989] Cannot use MERGE with SELECT: [42XAL]: The source table of a MERGE statement must be a base table or table function.
+                    if (select != null)
+                        ctx.visit(toInsertSelect(ctx.configuration()));
+                    else
+                        ctx.visit(toMerge(ctx.configuration()));
+
                     break;
                 }
 

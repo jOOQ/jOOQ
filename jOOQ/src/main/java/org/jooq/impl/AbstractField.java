@@ -65,13 +65,13 @@ import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.castIfNeeded;
+import static org.jooq.impl.Tools.fieldsArray;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -273,13 +273,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<Integer> sortAsc(Collection<T> sortList) {
-        Map<T, Integer> map = new LinkedHashMap<>();
-
-        int i = 0;
-        for (T value : sortList)
-            map.put(value, i++);
-
-        return sort(map);
+        return Tools.isEmpty(sortList) ? sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).asc();
     }
 
     @Override
@@ -290,13 +284,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<Integer> sortDesc(Collection<T> sortList) {
-        Map<T, Integer> map = new LinkedHashMap<>();
-
-        int i = 0;
-        for (T value : sortList)
-            map.put(value, i--);
-
-        return sort(map);
+        return Tools.isEmpty(sortList) ? sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).desc();
     }
 
     @Override
@@ -305,22 +293,14 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return sortDesc(Arrays.asList(sortList));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
-        CaseValueStep<T> decode = DSL.choose(this);
-        CaseWhenStep<T, Z> result = null;
+        return sortMap == null || sortMap.isEmpty() ? sortConstant() : DSL.case_(this).mapValues(sortMap).asc();
+    }
 
-        for (Entry<T, Z> entry : sortMap.entrySet())
-            if (result == null)
-                result = decode.when(entry.getKey(), inline(entry.getValue()));
-            else
-                result.when(entry.getKey(), inline(entry.getValue()));
-
-        if (result == null)
-            return new SortFieldImpl<>(new ConstantSortField<>((Field) this), SortOrder.DEFAULT);
-        else
-            return result.asc();
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private final <Z> SortField<Z> sortConstant() {
+        return new SortFieldImpl<>(new ConstantSortField<>((Field) this), SortOrder.DEFAULT);
     }
 
     // ------------------------------------------------------------------------

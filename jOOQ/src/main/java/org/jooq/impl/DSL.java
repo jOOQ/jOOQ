@@ -13491,6 +13491,26 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Get the MySQL <code>FIELD(expr, expr1, expr2, ...)</code> function.
+     */
+    @NotNull
+    @Support
+    @SafeVarargs
+    public static <T> Field<Integer> field(Field<T> field, T... list) {
+        return field(field, Tools.fieldsArray(list, field.getDataType()));
+    }
+
+    /**
+     * Get the MySQL <code>FIELD(expr, expr1, expr2, ...)</code> function.
+     */
+    @NotNull
+    @Support
+    @SafeVarargs
+    public static <T> Field<Integer> field(Field<T> field, Field<T>... list) {
+        return new FieldFunction<>(field, list);
+    }
+
+    /**
      * Wrap a {@link SelectField} in a general-purpose {@link Field}
      */
     @NotNull

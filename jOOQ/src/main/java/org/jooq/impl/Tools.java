@@ -1968,6 +1968,18 @@ final class Tools {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T>[] fieldsArray(Object[] values, DataType<T> type) {
+        if (values == null)
+            return (Field<T>[]) EMPTY_FIELD;
+
+        Field<T>[] result = new Field[values.length];
+        for (int i = 0; i < result.length; i++)
+            result[i] = field(values[i], type);
+
+        return result;
+    }
+
     static final Field<?>[] fieldsArray(Object[] values, DataType<?>[] types) {
         if (values == null || types == null)
             return EMPTY_FIELD;

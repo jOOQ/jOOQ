@@ -9347,31 +9347,15 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final <T, Z> Field<?> parseFieldFieldIf(ParserContext ctx) {
+    private static final <T> Field<?> parseFieldFieldIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "FIELD")) {
             parse(ctx, '(');
-
-            List<Field<?>> args = new ArrayList<>();
-
-            args.add(parseField(ctx));
+            Field<?> f1 = parseField(ctx);
             parse(ctx, ',');
-
-            int i = 1;
-            do {
-                args.add(parseField(ctx));
-                args.add(inline(i++));
-            }
-            while (parseIf(ctx, ','));
-
-            args.add(inline(0));
+            List<Field<?>> f2 = parseFields(ctx);
             parse(ctx, ')');
 
-            return DSL.decode(
-                (Field<T>) args.get(0),
-                (Field<T>) args.get(1),
-                (Field<Z>) args.get(2),
-                args.subList(3, args.size()).toArray(EMPTY_FIELD)
-            );
+            return DSL.field((Field<T>) f1, (Field<T>[]) f2.toArray(EMPTY_FIELD));
         }
 
         return null;

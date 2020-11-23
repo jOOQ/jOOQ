@@ -273,7 +273,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<Integer> sortAsc(Collection<T> sortList) {
-        return Tools.isEmpty(sortList) ? sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).asc();
+        return Tools.isEmpty(sortList) ? this.<Integer>sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).asc();
     }
 
     @Override
@@ -284,7 +284,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<Integer> sortDesc(Collection<T> sortList) {
-        return Tools.isEmpty(sortList) ? sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).desc();
+        return Tools.isEmpty(sortList) ? this.<Integer>sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).desc();
     }
 
     @Override
@@ -295,7 +295,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
-        return sortMap == null || sortMap.isEmpty() ? sortConstant() : DSL.case_(this).mapValues(sortMap).asc();
+        return sortMap == null || sortMap.isEmpty() ? this.<Z>sortConstant() : DSL.case_(this).mapValues(sortMap).asc();
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

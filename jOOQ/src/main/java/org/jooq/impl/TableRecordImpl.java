@@ -51,7 +51,9 @@ import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.fieldsArray;
 import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_RETURNING_CLAUSE;
 
@@ -136,7 +138,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      */
     @Override
     public Row valuesRow() {
-        return Tools.row0(Tools.fields(intoArray(), fields.fields.fields()));
+        return row0(fieldsArray(intoArray(), fields.fields.fields()));
     }
 
     @SuppressWarnings("unchecked")

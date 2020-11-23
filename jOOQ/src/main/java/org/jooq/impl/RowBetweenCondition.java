@@ -697,7 +697,7 @@ implements
 
     @Override
     public final Condition and(Record record) {
-        return and(new RowImplN(Tools.fields(record.intoArray(), record.fields())));
+        return and(new RowImplN(Tools.fieldsArray(record.intoArray(), record.fields())));
     }
 
     // ------------------------------------------------------------------------

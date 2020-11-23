@@ -86,6 +86,6 @@ class RecordImplN extends AbstractRecord implements InternalRecord {
 
     @Override
     public final RowImplN valuesRow() {
-        return new RowImplN(Tools.fields(values, fields.fields.fields));
+        return new RowImplN(Tools.fieldsArray(values, fields.fields.fields));
     }
 }

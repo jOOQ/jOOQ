@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DefaultExecuteContext.localConfiguration;
 import static org.jooq.impl.DefaultExecuteContext.localData;
+import static org.jooq.impl.Tools.fieldsArray;
+import static org.jooq.impl.Tools.row0;
 
 import java.sql.SQLException;
 import java.sql.SQLInput;
@@ -92,7 +94,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
      */
     @Override
     public Row valuesRow() {
-        return Tools.row0(Tools.fields(intoArray(), fields.fields.fields()));
+        return row0(fieldsArray(intoArray(), fields.fields.fields()));
     }
 
     @Override

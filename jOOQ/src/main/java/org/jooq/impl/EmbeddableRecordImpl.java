@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.fieldsArray;
+import static org.jooq.impl.Tools.row0;
+
 import org.jooq.Converter;
 import org.jooq.EmbeddableRecord;
 import org.jooq.Field;
@@ -91,7 +94,7 @@ public class EmbeddableRecordImpl<R extends EmbeddableRecord<R>> extends Abstrac
      */
     @Override
     public Row valuesRow() {
-        return Tools.row0(Tools.fields(intoArray(), fields.fields.fields()));
+        return row0(fieldsArray(intoArray(), fields.fields.fields()));
     }
 
     @SuppressWarnings("unchecked")

@@ -1850,12 +1850,17 @@ final class Tools {
     }
 
     static final <T> List<Field<T>> fields(T[] values) {
-        if (values == null)
-            return new ArrayList<>();
+        return asList(fieldsArray(values));
+    }
 
-        List<Field<T>> result = new ArrayList<>(values.length);
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T>[] fieldsArray(T[] values) {
+        if (values == null)
+            return (Field<T>[]) EMPTY_FIELD;
+
+        Field<T>[] result = new Field[values.length];
         for (int i = 0; i < values.length; i++)
-            result.add(field(values[i]));
+            result[i] = field(values[i]);
 
         return result;
     }
@@ -1872,16 +1877,7 @@ final class Tools {
     }
 
     static final List<Field<?>> fields(Object[] values, Field<?>[] fields) {
-        if (values == null || fields == null)
-            return new ArrayList<>();
-
-        int length = Math.min(values.length, fields.length);
-        List<Field<?>> result = new ArrayList<>(length);
-
-        for (int i = 0; i < length; i++)
-            result.add(field(values[i], fields[i]));
-
-        return result;
+        return asList(fieldsArray(values, fields));
     }
 
     static final Field<?>[] fieldsArray(Object[] values, Field<?>[] fields) {
@@ -1897,39 +1893,8 @@ final class Tools {
         return result;
     }
 
-    static final <T> List<Field<T>> fields(Object[] values, Class<T> type) {
-        if (values == null || type == null)
-            return new ArrayList<>();
-
-        List<Field<T>> result = new ArrayList<>(values.length);
-        for (int i = 0; i < values.length; i++)
-            result.add(field(values[i], type));
-
-        return result;
-    }
-
-    static final List<Field<?>> fields(Object[] values, Class<?>[] types) {
-        if (values == null || types == null)
-            return new ArrayList<>();
-
-        int length = Math.min(values.length, types.length);
-        List<Field<?>> result = new ArrayList<>(length);
-
-        for (int i = 0; i < length; i++)
-            result.add(field(values[i], types[i]));
-
-        return result;
-    }
-
     static final <T> List<Field<T>> fields(Object[] values, DataType<T> type) {
-        if (values == null || type == null)
-            return new ArrayList<>();
-
-        List<Field<T>> result = new ArrayList<>(values.length);
-        for (Object value : values)
-            result.add(field(value, type));
-
-        return result;
+        return asList(fieldsArray(values, type));
     }
 
     static final <T> List<Field<T>> fields(Collection<?> values, DataType<T> type) {
@@ -1939,31 +1904,6 @@ final class Tools {
         List<Field<T>> result = new ArrayList<>(values.size());
         for (Object value : values)
             result.add(field(value, type));
-
-        return result;
-    }
-
-    static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
-        if (values == null || types == null)
-            return new ArrayList<>();
-
-        int length = Math.min(values.length, types.length);
-        List<Field<?>> result = new ArrayList<>(length);
-
-        for (int i = 0; i < length; i++)
-            result.add(field(values[i], types[i]));
-
-        return result;
-    }
-
-    @SuppressWarnings("unchecked")
-    static final <T> Field<T>[] fieldsArray(T[] values) {
-        if (values == null)
-            return (Field<T>[]) EMPTY_FIELD;
-
-        Field<T>[] result = new Field[values.length];
-        for (int i = 0; i < values.length; i++)
-            result[i] = field(values[i]);
 
         return result;
     }
@@ -1978,6 +1918,10 @@ final class Tools {
             result[i] = field(values[i], type);
 
         return result;
+    }
+
+    static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
+        return asList(fieldsArray(values, types));
     }
 
     static final Field<?>[] fieldsArray(Object[] values, DataType<?>[] types) {

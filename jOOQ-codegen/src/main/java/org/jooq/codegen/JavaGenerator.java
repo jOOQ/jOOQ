@@ -8138,7 +8138,12 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected boolean isArrayType(String javaType) {
-        return javaType.endsWith("[]") || javaType.startsWith("kotlin.Array") || javaType.startsWith("scala.Array");
+        if (scala)
+            return javaType.startsWith("scala.Array");
+        else if (kotlin)
+            return javaType.startsWith("kotlin.Array") || javaType.equals("kotlin.ByteArray");
+        else
+            return javaType.endsWith("[]");
     }
 
     protected String getJavaType(DataTypeDefinition type, JavaWriter out) {

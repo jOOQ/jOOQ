@@ -4758,28 +4758,28 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else if (kotlin) {
-            out.println("override fun equals(obj: Any?): Boolean {");
-            out.println("if (this === obj)");
+            out.println("override fun equals(other: Any?): Boolean {");
+            out.println("if (this === other)");
             out.println("return true");
-            out.println("if (obj === null)");
+            out.println("if (other === null)");
             out.println("return false");
-            out.println("if (this::class != obj::class)");
+            out.println("if (this::class != other::class)");
             out.println("return false");
 
-            out.println("val other: %s = obj as %s", className, className);
+            out.println("val o: %s = other as %s", className, className);
 
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 out.println("if (%s === null) {", columnMember);
-                out.println("if (other.%s !== null)", columnMember);
+                out.println("if (o.%s !== null)", columnMember);
                 out.println("return false");
                 out.println("}");
 
                 if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                    out.println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
+                    out.println("else if (!%s.equals(%s, o.%s))", Arrays.class, columnMember, columnMember);
                 else
-                    out.println("else if (%s != other.%s)", columnMember, columnMember);
+                    out.println("else if (%s != o.%s)", columnMember, columnMember);
 
                 out.println("return false");
             }

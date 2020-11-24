@@ -1213,18 +1213,14 @@ public final class Convert {
          */
         @SuppressWarnings("unchecked")
         private static <X> X toDate(long time, Class<X> toClass) {
-            if (toClass == Date.class) {
+            if (toClass == Date.class)
                 return (X) new Date(time);
-            }
-            else if (toClass == Time.class) {
+            else if (toClass == Time.class)
                 return (X) new Time(time);
-            }
-            else if (toClass == Timestamp.class) {
+            else if (toClass == Timestamp.class)
                 return (X) new Timestamp(time);
-            }
-            else if (toClass == java.util.Date.class) {
+            else if (toClass == java.util.Date.class)
                 return (X) new java.util.Date(time);
-            }
             else if (toClass == Calendar.class) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(time);
@@ -1232,24 +1228,18 @@ public final class Convert {
             }
 
 
-            else if (toClass == LocalDate.class) {
+            else if (toClass == LocalDate.class)
                 return (X) new Date(time).toLocalDate();
-            }
-            else if (toClass == LocalTime.class) {
+            else if (toClass == LocalTime.class)
                 return (X) new Time(time).toLocalTime();
-            }
-            else if (toClass == OffsetTime.class) {
+            else if (toClass == OffsetTime.class)
                 return (X) new Time(time).toLocalTime().atOffset(OffsetTime.now().getOffset());
-            }
-            else if (toClass == LocalDateTime.class) {
+            else if (toClass == LocalDateTime.class)
                 return (X) new Timestamp(time).toLocalDateTime();
-            }
-            else if (toClass == OffsetDateTime.class) {
+            else if (toClass == OffsetDateTime.class)
                 return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
-            }
-            else if (toClass == Instant.class) {
+            else if (toClass == Instant.class)
                 return (X) Instant.ofEpochMilli(time);
-            }
 
 
             throw fail(time, toClass);
@@ -1259,25 +1249,20 @@ public final class Convert {
         private static final long millis(Temporal temporal) {
 
             // java.sql.* temporal types:
-            if (temporal instanceof LocalDate) {
+            if (temporal instanceof LocalDate)
                 return Date.valueOf((LocalDate) temporal).getTime();
-            }
-            else if (temporal instanceof LocalTime) {
+            else if (temporal instanceof LocalTime)
                 return Time.valueOf((LocalTime) temporal).getTime();
-            }
-            else if (temporal instanceof LocalDateTime) {
+            else if (temporal instanceof LocalDateTime)
                 return Timestamp.valueOf((LocalDateTime) temporal).getTime();
-            }
 
             // OffsetDateTime
-            else if (temporal.isSupported(INSTANT_SECONDS)) {
+            else if (temporal.isSupported(INSTANT_SECONDS))
                 return 1000 * temporal.getLong(INSTANT_SECONDS) + temporal.getLong(MILLI_OF_SECOND);
-            }
 
             // OffsetTime
-            else if (temporal.isSupported(MILLI_OF_DAY)) {
+            else if (temporal.isSupported(MILLI_OF_DAY))
                 return temporal.getLong(MILLI_OF_DAY);
-            }
 
             throw fail(temporal, Long.class);
         }
@@ -1288,19 +1273,24 @@ public final class Convert {
          * {@link SQLDialect#SYBASE} seems to omit hyphens
          */
         private static final UUID parseUUID(String string) {
-            if (string == null) {
+            if (string == null)
                 return null;
-            }
-            else if (string.contains("-")) {
+            else if (string.contains("-"))
                 return UUID.fromString(string);
-            }
-            else {
+            else
                 return UUID.fromString(UUID_PATTERN.matcher(string).replaceAll("$1-$2-$3-$4-$5"));
-            }
         }
 
         private static DataTypeException fail(Object from, Class<?> toClass) {
-            return new DataTypeException("Cannot convert from " + from + " (" + from.getClass() + ") to " + toClass);
+            String message = "Cannot convert from " + from + " (" + from.getClass() + ") to " + toClass;
+
+            // [#10072] [#11023] Some mappings may not have worked because of badly set up classpaths
+            if ((from instanceof JSON || from instanceof JSONB) && JSON_MAPPER == null)
+                return new DataTypeException(message + ". Check your classpath to see if Jackson or Gson is available to jOOQ.");
+            else if (from instanceof XML && !JAXB_AVAILABLE)
+                return new DataTypeException(message + ". Check your classpath to see if JAXB is available to jOOQ.");
+            else
+                return new DataTypeException(message);
         }
     }
 }

@@ -56,6 +56,7 @@ import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.Names.N_XMLTABLE;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.inlined;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_COALESCE;
+import static org.jooq.impl.Tools.inlined;
 
 import org.jooq.Context;
 import org.jooq.Field;

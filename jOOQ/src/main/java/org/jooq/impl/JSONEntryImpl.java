@@ -161,6 +161,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 break;
 
             // [#11025] These don't have boolean support outside of JSON
+            case MARIADB:
             case MYSQL:
                 if (type.getType() == Boolean.class)
                     return inlined(field);

@@ -50,6 +50,7 @@ import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_VALUE;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.Tools.castIfNeeded;
+import static org.jooq.impl.Tools.inlined;
 
 import java.util.Set;
 

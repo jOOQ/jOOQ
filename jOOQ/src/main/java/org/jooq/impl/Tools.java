@@ -274,6 +274,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.XML;
 import org.jooq.conf.BackslashEscaping;
+import org.jooq.conf.ParamType;
 import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -1993,6 +1994,20 @@ final class Tools {
             result[i] = DSL.inline(fieldIndexes[i]);
 
         return result;
+    }
+
+    @SuppressWarnings("serial")
+    static final <T> Field<T> inlined(final Field<T> field) {
+        return new CustomField<T>(field.getQualifiedName(), field.getDataType()) {
+            @Override
+            public void accept(Context<?> ctx) {
+                ParamType previous = ctx.paramType();
+
+                ctx.paramType(INLINED);
+                ctx.visit(field);
+                ctx.paramType(previous);
+            }
+        };
     }
 
     static final IllegalArgumentException indexFail(Row row, Field<?> field) {

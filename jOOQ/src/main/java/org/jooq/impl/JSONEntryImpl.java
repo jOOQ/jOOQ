@@ -46,6 +46,7 @@ import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.inlined;
 
 import java.util.UUID;
 
@@ -129,7 +130,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-                ctx.visit(key).sql(", ").visit(value);
+                ctx.visit(key).sql(", ").visit(jsonCast(ctx, value));
                 break;
 
             default:
@@ -159,6 +160,10 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
                 break;
 
+            // [#11025] These don't have boolean support outside of JSON
+            case MYSQL:
+                if (type.getType() == Boolean.class)
+                    return inlined(field);
 
 
 

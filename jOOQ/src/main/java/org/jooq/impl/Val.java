@@ -110,7 +110,7 @@ final class Val<T> extends AbstractParam<T> {
         return w;
     }
 
-    private final <U> Val<U> convertTo0(DataType<U> type) {
+    final <U> Val<U> convertTo0(DataType<U> type) {
         Val<U> w = new Val<>(type.convert(getValue()), type, getParamName());
         w.setInline(isInline());
         return w;

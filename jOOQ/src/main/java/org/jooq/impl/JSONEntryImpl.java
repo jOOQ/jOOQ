@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
@@ -51,6 +52,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
+// ...
 import org.jooq.Record1;
 import org.jooq.Select;
 
@@ -147,17 +149,35 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     }
 
     static final Field<?> jsonCast(Context<?> ctx, Field<?> field) {
+        DataType<?> type = field.getDataType();
+
         switch (ctx.family()) {
 
             // [#10769] Some dialects don't support auto conversions from X to JSON
-            case H2: {
-                DataType<?> type = field.getDataType();
-
+            case H2:
                 if (type.getType() == UUID.class)
                     return field.cast(VARCHAR(36));
-            }
+
+                break;
+
+
+
+
+
+
+
+
+
+
         }
 
         return field;
     }
+
+
+
+
+
+
+
 }

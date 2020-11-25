@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.Keywords.K_FORMAT;
@@ -124,9 +126,6 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
 
-
-
-
             case MARIADB:
             case MYSQL:
             case POSTGRES:
@@ -159,6 +158,9 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                     return field.cast(VARCHAR(36));
 
                 break;
+
+
+
 
 
 

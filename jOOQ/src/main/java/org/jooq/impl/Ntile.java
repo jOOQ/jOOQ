@@ -42,12 +42,11 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.impl.AbstractWindowFunction.OrderedWindowFunction;
 
 /**
  * @author Lukas Eder
  */
-final class Ntile extends AbstractWindowFunction<Integer> implements OrderedWindowFunction {
+final class Ntile extends AbstractWindowFunction<Integer> {
 
     /**
      * Generated UID

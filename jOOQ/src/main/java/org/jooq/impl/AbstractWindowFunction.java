@@ -43,9 +43,15 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -64,6 +70,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OrderField;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.WindowDefinition;
@@ -95,8 +102,21 @@ implements
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID                   = 2524547974085497171L;
-    private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE);
+    private static final long            serialVersionUID                            = 2524547974085497171L;
+    private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE          = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE);
+
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2);
+
+
+
+
+
+
+
+
+
 
     // Other attributes
     WindowSpecificationImpl              windowSpecification;
@@ -113,11 +133,6 @@ implements
     // -------------------------------------------------------------------------
     // XXX QueryPart API
     // -------------------------------------------------------------------------
-
-    /**
-     * A marker interface for ordered window functions.
-     */
-    interface OrderedWindowFunction {}
 
     @SuppressWarnings("unchecked")
     final QueryPart window(Context<?> ctx) {
@@ -162,36 +177,30 @@ implements
         if (window == null)
             return;
 
-        Boolean ordered = this instanceof OrderedWindowFunction;
+        Boolean ordered =
+               this instanceof Ntile && REQUIRES_ORDER_BY_IN_NTILE.contains(ctx.dialect())
+            || this instanceof PositionalWindowFunction && ((PositionalWindowFunction<?>) this).isLeadOrLag() && REQUIRES_ORDER_BY_IN_LEAD_LAG.contains(ctx.dialect())
+            || this instanceof RankingFunction && ((RankingFunction<?>) this).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK.contains(ctx.dialect())
+
+
+
+
+
+        ;
         Boolean previousOrdered = null;
-
-
-
-
-
 
         ctx.sql(' ')
            .visit(K_OVER)
            .sql(' ');
 
-
-
-
-        previousOrdered = (Boolean) ctx.data(BooleanDataKey.DATA_ORDERED_WINDOW_FUNCTION, ordered);
+        previousOrdered = (Boolean) ctx.data(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY, ordered);
 
         ctx.visit(window);
 
         if (TRUE.equals(previousOrdered))
-            ctx.data(BooleanDataKey.DATA_ORDERED_WINDOW_FUNCTION, previousOrdered);
+            ctx.data(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY, previousOrdered);
         else
-            ctx.data().remove(BooleanDataKey.DATA_ORDERED_WINDOW_FUNCTION);
-
-
-
-
-
-
-
+            ctx.data().remove(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY);
     }
 
 

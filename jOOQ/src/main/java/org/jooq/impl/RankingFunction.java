@@ -45,7 +45,9 @@ import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.Internal.idiv;
 import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.RankingFunction.RankingType.CUME_DIST;
+import static org.jooq.impl.RankingFunction.RankingType.DENSE_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
+import static org.jooq.impl.RankingFunction.RankingType.RANK;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.util.Set;
@@ -56,12 +58,11 @@ import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.WindowSpecification;
-import org.jooq.impl.AbstractWindowFunction.OrderedWindowFunction;
 
 /**
  * @author Lukas Eder
  */
-final class RankingFunction<T> extends AbstractWindowFunction<T> implements OrderedWindowFunction {
+final class RankingFunction<T> extends AbstractWindowFunction<T> {
 
     /**
      * Generated UID
@@ -123,6 +124,10 @@ final class RankingFunction<T> extends AbstractWindowFunction<T> implements Orde
 
 
 
+
+    final boolean isRankOrDenseRank() {
+        return rankingType == RANK || rankingType == DENSE_RANK;
+    }
 
     enum RankingType {
         RANK, DENSE_RANK, PERCENT_RANK, CUME_DIST;

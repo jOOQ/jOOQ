@@ -41,14 +41,9 @@ import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
-import static org.jooq.SQLDialect.H2;
-// ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
 import static org.jooq.SQLDialect.SQLITE;
-// ...
 // ...
 // ...
 import static org.jooq.impl.DSL.field;
@@ -80,7 +75,6 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.OrderField;
-// ...
 import org.jooq.SQLDialect;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationFinalStep;
@@ -104,14 +98,8 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID                = 2996016924769376361L;
-    private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE           = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
-    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_RANKING    = SQLDialect.supportedBy(H2);
-
-
-
-
-
+    private static final long             serialVersionUID      = 2996016924769376361L;
+    private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
 
     private final WindowDefinitionImpl    windowDefinition;
     private final QueryPartList<Field<?>> partitionBy;
@@ -148,31 +136,19 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     public final void accept(Context<?> ctx) {
         SortFieldList o = orderBy;
 
-        // [#8414] [#8593] Some RDBMS require ORDER BY in some window functions
-        if (o.isEmpty()) {
-            boolean requiresOrderBy =
-                   TRUE.equals(ctx.data(BooleanDataKey.DATA_ORDERED_WINDOW_FUNCTION))
-                && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.dialect());
+        // [#8414] [#8593] [#11021] Some RDBMS require ORDER BY in some window functions
+        if (o.isEmpty() && TRUE.equals(ctx.data(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY))) {
+            Field<Integer> constant;
 
 
 
 
 
 
+            constant = field(select(one()));
 
-            if (requiresOrderBy) {
-                Field<Integer> constant;
-
-
-
-
-
-
-                constant = field(select(one()));
-
-                o = new SortFieldList();
-                o.add(constant.sortDefault());
-            }
+            o = new SortFieldList();
+            o.add(constant.sortDefault());
         }
 
         boolean hasWindowDefinitions = windowDefinition != null;

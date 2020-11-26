@@ -294,6 +294,7 @@ import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.unnest;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.values0;
 // ...
@@ -7494,7 +7495,11 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldXMLElementIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "XMLELEMENT")) {
             parse(ctx, '(');
-            parseKeyword(ctx, "NAME");
+            parseKeywordIf(ctx, "NAME");
+
+            if (parseIf(ctx, ')'))
+                return xmlelement(unquotedName("NAME"));
+
             Name name = parseIdentifier(ctx);
             XMLAttributes attr = null;
             List<Field<?>> content = new ArrayList<>();

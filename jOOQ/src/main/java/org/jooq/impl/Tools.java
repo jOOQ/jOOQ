@@ -501,20 +501,11 @@ final class Tools {
          */
         DATA_EMULATE_BULK_INSERT_RETURNING,
 
-
-
-
-
-
-
-
-
-
-
         /**
-         * [#1535] We're currently generating the window specification of a ranking function.
+         * [#1535] We're currently generating the window specification of a
+         * window function that requires an ORDER BY clause.
          */
-        DATA_ORDERED_WINDOW_FUNCTION,
+        DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY,
 
         /**
          * [#9925] In some cases the <code>AS</code> keyword is required for aliasing, e.g. XML.

@@ -46,6 +46,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.SQLDialect.H2;
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -106,11 +107,10 @@ implements
     private static final long            serialVersionUID                            = 2524547974085497171L;
     private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE          = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE);
 
-    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(H2);
-    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2);
-
-
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2, MARIADB);
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST = SQLDialect.supportedBy(MARIADB);
 
 
 
@@ -182,7 +182,7 @@ implements
                this instanceof Ntile && REQUIRES_ORDER_BY_IN_NTILE.contains(ctx.dialect())
             || this instanceof PositionalWindowFunction && ((PositionalWindowFunction<?>) this).isLeadOrLag() && REQUIRES_ORDER_BY_IN_LEAD_LAG.contains(ctx.dialect())
             || this instanceof RankingFunction && ((RankingFunction<?>) this).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK.contains(ctx.dialect())
-
+            || this instanceof RankingFunction && !((RankingFunction<?>) this).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST.contains(ctx.dialect())
 
 
 

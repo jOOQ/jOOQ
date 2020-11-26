@@ -11713,14 +11713,14 @@ final class ParserImpl implements Parser {
     private static final Keyword parseAndGetKeywordIf(ParserContext ctx, String... keywords) {
         for (String keyword : keywords)
             if (parseKeywordIf(ctx, keyword))
-                return keyword(keyword);
+                return keyword(keyword.toLowerCase());
 
         return null;
     }
 
     private static final Keyword parseAndGetKeywordIf(ParserContext ctx, String keyword) {
         if (parseKeywordIf(ctx, keyword))
-            return keyword(keyword);
+            return keyword(keyword.toLowerCase());
 
         return null;
     }

@@ -72,7 +72,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Convenience method to fetch a value at a given position in the result.
      *
      * @param <T> The value's field's generic type parameter
-     * @param index The record's index
+     * @param index The record's 0-based index in the record list
      * @param field The value's field
      * @return The value
      * @throws IndexOutOfBoundsException if the index is out of range (
@@ -86,7 +86,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Convenience method to fetch a value at a given position in the result.
      *
      * @param <T> The value's field's generic type parameter
-     * @param index The record's index
+     * @param index The record's 0-based index in the record list
      * @param field The value's field
      * @param defaultValue The default value if the value was <code>null</code>
      * @return The value
@@ -102,7 +102,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Convenience method to fetch a value at a given position in the result.
      *
-     * @param index The record's index
+     * @param index The record's 0-based index in the record list
      * @param fieldIndex The value's field index
      * @return The value
      * @throws IndexOutOfBoundsException if the index is out of range (
@@ -116,7 +116,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Convenience method to fetch a value at a given position in the result.
      *
-     * @param index The record's index
+     * @param index The record's 0-based index in the record list
      * @param fieldIndex The value's field index
      * @param defaultValue The default value if the value was <code>null</code>
      * @return The value
@@ -133,7 +133,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Convenience method to fetch a value at a given position in the result.
      *
-     * @param index The record's index
+     * @param index The record's 0-based index in the record list
      * @param fieldName The value's field name
      * @return The value
      * @throws IndexOutOfBoundsException if the index is out of range (
@@ -147,7 +147,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Convenience method to fetch a value at a given position in the result.
      *
-     * @param index The record's index
+     * @param index The record's 0-based index in the record list
      * @param fieldName The value's field name
      * @param defaultValue The default value if the value was <code>null</code>
      * @return The value
@@ -210,13 +210,13 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
      *
-     * @param fieldIndex The values' field index
+     * @param index The values' 0-based field index
      * @return The values
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      */
     @NotNull
-    List<?> getValues(int fieldIndex) throws IllegalArgumentException;
+    List<?> getValues(int index) throws IllegalArgumentException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -226,7 +226,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
      *
-     * @param fieldIndex The values' field index
+     * @param index The values' 0-based field index
      * @param type The type used for type conversion
      * @return The values
      * @see Record#get(int, Class)
@@ -236,13 +236,13 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      *             that might have occurred
      */
     @NotNull
-    <U> List<U> getValues(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
+    <U> List<U> getValues(int index, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
      *
-     * @param fieldIndex The values' field index
+     * @param index The values' 0-based field index
      * @param converter The data type converter used for type conversion
      * @return The values
      * @see Record#get(int, Converter)
@@ -252,7 +252,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      *             that might have occurred
      */
     @NotNull
-    <U> List<U> getValues(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> List<U> getValues(int index, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -398,8 +398,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * non-unique in the result set. Use {@link #intoGroups(int)} instead, if
      * your keys are non-unique
      *
-     * @param keyFieldIndex The key field index. Client code must assure that
-     *            this field is unique in the result set.
+     * @param keyFieldIndex The 0-based key field index. Client code must assure
+     *            that this field is unique in the result set.
      * @return A Map containing the results
      * @throws IllegalArgumentException If the argument keyFieldIndex is not
      *             contained in {@link #fieldsRow()}
@@ -477,9 +477,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * non-unique in the result set. Use {@link #intoGroups(int, int)} instead,
      * if your keys are non-unique
      *
-     * @param keyFieldIndex The key field index. Client code must assure that
-     *            this field is unique in the result set.
-     * @param valueFieldIndex The value field index
+     * @param keyFieldIndex The 0-based key field index. Client code must assure
+     *            that this field is unique in the result set.
+     * @param valueFieldIndex The 0-based value field index
      * @return A Map containing the results
      * @throws IllegalArgumentException If any of the argument field indexes is
      *             not contained in {@link #fieldsRow()}
@@ -557,11 +557,11 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * into the given entity type.
      * <p>
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
-     * the result set. Use {@link #intoGroups(int, Class)} instead, if your
-     * key is non-unique.
+     * the result set. Use {@link #intoGroups(int, Class)} instead, if your key
+     * is non-unique.
      *
-     * @param keyFieldIndex The key. Client code must assure that key is unique
-     *            in the result set.
+     * @param keyFieldIndex The 0-based key field index. Client code must assure
+     *            that key is unique in the result set.
      * @param type The entity type.
      * @return A Map containing the result.
      * @throws IllegalArgumentException If the argument field index is not
@@ -652,8 +652,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * the result set. Use {@link #intoGroups(int, Class)} instead, if your key
      * is non-unique.
      *
-     * @param keyFieldIndex The key. Client code must assure that key is unique
-     *            in the result set.
+     * @param keyFieldIndex The 0-based key field index. Client code must assure
+     *            that key is unique in the result set.
      * @param mapper The mapper callback.
      * @return A Map containing the result.
      * @throws IllegalArgumentException If the argument field index is not
@@ -741,9 +741,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * in the result set. Use {@link #intoGroups(int[])} instead, if your keys
      * are non-unique.
      *
-     * @param keyFieldIndexes The keys. Client code must assure that keys are
-     *            unique in the result set. If this is <code>null</code> or an
-     *            empty array, the resulting map will contain at most one entry.
+     * @param keyFieldIndexes The 0-based key field indexes. Client code must
+     *            assure that keys are unique in the result set. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
      * @return A Map containing the results.
      * @throws IllegalArgumentException If any of the argument field indexes is
      *             not contained in {@link #fieldsRow()}
@@ -822,9 +823,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * in the result set. Use {@link #intoGroups(int[], int[])} instead, if your
      * keys are non-unique.
      *
-     * @param keyFieldIndexes The keys. Client code must assure that keys are
-     *            unique in the result set. If this is <code>null</code> or an
-     *            empty array, the resulting map will contain at most one entry.
+     * @param keyFieldIndexes The 0-based key field indexes. Client code must
+     *            assure that keys are unique in the result set. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
      * @param valueFieldIndexes The values.
      * @return A Map containing the results.
      * @throws IllegalArgumentException If any of the argument field indexes is
@@ -909,9 +911,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * in the result set. Use {@link #intoGroups(int[], Class)} instead, if your
      * keys are non-unique.
      *
-     * @param keyFieldIndexes The keys. Client code must assure that keys are
-     *            unique in the result set. If this is <code>null</code> or an
-     *            empty array, the resulting map will contain at most one entry.
+     * @param keyFieldIndexes The 0-based key field indexes. Client code must
+     *            assure that keys are unique in the result set. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
      * @param type The entity type.
      * @return A Map containing the results.
      * @throws IllegalArgumentException If any of the argument field indexes is
@@ -1005,9 +1008,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * in the result set. Use {@link #intoGroups(int[], Class)} instead, if your
      * keys are non-unique.
      *
-     * @param keyFieldIndexes The keys. Client code must assure that keys are
-     *            unique in the result set. If this is <code>null</code> or an
-     *            empty array, the resulting map will contain at most one entry.
+     * @param keyFieldIndexes The 0-based key field indexes. Client code must
+     *            assure that keys are unique in the result set. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
      * @param mapper The mapper callback.
      * @return A Map containing the results.
      * @throws IllegalArgumentException If any of the argument field indexes is
@@ -1321,7 +1325,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Unlike {@link #intoMap(int)}, this method allows for non-unique keys in
      * the result set.
      *
-     * @param keyFieldIndex The key field index.
+     * @param keyFieldIndex The 0-based key field index.
      * @return A Map containing the results
      * @throws IllegalArgumentException If the argument field index is not
      *             contained in {@link #fieldsRow()}
@@ -1384,8 +1388,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Unlike {@link #intoMap(int, int)}, this method allows for non-unique keys
      * in the result set.
      *
-     * @param keyFieldIndex The key field index.
-     * @param valueFieldIndex The value field index.
+     * @param keyFieldIndex The 0-based key field index.
+     * @param valueFieldIndex The 0-based value field index.
      * @return A Map containing the results
      * @throws IllegalArgumentException If any of the argument field indexes is
      *             not contained in {@link #fieldsRow()}
@@ -1448,7 +1452,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * into the given entity type.
      * <p>
      *
-     * @param keyFieldIndex The key field index.
+     * @param keyFieldIndex The 0-based key field index.
      * @param type The entity type.
      * @throws IllegalArgumentException If the argument field index is not
      *             contained in {@link #fieldsRow()}
@@ -1511,7 +1515,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
      *
-     * @param keyFieldIndex The key field index.
+     * @param keyFieldIndex The 0-based key field index.
      * @param mapper The mapper callback.
      * @throws IllegalArgumentException If the argument field index is not
      *             contained in {@link #fieldsRow()}
@@ -1567,11 +1571,12 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return a {@link Map} with the result grouped by the given keys.
      * <p>
-     * Unlike {@link #intoMap(int[])}, this method allows for non-unique keys
-     * in the result set.
+     * Unlike {@link #intoMap(int[])}, this method allows for non-unique keys in
+     * the result set.
      *
-     * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
-     *            array, the resulting map will contain at most one entry.
+     * @param keyFieldIndexes The 0-based key field indexes. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
      * @return A Map containing grouped results
      * @throws IllegalArgumentException If any of the argument field indexes is
      *             not contained in {@link #fieldsRow()}
@@ -1628,12 +1633,13 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return a {@link Map} with the result grouped by the given keys.
      * <p>
-     * Unlike {@link #intoMap(int[], int[])}, this method allows for non-unique keys in
-     * the result set.
+     * Unlike {@link #intoMap(int[], int[])}, this method allows for non-unique
+     * keys in the result set.
      *
-     * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
-     *            array, the resulting map will contain at most one entry.
-     * @param valueFieldIndexes The values.
+     * @param keyFieldIndexes The 0-based key field indexes. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
+     * @param valueFieldIndexes The 0-based value field indexes.
      * @return A Map containing grouped results
      * @throws IllegalArgumentException If any of the argument field indexes is
      *             not contained in {@link #fieldsRow()}
@@ -1700,8 +1706,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Unlike {@link #intoMap(int[], Class)}, this method allows for non-unique
      * keys in the result set.
      *
-     * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
-     *            array, the resulting map will contain at most one entry.
+     * @param keyFieldIndexes The 0-based key field indexes. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
      * @param type The entity type.
      * @return A Map containing grouped results
      * @throws IllegalArgumentException If the any of the argument field indexes
@@ -1780,8 +1787,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Unlike {@link #intoMap(int[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
      *
-     * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
-     *            array, the resulting map will contain at most one entry.
+     * @param keyFieldIndexes The 0-based key field indexes. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
      * @param mapper The mapper callback.
      * @return A Map containing grouped results
      * @throws IllegalArgumentException If the any of the argument field indexes
@@ -2058,6 +2066,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * You can access data like this
      * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
      *
+     * @param fieldIndex The 0-based field index
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
      *         knowledge about <code>fieldIndex</code>'s actual type.
@@ -2074,6 +2083,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * You can access data like this
      * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
      *
+     * @param fieldIndex The 0-based field index
      * @return The resulting values.
      * @see #getValues(int, Class)
      * @throws IllegalArgumentException If the argument fieldIndex is not
@@ -2090,6 +2100,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * You can access data like this
      * <code><pre>result.intoArray(fieldIndex)[recordIndex]</pre></code>
      *
+     * @param fieldIndex The 0-based field index
      * @return The resulting values.
      * @see #getValues(int, Converter)
      * @throws IllegalArgumentException If the argument fieldIndex is not
@@ -2254,6 +2265,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return all values for a field index from the result.
      *
+     * @param fieldIndex The 0-based field index
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
      *         knowledge about <code>fieldIndex</code>'s actual type.
@@ -2267,6 +2279,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return all values for a field index from the result.
      *
+     * @param fieldIndex The 0-based field index
      * @return The resulting values.
      * @see #getValues(int, Class)
      * @throws IllegalArgumentException If the argument fieldIndex is not
@@ -2280,6 +2293,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return all values for a field index from the result.
      *
+     * @param fieldIndex The 0-based field index
      * @return The resulting values.
      * @see #getValues(int, Converter)
      * @throws IllegalArgumentException If the argument fieldIndex is not
@@ -2728,7 +2742,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * <code>nulls</code> are sorted last by this method.
      *
-     * @param fieldIndex The sort field index
+     * @param fieldIndex The 0-based sort field index
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
@@ -2741,7 +2755,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * <code>nulls</code> are sorted last by this method.
      *
-     * @param fieldIndex The sort field index
+     * @param fieldIndex The 0-based sort field index
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
@@ -2838,7 +2852,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <code>null</code> sorting must be handled by the supplied
      * <code>comparator</code>.
      *
-     * @param fieldIndex The sort field index
+     * @param fieldIndex The 0-based sort field index
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
@@ -2854,7 +2868,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <code>null</code> sorting must be handled by the supplied
      * <code>comparator</code>.
      *
-     * @param fieldIndex The sort field index
+     * @param fieldIndex The 0-based sort field index
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
@@ -2974,11 +2988,11 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Future versions of jOOQ may also "intern" other data types, such as
      * {@link Integer}, {@link Long}, within a <code>Result</code> object.
      *
-     * @param fieldIndexes The field indexes whose values should be interned
+     * @param fieldIndexes The 0-based field indexes whose values should be
+     *            interned
      * @return The same result
      * @see Result#intern(Field...)
      * @see String#intern()
-     *
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */

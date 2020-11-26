@@ -936,7 +936,7 @@ final class Tools {
         }
     }
 
-    static final AbstractRow row0(Fields<?> fields) {
+    static final AbstractRow row0(FieldsImpl<?> fields) {
         return row0(fields.fields);
     }
 

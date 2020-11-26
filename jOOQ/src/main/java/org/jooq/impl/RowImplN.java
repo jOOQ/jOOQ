@@ -71,7 +71,7 @@ final class RowImplN extends AbstractRow implements RowN {
         super(fields);
     }
 
-    RowImplN(Fields<?> fields) {
+    RowImplN(FieldsImpl<?> fields) {
         super(fields);
     }
 

@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -54,9 +55,12 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordType;
+import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.tools.JooqLogger;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple wrapper for <code>Field[]</code>, providing some useful lookup
@@ -64,17 +68,17 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-final class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R> {
+final class FieldsImpl<R extends Record> extends AbstractQueryPart implements RecordType<R> {
 
     private static final long       serialVersionUID = -6911012275707591576L;
-    private static final JooqLogger log              = JooqLogger.getLogger(Fields.class);
+    private static final JooqLogger log              = JooqLogger.getLogger(FieldsImpl.class);
     Field<?>[]                      fields;
 
-    Fields(Field<?>... fields) {
+    FieldsImpl(Field<?>... fields) {
         this.fields = fields;
     }
 
-    Fields(Collection<? extends Field<?>> fields) {
+    FieldsImpl(Collection<? extends Field<?>> fields) {
         this.fields = fields.toArray(EMPTY_FIELD);
     }
 
@@ -255,6 +259,20 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
     public final Field<?>[] fields() {
         return fields;
     }
+
+    @Override
+    public final Row fieldsRow() {
+        return new RowImplN(fields);
+    }
+
+
+
+    @Override
+    public final Stream<Field<?>> fieldStream() {
+        return Stream.of(fields);
+    }
+
+
 
     @Override
     public final Field<?>[] fields(Field<?>... f) {
@@ -478,8 +496,8 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
         if (this == that)
             return true;
 
-        if (that instanceof Fields)
-            return Arrays.equals(fields, ((Fields<?>) that).fields);
+        if (that instanceof FieldsImpl)
+            return Arrays.equals(fields, ((FieldsImpl<?>) that).fields);
 
         return false;
     }

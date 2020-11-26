@@ -64,14 +64,14 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = 2392515064450536343L;
+    private static final long        serialVersionUID = 2392515064450536343L;
 
-    private final Object[]          array;
-    private final Fields<Record>    field;
-    private final Name              alias;
-    private final Name              fieldAlias;
+    private final Object[]           array;
+    private final FieldsImpl<Record> field;
+    private final Name               alias;
+    private final Name               fieldAlias;
 
-    private transient Table<Record> table;
+    private transient Table<Record>  table;
 
     ArrayTableEmulation(Object[] array) {
         this(array, N_ARRAY_TABLE, null);
@@ -87,7 +87,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
         this.array = array;
         this.alias = alias;
         this.fieldAlias = fieldAlias == null ? N_COLUMN_VALUE : fieldAlias;
-        this.field = new Fields<>(DSL.field(name(alias.last(), this.fieldAlias.last()), DSL.getDataType(array.getClass().getComponentType())));
+        this.field = new FieldsImpl<>(DSL.field(name(alias.last(), this.fieldAlias.last()), DSL.getDataType(array.getClass().getComponentType())));
     }
 
     @Override
@@ -124,7 +124,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
     }
 
     @Override
-    final Fields<Record> fields0() {
+    final FieldsImpl<Record> fields0() {
         return field;
     }
 

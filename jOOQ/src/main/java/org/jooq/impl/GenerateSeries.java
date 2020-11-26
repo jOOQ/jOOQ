@@ -162,8 +162,8 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
     }
 
     @Override
-    final Fields<Record1<Integer>> fields0() {
-        return new Fields<>(DSL.field(N_GENERATE_SERIES, Integer.class));
+    final FieldsImpl<Record1<Integer>> fields0() {
+        return new FieldsImpl<>(DSL.field(N_GENERATE_SERIES, Integer.class));
     }
 
     @Override // Avoid AbstractTable implementation

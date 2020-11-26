@@ -77,136 +77,13 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The cursor's record type
  * @author Lukas Eder
  */
-public interface Cursor<R extends Record> extends Iterable<R>, Formattable , AutoCloseable {
+public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattable , AutoCloseable {
 
     /**
      * Get this cursor's row type.
      */
     @NotNull
     RecordType<R> recordType();
-
-    /**
-     * Get this cursor's fields as a {@link Row}.
-     */
-    @NotNull
-    Row fieldsRow();
-
-    /**
-     * Get a specific field from this Cursor.
-     * <p>
-     * This will return:
-     * <ul>
-     * <li>A field that is the same as the argument field (by identity
-     * comparison).</li>
-     * <li>A field that is equal to the argument field (exact matching fully
-     * qualified name).</li>
-     * <li>A field that is equal to the argument field (partially matching
-     * qualified name).</li>
-     * <li>A field whose name is equal to the name of the argument field.</li>
-     * <li><code>null</code> otherwise.
-     * </ul>
-     * If several fields have the same name, the first one is returned and a
-     * warning is logged.
-     *
-     * @see Row#field(Field)
-     */
-    @Nullable
-    <T> Field<T> field(Field<T> field);
-
-    /**
-     * Get a specific field from this Cursor.
-     *
-     * @see Row#field(String)
-     */
-    @Nullable
-    Field<?> field(String name);
-
-    /**
-     * Get a specific qualified field from this Cursor.
-     *
-     * @see Row#field(Name)
-     */
-    @Nullable
-    Field<?> field(Name name);
-
-    /**
-     * Get a specific field from this Cursor.
-     *
-     * @see Row#field(int)
-     */
-    @Nullable
-    Field<?> field(int index);
-
-    /**
-     * Get all fields from this Cursor.
-     *
-     * @see Row#fields()
-     */
-    @NotNull
-    Field<?>[] fields();
-
-    /**
-     * Get all fields from this Cursor, providing some fields.
-     *
-     * @return All available fields
-     * @see Row#fields(Field...)
-     */
-    @NotNull
-    Field<?>[] fields(Field<?>... fields);
-
-    /**
-     * Get all fields from this Cursor, providing some field names.
-     *
-     * @return All available fields
-     * @see Row#fields(String...)
-     */
-    @NotNull
-    Field<?>[] fields(String... fieldNames);
-
-    /**
-     * Get all fields from this Cursor, providing some field names.
-     *
-     * @return All available fields
-     * @see Row#fields(Name...)
-     */
-    @NotNull
-    Field<?>[] fields(Name... fieldNames);
-
-    /**
-     * Get all fields from this Cursor, providing some field indexes.
-     *
-     * @return All available fields
-     * @see Row#fields(int...)
-     */
-    @NotNull
-    Field<?>[] fields(int... fieldIndexes);
-
-    /**
-     * Get a field's index from this cursor.
-     *
-     * @param field The field to look for
-     * @return The field's index or <code>-1</code> if the field is not
-     *         contained in this cursor.
-     */
-    int indexOf(Field<?> field);
-
-    /**
-     * Get a field's index from this cursor.
-     *
-     * @param fieldName The field name to look for
-     * @return The field's index or <code>-1</code> if the field is not
-     *         contained in this cursor.
-     */
-    int indexOf(String fieldName);
-
-    /**
-     * Get a field's index from this cursor.
-     *
-     * @param fieldName The field name to look for
-     * @return The field's index or <code>-1</code> if the field is not
-     *         contained in this cursor
-     */
-    int indexOf(Name fieldName);
 
     /**
      * Check whether this cursor has a next record.

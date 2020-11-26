@@ -60,7 +60,7 @@ final class RowsFrom extends AbstractTable<Record> {
      */
     private static final long serialVersionUID = 693765524746506586L;
 
-    private final TableList tables;
+    private final TableList   tables;
 
     RowsFrom(Table<?>... tables) {
         super(TableOptions.expression(), N_ROWSFROM);
@@ -75,14 +75,14 @@ final class RowsFrom extends AbstractTable<Record> {
     }
 
     @Override
-    final Fields<Record> fields0() {
+    final FieldsImpl<Record> fields0() {
         List<Field<?>> fields = new ArrayList<>();
 
         for (Table<?> table : tables)
             for (Field<?> field : table.fields())
                 fields.add(DSL.field(DSL.name(field.getName()), field.getDataType()));
 
-        return new Fields<>(fields);
+        return new FieldsImpl<>(fields);
     }
 
     @Override

@@ -88,7 +88,7 @@ final class Lateral<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    final Fields<R> fields0() {
-        return new Fields<>(table.fields());
+    final FieldsImpl<R> fields0() {
+        return new FieldsImpl<>(table.fields());
     }
 }

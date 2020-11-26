@@ -180,6 +180,20 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // ------------------------------------------------------------------------
 
     @Override
+    public final Field<?>[] fields() {
+        return fields.fields();
+    }
+
+
+
+    @Override
+    public final Stream<Field<?>> fieldStream() {
+        return fields.fieldStream();
+    }
+
+
+
+    @Override
     public final <T> Field<T> field(Field<T> field) {
         return fieldsRow().field(field);
     }
@@ -190,8 +204,28 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    public final <T> Field<T> field(String name, Class<T> type) {
+        return fields.field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(String name, DataType<T> dataType) {
+        return fields.field(name, dataType);
+    }
+
+    @Override
     public final Field<?> field(Name name) {
         return fieldsRow().field(name);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, Class<T> type) {
+        return fields.field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, DataType<T> dataType) {
+        return fields.field(name, dataType);
     }
 
     @Override
@@ -200,8 +234,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final Field<?>[] fields() {
-        return fields.fields();
+    public final <T> Field<T> field(int index, Class<T> type) {
+        return fields.field(index, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, DataType<T> dataType) {
+        return fields.field(index, dataType);
     }
 
     @Override
@@ -237,6 +276,46 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public final int indexOf(Name fieldName) {
         return fields.indexOf(fieldName);
+    }
+
+    @Override
+    public final Class<?>[] types() {
+        return fields.types();
+    }
+
+    @Override
+    public final Class<?> type(int fieldIndex) {
+        return fields.type(fieldIndex);
+    }
+
+    @Override
+    public final Class<?> type(String fieldName) {
+        return fields.type(fieldName);
+    }
+
+    @Override
+    public final Class<?> type(Name fieldName) {
+        return fields.type(fieldName);
+    }
+
+    @Override
+    public final DataType<?>[] dataTypes() {
+        return fields.dataTypes();
+    }
+
+    @Override
+    public final DataType<?> dataType(int fieldIndex) {
+        return fields.dataType(fieldIndex);
+    }
+
+    @Override
+    public final DataType<?> dataType(String fieldName) {
+        return fields.dataType(fieldName);
+    }
+
+    @Override
+    public final DataType<?> dataType(Name fieldName) {
+        return fields.dataType(fieldName);
     }
 
     // ------------------------------------------------------------------------
@@ -740,7 +819,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <E> E into(Class<? extends E> type) {
-        return (E) Tools.configuration(this).recordMapperProvider().provide((Fields) fields.fields, type).map(this);
+        return (E) Tools.configuration(this).recordMapperProvider().provide((FieldsImpl) fields.fields, type).map(this);
     }
 
     // [#10191] Java and Kotlin can produce overloads for this method despite
@@ -754,7 +833,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         Class<E> type = (Class<E>) object.getClass();
 
         try {
-            return new DefaultRecordMapper<Record, E>((Fields) fields.fields, type, object, configuration()).map(this);
+            return new DefaultRecordMapper<Record, E>((FieldsImpl) fields.fields, type, object, configuration()).map(this);
         }
 
         // Pass MappingExceptions on to client code
@@ -844,7 +923,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return mapper.map(this);
     }
 
-    private final void from0(Object source, Fields f) {
+    private final void from0(Object source, FieldsImpl f) {
         if (source == null) return;
 
         // [#2520] TODO: Benchmark this from() method. There's probably a better implementation
@@ -855,7 +934,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         resetChangedOnNotNull(this);
     }
 
-    private final Object prepareArrayForUnmap(Object source, Fields f) {
+    private final Object prepareArrayForUnmap(Object source, FieldsImpl f) {
         if (source instanceof Object[]) {
             Object[] array = (Object[]) source;
 
@@ -883,7 +962,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void from(Object source, Field<?>... f) {
-        from0(source, new Fields(f));
+        from0(source, new FieldsImpl(f));
     }
 
     @Override
@@ -908,7 +987,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void fromMap(Map<String, ?> map, Field<?>... f) {
-        from0(map, new Fields(f));
+        from0(map, new FieldsImpl(f));
     }
 
     @Override
@@ -933,7 +1012,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void fromArray(Object[] array, Field<?>... f) {
-        from0(array, new Fields(f));
+        from0(array, new FieldsImpl(f));
     }
 
     @Override

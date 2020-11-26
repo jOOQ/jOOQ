@@ -787,14 +787,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true)) {
                         list.add(configuration
                             .recordMapperProvider()
-                            .provide(new Fields<>(entry.getValue()), member.getType())
+                            .provide(new FieldsImpl<>(entry.getValue()), member.getType())
                         );
                     }
 
                     for (Method method : getMatchingSetters(configuration, type, prefix, true)) {
                         list.add(configuration
                             .recordMapperProvider()
-                            .provide(new Fields<>(entry.getValue()), method.getParameterTypes()[0])
+                            .provide(new FieldsImpl<>(entry.getValue()), method.getParameterTypes()[0])
                         );
                     }
 
@@ -1002,7 +1002,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     if (nestedMappedFields[i] != null) {
                         nestedMappers[i] = configuration
                             .recordMapperProvider()
-                            .provide((RecordType) new Fields<>(nestedMappedFields[i]), parameterTypes[i]);
+                            .provide((RecordType) new FieldsImpl<>(nestedMappedFields[i]), parameterTypes[i]);
                     }
                 }
             }

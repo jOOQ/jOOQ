@@ -76,7 +76,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
     private final DerivedColumnListImpl  name;
     private final Select<R>              select;
-    private final Fields<R>              fields;
+    private final FieldsImpl<R>          fields;
     private final Boolean                materialized;
 
     CommonTableExpressionImpl(DerivedColumnListImpl name, Select<R> select, Boolean materialized) {
@@ -131,11 +131,11 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     }
 
     @Override
-    final Fields<R> fields0() {
+    final FieldsImpl<R> fields0() {
         return fields;
     }
 
-    final Fields<R> fields1() {
+    final FieldsImpl<R> fields1() {
         List<Field<?>> s = select.getSelect();
         Field<?>[] f = new Field[Tools.degree(select)];
 
@@ -152,6 +152,6 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
             );
         }
 
-        return new Fields<>(f);
+        return new FieldsImpl<>(f);
     }
 }

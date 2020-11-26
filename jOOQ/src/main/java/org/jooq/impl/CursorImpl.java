@@ -119,14 +119,13 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
     private transient Iterator<R>                          iterator;
     private transient int                                  rows;
 
-
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
         this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImplN.class, 0, true);
     }
 
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows, boolean autoclosing) {
-        super(ctx.configuration(), new Fields<>(fields));
+        super(ctx.configuration(), new FieldsImpl<>(fields));
 
         this.ctx = ctx;
         this.listener = (listener != null ? listener : ExecuteListeners.getAndStart(ctx));

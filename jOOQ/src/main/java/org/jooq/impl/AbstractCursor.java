@@ -60,6 +60,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
@@ -76,6 +77,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.Fields;
 import org.jooq.Formattable;
 import org.jooq.JSON;
 import org.jooq.JSONB;
@@ -106,17 +108,17 @@ import org.xml.sax.helpers.AttributesImpl;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractCursor<R extends Record> extends AbstractFormattable implements Iterable<R> {
+abstract class AbstractCursor<R extends Record> extends AbstractFormattable implements Fields, Iterable<R> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -3412555195899758746L;
 
-    final Fields<R>           fields;
+    final FieldsImpl<R>       fields;
     Configuration             configuration;
 
-    AbstractCursor(Configuration configuration, Fields<R> fields) {
+    AbstractCursor(Configuration configuration, FieldsImpl<R> fields) {
         this.configuration = configuration;
         this.fields = fields;
     }
@@ -129,10 +131,21 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         return fields;
     }
 
+    @Override
     public final Row fieldsRow() {
         return Tools.row0(fields);
     }
 
+
+
+    @Override
+    public final Stream<Field<?>> fieldStream() {
+        return fields.fieldStream();
+    }
+
+
+
+    @Override
     public final <T> Field<T> field(Field<T> field) {
         return fields.field(field);
     }
@@ -140,6 +153,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
     /**
      * @deprecated This method hides static import {@link DSL#field(String)}.
      */
+    @Override
     @Deprecated
     public final Field<?> field(String name) {
         return fields.field(name);
@@ -148,6 +162,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
     /**
      * @deprecated This method hides static import {@link DSL#field(String, Class)}.
      */
+    @Override
     @Deprecated
     public final <T> Field<T> field(String name, Class<T> type) {
         return fields.field(name, type);
@@ -156,6 +171,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
     /**
      * @deprecated This method hides static import {@link DSL#field(String, DataType)}.
      */
+    @Override
     @Deprecated
     public final <T> Field<T> field(String name, DataType<T> dataType) {
         return fields.field(name, dataType);
@@ -164,6 +180,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
     /**
      * @deprecated This method hides static import {@link DSL#field(Name)}.
      */
+    @Override
     @Deprecated
     public final Field<?> field(Name name) {
         return fields.field(name);
@@ -172,6 +189,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
     /**
      * @deprecated This method hides static import {@link DSL#field(Name, Class)}.
      */
+    @Override
     @Deprecated
     public final <T> Field<T> field(Name name, Class<T> type) {
         return fields.field(name, type);
@@ -180,53 +198,105 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
     /**
      * @deprecated This method hides static import {@link DSL#field(Name, DataType)}.
      */
+    @Override
     @Deprecated
     public final <T> Field<T> field(Name name, DataType<T> dataType) {
         return fields.field(name, dataType);
     }
 
+    @Override
     public final Field<?> field(int index) {
         return fields.field(index);
     }
 
+    @Override
     public final <T> Field<T> field(int index, Class<T> type) {
         return fields.field(index, type);
     }
 
+    @Override
     public final <T> Field<T> field(int index, DataType<T> dataType) {
         return fields.field(index, dataType);
     }
 
+    @Override
     public final Field<?>[] fields() {
         return fields.fields().clone();
     }
 
+    @Override
     public final Field<?>[] fields(Field<?>... f) {
         return fields.fields(f);
     }
 
+    @Override
     public final Field<?>[] fields(int... indexes) {
         return fields.fields(indexes);
     }
 
+    @Override
     public final Field<?>[] fields(String... names) {
         return fields.fields(names);
     }
 
+    @Override
     public final Field<?>[] fields(Name... names) {
         return fields.fields(names);
     }
 
+    @Override
     public final int indexOf(Field<?> field) {
         return fields.indexOf(field);
     }
 
+    @Override
     public final int indexOf(String fieldName) {
         return fields.indexOf(fieldName);
     }
 
+    @Override
     public final int indexOf(Name fieldName) {
         return fields.indexOf(fieldName);
+    }
+
+    @Override
+    public final Class<?>[] types() {
+        return fields.types();
+    }
+
+    @Override
+    public final Class<?> type(int index) {
+        return fields.type(index);
+    }
+
+    @Override
+    public final Class<?> type(String name) {
+        return fields.type(name);
+    }
+
+    @Override
+    public final Class<?> type(Name name) {
+        return fields.type(name);
+    }
+
+    @Override
+    public final DataType<?>[] dataTypes() {
+        return fields.dataTypes();
+    }
+
+    @Override
+    public final DataType<?> dataType(int index) {
+        return fields.dataType(index);
+    }
+
+    @Override
+    public final DataType<?> dataType(String name) {
+        return fields.dataType(name);
+    }
+
+    @Override
+    public final DataType<?> dataType(Name name) {
+        return fields.dataType(name);
     }
 
     // -------------------------------------------------------------------------
@@ -723,7 +793,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         }
     }
 
-    static final void formatJSONMap0(Record record, Fields<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
+    static final void formatJSONMap0(Record record, FieldsImpl<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
         String separator = "";
         boolean wrapRecords = format.wrapSingleColumnRecords() || fields.fields.length > 1;
 
@@ -758,7 +828,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 writer.append('}');
     }
 
-    static final void formatJSONArray0(Record record, Fields<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
+    static final void formatJSONArray0(Record record, FieldsImpl<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
         String separator = "";
 
         if (format.wrapSingleColumnRecords() || fields.fields.length > 1)
@@ -855,7 +925,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         XMLFormat format,
         int recordLevel,
         Record record,
-        Fields<?> fields
+        FieldsImpl<?> fields
     )
     throws java.io.IOException {
         String newline = format.newline();

@@ -70,12 +70,12 @@ final class ArrayTable extends AbstractTable<Record> {
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = 2380426377794577041L;
+    private static final long        serialVersionUID = 2380426377794577041L;
 
-    private final Field<?>       array;
-    private final Fields<Record> field;
-    private final Name           alias;
-    private final Name[]         fieldAliases;
+    private final Field<?>           array;
+    private final FieldsImpl<Record> field;
+    private final Name               alias;
+    private final Name[]             fieldAliases;
 
     ArrayTable(Field<?> array) {
         this(array, N_ARRAY_TABLE);
@@ -122,7 +122,7 @@ final class ArrayTable extends AbstractTable<Record> {
         this.field = init(arrayType, alias);
     }
 
-    private static final Fields<Record> init(Class<?> arrayType, Name alias) {
+    private static final FieldsImpl<Record> init(Class<?> arrayType, Name alias) {
         List<Field<?>> result = new ArrayList<>();
 
         // [#1114] VARRAY/TABLE of OBJECT have more than one field
@@ -143,7 +143,7 @@ final class ArrayTable extends AbstractTable<Record> {
             result.add(DSL.field(name(alias.last(), "COLUMN_VALUE"), DSL.getDataType(arrayType)));
         }
 
-        return new Fields<>(result);
+        return new FieldsImpl<>(result);
     }
 
     @Override
@@ -284,7 +284,7 @@ final class ArrayTable extends AbstractTable<Record> {
         }
 
         @Override
-        final Fields<Record> fields0() {
+        final FieldsImpl<Record> fields0() {
             return ArrayTable.this.fields0();
         }
     }
@@ -295,7 +295,7 @@ final class ArrayTable extends AbstractTable<Record> {
     }
 
     @Override
-    final Fields<Record> fields0() {
+    final FieldsImpl<Record> fields0() {
         return field;
     }
 }

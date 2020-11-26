@@ -55,6 +55,8 @@ import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A common base class for the various degrees of {@link Row1}, {@link Row2},
  * etc.
@@ -64,20 +66,20 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 2175082265665049629L;
+    private static final long     serialVersionUID = 2175082265665049629L;
     private static final Clause[] CLAUSES          = { FIELD_ROW };
 
-    final Fields<?>               fields;
+    final FieldsImpl<?>           fields;
 
     AbstractRow(Field<?>... fields) {
-        this(new Fields<>(fields));
+        this(new FieldsImpl<>(fields));
     }
 
     AbstractRow(Collection<? extends Field<?>> fields) {
-        this(new Fields<>(fields));
+        this(new FieldsImpl<>(fields));
     }
 
-    AbstractRow(Fields<?> fields) {
+    AbstractRow(FieldsImpl<?> fields) {
         super();
 
         this.fields = fields;
@@ -114,11 +116,18 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
         return fields.size();
     }
 
+    @Override
+    public final Row fieldsRow() {
+        return this;
+    }
+
+
 
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
+
 
 
     @Override

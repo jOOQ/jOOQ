@@ -62,11 +62,11 @@ final class Intern implements Serializable {
         if (internIndexes != null)
             return internIndexes;
         else if (internFields != null)
-            return new Fields<>(fields).indexesOf(internFields);
+            return new FieldsImpl<>(fields).indexesOf(internFields);
         else if (internNameStrings != null)
-            return new Fields<>(fields).indexesOf(internNameStrings);
+            return new FieldsImpl<>(fields).indexesOf(internNameStrings);
         else if (internNames != null)
-            return new Fields<>(fields).indexesOf(internNames);
+            return new FieldsImpl<>(fields).indexesOf(internNames);
 
         return null;
     }

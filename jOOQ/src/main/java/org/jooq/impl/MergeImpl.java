@@ -1396,7 +1396,7 @@ implements
     }
 
     private final void toSQLMySQLOnDuplicateKeyUpdate(Context<?> ctx) {
-        Fields<?> fields = new Fields<>(getUpsertFields());
+        FieldsImpl<?> fields = new FieldsImpl<>(getUpsertFields());
         Map<Field<?>, Field<?>> map = new LinkedHashMap<>();
         for (Field<?> field : fields.fields)
             map.put(field, getUpsertValues().get(fields.indexOf(field)));
@@ -1417,7 +1417,7 @@ implements
             ctx.sql("[ merge with select is not supported in PostgreSQL ]");
         }
         else {
-            Fields<?> fields = new Fields<>(getUpsertFields());
+            FieldsImpl<?> fields = new FieldsImpl<>(getUpsertFields());
             Map<Field<?>, Field<?>> map = new LinkedHashMap<>();
 
             for (Field<?> field : fields.fields) {

@@ -94,7 +94,7 @@ implements
     private final XMLPassingMechanism           passingMechanism;
     private final QueryPartList<XMLTableColumn> columns;
     private final boolean                       hasOrdinality;
-    private transient Fields<Record>            fields;
+    private transient FieldsImpl<Record>        fields;
 
     XMLTable(Field<String> xpath) {
         this(xpath, null, null, null, false);
@@ -210,14 +210,14 @@ implements
     }
 
     @Override
-    final Fields<Record> fields0() {
+    final FieldsImpl<Record> fields0() {
         if (fields == null) {
             List<Field<?>> f = new ArrayList<>();
 
             for (XMLTableColumn c : columns)
                 f.add(c.field.getDataType() == c.type ? c.field : DSL.field(c.field.getQualifiedName(), c.type));
 
-            fields = new Fields<>(f);
+            fields = new FieldsImpl<>(f);
         }
 
         return fields;

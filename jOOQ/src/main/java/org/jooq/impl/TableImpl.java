@@ -87,7 +87,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS = SQLDialect.supportedBy(HSQLDB, POSTGRES);
     private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR = SQLDialect.supportedBy(HSQLDB);
 
-    final Fields<R>                      fields;
+    final FieldsImpl<R>                  fields;
     final Alias<Table<R>>                alias;
 
     protected final Field<?>[]           parameters;
@@ -183,7 +183,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
         super(options, name, schema, comment);
 
-        this.fields = new Fields<>();
+        this.fields = new FieldsImpl<>();
         this.child = child;
         this.childPath = path == null ? null : Tools.aliasedKey((ForeignKey) path, child, this);
 
@@ -226,7 +226,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    final Fields<R> fields0() {
+    final FieldsImpl<R> fields0() {
         return fields;
     }
 

@@ -564,9 +564,9 @@ implements
     }
 
     @Override
-    final Fields<Record> fields0() {
+    final FieldsImpl<Record> fields0() {
         if (type == LEFT_SEMI_JOIN || type == LEFT_ANTI_JOIN) {
-            return new Fields<>(lhs.asTable().fields());
+            return new FieldsImpl<>(lhs.asTable().fields());
         }
         else {
             Field<?>[] l = lhs.asTable().fields();
@@ -576,7 +576,7 @@ implements
             System.arraycopy(l, 0, all, 0, l.length);
             System.arraycopy(r, 0, all, l.length, r.length);
 
-            return new Fields<>(all);
+            return new FieldsImpl<>(all);
         }
     }
 

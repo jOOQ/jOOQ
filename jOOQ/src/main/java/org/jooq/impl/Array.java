@@ -65,12 +65,12 @@ final class Array<T> extends AbstractField<T[]> {
     private static final long            serialVersionUID = -6629785423729163857L;
     private static final Set<SQLDialect> REQUIRES_CAST    = SQLDialect.supportedBy(POSTGRES);
 
-    private final Fields<Record>         fields;
+    private final FieldsImpl<Record>     fields;
 
     Array(Collection<? extends Field<T>> fields) {
         super(N_ARRAY, type(fields));
 
-        this.fields = new Fields<>(fields);
+        this.fields = new FieldsImpl<>(fields);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

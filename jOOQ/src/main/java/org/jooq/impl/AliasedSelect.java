@@ -97,8 +97,8 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    final Fields<R> fields0() {
-        return new Fields<>(query.asTable(DSL.name("t"), aliases).fields());
+    final FieldsImpl<R> fields0() {
+        return new FieldsImpl<>(query.asTable(DSL.name("t"), aliases).fields());
     }
 
     @Override

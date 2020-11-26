@@ -110,14 +110,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     private final List<R>     records;
 
     ResultImpl(Configuration configuration, Collection<? extends Field<?>> fields) {
-        this(configuration, new Fields<>(fields));
+        this(configuration, new FieldsImpl<>(fields));
     }
 
     ResultImpl(Configuration configuration, Field<?>... fields) {
-        this(configuration, new Fields<>(fields));
+        this(configuration, new FieldsImpl<>(fields));
     }
 
-    ResultImpl(Configuration configuration, Fields<R> fields) {
+    ResultImpl(Configuration configuration, FieldsImpl<R> fields) {
         super(configuration, fields);
 
         this.records = new ArrayList<>();

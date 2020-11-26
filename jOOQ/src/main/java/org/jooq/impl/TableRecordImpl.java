@@ -309,7 +309,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      * Set all changed values of this record to a store query.
      */
     final void addChangedValues(Field<?>[] storeFields, StoreQuery<R> query, boolean forUpdate) {
-        Fields<Record> f = new Fields<>(storeFields);
+        FieldsImpl<Record> f = new FieldsImpl<>(storeFields);
 
         for (Field<?> field : fields.fields.fields)
             if (changed(field) && f.field(field) != null)

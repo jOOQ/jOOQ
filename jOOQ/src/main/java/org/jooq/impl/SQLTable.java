@@ -72,7 +72,7 @@ final class SQLTable extends AbstractTable<Record> {
     }
 
     @Override
-    final Fields<Record> fields0() {
-        return new Fields<>();
+    final FieldsImpl<Record> fields0() {
+        return new FieldsImpl<>();
     }
 }

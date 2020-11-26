@@ -1254,7 +1254,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
-                if (returningResolvedAsterisks.size() == 1 && new Fields<>(returningResolvedAsterisks).field(returnIdentity) != null) {
+                if (returningResolvedAsterisks.size() == 1 && new FieldsImpl<>(returningResolvedAsterisks).field(returnIdentity) != null) {
                     for (final Object id : ids) {
                         ((Result) getResult()).add(
                         Tools.newRecord(

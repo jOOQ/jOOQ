@@ -106,7 +106,7 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    final Fields<R> fields0() {
+    final FieldsImpl<R> fields0() {
         return delegate.fields0();
     }
 }

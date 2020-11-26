@@ -474,10 +474,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
 
+
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
+
 
 
     @Override
@@ -592,6 +594,46 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final int indexOf(Name fieldName) {
         return asTable().indexOf(fieldName);
+    }
+
+    @Override
+    public final Class<?>[] types() {
+        return asTable().types();
+    }
+
+    @Override
+    public final Class<?> type(int fieldIndex) {
+        return asTable().type(fieldIndex);
+    }
+
+    @Override
+    public final Class<?> type(String fieldName) {
+        return asTable().type(fieldName);
+    }
+
+    @Override
+    public final Class<?> type(Name fieldName) {
+        return asTable().type(fieldName);
+    }
+
+    @Override
+    public final DataType<?>[] dataTypes() {
+        return asTable().dataTypes();
+    }
+
+    @Override
+    public final DataType<?> dataType(int fieldIndex) {
+        return asTable().dataType(fieldIndex);
+    }
+
+    @Override
+    public final DataType<?> dataType(String fieldName) {
+        return asTable().dataType(fieldName);
+    }
+
+    @Override
+    public final DataType<?> dataType(Name fieldName) {
+        return asTable().dataType(fieldName);
     }
 
     @Override
@@ -3308,7 +3350,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final Collection<? extends Field<?>> subtract(List<Field<?>> left, List<Field<?>> right) {
 
         // [#7921] TODO Make this functionality more generally reusable
-        Fields<?> e = new Fields<>(right);
+        FieldsImpl<?> e = new FieldsImpl<>(right);
         List<Field<?>> result = new ArrayList<>();
 
         for (Field<?> f : left)
@@ -3413,7 +3455,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result, QueryPartList<Field<?>> except) {
-        Fields<?> e = except == null ? null : new Fields<>(except);
+        FieldsImpl<?> e = except == null ? null : new FieldsImpl<>(except);
 
         // [#109] [#489] [#7231]: SELECT * is only applied when at least one
         // table from the table source is "unknown", i.e. not generated from a

@@ -100,7 +100,7 @@ implements
     private final Field<?>                       json;
     private final QueryPartList<JSONTableColumn> columns;
     private final boolean                        hasOrdinality;
-    private transient Fields<Record>             fields;
+    private transient FieldsImpl<Record>         fields;
 
     JSONTable(Field<?> json, Field<String> path) {
         this(json, path, null, false);
@@ -184,14 +184,14 @@ implements
     }
 
     @Override
-    final Fields<Record> fields0() {
+    final FieldsImpl<Record> fields0() {
         if (fields == null) {
             List<Field<?>> f = new ArrayList<>();
 
             for (JSONTableColumn c : columns)
                 f.add(c.field.getDataType() == c.type ? c.field : DSL.field(c.field.getQualifiedName(), c.type));
 
-            fields = new Fields<>(f);
+            fields = new FieldsImpl<>(f);
         }
 
         return fields;

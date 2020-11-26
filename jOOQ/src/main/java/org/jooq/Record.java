@@ -125,130 +125,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  * @see Result
  */
-public interface Record extends Attachable, Comparable<Record>, Formattable {
-
-    /**
-     * Get this record's fields as a {@link Row}.
-     */
-    @NotNull
-    Row fieldsRow();
-
-    /**
-     * Get a specific field from this Record.
-     * <p>
-     * This will return:
-     * <ul>
-     * <li>A field that is the same as the argument field (by identity
-     * comparison).</li>
-     * <li>A field that is equal to the argument field (exact matching fully
-     * qualified name).</li>
-     * <li>A field that is equal to the argument field (partially matching
-     * qualified name).</li>
-     * <li>A field whose name is equal to the name of the argument field.</li>
-     * <li><code>null</code> otherwise.
-     * </ul>
-     * If several fields have the same name, the first one is returned and a
-     * warning is logged.
-     *
-     * @see Row#field(Field)
-     */
-    @Nullable
-    <T> Field<T> field(Field<T> field);
-
-    /**
-     * Get a specific field from this Record.
-     *
-     * @see Row#field(String)
-     */
-    @Nullable
-    Field<?> field(String name);
-
-    /**
-     * Get a specific qualified field from this Record.
-     *
-     * @see Row#field(Name)
-     */
-    @Nullable
-    Field<?> field(Name name);
-
-    /**
-     * Get a specific field from this Record.
-     *
-     * @see Row#field(int)
-     */
-    @Nullable
-    Field<?> field(int index);
-
-    /**
-     * Get all fields from this Record.
-     *
-     * @see Row#fields()
-     */
-    @NotNull
-    Field<?>[] fields();
-
-    /**
-     * Get all fields from this Record, providing some fields.
-     *
-     * @return All available fields
-     * @see Row#fields(Field...)
-     */
-    @NotNull
-    Field<?>[] fields(Field<?>... fields);
-
-    /**
-     * Get all fields from this Record, providing some field names.
-     *
-     * @return All available fields
-     * @see Row#fields(String...)
-     */
-    @NotNull
-    Field<?>[] fields(String... fieldNames);
-
-    /**
-     * Get all fields from this Record, providing some field names.
-     *
-     * @return All available fields
-     * @see Row#fields(Name...)
-     */
-    @NotNull
-    Field<?>[] fields(Name... fieldNames);
-
-    /**
-     * Get all fields from this Record, providing some field indexes.
-     *
-     * @return All available fields
-     * @see Row#fields(int...)
-     */
-    @NotNull
-    Field<?>[] fields(int... fieldIndexes);
-
-    /**
-     * Get a field's index from this record.
-     *
-     * @param field The field to look for
-     * @return The field's index or <code>-1</code> if the field is not
-     *         contained in this record.
-     */
-    int indexOf(Field<?> field);
-
-    /**
-     * Get a field's index from this record.
-     *
-     * @param fieldName The field name to look for
-     * @return The field's index or <code>-1</code> if the field is not
-     *         contained in this record.
-     */
-    int indexOf(String fieldName);
-
-    /**
-     * Get a field's index from this record.
-     *
-     * @param fieldName The field name to look for
-     * @return The field's index or <code>-1</code> if the field is not
-     *         contained in this record
-     */
-    int indexOf(Name fieldName);
+public interface Record extends Fields, Attachable, Comparable<Record>, Formattable {
 
     /**
      * Get this record's values as a {@link Row}.
@@ -398,7 +275,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
     /**
      * Get a value from this record, providing a field index.
      *
-     * @param index The field's index
+     * @param index The 0-based field index in this record.
      * @return The value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
@@ -414,7 +291,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * value to <code>U</code>
      *
      * @param <U> The conversion type parameter
-     * @param index The field's index
+     * @param index The 0-based field index in this record.
      * @param type The conversion type
      * @return The value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
@@ -428,7 +305,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * Get a converted value from this record, providing a field index.
      *
      * @param <U> The conversion type parameter
-     * @param index The field's index
+     * @param index The 0-based field index in this record.
      * @param converter The data type converter
      * @return The value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument index is not contained
@@ -533,6 +410,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * the database. Every record also references the originally fetched values.
      * This method returns such an original value for a field.
      *
+     * @param fieldIndex The 0-based field index in this record.
      * @see #original()
      */
     @Nullable
@@ -589,6 +467,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * Check if a field's value has been changed from its original as fetched
      * from the database.
      *
+     * @param fieldIndex The 0-based field index in this record.
      * @see #changed()
      * @see #original(int)
      */
@@ -647,6 +526,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * {@link #original(int)} value will be reset to the corresponding "current"
      * value as well
      *
+     * @param fieldIndex The 0-based field index in this record.
      * @see #changed()
      * @see #changed(int)
      */
@@ -693,6 +573,8 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
     /**
      * Reset a given value to its {@link #original(int)} value and its
      * {@link #changed(int)} flag to <code>false</code>.
+     *
+     * @param fieldIndex The 0-based field index in this record.
      */
     void reset(int fieldIndex);
 
@@ -1249,7 +1131,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * contained in the <code>fieldIndexes</code> argument will be mapped.
      *
      * @param source The source object to copy data from
-     * @param fieldIndexes The record's fields indexes to use for mapping
+     * @param fieldIndexes The record's 0-based field indexes to use for mapping
      * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      * @see #into(Class)
@@ -1332,6 +1214,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * This is the same as {@link #fromMap(Map)}, except that only fields
      * contained in the <code>fieldIndexes</code> argument will be mapped.
      *
+     * @param fieldIndexes The 0-based field indexes in this record.
      * @see #intoMap()
      * @see #fromMap(Map)
      */
@@ -1407,6 +1290,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * fields contained in the <code>fieldIndexes</code> argument will be
      * mapped.
      *
+     * @param fieldIndexes The 0-based field indexes in this record.
      * @see #intoArray()
      * @see #fromArray(Object...)
      */
@@ -1752,6 +1636,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(int)} instead.
      *
+     * @param index The 0-based field index in this record.
      * @see #get(int)
      */
     Object getValue(int index) throws IllegalArgumentException;
@@ -1759,7 +1644,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
     /**
      * Get a value from this record, providing a field index.
      *
-     * @param index The field's index
+     * @param index The 0-based field index in this record.
      * @param defaultValue The default value instead of <code>null</code>
      * @return The value of a field's index contained in this record, or
      *         defaultValue, if <code>null</code>
@@ -1776,6 +1661,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(int, Class)} instead.
      *
+     * @param index The 0-based field index in this record.
      * @see #get(int, Class)
      */
     <T> T getValue(int index, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
@@ -1788,7 +1674,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * value to <code>U</code>
      *
      * @param <U> The conversion type parameter
-     * @param index The field's index
+     * @param index The 0-based field index in this record.
      * @param type The conversion type
      * @param defaultValue The default value instead of <code>null</code>
      * @return The value of a field's index contained in this record, or
@@ -1808,6 +1694,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(int, Converter)} instead.
      *
+     * @param index The 0-based field index in this record.
      * @see #get(int, Converter)
      */
     <U> U getValue(int index, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
@@ -1816,7 +1703,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * Get a converted value from this record, providing a field index.
      *
      * @param <U> The conversion type parameter
-     * @param index The field's index
+     * @param index The 0-based field index in this record.
      * @param converter The data type converter
      * @param defaultValue The default value instead of <code>null</code>
      * @return The value of a field's index contained in this record, or

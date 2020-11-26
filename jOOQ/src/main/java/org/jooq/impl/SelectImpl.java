@@ -4045,10 +4045,12 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
 
+
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
+
 
 
     @Override
@@ -4139,6 +4141,46 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final int indexOf(Name fieldName) {
         return getDelegate().indexOf(fieldName);
+    }
+
+    @Override
+    public final Class<?>[] types() {
+        return getDelegate().types();
+    }
+
+    @Override
+    public final Class<?> type(int fieldIndex) {
+        return getDelegate().type(fieldIndex);
+    }
+
+    @Override
+    public final Class<?> type(String fieldName) {
+        return getDelegate().type(fieldName);
+    }
+
+    @Override
+    public final Class<?> type(Name fieldName) {
+        return getDelegate().type(fieldName);
+    }
+
+    @Override
+    public final DataType<?>[] dataTypes() {
+        return getDelegate().dataTypes();
+    }
+
+    @Override
+    public final DataType<?> dataType(int fieldIndex) {
+        return getDelegate().dataType(fieldIndex);
+    }
+
+    @Override
+    public final DataType<?> dataType(String fieldName) {
+        return getDelegate().dataType(fieldName);
+    }
+
+    @Override
+    public final DataType<?> dataType(Name fieldName) {
+        return getDelegate().dataType(fieldName);
     }
 
     @Override

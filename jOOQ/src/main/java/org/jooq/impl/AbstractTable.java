@@ -189,7 +189,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * <code>TableAlias</code> contains aliased fields of its
      * <code>AliasProvider</code> table.
      */
-    abstract Fields<R> fields0();
+    abstract FieldsImpl<R> fields0();
 
     @Override
     public final DataType<R> getDataType() {
@@ -218,10 +218,12 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
 
+
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
+
 
 
     @Override
@@ -312,6 +314,46 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final int indexOf(Name fieldName) {
         return fieldsRow().indexOf(fieldName);
+    }
+
+    @Override
+    public final Class<?>[] types() {
+        return fieldsRow().types();
+    }
+
+    @Override
+    public final Class<?> type(int index) {
+        return fieldsRow().type(index);
+    }
+
+    @Override
+    public final Class<?> type(String name) {
+        return fieldsRow().type(name);
+    }
+
+    @Override
+    public final Class<?> type(Name name) {
+        return fieldsRow().type(name);
+    }
+
+    @Override
+    public final DataType<?>[] dataTypes() {
+        return fieldsRow().dataTypes();
+    }
+
+    @Override
+    public final DataType<?> dataType(int index) {
+        return fieldsRow().dataType(index);
+    }
+
+    @Override
+    public final DataType<?> dataType(String name) {
+        return fieldsRow().dataType(name);
+    }
+
+    @Override
+    public final DataType<?> dataType(Name name) {
+        return fieldsRow().dataType(name);
     }
 
     @Override

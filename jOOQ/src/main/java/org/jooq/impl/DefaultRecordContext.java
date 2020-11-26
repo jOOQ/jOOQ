@@ -53,9 +53,9 @@ import org.jooq.Result;
  */
 class DefaultRecordContext extends AbstractScope implements RecordContext {
 
-    private final ExecuteType         type;
-    private final Record[]            records;
-    Exception                         exception;
+    private final ExecuteType type;
+    private final Record[]    records;
+    Exception                 exception;
 
     DefaultRecordContext(Configuration configuration, ExecuteType type, Record... records) {
         super(configuration);
@@ -82,7 +82,7 @@ class DefaultRecordContext extends AbstractScope implements RecordContext {
     @Override
     public final RecordType<?> recordType() {
         Record record = record();
-        return record != null ? new Fields<>(record.fields()) : null;
+        return record != null ? new FieldsImpl<>(record.fields()) : null;
     }
 
     @Override

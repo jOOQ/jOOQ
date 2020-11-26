@@ -72,16 +72,16 @@ final class MetaDataFieldProvider implements Serializable {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -8482521025536063609L;
-    private static final JooqLogger log              = JooqLogger.getLogger(MetaDataFieldProvider.class);
+    private static final long        serialVersionUID = -8482521025536063609L;
+    private static final JooqLogger  log              = JooqLogger.getLogger(MetaDataFieldProvider.class);
 
-    private final Fields<Record>    fields;
+    private final FieldsImpl<Record> fields;
 
     MetaDataFieldProvider(Configuration configuration, ResultSetMetaData meta) {
         this.fields = init(configuration, meta);
     }
 
-    private static Fields<Record> init(Configuration configuration, ResultSetMetaData meta) {
+    private static FieldsImpl<Record> init(Configuration configuration, ResultSetMetaData meta) {
         Field<?>[] fields;
         int columnCount = 0;
 
@@ -160,7 +160,7 @@ final class MetaDataFieldProvider implements Serializable {
             throw Tools.translate(null, e);
         }
 
-        return new Fields<>(fields);
+        return new FieldsImpl<>(fields);
     }
 
     final Field<?>[] getFields() {

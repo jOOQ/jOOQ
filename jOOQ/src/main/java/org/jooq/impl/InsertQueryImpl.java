@@ -355,7 +355,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                             ctx.sql("[unknown primary key]");
                         else
                             ctx.qualify(false)
-                               .visit(new Fields<>(table().getPrimaryKey().getFields()))
+                               .visit(new FieldsImpl<>(table().getPrimaryKey().getFields()))
                                .qualify(qualify);
 
                         ctx.sql(')');

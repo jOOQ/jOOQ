@@ -67,7 +67,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     private static final long     serialVersionUID = -2208672099190913126L;
 
     private final Schema          schema;
-    private final Fields<R>       fields;
+    private final FieldsImpl<R>   fields;
     private final Package         pkg;
     private final boolean         synthetic;
     private transient DataType<R> type;
@@ -83,7 +83,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     public UDTImpl(String name, Schema schema, Package pkg, boolean synthetic) {
         super(qualify(pkg != null ? pkg : schema, DSL.name(name)), CommentImpl.NO_COMMENT);
 
-        this.fields = new Fields<>();
+        this.fields = new FieldsImpl<>();
         this.schema = schema;
         this.pkg = pkg;
         this.synthetic = synthetic;
@@ -116,10 +116,12 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     }
 
 
+
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
+
 
 
     @Override
@@ -133,13 +135,43 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     }
 
     @Override
+    public final <T> Field<T> field(String name, Class<T> t) {
+        return fieldsRow().field(name, t);
+    }
+
+    @Override
+    public final <T> Field<T> field(String name, DataType<T> t) {
+        return fieldsRow().field(name, t);
+    }
+
+    @Override
     public final Field<?> field(Name fieldName) {
         return fieldsRow().field(fieldName);
     }
 
     @Override
+    public final <T> Field<T> field(Name name, Class<T> t) {
+        return fieldsRow().field(name, t);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, DataType<T> t) {
+        return fieldsRow().field(name, t);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         return fieldsRow().field(index);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, Class<T> t) {
+        return fieldsRow().field(index, t);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, DataType<T> t) {
+        return fieldsRow().field(index, t);
     }
 
     @Override
@@ -182,7 +214,47 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
         return fieldsRow().indexOf(fieldName);
     }
 
-    final Fields<R> fields0() {
+    @Override
+    public final Class<?>[] types() {
+        return fieldsRow().types();
+    }
+
+    @Override
+    public final Class<?> type(int fieldIndex) {
+        return fieldsRow().type(fieldIndex);
+    }
+
+    @Override
+    public final Class<?> type(String fieldName) {
+        return fieldsRow().type(fieldName);
+    }
+
+    @Override
+    public final Class<?> type(Name fieldName) {
+        return fieldsRow().type(fieldName);
+    }
+
+    @Override
+    public final DataType<?>[] dataTypes() {
+        return fieldsRow().dataTypes();
+    }
+
+    @Override
+    public final DataType<?> dataType(int fieldIndex) {
+        return fieldsRow().dataType(fieldIndex);
+    }
+
+    @Override
+    public final DataType<?> dataType(String fieldName) {
+        return fieldsRow().dataType(fieldName);
+    }
+
+    @Override
+    public final DataType<?> dataType(Name fieldName) {
+        return fieldsRow().dataType(fieldName);
+    }
+
+    final FieldsImpl<R> fields0() {
         return fields;
     }
 

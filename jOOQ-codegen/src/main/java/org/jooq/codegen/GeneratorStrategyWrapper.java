@@ -56,6 +56,7 @@ import java.util.Set;
 import org.jooq.Record;
 import org.jooq.codegen.AbstractGenerator.Language;
 import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -63,6 +64,7 @@ import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
+import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -244,12 +246,10 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             reserved = reservedColumns(UDTRecordImpl.class, 0);
         }
         else if (definition instanceof ColumnDefinition) {
-            if (((ColumnDefinition) definition).getContainer().getPrimaryKey() != null) {
+            if (((ColumnDefinition) definition).getContainer().getPrimaryKey() != null)
                 reserved = reservedColumns(UpdatableRecordImpl.class, 0);
-            }
-            else {
+            else
                 reserved = reservedColumns(TableRecordImpl.class, 0);
-            }
         }
 
         // [#1406] Disambiguate also procedure parameters
@@ -267,19 +267,22 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
                 reserved = reservedColumns(UDTRecordImpl.class, routine.getInParameters().size() - 1);
         }
 
+        // [#11032] Foreign keys produce implicit join methods that can collide with TableImpl methods
+        else if (definition instanceof ForeignKeyDefinition) {
+            reserved = reservedColumns(TableImpl.class, 0);
+        }
+
         if (reserved != null) {
-            if (reserved.contains(method)) {
+            if (reserved.contains(method))
                 return method + "_";
-            }
 
             // If this is the setter, check if the getter needed disambiguation
             // This ensures that getters and setters have the same name
             if (method.startsWith("set")) {
                 String base = method.substring(3);
 
-                if (reserved.contains("get" + base) || reserved.contains("is" + base)) {
+                if (reserved.contains("get" + base) || reserved.contains("is" + base))
                     return method + "_";
-                }
             }
         }
 

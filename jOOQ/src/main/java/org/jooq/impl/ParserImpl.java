@@ -1903,14 +1903,16 @@ final class ParserImpl implements Parser {
 
         parseKeywordIf(ctx, "FROM");
         Table<?> table = parseTableNameIf(ctx);
-        if (table == null) {
+        if (table == null)
             table = table(parseSelect(ctx));
 
-            if (parseKeywordIf(ctx, "AS"))
-                table = table.as(parseIdentifier(ctx));
-            else if (!peekKeyword(ctx, "WHERE", "ORDER BY", "LIMIT", "RETURNING"))
-                table = table.as(parseIdentifierIf(ctx));
-        }
+        Name alias;
+        if (parseKeywordIf(ctx, "AS"))
+            table = table.as(parseIdentifier(ctx));
+        else if (!peekKeyword(ctx, "USING", "WHERE", "ORDER BY", "LIMIT", "RETURNING")
+            && !peekKeyword(ctx, KEYWORDS_IN_STATEMENTS)
+            && (alias = parseIdentifierIf(ctx)) != null)
+            table = table.as(alias);
 
         ctx.scope(table);
 
@@ -5868,7 +5870,7 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "AS"))
             alias = parseIdentifier(ctx);
-        else if (!peekKeyword(ctx, KEYWORDS_IN_FROM))
+        else if (!peekKeyword(ctx, KEYWORDS_IN_FROM) && !peekKeyword(ctx, KEYWORDS_IN_STATEMENTS))
             alias = parseIdentifierIf(ctx);
 
         if (alias != null) {
@@ -6157,7 +6159,7 @@ final class ParserImpl implements Parser {
 
                     if (parseKeywordIf(ctx, "AS"))
                         alias = parseIdentifier(ctx, true);
-                    else if (!peekKeyword(ctx, KEYWORDS_IN_SELECT))
+                    else if (!peekKeyword(ctx, KEYWORDS_IN_SELECT) && !peekKeyword(ctx, KEYWORDS_IN_STATEMENTS))
                         alias = parseIdentifierIf(ctx, true);
                 }
 
@@ -12003,16 +12005,32 @@ final class ParserImpl implements Parser {
         REGR_SXY,
     }
 
-    private static final String[] KEYWORDS_IN_SELECT  = {
+    private static final String[] KEYWORDS_IN_STATEMENTS = {
         "ALTER",
         "BEGIN",
         "COMMENT",
-        "CONNECT BY",
         "CREATE",
         "DECLARE",
         "DELETE",
         "DROP",
-        "END",
+        "END", // In T-SQL, semicolons are optional, so a T-SQL END clause might appear
+        "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
+        "GRANT",
+        "INSERT",
+        "MERGE",
+        "RENAME",
+        "REVOKE",
+        "SELECT",
+        "SET",
+        "TRUNCATE",
+        "UPDATE",
+        "USE",
+        "VALUES",
+        "WITH",
+    };
+
+    private static final String[] KEYWORDS_IN_SELECT     = {
+        "CONNECT BY",
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",
@@ -12023,49 +12041,29 @@ final class ParserImpl implements Parser {
         "FOR UPDATE",
         "FOR XML",
         "FROM",
-        "GO",
-        "GRANT",
         "GROUP BY",
         "HAVING",
-        "INSERT",
         "INTERSECT",
         "INTO",
         "LIMIT",
-        "MERGE",
         "MINUS",
         "OFFSET",
         "ORDER BY",
         "PARTITION BY",
         "QUALIFY",
-        "RENAME",
         "RETURNING",
-        "REVOKE",
         "ROWS",
-        "SELECT",
-        "SET",
         "START WITH",
-        "TRUNCATE",
         "UNION",
-        "UPDATE",
-        "USE",
-        "VALUES",
         "WHERE",
         "WINDOW",
-        "WITH",
     };
 
-    private static final String[] KEYWORDS_IN_FROM    = {
-        "ALTER",
-        "BEGIN",
-        "COMMENT",
+    private static final String[] KEYWORDS_IN_FROM       = {
         "CONNECT BY",
         "CREATE",
         "CROSS APPLY",
         "CROSS JOIN",
-        "DECLARE",
-        "DELETE",
-        "DROP",
-        "END", // In T-SQL, semicolons are optional, so a T-SQL END clause might appear
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",
@@ -12077,12 +12075,9 @@ final class ParserImpl implements Parser {
         "FOR XML",
         "FULL JOIN",
         "FULL OUTER JOIN",
-        "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
-        "GRANT",
         "GROUP BY",
         "HAVING",
         "INNER JOIN",
-        "INSERT",
         "INTERSECT",
         "INTO",
         "JOIN",
@@ -12091,7 +12086,6 @@ final class ParserImpl implements Parser {
         "LEFT OUTER JOIN",
         "LEFT SEMI JOIN",
         "LIMIT",
-        "MERGE",
         "MINUS",
         "NATURAL FULL JOIN",
         "NATURAL FULL OUTER JOIN",
@@ -12107,27 +12101,18 @@ final class ParserImpl implements Parser {
         "OUTER APPLY",
         "PARTITION BY",
         "QUALIFY",
-        "RENAME",
         "RETURNING",
-        "REVOKE",
         "RIGHT ANTI JOIN",
         "RIGHT JOIN",
         "RIGHT OUTER JOIN",
         "RIGHT SEMI JOIN",
         "ROWS",
-        "SELECT",
-        "SET",
         "START WITH",
         "STRAIGHT_JOIN",
-        "TRUNCATE",
         "UNION",
-        "UPDATE",
-        "USE",
         "USING",
-        "VALUES",
         "WHERE",
         "WINDOW",
-        "WITH",
     };
 
     private static final String[] PIVOT_KEYWORDS      = {

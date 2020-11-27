@@ -80,6 +80,22 @@ inline fun Field<Boolean>.not(): Condition = condition(this).not()
 
 
 // ----------------------------------------------------------------------------
+// Extensions to extract fields from Tables
+// ----------------------------------------------------------------------------
+
+@Support
+inline operator fun TableLike<*>.get(index: Int) = this.field(index)
+
+@Support
+inline operator fun TableLike<*>.get(name: Name) = this.field(name)
+
+@Support
+inline operator fun TableLike<*>.get(name: String) = this.field(name)
+
+@Support
+inline operator fun <T> TableLike<*>.get(field: Field<T>) = this.field(field)
+
+// ----------------------------------------------------------------------------
 // Extensions to make Field<T[]> aware of its being an array
 // ----------------------------------------------------------------------------
 

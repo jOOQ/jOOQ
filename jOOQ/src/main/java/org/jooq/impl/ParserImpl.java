@@ -2001,14 +2001,14 @@ final class ParserImpl implements Parser {
 
                 returning = onDuplicate =  s1.set(map);
             }
-            else if (peekSelect(ctx, true)){
+            else if (peekSelectOrWith(ctx, true)){
 
                 // [#10954] These are moved into the INSERT .. SELECT clause handling. They should not be necessary here
                 //          either, but it seems we currently don't correctly implement nesting scopes?
                 ctx.scopeEnd();
                 ctx.scopeStart();
 
-                SelectQueryImpl<Record> select = parseSelect(ctx);
+                Select<?> select = parseWithOrSelect(ctx);
 
                 returning = onDuplicate = (fields == null)
                     ? s1.select(select)
@@ -2021,7 +2021,7 @@ final class ParserImpl implements Parser {
                     returning = onDuplicate = s1.defaultValues();
             }
             else
-                throw ctx.expected("DEFAULT VALUES", "SELECT", "SET", "VALUES");
+                throw ctx.expected("DEFAULT VALUES", "WITH", "SELECT", "SET", "VALUES");
 
             if (parseKeywordIf(ctx, "ON")) {
                 if (parseKeywordIf(ctx, "DUPLICATE KEY UPDATE")) {

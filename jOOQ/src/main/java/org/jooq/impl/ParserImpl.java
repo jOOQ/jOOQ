@@ -270,6 +270,7 @@ import static org.jooq.impl.DSL.sign;
 import static org.jooq.impl.DSL.sin;
 import static org.jooq.impl.DSL.sinh;
 import static org.jooq.impl.DSL.space;
+import static org.jooq.impl.DSL.splitPart;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.stddevPop;
@@ -7056,6 +7057,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if (parseFunctionNameIf(ctx, "SPACE"))
                         return space((Field) parseFieldParenthesised(ctx, N));
+                    else if ((field = parseFieldSplitPartIf(ctx)) != null)
+                        return field;
                     else if ((field = parseFieldReplaceIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "SCHEMA") && parseIf(ctx, '(') && parse(ctx, ')'))
@@ -7295,6 +7298,22 @@ final class ParserImpl implements Parser {
     private static final boolean peekSelect(ParserContext ctx, boolean peekIntoParens) {
         return peekKeyword(ctx, "SELECT", false, peekIntoParens, false) ||
                peekKeyword(ctx, "SEL", false, peekIntoParens, false);
+    }
+
+    private static final Field<?> parseFieldSplitPartIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "SPLIT_PART")) {
+            parse(ctx, '(');
+            Field<?> f1 = parseField(ctx, S);
+            parse(ctx, ',');
+            Field<?> f2 = parseField(ctx, S);
+            parse(ctx, ',');
+            Field<?> f3 = parseField(ctx, N);
+            parse(ctx, ')');
+
+            return splitPart((Field) f1, (Field) f2, (Field) f3);
+        }
+
+        return null;
     }
 
     private static final Field<?> parseFieldShlIf(ParserContext ctx) {

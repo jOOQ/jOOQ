@@ -15430,6 +15430,24 @@ public class DSL {
     }
 
     /**
+     * Get the <code>SPLIT_PART</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<String> splitPart(Field<String> field, String delimiter, int n) {
+        return splitPart(field, Tools.field(delimiter), Tools.field(n));
+    }
+
+    /**
+     * Get the <code>SPLIT_PART</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<String> splitPart(Field<String> field, Field<String> delimiter, Field<Integer> n) {
+        return new SplitPart(field, nullSafe(delimiter), nullSafe(n));
+    }
+
+    /**
      * Get the position(in, search) function.
      *
      * @see #position(Field, Field)

@@ -216,6 +216,7 @@ final class Names {
     static final Name N_SIGN                   = unquotedName("sign");
     static final Name N_SINH                   = unquotedName("sinh");
     static final Name N_SPACE                  = unquotedName("space");
+    static final Name N_SPLIT_PART             = unquotedName("split_part");
     static final Name N_SQL_TSI_DAY            = unquotedName("sql_tsi_day");
     static final Name N_SQL_TSI_FRAC_SECOND    = unquotedName("sql_tsi_frac_second");
     static final Name N_SQL_TSI_HOUR           = unquotedName("sql_tsi_hour");

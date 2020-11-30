@@ -8196,16 +8196,21 @@ public class JavaGenerator extends AbstractGenerator {
         else if (db.isArrayType(t)) {
 
             // [#4388] TODO: Improve array handling
-            Name baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
+            Name baseTypeName = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
+
+            // [#9067] Prevent StackOverflowErrors
+            String last = t.equals(baseTypeName.last()) ? "OTHER" : baseTypeName.last();
 
             // [#10309] TODO: The schema should be taken from baseType, if available. Might be different than the argument schema.
             //          When can this happen?
+            String baseType = getType(db, schema, out, last, p, s, baseTypeName, javaType, defaultType, udtMode);
+
             if (scala)
-                type = "scala.Array[" + getType(db, schema, out, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "]";
+                type = "scala.Array[" + baseType + "]";
             else if (kotlin)
-                type = "kotlin.Array<" + getType(db, schema, out, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "?>";
+                type = "kotlin.Array<" + baseType + "?>";
             else
-                type = getType(db, schema, out, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "[]";
+                type = baseType + "[]";
         }
 
         // Check for Oracle-style VARRAY types

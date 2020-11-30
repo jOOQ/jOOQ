@@ -481,10 +481,6 @@ class GenerationUtil {
      */
     static Name getArrayBaseType(SQLDialect dialect, String t, Name u) {
 
-        // [#9067] Return this for all dialects early, to prevent StackOverflowErrors
-        if ("ARRAY".equalsIgnoreCase(t))
-            return name("OTHER");
-
         // [#4388] TODO: Improve array handling
         switch (dialect.family()) {
 

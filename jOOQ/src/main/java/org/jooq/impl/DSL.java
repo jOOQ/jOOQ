@@ -21300,6 +21300,19 @@ public class DSL {
     }
 
     /**
+     * The PostgreSQL <code>array(select)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array(select 1 union select 2 union select 3)
+     * </pre></code>
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
+        return new ArraySelect<>(select);
+    }
+
+    /**
      * Calculate the cardinality of an array field.
      */
     @NotNull

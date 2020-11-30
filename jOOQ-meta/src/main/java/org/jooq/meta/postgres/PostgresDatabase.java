@@ -115,6 +115,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.ParserException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -221,7 +222,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             for (int k = 0; k < columns.length; k++)
 
                 // [#6310] [#6620] Function-based indexes are not yet supported
-                if (table.getColumn(columns[k]) == null)
+                // [#11047]        Even without supporting function-based indexes, we might have to parse
+                //                 the column expression, because it might be quoted
+                if (table.getColumn(columns[k]) == null && table.getColumn(columns[k] = tryParseColumnName(columns[k])) == null)
                     continue indexLoop;
 
                 // [#10466] Neither are INCLUDE columns, which are reported as
@@ -257,6 +260,16 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         }
 
         return result;
+    }
+
+    private String tryParseColumnName(String string) {
+        try {
+            return create().parser().parseField(string).getName();
+        }
+        catch (ParserException e) {
+            log.info("Parse error", "Error when parsing column name : " + string, e);
+            return string;
+        }
     }
 
     @Override

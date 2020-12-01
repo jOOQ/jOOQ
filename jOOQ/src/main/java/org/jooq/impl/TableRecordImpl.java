@@ -103,7 +103,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     private final Table<R>               table;
 
     public TableRecordImpl(Table<R> table) {
-        super(table.fields());
+        super((AbstractRow) table.fieldsRow());
 
         this.table = table;
     }

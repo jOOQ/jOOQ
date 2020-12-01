@@ -61,6 +61,7 @@ import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
+import org.jooq.meta.jaxb.SyntheticViewType;
 
 /**
  * A general database model.
@@ -1041,6 +1042,11 @@ public interface Database extends AutoCloseable {
     List<SyntheticForeignKeyType> getConfiguredSyntheticForeignKeys();
 
     /**
+     * Get the configured synthetic views.
+     */
+    List<SyntheticViewType> getConfiguredSyntheticViews();
+
+    /**
      * Mark a synthetic identity as used.
      */
     void markUsed(SyntheticIdentityType identity);
@@ -1079,6 +1085,16 @@ public interface Database extends AutoCloseable {
      * Retrieve the not-yet used synthetic foreign keys.
      */
     List<SyntheticForeignKeyType> getUnusedSyntheticForeignKeys();
+
+    /**
+     * Mark a synthetic view as used.
+     */
+    void markUsed(SyntheticViewType view);
+
+    /**
+     * Retrieve the not-yet used synthetic views.
+     */
+    List<SyntheticViewType> getUnusedSyntheticViews();
 
     /**
      * Get the dialect for this database.

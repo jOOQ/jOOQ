@@ -43,6 +43,9 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "foreignKeys")
     @XmlElement(name = "foreignKey")
     protected List<SyntheticForeignKeyType> foreignKeys;
+    @XmlElementWrapper(name = "views")
+    @XmlElement(name = "view")
+    protected List<SyntheticViewType> views;
 
     public List<SyntheticIdentityType> getIdentities() {
         if (identities == null) {
@@ -86,6 +89,17 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public void setForeignKeys(List<SyntheticForeignKeyType> foreignKeys) {
         this.foreignKeys = foreignKeys;
+    }
+
+    public List<SyntheticViewType> getViews() {
+        if (views == null) {
+            views = new ArrayList<SyntheticViewType>();
+        }
+        return views;
+    }
+
+    public void setViews(List<SyntheticViewType> views) {
+        this.views = views;
     }
 
     public SyntheticObjectsType withIdentities(SyntheticIdentityType... values) {
@@ -172,12 +186,34 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         return this;
     }
 
+    public SyntheticObjectsType withViews(SyntheticViewType... values) {
+        if (values!= null) {
+            for (SyntheticViewType value: values) {
+                getViews().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withViews(Collection<SyntheticViewType> values) {
+        if (values!= null) {
+            getViews().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withViews(List<SyntheticViewType> views) {
+        setViews(views);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("identities", "identity", identities);
         builder.append("primaryKeys", "primaryKey", primaryKeys);
         builder.append("uniqueKeys", "uniqueKey", uniqueKeys);
         builder.append("foreignKeys", "foreignKey", foreignKeys);
+        builder.append("views", "view", views);
     }
 
     @Override
@@ -235,6 +271,15 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (views == null) {
+            if (other.views!= null) {
+                return false;
+            }
+        } else {
+            if (!views.equals(other.views)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -246,6 +291,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         result = ((prime*result)+((primaryKeys == null)? 0 :primaryKeys.hashCode()));
         result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));
         result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));
+        result = ((prime*result)+((views == null)? 0 :views.hashCode()));
         return result;
     }
 

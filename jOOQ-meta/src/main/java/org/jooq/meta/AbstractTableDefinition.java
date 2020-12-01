@@ -76,6 +76,11 @@ implements TableDefinition {
     }
 
     @Override
+    public /* non-final */ boolean isSynthetic() {
+        return false;
+    }
+
+    @Override
     public final List<EmbeddableDefinition> getEmbeddables() {
         return getDatabase().getEmbeddables(this);
     }

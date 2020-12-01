@@ -67,6 +67,7 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.tools.StringUtils;
@@ -225,6 +226,17 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         return getAliasedTable() != null;
     }
 
+    /**
+     * Check if this table is a synthetic table.
+     * <p>
+     * This method is used by generated code of synthetic views. Do not
+     * call this method directly.
+     */
+    @org.jooq.Internal
+    protected boolean isSynthetic() {
+        return false;
+    }
+
     @Override
     final FieldsImpl<R> fields0() {
         return fields;
@@ -243,6 +255,14 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (getType().isView() && isSynthetic() && ctx.declareTables()) {
+            Select<?> s = getOptions().select();
+
+            // TODO: Avoid parsing this every time
+            ctx.visit(s != null ? s : new DerivedTable<>(ctx.dsl().parser().parseSelect(getOptions().source())).as(getUnqualifiedName()));
+            return;
+        }
+
         if (child != null)
             ctx.scopeRegister(this);
 

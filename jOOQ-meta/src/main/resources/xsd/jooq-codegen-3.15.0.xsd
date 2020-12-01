@@ -937,6 +937,10 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       <element name="foreignKeys" type="tns:SyntheticForeignKeysType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic unique key configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="views" type="tns:SyntheticViewsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic view configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
   
@@ -1050,6 +1054,37 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching a key field that is referenced by a synthetic key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticViewsType">
+    <sequence>
+      <element name="view" type="tns:SyntheticViewType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticViewType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic view configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="catalog" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining catalog of the view.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="schema" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining schema of the view.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="name" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining name of the view.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="comment" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining comment on the view.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="sql" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining SQL query.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
   </complexType>
   
   <complexType name="CatalogMappingsType">

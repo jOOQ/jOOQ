@@ -76,15 +76,22 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListenerProvider;
+import org.jooq.Field;
 import org.jooq.Log;
+import org.jooq.Meta;
+import org.jooq.MetaProvider;
 import org.jooq.Name;
+import org.jooq.Param;
 // ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions.TableType;
+import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -92,6 +99,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.jooq.impl.ParserException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
@@ -109,6 +117,7 @@ import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
+import org.jooq.meta.jaxb.SyntheticViewType;
 // ...
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
@@ -188,6 +197,8 @@ public abstract class AbstractDatabase implements Database {
     private Set<SyntheticUniqueKeyType>                                      unusedSyntheticUniqueKeys            = new HashSet<>();
     private List<SyntheticForeignKeyType>                                    configuredSyntheticForeignKeys       = new ArrayList<>();
     private Set<SyntheticForeignKeyType>                                     unusedSyntheticForeignKeys           = new HashSet<>();
+    private List<SyntheticViewType>                                          configuredSyntheticViews             = new ArrayList<>();
+    private Set<SyntheticViewType>                                           unusedSyntheticViews                 = new HashSet<>();
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
     private Comparator<Definition>                                           orderProvider;
@@ -1736,7 +1747,7 @@ public abstract class AbstractDatabase implements Database {
                     @Override
                     public void run() throws Exception {
                         List<TableDefinition> t = getTables0();
-
+                        syntheticViews(t);
                         tables = sort(filterExcludeInclude(t));
                         log.info("Tables fetched", fetchedSize(t, tables));
                     }
@@ -2845,11 +2856,13 @@ public abstract class AbstractDatabase implements Database {
             getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticObjects.getPrimaryKeys());
             getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticObjects.getUniqueKeys());
             getConfiguredSyntheticForeignKeys().addAll(configuredSyntheticObjects.getForeignKeys());
+            getConfiguredSyntheticViews().addAll(configuredSyntheticObjects.getViews());
 
             unusedSyntheticIdentities.addAll(configuredSyntheticObjects.getIdentities());
             unusedSyntheticPrimaryKeys.addAll(configuredSyntheticObjects.getPrimaryKeys());
             unusedSyntheticUniqueKeys.addAll(configuredSyntheticObjects.getUniqueKeys());
             unusedSyntheticForeignKeys.addAll(configuredSyntheticObjects.getForeignKeys());
+            unusedSyntheticViews.addAll(configuredSyntheticObjects.getViews());
 
 
 
@@ -2896,6 +2909,14 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public List<SyntheticViewType> getConfiguredSyntheticViews() {
+        if (configuredSyntheticViews == null)
+            configuredSyntheticViews = new ArrayList<>();
+
+        return configuredSyntheticViews;
+    }
+
+    @Override
     public void markUsed(SyntheticIdentityType identity) {
         unusedSyntheticIdentities.remove(identity);
     }
@@ -2916,6 +2937,11 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public void markUsed(SyntheticViewType view) {
+        unusedSyntheticViews.remove(view);
+    }
+
+    @Override
     public List<SyntheticIdentityType> getUnusedSyntheticIdentities() {
         return new ArrayList<>(unusedSyntheticIdentities);
     }
@@ -2933,6 +2959,11 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public List<SyntheticForeignKeyType> getUnusedSyntheticForeignKeys() {
         return new ArrayList<>(unusedSyntheticForeignKeys);
+    }
+
+    @Override
+    public List<SyntheticViewType> getUnusedSyntheticViews() {
+        return new ArrayList<>(unusedSyntheticViews);
     }
 
     private final void overridePrimaryKeys(DefaultRelations r) {
@@ -3032,6 +3063,117 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+    private final DataTypeDefinition type(SchemaDefinition schema, Field<?> field) {
+        return new DefaultDataTypeDefinition(
+            schema.getDatabase(),
+            schema,
+            field.getDataType().getTypeName(),
+            field.getDataType().length(),
+            field.getDataType().precision(),
+            field.getDataType().scale(),
+            field.getDataType().nullable(),
+            create().renderInlined(field.getDataType().defaultValue())
+        );
+    }
+
+    private final void syntheticViews(final List<TableDefinition> t) {
+
+        viewLoop:
+        for (final SyntheticViewType view : getConfiguredSyntheticViews()) {
+            final CatalogDefinition catalog = StringUtils.isBlank(view.getCatalog()) ? getCatalogs().get(0) : getCatalog(view.getCatalog());
+            if (catalog == null)
+                continue viewLoop;
+
+            final SchemaDefinition schema = StringUtils.isBlank(view.getSchema()) ? catalog.getSchemata().get(0) : catalog.getSchema(view.getSchema());
+            if (schema == null)
+                continue viewLoop;
+
+            onError(ERROR, "Error while parsing view", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    final Settings settings = SettingsTools.clone(create().settings())
+                        .withParseWithMetaLookups(ParseWithMetaLookups.THROW_ON_FAILURE);
+
+                    // TODO: Add a Meta implementation that is based on jOOQ-meta
+                    final Meta meta = create().meta();
+
+                    final Select<?> select = create()
+                        .configuration()
+                        .derive(settings)
+                        .derive(new MetaProvider() {
+                            @Override
+                            public Meta provide() {
+                                return meta;
+                            }
+                        })
+                        .dsl()
+                        .parser()
+                        .parseSelect(view.getSql());
+
+                    final Map<String, Param<?>> params = select.getParams();
+                    final RoutineDefinition routine = params.isEmpty() ? null : new AbstractRoutineDefinition(schema, null, view.getName(), view.getComment(), null) {
+                        @Override
+                        protected void init0() throws SQLException {
+                            int i = 0;
+
+                            for (Param<?> param : params.values()) {
+                                addParameter(InOutDefinition.IN, new DefaultParameterDefinition(
+                                    this,
+                                    param.getParamName(),
+                                    ++i,
+                                    type(schema, param)
+                                ));
+                            }
+                        }
+                    };
+
+                    t.add(new AbstractTableDefinition(schema, view.getName(), view.getComment(), routine == null ? TableType.VIEW : TableType.FUNCTION, view.getSql()) {
+
+                        @Override
+                        public boolean isSynthetic() {
+                            return true;
+                        }
+
+                        @Override
+                        protected List<ColumnDefinition> getElements0() throws SQLException {
+                            List<ColumnDefinition> result = new ArrayList<>();
+
+                            int i = 0;
+                            for (Field<?> field : select.getSelect()) {
+                                result.add(new DefaultColumnDefinition(
+                                    this,
+                                    field.getName(),
+                                    ++i,
+                                    type(getSchema(), field),
+                                    false,
+                                    field.getComment()
+                                ));
+                            }
+
+                            return result;
+                        }
+
+                        @Override
+                        protected List<ParameterDefinition> getParameters0() {
+                            List<ParameterDefinition> result = new ArrayList<>();
+
+                            if (routine != null) {
+                                result.addAll(routine.getInParameters());
+                            }
+
+                            return result;
+                        }
+                    });
+
+                    log.info("Synthetic view added", view.getName());
+                }
+            });
+
+            // TODO: Can we really have unused views?
+            markUsed(view);
+        }
+    }
 
     @Override
     public void close() {}

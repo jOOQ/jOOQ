@@ -198,6 +198,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyntheticViewType }
+     * 
+     */
+    public SyntheticViewType createSyntheticViewType() {
+        return new SyntheticViewType();
+    }
+
+    /**
      * Create an instance of {@link CatalogMappingType }
      * 
      */

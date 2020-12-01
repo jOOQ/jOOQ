@@ -311,17 +311,11 @@ public final class TableOptions implements Serializable {
      */
     public enum OnCommit {
 
-        @NotNull
-
         @Support({ POSTGRES })
         DELETE_ROWS,
 
-        @NotNull
-
         @Support({ POSTGRES })
         PRESERVE_ROWS,
-
-        @NotNull
 
         @Support({ POSTGRES })
         DROP;

@@ -5174,7 +5174,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("parameters,");
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
-            if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
+            if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
                 out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
             else
                 out.println("%s.%s", TableOptions.class, tableType);
@@ -5197,7 +5197,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("parameters,");
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
-            if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
+            if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
                 out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
             else
                 out.println("%s.%s()", TableOptions.class, tableType);
@@ -5215,6 +5215,24 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         printRecordTypeMethod(out, table);
+
+        if (table.isSynthetic()) {
+            if (scala) {
+                out.println();
+                out.println("protected override def isSynthetic(): Boolean = true");
+            }
+            else if (kotlin) {
+                out.println();
+                out.println("protected override fun isSynthetic(): Boolean = true");
+            }
+            else {
+                out.println();
+                out.override();
+                out.println("protected boolean isSynthetic() {");
+                out.println("return true;");
+                out.println("}");
+            }
+        }
 
         for (ColumnDefinition column : table.getColumns()) {
             final String columnTypeFull = getJavaType(column.getType(resolver(out)), out);
@@ -5308,7 +5326,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
             out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
 
-            if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
+            if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
                 out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, escapeString(table.getSource()));
             else
                 out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);

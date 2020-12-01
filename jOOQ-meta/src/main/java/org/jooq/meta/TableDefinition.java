@@ -71,6 +71,11 @@ public interface TableDefinition extends Definition {
     ColumnDefinition getColumn(int columnIndex);
 
     /**
+     * Whether this table is a synthetic table (e.g. a synthetic view).
+     */
+    boolean isSynthetic();
+
+    /**
      * All embeddable types in this defining table.
      */
     List<EmbeddableDefinition> getEmbeddables();

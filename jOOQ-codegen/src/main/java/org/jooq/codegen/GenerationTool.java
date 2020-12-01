@@ -889,6 +889,7 @@ public class GenerationTool {
             logUnused("synthetic primary key", "synthetic primary keys", database.getUnusedSyntheticPrimaryKeys());
             logUnused("synthetic unique key", "synthetic unique keys", database.getUnusedSyntheticUniqueKeys());
             logUnused("synthetic foreign key", "synthetic foreign keys", database.getUnusedSyntheticForeignKeys());
+            logUnused("synthetic view", "synthetic views", database.getUnusedSyntheticViews());
         }
         finally {
             if (database != null)

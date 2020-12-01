@@ -66,6 +66,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -3111,7 +3112,12 @@ public abstract class AbstractDatabase implements Database {
                         .parser()
                         .parseSelect(view.getSql());
 
-                    final Map<String, Param<?>> params = select.getParams();
+                    final Map<String, Param<?>> params = new LinkedHashMap<>(select.getParams());
+                    final Iterator<Entry<String, Param<?>>> it = params.entrySet().iterator();
+                    while (it.hasNext())
+                        if (it.next().getValue().isInline())
+                            it.remove();
+
                     final RoutineDefinition routine = params.isEmpty() ? null : new AbstractRoutineDefinition(schema, null, view.getName(), view.getComment(), null) {
                         @Override
                         protected void init0() throws SQLException {

@@ -5176,6 +5176,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
                 out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
+            else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
+                out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
             else
                 out.println("%s.%s", TableOptions.class, tableType);
 
@@ -5198,6 +5200,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
+                out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
+            else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
                 out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
             else
                 out.println("%s.%s()", TableOptions.class, tableType);
@@ -5327,6 +5331,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, escapeString(table.getSource()));
+            else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
                 out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, escapeString(table.getSource()));
             else
                 out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);

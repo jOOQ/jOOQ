@@ -81,7 +81,7 @@ public interface Parser {
      * @param sql The SQL string
      * @throws ParserException If the SQL string could not be parsed.
      */
-    @NotNull
+    @Nullable
     @Support
     @PlainSQL
     Query parseQuery(String sql) throws ParserException;
@@ -93,7 +93,7 @@ public interface Parser {
      * @param bindings The bind variables
      * @throws ParserException If the SQL string could not be parsed.
      */
-    @NotNull
+    @Nullable
     @Support
     @PlainSQL
     Query parseQuery(String sql, Object... bindings) throws ParserException;
@@ -104,7 +104,7 @@ public interface Parser {
      * @param sql The SQL string
      * @throws ParserException If the SQL string could not be parsed.
      */
-    @NotNull
+    @Nullable
     @Support
     @PlainSQL
     Statement parseStatement(String sql) throws ParserException;
@@ -116,7 +116,7 @@ public interface Parser {
      * @param bindings The bind variables
      * @throws ParserException If the SQL string could not be parsed.
      */
-    @NotNull
+    @Nullable
     @Support
     @PlainSQL
     Statement parseStatement(String sql, Object... bindings) throws ParserException;
@@ -156,7 +156,7 @@ public interface Parser {
      * @param sql The SQL string
      * @throws ParserException If the SQL string could not be parsed.
      */
-    @NotNull
+    @Nullable
     @Support
     @PlainSQL
     ResultQuery<?> parseResultQuery(String sql) throws ParserException;
@@ -168,7 +168,7 @@ public interface Parser {
      * @param bindings The bind variables
      * @throws ParserException If the SQL string could not be parsed.
      */
-    @NotNull
+    @Nullable
     @Support
     @PlainSQL
     ResultQuery<?> parseResultQuery(String sql, Object... bindings) throws ParserException;
@@ -179,7 +179,7 @@ public interface Parser {
      * @param sql The SQL string
      * @throws ParserException If the SQL string could not be parsed.
      */
-    @NotNull
+    @Nullable
     @Support
     @PlainSQL
     Select<?> parseSelect(String sql) throws ParserException;
@@ -191,7 +191,7 @@ public interface Parser {
      * @param bindings The bind variables
      * @throws ParserException If the SQL string could not be parsed.
      */
-    @NotNull
+    @Nullable
     @Support
     @PlainSQL
     Select<?> parseSelect(String sql, Object... bindings) throws ParserException;

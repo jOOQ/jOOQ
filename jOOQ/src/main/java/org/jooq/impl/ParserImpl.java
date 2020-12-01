@@ -12174,7 +12174,7 @@ final class ParserContext {
         this.locale = parseLocale(dsl.settings());
         this.meta = meta;
         this.metaLookups = metaLookups;
-        this.sql = sqlString.toCharArray();
+        this.sql = sqlString != null ? sqlString.toCharArray() : new char[0];
         this.bindings = bindings;
     }
 

@@ -204,6 +204,14 @@ public final class TableOptions implements Serializable {
     }
 
     /**
+     * Create a new {@link TableOptions} object for a {@link TableType#FUNCTION}.
+     */
+    @NotNull
+    public static final TableOptions function(String source) {
+        return new TableOptions(TableType.FUNCTION, source);
+    }
+
+    /**
      * The table type.
      * <p>
      * This is never <code>null</code>.

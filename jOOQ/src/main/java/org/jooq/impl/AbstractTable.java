@@ -131,6 +131,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     private Schema                   tableschema;
     private transient DataType<R>    tabletype;
     private transient Identity<R, ?> identity;
+    private transient Row            fieldsRow;
 
     AbstractTable(TableOptions options, Name name) {
         this(options, name, null, null);
@@ -214,7 +215,10 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      */
     @Override
     public Row fieldsRow() {
-        return Tools.row0(fields0());
+        if (fieldsRow == null)
+            fieldsRow = Tools.row0(fields0());
+        
+        return fieldsRow;
     }
 
 

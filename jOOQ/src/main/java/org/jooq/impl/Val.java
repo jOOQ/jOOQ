@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
@@ -49,6 +50,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
@@ -80,7 +82,7 @@ final class Val<T> extends AbstractParam<T> {
      * [#10438] Convert this bind value to a new type.
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    final <U> Val<U> convertTo(DataType<U> type) {
+    final <U> Field<U> convertTo(DataType<U> type) {
 
         // [#10438] A user defined data type could was not provided explicitly,
         //          when wrapping a bind value in DSL::val or DSL::inline
@@ -100,6 +102,11 @@ final class Val<T> extends AbstractParam<T> {
         // [#10438] A data type conversion between built in data types was made
         else if (type instanceof ConvertedDataType)
             return convertTo0(type);
+
+        // [#11061] Infer bind value data types if they could not be defined eagerly, mostly from the parser.
+        //          Cannot use convertTo0() here as long as Param.setValue() is possible (mutable Params)
+        else if (OTHER.equals(getDataType()))
+            return new ConvertedVal<>(this, type);
         else
             return (Val) this;
     }

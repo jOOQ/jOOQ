@@ -7048,11 +7048,20 @@ public class JavaGenerator extends AbstractGenerator {
 
     private boolean printDeprecationIfUnknownType(JavaWriter out, String type) {
         if (generateDeprecationOnUnknownTypes() && (Object.class.getName().equals(type) || kotlin && "Any".equals(type))) {
-            out.javadoc("@deprecated Unknown data type. "
-                + "Please define an explicit {@link org.jooq.Binding} to specify how this "
-                + "type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} "
-                + "in your code generator configuration.");
-            out.println("@java.lang.Deprecated");
+            if (kotlin) {
+                out.println("@%s(message = \"%s\")", out.ref("kotlin.Deprecated"), escapeString(
+                    "Unknown data type. Please define an explicit org.jooq.Binding to specify how this type should be handled. "
+                  + "Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration."));
+            }
+            else {
+                out.javadoc("@deprecated Unknown data type. "
+                    + "Please define an explicit {@link org.jooq.Binding} to specify how this "
+                    + "type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} "
+                    + "in your code generator configuration.");
+
+                out.println("@%s", out.ref(Deprecated.class));
+            }
+
             return true;
         }
         else {

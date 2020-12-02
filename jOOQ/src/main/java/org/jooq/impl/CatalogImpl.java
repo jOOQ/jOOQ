@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CATALOG;
 import static org.jooq.Clause.CATALOG_REFERENCE;
+import static org.jooq.impl.CatalogImpl.DEFAULT_CATALOG;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +52,7 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Schema;
+import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for database catalogs
@@ -125,4 +128,21 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
         return getSchemas().stream();
     }
 
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that)
+            return true;
+
+        // [#11078] CatalogImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof CatalogImpl)
+            return StringUtils.equals(getName(), ((CatalogImpl) that).getName());
+
+        return super.equals(that);
+    }
 }

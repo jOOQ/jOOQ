@@ -108,16 +108,10 @@ import static org.jooq.impl.RankingFunction.RankingType.DENSE_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.RANK;
 import static org.jooq.impl.SQLDataType.DATE;
-import static org.jooq.impl.SQLDataType.INSTANT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
-import static org.jooq.impl.SQLDataType.LOCALDATE;
-import static org.jooq.impl.SQLDataType.LOCALDATETIME;
-import static org.jooq.impl.SQLDataType.LOCALTIME;
 import static org.jooq.impl.SQLDataType.NUMERIC;
-import static org.jooq.impl.SQLDataType.OFFSETDATETIME;
-import static org.jooq.impl.SQLDataType.OFFSETTIME;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -16167,7 +16161,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<LocalDate> currentLocalDate() {
-        return new CurrentDate<>(LOCALDATE.notNull());
+        return new CurrentDate<>(SQLDataType.LOCALDATE.notNull());
     }
 
     /**
@@ -16179,7 +16173,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<LocalTime> currentLocalTime() {
-        return new CurrentTime<>(LOCALTIME.notNull());
+        return new CurrentTime<>(SQLDataType.LOCALTIME.notNull());
     }
 
     /**
@@ -16191,7 +16185,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<LocalDateTime> currentLocalDateTime() {
-        return new CurrentTimestamp<>(LOCALDATETIME.notNull());
+        return new CurrentTimestamp<>(SQLDataType.LOCALDATETIME.notNull());
     }
 
     /**
@@ -16202,7 +16196,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<OffsetTime> currentOffsetTime() {
-        return currentTime().cast(OFFSETTIME.notNull());
+        return currentTime().cast(SQLDataType.OFFSETTIME.notNull());
     }
 
     /**
@@ -16213,7 +16207,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<OffsetDateTime> currentOffsetDateTime() {
-        return currentTimestamp().cast(OFFSETDATETIME.notNull());
+        return currentTimestamp().cast(SQLDataType.OFFSETDATETIME.notNull());
     }
 
     /**
@@ -16224,7 +16218,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Instant> currentInstant() {
-        return currentTimestamp().cast(INSTANT.notNull());
+        return currentTimestamp().cast(SQLDataType.INSTANT.notNull());
     }
 
 

@@ -60,7 +60,7 @@ final class CurrentSchema extends AbstractField<String> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentSchema() {
-        super(N_CURRENT_SCHEMA, VARCHAR);
+        super(N_CURRENT_SCHEMA, VARCHAR.notNull());
     }
 
     @Override

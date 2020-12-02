@@ -107,10 +107,18 @@ import static org.jooq.impl.RankingFunction.RankingType.CUME_DIST;
 import static org.jooq.impl.RankingFunction.RankingType.DENSE_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.RANK;
+import static org.jooq.impl.SQLDataType.DATE;
+import static org.jooq.impl.SQLDataType.INSTANT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SQLDataType.LOCALDATE;
+import static org.jooq.impl.SQLDataType.LOCALDATETIME;
+import static org.jooq.impl.SQLDataType.LOCALTIME;
 import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.SQLDataType.OFFSETDATETIME;
+import static org.jooq.impl.SQLDataType.OFFSETTIME;
+import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
@@ -15949,7 +15957,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> charLength(Field<String> field) {
-        return new DefaultAggregateFunction<>(Term.CHAR_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+        return new DefaultAggregateFunction<>(Term.CHAR_LENGTH, INTEGER.nullable(nullSafeDataType(field).nullable()), nullSafe(field));
     }
 
     /**
@@ -15971,7 +15979,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> bitLength(Field<String> field) {
-        return new DefaultAggregateFunction<>(Term.BIT_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+        return new DefaultAggregateFunction<>(Term.BIT_LENGTH, INTEGER.nullable(nullSafeDataType(field).nullable()), nullSafe(field));
     }
 
     /**
@@ -15993,7 +16001,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> octetLength(Field<String> field) {
-        return new DefaultAggregateFunction<>(Term.OCTET_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+        return new DefaultAggregateFunction<>(Term.OCTET_LENGTH, INTEGER.nullable(nullSafeDataType(field).nullable()), nullSafe(field));
     }
 
     // ------------------------------------------------------------------------
@@ -16087,7 +16095,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Date> currentDate() {
-        return new CurrentDate<>(SQLDataType.DATE);
+        return new CurrentDate<>(DATE.notNull());
     }
 
     /**
@@ -16099,7 +16107,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Time> currentTime() {
-        return new CurrentTime<>(SQLDataType.TIME);
+        return new CurrentTime<>(TIME.notNull());
     }
 
     /**
@@ -16111,7 +16119,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Timestamp> currentTimestamp() {
-        return new CurrentTimestamp<>(SQLDataType.TIMESTAMP);
+        return new CurrentTimestamp<>(TIMESTAMP.notNull());
     }
 
     /**
@@ -16122,7 +16130,7 @@ public class DSL {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Timestamp> currentTimestamp(Field<Integer> precision) {
-        return new CurrentTimestamp<>(SQLDataType.TIMESTAMP, precision);
+        return new CurrentTimestamp<>(TIMESTAMP.notNull(), precision);
     }
 
     /**
@@ -16159,7 +16167,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<LocalDate> currentLocalDate() {
-        return new CurrentDate<>(SQLDataType.LOCALDATE);
+        return new CurrentDate<>(LOCALDATE.notNull());
     }
 
     /**
@@ -16171,7 +16179,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<LocalTime> currentLocalTime() {
-        return new CurrentTime<>(SQLDataType.LOCALTIME);
+        return new CurrentTime<>(LOCALTIME.notNull());
     }
 
     /**
@@ -16183,7 +16191,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<LocalDateTime> currentLocalDateTime() {
-        return new CurrentTimestamp<>(SQLDataType.LOCALDATETIME);
+        return new CurrentTimestamp<>(LOCALDATETIME.notNull());
     }
 
     /**
@@ -16194,7 +16202,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<OffsetTime> currentOffsetTime() {
-        return currentTime().cast(SQLDataType.OFFSETTIME);
+        return currentTime().cast(OFFSETTIME.notNull());
     }
 
     /**
@@ -16205,7 +16213,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<OffsetDateTime> currentOffsetDateTime() {
-        return currentTimestamp().cast(SQLDataType.OFFSETDATETIME);
+        return currentTimestamp().cast(OFFSETDATETIME.notNull());
     }
 
     /**
@@ -16216,7 +16224,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Instant> currentInstant() {
-        return currentTimestamp().cast(SQLDataType.INSTANT);
+        return currentTimestamp().cast(INSTANT.notNull());
     }
 
 

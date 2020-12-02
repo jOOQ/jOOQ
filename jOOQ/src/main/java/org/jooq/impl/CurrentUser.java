@@ -55,7 +55,7 @@ final class CurrentUser extends AbstractField<String> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentUser() {
-        super(N_CURRENT_USER, VARCHAR);
+        super(N_CURRENT_USER, VARCHAR.notNull());
     }
 
     @Override

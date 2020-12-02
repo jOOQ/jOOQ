@@ -78,7 +78,7 @@ final class Cast<T> extends AbstractField<T> {
     private final Field<?>    field;
 
     public Cast(Field<?> field, DataType<T> type) {
-        super(N_CAST, type);
+        super(N_CAST, type.nullable(field.getDataType().nullable()));
 
         this.field = field;
     }

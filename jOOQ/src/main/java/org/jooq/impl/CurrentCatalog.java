@@ -57,7 +57,7 @@ final class CurrentCatalog extends AbstractField<String> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentCatalog() {
-        super(N_CURRENT_CATALOG, VARCHAR);
+        super(N_CURRENT_CATALOG, VARCHAR.notNull());
     }
 
     @Override

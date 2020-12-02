@@ -5938,12 +5938,11 @@ final class Tools {
             return result;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final <T> DataType<T> anyNotNull(Field<T>... fields) {
+    static final DataType<?> anyNotNull(Field<?>... fields) {
         if (fields == null || fields.length == 0)
-            return (DataType) OTHER;
+            return OTHER;
 
-        DataType<T> result = fields[0].getDataType();
+        DataType<?> result = fields[0].getDataType();
         if (!result.nullable())
             return result;
 

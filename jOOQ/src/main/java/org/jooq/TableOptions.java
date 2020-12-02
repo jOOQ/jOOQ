@@ -307,6 +307,13 @@ public final class TableOptions implements Serializable {
         }
 
         /**
+         * Whether the type is a function.
+         */
+        public final boolean isFunction() {
+            return this == FUNCTION;
+        }
+
+        /**
          * Whether the type is a view.
          */
         public final boolean isTable() {

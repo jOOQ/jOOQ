@@ -51,6 +51,7 @@ import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
+import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.getMappedTable;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -255,11 +256,15 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (getType().isView() && isSynthetic() && ctx.declareTables()) {
+        if ((getType().isView() || getType().isFunction()) && isSynthetic() && ctx.declareTables()) {
             Select<?> s = getOptions().select();
 
             // TODO: Avoid parsing this every time
-            ctx.visit(s != null ? s : new DerivedTable<>(ctx.dsl().parser().parseSelect(getOptions().source())).as(getUnqualifiedName()));
+            ctx.visit(
+                s != null ? s : new DerivedTable<>(
+                    ctx.dsl().parser().parseSelect(getOptions().source(), parameters == null ? EMPTY_OBJECT : parameters)
+                ).as(getUnqualifiedName())
+            );
             return;
         }
 

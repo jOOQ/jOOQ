@@ -341,6 +341,7 @@ import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -603,7 +604,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Queries parse(String sql) {
-        return parse(sql, new Object[0]);
+        return parse(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -664,7 +665,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Query parseQuery(String sql) {
-        return parseQuery(sql, new Object[0]);
+        return parseQuery(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -678,7 +679,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Statement parseStatement(String sql) {
-        return parseStatement(sql, new Object[0]);
+        return parseStatement(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -714,7 +715,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final ResultQuery<?> parseResultQuery(String sql) {
-        return parseResultQuery(sql, new Object[0]);
+        return parseResultQuery(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -728,7 +729,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Select<?> parseSelect(String sql) {
-        return parseSelect(sql, new Object[0]);
+        return parseSelect(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -742,7 +743,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Table<?> parseTable(String sql) {
-        return parseTable(sql, new Object[0]);
+        return parseTable(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -756,7 +757,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Field<?> parseField(String sql) {
-        return parseField(sql, new Object[0]);
+        return parseField(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -770,7 +771,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Row parseRow(String sql) {
-        return parseRow(sql, new Object[0]);
+        return parseRow(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -784,7 +785,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Condition parseCondition(String sql) {
-        return parseCondition(sql, new Object[0]);
+        return parseCondition(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -798,7 +799,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Name parseName(String sql) {
-        return parseName(sql, new Object[0]);
+        return parseName(sql, EMPTY_OBJECT);
     }
 
     @Override
@@ -10853,14 +10854,19 @@ final class ParserImpl implements Parser {
     }
 
     private static final Param<?> parseBindVariable(ParserContext ctx) {
+
+        // [#11074] Bindings can be Param or even Field types
+        Object binding = ctx.nextBinding();
+
         switch (ctx.character()) {
             case '?':
                 parse(ctx, '?');
-                return DSL.val(ctx.nextBinding(), Object.class);
+                return binding instanceof Param ? (Param<?>) binding : DSL.val(binding, Object.class);
 
             case ':':
                 parse(ctx, ':', false);
-                return DSL.param(parseIdentifier(ctx).last(), ctx.nextBinding());
+                Name identifier = parseIdentifier(ctx);
+                return binding instanceof Param ? (Param<?>) binding : DSL.param(identifier.last(), binding);
 
             default:
                 throw ctx.exception("Illegal bind variable character");

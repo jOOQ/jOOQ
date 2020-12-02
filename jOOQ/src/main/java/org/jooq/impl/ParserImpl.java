@@ -1281,7 +1281,7 @@ final class ParserImpl implements Parser {
         boolean offsetPostgres = false;
 
         if (offset && parseKeywordIf(ctx, "OFFSET")) {
-            result.addOffset(parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
+            result.addOffset(requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx)));
 
             if (parseKeywordIf(ctx, "ROWS") || parseKeywordIf(ctx, "ROW"))
                 offsetStandard = true;
@@ -1294,7 +1294,7 @@ final class ParserImpl implements Parser {
         }
 
         if (!offsetStandard && parseKeywordIf(ctx, "LIMIT")) {
-            Param<Long> limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
+            Param<Long> limit = requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
 
             if (offsetPostgres) {
                 result.addLimit(limit);
@@ -1306,7 +1306,7 @@ final class ParserImpl implements Parser {
                     result.setWithTies(true);
             }
             else if (offset && parseIf(ctx, ',')) {
-                result.addLimit(limit, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
+                result.addLimit(limit, requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx)));
             }
             else {
                 if (parseKeywordIf(ctx, "PERCENT"))
@@ -1316,7 +1316,7 @@ final class ParserImpl implements Parser {
                     result.setWithTies(true);
 
                 if (offset && parseKeywordIf(ctx, "OFFSET"))
-                    result.addLimit(parseParenthesisedUnsignedIntegerOrBindVariable(ctx), limit);
+                    result.addLimit(requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx)), limit);
                 else
                     result.addLimit(limit);
             }
@@ -1328,7 +1328,7 @@ final class ParserImpl implements Parser {
                 result.addLimit(inline(1L));
             }
             else {
-                result.addLimit(parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
+                result.addLimit(requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx)));
 
                 if (parseKeywordIf(ctx, "PERCENT"))
                     result.setLimitPercent(true);
@@ -1464,24 +1464,24 @@ final class ParserImpl implements Parser {
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
-            limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
+            limit = requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
             percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
 
             if (parseKeywordIf(ctx, "START AT"))
-                offset = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
+                offset = requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
             else if (parseKeywordIf(ctx, "WITH TIES"))
                 withTies = true;
         }
 
         // Informix style SKIP .. FIRST
         else if (parseKeywordIf(ctx, "SKIP")) {
-            offset = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
+            offset = requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
 
             if (parseKeywordIf(ctx, "FIRST"))
-                limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
+                limit = requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
         }
         else if (parseKeywordIf(ctx, "FIRST")) {
-            limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
+            limit = requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
         }
 
         List<SelectFieldOrAsterisk> select = parseSelectList(ctx);
@@ -1898,7 +1898,7 @@ final class ParserImpl implements Parser {
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
-            limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
+            limit = requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
 
             // [#8623] TODO Support this
             // percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
@@ -1924,7 +1924,7 @@ final class ParserImpl implements Parser {
         DeleteOrderByStep<?> s3 = parseKeywordIf(ctx, "WHERE") ? s2.where(parseCondition(ctx)) : s2;
         DeleteLimitStep<?> s4 = parseKeywordIf(ctx, "ORDER BY") ? s3.orderBy(parseSortSpecification(ctx)) : s3;
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf(ctx, "LIMIT"))
-            ? s4.limit(limit != null ? limit : parseParenthesisedUnsignedIntegerOrBindVariable(ctx))
+            ? s4.limit(limit != null ? limit : requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx)))
             : s4;
         Delete<?> s6 = parseKeywordIf(ctx, "RETURNING") ? s5.returning(parseSelectList(ctx)) : s5;
 
@@ -2093,7 +2093,7 @@ final class ParserImpl implements Parser {
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
-            limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
+            limit = requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
 
             // [#8623] TODO Support this
             // percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
@@ -2121,7 +2121,7 @@ final class ParserImpl implements Parser {
         UpdateOrderByStep<?> s4 = parseKeywordIf(ctx, "WHERE") ? s3.where(parseCondition(ctx)) : s3;
         UpdateLimitStep<?> s5 = parseKeywordIf(ctx, "ORDER BY") ? s4.orderBy(parseSortSpecification(ctx)) : s4;
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf(ctx, "LIMIT"))
-            ? s5.limit(limit != null ? limit : parseParenthesisedUnsignedIntegerOrBindVariable(ctx))
+            ? s5.limit(limit != null ? limit : requireParam(ctx, parseParenthesisedUnsignedIntegerOrBindVariable(ctx)))
             : s5;
         Update<?> s7 = parseKeywordIf(ctx, "RETURNING") ? s6.returning(parseSelectList(ctx)) : s6;
 
@@ -3511,26 +3511,26 @@ final class ParserImpl implements Parser {
             : ctx.dsl.createSequence(schemaName);
 
         for (;;) {
-            Param<Long> param;
+            Field<Long> field;
 
-            if ((param = parseSequenceStartWithIf(ctx)) != null)
-                s = s.startWith(param);
-            else if ((param = parseSequenceIncrementByIf(ctx)) != null)
-                s = s.incrementBy(param);
-            else if ((param = parseSequenceMinvalueIf(ctx)) != null)
-                s = s.minvalue(param);
+            if ((field = parseSequenceStartWithIf(ctx)) != null)
+                s = s.startWith(field);
+            else if ((field = parseSequenceIncrementByIf(ctx)) != null)
+                s = s.incrementBy(field);
+            else if ((field = parseSequenceMinvalueIf(ctx)) != null)
+                s = s.minvalue(field);
             else if (parseSequenceNoMinvalueIf(ctx))
                 s = s.noMinvalue();
-            else if ((param = parseSequenceMaxvalueIf(ctx)) != null)
-                s = s.maxvalue(param);
+            else if ((field = parseSequenceMaxvalueIf(ctx)) != null)
+                s = s.maxvalue(field);
             else if (parseSequenceNoMaxvalueIf(ctx))
                 s = s.noMaxvalue();
             else if (parseKeywordIf(ctx, "CYCLE"))
                 s = s.cycle();
             else if (parseSequenceNoCycleIf(ctx))
                 s = s.noCycle();
-            else if ((param = parseSequenceCacheIf(ctx)) != null)
-                s = s.cache(param);
+            else if ((field = parseSequenceCacheIf(ctx)) != null)
+                s = s.cache(field);
             else if (parseSequenceNoCacheIf(ctx)) {
                 s = s.noCache();
                 continue;
@@ -3562,26 +3562,26 @@ final class ParserImpl implements Parser {
             boolean found = false;
             AlterSequenceFlagsStep s1 = s;
             while (true) {
-                Param<Long> param;
+                Field<Long> field;
 
-                if ((param = parseSequenceStartWithIf(ctx)) != null)
-                    s1 = s1.startWith(param);
-                else if ((param = parseSequenceIncrementByIf(ctx)) != null)
-                    s1 = s1.incrementBy(param);
-                else if ((param = parseSequenceMinvalueIf(ctx)) != null)
-                    s1 = s1.minvalue(param);
+                if ((field = parseSequenceStartWithIf(ctx)) != null)
+                    s1 = s1.startWith(field);
+                else if ((field = parseSequenceIncrementByIf(ctx)) != null)
+                    s1 = s1.incrementBy(field);
+                else if ((field = parseSequenceMinvalueIf(ctx)) != null)
+                    s1 = s1.minvalue(field);
                 else if (parseSequenceNoMinvalueIf(ctx))
                     s1 = s1.noMinvalue();
-                else if ((param = parseSequenceMaxvalueIf(ctx)) != null)
-                    s1 = s1.maxvalue(param);
+                else if ((field = parseSequenceMaxvalueIf(ctx)) != null)
+                    s1 = s1.maxvalue(field);
                 else if (parseSequenceNoMaxvalueIf(ctx))
                     s1 = s1.noMaxvalue();
                 else if (parseKeywordIf(ctx, "CYCLE"))
                     s1 = s1.cycle();
                 else if (parseSequenceNoCycleIf(ctx))
                     s1 = s1.noCycle();
-                else if ((param = parseSequenceCacheIf(ctx)) != null)
-                    s1 = s1.cache(param);
+                else if ((field = parseSequenceCacheIf(ctx)) != null)
+                    s1 = s1.cache(field);
                 else if (parseSequenceNoCacheIf(ctx))
                     s1 = s1.noCache();
                 else if (parseKeywordIf(ctx, "RESTART")) {
@@ -3620,7 +3620,7 @@ final class ParserImpl implements Parser {
         return parseKeywordIf(ctx, "NO CACHE") || parseKeywordIf(ctx, "NOCACHE");
     }
 
-    private static final Param<Long> parseSequenceCacheIf(ParserContext ctx) {
+    private static final Field<Long> parseSequenceCacheIf(ParserContext ctx) {
         return parseKeywordIf(ctx, "CACHE") && (parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
     }
 
@@ -3632,7 +3632,7 @@ final class ParserImpl implements Parser {
         return parseKeywordIf(ctx, "NO MAXVALUE") || parseKeywordIf(ctx, "NOMAXVALUE");
     }
 
-    private static final Param<Long> parseSequenceMaxvalueIf(ParserContext ctx) {
+    private static final Field<Long> parseSequenceMaxvalueIf(ParserContext ctx) {
         return parseKeywordIf(ctx, "MAXVALUE") && (parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
     }
 
@@ -3640,15 +3640,15 @@ final class ParserImpl implements Parser {
         return parseKeywordIf(ctx, "NO MINVALUE") || parseKeywordIf(ctx, "NOMINVALUE");
     }
 
-    private static final Param<Long> parseSequenceMinvalueIf(ParserContext ctx) {
+    private static final Field<Long> parseSequenceMinvalueIf(ParserContext ctx) {
         return parseKeywordIf(ctx, "MINVALUE") && (parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
     }
 
-    private static final Param<Long> parseSequenceIncrementByIf(ParserContext ctx) {
+    private static final Field<Long> parseSequenceIncrementByIf(ParserContext ctx) {
         return parseKeywordIf(ctx, "INCREMENT") && (parseKeywordIf(ctx, "BY") || parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
     }
 
-    private static final Param<Long> parseSequenceStartWithIf(ParserContext ctx) {
+    private static final Field<Long> parseSequenceStartWithIf(ParserContext ctx) {
         return parseKeywordIf(ctx, "START") && (parseKeywordIf(ctx, "WITH") || parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
     }
 
@@ -10853,7 +10853,7 @@ final class ParserImpl implements Parser {
         return c;
     }
 
-    private static final Param<?> parseBindVariable(ParserContext ctx) {
+    private static final Field<?> parseBindVariable(ParserContext ctx) {
 
         // [#11074] Bindings can be Param or even Field types
         Object binding = ctx.nextBinding();
@@ -10861,12 +10861,12 @@ final class ParserImpl implements Parser {
         switch (ctx.character()) {
             case '?':
                 parse(ctx, '?');
-                return binding instanceof Param ? (Param<?>) binding : DSL.val(binding, Object.class);
+                return binding instanceof Field ? (Field<?>) binding : DSL.val(binding, Object.class);
 
             case ':':
                 parse(ctx, ':', false);
                 Name identifier = parseIdentifier(ctx);
-                return binding instanceof Param ? (Param<?>) binding : DSL.param(identifier.last(), binding);
+                return binding instanceof Field ? (Field<?>) binding : DSL.param(identifier.last(), binding);
 
             default:
                 throw ctx.exception("Illegal bind variable character");
@@ -11316,8 +11316,15 @@ final class ParserImpl implements Parser {
              : unsigned;
     }
 
-    private static final Param<Long> parseParenthesisedUnsignedIntegerOrBindVariable(ParserContext ctx) {
-        Param<Long> result;
+    private static final <T> Param<T> requireParam(ParserContext ctx, Field<T> field) {
+        if (field instanceof Param)
+            return (Param<T>) field;
+        else
+            throw ctx.expected("Bind parameter or constant");
+    }
+
+    private static final Field<Long> parseParenthesisedUnsignedIntegerOrBindVariable(ParserContext ctx) {
+        Field<Long> result;
 
         int parens;
         for (parens = 0; parseIf(ctx, '('); parens++);
@@ -11327,9 +11334,9 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final Param<Long> parseUnsignedIntegerOrBindVariable(ParserContext ctx) {
+    private static final Field<Long> parseUnsignedIntegerOrBindVariable(ParserContext ctx) {
         Long i = parseUnsignedIntegerIf(ctx);
-        return i != null ? DSL.inline(i) : (Param<Long>) parseBindVariable(ctx);
+        return i != null ? DSL.inline(i) : (Field<Long>) parseBindVariable(ctx);
     }
 
     private static final Long parseUnsignedInteger(ParserContext ctx) {

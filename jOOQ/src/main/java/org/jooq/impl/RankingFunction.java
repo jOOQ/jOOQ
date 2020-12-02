@@ -79,7 +79,7 @@ final class RankingFunction<T> extends AbstractWindowFunction<T> {
     private final RankingType            rankingType;
 
     RankingFunction(RankingType rankingType, DataType<T> type) {
-        super(rankingType.name, type);
+        super(rankingType.name, type.notNull());
 
         this.rankingType = rankingType;
     }

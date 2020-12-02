@@ -58,7 +58,7 @@ final class NullIf<T> extends AbstractField<T> {
     private final Field<T>    arg2;
 
     NullIf(Field<T> arg1, Field<T> arg2) {
-        super(N_NULLIF, arg1.getDataType());
+        super(N_NULLIF, arg1.getDataType().null_());
 
         this.arg1 = arg1;
         this.arg2 = arg2;

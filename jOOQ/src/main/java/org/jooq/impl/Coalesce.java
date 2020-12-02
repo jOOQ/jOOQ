@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_COALESCE;
+import static org.jooq.impl.Tools.anyNotNull;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -54,9 +55,9 @@ final class Coalesce<T> extends AbstractField<T> {
     private static final long serialVersionUID = -4546488210418866103L;
     private final Field<T>[]  fields;
 
-    @SuppressWarnings("unchecked")
-    Coalesce(DataType<T> dataType, Field<?>[] fields) {
-        super(N_COALESCE, dataType);
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    Coalesce(Field<?>[] fields) {
+        super(N_COALESCE, (DataType) anyNotNull(fields));
 
         this.fields = (Field[]) fields;
     }

@@ -60,7 +60,7 @@ final class Nvl<T> extends AbstractField<T> {
     private final Field<T>    arg2;
 
     Nvl(Field<T> arg1, Field<T> arg2) {
-        super(N_NVL, arg1.getDataType());
+        super(N_NVL, Tools.anyNotNull(arg1, arg2));
 
         this.arg1 = arg1;
         this.arg2 = arg2;

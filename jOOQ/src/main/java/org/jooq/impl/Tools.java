@@ -155,6 +155,7 @@ import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER;
@@ -5895,6 +5896,60 @@ final class Tools {
                     return ParseNameCase.UPPER_IF_UNQUOTED;
             }
         }
+
+        return result;
+    }
+
+    static final <T> DataType<T> allNotNull(Field<T> f1, Field<T> f2) {
+        DataType<T> result = f1.getDataType();
+
+        if (result.nullable())
+            return result;
+        else if (f2.getDataType().nullable())
+            return result.null_();
+        else
+            return result;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    static final <T> DataType<T> allNotNull(Field<T>... fields) {
+        if (fields == null || fields.length == 0)
+            return (DataType) OTHER;
+
+        DataType<T> result = fields[0].getDataType();
+        if (result.nullable())
+            return result;
+
+        for (int i = 1; i < fields.length; i++)
+            if (fields[i].getDataType().nullable())
+                return result.null_();
+
+        return result;
+    }
+
+    static final <T> DataType<T> anyNotNull(Field<T> f1, Field<T> f2) {
+        DataType<T> result = f1.getDataType();
+
+        if (!result.nullable())
+            return result;
+        else if (!f2.getDataType().nullable())
+            return result.notNull();
+        else
+            return result;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    static final <T> DataType<T> anyNotNull(Field<T>... fields) {
+        if (fields == null || fields.length == 0)
+            return (DataType) OTHER;
+
+        DataType<T> result = fields[0].getDataType();
+        if (!result.nullable())
+            return result;
+
+        for (int i = 1; i < fields.length; i++)
+            if (!fields[i].getDataType().nullable())
+                return result.notNull();
 
         return result;
     }

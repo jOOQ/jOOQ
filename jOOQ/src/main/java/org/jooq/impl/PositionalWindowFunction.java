@@ -65,7 +65,7 @@ final class PositionalWindowFunction<T> extends AbstractWindowFunction<T> {
     }
 
     PositionalWindowFunction(PositionalFunctionType functionType, Field<T> arg, Field<Integer> offset, Field<T> defaultValue) {
-        super(functionType.name, arg.getDataType());
+        super(functionType.name, arg.getDataType().null_());
 
         this.functionType = functionType;
         this.arg = arg;

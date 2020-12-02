@@ -67,11 +67,15 @@ final class Val<T> extends AbstractParam<T> {
     private static final ConcurrentHashMap<Class<?>, Object> legacyWarnings   = new ConcurrentHashMap<>();
 
     Val(T value, DataType<T> type) {
-        super(value, type);
+        super(value, type(value, type));
     }
 
     Val(T value, DataType<T> type, String paramName) {
-        super(value, type, paramName);
+        super(value, type(value, type), paramName);
+    }
+
+    private static final <T> DataType<T> type(T value, DataType<T> type) {
+        return value == null ? type.null_() : type.notNull();
     }
 
     // ------------------------------------------------------------------------

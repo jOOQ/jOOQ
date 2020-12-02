@@ -107,8 +107,10 @@ import static org.jooq.impl.RankingFunction.RankingType.CUME_DIST;
 import static org.jooq.impl.RankingFunction.RankingType.DENSE_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.RANK;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
@@ -14529,7 +14531,7 @@ public class DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T> coalesce0(Field<T> field, Field<?>... fields) {
-        return new Coalesce<>(nullSafeDataType(field), nullSafe(combine(field, fields)));
+        return new Coalesce<>(nullSafe(combine(field, fields)));
     }
 
     /**
@@ -22277,7 +22279,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> rank() {
-        return new RankingFunction<>(RANK, SQLDataType.INTEGER);
+        return new RankingFunction<>(RANK, INTEGER);
     }
 
     /**
@@ -22286,7 +22288,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> denseRank() {
-        return new RankingFunction<>(DENSE_RANK, SQLDataType.INTEGER);
+        return new RankingFunction<>(DENSE_RANK, INTEGER);
     }
 
     /**
@@ -22295,7 +22297,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> percentRank() {
-        return new RankingFunction<>(PERCENT_RANK, SQLDataType.NUMERIC);
+        return new RankingFunction<>(PERCENT_RANK, NUMERIC);
     }
 
     /**
@@ -22304,7 +22306,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> cumeDist() {
-        return new RankingFunction<>(CUME_DIST, SQLDataType.NUMERIC);
+        return new RankingFunction<>(CUME_DIST, NUMERIC);
     }
 
     /**

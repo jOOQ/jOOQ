@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -187,7 +188,7 @@ public class JDBCUtils {
             case POSTGRES:
                 return postgresDialect(majorVersion, minorVersion);
             case MYSQL:
-                return mysqlDialect(majorVersion);
+                return mysqlDialect(majorVersion, minorVersion);
             case FIREBIRD:
                 return firebirdDialect(majorVersion);
         }
@@ -269,7 +270,10 @@ public class JDBCUtils {
         return POSTGRES;
     }
 
-    private static final SQLDialect mysqlDialect(int majorVersion) {
+    private static final SQLDialect mysqlDialect(int majorVersion, int minorVersion) {
+
+
+
 
 
 

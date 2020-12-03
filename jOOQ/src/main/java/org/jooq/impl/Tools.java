@@ -5900,7 +5900,7 @@ final class Tools {
         return result;
     }
 
-    static final <T> DataType<T> allNotNull(Field<T> f1, Field<T> f2) {
+    static final <T> DataType<T> allNotNull(Field<T> f1, Field<?> f2) {
         DataType<T> result = f1.getDataType();
 
         if (result.nullable())
@@ -5912,11 +5912,11 @@ final class Tools {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final <T> DataType<T> allNotNull(Field<T>... fields) {
+    static final DataType<?> allNotNull(Field<?>... fields) {
         if (fields == null || fields.length == 0)
-            return (DataType) OTHER;
+            return OTHER;
 
-        DataType<T> result = fields[0].getDataType();
+        DataType<?> result = fields[0].getDataType();
         if (result.nullable())
             return result;
 
@@ -5927,7 +5927,7 @@ final class Tools {
         return result;
     }
 
-    static final <T> DataType<T> anyNotNull(Field<T> f1, Field<T> f2) {
+    static final <T> DataType<T> anyNotNull(Field<T> f1, Field<?> f2) {
         DataType<T> result = f1.getDataType();
 
         if (!result.nullable())

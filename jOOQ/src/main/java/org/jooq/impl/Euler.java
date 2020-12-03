@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Names.N_E;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 
@@ -57,7 +58,7 @@ final class Euler extends AbstractField<BigDecimal> {
     private static final long serialVersionUID = -420788300355442056L;
 
     Euler() {
-        super(N_E, SQLDataType.NUMERIC);
+        super(N_E, NUMERIC.notNull());
     }
 
     @Override

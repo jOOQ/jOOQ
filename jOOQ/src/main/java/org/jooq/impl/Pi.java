@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Names.N_PI;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 
@@ -59,7 +60,7 @@ final class Pi extends AbstractField<BigDecimal> {
     private static final long serialVersionUID = -420788300355442056L;
 
     Pi() {
-        super(N_PI, SQLDataType.NUMERIC);
+        super(N_PI, NUMERIC.notNull());
     }
 
     @Override

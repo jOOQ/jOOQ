@@ -53,7 +53,7 @@ final class Space extends AbstractField<String> {
     private final Field<Integer> count;
 
     Space(Field<Integer> count) {
-        super(N_SPACE, VARCHAR);
+        super(N_SPACE, VARCHAR.nullable(count.getDataType().nullable()));
 
         this.count = count;
     }

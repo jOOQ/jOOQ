@@ -285,7 +285,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     final void setRecordVersionAndTimestamp(BigInteger version, Timestamp timestamp) {
         if (version != null) {
             TableField<R, ?> field = getTable().getRecordVersion();
-            int fieldIndex = indexOrFail(fieldsRow(), field);
+            int fieldIndex = indexOrFail(fields, field);
             Object value = field.getDataType().convert(version);
 
             values[fieldIndex] = value;
@@ -294,7 +294,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         }
         if (timestamp != null) {
             TableField<R, ?> field = getTable().getRecordTimestamp();
-            int fieldIndex = indexOrFail(fieldsRow(), field);
+            int fieldIndex = indexOrFail(fields, field);
             Object value = field.getDataType().convert(timestamp);
 
             values[fieldIndex] = value;

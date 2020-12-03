@@ -104,8 +104,8 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     private Field<T>                         maxValue;
 
     BetweenCondition(Field<T> field, Field<T> minValue, boolean not, boolean symmetric) {
-        this.field = field;
-        this.minValue = minValue;
+        this.field = nullSafe(field, minValue.getDataType());
+        this.minValue = nullSafe(minValue, field.getDataType());
         this.not = not;
         this.symmetric = symmetric;
     }

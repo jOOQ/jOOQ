@@ -101,8 +101,8 @@ final class RowCondition extends AbstractCondition {
     }
 
     RowCondition(Row left, Row right, Comparator comparator, boolean forceEmulation) {
-        this.left = left;
-        this.right = right;
+        this.left = ((AbstractRow) left).convertTo(right);
+        this.right = ((AbstractRow) right).convertTo(left);
         this.comparator = comparator;
         this.forceEmulation = forceEmulation;
     }

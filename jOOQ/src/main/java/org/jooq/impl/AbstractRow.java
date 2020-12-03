@@ -55,8 +55,6 @@ import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * A common base class for the various degrees of {@link Row1}, {@link Row2},
  * etc.
@@ -83,6 +81,34 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
         super();
 
         this.fields = fields;
+    }
+
+    /**
+     * [#8517] Convert the bind values in this row to the types of columns of another row
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    final AbstractRow convertTo(Row row) {
+        int size = fields.size();
+
+        findConversionCandidates: {
+            for (int i = 0; i < size; i++)
+                if (fields.field(i) instanceof Val && !(row.field(i) instanceof Val))
+                    break findConversionCandidates;
+
+            return this;
+        }
+
+        Field<?>[] result = new Field[size];
+        for (int i = 0; i < size; i++) {
+            Field<?> f = fields.field(i);
+
+            if (f instanceof Val)
+                result[i] = ((Val) f).convertTo(row.field(i).getDataType());
+            else
+                result[i] = f;
+        }
+
+        return Tools.row0(result);
     }
 
     // ------------------------------------------------------------------------

@@ -3074,7 +3074,7 @@ public abstract class AbstractDatabase implements Database {
             field.getDataType().precision(),
             field.getDataType().scale(),
             field.getDataType().nullable(),
-            create().renderInlined(field.getDataType().defaultValue())
+            field.getDataType().defaultValue() == null ? null : create().renderInlined(field.getDataType().defaultValue())
         );
     }
 

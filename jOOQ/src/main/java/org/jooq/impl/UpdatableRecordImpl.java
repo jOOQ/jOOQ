@@ -101,7 +101,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public Record key() {
-        AbstractRecord result = Tools.newRecord(fetched, AbstractRecord.class, getPrimaryKey().getFieldsArray()).<RuntimeException>operate(null);
+        AbstractRecord result = Tools.newRecord(fetched, AbstractRecord.class, Tools.row0(getPrimaryKey().getFieldsArray())).<RuntimeException>operate(null);
         result.setValues(result.fields.fields.fields, this);
         return result;
     }

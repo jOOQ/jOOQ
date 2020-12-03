@@ -70,6 +70,10 @@ final class RowImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends AbstractR
         super(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
     }
 
+    RowImpl10(Fields<?> fields) {
+        super(fields);
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Row accessor API
     // ------------------------------------------------------------------------

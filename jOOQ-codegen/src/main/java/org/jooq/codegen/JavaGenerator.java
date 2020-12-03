@@ -1459,7 +1459,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("class %s extends %s[%s](%s.fields(%s.%s):_*)[[before= with ][separator= with ][%s]] {",
+                out.println("class %s extends %s[%s](%s.fieldsRow(%s.%s))[[before= with ][separator= with ][%s]] {",
                     className,
                     baseClass,
                     className,
@@ -1478,7 +1478,7 @@ public class JavaGenerator extends AbstractGenerator {
                 );
         else if (kotlin)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("open class %s() : %s<%s>(*%s.fields(%s.%s))[[before=, ][%s]] {",
+                out.println("open class %s() : %s<%s>(%s.fieldsRow(%s.%s))[[before=, ][%s]] {",
                     className,
                     baseClass,
                     className,
@@ -1851,7 +1851,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("public %s() {", className);
 
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("super(%s.fields(%s.%s));",
+                out.println("super(%s.fieldsRow(%s.%s));",
                     Internal.class,
                     out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
                     getStrategy().getJavaIdentifier(tableUdtOrEmbeddable));

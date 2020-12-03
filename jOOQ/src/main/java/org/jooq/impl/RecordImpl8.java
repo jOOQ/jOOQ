@@ -52,15 +52,15 @@ import org.jooq.Record8;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked" })
-class RecordImpl8<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractRecord implements InternalRecord, Record8<T1, T2, T3, T4, T5, T6, T7, T8> {
+final class RecordImpl8<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractRecord implements InternalRecord, Record8<T1, T2, T3, T4, T5, T6, T7, T8> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -2201346180421463830L;
 
-    RecordImpl8(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
-        super(t1, t2, t3, t4, t5, t6, t7, t8);
+    RecordImpl8(AbstractRow row) {
+        super(row);
     }
 
     // ------------------------------------------------------------------------

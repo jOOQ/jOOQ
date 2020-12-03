@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.indexOrFail;
 
@@ -110,14 +111,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     private final List<R>     records;
 
     ResultImpl(Configuration configuration, Collection<? extends Field<?>> fields) {
-        this(configuration, new Fields<>(fields));
+        this(configuration, Tools.row0(fields));
     }
 
     ResultImpl(Configuration configuration, Field<?>... fields) {
-        this(configuration, new Fields<>(fields));
+        this(configuration, Tools.row0(fields));
     }
 
-    ResultImpl(Configuration configuration, Fields<R> fields) {
+    ResultImpl(Configuration configuration, AbstractRow fields) {
         super(configuration, fields);
 
         this.records = new ArrayList<>();
@@ -358,18 +359,17 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Map<Record, R> intoMap(Field<?>[] keys) {
-        if (keys == null)
-            keys = new Field[0];
+        AbstractRow keysRow = Tools.row0(keys == null ? EMPTY_FIELD : keys);
 
         Map<Record, R> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImplN key = new RecordImplN(keys);
+            RecordImplN key = new RecordImplN(keysRow);
 
-            for (Field<?> field : keys)
+            for (Field<?> field : keysRow.fields.fields)
                 Tools.copyValue(key, field, record, field);
 
             if (map.put(key, record) != null)
-                throw new InvalidResultException("Key list " + Arrays.asList(keys) + " is not unique in Result for " + this);
+                throw new InvalidResultException("Key list " + keysRow + " is not unique in Result for " + this);
         }
 
         return map;
@@ -392,22 +392,22 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Map<Record, Record> intoMap(Field<?>[] keys, Field<?>[] values) {
-        if (keys == null)
-            keys = new Field[0];
+        AbstractRow keysRow = Tools.row0(keys == null ? EMPTY_FIELD : keys);
+        AbstractRow valuesRow = Tools.row0(values == null ? EMPTY_FIELD : values);
 
         Map<Record, Record> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImplN key = new RecordImplN(keys);
-            RecordImplN value = new RecordImplN(values);
+            RecordImplN key = new RecordImplN(keysRow);
+            RecordImplN value = new RecordImplN(valuesRow);
 
-            for (Field<?> field : keys)
+            for (Field<?> field : keysRow.fields.fields)
                 Tools.copyValue(key, field, record, field);
 
-            for (Field<?> field : values)
+            for (Field<?> field : valuesRow.fields.fields)
                 Tools.copyValue(value, field, record, field);
 
             if (map.put(key, value) != null)
-                throw new InvalidResultException("Key list " + Arrays.asList(keys) + " is not unique in Result for " + this);
+                throw new InvalidResultException("Key list " + keysRow + " is not unique in Result for " + this);
         }
 
         return map;
@@ -430,7 +430,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
-        return intoMap(keys, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(keys, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
@@ -470,20 +470,20 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <K> Map<K, R> intoMap(Class<? extends K> keyType) {
-        return intoMap(Tools.configuration(this).recordMapperProvider().provide(fields, keyType));
+        return intoMap(Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Class<? extends K> keyType, Class<? extends V> valueType) {
         return intoMap(
-            Tools.configuration(this).recordMapperProvider().provide(fields, keyType),
-            Tools.configuration(this).recordMapperProvider().provide(fields, valueType)
+            Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType),
+            Tools.configuration(this).recordMapperProvider().provide(recordType(), valueType)
         );
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return intoMap(Tools.configuration(this).recordMapperProvider().provide(fields, keyType), valueMapper);
+        return intoMap(Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType), valueMapper);
     }
 
     @Override
@@ -502,7 +502,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return intoMap(keyMapper, Tools.configuration(this).recordMapperProvider().provide(fields, valueType));
+        return intoMap(keyMapper, Tools.configuration(this).recordMapperProvider().provide(recordType(), valueType));
     }
 
     @Override
@@ -551,7 +551,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, Class<? extends E> type) {
-        return intoMap(table, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(table, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
@@ -570,22 +570,22 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> Map<?, E> intoMap(int keyFieldIndex, Class<? extends E> type) {
-        return intoMap(keyFieldIndex, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(keyFieldIndex, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(String keyFieldName, Class<? extends E> type) {
-        return intoMap(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(Name keyFieldName, Class<? extends E> type) {
-        return intoMap(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
-        return intoMap(key, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(key, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
@@ -696,22 +696,22 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(int keyFieldIndex, Class<? extends E> type) {
-        return intoGroups(keyFieldIndex, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldIndex, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(String keyFieldName, Class<? extends E> type) {
-        return intoGroups(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(Name keyFieldName, Class<? extends E> type) {
-        return intoGroups(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
-        return intoGroups(key, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(key, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
@@ -767,14 +767,13 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Map<Record, Result<R>> intoGroups(Field<?>[] keys) {
-        if (keys == null)
-            keys = new Field[0];
+        AbstractRow keysRow = Tools.row0(keys == null ? EMPTY_FIELD : keys);
 
         Map<Record, Result<R>> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImplN key = new RecordImplN(keys);
+            RecordImplN key = new RecordImplN(keysRow);
 
-            for (Field<?> field : keys)
+            for (Field<?> field : keysRow.fields.fields)
                 Tools.copyValue(key, field, record, field);
 
             Result<R> result = map.get(key);
@@ -804,26 +803,23 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Map<Record, Result<Record>> intoGroups(Field<?>[] keys, Field<?>[] values) {
-        if (keys == null)
-            keys = new Field[0];
-
-        if (values == null)
-            values = new Field[0];
+        AbstractRow keysRow = Tools.row0(keys == null ? EMPTY_FIELD : keys);
+        AbstractRow valuesRow = Tools.row0(values == null ? EMPTY_FIELD : values);
 
         Map<Record, Result<Record>> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImplN key = new RecordImplN(keys);
-            RecordImplN value = new RecordImplN(values);
+            RecordImplN key = new RecordImplN(keysRow);
+            RecordImplN value = new RecordImplN(valuesRow);
 
-            for (Field<?> field : keys)
+            for (Field<?> field : keysRow.fields.fields)
                 Tools.copyValue(key, field, record, field);
 
-            for (Field<?> field : values)
+            for (Field<?> field : valuesRow.fields.fields)
                 Tools.copyValue(value, field, record, field);
 
             Result<Record> result = map.get(key);
             if (result == null)
-                map.put(key, result = new ResultImpl<>(configuration(), values));
+                map.put(key, result = new ResultImpl<>(configuration(), valuesRow));
 
             result.add(value);
         }
@@ -833,22 +829,22 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, Class<? extends E> type) {
-        return intoGroups(keyFieldIndexes, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldIndexes, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, Class<? extends E> type) {
-        return intoGroups(keyFieldNames, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldNames, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) {
-        return intoGroups(keyFieldNames, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldNames, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
-        return intoGroups(keys, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keys, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
@@ -868,14 +864,13 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
-        if (keys == null)
-            keys = new Field[0];
+        AbstractRow keysRow = Tools.row0(keys == null ? EMPTY_FIELD : keys);
 
         Map<Record, List<E>> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImplN key = new RecordImplN(keys);
+            RecordImplN key = new RecordImplN(keysRow);
 
-            for (Field<?> field : keys)
+            for (Field<?> field : keysRow.fields.fields)
                 Tools.copyValue(key, field, record, field);
 
             List<E> list = map.get(key);
@@ -890,20 +885,20 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Class<? extends K> keyType) {
-        return intoGroups(Tools.configuration(this).recordMapperProvider().provide(fields, keyType));
+        return intoGroups(Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, Class<? extends V> valueType) {
         return intoGroups(
-            Tools.configuration(this).recordMapperProvider().provide(fields, keyType),
-            Tools.configuration(this).recordMapperProvider().provide(fields, valueType)
+            Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType),
+            Tools.configuration(this).recordMapperProvider().provide(recordType(), valueType)
         );
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return intoGroups(Tools.configuration(this).recordMapperProvider().provide(fields, keyType), valueMapper);
+        return intoGroups(Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType), valueMapper);
     }
 
     @Override
@@ -915,7 +910,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
             Result<R> result = map.get(key);
             if (result == null)
-                map.put(key, result = new ResultImpl<>(configuration(), fields()));
+                map.put(key, result = new ResultImpl<>(configuration(), fields));
 
             result.add(record);
         }
@@ -925,7 +920,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return intoGroups(keyMapper, Tools.configuration(this).recordMapperProvider().provide(fields, valueType));
+        return intoGroups(keyMapper, Tools.configuration(this).recordMapperProvider().provide(recordType(), valueType));
     }
 
     @Override
@@ -982,7 +977,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, Class<? extends E> type) {
-        return intoGroups(table, Tools.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(table, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
     }
 
     @Override
@@ -1279,7 +1274,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     @Override
     public final <E> List<E> into(Class<? extends E> type) {
         List<E> list = new ArrayList<>(size());
-        RecordMapper<R, E> mapper = Tools.configuration(this).recordMapperProvider().provide(fields, type);
+        RecordMapper<R, E> mapper = Tools.configuration(this).recordMapperProvider().provide(recordType(), type);
 
         for (R record : this)
             list.add(mapper.map(record));
@@ -1289,7 +1284,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <Z extends Record> Result<Z> into(Table<Z> table) {
-        Result<Z> list = new ResultImpl<>(configuration(), table.fields());
+        Result<Z> list = new ResultImpl<>(configuration(), (AbstractRow) table.fieldsRow());
 
         for (R record : this)
             list.add(record.into(table));
@@ -1413,13 +1408,13 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Result<R> intern(Field<?>... f) {
-        return intern(fields.indexesOf(f));
+        return intern(fields.fields.indexesOf(f));
     }
 
     @Override
     public final Result<R> intern(int... fieldIndexes) {
         for (int fieldIndex : fieldIndexes)
-            if (fields.fields[fieldIndex].getType() == String.class)
+            if (fields.field(fieldIndex).getType() == String.class)
                 for (Record record : this)
                     ((AbstractRecord) record).intern0(fieldIndex);
 
@@ -1428,12 +1423,12 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Result<R> intern(String... fieldNames) {
-        return intern(fields.indexesOf(fieldNames));
+        return intern(fields.fields.indexesOf(fieldNames));
     }
 
     @Override
     public final Result<R> intern(Name... fieldNames) {
-        return intern(fields.indexesOf(fieldNames));
+        return intern(fields.fields.indexesOf(fieldNames));
     }
 
     /**
@@ -1476,10 +1471,10 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     final int safeIndex(int index) {
-        if (index >= 0 && index < fields.fields.length)
+        if (index >= 0 && index < fields.size())
             return index;
 
-        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fieldsRow());
+        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fields);
     }
 
     // -------------------------------------------------------------------------

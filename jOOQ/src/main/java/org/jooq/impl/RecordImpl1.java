@@ -52,15 +52,15 @@ import org.jooq.Record1;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked" })
-class RecordImpl1<T1> extends AbstractRecord implements InternalRecord, Record1<T1> {
+final class RecordImpl1<T1> extends AbstractRecord implements InternalRecord, Record1<T1> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -2201346180421463830L;
 
-    RecordImpl1(Field<T1> t1) {
-        super(t1);
+    RecordImpl1(AbstractRow row) {
+        super(row);
     }
 
     // ------------------------------------------------------------------------

@@ -126,11 +126,11 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
     }
 
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows, boolean autoclosing) {
-        super(ctx.configuration(), new Fields<>(fields));
+        super(ctx.configuration(), Tools.row0(fields));
 
         this.ctx = ctx;
         this.listener = (listener != null ? listener : ExecuteListeners.getAndStart(ctx));
-        this.factory = recordFactory(type, fields);
+        this.factory = recordFactory(type, this.fields);
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
         this.rs = new CursorResultSet();
@@ -341,15 +341,13 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         // [#1157] This invokes listener.fetchStart(ctx), which has to be called
         // Before listener.resultStart(ctx)
         iterator();
-
-        ResultImpl<R> result = new ResultImpl<>(((DefaultExecuteContext) ctx).originalConfiguration(), fields.fields);
+        ResultImpl<R> result = new ResultImpl<>(((DefaultExecuteContext) ctx).originalConfiguration(), fields);
 
         ctx.result(result);
         listener.resultStart(ctx);
 
-        for (int i = 0; i < number && iterator().hasNext(); i++) {
+        for (int i = 0; i < number && iterator().hasNext(); i++)
             result.addRecord(iterator().next());
-        }
 
         ctx.result(result);
         listener.resultEnd(ctx);
@@ -1600,7 +1598,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
             try {
                 if (!isClosed && rs.next()) {
                     record = Tools.newRecord(true, (F0<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration())
-                                  .operate(new CursorRecordInitialiser(fields.fields, 0));
+                                  .operate(new CursorRecordInitialiser(fields, 0));
 
                     rows++;
                 }
@@ -1638,11 +1636,11 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
         private class CursorRecordInitialiser implements RecordOperation<AbstractRecord, SQLException> {
 
-            private final Field<?>[] initialiserFields;
-            private int              offset;
+            private final AbstractRow initialiserFields;
+            private int               offset;
 
-            CursorRecordInitialiser(Field<?>[] fields, int offset) {
-                this.initialiserFields = fields;
+            CursorRecordInitialiser(AbstractRow initialiserFields, int offset) {
+                this.initialiserFields = initialiserFields;
                 this.offset = offset;
             }
 
@@ -1650,6 +1648,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
             public AbstractRecord operate(AbstractRecord record) throws SQLException {
                 ctx.record(record);
                 listener.recordStart(ctx);
+                int size = initialiserFields.size();
 
 
 
@@ -1670,8 +1669,8 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
 
 
-                for (int i = 0; i < initialiserFields.length; i++)
-                    setValue(record, initialiserFields[i], i);
+                for (int i = 0; i < size; i++)
+                    setValue(record, initialiserFields.field(i), i);
 
                 if (intern != null)
                     for (int i = 0; i < intern.length; i++)
@@ -1691,7 +1690,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
             private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
                 try {
                     T value;
-                    Field<?>[] nested = null;
+                    AbstractRow nested = null;
                     Class<? extends AbstractRecord> recordType = null;
 
                     if (field instanceof RowField) {
@@ -1700,7 +1699,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
                         recordType = RecordImplN.class;
                     }
                     else if (field.getDataType().isEmbeddable()) {
-                        nested = embeddedFields(field);
+                        nested = Tools.row0(embeddedFields(field));
                         recordType = embeddedRecordType(field);
                     }
 
@@ -1708,7 +1707,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
                         value = (T) Tools.newRecord(true, recordType, nested, ((DefaultExecuteContext) ctx).originalConfiguration())
                                          .operate(new CursorRecordInitialiser(nested, offset + index));
 
-                        offset += nested.length - 1;
+                        offset += nested.size() - 1;
                     }
                     else {
                         rsContext.index(offset + index + 1);

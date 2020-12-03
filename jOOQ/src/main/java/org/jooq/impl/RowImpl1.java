@@ -70,6 +70,10 @@ final class RowImpl1<T1> extends AbstractRow implements Row1<T1> {
         super(t1);
     }
 
+    RowImpl1(Fields<?> fields) {
+        super(fields);
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Row accessor API
     // ------------------------------------------------------------------------

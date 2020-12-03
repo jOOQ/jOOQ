@@ -51,15 +51,15 @@ import org.jooq.Record;
  *
  * @author Lukas Eder
  */
-class RecordImplN extends AbstractRecord implements InternalRecord {
+final class RecordImplN extends AbstractRecord implements InternalRecord {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -2201346180421463830L;
 
-    RecordImplN(Field<?>... values) {
-        super(values);
+    RecordImplN(AbstractRow row) {
+        super(row);
     }
 
     /**

@@ -58,12 +58,24 @@ public class EmbeddableRecordImpl<R extends EmbeddableRecord<R>> extends Abstrac
      */
     private static final long serialVersionUID = -1260149220986944763L;
 
+    /**
+     * @deprecated - [#11058] - 3.14.5 - Please re-generate your code.
+     */
+    @Deprecated
     public EmbeddableRecordImpl(Field<?>... fields) {
         super(fields);
     }
 
+    /**
+     * @deprecated - [#11058] - 3.14.5 - Please re-generate your code.
+     */
+    @Deprecated
     public EmbeddableRecordImpl(TableField<?, ?>... fields) {
         super(fields);
+    }
+
+    public EmbeddableRecordImpl(Row fields) {
+        super((AbstractRow) fields);
     }
 
     @SuppressWarnings("unchecked")

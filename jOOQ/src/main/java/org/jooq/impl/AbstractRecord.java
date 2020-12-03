@@ -133,14 +133,17 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     boolean                         fetched;
 
     /**
-     * @deprecated - 3.14.0 - [#8495] - Prevent the array copy and call
-     *             {@link #RecordImplN(Field...)} instead.
+     * @deprecated - 3.14.5 - [#8495] [#11058] - Re-use AbstractRow reference if possible
      */
     @Deprecated
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(Tools.row0(fields.toArray(EMPTY_FIELD)));
     }
 
+    /**
+     * @deprecated - 3.14.5 - [#8495] [#11058] - Re-use AbstractRow reference if possible
+     */
+    @Deprecated
     AbstractRecord(Field<?>... fields) {
         this(Tools.row0(fields));
     }
@@ -458,7 +461,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        return Tools.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
+        return Tools.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields, configuration())
                     .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
 
             @Override
@@ -621,7 +624,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Record into(Field<?>... f) {
-        return Tools.newRecord(fetched, Record.class, f, configuration()).operate(new TransferRecordState<Record>(f));
+        return Tools.newRecord(fetched, Record.class, Tools.row0(f), configuration()).operate(new TransferRecordState<Record>(f));
     }
 
 
@@ -774,7 +777,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return Tools.newRecord(fetched, type, fields(), configuration()).operate(new TransferRecordState<R>(null));
+        return Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<R>(null));
     }
 
     private class TransferRecordState<R extends Record> implements RecordOperation<R, MappingException> {
@@ -834,9 +837,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final ResultSet intoResultSet() {
-        ResultImpl<Record> result = new ResultImpl<>(configuration(), fields.fields.fields);
-        result.add(this);
-        return result.intoResultSet();
+        return asResult().intoResultSet();
     }
 
     @Override
@@ -970,16 +971,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void format(Writer writer, TXTFormat format) {
-        Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields.fields.fields);
-        result.add(AbstractRecord.this);
-        result.format(writer, format);
+        asResult().format(writer, format);
     }
 
     @Override
     public final void formatCSV(Writer writer, CSVFormat format)  {
-        Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields.fields.fields);
-        result.add(AbstractRecord.this);
-        result.formatCSV(writer, format);
+        asResult().formatCSV(writer, format);
     }
 
     @Override
@@ -993,10 +990,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         try {
             switch (format.recordFormat()) {
                 case ARRAY:
-                    AbstractCursor.formatJSONArray0(this, fields.fields, format, 0, writer);
+                    AbstractCursor.formatJSONArray0(this, fields, format, 0, writer);
                     break;
                 case OBJECT:
-                    AbstractCursor.formatJSONMap0(this, fields.fields, format, 0, writer);
+                    AbstractCursor.formatJSONMap0(this, fields, format, 0, writer);
                     break;
                 default:
                     throw new IllegalArgumentException("Format not supported: " + format);
@@ -1016,7 +1013,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             log.debug("XMLFormat.header currently not supported for Record.formatXML()");
 
         try {
-            AbstractCursor.formatXMLRecord(writer, format, 0, this, fields.fields);
+            AbstractCursor.formatXMLRecord(writer, format, 0, this, fields);
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing XML", e);
@@ -1025,15 +1022,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void formatHTML(Writer writer) {
-        Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields.fields.fields);
-        result.add(AbstractRecord.this);
+        Result<AbstractRecord> result = asResult();
         result.formatHTML(writer);
     }
 
     @Override
     public final void formatChart(Writer writer, ChartFormat format) {
-        Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields.fields.fields);
-        result.add(AbstractRecord.this);
+        Result<AbstractRecord> result = asResult();
         result.formatChart(writer, format);
     }
 
@@ -1044,22 +1039,19 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void formatInsert(Writer writer, Table<?> table, Field<?>... f) {
-        Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields.fields.fields);
-        result.add(AbstractRecord.this);
+        Result<AbstractRecord> result = asResult();
         result.formatInsert(writer, table, f);
     }
 
     @Override
     public final Document intoXML(XMLFormat format) {
-        Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields.fields.fields);
-        result.add(AbstractRecord.this);
+        Result<AbstractRecord> result = asResult();
         return result.intoXML(format);
     }
 
     @Override
     public final <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException {
-        Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields.fields.fields);
-        result.add(AbstractRecord.this);
+        Result<AbstractRecord> result = asResult();
         return result.intoXML(handler, format);
     }
 
@@ -1073,9 +1065,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return ThreadGuard.run(RECORD_TOSTRING, new GuardedOperation<String>() {
             @Override
             public String unguarded() {
-                Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields.fields.fields);
-                result.add(AbstractRecord.this);
-                return result.toString();
+                return asResult().toString();
             }
 
             @Override
@@ -1334,4 +1324,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         set(field, value, converter);
     }
 
+    final Result<AbstractRecord> asResult() {
+        Result<AbstractRecord> result = new ResultImpl<>(configuration(), fields);
+        result.add(this);
+        return result;
+    }
 }

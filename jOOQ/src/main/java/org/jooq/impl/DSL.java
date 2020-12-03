@@ -9807,7 +9807,7 @@ public class DSL {
         if (records == null || records.length == 0)
             return (Table<R>) new Dual();
 
-        Result<R> result = new ResultImpl(configuration(records[0]), records[0].fields());
+        Result<R> result = new ResultImpl(configuration(records[0]), (AbstractRow) records[0].fieldsRow());
         result.addAll(Arrays.asList(records));
 
         return table(result);

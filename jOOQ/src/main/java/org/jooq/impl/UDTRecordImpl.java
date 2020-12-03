@@ -69,7 +69,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     private final UDT<R>      udt;
 
     public UDTRecordImpl(UDT<R> udt) {
-        super(udt.fields());
+        super((AbstractRow) udt.fieldsRow());
 
         this.udt = udt;
     }

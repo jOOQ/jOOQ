@@ -73,6 +73,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
@@ -108,8 +109,8 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
     private Character                    escape;
 
     CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator) {
-        this.field1 = field1;
-        this.field2 = field2;
+        this.field1 = nullSafe(field1, field2.getDataType());
+        this.field2 = nullSafe(field2, field1.getDataType());
         this.comparator = comparator;
     }
 

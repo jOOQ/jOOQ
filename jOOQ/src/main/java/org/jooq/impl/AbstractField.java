@@ -953,7 +953,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Condition in(Field<?>... values) {
-        return new InCondition<>(this, nullSafeList(values), IN);
+        return new InCondition<>(this, nullSafeList(values, getDataType()), IN);
     }
 
     @Override
@@ -994,7 +994,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Condition notIn(Field<?>... values) {
-        return new InCondition<>(this, nullSafeList(values), NOT_IN);
+        return new InCondition<>(this, nullSafeList(values, getDataType()), NOT_IN);
     }
 
     @Override

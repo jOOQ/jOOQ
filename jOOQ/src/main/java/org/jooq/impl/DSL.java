@@ -26168,6 +26168,20 @@ public class DSL {
     /**
      * Null-safety of a field.
      */
+    protected static Field<?>[] nullSafe(Field<?>[] fields, DataType<?> type) {
+        if (fields == null)
+            return EMPTY_FIELD;
+
+        Field<?>[] result = new Field<?>[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            result[i] = nullSafe(fields[i], type);
+
+        return result;
+    }
+
+    /**
+     * Null-safety of a field.
+     */
     protected static List<Field<?>> nullSafeList(Field<?>... fields) {
         if (fields == null)
             return asList(EMPTY_FIELD);
@@ -26175,6 +26189,20 @@ public class DSL {
         List<Field<?>> result = new ArrayList<>(fields.length);
         for (Field<?> f : fields)
             result.add(nullSafe(f));
+
+        return result;
+    }
+
+    /**
+     * Null-safety of a field.
+     */
+    protected static List<Field<?>> nullSafeList(Field<?>[] fields, DataType<?> type) {
+        if (fields == null)
+            return asList(EMPTY_FIELD);
+
+        List<Field<?>> result = new ArrayList<>(fields.length);
+        for (Field<?> f : fields)
+            result.add(nullSafe(f, type));
 
         return result;
     }

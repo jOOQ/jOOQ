@@ -70,6 +70,10 @@ final class RowImpl11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Abst
         super(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
     }
 
+    RowImpl11(FieldsImpl<?> fields) {
+        super(fields);
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Row accessor API
     // ------------------------------------------------------------------------

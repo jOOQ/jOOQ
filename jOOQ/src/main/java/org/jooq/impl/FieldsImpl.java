@@ -381,6 +381,10 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         return dataType(indexOrFail(this, fieldName));
     }
 
+    /**
+     * @deprecated - 3.14.5 - [#11058] - These are used for the deprecated interning feature only.
+     */
+    @Deprecated
     final int[] indexesOf(Field<?>... f) {
         int[] result = new int[f.length];
 
@@ -390,6 +394,10 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         return result;
     }
 
+    /**
+     * @deprecated - 3.14.5 - [#11058] - These are used for the deprecated interning feature only.
+     */
+    @Deprecated
     final int[] indexesOf(String... fieldNames) {
         int[] result = new int[fieldNames.length];
 
@@ -400,6 +408,10 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         return result;
     }
 
+    /**
+     * @deprecated - 3.14.5 - [#11058] - These are used for the deprecated interning feature only.
+     */
+    @Deprecated
     final int[] indexesOf(Name... fieldNames) {
         int[] result = new int[fieldNames.length];
 

@@ -115,25 +115,26 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
      */
     private static final long serialVersionUID = -3412555195899758746L;
 
-    final FieldsImpl<R>       fields;
+    final AbstractRow         fields;
     Configuration             configuration;
 
-    AbstractCursor(Configuration configuration, FieldsImpl<R> fields) {
+    AbstractCursor(Configuration configuration, AbstractRow row) {
         this.configuration = configuration;
-        this.fields = fields;
+        this.fields = row;
     }
 
     // -------------------------------------------------------------------------
     // XXX: RecordType API of subtypes
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings("unchecked")
     public final RecordType<R> recordType() {
-        return fields;
+        return (RecordType<R>) fields.fields;
     }
 
     @Override
     public final Row fieldsRow() {
-        return Tools.row0(fields);
+        return fields;
     }
 
 
@@ -320,11 +321,12 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 buffer.offer(it.next());
 
             // Get max decimal places for numeric type columns
-            final int[] decimalPlaces = new int[fields.fields.length];
-            final int[] widths = new int[fields.fields.length];
+            int size = fields.size();
+            final int[] decimalPlaces = new int[size];
+            final int[] widths = new int[size];
 
-            for (int index = 0; index < fields.fields.length; index++) {
-                if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
+            for (int index = 0; index < size; index++) {
+                if (Number.class.isAssignableFrom(fields.field(index).getType())) {
                     List<Integer> decimalPlacesList = new ArrayList<>(1 + buffer.size());
 
                     // Initialize
@@ -341,10 +343,10 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
             // Get max column widths
             int colMaxWidth;
-            for (int index = 0; index < fields.fields.length; index++) {
+            for (int index = 0; index < size; index++) {
 
                 // Is number column?
-                boolean isNumCol = Number.class.isAssignableFrom(fields.fields[index].getType());
+                boolean isNumCol = Number.class.isAssignableFrom(fields.field(index).getType());
 
                 colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : format.maxColWidth();
 
@@ -352,7 +354,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 List<Integer> widthList = new ArrayList<>(1 + buffer.size());
 
                 // Add column name width first
-                widthList.add(min(colMaxWidth, max(format.minColWidth(), fields.fields[index].getName().length())));
+                widthList.add(min(colMaxWidth, max(format.minColWidth(), fields.field(index).getName().length())));
 
                 // Add column values width
                 for (R record : buffer) {
@@ -380,7 +382,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             if (format.verticalTableBorder())
                 writer.append('|');
 
-            for (int index = 0; index < fields.fields.length; index++) {
+            for (int index = 0; index < size; index++) {
                 if (index > 0)
                     if (format.verticalCellBorder())
                         writer.append('|');
@@ -389,10 +391,10 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
                 String padded;
 
-                if (Number.class.isAssignableFrom(fields.fields[index].getType()))
-                    padded = leftPad(fields.fields[index].getName(), widths[index]);
+                if (Number.class.isAssignableFrom(fields.field(index).getType()))
+                    padded = leftPad(fields.field(index).getName(), widths[index]);
                 else
-                    padded = rightPad(fields.fields[index].getName(), widths[index]);
+                    padded = rightPad(fields.field(index).getName(), widths[index]);
 
                 writer.append(abbreviate(padded, widths[index]));
             }
@@ -426,7 +428,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 if (format.verticalTableBorder())
                     writer.append('|');
 
-                for (int index = 0; index < fields.fields.length; index++) {
+                for (int index = 0; index < size; index++) {
                     if (index > 0)
                         if (format.verticalCellBorder())
                             writer.append('|');
@@ -443,7 +445,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                         );
 
                     String padded;
-                    if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
+                    if (Number.class.isAssignableFrom(fields.field(index).getType())) {
                         // Align number value before left pad
                         value = alignNumberValue(decimalPlaces[index], value);
 
@@ -490,7 +492,8 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             else
                 writer.append('-');
 
-        for (int index = 0; index < fields.fields.length; index++) {
+        int size = fields.size();
+        for (int index = 0; index < size; index++) {
             if (index > 0)
                 if (format.verticalCellBorder())
                     if (format.intersectLines())
@@ -544,7 +547,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         try {
             if (format.header()) {
                 String sep1 = "";
-                for (Field<?> field : fields.fields) {
+                for (Field<?> field : fields.fields.fields) {
                     writer.append(sep1);
                     writer.append(formatCSV0(field.getName(), format));
 
@@ -557,7 +560,8 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             for (Record record : this) {
                 String sep2 = "";
 
-                for (int index = 0; index < fields.fields.length; index++) {
+                int size = fields.size();
+                for (int index = 0; index < size; index++) {
                     writer.append(sep2);
                     writer.append(formatCSV0(record.getValue(index), format));
 
@@ -628,7 +632,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
                 separator = "";
 
-                for (Field<?> field : fields.fields) {
+                for (Field<?> field : fields.fields.fields) {
                     writer.append(separator);
 
                     if (format.format())
@@ -793,9 +797,10 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         }
     }
 
-    static final void formatJSONMap0(Record record, FieldsImpl<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
+    static final void formatJSONMap0(Record record, AbstractRow fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
         String separator = "";
-        boolean wrapRecords = format.wrapSingleColumnRecords() || fields.fields.length > 1;
+        int size = fields.size();
+        boolean wrapRecords = format.wrapSingleColumnRecords() || size > 1;
 
         if (wrapRecords)
             if (format.format())
@@ -803,7 +808,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             else
                 writer.append('{');
 
-        for (int index = 0; index < fields.fields.length; index++) {
+        for (int index = 0; index < size; index++) {
             writer.append(separator);
 
             if (format.format())
@@ -828,16 +833,17 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 writer.append('}');
     }
 
-    static final void formatJSONArray0(Record record, FieldsImpl<?> fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
+    static final void formatJSONArray0(Record record, AbstractRow fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
         String separator = "";
 
-        if (format.wrapSingleColumnRecords() || fields.fields.length > 1)
+        int size = fields.size();
+        if (format.wrapSingleColumnRecords() || size > 1)
             if (format.format())
                 writer.append(format.indentString(recordLevel)).append('[');
             else
                 writer.append('[');
 
-        for (int index = 0; index < fields.fields.length; index++) {
+        for (int index = 0; index < size; index++) {
             writer.append(separator);
 
             if (format.format())
@@ -847,7 +853,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             separator = ",";
         }
 
-        if (format.wrapSingleColumnRecords() || fields.fields.length > 1)
+        if (format.wrapSingleColumnRecords() || size > 1)
             if (format.format())
                 writer.append(format.newline()).append(format.indentString(recordLevel)).append(']');
             else
@@ -871,7 +877,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             if (format.header()) {
                 writer.append(newline).append(format.indentString(1)).append("<fields>");
 
-                for (Field<?> field : fields.fields) {
+                for (Field<?> field : fields.fields.fields) {
                     writer.append(newline).append(format.indentString(2)).append("<field");
 
                     if (field instanceof TableField) {
@@ -925,7 +931,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         XMLFormat format,
         int recordLevel,
         Record record,
-        FieldsImpl<?> fields
+        AbstractRow fields
     )
     throws java.io.IOException {
         String newline = format.newline();
@@ -935,18 +941,19 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             writer.append(" xmlns=\"" + Constants.NS_EXPORT + "\"");
         writer.append(">");
 
-        for (int index = 0; index < fields.fields.length; index++) {
+        int size = fields.size();
+        for (int index = 0; index < size; index++) {
             Object value = record.get(index);
 
             writer.append(newline).append(format.indentString(recordLevel + 1));
             String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
-                ? escapeXML(fields.fields[index].getName())
+                ? escapeXML(fields.field(index).getName())
                 : "value";
 
             writer.append("<" + tag);
             if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE) {
                 writer.append(" field=\"");
-                writer.append(escapeXML(fields.fields[index].getName()));
+                writer.append(escapeXML(fields.field(index).getName()));
                 writer.append("\"");
             }
 
@@ -994,7 +1001,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
                     for (Date i = categoryMin; i.before(categoryMax); i = new Date(i.getYear(), i.getMonth(), i.getDate() + 1))
                         if (!groups.containsKey(i))
-                            groups.put(i, (Result<R>) ctx.newResult(fields.fields));
+                            groups.put(i, (Result<R>) ctx.newResult(fields.fields.fields));
                 }
             }
 
@@ -1155,7 +1162,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
     @Override
     public final void formatInsert(Writer writer) {
-        formatInsert(writer, null, fields.fields);
+        formatInsert(writer, null, fields.fields.fields);
     }
 
     @Override
@@ -1188,7 +1195,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             writer.append("<thead>");
             writer.append("<tr>");
 
-            for (Field<?> field : fields.fields) {
+            for (Field<?> field : fields.fields.fields) {
                 writer.append("<th>");
                 writer.append(escapeXML(field.getName()));
                 writer.append("</th>");
@@ -1201,7 +1208,8 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             for (Record record : this) {
                 writer.append("<tr>");
 
-                for (int index = 0; index < fields.fields.length; index++) {
+                int size = fields.size();
+                for (int index = 0; index < size; index++) {
                     writer.append("<td>");
                     writer.append(escapeXML(format0(record.getValue(index), false, true)));
                     writer.append("</td>");
@@ -1239,7 +1247,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 Element eFields = document.createElement("fields");
                 eResult.appendChild(eFields);
 
-                for (Field<?> field : fields.fields) {
+                for (Field<?> field : fields.fields.fields) {
                     Element eField = document.createElement("field");
 
                     if (field instanceof TableField<?, ?>) {
@@ -1270,12 +1278,13 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 Element eRecord = document.createElement("record");
                 eRecordParent.appendChild(eRecord);
 
-                for (int index = 0; index < fields.fields.length; index++) {
-                    Field<?> field = fields.fields[index];
+                int size = fields.size();
+                for (int index = 0; index < size; index++) {
+                    Field<?> field = fields.field(index);
                     Object value = record.get(index);
 
                     String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
-                        ? escapeXML(fields.fields[index].getName())
+                        ? escapeXML(fields.field(index).getName())
                         : "value";
 
                     Element eValue = document.createElement(tag);
@@ -1310,7 +1319,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         if (format.header()) {
             handler.startElement("", "", "fields", empty);
 
-            for (Field<?> field : fields.fields) {
+            for (Field<?> field : fields.fields.fields) {
                 AttributesImpl attrs = new AttributesImpl();
 
                 if (field instanceof TableField<?, ?>) {
@@ -1341,12 +1350,13 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         for (Record record : this) {
             handler.startElement("", "", "record", empty);
 
-            for (int index = 0; index < fields.fields.length; index++) {
-                Field<?> field = fields.fields[index];
+            int size = fields.size();
+            for (int index = 0; index < size; index++) {
+                Field<?> field = fields.field(index);
                 Object value = record.get(index);
 
                 String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
-                    ? escapeXML(fields.fields[index].getName())
+                    ? escapeXML(fields.field(index).getName())
                     : "value";
 
                 AttributesImpl attrs = new AttributesImpl();

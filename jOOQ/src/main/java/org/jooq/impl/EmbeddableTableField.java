@@ -62,7 +62,13 @@ implements TableField<R, E> {
     final Class<E>            recordType;
     final boolean             replacesFields;
     final Table<R>            table;
+    final AbstractRow         fieldsRow;
+    /**
+     * @deprecated - [#11058] - 3.14.5 - This will be removed in the future.
+     */
+    @Deprecated
     final TableField<R, ?>[]  fields;
+
 
     EmbeddableTableField(Name name, Class<E> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>[] fields) {
         super(name, new DefaultDataType<>(SQLDialect.DEFAULT, recordType, name.last()));
@@ -70,6 +76,7 @@ implements TableField<R, E> {
         this.recordType = recordType;
         this.replacesFields = replacesFields;
         this.table = table;
+        this.fieldsRow = Tools.row0(fields);
         this.fields = fields;
 
 
@@ -87,7 +94,7 @@ implements TableField<R, E> {
         Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
         ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-        ctx.visit(wrap(fields));
+        ctx.visit(wrap(fieldsRow.fields.fields));
         ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
     }
 

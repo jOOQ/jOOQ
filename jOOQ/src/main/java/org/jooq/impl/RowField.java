@@ -60,7 +60,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     private static final long serialVersionUID = -2065258332642911588L;
 
     private final ROW         row;
-    private final Field<?>[]  emulatedFields;
+    private final AbstractRow emulatedFields;
 
     RowField(ROW row) {
         this(row, N_ROW);
@@ -74,7 +74,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
             @Override
             public REC from(final Object t) {
                 // So far, this is only supported for PostgreSQL
-                return (REC) (t == null ? null : pgNewRecord(Record.class, row.fields(), t));
+                return (REC) (t == null ? null : pgNewRecord(Record.class, (AbstractRow) row, t));
             }
 
             @Override
@@ -83,14 +83,15 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
             }
         }));
 
-        this.row = row;
-        this.emulatedFields = new Field[row.fields().length];
+        Field<?>[] f = new Field[row.size()];
+        for (int i = 0; i < f.length; i++)
+            f[i] = row.field(i).as(as + "." + row.field(i).getName());
 
-        for (int i = 0; i < emulatedFields.length; i++)
-            emulatedFields[i] = row.field(i).as(as + "." + row.field(i).getName());
+        this.row = row;
+        this.emulatedFields = Tools.row0(f);
     }
 
-    Field<?>[] emulatedFields() {
+    AbstractRow emulatedFields() {
         return emulatedFields;
     }
 
@@ -100,7 +101,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
             Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
             ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-            ctx.visit(new SelectFieldList<>(emulatedFields()));
+            ctx.visit(new SelectFieldList<>(emulatedFields.fields.fields));
             ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
         }
         else {

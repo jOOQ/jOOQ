@@ -55,6 +55,7 @@ import org.jooq.OrderField;
 import org.jooq.Parameter;
 // ...
 import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Support;
@@ -357,10 +358,21 @@ public final class Internal {
 
     /**
      * Get the fields of an embeddable type.
+     *
+     * @deprecated - [#11058] - 3.14.5 - Please re-generate your code.
      */
+    @Deprecated
     @NotNull
     public static final <R extends Record, ER extends EmbeddableRecord<ER>> TableField<R, ?>[] fields(TableField<R, ER> embeddableField) {
         return ((EmbeddableTableField<R, ER>) embeddableField).fields;
+    }
+
+    /**
+     * Get the fields row of an embeddable type.
+     */
+    @NotNull
+    public static final <R extends Record, ER extends EmbeddableRecord<ER>> Row fieldsRow(TableField<R, ER> embeddableField) {
+        return ((EmbeddableTableField<R, ER>) embeddableField).fieldsRow;
     }
 
     @Support

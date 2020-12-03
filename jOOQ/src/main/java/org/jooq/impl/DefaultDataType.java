@@ -289,8 +289,8 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
 
         this.dialect = dialect;
 
-        // [#858] SQLDataTypes should reference themselves for more convenience
-        this.sqlDataType = (dialect == null) ? this : sqlDataType;
+        // [#858] [#11086] SQLDataTypes should reference themselves for more convenience
+        this.sqlDataType = (dialect == null && sqlDataType == null) ? this : sqlDataType;
         this.uType = type;
         this.typeName = TYPE_NAME_PATTERN.matcher(typeName).replaceAll("").trim();
         this.castTypeName = castTypeName == null ? this.typeName : castTypeName;
@@ -325,8 +325,8 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
         if (TYPES_BY_TYPE[ordinal].get(type) == null)
             TYPES_BY_TYPE[ordinal].put(type, this);
 
-        if (TYPES_BY_SQL_DATATYPE[ordinal].get(sqlDataType) == null)
-            TYPES_BY_SQL_DATATYPE[ordinal].put(sqlDataType, this);
+        if (TYPES_BY_SQL_DATATYPE[ordinal].get(this.sqlDataType) == null)
+            TYPES_BY_SQL_DATATYPE[ordinal].put(this.sqlDataType, this);
 
         // Global data types
         if (dialect == null)

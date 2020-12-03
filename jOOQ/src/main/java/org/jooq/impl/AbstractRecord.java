@@ -195,12 +195,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> Field<T> field(Field<T> field) {
-        return fieldsRow().field(field);
+        return fields.field(field);
     }
 
     @Override
     public final Field<?> field(String name) {
-        return fieldsRow().field(name);
+        return fields.field(name);
     }
 
     @Override
@@ -215,7 +215,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Field<?> field(Name name) {
-        return fieldsRow().field(name);
+        return fields.field(name);
     }
 
     @Override
@@ -329,7 +329,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(Field<T> field) {
-        int index = fieldsRow().indexOf(field);
+        int index = fields.indexOf(field);
 
         if (index >= 0)
             return (T) get(index);
@@ -338,7 +338,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                 .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
                 .operate(new TransferRecordState<Record>(embeddedFields(field)));
         else
-            throw Tools.indexFail(fieldsRow(), field);
+            throw Tools.indexFail(fields, field);
     }
 
     @Override
@@ -368,12 +368,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Object get(String fieldName) {
-        return get(indexOrFail(fieldsRow(), fieldName));
+        return get(indexOrFail(fields, fieldName));
     }
 
     @Override
     public final <T> T get(String fieldName, Class<? extends T> type) {
-        return get(indexOrFail(fieldsRow(), fieldName), type);
+        return get(indexOrFail(fields, fieldName), type);
     }
 
     @Override
@@ -383,12 +383,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Object get(Name fieldName) {
-        return get(indexOrFail(fieldsRow(), fieldName));
+        return get(indexOrFail(fields, fieldName));
     }
 
     @Override
     public final <T> T get(Name fieldName, Class<? extends T> type) {
-        return get(indexOrFail(fieldsRow(), fieldName), type);
+        return get(indexOrFail(fields, fieldName), type);
     }
 
     @Override
@@ -496,8 +496,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         fetched = record.fetched;
 
         for (Field<?> field : fields) {
-            int targetIndex = indexOrFail(fieldsRow(), field);
-            int sourceIndex = indexOrFail(record.fieldsRow(), field);
+            int targetIndex = indexOrFail(this.fields, field);
+            int sourceIndex = indexOrFail(record.fields, field);
 
             values[targetIndex] = record.get(sourceIndex);
             originals[targetIndex] = record.original(sourceIndex);
@@ -518,7 +518,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         if (index >= 0 && index < values.length)
             return index;
 
-        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fieldsRow());
+        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fields);
     }
 
     final String intern(String string) {
@@ -554,7 +554,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T original(Field<T> field) {
-        return (T) original(indexOrFail(fieldsRow(), field));
+        return (T) original(indexOrFail(fields, field));
     }
 
     @Override
@@ -564,12 +564,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Object original(String fieldName) {
-        return original(indexOrFail(fieldsRow(), fieldName));
+        return original(indexOrFail(fields, fieldName));
     }
 
     @Override
     public final Object original(Name fieldName) {
-        return original(indexOrFail(fieldsRow(), fieldName));
+        return original(indexOrFail(fields, fieldName));
     }
 
     @Override
@@ -579,7 +579,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final boolean changed(Field<?> field) {
-        return changed(indexOrFail(fieldsRow(), field));
+        return changed(indexOrFail(fields, field));
     }
 
     @Override
@@ -589,12 +589,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final boolean changed(String fieldName) {
-        return changed(indexOrFail(fieldsRow(), fieldName));
+        return changed(indexOrFail(fields, fieldName));
     }
 
     @Override
     public final boolean changed(Name fieldName) {
-        return changed(indexOrFail(fieldsRow(), fieldName));
+        return changed(indexOrFail(fields, fieldName));
     }
 
     @Override
@@ -610,7 +610,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void changed(Field<?> field, boolean c) {
-        changed(indexOrFail(fieldsRow(), field), c);
+        changed(indexOrFail(fields, field), c);
     }
 
     @Override
@@ -627,12 +627,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void changed(String fieldName, boolean c) {
-        changed(indexOrFail(fieldsRow(), fieldName), c);
+        changed(indexOrFail(fields, fieldName), c);
     }
 
     @Override
     public final void changed(Name fieldName, boolean c) {
-        changed(indexOrFail(fieldsRow(), fieldName), c);
+        changed(indexOrFail(fields, fieldName), c);
     }
 
     @Override
@@ -644,7 +644,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void reset(Field<?> field) {
-        reset(indexOrFail(fieldsRow(), field));
+        reset(indexOrFail(fields, field));
     }
 
     @Override
@@ -657,12 +657,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void reset(String fieldName) {
-        reset(indexOrFail(fieldsRow(), fieldName));
+        reset(indexOrFail(fields, fieldName));
     }
 
     @Override
     public final void reset(Name fieldName) {
-        reset(indexOrFail(fieldsRow(), fieldName));
+        reset(indexOrFail(fields, fieldName));
     }
 
     @Override
@@ -1361,7 +1361,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     @Deprecated
     public final Object getValue(String fieldName, Object defaultValue) {
-        return getValue(indexOrFail(fieldsRow(), fieldName), defaultValue);
+        return getValue(indexOrFail(fields, fieldName), defaultValue);
     }
 
     @Override

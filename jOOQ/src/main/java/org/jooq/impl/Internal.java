@@ -37,8 +37,11 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.nullSafe;
-import static org.jooq.impl.ExpressionOperator.*;
+import static org.jooq.impl.ExpressionOperator.ADD;
+import static org.jooq.impl.ExpressionOperator.DIVIDE;
+import static org.jooq.impl.ExpressionOperator.MULTIPLY;
+import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Tools.nullSafe;
 
 import org.jooq.Binding;
 import org.jooq.Check;

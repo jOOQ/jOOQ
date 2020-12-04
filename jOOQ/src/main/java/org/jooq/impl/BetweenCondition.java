@@ -64,7 +64,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_AND;
@@ -72,6 +71,7 @@ import static org.jooq.impl.Keywords.K_BETWEEN;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_SYMMETRIC;
 import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.nullSafe;
 
 import java.util.Set;
 

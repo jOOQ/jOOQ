@@ -60,7 +60,6 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
-import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_AND;
@@ -83,6 +82,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.io.Serializable;

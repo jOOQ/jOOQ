@@ -37,23 +37,19 @@
  */
 package org.jooq.util.postgres;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.Condition;
-import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Record1;
 import org.jooq.SQLDialect;
-import org.jooq.Select;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The {@link SQLDialect#POSTGRES} specific DSL.

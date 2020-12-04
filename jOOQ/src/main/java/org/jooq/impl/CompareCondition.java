@@ -73,7 +73,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
@@ -81,6 +80,7 @@ import static org.jooq.impl.Keywords.K_ESCAPE;
 import static org.jooq.impl.Keywords.K_VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.nullSafe;
 
 import java.util.Set;
 

@@ -38,9 +38,9 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.nullSafeDataType;
 import static org.jooq.impl.Keywords.K_PRIOR;
 import static org.jooq.impl.Names.N_PRIOR;
+import static org.jooq.impl.Tools.nullSafeDataType;
 
 import org.jooq.Context;
 import org.jooq.Field;

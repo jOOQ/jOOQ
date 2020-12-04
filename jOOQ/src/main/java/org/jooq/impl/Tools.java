@@ -98,7 +98,6 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.nullSafeDataType;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
@@ -5945,5 +5944,67 @@ final class Tools {
                 return result.notNull();
 
         return result;
+    }
+
+    static final <T> Field<T> nullSafe(Field<T> field) {
+        return field == null ? DSL.val((T) null) : field;
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> nullSafe(Field<T> field, DataType<?> type) {
+        return field == null
+             ? (Field<T>) DSL.val((T) null, type)
+             : field instanceof Val
+             ? (Field<T>) ((Val<T>) field).convertTo(type)
+             : field;
+    }
+
+    static final Field<?>[] nullSafe(Field<?>... fields) {
+        if (fields == null)
+            return EMPTY_FIELD;
+
+        Field<?>[] result = new Field<?>[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            result[i] = nullSafe(fields[i]);
+
+        return result;
+    }
+
+    static final Field<?>[] nullSafe(Field<?>[] fields, DataType<?> type) {
+        if (fields == null)
+            return EMPTY_FIELD;
+
+        Field<?>[] result = new Field<?>[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            result[i] = nullSafe(fields[i], type);
+
+        return result;
+    }
+
+    static final List<Field<?>> nullSafeList(Field<?>... fields) {
+        if (fields == null)
+            return asList(EMPTY_FIELD);
+
+        List<Field<?>> result = new ArrayList<>(fields.length);
+        for (Field<?> f : fields)
+            result.add(nullSafe(f));
+
+        return result;
+    }
+
+    static final List<Field<?>> nullSafeList(Field<?>[] fields, DataType<?> type) {
+        if (fields == null)
+            return asList(EMPTY_FIELD);
+
+        List<Field<?>> result = new ArrayList<>(fields.length);
+        for (Field<?> f : fields)
+            result.add(nullSafe(f, type));
+
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T> DataType<T> nullSafeDataType(Field<T> field) {
+        return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
     }
 }

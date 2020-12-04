@@ -37,13 +37,16 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.isub;
-import static org.jooq.impl.Names.N_RIGHT;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Names.N_BIT_LENGTH;
+import static org.jooq.impl.Names.N_CHAR_LENGTH;
+import static org.jooq.impl.Names.N_DATALENGTH;
+import static org.jooq.impl.Names.N_LEN;
+import static org.jooq.impl.Names.N_LENGTH;
+import static org.jooq.impl.Names.N_LENGTHB;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.allNotNull;
 import static org.jooq.impl.Tools.nullSafeNotNull;
 
 import org.jooq.Context;
@@ -52,57 +55,53 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class Right extends AbstractField<String> {
+final class BitLength extends AbstractField<Integer> {
 
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = 2200760781944082146L;
+    private static final long serialVersionUID = 1484652553287331042L;
 
-    private Field<String>           field;
-    private Field<? extends Number> length;
+    private final Field<String> field;
 
-    Right(Field<String> field, Field<? extends Number> length) {
-        super(N_RIGHT, allNotNull(VARCHAR, field, length));
+    BitLength(Field<String> field) {
+        super(N_BIT_LENGTH, INTEGER.nullable(field == null || field.getDataType().nullable()));
 
         this.field = nullSafeNotNull(field, VARCHAR);
-        this.length = nullSafeNotNull(length, INTEGER);
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
+    public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case DERBY:
-                ctx.visit(DSL.substring(field, iadd(DSL.length(field), isub(one(), length))));
-                break;
-
-
-
-
             case SQLITE:
-                ctx.visit(DSL.substring(field, length.neg()));
+                ctx.visit(inline(8).times(function(N_LENGTH, getDataType(), field)));
                 break;
 
-
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
             default:
-                ctx.visit(N_RIGHT).sql('(').visit(field).sql(", ").visit(length).sql(')');
+                ctx.visit(function(N_BIT_LENGTH, getDataType(), field));
                 break;
         }
     }

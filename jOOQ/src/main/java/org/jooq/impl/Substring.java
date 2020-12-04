@@ -48,6 +48,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.allNotNull;
 import static org.jooq.impl.Tools.convertVal;
 import static org.jooq.impl.Tools.nullSafe;
+import static org.jooq.impl.Tools.nullSafeNotNull;
 import static org.jooq.impl.Tools.nullableIf;
 
 import org.jooq.Context;
@@ -72,17 +73,17 @@ final class Substring extends AbstractField<String> {
     Substring(Field<String> field, Field<? extends Number> startingPosition) {
         super(N_SUBSTRING, allNotNull(VARCHAR, field, startingPosition));
 
-        this.field = nullableIf(false, nullSafe(field, VARCHAR));
-        this.startingPosition = nullableIf(false, nullSafe(startingPosition, INTEGER));
+        this.field = nullSafeNotNull(field, VARCHAR);
+        this.startingPosition = nullSafeNotNull(startingPosition, INTEGER);
         this.length = null;
     }
 
     Substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
         super(N_SUBSTRING, allNotNull(VARCHAR, field, startingPosition, length));
 
-        this.field = nullableIf(false, nullSafe(field, VARCHAR));
-        this.startingPosition = nullableIf(false, nullSafe(startingPosition, INTEGER));
-        this.length = nullableIf(false, nullSafe(length, INTEGER));
+        this.field = nullSafeNotNull(field, VARCHAR);
+        this.startingPosition = nullSafeNotNull(startingPosition, INTEGER);
+        this.length = nullSafeNotNull(length, INTEGER);
     }
 
     @Override

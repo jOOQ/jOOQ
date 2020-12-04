@@ -68,6 +68,7 @@ final class Names {
     static final Name N_ATAN                   = unquotedName("atan");
     static final Name N_ATN                    = unquotedName("atn");
     static final Name N_BIT_COUNT              = unquotedName("bit_count");
+    static final Name N_BIT_LENGTH             = unquotedName("bit_length");
     static final Name N_BOOL_AND               = unquotedName("bool_and");
     static final Name N_BOOL_OR                = unquotedName("bool_or");
     static final Name N_CARDINALITY            = unquotedName("cardinality");
@@ -75,6 +76,7 @@ final class Names {
     static final Name N_CAST                   = unquotedName("cast");
     static final Name N_CEIL                   = unquotedName("ceil");
     static final Name N_CEILING                = unquotedName("ceiling");
+    static final Name N_CHAR_LENGTH            = unquotedName("char_length");
     static final Name N_CHARINDEX              = unquotedName("charindex");
     static final Name N_CHOOSE                 = unquotedName("choose");
     static final Name N_CLNG                   = unquotedName("clng");
@@ -96,6 +98,7 @@ final class Names {
     static final Name N_CURRENT_USER           = unquotedName("current_user");
     static final Name N_CURRENTUSER            = unquotedName("currentuser");
     static final Name N_CURRVAL                = unquotedName("currval");
+    static final Name N_DATALENGTH             = unquotedName("datalength");
     static final Name N_DATE_ADD               = unquotedName("date_add");
     static final Name N_DATE_DIFF              = unquotedName("date_diff");
     static final Name N_DATE_TRUNC             = unquotedName("date_trunc");
@@ -157,6 +160,7 @@ final class Names {
     static final Name N_LEFT                   = unquotedName("left");
     static final Name N_LEN                    = unquotedName("len");
     static final Name N_LENGTH                 = unquotedName("length");
+    static final Name N_LENGTHB                = unquotedName("lengthb");
     static final Name N_LIST                   = unquotedName("list");
     static final Name N_LISTAGG                = unquotedName("listagg");
     static final Name N_LN                     = unquotedName("ln");
@@ -178,6 +182,7 @@ final class Names {
     static final Name N_NUMTODSINTERVAL        = unquotedName("numtodsinterval");
     static final Name N_NVL                    = unquotedName("nvl");
     static final Name N_NVL2                   = unquotedName("nvl2");
+    static final Name N_OCTET_LENGTH           = unquotedName("octet_length");
     static final Name N_OPENJSON               = unquotedName("openjson");
     static final Name N_OPENXML                = unquotedName("openxml");
     static final Name N_OVERLAY                = unquotedName("overlay");

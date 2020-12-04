@@ -15224,7 +15224,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
-        return repeat(Tools.field(field), Tools.nullSafe(count));
+        return repeat(Tools.field(field), count);
     }
 
     /**
@@ -15235,7 +15235,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(Field<String> field, int count) {
-        return repeat(Tools.nullSafe(field), Tools.field(count));
+        return repeat(field, Tools.field(count));
     }
 
     /**
@@ -15254,7 +15254,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
-        return new Repeat(Tools.nullSafe(field), Tools.nullSafe(count));
+        return new Repeat(field, count);
     }
 
     /**
@@ -15269,7 +15269,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> space(int value) {
-        return space(val(value));
+        return space(Tools.field(value));
     }
 
     /**
@@ -15284,7 +15284,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> space(Field<Integer> value) {
-        return new Space(Tools.nullSafe(value));
+        return new Space(value);
     }
 
     /**
@@ -15302,7 +15302,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<String> reverse(Field<String> field) {
-        return new Reverse(Tools.nullSafe(field));
+        return new Reverse(field);
     }
 
     /**
@@ -15821,7 +15821,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> left(String field, Field<? extends Number> length) {
-        return left(Tools.field(field), Tools.nullSafe(length));
+        return left(Tools.field(field), length);
     }
 
     /**
@@ -15835,7 +15835,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> left(Field<String> field, int length) {
-        return left(Tools.nullSafe(field), Tools.field(length));
+        return left(field, Tools.field(length));
     }
 
     /**
@@ -15877,7 +15877,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> right(String field, Field<? extends Number> length) {
-        return right(Tools.field(field), Tools.nullSafe(length));
+        return right(Tools.field(field), length);
     }
 
     /**
@@ -15891,7 +15891,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> right(Field<String> field, int length) {
-        return right(Tools.nullSafe(field), Tools.field(length));
+        return right(field, Tools.field(length));
     }
 
     /**
@@ -15951,7 +15951,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> charLength(Field<String> field) {
-        return new DefaultAggregateFunction<>(Term.CHAR_LENGTH, INTEGER.nullable(Tools.nullSafeDataType(field).nullable()), Tools.nullSafe(field));
+        return new CharLength(field);
     }
 
     /**
@@ -15973,7 +15973,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> bitLength(Field<String> field) {
-        return new DefaultAggregateFunction<>(Term.BIT_LENGTH, INTEGER.nullable(Tools.nullSafeDataType(field).nullable()), Tools.nullSafe(field));
+        return new BitLength(field);
     }
 
     /**
@@ -15995,7 +15995,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> octetLength(Field<String> field) {
-        return new DefaultAggregateFunction<>(Term.OCTET_LENGTH, INTEGER.nullable(Tools.nullSafeDataType(field).nullable()), Tools.nullSafe(field));
+        return new OctetLength(field);
     }
 
     // ------------------------------------------------------------------------

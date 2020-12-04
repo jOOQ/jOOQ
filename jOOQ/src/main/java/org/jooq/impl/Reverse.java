@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_REVERSE;
 import static org.jooq.impl.Names.N_STRREVERSE;
+import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.nullSafeNotNull;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -55,9 +57,9 @@ final class Reverse extends AbstractField<String> {
     private final Field<String> field;
 
     Reverse(Field<String> field) {
-        super(N_REVERSE, field.getDataType());
+        super(N_REVERSE, field == null ? VARCHAR : field.getDataType());
 
-        this.field = field;
+        this.field = nullSafeNotNull(field, VARCHAR);
     }
 
     @Override

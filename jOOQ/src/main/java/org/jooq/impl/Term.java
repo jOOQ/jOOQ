@@ -46,7 +46,9 @@ import org.jooq.SQLDialect;
  * dialect-specific variants if applicable
  *
  * @author Lukas Eder
+ * @deprecated - This should be removed by jOOQ 3.15.0
  */
+@Deprecated
 enum Term {
 
     ATAN2 {
@@ -62,89 +64,6 @@ enum Term {
 
 
             return "atan2";
-        }
-    },
-    BIT_LENGTH {
-        @Override
-        public String translate(SQLDialect dialect) {
-            switch (dialect.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case DERBY:
-                case SQLITE:
-                    return "8 * length";
-            }
-
-            return "bit_length";
-        }
-    },
-    CHAR_LENGTH {
-        @Override
-        public String translate(SQLDialect dialect) {
-            switch (dialect.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case DERBY:
-                case SQLITE:
-                    return "length";
-            }
-
-            return "char_length";
-        }
-    },
-    OCTET_LENGTH {
-        @Override
-        public String translate(SQLDialect dialect) {
-            switch (dialect.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case DERBY:
-                case SQLITE:
-                    return "length";
-            }
-
-            return "octet_length";
         }
     },
     STDDEV_POP {

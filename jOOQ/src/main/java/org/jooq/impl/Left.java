@@ -39,8 +39,10 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Names.N_LEFT;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.allNotNull;
+import static org.jooq.impl.Tools.nullSafeNotNull;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -61,8 +63,8 @@ final class Left extends AbstractField<String> {
     Left(Field<String> field, Field<? extends Number> length) {
         super(N_LEFT, allNotNull(VARCHAR, field, length));
 
-        this.field = field;
-        this.length = length;
+        this.field = nullSafeNotNull(field, VARCHAR);
+        this.length = nullSafeNotNull(length, INTEGER);
     }
 
     @Override

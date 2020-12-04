@@ -5900,7 +5900,11 @@ final class Tools {
     }
 
     static final DataType<?> dataType(Field<?> field) {
-        return field == null ? OTHER : field.getDataType();
+        return dataType(OTHER, field);
+    }
+
+    static final DataType<?> dataType(DataType<?> defaultType, Field<?> field) {
+        return field == null ? defaultType : field.getDataType();
     }
 
     static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<T> f1, Field<?> f2) {
@@ -6020,6 +6024,10 @@ final class Tools {
     @SuppressWarnings("unchecked")
     static final <T> DataType<T> nullSafeDataType(Field<T> field) {
         return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
+    }
+
+    static final <T> Field<T> nullSafeNotNull(Field<T> field, DataType<?> type) {
+        return nullableIf(false, nullSafe(field, type));
     }
 
     static final <T> Field<T> nullableIf(boolean nullable, Field<T> field) {

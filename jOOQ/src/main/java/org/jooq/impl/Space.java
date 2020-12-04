@@ -38,7 +38,9 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_SPACE;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.nullSafeNotNull;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -53,9 +55,9 @@ final class Space extends AbstractField<String> {
     private final Field<Integer> count;
 
     Space(Field<Integer> count) {
-        super(N_SPACE, VARCHAR.nullable(count.getDataType().nullable()));
+        super(N_SPACE, VARCHAR.nullable(count == null || count.getDataType().nullable()));
 
-        this.count = count;
+        this.count = nullSafeNotNull(count, INTEGER);
     }
 
     @Override

@@ -7543,7 +7543,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (parametersAsField)
                     out.println("%s%s: %s<%s?>", separator, memberName, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))));
                 else
-                    out.println("%s%s: %s?", separator, memberName, refNumberType(out, parameter.getType(resolver(out))));
+                    out.println("%s%s: %s%s", separator, memberName, refNumberType(out, parameter.getType(resolver(out))), kotlinNullability(parameter));
             }
             else {
                 if (parametersAsField)
@@ -7623,7 +7623,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 out.println("%s%s: %s", separator, paramMember, paramType);
             else if (kotlin)
-                out.println("%s%s: %s?", separator, paramMember, paramType);
+                out.println("%s%s: %s%s", separator, paramMember, paramType, kotlinNullability(parameter));
             else
                 out.println("%s%s %s", separator, paramType, paramMember);
 
@@ -8578,6 +8578,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         return sb.toString();
+    }
+
+    private String kotlinNullability(TypedElementDefinition<?> typed) {
+        return typed.getType().isNullable() ? "?" : "";
     }
 
     private DataType<?> mapJavaTimeTypes(DataType<?> dataType) {

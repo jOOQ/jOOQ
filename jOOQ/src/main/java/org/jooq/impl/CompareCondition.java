@@ -81,6 +81,7 @@ import static org.jooq.impl.Keywords.K_VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.nullSafe;
+import static org.jooq.impl.Tools.nullableIf;
 
 import java.util.Set;
 
@@ -109,8 +110,8 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
     private Character                    escape;
 
     CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator) {
-        this.field1 = nullSafe(field1, field2.getDataType());
-        this.field2 = nullSafe(field2, field1.getDataType());
+        this.field1 = nullableIf(comparator.supportsNulls(), nullSafe(field1, field2.getDataType()));
+        this.field2 = nullableIf(comparator.supportsNulls(), nullSafe(field2, field1.getDataType()));
         this.comparator = comparator;
     }
 

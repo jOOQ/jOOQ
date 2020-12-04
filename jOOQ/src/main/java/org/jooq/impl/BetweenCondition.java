@@ -72,6 +72,7 @@ import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_SYMMETRIC;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.nullSafe;
+import static org.jooq.impl.Tools.nullableIf;
 
 import java.util.Set;
 
@@ -104,8 +105,8 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     private Field<T>                         maxValue;
 
     BetweenCondition(Field<T> field, Field<T> minValue, boolean not, boolean symmetric) {
-        this.field = nullSafe(field, minValue.getDataType());
-        this.minValue = nullSafe(minValue, field.getDataType());
+        this.field = nullableIf(false, nullSafe(field, minValue.getDataType()));
+        this.minValue = nullableIf(false, nullSafe(minValue, field.getDataType()));
         this.not = not;
         this.symmetric = symmetric;
     }
@@ -119,7 +120,7 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     @Override
     public final Condition and(Field f) {
         if (maxValue == null) {
-            this.maxValue = nullSafe(f, field.getDataType());
+            this.maxValue = nullableIf(false, nullSafe(f, field.getDataType()));
             return this;
         }
         else

@@ -53,17 +53,17 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class ConvertedDataType<T, U> extends AbstractDataType<U> {
+final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
     /**
      * Generated UID
      */
     private static final long           serialVersionUID = -2321926692580974126L;
 
-    private final AbstractDataType<T>   delegate;
+    private final AbstractDataTypeX<T>  delegate;
     private final Binding<? super T, U> binding;
 
-    ConvertedDataType(AbstractDataType<T> delegate, Binding<? super T, U> binding) {
+    ConvertedDataType(AbstractDataTypeX<T> delegate, Binding<? super T, U> binding) {
         super(delegate.getQualifiedName(), delegate.getCommentPart());
 
         this.delegate = delegate;
@@ -75,7 +75,7 @@ final class ConvertedDataType<T, U> extends AbstractDataType<U> {
     }
 
     @Override
-    AbstractDataType<U> construct(
+    AbstractDataTypeX<U> construct(
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
@@ -85,7 +85,7 @@ final class ConvertedDataType<T, U> extends AbstractDataType<U> {
         boolean newIdentity,
         Field<U> newDefaultValue
     ) {
-        return (AbstractDataType) delegate.construct(
+        return (AbstractDataTypeX) delegate.construct(
             newPrecision,
             newScale,
             newLength,

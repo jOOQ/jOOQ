@@ -48,7 +48,7 @@ import static org.jooq.impl.Names.N_TRUNC;
 import static org.jooq.impl.Names.N_TRUNCATE;
 import static org.jooq.impl.Names.N_TRUNCNUM;
 import static org.jooq.impl.Tools.castIfNeeded;
-import static org.jooq.impl.Tools.extractVal;
+import static org.jooq.impl.Tools.extractParamValue;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -88,13 +88,11 @@ final class Trunc<T> extends AbstractField<T> {
 
                 // [#1334] if possible, calculate the power in Java to prevent
                 // inaccurate arithmetics in the Derby database
-                Integer decimalsVal = extractVal(decimals);
-                if (decimalsVal != null) {
+                Integer decimalsVal = extractParamValue(decimals);
+                if (decimalsVal != null)
                     power = inline(TEN.pow(decimalsVal, MathContext.DECIMAL128));
-                }
-                else {
+                else
                     power = DSL.power(inline(TEN), decimals);
-                }
 
                 ctx.visit(DSL.decode()
                     .when(field.sign().greaterOrEqual(zero()), idiv(imul(field, power).floor(), power))

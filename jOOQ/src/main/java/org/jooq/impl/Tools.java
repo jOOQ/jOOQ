@@ -3115,25 +3115,29 @@ final class Tools {
         }
     }
 
-    /**
-     * Utility method to check whether a field is a {@link Param}
-     */
-    static final boolean isVal(Field<?> field) {
+    static final boolean isParam(Field<?> field) {
         return field instanceof Param;
     }
 
-    /**
-     * Utility method to check whether a field uses a default {@link Converter}
-     */
+    static final boolean isVal(Field<?> field) {
+        return field instanceof Val
+            || field instanceof ConvertedVal && ((ConvertedVal<?>) field).delegate instanceof Val;
+    }
+
+    static final Val<?> extractVal(Field<?> field) {
+        return field instanceof Val
+             ? (Val<?>) field
+             : field instanceof ConvertedVal
+             ? (Val<?>) ((ConvertedVal<?>) field).delegate
+             : null;
+    }
+
     static final boolean hasDefaultConverter(Field<?> field) {
         return field.getConverter() instanceof IdentityConverter;
     }
 
-    /**
-     * Utility method to extract a value from a field
-     */
-    static final <T> T extractVal(Field<T> field) {
-        if (isVal(field))
+    static final <T> T extractParamValue(Field<T> field) {
+        if (isParam(field))
             return ((Param<T>) field).getValue();
         else
             return null;
@@ -6006,5 +6010,11 @@ final class Tools {
     @SuppressWarnings("unchecked")
     static final <T> DataType<T> nullSafeDataType(Field<T> field) {
         return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
+    }
+
+    static final <T> Field<T> nullableIf(boolean nullable, Field<T> field) {
+        return isVal(field)
+             ? extractVal(field).convertTo(field.getDataType().nullable(nullable))
+             : field;
     }
 }

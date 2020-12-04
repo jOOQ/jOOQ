@@ -58,7 +58,7 @@ import org.jooq.conf.ParamType;
 final class ConvertedVal<T> extends AbstractField<T> implements Param<T> {
 
     private static final long serialVersionUID = 1258437916133900173L;
-    private final Param<?>    delegate;
+    final Param<?>            delegate;
 
     ConvertedVal(Param<?> delegate, DataType<T> type) {
         super(delegate.getUnqualifiedName(), type);

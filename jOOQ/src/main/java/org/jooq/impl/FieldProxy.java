@@ -83,7 +83,7 @@ final class FieldProxy<T> extends AbstractField<T> implements TableField<Record,
 
         // [#8278] Prevent StackOverflowErrors when the data type proxy is shared
         if (!(newDelegate.getDataType() instanceof DataTypeProxy))
-            ((DataTypeProxy<T>) getDataType()).type = (AbstractDataType<T>) newDelegate.getDataType();
+            ((DataTypeProxy<T>) getDataType()).type((AbstractDataType<T>) newDelegate.getDataType());
     }
 
     @Override

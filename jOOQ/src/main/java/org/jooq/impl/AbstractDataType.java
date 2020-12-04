@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -108,24 +107,8 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         super(name, comment);
     }
 
-    /**
-     * [#7811] Allow for subtypes to override the constructor
-     */
-    abstract AbstractDataType<T> construct(
-        Integer newPrecision,
-        Integer newScale,
-        Integer newLength,
-        Nullability newNullability,
-        Collation newCollation,
-        CharacterSet newCharacterSet,
-        boolean newIdentity,
-        Field<T> newDefaultValue
-    );
-
     @Override
-    public final DataType<T> nullability(Nullability n) {
-        return construct(precision0(), scale0(), length0(), n, collation(), characterSet(), n.nullable() ? false : identity(), defaultValue());
-    }
+    public abstract DataType<T> nullability(Nullability n);
 
     @Override
     public final DataType<T> nullable(boolean n) {
@@ -143,24 +126,18 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
-    public DataType<T> notNull() {
+    public final DataType<T> notNull() {
         return nullable(false);
     }
 
     @Override
-    public final DataType<T> collation(Collation c) {
-        return construct(precision0(), scale0(), length0(), nullability(), c, characterSet(), identity(), defaultValue());
-    }
+    public abstract DataType<T> collation(Collation c);
 
     @Override
-    public final DataType<T> characterSet(CharacterSet c) {
-        return construct(precision0(), scale0(), length0(), nullability(), collation(), c, identity(), defaultValue());
-    }
+    public abstract DataType<T> characterSet(CharacterSet c);
 
     @Override
-    public final DataType<T> identity(boolean i) {
-        return construct(precision0(), scale0(), length0(), i ? NOT_NULL : nullability(), collation(), characterSet(), i, defaultValue());
-    }
+    public abstract DataType<T> identity(boolean i);
 
     @Override
     public final DataType<T> defaultValue(T d) {
@@ -183,9 +160,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
-    public final DataType<T> default_(Field<T> d) {
-        return construct(precision0(), scale0(), length0(), nullability(), collation(), characterSet(), identity(), d);
-    }
+    public abstract DataType<T> default_(Field<T> d);
 
     @Override
     @Deprecated
@@ -222,8 +197,10 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         else if (isLob())
             return this;
         else
-            return construct(p, s, length0(), nullability(), collation(), characterSet(), identity(), defaultValue());
+            return precision1(p, s);
     }
+
+    abstract AbstractDataType<T> precision1(Integer p, Integer s);
 
     @Override
     public final boolean hasPrecision() {
@@ -267,8 +244,10 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         else if (isLob())
             return this;
         else
-            return construct(precision0(), s, length0(), nullability(), collation(), characterSet(), identity(), defaultValue());
+            return scale1(s);
     }
+
+    abstract AbstractDataType<T> scale1(Integer s);
 
     @Override
     public final boolean hasScale() {
@@ -293,8 +272,10 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         else if (isLob())
             return this;
         else
-            return construct(precision0(), scale0(), l, nullability(), collation(), characterSet(), identity(), defaultValue());
+            return length1(l);
     }
+
+    abstract AbstractDataType<T> length1(Integer l);
 
     @Override
     public final int length() {
@@ -529,7 +510,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         if (newBinding == null)
             newBinding = (Binding<? super T, U>) DefaultBinding.binding(this);
 
-        return new ConvertedDataType<>(this, newBinding);
+        return new ConvertedDataType<>((AbstractDataTypeX) this, newBinding);
     }
 
     @Override

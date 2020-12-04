@@ -67,67 +67,67 @@ public enum Comparator {
 
     @NotNull
     @Support
-    IN("in", false, true),
+    IN("in", false, true, false),
 
     @NotNull
     @Support
-    NOT_IN("not in", false, true),
+    NOT_IN("not in", false, true, false),
 
     @NotNull
     @Support
-    EQUALS("=", true, true),
+    EQUALS("=", true, true, false),
 
     @NotNull
     @Support
-    NOT_EQUALS("<>", true, true),
+    NOT_EQUALS("<>", true, true, false),
 
     @NotNull
     @Support
-    LESS("<", true, true),
+    LESS("<", true, true, false),
 
     @NotNull
     @Support
-    LESS_OR_EQUAL("<=", true, true),
+    LESS_OR_EQUAL("<=", true, true, false),
 
     @NotNull
     @Support
-    GREATER(">", true, true),
+    GREATER(">", true, true, false),
 
     @NotNull
     @Support
-    GREATER_OR_EQUAL(">=", true, true),
+    GREATER_OR_EQUAL(">=", true, true, false),
 
     @NotNull
     @Support
-    IS_DISTINCT_FROM("is distinct from", false, false),
+    IS_DISTINCT_FROM("is distinct from", false, false, true),
 
     @NotNull
     @Support
-    IS_NOT_DISTINCT_FROM("is not distinct from", false, false),
+    IS_NOT_DISTINCT_FROM("is not distinct from", false, false, true),
 
     @NotNull
     @Support
-    LIKE("like", false, false),
+    LIKE("like", false, false, false),
 
     @NotNull
     @Support
-    NOT_LIKE("not like", false, false),
+    NOT_LIKE("not like", false, false, false),
 
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
-    SIMILAR_TO("similar to", false, false),
+    SIMILAR_TO("similar to", false, false, false),
 
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
-    NOT_SIMILAR_TO("not similar to", false, false),
+    NOT_SIMILAR_TO("not similar to", false, false, false),
 
     @NotNull
     @Support
-    LIKE_IGNORE_CASE("ilike", false, false),
+    LIKE_IGNORE_CASE("ilike", false, false, false),
 
     @NotNull
     @Support
-    NOT_LIKE_IGNORE_CASE("not ilike", false, false),
+    NOT_LIKE_IGNORE_CASE("not ilike", false, false, false),
 
     ;
 
@@ -135,12 +135,14 @@ public enum Comparator {
     private final Keyword keyword;
     private final boolean supportsQuantifier;
     private final boolean supportsSubselect;
+    private final boolean supportsNulls;
 
-    private Comparator(String sql, boolean supportsQuantifier, boolean supportsSubselect) {
+    private Comparator(String sql, boolean supportsQuantifier, boolean supportsSubselect, boolean supportsNulls) {
         this.sql = sql;
         this.keyword = DSL.keyword(sql);
         this.supportsQuantifier = supportsQuantifier;
         this.supportsSubselect = supportsSubselect;
+        this.supportsNulls = supportsNulls;
     }
 
     /**
@@ -200,6 +202,16 @@ public enum Comparator {
             case NOT_EQUALS:           return NOT_EQUALS;
             default:                   return null;
         }
+    }
+
+    /**
+     * Whether this comparator supports quantifiers on the right-hand side.
+     *
+     * @deprecated - 3.14.0 - [#9911] - This method is no longer supported.
+     */
+    @Deprecated
+    public final boolean supportsNulls() {
+        return supportsNulls;
     }
 
     /**

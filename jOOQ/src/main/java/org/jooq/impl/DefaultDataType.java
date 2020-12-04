@@ -85,7 +85,7 @@ import org.jooq.types.UShort;
  */
 @SuppressWarnings({"unchecked"})
 @org.jooq.Internal
-public class DefaultDataType<T> extends AbstractDataType<T> {
+public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     /**
      * Generated UID

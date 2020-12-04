@@ -93,8 +93,8 @@ final class Val<T> extends AbstractParam<T> {
         if (getDataType() instanceof DataTypeProxy) {
 
             // [#9492] Maintain legacy static type registry behaviour for now
-            if (((DataTypeProxy<?>) getDataType()).type instanceof LegacyConvertedDataType && type == SQLDataType.OTHER) {
-                type = (DataType) ((DataTypeProxy<?>) getDataType()).type;
+            if (((DataTypeProxy<?>) getDataType()).type() instanceof LegacyConvertedDataType && type == SQLDataType.OTHER) {
+                type = (DataType) ((DataTypeProxy<?>) getDataType()).type();
 
                 if (legacyWarnings.size() < 8 && legacyWarnings.put(type.getType(), "") == null)
                     log.warn("Deprecation", "User-defined, converted data type " + type.getType() + " was registered statically, which will be unsupported in the future, see https://github.com/jOOQ/jOOQ/issues/9492. Please use explicit data types in generated code, or e.g. with DSL.val(Object, DataType), or DSL.inline(Object, DataType).", new SQLWarning("Static type registry usage"));

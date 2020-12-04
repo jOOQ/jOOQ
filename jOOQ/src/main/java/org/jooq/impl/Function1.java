@@ -37,56 +37,32 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_ASC;
-import static org.jooq.impl.Names.N_ASCII;
-import static org.jooq.impl.Names.N_ASCII_VAL;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.nullSafeNotNull;
+import static org.jooq.impl.DSL.unquotedName;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 
 /**
  * @author Lukas Eder
  */
-final class Ascii extends AbstractField<Integer> {
+final class Function1<T> extends AbstractField<T> {
 
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = -2034096213592995420L;
+    private final Field<?>    argument;
 
-    private final Field<?>                string;
+    Function1(Name name, DataType<T> type, Field<?> argument) {
+        super(name, type);
 
-    Ascii(Field<?> string) {
-        super(N_ASCII, INTEGER.nullable(string == null || string.getDataType().nullable()));
-
-        this.string = nullSafeNotNull(string, VARCHAR);
+        this.argument = argument;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-            case FIREBIRD:
-                ctx.visit(N_ASCII_VAL).sql('(').visit(string).sql(')');
-                break;
-
-            // TODO [#862] [#864] emulate this for some dialects
-
-
-
-            case DERBY:
-            case SQLITE:
-            default:
-                ctx.visit(N_ASCII).sql('(').visit(string).sql(')');
-                break;
-        }
+        ctx.visit(getQualifiedName()).sql('(').visit(argument).sql(')');
     }
 }

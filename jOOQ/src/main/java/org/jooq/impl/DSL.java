@@ -94,9 +94,13 @@ import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
+import static org.jooq.impl.Names.N_ABS;
+import static org.jooq.impl.Names.N_COS;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
+import static org.jooq.impl.Names.N_SIN;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
+import static org.jooq.impl.Names.N_TAN;
 import static org.jooq.impl.Names.N_VALUE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.FIRST_VALUE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAG;
@@ -13051,6 +13055,20 @@ public class DSL {
     }
 
     /**
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
+     *
+     * @param name The function name (possibly qualified)
+     * @param type The function return type
+     * @param arguments The function arguments
+     */
+    @NotNull
+    @Support
+    static <T> Field<T> function(Name name, DataType<T> type, Field<?> argument) {
+        return new org.jooq.impl.Function1<>(name, type, Tools.nullSafe(argument));
+    }
+
+    /**
      * Create a new condition holding plain SQL.
      * <p>
      * There must not be any bind variables contained in the SQL.
@@ -15672,7 +15690,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> ascii(Field<String> field) {
-        return new Ascii(Tools.nullSafe(field));
+        return new Ascii(field);
     }
 
     /**
@@ -19479,7 +19497,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> abs(Field<T> field) {
-        return function("abs", Tools.nullSafeDataType(field), field);
+        return function(N_ABS, Tools.nullSafeDataType(field), field);
     }
 
     /**
@@ -19981,7 +19999,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
-        return function("cos", SQLDataType.NUMERIC, field);
+        return function(N_COS, SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -20004,7 +20022,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
-        return function("sin", SQLDataType.NUMERIC, field);
+        return function(N_SIN, SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -20027,7 +20045,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
-        return function("tan", SQLDataType.NUMERIC, field);
+        return function(N_TAN, SQLDataType.NUMERIC, field);
     }
 
     /**

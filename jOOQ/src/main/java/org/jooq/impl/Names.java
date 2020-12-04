@@ -52,6 +52,7 @@ final class Names {
     static final Name N_ARRAY_TABLE            = name("array_table");
     static final Name N_COLUMN_VALUE           = name("COLUMN_VALUE");
 
+    static final Name N_ABS                    = unquotedName("abs");
     static final Name N_ACOS                   = unquotedName("acos");
     static final Name N_ADD_DAYS               = unquotedName("add_days");
     static final Name N_ADD_MONTHS             = unquotedName("add_months");
@@ -84,6 +85,7 @@ final class Names {
     static final Name N_COLLECT                = unquotedName("collect");
     static final Name N_CONCAT                 = unquotedName("concat");
     static final Name N_CONVERT                = unquotedName("convert");
+    static final Name N_COS                    = unquotedName("cos");
     static final Name N_COSH                   = unquotedName("cosh");
     static final Name N_COT                    = unquotedName("cot");
     static final Name N_COUNT                  = unquotedName("count");
@@ -133,6 +135,7 @@ final class Names {
     static final Name N_IIF                    = unquotedName("iif");
     static final Name N_INSERT                 = unquotedName("insert");
     static final Name N_INSTR                  = unquotedName("instr");
+    static final Name N_ISJSON                 = unquotedName("isjson");
     static final Name N_ISOWEEK                = unquotedName("isoweek");
     static final Name N_JOIN                   = unquotedName("join");
     static final Name N_JSON_AGG               = unquotedName("json_agg");
@@ -147,6 +150,7 @@ final class Names {
     static final Name N_JSON_OBJECTAGG         = unquotedName("json_objectagg");
     static final Name N_JSON_QUOTE             = unquotedName("json_quote");
     static final Name N_JSON_TABLE             = unquotedName("json_table");
+    static final Name N_JSON_VALID             = unquotedName("json_valid");
     static final Name N_JSON_VALUE             = unquotedName("json_value");
     static final Name N_JSONB_AGG              = unquotedName("jsonb_agg");
     static final Name N_JSONB_BUILD_ARRAY      = unquotedName("jsonb_build_array");
@@ -165,6 +169,8 @@ final class Names {
     static final Name N_LISTAGG                = unquotedName("listagg");
     static final Name N_LN                     = unquotedName("ln");
     static final Name N_LOCATE                 = unquotedName("locate");
+    static final Name N_LOG                    = unquotedName("log");
+    static final Name N_LOGN                   = unquotedName("logn");
     static final Name N_LOWER                  = unquotedName("lower");
     static final Name N_LPAD                   = unquotedName("lpad");
     static final Name N_LTRIM                  = unquotedName("ltrim");
@@ -219,6 +225,7 @@ final class Names {
     static final Name N_SELECT                 = unquotedName("select");
     static final Name N_SGN                    = unquotedName("sgn");
     static final Name N_SIGN                   = unquotedName("sign");
+    static final Name N_SIN                    = unquotedName("sin");
     static final Name N_SINH                   = unquotedName("sinh");
     static final Name N_SPACE                  = unquotedName("space");
     static final Name N_SPLIT_PART             = unquotedName("split_part");
@@ -245,6 +252,7 @@ final class Names {
     static final Name N_SYSTEM_RANGE           = unquotedName("system_range");
     static final Name N_SYSTEM_TIME            = unquotedName("system_time");
     static final Name N_T                      = unquotedName("t");
+    static final Name N_TAN                    = unquotedName("tan");
     static final Name N_TANH                   = unquotedName("tanh");
     static final Name N_TIMESTAMPADD           = unquotedName("timestampadd");
     static final Name N_TIMESTAMPDIFF          = unquotedName("timestampdiff");

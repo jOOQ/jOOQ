@@ -79,7 +79,7 @@ final class Exp extends AbstractField<BigDecimal> {
 
 
             default:
-                ctx.visit(function("exp", NUMERIC, argument));
+                ctx.visit(function(N_EXP, NUMERIC, argument));
                 return;
         }
     }

@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Internal.idiv;
 import static org.jooq.impl.Names.N_LN;
+import static org.jooq.impl.Names.N_LOG;
+import static org.jooq.impl.Names.N_LOGN;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
@@ -65,7 +67,7 @@ final class Ln extends AbstractField<BigDecimal> {
     }
 
     Ln(Field<? extends Number> argument, Field<? extends Number> base) {
-        super(N_LN, SQLDataType.NUMERIC);
+        super(N_LN, NUMERIC);
 
         this.argument = argument;
         this.base = base;
@@ -98,7 +100,7 @@ final class Ln extends AbstractField<BigDecimal> {
 
 
                 default:
-                    ctx.visit(function("ln", SQLDataType.NUMERIC, argument));
+                    ctx.visit(function(N_LN, NUMERIC, argument));
                     return;
             }
         }
@@ -131,7 +133,7 @@ final class Ln extends AbstractField<BigDecimal> {
                     return;
 
                 default:
-                    ctx.visit(function("log", SQLDataType.NUMERIC, base, argument));
+                    ctx.visit(function(N_LOG, NUMERIC, base, argument));
                     return;
             }
         }

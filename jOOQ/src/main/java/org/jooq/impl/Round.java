@@ -135,17 +135,17 @@ final class Round<T extends Number> extends AbstractField<T> {
             // There's no function round(double precision, integer) in Postgres
             case POSTGRES:
                 if (decimals == null)
-                    ctx.visit(function("round", getDataType(), argument));
+                    ctx.visit(function(N_ROUND, getDataType(), argument));
                 else
-                    ctx.visit(function("round", getDataType(), castIfNeeded(argument, BigDecimal.class), decimals));
+                    ctx.visit(function(N_ROUND, getDataType(), castIfNeeded(argument, BigDecimal.class), decimals));
 
                 return;
 
             default:
                 if (decimals == null)
-                    ctx.visit(function("round", getDataType(), argument));
+                    ctx.visit(function(N_ROUND, getDataType(), argument));
                 else
-                    ctx.visit(function("round", getDataType(), argument, decimals));
+                    ctx.visit(function(N_ROUND, getDataType(), argument, decimals));
 
                 return;
         }

@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.pi;
 import static org.jooq.impl.Names.N_RADIANS;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
@@ -61,7 +62,7 @@ final class Radians extends AbstractField<BigDecimal> {
     private final Field<?>    argument;
 
     Radians(Field<?> argument) {
-        super(N_RADIANS, SQLDataType.NUMERIC);
+        super(N_RADIANS, NUMERIC);
 
         this.argument = argument;
     }
@@ -81,7 +82,7 @@ final class Radians extends AbstractField<BigDecimal> {
                 return;
 
             default:
-                ctx.visit(function("radians", SQLDataType.NUMERIC, argument));
+                ctx.visit(function(N_RADIANS, NUMERIC, argument));
                 return;
         }
     }

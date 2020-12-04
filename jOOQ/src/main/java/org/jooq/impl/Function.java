@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.unquotedName;
+
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -55,7 +57,7 @@ final class Function<T> extends AbstractField<T> {
     private final QueryPartList<Field<?>> arguments;
 
     Function(String name, DataType<T> type, Field<?>... arguments) {
-        this(DSL.unquotedName(name), type, arguments);
+        this(unquotedName(name), type, arguments);
     }
 
     Function(Name name, DataType<T> type, Field<?>... arguments) {

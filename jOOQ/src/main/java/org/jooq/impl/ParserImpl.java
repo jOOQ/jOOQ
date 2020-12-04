@@ -87,6 +87,7 @@ import static org.jooq.impl.DSL.characterSet;
 import static org.jooq.impl.DSL.check;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.coerce;
 import static org.jooq.impl.DSL.collation;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
@@ -9438,14 +9439,17 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldCastIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "CAST")) {
+        boolean cast = parseFunctionNameIf(ctx, "CAST");
+        boolean coerce = !cast && parseFunctionNameIf(ctx, "COERCE");
+
+        if (cast || coerce) {
             parse(ctx, '(');
             Field<?> field = parseField(ctx);
             parseKeyword(ctx, "AS");
             DataType<?> type = parseCastDataType(ctx);
             parse(ctx, ')');
 
-            return cast(field, type);
+            return cast ? cast(field, type) : coerce(field, type);
         }
 
         return null;

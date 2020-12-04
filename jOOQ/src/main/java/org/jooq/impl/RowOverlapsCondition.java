@@ -89,9 +89,10 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
     private final Row2<T1, T2>           left;
     private final Row2<T1, T2>           right;
 
+    @SuppressWarnings("unchecked")
     RowOverlapsCondition(Row2<T1, T2> left, Row2<T1, T2> right) {
-        this.left = left;
-        this.right = right;
+        this.left = (Row2<T1, T2>) ((AbstractRow) left).convertTo(right);
+        this.right = (Row2<T1, T2>) ((AbstractRow) right).convertTo(left);
     }
 
     @Override

@@ -301,6 +301,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * General internal jOOQ utilities
  *
@@ -5897,54 +5899,57 @@ final class Tools {
         return result;
     }
 
-    static final <T> DataType<T> allNotNull(Field<T> f1, Field<?> f2) {
-        DataType<T> result = f1.getDataType();
+    static final DataType<?> dataType(Field<?> field) {
+        return field == null ? OTHER : field.getDataType();
+    }
 
+    static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<T> f1, Field<?> f2) {
+        if (f1 == null)
+            return defaultType.null_();
+
+        DataType<T> result = f1.getDataType();
         if (result.nullable())
             return result;
-        else if (f2.getDataType().nullable())
+        else if (dataType(f2).nullable())
             return result.null_();
         else
             return result;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final DataType<?> allNotNull(Field<?>... fields) {
-        if (fields == null || fields.length == 0)
-            return OTHER;
+    static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<T> f1, Field<?>... fields) {
+        if (f1 == null)
+            return defaultType.null_();
 
-        DataType<?> result = fields[0].getDataType();
+        DataType<T> result = f1.getDataType();
         if (result.nullable())
             return result;
 
-        for (int i = 1; i < fields.length; i++)
-            if (fields[i].getDataType().nullable())
+        for (int i = 0; i < fields.length; i++)
+            if (dataType(fields[i]).nullable())
                 return result.null_();
 
         return result;
     }
 
-    static final <T> DataType<T> anyNotNull(Field<T> f1, Field<?> f2) {
-        DataType<T> result = f1.getDataType();
+    static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<T> f1, Field<?> f2) {
+        DataType<T> result = f1 == null ? defaultType : f1.getDataType();
 
         if (!result.nullable())
             return result;
-        else if (!f2.getDataType().nullable())
+        else if (!dataType(f2).nullable())
             return result.notNull();
         else
             return result;
     }
 
-    static final DataType<?> anyNotNull(Field<?>... fields) {
-        if (fields == null || fields.length == 0)
-            return OTHER;
+    static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<T> f1, Field<?>... fields) {
+        DataType<T> result = f1 == null ? defaultType : f1.getDataType();
 
-        DataType<?> result = fields[0].getDataType();
         if (!result.nullable())
             return result;
 
-        for (int i = 1; i < fields.length; i++)
-            if (!fields[i].getDataType().nullable())
+        for (int i = 0; i < fields.length; i++)
+            if (!dataType(fields[i]).nullable())
                 return result.notNull();
 
         return result;
@@ -5958,8 +5963,13 @@ final class Tools {
     static final <T> Field<T> nullSafe(Field<T> field, DataType<?> type) {
         return field == null
              ? (Field<T>) DSL.val((T) null, type)
-             : field instanceof Val
-             ? (Field<T>) ((Val<T>) field).convertTo(type)
+             : convertVal(field, type);
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> convertVal(Field<T> field, DataType<?> type) {
+        return isVal(field)
+             ? (Field<T>) extractVal(field).convertTo(type)
              : field;
     }
 

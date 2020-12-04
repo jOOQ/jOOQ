@@ -43,9 +43,15 @@ import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Names.N_MID;
 import static org.jooq.impl.Names.N_SUBSTR;
 import static org.jooq.impl.Names.N_SUBSTRING;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.allNotNull;
+import static org.jooq.impl.Tools.convertVal;
+import static org.jooq.impl.Tools.nullSafe;
+import static org.jooq.impl.Tools.nullableIf;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 
@@ -57,22 +63,26 @@ final class Substring extends AbstractField<String> {
     /**
      * Generated UID
      */
-    private static final long                    serialVersionUID = -7273879239726265322L;
+    private static final long             serialVersionUID = -7273879239726265322L;
 
-    private final        Field<String>           field;
-    private final        Field<? extends Number> startingPosition;
-    private final        Field<? extends Number> length;
+    private final Field<String>           field;
+    private final Field<? extends Number> startingPosition;
+    private final Field<? extends Number> length;
 
     Substring(Field<String> field, Field<? extends Number> startingPosition) {
-        this(field, startingPosition, null);
+        super(N_SUBSTRING, allNotNull(VARCHAR, field, startingPosition));
+
+        this.field = nullableIf(false, nullSafe(field, VARCHAR));
+        this.startingPosition = nullableIf(false, nullSafe(startingPosition, INTEGER));
+        this.length = null;
     }
 
     Substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        super(N_SUBSTRING, VARCHAR);
+        super(N_SUBSTRING, allNotNull(VARCHAR, field, startingPosition, length));
 
-        this.field = field;
-        this.startingPosition = startingPosition;
-        this.length = length;
+        this.field = nullableIf(false, nullSafe(field, VARCHAR));
+        this.startingPosition = nullableIf(false, nullSafe(startingPosition, INTEGER));
+        this.length = nullableIf(false, nullSafe(length, INTEGER));
     }
 
     @Override

@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Internal.iadd;
 import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Names.N_RIGHT;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.allNotNull;
 
 import org.jooq.Context;
@@ -60,7 +61,7 @@ final class Right extends AbstractField<String> {
     private Field<? extends Number> length;
 
     Right(Field<String> field, Field<? extends Number> length) {
-        super(N_RIGHT, allNotNull(field, length));
+        super(N_RIGHT, allNotNull(VARCHAR, field, length));
 
         this.field = field;
         this.length = length;

@@ -58,7 +58,7 @@ final class Nvl2<T> extends AbstractField<T> {
     private final Field<T>    arg3;
 
     Nvl2(Field<?> arg1, Field<T> arg2, Field<T> arg3) {
-        super(N_NVL2, !arg1.getDataType().nullable() ? arg2.getDataType() : Tools.allNotNull(arg2, arg3));
+        super(N_NVL2, !arg1.getDataType().nullable() ? arg2.getDataType() : Tools.allNotNull(arg2.getDataType(), arg2, arg3));
 
         this.arg1 = arg1;
         this.arg2 = arg2;

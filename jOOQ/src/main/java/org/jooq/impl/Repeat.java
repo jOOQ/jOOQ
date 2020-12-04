@@ -43,6 +43,7 @@ import static org.jooq.impl.Names.N_REPEAT;
 import static org.jooq.impl.Names.N_REPLACE;
 import static org.jooq.impl.Names.N_REPLICATE;
 import static org.jooq.impl.Names.N_ZEROBLOB;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.allNotNull;
 
 import org.jooq.Context;
@@ -62,7 +63,7 @@ final class Repeat extends AbstractField<String> {
     private final Field<? extends Number> count;
 
     Repeat(Field<String> string, Field<? extends Number> count) {
-        super(N_REPEAT, allNotNull(string, count));
+        super(N_REPEAT, allNotNull(VARCHAR, string, count));
 
         this.string = string;
         this.count = count;

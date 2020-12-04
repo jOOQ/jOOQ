@@ -15732,7 +15732,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> substring(Field<String> field, int startingPosition) {
-        return substring(Tools.nullSafe(field), Tools.field(startingPosition));
+        return substring(field, Tools.field(startingPosition));
     }
 
     /**
@@ -15745,7 +15745,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition) {
-        return new Substring(Tools.nullSafe(field), Tools.nullSafe(startingPosition));
+        return new Substring(field, startingPosition);
     }
 
     /**
@@ -15756,7 +15756,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> substring(Field<String> field, int startingPosition, int length) {
-        return substring(Tools.nullSafe(field), Tools.field(startingPosition), Tools.field(length));
+        return substring(field, Tools.field(startingPosition), Tools.field(length));
     }
 
     /**
@@ -15769,7 +15769,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        return new Substring(Tools.nullSafe(field), Tools.nullSafe(startingPosition), Tools.nullSafe(length));
+        return new Substring(field, startingPosition, Tools.nullSafe(length));
     }
 
     /**
@@ -15780,7 +15780,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> mid(Field<String> field, int startingPosition, int length) {
-        return substring(Tools.nullSafe(field), Tools.field(startingPosition), Tools.field(length));
+        return substring(field, Tools.field(startingPosition), Tools.field(length));
     }
 
     /**
@@ -15793,7 +15793,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> mid(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        return substring(Tools.nullSafe(field), Tools.nullSafe(startingPosition), Tools.nullSafe(length));
+        return substring(field, startingPosition, length);
     }
 
     /**

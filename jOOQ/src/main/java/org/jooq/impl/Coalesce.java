@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_COALESCE;
+import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.anyNotNull;
 
 import org.jooq.Context;
@@ -57,7 +58,7 @@ final class Coalesce<T> extends AbstractField<T> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Coalesce(Field<?>[] fields) {
-        super(N_COALESCE, (DataType) anyNotNull(fields));
+        super(N_COALESCE, anyNotNull((DataType) OTHER, fields[0], fields));
 
         this.fields = (Field[]) fields;
     }

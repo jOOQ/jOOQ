@@ -55,7 +55,7 @@ import java.util.*;
  * The <code>RTRIM</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class RTrim
+final class Rtrim
 extends
     AbstractField<String>
 {
@@ -65,7 +65,7 @@ extends
     private final Field<String> string;
     private final Field<String> characters;
 
-    RTrim(
+    Rtrim(
         Field string
     ) {
         super(N_RTRIM, allNotNull(VARCHAR, string));
@@ -74,7 +74,7 @@ extends
         this.characters = null;
     }
 
-    RTrim(
+    Rtrim(
         Field string,
         Field characters
     ) {

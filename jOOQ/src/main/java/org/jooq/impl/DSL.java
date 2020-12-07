@@ -14936,12 +14936,30 @@ public class DSL {
     }
 
     /**
+     * The <code>LOWER</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> lower(String string) {
+        return new Lower(Tools.field(string));
+    }
+
+    /**
+     * The <code>LOWER</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> lower(Field<String> string) {
+        return new Lower(string);
+    }
+
+    /**
      * The <code>LTRIM</code> function.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> ltrim(String string, String characters) {
-        return new LTrim(Tools.field(string), Tools.field(characters));
+        return new Ltrim(Tools.field(string), Tools.field(characters));
     }
 
     /**
@@ -14950,7 +14968,7 @@ public class DSL {
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> ltrim(String string, Field<String> characters) {
-        return new LTrim(Tools.field(string), characters);
+        return new Ltrim(Tools.field(string), characters);
     }
 
     /**
@@ -14959,7 +14977,7 @@ public class DSL {
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> ltrim(Field<String> string, String characters) {
-        return new LTrim(string, Tools.field(characters));
+        return new Ltrim(string, Tools.field(characters));
     }
 
     /**
@@ -14968,7 +14986,7 @@ public class DSL {
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> ltrim(Field<String> string, Field<String> characters) {
-        return new LTrim(string, characters);
+        return new Ltrim(string, characters);
     }
 
     /**
@@ -14977,7 +14995,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> ltrim(String string) {
-        return new LTrim(Tools.field(string));
+        return new Ltrim(Tools.field(string));
     }
 
     /**
@@ -14986,7 +15004,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> ltrim(Field<String> string) {
-        return new LTrim(string);
+        return new Ltrim(string);
     }
 
     /**
@@ -15085,7 +15103,7 @@ public class DSL {
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rtrim(String string, String characters) {
-        return new RTrim(Tools.field(string), Tools.field(characters));
+        return new Rtrim(Tools.field(string), Tools.field(characters));
     }
 
     /**
@@ -15094,7 +15112,7 @@ public class DSL {
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rtrim(String string, Field<String> characters) {
-        return new RTrim(Tools.field(string), characters);
+        return new Rtrim(Tools.field(string), characters);
     }
 
     /**
@@ -15103,7 +15121,7 @@ public class DSL {
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rtrim(Field<String> string, String characters) {
-        return new RTrim(string, Tools.field(characters));
+        return new Rtrim(string, Tools.field(characters));
     }
 
     /**
@@ -15112,7 +15130,7 @@ public class DSL {
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rtrim(Field<String> string, Field<String> characters) {
-        return new RTrim(string, characters);
+        return new Rtrim(string, characters);
     }
 
     /**
@@ -15121,7 +15139,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> rtrim(String string) {
-        return new RTrim(Tools.field(string));
+        return new Rtrim(Tools.field(string));
     }
 
     /**
@@ -15130,7 +15148,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<String> rtrim(Field<String> string) {
-        return new RTrim(string);
+        return new Rtrim(string);
     }
 
     /**
@@ -15313,53 +15331,25 @@ public class DSL {
         return new Trim(string);
     }
 
-
-
     /**
-     * Get the upper(field) function.
-     *
-     * @see #upper(Field)
+     * The <code>UPPER</code> function.
      */
     @NotNull
     @Support
-    public static Field<String> upper(String value) {
-        return upper(Tools.field(value));
+    public static Field<String> upper(String string) {
+        return new Upper(Tools.field(string));
     }
 
     /**
-     * Get the upper(field) function.
-     * <p>
-     * This renders the upper function in all dialects:
-     * <code><pre>upper([field])</pre></code>
+     * The <code>UPPER</code> function.
      */
     @NotNull
     @Support
-    public static Field<String> upper(Field<String> field) {
-        return new Upper(Tools.nullSafe(field));
+    public static Field<String> upper(Field<String> string) {
+        return new Upper(string);
     }
 
-    /**
-     * Get the lower(field) function.
-     *
-     * @see #lower(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<String> lower(String value) {
-        return lower(Tools.field(value));
-    }
 
-    /**
-     * Get the lower(field) function.
-     * <p>
-     * This renders the lower function in all dialects:
-     * <code><pre>lower([field])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> lower(Field<String> field) {
-        return new Lower(Tools.nullSafe(field));
-    }
 
     /**
      * Get the rpad(field, length) function.

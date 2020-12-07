@@ -55,7 +55,7 @@ import java.util.*;
  * The <code>LTRIM</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class LTrim
+final class Ltrim
 extends
     AbstractField<String>
 {
@@ -65,7 +65,7 @@ extends
     private final Field<String> string;
     private final Field<String> characters;
 
-    LTrim(
+    Ltrim(
         Field string
     ) {
         super(N_LTRIM, allNotNull(VARCHAR, string));
@@ -74,7 +74,7 @@ extends
         this.characters = null;
     }
 
-    LTrim(
+    Ltrim(
         Field string,
         Field characters
     ) {

@@ -37,28 +37,46 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_LCASE;
-import static org.jooq.impl.Names.N_LOWER;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>LOWER</code> statement.
  */
-final class Lower extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Lower
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -9070564546827153434L;
-    private final Field<String> field;
+    private static final long serialVersionUID = 1L;
 
-    Lower(Field<String> field) {
-        super(N_LOWER, field.getDataType());
+    private final Field<String> string;
 
-        this.field = field;
+    Lower(
+        Field string
+    ) {
+        super(N_LOWER, allNotNull(VARCHAR, string));
+
+        this.string = nullSafeNotNull(string, VARCHAR);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -70,8 +88,10 @@ final class Lower extends AbstractField<String> {
 
 
             default:
-                ctx.visit(N_LOWER).sql('(').visit(field).sql(')');
+                ctx.visit(N_LOWER).sql('(').visit(string).sql(')');
                 break;
         }
     }
+
+
 }

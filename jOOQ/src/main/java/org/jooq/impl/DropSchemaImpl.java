@@ -38,9 +38,11 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
 import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.SQLDialect.*;
 
@@ -66,7 +68,7 @@ implements
     private final Schema  schema;
     private final boolean dropSchemaIfExists;
     private       Boolean cascade;
-    
+
     DropSchemaImpl(
         Configuration configuration,
         Schema schema,

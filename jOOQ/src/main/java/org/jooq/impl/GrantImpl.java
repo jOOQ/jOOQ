@@ -38,9 +38,11 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
 import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.SQLDialect.*;
 
@@ -70,7 +72,7 @@ implements
     private       Role                            to;
     private       Boolean                         toPublic;
     private       Boolean                         withGrantOption;
-    
+
     GrantImpl(
         Configuration configuration,
         Collection privileges
@@ -102,10 +104,10 @@ implements
         this.withGrantOption = withGrantOption;
     }
 
-    final Collection<? extends Privilege> $privileges()      { return privileges; }
-    final Table<?>                        $on()              { return on; }
-    final Role                            $to()              { return to; }
-    final Boolean                         $toPublic()        { return toPublic; }
+    final Collection<? extends Privilege> $privileges() { return privileges; }
+    final Table<?>                        $on()    { return on; }
+    final Role                            $to()    { return to; }
+    final Boolean                         $toPublic() { return toPublic; }
     final Boolean                         $withGrantOption() { return withGrantOption; }
 
     // -------------------------------------------------------------------------

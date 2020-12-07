@@ -38,9 +38,11 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
 import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.SQLDialect.*;
 
@@ -69,7 +71,7 @@ implements
     private       Table<?>                        on;
     private       Role                            from;
     private       Boolean                         fromPublic;
-    
+
     RevokeImpl(
         Configuration configuration,
         Collection privileges,

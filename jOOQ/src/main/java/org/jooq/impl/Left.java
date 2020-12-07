@@ -37,35 +37,53 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Names.N_LEFT;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.allNotNull;
-import static org.jooq.impl.Tools.nullSafeNotNull;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>LEFT</code> statement.
  */
-final class Left extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Left
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 2200760781944082146L;
+    private static final long serialVersionUID = 1L;
 
-    private Field<String>           field;
-    private Field<? extends Number> length;
+    private final Field<String>           string;
+    private final Field<? extends Number> length;
 
-    Left(Field<String> field, Field<? extends Number> length) {
-        super(N_LEFT, allNotNull(VARCHAR, field, length));
 
-        this.field = nullSafeNotNull(field, VARCHAR);
+    Left(
+        Field string,
+        Field length
+    ) {
+        super(N_LEFT, allNotNull(VARCHAR, string, length));
+
+        this.string = nullSafeNotNull(string, VARCHAR);
         this.length = nullSafeNotNull(length, INTEGER);
     }
+
+    final Field<String>           $string() { return string; }
+    final Field<? extends Number> $length() { return length; }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -75,7 +93,7 @@ final class Left extends AbstractField<String> {
 
             case DERBY:
             case SQLITE:
-                ctx.visit(DSL.substring(field, inline(1), length));
+                ctx.visit(DSL.substring(string, inline(1), length));
                 break;
 
 
@@ -97,8 +115,10 @@ final class Left extends AbstractField<String> {
             case MYSQL:
             case POSTGRES:
             default:
-                ctx.visit(N_LEFT).sql('(').visit(field).sql(", ").visit(length).sql(')');
+                ctx.visit(N_LEFT).sql('(').visit(string).sql(", ").visit(length).sql(')');
                 break;
         }
     }
+
+
 }

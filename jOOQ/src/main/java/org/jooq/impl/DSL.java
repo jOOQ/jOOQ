@@ -14879,6 +14879,82 @@ public class DSL {
     // XXX String function factory
     // -------------------------------------------------------------------------
 
+
+
+    /**
+     * The <code>LEFT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> left(String string, int length) {
+        return new Left(Tools.field(string), Tools.field(length));
+    }
+
+    /**
+     * The <code>LEFT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> left(String string, Field<? extends Number> length) {
+        return new Left(Tools.field(string), length);
+    }
+
+    /**
+     * The <code>LEFT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> left(Field<String> string, int length) {
+        return new Left(string, Tools.field(length));
+    }
+
+    /**
+     * The <code>LEFT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> left(Field<String> string, Field<? extends Number> length) {
+        return new Left(string, length);
+    }
+
+    /**
+     * The <code>RIGHT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> right(String string, int length) {
+        return new Right(Tools.field(string), Tools.field(length));
+    }
+
+    /**
+     * The <code>RIGHT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> right(String string, Field<? extends Number> length) {
+        return new Right(Tools.field(string), length);
+    }
+
+    /**
+     * The <code>RIGHT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> right(Field<String> string, int length) {
+        return new Right(string, Tools.field(length));
+    }
+
+    /**
+     * The <code>RIGHT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> right(Field<String> string, Field<? extends Number> length) {
+        return new Right(string, length);
+    }
+
+
+
     /**
      * Get the upper(field) function.
      *
@@ -15812,118 +15888,6 @@ public class DSL {
     @Support
     public static Field<String> mid(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
         return substring(field, startingPosition, length);
-    }
-
-    /**
-     * Get the left outermost characters from a string.
-     * <p>
-     * Example:
-     * <code><pre>
-     * 'abc' = LEFT('abcde', 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> left(String field, int length) {
-        return left(Tools.field(field), Tools.field(length));
-    }
-
-    /**
-     * Get the left outermost characters from a string.
-     * <p>
-     * Example:
-     * <code><pre>
-     * 'abc' = LEFT('abcde', 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> left(String field, Field<? extends Number> length) {
-        return left(Tools.field(field), length);
-    }
-
-    /**
-     * Get the left outermost characters from a string.
-     * <p>
-     * Example:
-     * <code><pre>
-     * 'abc' = LEFT('abcde', 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> left(Field<String> field, int length) {
-        return left(field, Tools.field(length));
-    }
-
-    /**
-     * Get the left outermost characters from a string.
-     * <p>
-     * Example:
-     * <code><pre>
-     * 'abc' = LEFT('abcde', 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> left(Field<String> field, Field<? extends Number> length) {
-        return new Left(field, length);
-    }
-
-    /**
-     * Get the right outermost characters from a string.
-     * <p>
-     * Example:
-     * <code><pre>
-     * 'cde' = RIGHT('abcde', 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> right(String field, int length) {
-        return right(Tools.field(field), Tools.field(length));
-    }
-
-    /**
-     * Get the right outermost characters from a string.
-     * <p>
-     * Example:
-     * <code><pre>
-     * 'cde' = RIGHT('abcde', 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> right(String field, Field<? extends Number> length) {
-        return right(Tools.field(field), length);
-    }
-
-    /**
-     * Get the right outermost characters from a string.
-     * <p>
-     * Example:
-     * <code><pre>
-     * 'cde' = RIGHT('abcde', 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> right(Field<String> field, int length) {
-        return right(field, Tools.field(length));
-    }
-
-    /**
-     * Get the right outermost characters from a string.
-     * <p>
-     * Example:
-     * <code><pre>
-     * 'cde' = RIGHT('abcde', 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> right(Field<String> field, Field<? extends Number> length) {
-        return new Right(field, length);
     }
 
     /**

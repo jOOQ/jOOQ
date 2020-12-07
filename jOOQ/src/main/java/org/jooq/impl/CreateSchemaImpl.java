@@ -67,7 +67,6 @@ implements
     private final Schema  schema;
     private final boolean createSchemaIfNotExists;
 
-
     CreateSchemaImpl(
         Configuration configuration,
         Schema schema,

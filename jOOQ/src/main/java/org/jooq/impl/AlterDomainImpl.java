@@ -141,20 +141,20 @@ implements
         this.renameConstraintTo = renameConstraintTo;
     }
 
-    final Domain<T>  $domain()                 { return domain; }
-    final boolean    $alterDomainIfExists()    { return alterDomainIfExists; }
-    final Constraint $addConstraint()          { return addConstraint; }
-    final Constraint $dropConstraint()         { return dropConstraint; }
-    final boolean    $dropConstraintIfExists() { return dropConstraintIfExists; }
-    final Domain<?>  $renameTo()               { return renameTo; }
-    final Constraint $renameConstraint()       { return renameConstraint; }
+    final Domain<T>  $domain()                   { return domain; }
+    final boolean    $alterDomainIfExists()      { return alterDomainIfExists; }
+    final Constraint $addConstraint()            { return addConstraint; }
+    final Constraint $dropConstraint()           { return dropConstraint; }
+    final boolean    $dropConstraintIfExists()   { return dropConstraintIfExists; }
+    final Domain<?>  $renameTo()                 { return renameTo; }
+    final Constraint $renameConstraint()         { return renameConstraint; }
     final boolean    $renameConstraintIfExists() { return renameConstraintIfExists; }
-    final Field<T>   $setDefault()             { return setDefault; }
-    final boolean    $dropDefault()            { return dropDefault; }
-    final boolean    $setNotNull()             { return setNotNull; }
-    final boolean    $dropNotNull()            { return dropNotNull; }
-    final Boolean    $cascade()                { return cascade; }
-    final Constraint $renameConstraintTo()     { return renameConstraintTo; }
+    final Field<T>   $setDefault()               { return setDefault; }
+    final boolean    $dropDefault()              { return dropDefault; }
+    final boolean    $setNotNull()               { return setNotNull; }
+    final boolean    $dropNotNull()              { return dropNotNull; }
+    final Boolean    $cascade()                  { return cascade; }
+    final Constraint $renameConstraintTo()       { return renameConstraintTo; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API

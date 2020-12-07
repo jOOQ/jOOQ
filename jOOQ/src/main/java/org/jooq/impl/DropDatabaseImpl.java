@@ -67,7 +67,6 @@ implements
     private final Catalog database;
     private final boolean dropDatabaseIfExists;
 
-
     DropDatabaseImpl(
         Configuration configuration,
         Catalog database,

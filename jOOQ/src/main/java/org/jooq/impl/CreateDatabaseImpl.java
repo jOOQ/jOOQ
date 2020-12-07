@@ -67,7 +67,6 @@ implements
     private final Catalog database;
     private final boolean createDatabaseIfNotExists;
 
-
     CreateDatabaseImpl(
         Configuration configuration,
         Catalog database,

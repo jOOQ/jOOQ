@@ -14882,6 +14882,24 @@ public class DSL {
 
 
     /**
+     * The <code>ABS</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> abs(T number) {
+        return new Abs<>(Tools.field(number));
+    }
+
+    /**
+     * The <code>ABS</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> abs(Field<T> number) {
+        return new Abs<>(number);
+    }
+
+    /**
      * The <code>LEFT</code> function.
      */
     @NotNull
@@ -14918,6 +14936,60 @@ public class DSL {
     }
 
     /**
+     * The <code>REPEAT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> repeat(String string, int count) {
+        return new Repeat(Tools.field(string), Tools.field(count));
+    }
+
+    /**
+     * The <code>REPEAT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> repeat(String string, Field<? extends Number> count) {
+        return new Repeat(Tools.field(string), count);
+    }
+
+    /**
+     * The <code>REPEAT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> repeat(Field<String> string, int count) {
+        return new Repeat(string, Tools.field(count));
+    }
+
+    /**
+     * The <code>REPEAT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> repeat(Field<String> string, Field<? extends Number> count) {
+        return new Repeat(string, count);
+    }
+
+    /**
+     * The <code>REVERSE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<String> reverse(String string) {
+        return new Reverse(Tools.field(string));
+    }
+
+    /**
+     * The <code>REVERSE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<String> reverse(Field<String> string) {
+        return new Reverse(string);
+    }
+
+    /**
      * The <code>RIGHT</code> function.
      */
     @NotNull
@@ -14951,6 +15023,132 @@ public class DSL {
     @Support
     public static Field<String> right(Field<String> string, Field<? extends Number> length) {
         return new Right(string, length);
+    }
+
+    /**
+     * The <code>SIGN</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> sign(Number number) {
+        return new Sign(Tools.field(number));
+    }
+
+    /**
+     * The <code>SIGN</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> sign(Field<? extends Number> number) {
+        return new Sign(number);
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(String string, int startingPosition, int length) {
+        return new Substring(Tools.field(string), Tools.field(startingPosition), Tools.field(length));
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(String string, int startingPosition, Field<? extends Number> length) {
+        return new Substring(Tools.field(string), Tools.field(startingPosition), length);
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(String string, Field<? extends Number> startingPosition, int length) {
+        return new Substring(Tools.field(string), startingPosition, Tools.field(length));
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(String string, Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        return new Substring(Tools.field(string), startingPosition, length);
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(Field<String> string, int startingPosition, int length) {
+        return new Substring(string, Tools.field(startingPosition), Tools.field(length));
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(Field<String> string, int startingPosition, Field<? extends Number> length) {
+        return new Substring(string, Tools.field(startingPosition), length);
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(Field<String> string, Field<? extends Number> startingPosition, int length) {
+        return new Substring(string, startingPosition, Tools.field(length));
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(Field<String> string, Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        return new Substring(string, startingPosition, length);
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(String string, int startingPosition) {
+        return new Substring(Tools.field(string), Tools.field(startingPosition));
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(String string, Field<? extends Number> startingPosition) {
+        return new Substring(Tools.field(string), startingPosition);
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(Field<String> string, int startingPosition) {
+        return new Substring(string, Tools.field(startingPosition));
+    }
+
+    /**
+     * The <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> substring(Field<String> string, Field<? extends Number> startingPosition) {
+        return new Substring(string, startingPosition);
     }
 
 
@@ -15300,58 +15498,6 @@ public class DSL {
     }
 
     /**
-     * Get the repeat(field, count) function.
-     *
-     * @see #repeat(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> repeat(String field, int count) {
-        return repeat(Tools.field(field), Tools.field(count));
-    }
-
-    /**
-     * Get the repeat(field, count) function.
-     *
-     * @see #repeat(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> repeat(String field, Field<? extends Number> count) {
-        return repeat(Tools.field(field), count);
-    }
-
-    /**
-     * Get the repeat(count) function.
-     *
-     * @see #repeat(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> repeat(Field<String> field, int count) {
-        return repeat(field, Tools.field(count));
-    }
-
-    /**
-     * Get the repeat(field, count) function.
-     * <p>
-     * This renders the repeat or replicate function where available:
-     * <code><pre>repeat([field], [count]) or
-     * replicate([field], [count])</pre></code> ... or emulates it elsewhere
-     * using rpad and length, which may be emulated as well, depending on the
-     * RDBMS:
-     * <code><pre>rpad([field], length([field]) * [count], [field])</pre></code>
-     * <p>
-     * In {@link SQLDialect#SQLITE}, this is emulated as such:
-     * <code><pre>replace(substr(quote(zeroblob(([count] + 1) / 2)), 3, [count]), '0', [field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
-        return new Repeat(field, count);
-    }
-
-    /**
      * Get the SQL Server specific <code>SPACE()</code> function.
      * <p>
      * This function can be emulated using {@link #repeat(String, int)} in
@@ -15379,24 +15525,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> space(Field<Integer> value) {
         return new Space(value);
-    }
-
-    /**
-     * Get the <code>reverse(field)</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<String> reverse(String value) {
-        return reverse(val(value));
-    }
-
-    /**
-     * Get the <code>reverse(field)</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<String> reverse(Field<String> field) {
-        return new Reverse(field);
     }
 
     /**
@@ -15816,54 +15944,6 @@ public class DSL {
     @Support
     public static Field<String> concat(Field<?>... fields) {
         return new Concat(Tools.nullSafe(fields));
-    }
-
-    /**
-     * Get the substring(field, startingPosition) function.
-     *
-     * @see #substring(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<String> substring(Field<String> field, int startingPosition) {
-        return substring(field, Tools.field(startingPosition));
-    }
-
-    /**
-     * Get the substring(field, startingPosition) function.
-     * <p>
-     * This renders the substr or substring function:
-     * <code><pre>substr([field], [startingPosition]) or
-     * substring([field], [startingPosition])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition) {
-        return new Substring(field, startingPosition);
-    }
-
-    /**
-     * Get the substring(field, startingPosition, length) function.
-     *
-     * @see #substring(Field, Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<String> substring(Field<String> field, int startingPosition, int length) {
-        return substring(field, Tools.field(startingPosition), Tools.field(length));
-    }
-
-    /**
-     * Get the substring(field, startingPosition, length) function.
-     * <p>
-     * This renders the substr or substring function:
-     * <code><pre>substr([field], [startingPosition], [length]) or
-     * substring([field], [startingPosition], [length])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        return new Substring(field, startingPosition, Tools.nullSafe(length));
     }
 
     /**
@@ -19410,58 +19490,6 @@ public class DSL {
     @Support
     public static <T extends Number> Field<T> minus(Field<T> field) {
         return field.neg();
-    }
-
-    /**
-     * Get the sign of a numeric field: sign(field).
-     *
-     * @see #sign(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> sign(Number value) {
-        return sign(Tools.field(value));
-    }
-
-    /**
-     * Get the sign of a numeric field: sign(field).
-     * <p>
-     * This renders the sign function where available:
-     * <code><pre>sign([field])</pre></code>
-     * ... or emulates it elsewhere (without bind variables on values -1, 0, 1):
-     * <code><pre>
-     * CASE WHEN [this] &gt; 0 THEN 1
-     *      WHEN [this] &lt; 0 THEN -1
-     *      ELSE 0
-     * END
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> sign(Field<? extends Number> field) {
-        return new Sign(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the absolute value of a numeric field: abs(field).
-     *
-     * @see #abs(Field)
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> abs(T value) {
-        return abs(Tools.field(value));
-    }
-
-    /**
-     * Get the absolute value of a numeric field: abs(field).
-     * <p>
-     * This renders the same on all dialects:
-     * <code><pre>abs([field])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> abs(Field<T> field) {
-        return function(N_ABS, Tools.nullSafeDataType(field), field);
     }
 
     /**

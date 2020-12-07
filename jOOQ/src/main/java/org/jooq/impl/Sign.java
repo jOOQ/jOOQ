@@ -37,34 +37,47 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Names.N_SGN;
-import static org.jooq.impl.Names.N_SIGN;
-import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>SIGN</code> statement.
  */
-final class Sign extends AbstractField<Integer> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Sign
+extends
+    AbstractField<Integer>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<?>    argument;
+    private final Field<? extends Number> number;
 
-    Sign(Field<?> argument) {
-        super(N_SIGN, INTEGER);
+    Sign(
+        Field number
+    ) {
+        super(N_SIGN, allNotNull(INTEGER, number));
 
-        this.argument = argument;
+        this.number = nullSafeNotNull(number, INTEGER);
     }
 
-    @SuppressWarnings("unchecked")
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -76,14 +89,16 @@ final class Sign extends AbstractField<Integer> {
 
             case SQLITE:
                 ctx.visit(DSL
-                    .when(((Field<Integer>) argument).gt(zero()), inline(1))
-                    .when(((Field<Integer>) argument).lt(zero()), inline(-1))
-                    .when(((Field<Integer>) argument).eq(zero()), inline(0)));
+                    .when(((Field<Integer>) number).gt(zero()), inline(1))
+                    .when(((Field<Integer>) number).lt(zero()), inline(-1))
+                    .when(((Field<Integer>) number).eq(zero()), inline(0)));
                 break;
 
             default:
-                ctx.visit(N_SIGN).sql('(').visit(argument).sql(')');
+                ctx.visit(N_SIGN).sql('(').visit(number).sql(')');
                 break;
         }
     }
+
+
 }

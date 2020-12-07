@@ -52,24 +52,24 @@ import org.jooq.impl.*;
 import java.util.*;
 
 /**
- * The <code>REVERSE</code> statement.
+ * The <code>ABS</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Reverse
+final class Abs<T>
 extends
-    AbstractField<String>
+    AbstractField<T>
 {
 
     private static final long serialVersionUID = 1L;
 
-    private final Field<String> string;
+    private final Field<T> number;
 
-    Reverse(
-        Field string
+    Abs(
+        Field number
     ) {
-        super(N_REVERSE, allNotNull(VARCHAR, string));
+        super(N_ABS, allNotNull(INTEGER, number));
 
-        this.string = nullSafeNotNull(string, VARCHAR);
+        this.number = nullSafeNotNull(number, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -80,31 +80,7 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case HSQLDB:
-            case POSTGRES:
-            case MARIADB:
-            case MYSQL:
-            default:
-                ctx.visit(N_REVERSE).sql('(').visit(string).sql(')');
-                break;
-        }
+        ctx.visit(N_ABS).sql('(').visit(number).sql(')');
     }
 
 

@@ -67,7 +67,6 @@ implements
     private final Sequence<?> sequence;
     private final boolean     dropSequenceIfExists;
 
-
     DropSequenceImpl(
         Configuration configuration,
         Sequence sequence,

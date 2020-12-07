@@ -65,7 +65,6 @@ extends
     private final Field<String>           string;
     private final Field<? extends Number> length;
 
-
     Left(
         Field string,
         Field length
@@ -75,9 +74,6 @@ extends
         this.string = nullSafeNotNull(string, VARCHAR);
         this.length = nullSafeNotNull(length, INTEGER);
     }
-
-    final Field<String>           $string() { return string; }
-    final Field<? extends Number> $length() { return length; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API

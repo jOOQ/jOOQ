@@ -37,54 +37,63 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.K_FOR;
-import static org.jooq.impl.Keywords.K_FROM;
-import static org.jooq.impl.Names.N_MID;
-import static org.jooq.impl.Names.N_SUBSTR;
-import static org.jooq.impl.Names.N_SUBSTRING;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.allNotNull;
-import static org.jooq.impl.Tools.convertVal;
-import static org.jooq.impl.Tools.nullSafe;
-import static org.jooq.impl.Tools.nullSafeNotNull;
-import static org.jooq.impl.Tools.nullableIf;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.Name;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>SUBSTRING</code> statement.
  */
-final class Substring extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Substring
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<String>           field;
+    private final Field<String>           string;
     private final Field<? extends Number> startingPosition;
     private final Field<? extends Number> length;
 
-    Substring(Field<String> field, Field<? extends Number> startingPosition) {
-        super(N_SUBSTRING, allNotNull(VARCHAR, field, startingPosition));
+    Substring(
+        Field string,
+        Field startingPosition
+    ) {
+        super(N_SUBSTRING, allNotNull(VARCHAR, string, startingPosition));
 
-        this.field = nullSafeNotNull(field, VARCHAR);
+        this.string = nullSafeNotNull(string, VARCHAR);
         this.startingPosition = nullSafeNotNull(startingPosition, INTEGER);
         this.length = null;
     }
 
-    Substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        super(N_SUBSTRING, allNotNull(VARCHAR, field, startingPosition, length));
+    Substring(
+        Field string,
+        Field startingPosition,
+        Field length
+    ) {
+        super(N_SUBSTRING, allNotNull(VARCHAR, string, startingPosition, length));
 
-        this.field = nullSafeNotNull(field, VARCHAR);
+        this.string = nullSafeNotNull(string, VARCHAR);
         this.startingPosition = nullSafeNotNull(startingPosition, INTEGER);
         this.length = nullSafeNotNull(length, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -98,9 +107,9 @@ final class Substring extends AbstractField<String> {
 
             case FIREBIRD: {
                 if (length == null)
-                    ctx.visit(N_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(')');
+                    ctx.visit(N_SUBSTRING).sql('(').visit(string).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(')');
                 else
-                    ctx.visit(N_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(' ').visit(K_FOR).sql(' ').visit(length).sql(')');
+                    ctx.visit(N_SUBSTRING).sql('(').visit(string).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(' ').visit(K_FOR).sql(' ').visit(length).sql(')');
 
                 return;
             }
@@ -144,8 +153,10 @@ final class Substring extends AbstractField<String> {
         }
 
         if (length == null)
-            ctx.visit(functionName).sql('(').visit(field).sql(", ").visit(startingPosition).sql(')');
+            ctx.visit(functionName).sql('(').visit(string).sql(", ").visit(startingPosition).sql(')');
         else
-            ctx.visit(functionName).sql('(').visit(field).sql(", ").visit(startingPosition).sql(", ").visit(length).sql(')');
+            ctx.visit(functionName).sql('(').visit(string).sql(", ").visit(startingPosition).sql(", ").visit(length).sql(')');
     }
+
+
 }

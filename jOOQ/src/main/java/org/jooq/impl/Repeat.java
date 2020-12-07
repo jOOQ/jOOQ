@@ -37,39 +37,49 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Names.N_HEX;
-import static org.jooq.impl.Names.N_REPEAT;
-import static org.jooq.impl.Names.N_REPLACE;
-import static org.jooq.impl.Names.N_REPLICATE;
-import static org.jooq.impl.Names.N_ZEROBLOB;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.allNotNull;
-import static org.jooq.impl.Tools.nullSafeNotNull;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>REPEAT</code> statement.
  */
-final class Repeat extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Repeat
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
     private final Field<String>           string;
     private final Field<? extends Number> count;
 
-    Repeat(Field<String> string, Field<? extends Number> count) {
+    Repeat(
+        Field string,
+        Field count
+    ) {
         super(N_REPEAT, allNotNull(VARCHAR, string, count));
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.count = nullSafeNotNull(count, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -107,4 +117,6 @@ final class Repeat extends AbstractField<String> {
                 break;
         }
     }
+
+
 }

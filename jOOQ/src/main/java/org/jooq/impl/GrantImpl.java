@@ -104,10 +104,10 @@ implements
         this.withGrantOption = withGrantOption;
     }
 
-    final Collection<? extends Privilege> $privileges() { return privileges; }
-    final Table<?>                        $on()    { return on; }
-    final Role                            $to()    { return to; }
-    final Boolean                         $toPublic() { return toPublic; }
+    final Collection<? extends Privilege> $privileges()      { return privileges; }
+    final Table<?>                        $on()              { return on; }
+    final Role                            $to()              { return to; }
+    final Boolean                         $toPublic()        { return toPublic; }
     final Boolean                         $withGrantOption() { return withGrantOption; }
 
     // -------------------------------------------------------------------------

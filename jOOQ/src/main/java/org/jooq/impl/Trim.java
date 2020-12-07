@@ -37,52 +37,63 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_BOTH;
-import static org.jooq.impl.Keywords.K_FROM;
-import static org.jooq.impl.Names.N_TRIM;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
-// ...
-import org.jooq.SQLDialect;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>TRIM</code> statement.
  */
-final class Trim extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Trim
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID                   = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-
-
-
-
-
-    private final Field<String> argument;
+    private final Field<String> string;
     private final Field<String> characters;
 
-    Trim(Field<String> argument) {
-        this(argument, null);
+    Trim(
+        Field string
+    ) {
+        super(N_TRIM, allNotNull(VARCHAR, string));
+
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.characters = null;
     }
 
-    Trim(Field<String> argument, Field<String> characters) {
-        super(N_TRIM, VARCHAR);
+    Trim(
+        Field string,
+        Field characters
+    ) {
+        super(N_TRIM, allNotNull(VARCHAR, string, characters));
 
-        this.argument = argument;
-        this.characters = characters;
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.characters = nullSafeNotNull(characters, VARCHAR);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+
+
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -92,15 +103,17 @@ final class Trim extends AbstractField<String> {
 
 
 
-            ctx.visit(N_TRIM).sql('(').visit(argument).sql(')');
+            ctx.visit(N_TRIM).sql('(').visit(string).sql(')');
         }
         else if (ctx.family() == SQLITE)
-            ctx.visit(N_TRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
+            ctx.visit(N_TRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
 
 
 
 
         else
-            ctx.visit(N_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+            ctx.visit(N_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(string).sql(')');
     }
+
+
 }

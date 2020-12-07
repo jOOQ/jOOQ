@@ -14936,6 +14936,60 @@ public class DSL {
     }
 
     /**
+     * The <code>LTRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> ltrim(String string, String characters) {
+        return new LTrim(Tools.field(string), Tools.field(characters));
+    }
+
+    /**
+     * The <code>LTRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> ltrim(String string, Field<String> characters) {
+        return new LTrim(Tools.field(string), characters);
+    }
+
+    /**
+     * The <code>LTRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> ltrim(Field<String> string, String characters) {
+        return new LTrim(string, Tools.field(characters));
+    }
+
+    /**
+     * The <code>LTRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> ltrim(Field<String> string, Field<String> characters) {
+        return new LTrim(string, characters);
+    }
+
+    /**
+     * The <code>LTRIM</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> ltrim(String string) {
+        return new LTrim(Tools.field(string));
+    }
+
+    /**
+     * The <code>LTRIM</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> ltrim(Field<String> string) {
+        return new LTrim(string);
+    }
+
+    /**
      * The <code>REPEAT</code> function.
      */
     @NotNull
@@ -15023,6 +15077,60 @@ public class DSL {
     @Support
     public static Field<String> right(Field<String> string, Field<? extends Number> length) {
         return new Right(string, length);
+    }
+
+    /**
+     * The <code>RTRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rtrim(String string, String characters) {
+        return new RTrim(Tools.field(string), Tools.field(characters));
+    }
+
+    /**
+     * The <code>RTRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rtrim(String string, Field<String> characters) {
+        return new RTrim(Tools.field(string), characters);
+    }
+
+    /**
+     * The <code>RTRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rtrim(Field<String> string, String characters) {
+        return new RTrim(string, Tools.field(characters));
+    }
+
+    /**
+     * The <code>RTRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rtrim(Field<String> string, Field<String> characters) {
+        return new RTrim(string, characters);
+    }
+
+    /**
+     * The <code>RTRIM</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> rtrim(String string) {
+        return new RTrim(Tools.field(string));
+    }
+
+    /**
+     * The <code>RTRIM</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> rtrim(Field<String> string) {
+        return new RTrim(string);
     }
 
     /**
@@ -15151,6 +15259,60 @@ public class DSL {
         return new Substring(string, startingPosition);
     }
 
+    /**
+     * The <code>TRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> trim(String string, String characters) {
+        return new Trim(Tools.field(string), Tools.field(characters));
+    }
+
+    /**
+     * The <code>TRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> trim(String string, Field<String> characters) {
+        return new Trim(Tools.field(string), characters);
+    }
+
+    /**
+     * The <code>TRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> trim(Field<String> string, String characters) {
+        return new Trim(string, Tools.field(characters));
+    }
+
+    /**
+     * The <code>TRIM</code> function.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> trim(Field<String> string, Field<String> characters) {
+        return new Trim(string, characters);
+    }
+
+    /**
+     * The <code>TRIM</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> trim(String string) {
+        return new Trim(Tools.field(string));
+    }
+
+    /**
+     * The <code>TRIM</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> trim(Field<String> string) {
+        return new Trim(string);
+    }
+
 
 
     /**
@@ -15197,152 +15359,6 @@ public class DSL {
     @Support
     public static Field<String> lower(Field<String> field) {
         return new Lower(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the trim(field) function.
-     *
-     * @see #trim(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<String> trim(String value) {
-        return trim(Tools.field(value));
-    }
-
-    /**
-     * Get the trim(field) function.
-     * <p>
-     * This renders the trim function where available:
-     * <code><pre>trim([field])</pre></code> ... or emulates it elsewhere using
-     * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> trim(Field<String> field) {
-        return new Trim(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the <code>trim(field, characters)</code> or
-     * <code>trim(both characters from field)</code> function.
-     *
-     * @see #trim(Field, Field)
-     */
-    @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> trim(String value, String characters) {
-        return trim(Tools.field(value), Tools.field(characters));
-    }
-
-    /**
-     * Get the <code>trim(field, characters)</code> or
-     * <code>trim(both characters from field)</code> function.
-     * <p>
-     * This renders the trim function where available:
-     * <code><pre>trim([field])</pre></code> ... or emulates it elsewhere using
-     * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
-     */
-    @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> trim(Field<String> field, Field<String> characters) {
-        return new Trim(Tools.nullSafe(field), Tools.nullSafe(characters));
-    }
-
-    /**
-     * Get the rtrim(field) function.
-     *
-     * @see #rtrim(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<String> rtrim(String value) {
-        return rtrim(Tools.field(value));
-    }
-
-    /**
-     * Get the rtrim(field) function.
-     * <p>
-     * This renders the rtrim function in all dialects:
-     * <code><pre>rtrim([field])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> rtrim(Field<String> field) {
-        return new RTrim(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the <code>rtrim(field, characters)</code> or
-     * <code>trim(trailing characters from field)</code> function.
-     *
-     * @see #rtrim(Field, Field)
-     */
-    @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rtrim(String value, String characters) {
-        return rtrim(Tools.field(value), Tools.field(characters));
-    }
-
-    /**
-     * Get the <code>rtrim(field, characters)</code> or
-     * <code>trim(trailing characters from field)</code> function.
-     * <p>
-     * This renders the rtrim function in all dialects:
-     * <code><pre>rtrim([field])</pre></code>
-     */
-    @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rtrim(Field<String> field, Field<String> characters) {
-        return new RTrim(Tools.nullSafe(field), Tools.nullSafe(characters));
-    }
-
-    /**
-     * Get the ltrim(field) function.
-     *
-     * @see #ltrim(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<String> ltrim(String value) {
-        return ltrim(Tools.field(value));
-    }
-
-    /**
-     * Get the ltrim(field) function.
-     * <p>
-     * This renders the ltrim function in all dialects:
-     * <code><pre>ltrim([field])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> ltrim(Field<String> field) {
-        return new LTrim(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the <code>ltrim(field, characters)</code> or
-     * <code>trim(leading characters from field)</code> function.
-     *
-     * @see #ltrim(Field, Field)
-     */
-    @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> ltrim(String value, String characters) {
-        return ltrim(Tools.field(value), Tools.field(characters));
-    }
-
-    /**
-     * Get the <code>ltrim(field, characters)</code> or
-     * <code>trim(leading characters from field)</code> function.
-     * <p>
-     * This renders the ltrim function in all dialects:
-     * <code><pre>ltrim([field])</pre></code>
-     */
-    @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> ltrim(Field<String> field, Field<String> characters) {
-        return new LTrim(Tools.nullSafe(field), Tools.nullSafe(characters));
     }
 
     /**

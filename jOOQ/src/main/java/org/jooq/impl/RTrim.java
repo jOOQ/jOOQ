@@ -37,49 +37,69 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_FROM;
-import static org.jooq.impl.Keywords.K_TRAILING;
-import static org.jooq.impl.Names.N_RTRIM;
-import static org.jooq.impl.Names.N_TRIM;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>RTRIM</code> statement.
  */
-final class RTrim extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class RTrim
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<String> argument;
+    private final Field<String> string;
     private final Field<String> characters;
 
-    RTrim(Field<String> argument) {
-        this(argument, null);
+    RTrim(
+        Field string
+    ) {
+        super(N_RTRIM, allNotNull(VARCHAR, string));
+
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.characters = null;
     }
 
-    RTrim(Field<String> argument, Field<String> characters) {
-        super(N_RTRIM, VARCHAR);
+    RTrim(
+        Field string,
+        Field characters
+    ) {
+        super(N_RTRIM, allNotNull(VARCHAR, string, characters));
 
-        this.argument = argument;
-        this.characters = characters;
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.characters = nullSafeNotNull(characters, VARCHAR);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
         if (characters == null) {
             switch (ctx.family()) {
                 case FIREBIRD:
-                    ctx.visit(N_TRIM).sql('(').visit(K_TRAILING).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    ctx.visit(N_TRIM).sql('(').visit(K_TRAILING).sql(' ').visit(K_FROM).sql(' ').visit(string).sql(')');
                     break;
 
                 default:
-                    ctx.visit(N_RTRIM).sql('(').visit(argument).sql(')');
+                    ctx.visit(N_RTRIM).sql('(').visit(string).sql(')');
                     break;
             }
         }
@@ -91,13 +111,15 @@ final class RTrim extends AbstractField<String> {
 
 
                 case SQLITE:
-                    ctx.visit(N_RTRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
+                    ctx.visit(N_RTRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
                     break;
 
                 default:
-                    ctx.visit(N_TRIM).sql('(').visit(K_TRAILING).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    ctx.visit(N_TRIM).sql('(').visit(K_TRAILING).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(string).sql(')');
                     break;
             }
         }
     }
+
+
 }

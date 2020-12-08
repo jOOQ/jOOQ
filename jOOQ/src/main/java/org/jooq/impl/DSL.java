@@ -15614,6 +15614,24 @@ public class DSL {
     }
 
     /**
+     * The <code>SPACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> space(Number count) {
+        return new Space(Tools.field(count));
+    }
+
+    /**
+     * The <code>SPACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> space(Field<? extends Number> count) {
+        return new Space(count);
+    }
+
+    /**
      * The <code>SUBSTRING</code> function.
      */
     @NotNull
@@ -15887,36 +15905,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length, char character) {
         return lpad(field, length, Character.toString(character));
-    }
-
-    /**
-     * Get the SQL Server specific <code>SPACE()</code> function.
-     * <p>
-     * This function can be emulated using {@link #repeat(String, int)} in
-     * dialects that do not ship with a native <code>SPACE()</code> function.
-     *
-     * @see <a
-     *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> space(int value) {
-        return space(Tools.field(value));
-    }
-
-    /**
-     * Get the SQL Server specific <code>SPACE()</code> function.
-     * <p>
-     * This function can be emulated using {@link #repeat(String, int)} in
-     * dialects that do not ship with a native <code>SPACE()</code> function.
-     *
-     * @see <a
-     *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> space(Field<Integer> value) {
-        return new Space(value);
     }
 
     /**

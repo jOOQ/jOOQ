@@ -37,28 +37,46 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_SPACE;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.nullSafeNotNull;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-final class Space extends AbstractField<String> {
+import java.util.*;
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = -4239524454814412161L;
+/**
+ * The <code>SPACE</code> statement.
+ */
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Space
+extends
+    AbstractField<String>
+{
 
-    private final Field<Integer> count;
+    private static final long serialVersionUID = 1L;
 
-    Space(Field<Integer> count) {
-        super(N_SPACE, VARCHAR.nullable(count == null || count.getDataType().nullable()));
+    private final Field<? extends Number> count;
+
+    Space(
+        Field<? extends Number> count
+    ) {
+        super(N_SPACE, allNotNull(VARCHAR, count));
 
         this.count = nullSafeNotNull(count, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -110,5 +128,6 @@ final class Space extends AbstractField<String> {
                 break;
         }
     }
+
 
 }

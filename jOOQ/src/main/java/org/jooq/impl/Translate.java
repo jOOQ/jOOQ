@@ -37,33 +37,52 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.Names.N_TRANSLATE;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>TRANSLATE</code> statement.
  */
-final class Translate extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Translate
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = 6776882414592454999L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<String> text;
+    private final Field<String> string;
     private final Field<String> from;
     private final Field<String> to;
 
-    Translate(Field<String> text, Field<String> from, Field<String> to) {
-        super(N_TRANSLATE, text.getDataType());
+    Translate(
+        Field<String> string,
+        Field<String> from,
+        Field<String> to
+    ) {
+        super(N_TRANSLATE, allNotNull(VARCHAR, string, from, to));
 
-        this.text = text;
-        this.from = from;
-        this.to = to;
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.from = nullSafeNotNull(from, VARCHAR);
+        this.to = nullSafeNotNull(to, VARCHAR);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -79,8 +98,10 @@ final class Translate extends AbstractField<String> {
 
 
             default:
-                ctx.visit(function("translate", getDataType(), text, from, to));
+                ctx.visit(function("translate", getDataType(), string, from, to));
                 return;
         }
     }
+
+
 }

@@ -15722,6 +15722,78 @@ public class DSL {
     }
 
     /**
+     * The <code>TRANSLATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<String> translate(String string, String from, String to) {
+        return new Translate(Tools.field(string), Tools.field(from), Tools.field(to));
+    }
+
+    /**
+     * The <code>TRANSLATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<String> translate(String string, String from, Field<String> to) {
+        return new Translate(Tools.field(string), Tools.field(from), to);
+    }
+
+    /**
+     * The <code>TRANSLATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<String> translate(String string, Field<String> from, String to) {
+        return new Translate(Tools.field(string), from, Tools.field(to));
+    }
+
+    /**
+     * The <code>TRANSLATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<String> translate(String string, Field<String> from, Field<String> to) {
+        return new Translate(Tools.field(string), from, to);
+    }
+
+    /**
+     * The <code>TRANSLATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<String> translate(Field<String> string, String from, String to) {
+        return new Translate(string, Tools.field(from), Tools.field(to));
+    }
+
+    /**
+     * The <code>TRANSLATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<String> translate(Field<String> string, String from, Field<String> to) {
+        return new Translate(string, Tools.field(from), to);
+    }
+
+    /**
+     * The <code>TRANSLATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<String> translate(Field<String> string, Field<String> from, String to) {
+        return new Translate(string, from, Tools.field(to));
+    }
+
+    /**
+     * The <code>TRANSLATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<String> translate(Field<String> string, Field<String> from, Field<String> to) {
+        return new Translate(string, from, to);
+    }
+
+    /**
      * The <code>TRIM</code> function.
      */
     @NotNull
@@ -15815,26 +15887,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length, char character) {
         return lpad(field, length, Character.toString(character));
-    }
-
-    /**
-     * Get the translate(field, from, to) function.
-     *
-     * @see #translate(Field, Field, Field)
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(Field<String> text, String from, String to) {
-        return translate(text, Tools.field(from), Tools.field(to));
-    }
-
-    /**
-     * Get the translate(field, from, to) function.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(Field<String> text, Field<String> from, Field<String> to) {
-        return new Translate(text, from, to);
     }
 
     /**

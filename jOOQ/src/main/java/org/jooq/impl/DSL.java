@@ -15367,6 +15367,18 @@ public class DSL {
         return new Rtrim(string);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>SIGN</code> function.
      */
@@ -20236,23 +20248,6 @@ public class DSL {
     public static Field<BigDecimal> rad(Field<? extends Number> field) {
         return new Radians(Tools.nullSafe(field));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

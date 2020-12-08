@@ -959,21 +959,4 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 log.debug("Re-render query", "Forcing bind variable inlining as " + configuration().dialect() + " does not support " + params + " bind variables (or more) in a single query");
         }
     }
-
-    /**
-     * A query rendering signal to force re-rendering a query with different
-     * settings.
-     */
-    static class ForceSettingsSignal extends ControlFlowSignal {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -1530836969063166588L;
-        final Settings            settings;
-
-        ForceSettingsSignal(Settings settings) {
-            this.settings = settings;
-        }
-    }
 }

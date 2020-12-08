@@ -82,7 +82,6 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
-import org.jooq.impl.DefaultRenderContext.ForceSettingsSignal;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
 

@@ -288,7 +288,6 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.DefaultRenderContext.ForceSettingsSignal;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -300,8 +299,6 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * General internal jOOQ utilities
@@ -5910,6 +5907,10 @@ final class Tools {
              : preferDefault && field.getType() != defaultType.getType()
              ? defaultType.nullable(field.getDataType().nullable())
              : (DataType<T>) field.getDataType();
+    }
+
+    static final <T> DataType<T> allNotNull(DataType<T> defaultType) {
+        return defaultType.notNull();
     }
 
     static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?> f1) {

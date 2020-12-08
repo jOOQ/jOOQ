@@ -202,7 +202,6 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     @Override
     protected String beforeClose(String string) {
         string = super.beforeClose(string);
-
         StringBuilder importString = new StringBuilder();
         Pattern samePackagePattern = Pattern.compile(packageName + "\\.[^\\.]+");
         String dotClassName = "." + className;
@@ -223,8 +222,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             if (imp.endsWith(dotClassName))
                 continue;
 
-            // [#4229] [#4531] Avoid warnings due to unnecessary same-package imports
-            if (packageName.length() > 0 && samePackagePattern.matcher(imp).matches())
+            // [#4229] [#4531] [#11103] Avoid warnings due to unnecessary same-package imports
+            if (packageName != null && packageName.length() > 0 && samePackagePattern.matcher(imp).matches())
                 continue;
 
             String topLevelPackage = imp.split("\\.")[0];

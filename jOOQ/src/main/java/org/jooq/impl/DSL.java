@@ -14900,6 +14900,60 @@ public class DSL {
     }
 
     /**
+     * The <code>ASCII</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> ascii(String string) {
+        return new Ascii(Tools.field(string));
+    }
+
+    /**
+     * The <code>ASCII</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> ascii(Field<String> string) {
+        return new Ascii(string);
+    }
+
+    /**
+     * The <code>BIT_LENGTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> bitLength(String string) {
+        return new BitLength(Tools.field(string));
+    }
+
+    /**
+     * The <code>BIT_LENGTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> bitLength(Field<String> string) {
+        return new BitLength(string);
+    }
+
+    /**
+     * The <code>CHAR_LENGTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> charLength(String string) {
+        return new CharLength(Tools.field(string));
+    }
+
+    /**
+     * The <code>CHAR_LENGTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> charLength(Field<String> string) {
+        return new CharLength(string);
+    }
+
+    /**
      * The <code>LEFT</code> function.
      */
     @NotNull
@@ -14933,6 +14987,24 @@ public class DSL {
     @Support
     public static Field<String> left(Field<String> string, Field<? extends Number> length) {
         return new Left(string, length);
+    }
+
+    /**
+     * The <code>LENGTH</code> function, an alias for the <code>CHAR_LENGTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> length(String string) {
+        return charLength(Tools.field(string));
+    }
+
+    /**
+     * The <code>LENGTH</code> function, an alias for the <code>CHAR_LENGTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> length(Field<String> string) {
+        return charLength(string);
     }
 
     /**
@@ -15059,6 +15131,78 @@ public class DSL {
     @Support
     public static Field<String> ltrim(Field<String> string) {
         return new Ltrim(string);
+    }
+
+    /**
+     * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> mid(Field<String> string, int startingPosition, int length) {
+        return substring(string, Tools.field(startingPosition), Tools.field(length));
+    }
+
+    /**
+     * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> mid(Field<String> string, int startingPosition, Field<? extends Number> length) {
+        return substring(string, Tools.field(startingPosition), length);
+    }
+
+    /**
+     * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> mid(Field<String> string, Field<? extends Number> startingPosition, int length) {
+        return substring(string, startingPosition, Tools.field(length));
+    }
+
+    /**
+     * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> mid(Field<String> string, Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        return substring(string, startingPosition, length);
+    }
+
+    /**
+     * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> mid(Field<String> string, int startingPosition) {
+        return substring(string, Tools.field(startingPosition));
+    }
+
+    /**
+     * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> mid(Field<String> string, Field<? extends Number> startingPosition) {
+        return substring(string, startingPosition);
+    }
+
+    /**
+     * The <code>OCTET_LENGTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> octetLength(String string) {
+        return new OctetLength(Tools.field(string));
+    }
+
+    /**
+     * The <code>OCTET_LENGTH</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> octetLength(Field<String> string) {
+        return new OctetLength(string);
     }
 
     /**
@@ -15824,29 +15968,6 @@ public class DSL {
     }
 
     /**
-     * Get the ascii(field) function.
-     *
-     * @see #ascii(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> ascii(String field) {
-        return ascii(Tools.field(field));
-    }
-
-    /**
-     * Get the ascii(field) function.
-     * <p>
-     * This renders the ascii function:
-     * <code><pre>ascii([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> ascii(Field<String> field) {
-        return new Ascii(field);
-    }
-
-    /**
      * Get the <code>concat(field, value)</code> function.
      *
      * @see #concat(Field...)
@@ -15893,120 +16014,6 @@ public class DSL {
     @Support
     public static Field<String> concat(Field<?>... fields) {
         return new Concat(Tools.nullSafe(fields));
-    }
-
-    /**
-     * Get the mid(field, startingPosition, length) function.
-     *
-     * @see #substring(Field, Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<String> mid(Field<String> field, int startingPosition, int length) {
-        return substring(field, Tools.field(startingPosition), Tools.field(length));
-    }
-
-    /**
-     * Get the mid(field, startingPosition, length) function.
-     * <p>
-     * This renders the substr or substring function:
-     * <code><pre>substr([field], [startingPosition], [length]) or
-     * substring([field], [startingPosition], [length])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<String> mid(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        return substring(field, startingPosition, length);
-    }
-
-    /**
-     * Get the length of a <code>VARCHAR</code> type. This is a synonym for
-     * {@link #charLength(String)}.
-     *
-     * @see #charLength(String)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> length(String value) {
-        return length(Tools.field(value));
-    }
-
-    /**
-     * Get the length of a <code>VARCHAR</code> type. This is a synonym for
-     * {@link #charLength(Field)}.
-     *
-     * @see #charLength(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> length(Field<String> field) {
-        return charLength(field);
-    }
-
-    /**
-     * Get the char_length(field) function.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> charLength(String value) {
-        return charLength(Tools.field(value));
-    }
-
-    /**
-     * Get the char_length(field) function.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> charLength(Field<String> field) {
-        return new CharLength(field);
-    }
-
-    /**
-     * Get the bit_length(field) function.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> bitLength(String value) {
-        return bitLength(Tools.field(value));
-    }
-
-    /**
-     * Get the bit_length(field) function.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> bitLength(Field<String> field) {
-        return new BitLength(field);
-    }
-
-    /**
-     * Get the octet_length(field) function.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> octetLength(String value) {
-        return octetLength(Tools.field(value));
-    }
-
-    /**
-     * Get the octet_length(field) function.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> octetLength(Field<String> field) {
-        return new OctetLength(field);
     }
 
     // ------------------------------------------------------------------------

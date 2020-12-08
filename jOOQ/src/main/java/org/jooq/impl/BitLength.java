@@ -37,38 +37,46 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Names.N_BIT_LENGTH;
-import static org.jooq.impl.Names.N_CHAR_LENGTH;
-import static org.jooq.impl.Names.N_DATALENGTH;
-import static org.jooq.impl.Names.N_LEN;
-import static org.jooq.impl.Names.N_LENGTH;
-import static org.jooq.impl.Names.N_LENGTHB;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.nullSafeNotNull;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>BIT LENGTH</code> statement.
  */
-final class BitLength extends AbstractField<Integer> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class BitLength
+extends
+    AbstractField<Integer>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1484652553287331042L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<String> field;
+    private final Field<String> string;
 
-    BitLength(Field<String> field) {
-        super(N_BIT_LENGTH, INTEGER.nullable(field == null || field.getDataType().nullable()));
+    BitLength(
+        Field<String> string
+    ) {
+        super(N_BIT_LENGTH, allNotNull(INTEGER, string));
 
-        this.field = nullSafeNotNull(field, VARCHAR);
+        this.string = nullSafeNotNull(string, VARCHAR);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public void accept(Context<?> ctx) {
@@ -97,12 +105,14 @@ final class BitLength extends AbstractField<Integer> {
 
             case DERBY:
             case SQLITE:
-                ctx.visit(inline(8).times(function(N_LENGTH, getDataType(), field)));
+                ctx.visit(inline(8).times(function(N_LENGTH, getDataType(), string)));
                 break;
 
             default:
-                ctx.visit(function(N_BIT_LENGTH, getDataType(), field));
+                ctx.visit(function(N_BIT_LENGTH, getDataType(), string));
                 break;
         }
     }
+
+
 }

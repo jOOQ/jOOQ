@@ -37,34 +37,57 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_SPLIT_PART;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>SPLIT PART</code> statement.
  */
-final class SplitPart extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class SplitPart
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = -5368480391694006195L;
-    private final Field<String>  field;
-    private final Field<String>  delimiter;
-    private final Field<Integer> n;
+    private static final long serialVersionUID = 1L;
 
-    SplitPart(Field<String> field, Field<String> delimiter, Field<Integer> n) {
-        super(N_SPLIT_PART, field.getDataType());
+    private final Field<String>           string;
+    private final Field<String>           delimiter;
+    private final Field<? extends Number> n;
 
-        this.field = field;
-        this.delimiter = delimiter;
-        this.n = n;
+    SplitPart(
+        Field<String> string,
+        Field<String> delimiter,
+        Field<? extends Number> n
+    ) {
+        super(N_SPLIT_PART, allNotNull(VARCHAR, string, delimiter, n));
+
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.delimiter = nullSafeNotNull(delimiter, VARCHAR);
+        this.n = nullSafeNotNull(n, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_SPLIT_PART).sql('(').visit(field).sql(", ").visit(delimiter).sql(", ").visit(n).sql(')');
+        ctx.visit(N_SPLIT_PART).sql('(').visit(string).sql(", ").visit(delimiter).sql(", ").visit(n).sql(')');
     }
+
+
 }

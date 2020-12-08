@@ -15470,6 +15470,42 @@ public class DSL {
     }
 
     /**
+     * The <code>SPLIT_PART</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<String> splitPart(Field<String> string, String delimiter, Number n) {
+        return new SplitPart(string, Tools.field(delimiter), Tools.field(n));
+    }
+
+    /**
+     * The <code>SPLIT_PART</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<String> splitPart(Field<String> string, String delimiter, Field<? extends Number> n) {
+        return new SplitPart(string, Tools.field(delimiter), n);
+    }
+
+    /**
+     * The <code>SPLIT_PART</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Number n) {
+        return new SplitPart(string, delimiter, Tools.field(n));
+    }
+
+    /**
+     * The <code>SPLIT_PART</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Field<? extends Number> n) {
+        return new SplitPart(string, delimiter, n);
+    }
+
+    /**
      * The <code>SUBSTRING</code> function.
      */
     @NotNull
@@ -15731,24 +15767,6 @@ public class DSL {
     @Support({ MYSQL, POSTGRES })
     public static Field<String> regexpReplaceFirst(Field<String> field, Field<String> pattern, Field<String> replacement) {
         return new RegexpReplace(field, Tools.nullSafe(pattern), Tools.nullSafe(replacement), false);
-    }
-
-    /**
-     * Get the <code>SPLIT_PART</code> function.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<String> splitPart(Field<String> field, String delimiter, int n) {
-        return splitPart(field, Tools.field(delimiter), Tools.field(n));
-    }
-
-    /**
-     * Get the <code>SPLIT_PART</code> function.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<String> splitPart(Field<String> field, Field<String> delimiter, Field<Integer> n) {
-        return new SplitPart(field, Tools.nullSafe(delimiter), Tools.nullSafe(n));
     }
 
     /**

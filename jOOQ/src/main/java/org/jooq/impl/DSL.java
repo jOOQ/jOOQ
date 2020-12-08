@@ -14958,42 +14958,6 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(String string, int length, String character) {
-        return new Lpad(Tools.field(string), Tools.field(length), Tools.field(character));
-    }
-
-    /**
-     * The <code>LPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(String string, int length, Field<String> character) {
-        return new Lpad(Tools.field(string), Tools.field(length), character);
-    }
-
-    /**
-     * The <code>LPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(String string, Field<? extends Number> length, String character) {
-        return new Lpad(Tools.field(string), length, Tools.field(character));
-    }
-
-    /**
-     * The <code>LPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(String string, Field<? extends Number> length, Field<String> character) {
-        return new Lpad(Tools.field(string), length, character);
-    }
-
-    /**
-     * The <code>LPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> string, int length, String character) {
         return new Lpad(string, Tools.field(length), Tools.field(character));
     }
@@ -15023,24 +14987,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> string, Field<? extends Number> length, Field<String> character) {
         return new Lpad(string, length, character);
-    }
-
-    /**
-     * The <code>LPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(String string, int length) {
-        return new Lpad(Tools.field(string), Tools.field(length));
-    }
-
-    /**
-     * The <code>LPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(String string, Field<? extends Number> length) {
-        return new Lpad(Tools.field(string), length);
     }
 
     /**
@@ -15264,42 +15210,6 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(String string, String search, String replace) {
-        return new Replace(Tools.field(string), Tools.field(search), Tools.field(replace));
-    }
-
-    /**
-     * The <code>REPLACE</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(String string, String search, Field<String> replace) {
-        return new Replace(Tools.field(string), Tools.field(search), replace);
-    }
-
-    /**
-     * The <code>REPLACE</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(String string, Field<String> search, String replace) {
-        return new Replace(Tools.field(string), search, Tools.field(replace));
-    }
-
-    /**
-     * The <code>REPLACE</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(String string, Field<String> search, Field<String> replace) {
-        return new Replace(Tools.field(string), search, replace);
-    }
-
-    /**
-     * The <code>REPLACE</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> string, String search, String replace) {
         return new Replace(string, Tools.field(search), Tools.field(replace));
     }
@@ -15329,24 +15239,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> string, Field<String> search, Field<String> replace) {
         return new Replace(string, search, replace);
-    }
-
-    /**
-     * The <code>REPLACE</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(String string, String search) {
-        return new Replace(Tools.field(string), Tools.field(search));
-    }
-
-    /**
-     * The <code>REPLACE</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(String string, Field<String> search) {
-        return new Replace(Tools.field(string), search);
     }
 
     /**
@@ -15426,42 +15318,6 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(String string, int length, String character) {
-        return new Rpad(Tools.field(string), Tools.field(length), Tools.field(character));
-    }
-
-    /**
-     * The <code>RPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(String string, int length, Field<String> character) {
-        return new Rpad(Tools.field(string), Tools.field(length), character);
-    }
-
-    /**
-     * The <code>RPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(String string, Field<? extends Number> length, String character) {
-        return new Rpad(Tools.field(string), length, Tools.field(character));
-    }
-
-    /**
-     * The <code>RPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(String string, Field<? extends Number> length, Field<String> character) {
-        return new Rpad(Tools.field(string), length, character);
-    }
-
-    /**
-     * The <code>RPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> string, int length, String character) {
         return new Rpad(string, Tools.field(length), Tools.field(character));
     }
@@ -15491,24 +15347,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> string, Field<? extends Number> length, Field<String> character) {
         return new Rpad(string, length, character);
-    }
-
-    /**
-     * The <code>RPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(String string, int length) {
-        return new Rpad(Tools.field(string), Tools.field(length));
-    }
-
-    /**
-     * The <code>RPAD</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(String string, Field<? extends Number> length) {
-        return new Rpad(Tools.field(string), length);
     }
 
     /**
@@ -15636,42 +15474,6 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> substring(String string, int startingPosition, int length) {
-        return new Substring(Tools.field(string), Tools.field(startingPosition), Tools.field(length));
-    }
-
-    /**
-     * The <code>SUBSTRING</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> substring(String string, int startingPosition, Field<? extends Number> length) {
-        return new Substring(Tools.field(string), Tools.field(startingPosition), length);
-    }
-
-    /**
-     * The <code>SUBSTRING</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> substring(String string, Field<? extends Number> startingPosition, int length) {
-        return new Substring(Tools.field(string), startingPosition, Tools.field(length));
-    }
-
-    /**
-     * The <code>SUBSTRING</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> substring(String string, Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        return new Substring(Tools.field(string), startingPosition, length);
-    }
-
-    /**
-     * The <code>SUBSTRING</code> function.
-     */
-    @NotNull
-    @Support
     public static Field<String> substring(Field<String> string, int startingPosition, int length) {
         return new Substring(string, Tools.field(startingPosition), Tools.field(length));
     }
@@ -15708,24 +15510,6 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> substring(String string, int startingPosition) {
-        return new Substring(Tools.field(string), Tools.field(startingPosition));
-    }
-
-    /**
-     * The <code>SUBSTRING</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> substring(String string, Field<? extends Number> startingPosition) {
-        return new Substring(Tools.field(string), startingPosition);
-    }
-
-    /**
-     * The <code>SUBSTRING</code> function.
-     */
-    @NotNull
-    @Support
     public static Field<String> substring(Field<String> string, int startingPosition) {
         return new Substring(string, Tools.field(startingPosition));
     }
@@ -15737,42 +15521,6 @@ public class DSL {
     @Support
     public static Field<String> substring(Field<String> string, Field<? extends Number> startingPosition) {
         return new Substring(string, startingPosition);
-    }
-
-    /**
-     * The <code>TRANSLATE</code> function.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(String string, String from, String to) {
-        return new Translate(Tools.field(string), Tools.field(from), Tools.field(to));
-    }
-
-    /**
-     * The <code>TRANSLATE</code> function.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(String string, String from, Field<String> to) {
-        return new Translate(Tools.field(string), Tools.field(from), to);
-    }
-
-    /**
-     * The <code>TRANSLATE</code> function.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(String string, Field<String> from, String to) {
-        return new Translate(Tools.field(string), from, Tools.field(to));
-    }
-
-    /**
-     * The <code>TRANSLATE</code> function.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(String string, Field<String> from, Field<String> to) {
-        return new Translate(Tools.field(string), from, to);
     }
 
     /**

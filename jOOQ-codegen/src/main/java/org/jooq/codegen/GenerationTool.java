@@ -897,7 +897,9 @@ public class GenerationTool {
             // Close connection only if it was created by the GenerationTool
             if (connection != null) {
                 if (close) {
-                    if (ctx.family() == HSQLDB && dataSource == null)
+
+                    // [#11105] In case of misconfiguration, the ctx reference could be null as a side effect
+                    if (ctx != null && ctx.family() == HSQLDB && dataSource == null)
                         ctx.execute("shutdown");
 
                     connection.close();

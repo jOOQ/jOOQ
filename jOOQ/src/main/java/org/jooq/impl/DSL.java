@@ -15152,6 +15152,114 @@ public class DSL {
     }
 
     /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(String string, String search, String replace) {
+        return new Replace(Tools.field(string), Tools.field(search), Tools.field(replace));
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(String string, String search, Field<String> replace) {
+        return new Replace(Tools.field(string), Tools.field(search), replace);
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(String string, Field<String> search, String replace) {
+        return new Replace(Tools.field(string), search, Tools.field(replace));
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(String string, Field<String> search, Field<String> replace) {
+        return new Replace(Tools.field(string), search, replace);
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(Field<String> string, String search, String replace) {
+        return new Replace(string, Tools.field(search), Tools.field(replace));
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(Field<String> string, String search, Field<String> replace) {
+        return new Replace(string, Tools.field(search), replace);
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(Field<String> string, Field<String> search, String replace) {
+        return new Replace(string, search, Tools.field(replace));
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(Field<String> string, Field<String> search, Field<String> replace) {
+        return new Replace(string, search, replace);
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(String string, String search) {
+        return new Replace(Tools.field(string), Tools.field(search));
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(String string, Field<String> search) {
+        return new Replace(Tools.field(string), search);
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(Field<String> string, String search) {
+        return new Replace(string, Tools.field(search));
+    }
+
+    /**
+     * The <code>REPLACE</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> replace(Field<String> string, Field<String> search) {
+        return new Replace(string, search);
+    }
+
+    /**
      * The <code>REVERSE</code> function.
      */
     @NotNull
@@ -15681,56 +15789,6 @@ public class DSL {
         replace = replace(replace, inline("_"), inline(esc + "_"));
 
         return replace;
-    }
-
-    /**
-     * Get the replace(field, search) function.
-     *
-     * @see #replace(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(Field<String> field, String search) {
-        return replace(Tools.nullSafe(field), Tools.field(search));
-    }
-
-    /**
-     * Get the replace(field, search) function.
-     * <p>
-     * This renders the replace or str_replace function where available:
-     * <code><pre>replace([field], [search]) or
-     * str_replace([field], [search])</pre></code> ... or emulates it elsewhere
-     * using the three-argument replace function:
-     * <code><pre>replace([field], [search], '')</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(Field<String> field, Field<String> search) {
-        return new Replace(Tools.nullSafe(field), Tools.nullSafe(search), null);
-    }
-
-    /**
-     * Get the replace(field, search, replace) function.
-     *
-     * @see #replace(Field, Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(Field<String> field, String search, String replace) {
-        return replace(Tools.nullSafe(field), Tools.field(search), Tools.field(replace));
-    }
-
-    /**
-     * Get the replace(field, search, replace) function.
-     * <p>
-     * This renders the replace or str_replace function:
-     * <code><pre>replace([field], [search]) or
-     * str_replace([field], [search])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
-        return new Replace(Tools.nullSafe(field), Tools.nullSafe(search), Tools.nullSafe(replace));
     }
 
     /**

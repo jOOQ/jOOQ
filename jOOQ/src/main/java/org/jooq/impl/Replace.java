@@ -37,34 +37,63 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.Names.N_REPLACE;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>REPLACE</code> statement.
  */
-final class Replace extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Replace
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
-    private final Field<?>    field;
-    private final Field<?>    search;
-    private final Field<?>    replace;
+    private static final long serialVersionUID = 1L;
 
-    Replace(Field<?> field, Field<?> search, Field<?> replace) {
-        super(N_REPLACE, SQLDataType.VARCHAR);
+    private final Field<String> string;
+    private final Field<String> search;
+    private final Field<String> replace;
 
-        this.field = field;
-        this.search = search;
-        this.replace = replace;
+    Replace(
+        Field string,
+        Field search
+    ) {
+        super(N_REPLACE, allNotNull(VARCHAR, string, search));
+
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.search = nullSafeNotNull(search, VARCHAR);
+        this.replace = null;
     }
+
+    Replace(
+        Field string,
+        Field search,
+        Field replace
+    ) {
+        super(N_REPLACE, allNotNull(VARCHAR, string, search, replace));
+
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.search = nullSafeNotNull(search, VARCHAR);
+        this.replace = nullSafeNotNull(replace, VARCHAR);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -109,19 +138,21 @@ final class Replace extends AbstractField<String> {
             case POSTGRES:
             case SQLITE:
                 if (replace == null)
-                    ctx.visit(function("replace", VARCHAR, field, search, val("")));
+                    ctx.visit(function("replace", VARCHAR, string, search, val("")));
                 else
-                    ctx.visit(function("replace", VARCHAR, field, search, replace));
+                    ctx.visit(function("replace", VARCHAR, string, search, replace));
 
                 return;
 
             default:
                 if (replace == null)
-                    ctx.visit(function("replace", VARCHAR, field, search));
+                    ctx.visit(function("replace", VARCHAR, string, search));
                 else
-                    ctx.visit(function("replace", VARCHAR, field, search, replace));
+                    ctx.visit(function("replace", VARCHAR, string, search, replace));
 
                 return;
         }
     }
+
+
 }

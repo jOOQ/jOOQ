@@ -200,7 +200,7 @@ public class GenerationTool {
                 generate(configuration);
             }
             catch (Exception e) {
-                log.error("Cannot read " + file + ". Error : " + e.getMessage(), e);
+                log.error("Error in file: " + file + ". Error : " + e.getMessage(), e);
 
                 System.exit(-1);
                 return;

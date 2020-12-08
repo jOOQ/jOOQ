@@ -5900,24 +5900,24 @@ final class Tools {
     }
 
     private static final DataType<?> dataType(Field<?> field) {
-        return dataType(OTHER, field);
+        return dataType(OTHER, field, false);
     }
 
     @SuppressWarnings("unchecked")
-    private static final <T> DataType<T> dataType(DataType<T> defaultType, Field<?> field) {
+    private static final <T> DataType<T> dataType(DataType<T> defaultType, Field<?> field, boolean preferDefault) {
         return field == null
              ? defaultType
-             : field.getType() != defaultType.getType()
+             : preferDefault && field.getType() != defaultType.getType()
              ? defaultType.nullable(field.getDataType().nullable())
              : (DataType<T>) field.getDataType();
     }
 
     static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?> f1) {
-        return dataType(defaultType, f1);
+        return dataType(defaultType, f1, true);
     }
 
     static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?> f1, Field<?> f2) {
-        DataType<T> result = dataType(defaultType, f1);
+        DataType<T> result = dataType(defaultType, f1, true);
 
         if (result.nullable())
             return result;
@@ -5928,7 +5928,7 @@ final class Tools {
     }
 
     static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?> f1, Field<?> f2, Field<?> f3) {
-        DataType<T> result = dataType(defaultType, f1);
+        DataType<T> result = dataType(defaultType, f1, true);
 
         if (result.nullable())
             return result;
@@ -5941,7 +5941,7 @@ final class Tools {
     }
 
     static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?>... fields) {
-        DataType<T> result = dataType(defaultType, isEmpty(fields) ? null : fields[0]);
+        DataType<T> result = dataType(defaultType, isEmpty(fields) ? null : fields[0], true);
 
         if (result.nullable())
             return result;
@@ -5954,11 +5954,11 @@ final class Tools {
     }
 
     static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<?> f1) {
-        return dataType(defaultType, f1);
+        return dataType(defaultType, f1, false);
     }
 
     static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<?> f1, Field<?> f2) {
-        DataType<T> result = dataType(defaultType, f1);
+        DataType<T> result = dataType(defaultType, f1, false);
 
         if (!result.nullable())
             return result;
@@ -5969,7 +5969,7 @@ final class Tools {
     }
 
     static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<?> f1, Field<?> f2, Field<?> f3) {
-        DataType<T> result = dataType(defaultType, f1);
+        DataType<T> result = dataType(defaultType, f1, false);
 
         if (!result.nullable())
             return result;
@@ -5982,7 +5982,7 @@ final class Tools {
     }
 
     static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<?>... fields) {
-        DataType<T> result = dataType(defaultType, isEmpty(fields) ? null : fields[0]);
+        DataType<T> result = dataType(defaultType, isEmpty(fields) ? null : fields[0], false);
 
         if (!result.nullable())
             return result;

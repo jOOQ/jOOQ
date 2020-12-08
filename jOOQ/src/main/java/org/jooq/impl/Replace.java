@@ -67,8 +67,8 @@ extends
     private final Field<String> replace;
 
     Replace(
-        Field string,
-        Field search
+        Field<String> string,
+        Field<String> search
     ) {
         super(N_REPLACE, allNotNull(VARCHAR, string, search));
 
@@ -78,9 +78,9 @@ extends
     }
 
     Replace(
-        Field string,
-        Field search,
-        Field replace
+        Field<String> string,
+        Field<String> search,
+        Field<String> replace
     ) {
         super(N_REPLACE, allNotNull(VARCHAR, string, search, replace));
 

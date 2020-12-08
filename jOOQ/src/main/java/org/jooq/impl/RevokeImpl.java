@@ -74,7 +74,7 @@ implements
 
     RevokeImpl(
         Configuration configuration,
-        Collection privileges,
+        Collection<? extends Privilege> privileges,
         boolean revokeGrantOptionFor
     ) {
         this(
@@ -89,9 +89,9 @@ implements
 
     RevokeImpl(
         Configuration configuration,
-        Collection privileges,
+        Collection<? extends Privilege> privileges,
         boolean revokeGrantOptionFor,
-        Table on,
+        Table<?> on,
         Role from,
         Boolean fromPublic
     ) {

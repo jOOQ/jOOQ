@@ -66,8 +66,8 @@ extends
     private final Field<? extends Number> count;
 
     Repeat(
-        Field string,
-        Field count
+        Field<String> string,
+        Field<? extends Number> count
     ) {
         super(N_REPEAT, allNotNull(VARCHAR, string, count));
 

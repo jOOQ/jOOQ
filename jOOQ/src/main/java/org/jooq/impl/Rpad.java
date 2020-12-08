@@ -67,8 +67,8 @@ extends
     private final Field<String>           character;
 
     Rpad(
-        Field string,
-        Field length
+        Field<String> string,
+        Field<? extends Number> length
     ) {
         super(N_RPAD, allNotNull(VARCHAR, string, length));
 
@@ -78,9 +78,9 @@ extends
     }
 
     Rpad(
-        Field string,
-        Field length,
-        Field character
+        Field<String> string,
+        Field<? extends Number> length,
+        Field<String> character
     ) {
         super(N_RPAD, allNotNull(VARCHAR, string, length, character));
 

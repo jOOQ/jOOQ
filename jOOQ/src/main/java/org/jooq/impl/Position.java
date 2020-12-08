@@ -67,8 +67,8 @@ extends
     private final Field<? extends Number> startIndex;
 
     Position(
-        Field in,
-        Field search
+        Field<String> in,
+        Field<String> search
     ) {
         super(N_POSITION, allNotNull(INTEGER, in, search));
 
@@ -78,9 +78,9 @@ extends
     }
 
     Position(
-        Field in,
-        Field search,
-        Field startIndex
+        Field<String> in,
+        Field<String> search,
+        Field<? extends Number> startIndex
     ) {
         super(N_POSITION, allNotNull(INTEGER, in, search, startIndex));
 

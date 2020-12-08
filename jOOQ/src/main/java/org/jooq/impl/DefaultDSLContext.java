@@ -3114,32 +3114,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
-        return new AlterDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), false);
+        return new AlterDomainImpl(configuration(), DSL.domain(DSL.name(domain)), false);
     }
 
     @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomain(Name domain) {
-        return new AlterDomainImpl<>(configuration(), DSL.domain(domain), false);
+        return new AlterDomainImpl(configuration(), DSL.domain(domain), false);
     }
 
     @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomain(Domain<T> domain) {
-        return new AlterDomainImpl<>(configuration(), domain, false);
+        return new AlterDomainImpl(configuration(), domain, false);
     }
 
     @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(String domain) {
-        return new AlterDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), true);
+        return new AlterDomainImpl(configuration(), DSL.domain(DSL.name(domain)), true);
     }
 
     @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Name domain) {
-        return new AlterDomainImpl<>(configuration(), DSL.domain(domain), true);
+        return new AlterDomainImpl(configuration(), DSL.domain(domain), true);
     }
 
     @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Domain<T> domain) {
-        return new AlterDomainImpl<>(configuration(), domain, true);
+        return new AlterDomainImpl(configuration(), domain, true);
     }
 
     @Override

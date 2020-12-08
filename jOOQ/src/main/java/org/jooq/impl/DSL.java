@@ -14887,7 +14887,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> abs(T number) {
-        return new Abs<>(Tools.field(number));
+        return new Abs(Tools.field(number));
     }
 
     /**
@@ -14896,7 +14896,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T extends Number> Field<T> abs(Field<T> number) {
-        return new Abs<>(number);
+        return new Abs(number);
     }
 
     /**

@@ -75,7 +75,7 @@ implements
 
     CreateDomainImpl(
         Configuration configuration,
-        Domain domain,
+        Domain<?> domain,
         boolean createDomainIfNotExists
     ) {
         this(
@@ -90,11 +90,11 @@ implements
 
     CreateDomainImpl(
         Configuration configuration,
-        Domain domain,
+        Domain<?> domain,
         boolean createDomainIfNotExists,
-        DataType dataType,
-        Field default_,
-        Collection constraints
+        DataType<T> dataType,
+        Field<T> default_,
+        Collection<? extends Constraint> constraints
     ) {
         super(configuration);
 

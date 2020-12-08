@@ -71,7 +71,7 @@ implements
 
     DropDomainImpl(
         Configuration configuration,
-        Domain domain,
+        Domain<?> domain,
         boolean dropDomainIfExists
     ) {
         this(
@@ -84,7 +84,7 @@ implements
 
     DropDomainImpl(
         Configuration configuration,
-        Domain domain,
+        Domain<?> domain,
         boolean dropDomainIfExists,
         Boolean cascade
     ) {

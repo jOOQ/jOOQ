@@ -67,8 +67,8 @@ extends
     private final Field<String>           character;
 
     Lpad(
-        Field string,
-        Field length
+        Field<String> string,
+        Field<? extends Number> length
     ) {
         super(N_LPAD, allNotNull(VARCHAR, string, length));
 
@@ -78,9 +78,9 @@ extends
     }
 
     Lpad(
-        Field string,
-        Field length,
-        Field character
+        Field<String> string,
+        Field<? extends Number> length,
+        Field<String> character
     ) {
         super(N_LPAD, allNotNull(VARCHAR, string, length, character));
 

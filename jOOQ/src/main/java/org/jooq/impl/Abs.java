@@ -65,7 +65,7 @@ extends
     private final Field<T> number;
 
     Abs(
-        Field number
+        Field<T> number
     ) {
         super(N_ABS, allNotNull((DataType) INTEGER, number));
 

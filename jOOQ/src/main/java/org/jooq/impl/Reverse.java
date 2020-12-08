@@ -65,7 +65,7 @@ extends
     private final Field<String> string;
 
     Reverse(
-        Field string
+        Field<String> string
     ) {
         super(N_REVERSE, allNotNull(VARCHAR, string));
 

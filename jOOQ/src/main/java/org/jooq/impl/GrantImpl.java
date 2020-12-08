@@ -75,7 +75,7 @@ implements
 
     GrantImpl(
         Configuration configuration,
-        Collection privileges
+        Collection<? extends Privilege> privileges
     ) {
         this(
             configuration,
@@ -89,8 +89,8 @@ implements
 
     GrantImpl(
         Configuration configuration,
-        Collection privileges,
-        Table on,
+        Collection<? extends Privilege> privileges,
+        Table<?> on,
         Role to,
         Boolean toPublic,
         Boolean withGrantOption

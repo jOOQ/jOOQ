@@ -69,7 +69,7 @@ implements
 
     DropSequenceImpl(
         Configuration configuration,
-        Sequence sequence,
+        Sequence<?> sequence,
         boolean dropSequenceIfExists
     ) {
         super(configuration);

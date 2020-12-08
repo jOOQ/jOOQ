@@ -66,7 +66,7 @@ extends
     private final Field<String> characters;
 
     Trim(
-        Field string
+        Field<String> string
     ) {
         super(N_TRIM, allNotNull(VARCHAR, string));
 
@@ -75,8 +75,8 @@ extends
     }
 
     Trim(
-        Field string,
-        Field characters
+        Field<String> string,
+        Field<String> characters
     ) {
         super(N_TRIM, allNotNull(VARCHAR, string, characters));
 

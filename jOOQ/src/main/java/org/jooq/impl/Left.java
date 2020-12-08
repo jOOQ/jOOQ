@@ -66,8 +66,8 @@ extends
     private final Field<? extends Number> length;
 
     Left(
-        Field string,
-        Field length
+        Field<String> string,
+        Field<? extends Number> length
     ) {
         super(N_LEFT, allNotNull(VARCHAR, string, length));
 

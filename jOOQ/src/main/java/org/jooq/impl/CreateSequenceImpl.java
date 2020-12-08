@@ -80,7 +80,7 @@ implements
 
     CreateSequenceImpl(
         Configuration configuration,
-        Sequence sequence,
+        Sequence<?> sequence,
         boolean createSequenceIfNotExists
     ) {
         this(
@@ -102,17 +102,17 @@ implements
 
     CreateSequenceImpl(
         Configuration configuration,
-        Sequence sequence,
+        Sequence<?> sequence,
         boolean createSequenceIfNotExists,
-        Field startWith,
-        Field incrementBy,
-        Field minvalue,
+        Field<? extends Number> startWith,
+        Field<? extends Number> incrementBy,
+        Field<? extends Number> minvalue,
         boolean noMinvalue,
-        Field maxvalue,
+        Field<? extends Number> maxvalue,
         boolean noMaxvalue,
         boolean cycle,
         boolean noCycle,
-        Field cache,
+        Field<? extends Number> cache,
         boolean noCache
     ) {
         super(configuration);

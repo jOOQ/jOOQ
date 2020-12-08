@@ -66,7 +66,7 @@ extends
     private final Field<String> characters;
 
     Rtrim(
-        Field string
+        Field<String> string
     ) {
         super(N_RTRIM, allNotNull(VARCHAR, string));
 
@@ -75,8 +75,8 @@ extends
     }
 
     Rtrim(
-        Field string,
-        Field characters
+        Field<String> string,
+        Field<String> characters
     ) {
         super(N_RTRIM, allNotNull(VARCHAR, string, characters));
 

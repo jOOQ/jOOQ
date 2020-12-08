@@ -67,8 +67,8 @@ extends
     private final Field<? extends Number> length;
 
     Substring(
-        Field string,
-        Field startingPosition
+        Field<String> string,
+        Field<? extends Number> startingPosition
     ) {
         super(N_SUBSTRING, allNotNull(VARCHAR, string, startingPosition));
 
@@ -78,9 +78,9 @@ extends
     }
 
     Substring(
-        Field string,
-        Field startingPosition,
-        Field length
+        Field<String> string,
+        Field<? extends Number> startingPosition,
+        Field<? extends Number> length
     ) {
         super(N_SUBSTRING, allNotNull(VARCHAR, string, startingPosition, length));
 

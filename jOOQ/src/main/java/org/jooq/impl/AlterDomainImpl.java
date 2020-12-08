@@ -84,7 +84,7 @@ implements
 
     AlterDomainImpl(
         Configuration configuration,
-        Domain domain,
+        Domain<T> domain,
         boolean alterDomainIfExists
     ) {
         this(
@@ -108,15 +108,15 @@ implements
 
     AlterDomainImpl(
         Configuration configuration,
-        Domain domain,
+        Domain<T> domain,
         boolean alterDomainIfExists,
         Constraint addConstraint,
         Constraint dropConstraint,
         boolean dropConstraintIfExists,
-        Domain renameTo,
+        Domain<?> renameTo,
         Constraint renameConstraint,
         boolean renameConstraintIfExists,
-        Field setDefault,
+        Field<T> setDefault,
         boolean dropDefault,
         boolean setNotNull,
         boolean dropNotNull,

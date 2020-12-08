@@ -65,7 +65,7 @@ extends
     private final Field<? extends Number> number;
 
     Sign(
-        Field number
+        Field<? extends Number> number
     ) {
         super(N_SIGN, allNotNull(INTEGER, number));
 

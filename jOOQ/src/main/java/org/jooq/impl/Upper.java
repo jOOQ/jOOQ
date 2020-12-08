@@ -65,7 +65,7 @@ extends
     private final Field<String> string;
 
     Upper(
-        Field string
+        Field<String> string
     ) {
         super(N_UPPER, allNotNull(VARCHAR, string));
 

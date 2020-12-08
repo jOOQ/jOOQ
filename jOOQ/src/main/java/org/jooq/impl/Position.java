@@ -35,48 +35,69 @@
  *
  *
  */
-
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.isub;
-import static org.jooq.impl.Keywords.K_IN;
-import static org.jooq.impl.Names.N_CHARINDEX;
-import static org.jooq.impl.Names.N_INSTR;
-import static org.jooq.impl.Names.N_LOCATE;
-import static org.jooq.impl.Names.N_POSITION;
-import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>POSITION</code> statement.
  */
-final class Position extends AbstractField<Integer> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Position
+extends
+    AbstractField<Integer>
+{
 
-    private static final long             serialVersionUID = 3544690069533526544L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<String>           search;
     private final Field<String>           in;
+    private final Field<String>           search;
     private final Field<? extends Number> startIndex;
 
-    Position(Field<String> search, Field<String> in) {
-        this(search, in, null);
+    Position(
+        Field in,
+        Field search
+    ) {
+        super(N_POSITION, allNotNull(INTEGER, in, search));
+
+        this.in = nullSafeNotNull(in, VARCHAR);
+        this.search = nullSafeNotNull(search, VARCHAR);
+        this.startIndex = null;
     }
 
-    Position(Field<String> search, Field<String> in, Field<? extends Number> startIndex) {
-        super(N_POSITION, INTEGER);
+    Position(
+        Field in,
+        Field search,
+        Field startIndex
+    ) {
+        super(N_POSITION, allNotNull(INTEGER, in, search, startIndex));
 
-        this.search = search;
-        this.in = in;
-        this.startIndex = startIndex;
+        this.in = nullSafeNotNull(in, VARCHAR);
+        this.search = nullSafeNotNull(search, VARCHAR);
+        this.startIndex = nullSafeNotNull(startIndex, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (startIndex != null)
+        if (startIndex != null) {
             switch (ctx.family()) {
 
 
@@ -94,7 +115,8 @@ final class Position extends AbstractField<Integer> {
                     ctx.visit(iadd(DSL.position(DSL.substring(in, startIndex), search), isub(startIndex, one())));
                     break;
             }
-        else
+        }
+        else {
             switch (ctx.family()) {
 
 
@@ -127,5 +149,8 @@ final class Position extends AbstractField<Integer> {
                     ctx.visit(N_POSITION).sql('(').visit(search).sql(' ').visit(K_IN).sql(' ').visit(in).sql(')');
                     break;
             }
+        }
     }
+
+
 }

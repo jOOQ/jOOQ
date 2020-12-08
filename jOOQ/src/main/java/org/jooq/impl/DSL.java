@@ -15008,6 +15008,114 @@ public class DSL {
     }
 
     /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(String in, String search, int startIndex) {
+        return new Position(Tools.field(in), Tools.field(search), Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(String in, String search, Field<? extends Number> startIndex) {
+        return new Position(Tools.field(in), Tools.field(search), startIndex);
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(String in, Field<String> search, int startIndex) {
+        return new Position(Tools.field(in), search, Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(String in, Field<String> search, Field<? extends Number> startIndex) {
+        return new Position(Tools.field(in), search, startIndex);
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(Field<String> in, String search, int startIndex) {
+        return new Position(in, Tools.field(search), Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(Field<String> in, String search, Field<? extends Number> startIndex) {
+        return new Position(in, Tools.field(search), startIndex);
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(Field<String> in, Field<String> search, int startIndex) {
+        return new Position(in, search, Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(Field<String> in, Field<String> search, Field<? extends Number> startIndex) {
+        return new Position(in, search, startIndex);
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(String in, String search) {
+        return new Position(Tools.field(in), Tools.field(search));
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(String in, Field<String> search) {
+        return new Position(Tools.field(in), search);
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(Field<String> in, String search) {
+        return new Position(in, Tools.field(search));
+    }
+
+    /**
+     * The <code>POSITION</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> position(Field<String> in, Field<String> search) {
+        return new Position(in, search);
+    }
+
+    /**
      * The <code>REPEAT</code> function.
      */
     @NotNull
@@ -15677,153 +15785,6 @@ public class DSL {
     @Support({ POSTGRES })
     public static Field<String> splitPart(Field<String> field, Field<String> delimiter, Field<Integer> n) {
         return new SplitPart(field, Tools.nullSafe(delimiter), Tools.nullSafe(n));
-    }
-
-    /**
-     * Get the position(in, search) function.
-     *
-     * @see #position(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(String in, String search) {
-        return position(Tools.field(in), Tools.field(search));
-    }
-
-    /**
-     * Get the position(in, search) function.
-     *
-     * @see #position(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(String in, Field<String> search) {
-        return position(Tools.field(in), Tools.nullSafe(search));
-    }
-
-    /**
-     * Get the position(in, search) function.
-     *
-     * @see #position(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(Field<String> in, String search) {
-        return position(Tools.nullSafe(in), Tools.field(search));
-    }
-
-    /**
-     * Get the position(in, search) function.
-     * <p>
-     * This renders the position or any equivalent function:
-     * <code><pre>position([search] in [in]) or
-     * locate([in], [search]) or
-     * locate([search], [in]) or
-     * instr([in], [search]) or
-     * charindex([search], [in])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(Field<String> in, Field<String> search) {
-        return new Position(Tools.nullSafe(search), Tools.nullSafe(in));
-    }
-
-    /**
-     * Get the position(in, search, startindex) function.
-     *
-     * @see #position(Field, Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(String in, String search, int startIndex) {
-        return position(Tools.field(in), Tools.field(search), Tools.field(startIndex));
-    }
-
-    /**
-     * Get the position(in, search, startindex) function.
-     *
-     * @see #position(Field, Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(String in, Field<String> search, int startIndex) {
-        return position(Tools.field(in), Tools.nullSafe(search), Tools.field(startIndex));
-    }
-
-    /**
-     * Get the position(in, search, startindex) function.
-     *
-     * @see #position(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(Field<String> in, String search, int startIndex) {
-        return position(Tools.nullSafe(in), Tools.field(search), Tools.field(startIndex));
-    }
-
-    /**
-     * Get the position(in, search, startindex) function.
-     * <p>
-     * This renders the position or any equivalent function:
-     * <code><pre>position([search] in [in]) or
-     * locate([in], [search]) or
-     * locate([search], [in]) or
-     * instr([in], [search]) or
-     * charindex([search], [in])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(Field<String> in, Field<String> search, int startIndex) {
-        return position(Tools.nullSafe(search), Tools.nullSafe(in), Tools.field(startIndex));
-    }
-
-    /**
-     * Get the position(in, search, startindex) function.
-     *
-     * @see #position(Field, Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(String in, String search, Field<? extends Number> startIndex) {
-        return position(Tools.field(in), Tools.field(search), Tools.nullSafe(startIndex));
-    }
-
-    /**
-     * Get the position(in, search, startindex) function.
-     *
-     * @see #position(Field, Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(String in, Field<String> search, Field<? extends Number> startIndex) {
-        return position(Tools.field(in), Tools.nullSafe(search), Tools.nullSafe(startIndex));
-    }
-
-    /**
-     * Get the position(in, search, startindex) function.
-     *
-     * @see #position(Field, Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(Field<String> in, String search, Field<? extends Number> startIndex) {
-        return position(Tools.nullSafe(in), Tools.field(search), Tools.nullSafe(startIndex));
-    }
-
-    /**
-     * Get the position(in, search, startindex) function.
-     * <p>
-     * This renders the position or any equivalent function:
-     * <code><pre>position([search] in [in]) or
-     * locate([in], [search]) or
-     * locate([search], [in]) or
-     * instr([in], [search]) or
-     * charindex([search], [in])</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> position(Field<String> in, Field<String> search, Field<? extends Number> startIndex) {
-        return new Position(Tools.nullSafe(search), Tools.nullSafe(in), Tools.nullSafe(startIndex));
     }
 
     /**

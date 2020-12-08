@@ -1424,7 +1424,7 @@ final class Tools {
         return result;
     }
 
-    static <R extends Record, O extends Record> ReferenceImpl<R, O> aliasedKey(ForeignKey<R, O> key, Table<R> child, Table<O> parent) {
+    static final <R extends Record, O extends Record> ReferenceImpl<R, O> aliasedKey(ForeignKey<R, O> key, Table<R> child, Table<O> parent) {
 
         // [#10603] [#5050] TODO: Solve aliasing constraints more generically
         return new ReferenceImpl<>(
@@ -1559,7 +1559,7 @@ final class Tools {
      * [#461] [#473] [#2597] [#8234] Some internals need a cast only if necessary.
      */
     @SuppressWarnings("unchecked")
-    static <T> Field<T>[] castAllIfNeeded(Field<?>[] fields, Class<T> type) {
+    static final <T> Field<T>[] castAllIfNeeded(Field<?>[] fields, Class<T> type) {
         Field<T>[] castFields = new Field[fields.length];
 
         for (int i = 0; i < fields.length; i++)
@@ -5167,11 +5167,11 @@ final class Tools {
             ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
     }
 
-    static boolean storedEnumType(DataType<EnumType> enumType) {
+    static final boolean storedEnumType(DataType<EnumType> enumType) {
         return enumConstants(enumType)[0].getSchema() != null;
     }
 
-    private static EnumType[] enumConstants(DataType<? extends EnumType> type) {
+    private static final EnumType[] enumConstants(DataType<? extends EnumType> type) {
         EnumType[] enums = type.getType().getEnumConstants();
 
         if (enums == null)
@@ -5200,11 +5200,11 @@ final class Tools {
 
 
 
-    static <T> Supplier<T> blocking(Supplier<T> supplier) {
+    static final <T> Supplier<T> blocking(Supplier<T> supplier) {
         return blocking(supplier, false);
     }
 
-    static <T> Supplier<T> blocking(Supplier<T> supplier, boolean threadLocal) {
+    static final <T> Supplier<T> blocking(Supplier<T> supplier, boolean threadLocal) {
 
         // [#5377] In ThreadLocal contexts (e.g. when using ThreadLocalTransactionprovider),
         //         no ManagedBlocker is needed as we're guaranteed by API contract to always
@@ -5239,7 +5239,7 @@ final class Tools {
     }
 
 
-    static String[] enumLiterals(Class<? extends EnumType> type) {
+    static final String[] enumLiterals(Class<? extends EnumType> type) {
         EnumType[] values = enums(type);
         String[] result = new String[values.length];
 
@@ -5249,7 +5249,7 @@ final class Tools {
         return result;
     }
 
-    static <E extends EnumType> E[] enums(Class<? extends E> type) {
+    static final <E extends EnumType> E[] enums(Class<? extends E> type) {
 
         // Java implementation
         if (Enum.class.isAssignableFrom(type)) {
@@ -5453,7 +5453,7 @@ final class Tools {
         return result;
     }
 
-    static Field<?> tableField(Table<?> table, Object field) {
+    static final Field<?> tableField(Table<?> table, Object field) {
         if (field instanceof Field<?>)
             return (Field<?>) field;
         else if (field instanceof Name)
@@ -5899,19 +5899,26 @@ final class Tools {
         return result;
     }
 
-    static final DataType<?> dataType(Field<?> field) {
+    private static final DataType<?> dataType(Field<?> field) {
         return dataType(OTHER, field);
     }
 
-    static final DataType<?> dataType(DataType<?> defaultType, Field<?> field) {
-        return field == null ? defaultType : field.getDataType();
+    @SuppressWarnings("unchecked")
+    private static final <T> DataType<T> dataType(DataType<T> defaultType, Field<?> field) {
+        return field == null
+             ? defaultType
+             : field.getType() != defaultType.getType()
+             ? defaultType.nullable(field.getDataType().nullable())
+             : (DataType<T>) field.getDataType();
     }
 
-    static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<T> f1, Field<?> f2) {
-        if (f1 == null)
-            return defaultType.null_();
+    static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?> f1) {
+        return dataType(defaultType, f1);
+    }
 
-        DataType<T> result = f1.getDataType();
+    static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?> f1, Field<?> f2) {
+        DataType<T> result = dataType(defaultType, f1);
+
         if (result.nullable())
             return result;
         else if (dataType(f2).nullable())
@@ -5920,23 +5927,38 @@ final class Tools {
             return result;
     }
 
-    static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<T> f1, Field<?>... fields) {
-        if (f1 == null)
-            return defaultType.null_();
+    static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?> f1, Field<?> f2, Field<?> f3) {
+        DataType<T> result = dataType(defaultType, f1);
 
-        DataType<T> result = f1.getDataType();
         if (result.nullable())
             return result;
+        else if (dataType(f2).nullable())
+            return result.null_();
+        else if (dataType(f3).nullable())
+            return result.null_();
+        else
+            return result;
+    }
 
-        for (int i = 0; i < fields.length; i++)
-            if (dataType(fields[i]).nullable())
-                return result.null_();
+    static final <T> DataType<T> allNotNull(DataType<T> defaultType, Field<?>... fields) {
+        DataType<T> result = dataType(defaultType, isEmpty(fields) ? null : fields[0]);
+
+        if (result.nullable())
+            return result;
+        else
+            for (Field<?> field : fields)
+                if (dataType(field).nullable())
+                    return result.null_();
 
         return result;
     }
 
-    static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<T> f1, Field<?> f2) {
-        DataType<T> result = f1 == null ? defaultType : f1.getDataType();
+    static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<?> f1) {
+        return dataType(defaultType, f1);
+    }
+
+    static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<?> f1, Field<?> f2) {
+        DataType<T> result = dataType(defaultType, f1);
 
         if (!result.nullable())
             return result;
@@ -5946,15 +5968,28 @@ final class Tools {
             return result;
     }
 
-    static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<T> f1, Field<?>... fields) {
-        DataType<T> result = f1 == null ? defaultType : f1.getDataType();
+    static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<?> f1, Field<?> f2, Field<?> f3) {
+        DataType<T> result = dataType(defaultType, f1);
 
         if (!result.nullable())
             return result;
+        else if (!dataType(f2).nullable())
+            return result.notNull();
+        else if (!dataType(f3).nullable())
+            return result.notNull();
+        else
+            return result;
+    }
 
-        for (int i = 0; i < fields.length; i++)
-            if (!dataType(fields[i]).nullable())
-                return result.notNull();
+    static final <T> DataType<T> anyNotNull(DataType<T> defaultType, Field<?>... fields) {
+        DataType<T> result = dataType(defaultType, isEmpty(fields) ? null : fields[0]);
+
+        if (!result.nullable())
+            return result;
+        else
+            for (Field<?> field : fields)
+                if (!dataType(field).nullable())
+                    return result.notNull();
 
         return result;
     }

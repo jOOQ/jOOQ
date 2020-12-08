@@ -67,7 +67,7 @@ extends
     Abs(
         Field number
     ) {
-        super(N_ABS, allNotNull(INTEGER, number));
+        super(N_ABS, allNotNull((DataType) INTEGER, number));
 
         this.number = nullSafeNotNull(number, INTEGER);
     }

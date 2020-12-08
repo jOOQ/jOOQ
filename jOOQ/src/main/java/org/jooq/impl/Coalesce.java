@@ -58,7 +58,7 @@ final class Coalesce<T> extends AbstractField<T> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Coalesce(Field<?>[] fields) {
-        super(N_COALESCE, anyNotNull((DataType) OTHER, fields[0], fields));
+        super(N_COALESCE, anyNotNull((DataType) OTHER, fields));
 
         this.fields = (Field[]) fields;
     }

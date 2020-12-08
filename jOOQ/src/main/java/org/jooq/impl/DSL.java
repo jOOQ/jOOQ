@@ -14954,6 +14954,114 @@ public class DSL {
     }
 
     /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(String string, int length, String character) {
+        return new Lpad(Tools.field(string), Tools.field(length), Tools.field(character));
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(String string, int length, Field<String> character) {
+        return new Lpad(Tools.field(string), Tools.field(length), character);
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(String string, Field<? extends Number> length, String character) {
+        return new Lpad(Tools.field(string), length, Tools.field(character));
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(String string, Field<? extends Number> length, Field<String> character) {
+        return new Lpad(Tools.field(string), length, character);
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(Field<String> string, int length, String character) {
+        return new Lpad(string, Tools.field(length), Tools.field(character));
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(Field<String> string, int length, Field<String> character) {
+        return new Lpad(string, Tools.field(length), character);
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(Field<String> string, Field<? extends Number> length, String character) {
+        return new Lpad(string, length, Tools.field(character));
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(Field<String> string, Field<? extends Number> length, Field<String> character) {
+        return new Lpad(string, length, character);
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(String string, int length) {
+        return new Lpad(Tools.field(string), Tools.field(length));
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(String string, Field<? extends Number> length) {
+        return new Lpad(Tools.field(string), length);
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(Field<String> string, int length) {
+        return new Lpad(string, Tools.field(length));
+    }
+
+    /**
+     * The <code>LPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> lpad(Field<String> string, Field<? extends Number> length) {
+        return new Lpad(string, length);
+    }
+
+    /**
      * The <code>LTRIM</code> function.
      */
     @NotNull
@@ -15314,6 +15422,114 @@ public class DSL {
     }
 
     /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(String string, int length, String character) {
+        return new Rpad(Tools.field(string), Tools.field(length), Tools.field(character));
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(String string, int length, Field<String> character) {
+        return new Rpad(Tools.field(string), Tools.field(length), character);
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(String string, Field<? extends Number> length, String character) {
+        return new Rpad(Tools.field(string), length, Tools.field(character));
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(String string, Field<? extends Number> length, Field<String> character) {
+        return new Rpad(Tools.field(string), length, character);
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(Field<String> string, int length, String character) {
+        return new Rpad(string, Tools.field(length), Tools.field(character));
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(Field<String> string, int length, Field<String> character) {
+        return new Rpad(string, Tools.field(length), character);
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(Field<String> string, Field<? extends Number> length, String character) {
+        return new Rpad(string, length, Tools.field(character));
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(Field<String> string, Field<? extends Number> length, Field<String> character) {
+        return new Rpad(string, length, character);
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(String string, int length) {
+        return new Rpad(Tools.field(string), Tools.field(length));
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(String string, Field<? extends Number> length) {
+        return new Rpad(Tools.field(string), length);
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(Field<String> string, int length) {
+        return new Rpad(string, Tools.field(length));
+    }
+
+    /**
+     * The <code>RPAD</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> rpad(Field<String> string, Field<? extends Number> length) {
+        return new Rpad(string, length);
+    }
+
+    /**
      * The <code>RTRIM</code> function.
      */
     @NotNull
@@ -15580,32 +15796,6 @@ public class DSL {
 
 
     /**
-     * Get the rpad(field, length) function.
-     *
-     * @see #rpad(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(Field<String> field, int length) {
-        return rpad(Tools.nullSafe(field), Tools.field(length));
-    }
-
-    /**
-     * Get the rpad(field, length) function.
-     * <p>
-     * This renders the rpad function where available:
-     * <code><pre>rpad([field], [length])</pre></code> ... or emulates it
-     * elsewhere using concat, repeat, and length, which may be emulated as
-     * well, depending on the RDBMS:
-     * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
-        return new Rpad(Tools.nullSafe(field), Tools.nullSafe(length));
-    }
-
-    /**
      * Get the rpad(field, length, character) function.
      *
      * @see #rpad(Field, Field, Field)
@@ -15617,61 +15807,6 @@ public class DSL {
     }
 
     /**
-     * Get the rpad(field, length, character) function.
-     *
-     * @see #rpad(Field, Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(Field<String> field, int length, String character) {
-        return rpad(Tools.nullSafe(field), Tools.field(length), Tools.field(character));
-    }
-
-    /**
-     * Get the rpad(field, length, character) function.
-     * <p>
-     * This renders the rpad function where available:
-     * <code><pre>rpad([field], [length])</pre></code> ... or emulates it
-     * elsewhere using concat, repeat, and length, which may be emulated as
-     * well, depending on the RDBMS:
-     * <code><pre>concat([field], repeat([character], [length] - length([field])))</pre></code>
-     * <p>
-     * In {@link SQLDialect#SQLITE}, this is emulated as such:
-     * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '\''', ''), '0', [character])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
-        return new Rpad(Tools.nullSafe(field), Tools.nullSafe(length), Tools.nullSafe(character));
-    }
-
-    /**
-     * Get the lpad(field, length) function.
-     *
-     * @see #lpad(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(Field<String> field, int length) {
-        return lpad(Tools.nullSafe(field), Tools.field(length));
-    }
-
-    /**
-     * Get the lpad(field, length) function.
-     * <p>
-     * This renders the lpad function where available:
-     * <code><pre>lpad([field], [length])</pre></code> ... or emulates it
-     * elsewhere using concat, repeat, and length, which may be emulated as
-     * well, depending on the RDBMS:
-     * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
-        return new Lpad(Tools.nullSafe(field), Tools.nullSafe(length));
-    }
-
-    /**
      * Get the lpad(field, length, character) function.
      *
      * @see #lpad(Field, Field, Field)
@@ -15680,35 +15815,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length, char character) {
         return lpad(field, length, Character.toString(character));
-    }
-
-    /**
-     * Get the lpad(field, length, character) function.
-     *
-     * @see #lpad(Field, Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(Field<String> field, int length, String character) {
-        return lpad(Tools.nullSafe(field), Tools.field(length), Tools.field(character));
-    }
-
-    /**
-     * Get the lpad(field, length, character) function.
-     * <p>
-     * This renders the lpad function where available:
-     * <code><pre>lpad([field], [length])</pre></code> ... or emulates it
-     * elsewhere using concat, repeat, and length, which may be emulated as
-     * well, depending on the RDBMS:
-     * <code><pre>concat(repeat([character], [length] - length([field])), [field])</pre></code>
-     * <p>
-     * In {@link SQLDialect#SQLITE}, this is emulated as such:
-     * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '\''', ''), '0', [character]) || [field]</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
-        return new Lpad(Tools.nullSafe(field), Tools.nullSafe(length), Tools.nullSafe(character));
     }
 
     /**

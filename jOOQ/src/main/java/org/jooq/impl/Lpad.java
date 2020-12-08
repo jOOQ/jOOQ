@@ -37,45 +37,66 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Internal.isub;
-import static org.jooq.impl.Names.N_HEX;
-import static org.jooq.impl.Names.N_LEN;
-import static org.jooq.impl.Names.N_LENGTH;
-import static org.jooq.impl.Names.N_LPAD;
-import static org.jooq.impl.Names.N_REPLACE;
-import static org.jooq.impl.Names.N_SPACE;
-import static org.jooq.impl.Names.N_SUBSTR;
-import static org.jooq.impl.Names.N_ZEROBLOB;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>LPAD</code> statement.
  */
-final class Lpad extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Lpad
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<String>           field;
+    private final Field<String>           string;
     private final Field<? extends Number> length;
     private final Field<String>           character;
 
-    Lpad(Field<String> field, Field<? extends Number> length) {
-        this(field, length, null);
+    Lpad(
+        Field string,
+        Field length
+    ) {
+        super(N_LPAD, allNotNull(VARCHAR, string, length));
+
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.length = nullSafeNotNull(length, INTEGER);
+        this.character = null;
     }
 
-    Lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
-        super(N_LPAD, VARCHAR);
+    Lpad(
+        Field string,
+        Field length,
+        Field character
+    ) {
+        super(N_LPAD, allNotNull(VARCHAR, string, length, character));
 
-        this.field = field;
-        this.length = length;
-        this.character = (character == null ? inline(" ") : character);
+        this.string = nullSafeNotNull(string, VARCHAR);
+        this.length = nullSafeNotNull(length, INTEGER);
+        this.character = nullSafeNotNull(character, VARCHAR);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+    private final Field<String> character() {
+        return character == null ? inline(" ") : character;
     }
 
     @Override
@@ -102,14 +123,16 @@ final class Lpad extends AbstractField<String> {
                         .visit(N_HEX).sql('(')
                             .visit(N_ZEROBLOB).sql('(')
                                 .visit(length)
-                        .sql(")), '00', ").visit(character)
-                    .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(field)
-                .sql(")) || ").visit(field);
+                        .sql(")), '00', ").visit(character())
+                    .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(string)
+                .sql(")) || ").visit(string);
                 break;
 
             default:
-                ctx.visit(N_LPAD).sql('(').visit(field).sql(", ").visit(length).sql(", ").visit(character).sql(')');
+                ctx.visit(N_LPAD).sql('(').visit(string).sql(", ").visit(length).sql(", ").visit(character()).sql(')');
                 break;
         }
     }
+
+
 }

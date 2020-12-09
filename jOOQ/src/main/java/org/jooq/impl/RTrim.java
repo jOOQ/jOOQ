@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.*;
 import org.jooq.*;
 import org.jooq.impl.*;
 
+import java.math.*;
 import java.util.*;
 
 /**

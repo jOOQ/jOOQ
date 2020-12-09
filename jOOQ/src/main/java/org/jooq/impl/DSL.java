@@ -14954,6 +14954,24 @@ public class DSL {
     }
 
     /**
+     * The <code>DEG</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> deg(Number radians) {
+        return new Degrees(Tools.field(radians));
+    }
+
+    /**
+     * The <code>DEG</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> deg(Field<? extends Number> radians) {
+        return new Degrees(radians);
+    }
+
+    /**
      * The <code>LEFT</code> function.
      */
     @NotNull
@@ -15314,6 +15332,24 @@ public class DSL {
     }
 
     /**
+     * The <code>RAD</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> rad(Number degrees) {
+        return new Radians(Tools.field(degrees));
+    }
+
+    /**
+     * The <code>RAD</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> rad(Field<? extends Number> degrees) {
+        return new Radians(degrees);
+    }
+
+    /**
      * The <code>REPEAT</code> function.
      */
     @NotNull
@@ -15564,6 +15600,9 @@ public class DSL {
     public static Field<String> rtrim(Field<String> string) {
         return new Rtrim(string);
     }
+
+
+
 
 
 
@@ -20118,54 +20157,6 @@ public class DSL {
             iadd(exp(imul(field, two())), one()),
             isub(exp(imul(field, two())), one())
         );
-    }
-
-    /**
-     * Calculate degrees from radians from this field.
-     *
-     * @see #deg(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> deg(Number value) {
-        return deg(Tools.field(value));
-    }
-
-    /**
-     * Calculate degrees from radians from this field.
-     * <p>
-     * This renders the degrees function where available:
-     * <code><pre>degrees([field])</pre></code> ... or emulates it elsewhere:
-     * <code><pre>[field] * 180 / PI</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> deg(Field<? extends Number> field) {
-        return new Degrees(Tools.nullSafe(field));
-    }
-
-    /**
-     * Calculate radians from degrees from this field.
-     *
-     * @see #rad(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> rad(Number value) {
-        return rad(Tools.field(value));
-    }
-
-    /**
-     * Calculate radians from degrees from this field.
-     * <p>
-     * This renders the degrees function where available:
-     * <code><pre>degrees([field])</pre></code> ... or emulates it elsewhere:
-     * <code><pre>[field] * PI / 180</pre></code>
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> rad(Field<? extends Number> field) {
-        return new Radians(Tools.nullSafe(field));
     }
 
 

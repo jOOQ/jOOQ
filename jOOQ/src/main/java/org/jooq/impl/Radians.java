@@ -37,35 +37,47 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.pi;
-import static org.jooq.impl.Names.N_RADIANS;
-import static org.jooq.impl.SQLDataType.NUMERIC;
-import static org.jooq.impl.Tools.castIfNeeded;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.math.BigDecimal;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import java.math.*;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>RAD</code> statement.
  */
-final class Radians extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Radians
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<?>    argument;
+    private final Field<? extends Number> degrees;
 
-    Radians(Field<?> argument) {
-        super(N_RADIANS, NUMERIC);
+    Radians(
+        Field<? extends Number> degrees
+    ) {
+        super(N_RADIANS, allNotNull(NUMERIC, degrees));
 
-        this.argument = argument;
+        this.degrees = nullSafeNotNull(degrees, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -78,12 +90,14 @@ final class Radians extends AbstractField<BigDecimal> {
 
             case FIREBIRD:
             case SQLITE:
-                ctx.visit(castIfNeeded(argument, BigDecimal.class).mul(pi()).div(inline(180)));
+                ctx.visit(castIfNeeded(degrees, BigDecimal.class).mul(pi()).div(inline(180)));
                 return;
 
             default:
-                ctx.visit(function(N_RADIANS, NUMERIC, argument));
+                ctx.visit(function(N_RADIANS, NUMERIC, degrees));
                 return;
         }
     }
+
+
 }

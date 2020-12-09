@@ -6,7 +6,7 @@ import static org.jooq.example.db.h2.Tables.BOOK;
 import static org.jooq.example.db.h2.Tables.BOOK_STORE;
 import static org.jooq.example.db.h2.Tables.BOOK_TO_BOOK_STORE;
 import static org.jooq.impl.DSL.countDistinct;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.jooq.DSLContext;
 import org.jooq.Record3;
@@ -16,17 +16,14 @@ import org.jooq.example.db.h2.tables.Book;
 import org.jooq.example.db.h2.tables.BookStore;
 import org.jooq.example.db.h2.tables.BookToBookStore;
 import org.jooq.example.db.h2.tables.records.BookRecord;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author Lukas Eder
  * @author Thomas Darimont
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class QueryTest {
 

@@ -1,22 +1,20 @@
 package org.jooq.example.spring;
 
 import static org.jooq.example.db.h2.Tables.BOOK;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jooq.DSLContext;
 import org.jooq.example.spring.service.BookService;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
@@ -27,7 +25,6 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  * @see <a
  *      href="http://www.petrikainulainen.net/programming/jooq/using-jooq-with-spring-configuration/">http://www.petrikainulainen.net/programming/jooq/using-jooq-with-spring-configuration/</a>
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class TransactionTest {
 
@@ -35,7 +32,7 @@ public class TransactionTest {
 	@Autowired DataSourceTransactionManager txMgr;
 	@Autowired BookService books;
 
-	@After
+	@AfterEach
 	public void teardown() {
 
 		// Delete all books that were created in any test
@@ -54,7 +51,7 @@ public class TransactionTest {
 			for (int i = 0; i < 2; i++)
 				dsl.insertInto(BOOK).set(BOOK.ID, 5).set(BOOK.AUTHOR_ID, 1).set(BOOK.TITLE, "Book 5").execute();
 
-			Assert.fail();
+			fail();
 		}
 
 		// Upon the constraint violation, we explicitly roll back the transaction.
@@ -73,7 +70,7 @@ public class TransactionTest {
 
 		try {
 			books.create(5, 1, "Book 5");
-			Assert.fail();
+			fail();
 		} catch (DataAccessException ignore) {
 			rollback = true;
 		}
@@ -94,7 +91,7 @@ public class TransactionTest {
 				for (int i = 0; i < 2; i++)
 					dsl.insertInto(BOOK).set(BOOK.ID, 5).set(BOOK.AUTHOR_ID, 1).set(BOOK.TITLE, "Book 5").execute();
 
-				Assert.fail();
+				fail();
 			});
 		}
 
@@ -132,7 +129,7 @@ public class TransactionTest {
 						for (int i = 0; i < 2; i++)
 							dsl.insertInto(BOOK).set(BOOK.ID, 6).set(BOOK.AUTHOR_ID, 1).set(BOOK.TITLE, "Book 6").execute();
 
-						Assert.fail();
+						fail();
 					});
 				}
 

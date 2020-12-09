@@ -18,7 +18,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implements Record2<Integer, String> {
 
-    private static final long serialVersionUID = -1228948270;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>LANGUAGE.LANGUAGEID</code>.
@@ -137,7 +137,7 @@ public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implemen
     public LanguageRecord(Integer languageid, String name) {
         super(Language.LANGUAGE);
 
-        set(0, languageid);
-        set(1, name);
+        setLanguageid(languageid);
+        setName(name);
     }
 }

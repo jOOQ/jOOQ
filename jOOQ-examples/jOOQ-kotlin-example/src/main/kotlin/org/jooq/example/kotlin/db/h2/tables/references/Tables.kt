@@ -14,19 +14,19 @@ import org.jooq.example.kotlin.db.h2.tables.BookToBookStore
 /**
  * The table <code>PUBLIC.AUTHOR</code>.
  */
-val AUTHOR = Author.AUTHOR
+val AUTHOR: Author = Author.AUTHOR
 
 /**
  * The table <code>PUBLIC.BOOK</code>.
  */
-val BOOK = Book.BOOK
+val BOOK: Book = Book.BOOK
 
 /**
  * The table <code>PUBLIC.BOOK_STORE</code>.
  */
-val BOOK_STORE = BookStore.BOOK_STORE
+val BOOK_STORE: BookStore = BookStore.BOOK_STORE
 
 /**
  * The table <code>PUBLIC.BOOK_TO_BOOK_STORE</code>.
  */
-val BOOK_TO_BOOK_STORE = BookToBookStore.BOOK_TO_BOOK_STORE
+val BOOK_TO_BOOK_STORE: BookToBookStore = BookToBookStore.BOOK_TO_BOOK_STORE

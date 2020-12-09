@@ -5,8 +5,6 @@ package org.jooq.example.flyway.ddl.db.h2.tables;
 
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -118,11 +116,6 @@ public class Author extends TableImpl<AuthorRecord> {
     @Override
     public UniqueKey<AuthorRecord> getPrimaryKey() {
         return Keys.PK_T_AUTHOR;
-    }
-
-    @Override
-    public List<UniqueKey<AuthorRecord>> getKeys() {
-        return Arrays.<UniqueKey<AuthorRecord>>asList(Keys.PK_T_AUTHOR);
     }
 
     @Override

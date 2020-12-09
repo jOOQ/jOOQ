@@ -105,11 +105,6 @@ public class Book extends TableImpl<BookRecord> {
     }
 
     @Override
-    public List<UniqueKey<BookRecord>> getKeys() {
-        return Arrays.<UniqueKey<BookRecord>>asList(Keys.PK_T_BOOK);
-    }
-
-    @Override
     public List<ForeignKey<BookRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<BookRecord, ?>>asList(Keys.FK_T_BOOK_AUTHOR_ID);
     }

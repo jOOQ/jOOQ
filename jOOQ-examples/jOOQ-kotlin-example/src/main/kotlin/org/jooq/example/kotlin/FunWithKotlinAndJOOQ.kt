@@ -204,7 +204,7 @@ fun main(args: Array<String>) {
               VALUES (1, 'a'),
                      (2, 'b')
             ) AS t(${colX.name}, ${colY.name}) -- This feature (derived column lists) isn't really available in H2!
-            """)
+            """)!!
            .fetch()
            .forEach {
                println("${it[colX]}, ${it[colY]}")

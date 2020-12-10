@@ -393,8 +393,9 @@ public final class Convert {
 
         if (fromType == Object.class)
             return converter.from((T) from);
-        else
-            return converter.from(new ConvertAll<>(fromType).from(from));
+
+        ConvertAll<T> convertAll = new ConvertAll<>(fromType);
+        return converter.from(convertAll.from(from));
     }
 
     /**

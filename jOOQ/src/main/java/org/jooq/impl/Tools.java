@@ -876,13 +876,6 @@ final class Tools {
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Table<R> type) {
-        return newRecord(fetched, type, null);
-    }
-
-    /**
-     * Create a new record
-     */
     @SuppressWarnings("unchecked")
     static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Table<R> type, Configuration configuration) {
         return (RecordDelegate<R>) newRecord(fetched, type.getRecordType(), (AbstractRow) type.fieldsRow(), configuration);
@@ -913,18 +906,7 @@ final class Tools {
      * Create a new record.
      */
     static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, F0<R> factory, Configuration configuration) {
-        try {
-            R record = factory.apply();
-
-            // [#3300] Records that were fetched from the database
-            if (record instanceof AbstractRecord)
-                ((AbstractRecord) record).fetched = fetched;
-
-            return new RecordDelegate<>(configuration, record);
-        }
-        catch (Exception e) {
-            throw new IllegalStateException("Could not construct new record", e);
-        }
+        return new RecordDelegate<>(configuration, factory, fetched);
     }
 
     static final AbstractRow row0(Fields<?> fields) {

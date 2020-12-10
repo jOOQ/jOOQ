@@ -86,12 +86,13 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -2292216936424437750L;
+    private static final long       serialVersionUID = -2292216936424437750L;
 
-    private final int         maxRows;
-    Result<?>                 result;
-    private transient int     index;
-    private transient boolean wasNull;
+    private final int               maxRows;
+    Result<?>                       result;
+    private transient int           index;
+    private transient boolean       wasNull;
+    private final Converter<?, ?>[] converters;
 
     public MockResultSet(Result<?> result) {
         this(result, 0);
@@ -100,6 +101,15 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     public MockResultSet(Result<?> result, int maxRows) {
         this.result = result;
         this.maxRows = maxRows;
+
+        if (result != null) {
+            int size = result.fieldsRow().size();
+            this.converters = new Converter[size];
+            for (int i = 0; i < size; i++)
+                converters[i] = Converters.inverse(result.field(i).getConverter());
+        }
+        else
+            converters = new Converter[0];
     }
 
     // -------------------------------------------------------------------------
@@ -152,17 +162,14 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         return field;
     }
 
-    private Field<?> field(int columnIndex) throws SQLException {
-        Field<?> field = result.field(columnIndex - 1);
-
-        if (field == null)
+    private Converter<?, ?> converter(int columnIndex) throws SQLException {
+        if (columnIndex > 0 && columnIndex <= converters.length)
+            return converters[columnIndex - 1];
+        else
             throw new SQLException("Unknown column index : " + columnIndex);
-
-        return field;
     }
 
-    private long getMillis(Calendar cal, int year, int month, int day, int hour, int minute, int second,
-        int millis) {
+    private long getMillis(Calendar cal, int year, int month, int day, int hour, int minute, int second, int millis) {
         cal = (Calendar) cal.clone();
         cal.clear();
         cal.setLenient(true);
@@ -446,6 +453,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     private <T> T get(String columnLabel, Class<T> type) throws SQLException {
         checkInRange();
 
+        // [#11099] TODO: Possibly optimise this logic similar to that of MockResultSet.get(int, Class)
         Converter<?, ?> converter = Converters.inverse(field(columnLabel).getConverter());
         T value = Convert.convert(result.get(index - 1).get(columnLabel, converter), type);
         wasNull = (value == null);
@@ -455,8 +463,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     private <T> T get(int columnIndex, Class<T> type) throws SQLException {
         checkInRange();
 
-        Converter<?, ?> converter = Converters.inverse(field(columnIndex).getConverter());
-        T value = Convert.convert(result.get(index - 1).get(columnIndex - 1, converter), type);
+        T value = Convert.convert(result.get(index - 1).get(columnIndex - 1, converter(columnIndex)), type);
         wasNull = (value == null);
         return value;
     }

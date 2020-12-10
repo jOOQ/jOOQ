@@ -62,29 +62,47 @@ import org.jooq.exception.ControlFlowSignal;
 final class RecordDelegate<R extends Record> {
 
     private final Configuration       configuration;
-    private final R                   record;
+    private final F0<R>               recordSupplier;
+    private final Boolean             fetched;
     private final RecordLifecycleType type;
 
-    RecordDelegate(Configuration configuration, R record) {
-        this(configuration, record, LOAD);
+    RecordDelegate(Configuration configuration, F0<R> recordSupplier, Boolean fetched) {
+        this(configuration, recordSupplier, fetched, LOAD);
     }
 
-    RecordDelegate(Configuration configuration, R record, RecordLifecycleType type) {
+    RecordDelegate(Configuration configuration, F0<R> recordSupplier, Boolean fetched, RecordLifecycleType type) {
         this.configuration = configuration;
-        this.record = record;
+        this.recordSupplier = recordSupplier;
+        this.fetched = fetched;
         this.type = type;
     }
 
-    static final <R extends Record> RecordDelegate<R> delegate(Configuration configuration, R record) {
-        return new RecordDelegate<>(configuration, record);
-    }
-
-    static final <R extends Record> RecordDelegate<R> delegate(Configuration configuration, R record, RecordLifecycleType type) {
-        return new RecordDelegate<>(configuration, record, type);
+    static final <R extends Record> RecordDelegate<R> delegate(
+        final Configuration configuration,
+        final R record,
+        final RecordLifecycleType type
+    ) {
+        return new RecordDelegate<>(
+            configuration,
+            new F0<R>() {
+                @Override
+                public R apply() {
+                    return record;
+                }
+            },
+            null,
+            type
+        );
     }
 
     @SuppressWarnings("unchecked")
     final <E extends Exception> R operate(RecordOperation<? super R, E> operation) throws E {
+        R record = recordSupplier.apply();
+
+        // [#3300] Records that were fetched from the database
+        if (fetched != null && record instanceof AbstractRecord)
+            ((AbstractRecord) record).fetched = fetched;
+
         RecordListenerProvider[] providers = null;
         RecordListener[] listeners = null;
         DefaultRecordContext ctx = null;

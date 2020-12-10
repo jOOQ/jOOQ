@@ -124,6 +124,7 @@ import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
 import java.io.Serializable;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Array;
@@ -557,22 +558,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long        serialVersionUID                    = -7965247586545864991L;
-        static final Set<SQLDialect>     NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB);
-        static final Set<SQLDialect>     REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES);
-        static final Set<SQLDialect>     NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES);
-        static final Set<SQLDialect>     NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY, FIREBIRD, POSTGRES, SQLITE);
+        private static final long    serialVersionUID                    = -7965247586545864991L;
+        static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB);
+        static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES);
+        static final Set<SQLDialect> NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES);
+        static final Set<SQLDialect> NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY, FIREBIRD, POSTGRES, SQLITE);
 
 
 
 
 
-        final DataType<T>                dataType;
-        final Converter<T, U>            converter;
+        final DataType<T>            dataType;
+        final Converter<T, U>        converter;
+        final boolean                attachable;
 
         AbstractBinding(DataType<T> dataType, Converter<T, U> converter) {
             this.dataType = dataType;
             this.converter = converter;
+
+            // [#11099] Caching this per binding seems to have a considerable performance effect.
+            //          We must be careful to short circuit instanceof Attachable checks only if we *know*
+            //          the type cannot be attachable, i.e. for final declared types only (such as String)
+            this.attachable = Attachable.class.isAssignableFrom(converter.toType())
+                           || !Modifier.isFinal(converter.toType().getModifiers());
         }
 
         @Override
@@ -860,17 +868,32 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void get(BindingGetResultSetContext<U> ctx) throws SQLException {
-            ctx.value(attach(converter().from(get0(ctx)), ctx.configuration()));
+            U value = converter().from(get0(ctx));
+
+            if (attachable)
+                value = attach(value, ctx.configuration());
+
+            ctx.value(value);
         }
 
         @Override
         public final void get(BindingGetStatementContext<U> ctx) throws SQLException {
-            ctx.value(attach(converter().from(get0(ctx)), ctx.configuration()));
+            U value = converter().from(get0(ctx));
+
+            if (attachable)
+                value = attach(value, ctx.configuration());
+
+            ctx.value(value);
         }
 
         @Override
         public final void get(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            ctx.value(attach(converter().from(get0(ctx)), ctx.configuration()));
+            U value = converter().from(get0(ctx));
+
+            if (attachable)
+                value = attach(value, ctx.configuration());
+
+            ctx.value(value);
         }
 
         private static final <U> U attach(U value, Configuration configuration) {

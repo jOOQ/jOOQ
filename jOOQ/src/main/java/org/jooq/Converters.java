@@ -124,28 +124,33 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      * Inverse a converter.
      */
     public static <T, U> Converter<U, T> inverse(final Converter<T, U> converter) {
-        return new AbstractConverter<U, T>(converter.toType(), converter.fromType()) {
+        
+    	// [#11099] Allow instanceof checks on IdentityConverter for performance reasons
+    	if (converter instanceof IdentityConverter)
+            return (Converter<U, T>) converter;
+        else
+            return new AbstractConverter<U, T>(converter.toType(), converter.fromType()) {
 
-            /**
-             * Generated UID
-             */
-            private static final long serialVersionUID = -4307758248063822630L;
+                /**
+                 * Generated UID
+                 */
+                private static final long serialVersionUID = -4307758248063822630L;
 
-            @Override
-            public T from(U u) {
-                return converter.to(u);
-            }
+                @Override
+                public T from(U u) {
+                    return converter.to(u);
+                }
 
-            @Override
-            public U to(T t) {
-                return converter.from(t);
-            }
+                @Override
+                public U to(T t) {
+                    return converter.from(t);
+                }
 
-            @Override
-            public String toString() {
-                return "InverseConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
-            }
-        };
+                @Override
+                public String toString() {
+                    return "InverseConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
+                }
+            };
     }
 
     public static <T, U> Converter<T[], U[]> forArrays(final Converter<T, U> converter) {

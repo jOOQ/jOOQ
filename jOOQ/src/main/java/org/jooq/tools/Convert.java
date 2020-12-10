@@ -96,6 +96,7 @@ import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.IdentityConverter;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.UByte;
@@ -380,16 +381,29 @@ public final class Convert {
      * @return The target type object
      * @throws DataTypeException - When the conversion is not possible
      */
+    @SuppressWarnings("unchecked")
     public static final <U> U convert(Object from, Converter<?, ? extends U> converter) throws DataTypeException {
-        return convert0(from, converter);
+
+        // [#5865] [#6799] [#11099] This leads to significant performance improvements especially when
+        //                          used from MockResultSet, which is likely to host IdentityConverters
+        if (converter instanceof IdentityConverter)
+            return (U) from;
+        else
+            return convert0(from, converter);
     }
 
     /**
      * Conversion type-safety
      */
+    @SuppressWarnings("unchecked")
     private static final <T, U> U convert0(Object from, Converter<T, ? extends U> converter) throws DataTypeException {
-        ConvertAll<T> all = new ConvertAll<>(converter.fromType());
-        return converter.from(all.from(from));
+        Class<T> fromType = converter.fromType();
+
+        if (fromType == Object.class)
+            return converter.from((T) from);
+
+        ConvertAll<T> convertAll = new ConvertAll<>(fromType);
+        return converter.from(convertAll.from(from));
     }
 
     /**
@@ -454,8 +468,12 @@ public final class Convert {
      * @return The converted object
      * @throws DataTypeException - When the conversion is not possible
      */
+    @SuppressWarnings("unchecked")
     public static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
-        return convert(from, new ConvertAll<T>(toClass));
+        if (from != null && from.getClass() == toClass)
+            return (T) from;
+        else
+            return convert0(from, new ConvertAll<T>(toClass));
     }
 
     /**
@@ -539,35 +557,30 @@ public final class Convert {
                 }
 
 
-                else if (toClass == Optional.class) {
+                else if (toClass == Optional.class)
                     return (U) Optional.empty();
-                }
 
 
-                else {
+                else
                     return null;
-                }
             }
             else {
                 final Class<?> fromClass = from.getClass();
-                final Class<?> wrapperTo = wrapper(toClass);
-                final Class<?> wrapperFrom = wrapper(fromClass);
+                final Class<?> wrapperTo;
+                final Class<?> wrapperFrom;
 
                 // No conversion
-                if (toClass == fromClass) {
+                if (toClass == fromClass)
                     return (U) from;
-                }
-
-                // [#6790] No conversion for primitive / wrapper conversions
-                else if (wrapperTo == wrapperFrom) {
-                    return (U) from;
-                }
 
                 // [#2535] Simple up-casting can be done early
                 // [#1155] ... up-casting includes (toClass == Object.class)
-                else if (toClass.isAssignableFrom(fromClass)) {
+                else if (toClass.isAssignableFrom(fromClass))
                     return (U) from;
-                }
+
+                // [#6790] No conversion for primitive / wrapper conversions
+                else if ((wrapperTo = wrapper(toClass)) == (wrapperFrom = wrapper(fromClass)))
+                    return (U) from;
 
                 // Regular checks
                 else if (fromClass == byte[].class) {
@@ -615,9 +628,8 @@ public final class Convert {
                 }
 
 
-                else if (toClass == Optional.class) {
+                else if (toClass == Optional.class)
                     return (U) Optional.of(from);
-                }
 
 
                 // All types can be converted into String

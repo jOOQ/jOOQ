@@ -88,6 +88,7 @@ final class Names {
     static final Name N_COS                    = unquotedName("cos");
     static final Name N_COSH                   = unquotedName("cosh");
     static final Name N_COT                    = unquotedName("cot");
+    static final Name N_COTH                   = unquotedName("coth");
     static final Name N_COUNT                  = unquotedName("count");
     static final Name N_COUNTSET               = unquotedName("countset");
     static final Name N_CURRENT_BIGDATETIME    = unquotedName("current_bigdatetime");

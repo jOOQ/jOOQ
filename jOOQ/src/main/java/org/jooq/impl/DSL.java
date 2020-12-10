@@ -88,17 +88,11 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.idiv;
 import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
-import static org.jooq.impl.Names.N_ABS;
-import static org.jooq.impl.Names.N_COS;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
-import static org.jooq.impl.Names.N_SIN;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_TAN;
 import static org.jooq.impl.Names.N_VALUE;
@@ -138,7 +132,6 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.temporal.Temporal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -14954,6 +14947,78 @@ public class DSL {
     }
 
     /**
+     * The <code>COS</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cos(Number number) {
+        return new Cos(Tools.field(number));
+    }
+
+    /**
+     * The <code>COS</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cos(Field<? extends Number> number) {
+        return new Cos(number);
+    }
+
+    /**
+     * The <code>COSH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cosh(Number number) {
+        return new Cosh(Tools.field(number));
+    }
+
+    /**
+     * The <code>COSH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cosh(Field<? extends Number> number) {
+        return new Cosh(number);
+    }
+
+    /**
+     * The <code>COT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cot(Number number) {
+        return new Cot(Tools.field(number));
+    }
+
+    /**
+     * The <code>COT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cot(Field<? extends Number> number) {
+        return new Cot(number);
+    }
+
+    /**
+     * The <code>COTH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> coth(Number number) {
+        return new Coth(Tools.field(number));
+    }
+
+    /**
+     * The <code>COTH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> coth(Field<? extends Number> number) {
+        return new Coth(number);
+    }
+
+    /**
      * The <code>DEG</code> function.
      */
     @NotNull
@@ -15632,6 +15697,42 @@ public class DSL {
     @Support
     public static Field<Integer> sign(Field<? extends Number> number) {
         return new Sign(number);
+    }
+
+    /**
+     * The <code>SIN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sin(Number number) {
+        return new Sin(Tools.field(number));
+    }
+
+    /**
+     * The <code>SIN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sin(Field<? extends Number> number) {
+        return new Sin(number);
+    }
+
+    /**
+     * The <code>SINH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sinh(Number number) {
+        return new Sinh(Tools.field(number));
+    }
+
+    /**
+     * The <code>SINH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sinh(Field<? extends Number> number) {
+        return new Sinh(number);
     }
 
     /**
@@ -19967,52 +20068,6 @@ public class DSL {
     }
 
     /**
-     * Get the cosine(field) function.
-     *
-     * @see #cos(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cos(Number value) {
-        return cos(Tools.field(value));
-    }
-
-    /**
-     * Get the cosine(field) function.
-     * <p>
-     * This renders the cos function where available:
-     * <code><pre>cos([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cos(Field<? extends Number> field) {
-        return function(N_COS, SQLDataType.NUMERIC, field);
-    }
-
-    /**
-     * Get the sine(field) function.
-     *
-     * @see #sin(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sin(Number value) {
-        return sin(Tools.field(value));
-    }
-
-    /**
-     * Get the sine(field) function.
-     * <p>
-     * This renders the sin function where available:
-     * <code><pre>sin([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sin(Field<? extends Number> field) {
-        return function(N_SIN, SQLDataType.NUMERIC, field);
-    }
-
-    /**
      * Get the tangent(field) function.
      *
      * @see #tan(Field)
@@ -20033,78 +20088,6 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
         return function(N_TAN, SQLDataType.NUMERIC, field);
-    }
-
-    /**
-     * Get the cotangent(field) function.
-     *
-     * @see #cot(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cot(Number value) {
-        return cot(Tools.field(value));
-    }
-
-    /**
-     * Get the cotangent(field) function.
-     * <p>
-     * This renders the cot function where available:
-     * <code><pre>cot([field])</pre></code> ... or emulates it elsewhere using
-     * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cot(Field<? extends Number> field) {
-        return new Cot(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the hyperbolic sine function: sinh(field).
-     *
-     * @see #sinh(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sinh(Number value) {
-        return sinh(Tools.field(value));
-    }
-
-    /**
-     * Get the hyperbolic sine function: sinh(field).
-     * <p>
-     * This renders the sinh function where available:
-     * <code><pre>sinh([field])</pre></code> ... or emulates it elsewhere using
-     * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sinh(Field<? extends Number> field) {
-        return new Sinh(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the hyperbolic cosine function: cosh(field).
-     *
-     * @see #cosh(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cosh(Number value) {
-        return cosh(Tools.field(value));
-    }
-
-    /**
-     * Get the hyperbolic cosine function: cosh(field).
-     * <p>
-     * This renders the cosh function where available:
-     * <code><pre>cosh([field])</pre></code> ... or emulates it elsewhere using
-     * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cosh(Field<? extends Number> field) {
-        return new Cosh(Tools.nullSafe(field));
     }
 
     /**
@@ -20130,33 +20113,6 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
         return new Tanh(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the hyperbolic cotangent function: coth(field).
-     *
-     * @see #coth(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> coth(Number value) {
-        return coth(Tools.field(value));
-    }
-
-    /**
-     * Get the hyperbolic cotangent function: coth(field).
-     * <p>
-     * This is not supported by any RDBMS, but emulated using exp exp:
-     * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> coth(Field<? extends Number> field) {
-        field = Tools.nullSafe(field);
-        return idiv(
-            iadd(exp(imul(field, two())), one()),
-            isub(exp(imul(field, two())), one())
-        );
     }
 
 

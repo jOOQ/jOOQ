@@ -53,10 +53,10 @@ import java.math.*;
 import java.util.*;
 
 /**
- * The <code>COT</code> statement.
+ * The <code>COTH</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Cot
+final class Coth
 extends
     AbstractField<BigDecimal>
 {
@@ -65,10 +65,10 @@ extends
 
     private final Field<? extends Number> number;
 
-    Cot(
+    Coth(
         Field<? extends Number> number
     ) {
-        super(N_COT, allNotNull(NUMERIC, number));
+        super(N_COTH, allNotNull(NUMERIC, number));
 
         this.number = nullSafeNotNull(number, INTEGER);
     }
@@ -81,21 +81,10 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-            default:
-                ctx.visit(N_COT).sql('(').visit(number).sql(')');
-                break;
-        }
+        ctx.visit(idiv(
+            iadd(DSL.exp(imul(number, two())), one()),
+            isub(DSL.exp(imul(number, two())), one())
+        ));
     }
 
 

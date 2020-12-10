@@ -37,35 +37,47 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.idiv;
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Names.N_COSH;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.math.BigDecimal;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import java.math.*;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>COSH</code> statement.
  */
-final class Cosh extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Cosh
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<? extends Number> argument;
+    private final Field<? extends Number> number;
 
-    Cosh(Field<? extends Number> argument) {
-        super(N_COSH, SQLDataType.NUMERIC);
+    Cosh(
+        Field<? extends Number> number
+    ) {
+        super(N_COSH, allNotNull(NUMERIC, number));
 
-        this.argument = argument;
+        this.number = nullSafeNotNull(number, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -91,16 +103,18 @@ final class Cosh extends AbstractField<BigDecimal> {
             case POSTGRES:
                 ctx.visit(idiv(
                     iadd(
-                        DSL.exp(imul(argument, two())),
+                        DSL.exp(imul(number, two())),
                         one()
                     ),
-                    imul(DSL.exp(argument), two())
+                    imul(DSL.exp(number), two())
                 ));
                 break;
 
             default:
-                ctx.visit(N_COSH).sql('(').visit(argument).sql(')');
+                ctx.visit(N_COSH).sql('(').visit(number).sql(')');
                 break;
         }
     }
+
+
 }

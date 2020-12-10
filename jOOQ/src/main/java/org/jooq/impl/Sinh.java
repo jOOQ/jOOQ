@@ -37,36 +37,47 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.Internal.idiv;
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Internal.isub;
-import static org.jooq.impl.Names.N_SINH;
-import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.math.BigDecimal;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import java.math.*;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>SINH</code> statement.
  */
-final class Sinh extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Sinh
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<? extends Number> argument;
+    private final Field<? extends Number> number;
 
-    Sinh(Field<? extends Number> argument) {
-        super(N_SINH, NUMERIC);
+    Sinh(
+        Field<? extends Number> number
+    ) {
+        super(N_SINH, allNotNull(NUMERIC, number));
 
-        this.argument = argument;
+        this.number = nullSafeNotNull(number, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -91,14 +102,16 @@ final class Sinh extends AbstractField<BigDecimal> {
             case MYSQL:
             case POSTGRES:
                 ctx.visit(idiv(
-                    isub(DSL.exp(imul(argument, two())), one()),
-                    imul(DSL.exp(argument), two())
+                    isub(DSL.exp(imul(number, two())), one()),
+                    imul(DSL.exp(number), two())
                 ));
                 break;
 
             default:
-                ctx.visit(N_SINH).sql('(').visit(argument).sql(')');
+                ctx.visit(N_SINH).sql('(').visit(number).sql(')');
                 break;
         }
     }
+
+
 }

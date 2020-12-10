@@ -387,9 +387,14 @@ public final class Convert {
     /**
      * Conversion type-safety
      */
+    @SuppressWarnings("unchecked")
     private static final <T, U> U convert0(Object from, Converter<T, ? extends U> converter) throws DataTypeException {
-        ConvertAll<T> all = new ConvertAll<>(converter.fromType());
-        return converter.from(all.from(from));
+        Class<T> fromType = converter.fromType();
+
+        if (fromType == Object.class)
+            return converter.from((T) from);
+        else
+            return converter.from(new ConvertAll<>(fromType).from(from));
     }
 
     /**
@@ -455,7 +460,10 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     public static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
-        return convert(from, new ConvertAll<T>(toClass));
+        if (from != null && from.getClass() == toClass)
+            return (T) from;
+        else
+            return convert(from, new ConvertAll<T>(toClass));
     }
 
     /**
@@ -539,35 +547,30 @@ public final class Convert {
                 }
 
 
-                else if (toClass == Optional.class) {
+                else if (toClass == Optional.class)
                     return (U) Optional.empty();
-                }
 
 
-                else {
+                else
                     return null;
-                }
             }
             else {
                 final Class<?> fromClass = from.getClass();
-                final Class<?> wrapperTo = wrapper(toClass);
-                final Class<?> wrapperFrom = wrapper(fromClass);
+                final Class<?> wrapperTo;
+                final Class<?> wrapperFrom;
 
                 // No conversion
-                if (toClass == fromClass) {
+                if (toClass == fromClass)
                     return (U) from;
-                }
-
-                // [#6790] No conversion for primitive / wrapper conversions
-                else if (wrapperTo == wrapperFrom) {
-                    return (U) from;
-                }
 
                 // [#2535] Simple up-casting can be done early
                 // [#1155] ... up-casting includes (toClass == Object.class)
-                else if (toClass.isAssignableFrom(fromClass)) {
+                else if (toClass.isAssignableFrom(fromClass))
                     return (U) from;
-                }
+
+                // [#6790] No conversion for primitive / wrapper conversions
+                else if ((wrapperTo = wrapper(toClass)) == (wrapperFrom = wrapper(fromClass)))
+                    return (U) from;
 
                 // Regular checks
                 else if (fromClass == byte[].class) {
@@ -615,9 +618,8 @@ public final class Convert {
                 }
 
 
-                else if (toClass == Optional.class) {
+                else if (toClass == Optional.class)
                     return (U) Optional.of(from);
-                }
 
 
                 // All types can be converted into String

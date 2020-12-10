@@ -453,6 +453,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     private <T> T get(String columnLabel, Class<T> type) throws SQLException {
         checkInRange();
 
+        // [#11099] TODO: Possibly optimise this logic similar to that of MockResultSet.get(int, Class)
         Converter<?, ?> converter = Converters.inverse(field(columnLabel).getConverter());
         T value = Convert.convert(result.get(index - 1).get(columnLabel, converter), type);
         wasNull = (value == null);

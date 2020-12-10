@@ -96,6 +96,7 @@ import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.IdentityConverter;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.UByte;
@@ -380,8 +381,15 @@ public final class Convert {
      * @return The target type object
      * @throws DataTypeException - When the conversion is not possible
      */
+    @SuppressWarnings("unchecked")
     public static final <U> U convert(Object from, Converter<?, ? extends U> converter) throws DataTypeException {
-        return convert0(from, converter);
+
+        // [#5865] [#6799] [#11099] This leads to significant performance improvements especially when
+        //                          used from MockResultSet, which is likely to host IdentityConverters
+        if (converter instanceof IdentityConverter)
+            return (U) from;
+        else
+            return convert0(from, converter);
     }
 
     /**
@@ -460,11 +468,12 @@ public final class Convert {
      * @return The converted object
      * @throws DataTypeException - When the conversion is not possible
      */
+    @SuppressWarnings("unchecked")
     public static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
         if (from != null && from.getClass() == toClass)
             return (T) from;
         else
-            return convert(from, new ConvertAll<T>(toClass));
+            return convert0(from, new ConvertAll<T>(toClass));
     }
 
     /**

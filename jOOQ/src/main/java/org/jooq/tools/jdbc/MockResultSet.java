@@ -90,7 +90,9 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     private final int               maxRows;
     Result<?>                       result;
+    private final int               size;
     private transient int           index;
+    private transient Record        record;
     private transient boolean       wasNull;
     private final Converter<?, ?>[] converters;
 
@@ -103,13 +105,16 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         this.maxRows = maxRows;
 
         if (result != null) {
-            int size = result.fieldsRow().size();
-            this.converters = new Converter[size];
-            for (int i = 0; i < size; i++)
+            size = result.size();
+            int l = result.fieldsRow().size();
+            this.converters = new Converter[l];
+            for (int i = 0; i < l; i++)
                 converters[i] = Converters.inverse(result.field(i).getConverter());
         }
-        else
+        else {
+            size = 0;
             converters = new Converter[0];
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -136,9 +141,9 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     private int size() {
         if (maxRows == 0)
-            return result.size();
+            return size;
         else
-            return Math.min(maxRows, result.size());
+            return Math.min(maxRows, size);
     }
 
     void checkNotClosed() throws SQLException {
@@ -149,7 +154,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     private void checkInRange() throws SQLException {
         checkNotClosed();
 
-        if (index <= 0 || index > result.size())
+        if (index <= 0 || index > size)
             throw new SQLException("ResultSet index is at an illegal position : " + index);
     }
 
@@ -253,7 +258,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         if (size() > 0) {
             if (row > 0) {
                 if (row <= size()) {
-                    index = row;
+                    index(row);
                     return true;
                 }
                 else {
@@ -267,7 +272,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
             }
             else {
                 if (-row <= size()) {
-                    index = size() + 1 + row;
+                    index(size() + 1 + row);
                     return true;
                 }
                 else {
@@ -285,16 +290,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     public boolean relative(int rows) throws SQLException {
         checkNotClosed();
 
-        index += rows;
-        try {
-            return (index > 0 && index <= size());
-        }
-
-        // Be sure we don't go out of bounds
-        finally {
-            index = Math.max(index, 0);
-            index = Math.min(index, size() + 1);
-        }
+        return index(index + rows);
     }
 
     @Override
@@ -305,13 +301,13 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     @Override
     public void beforeFirst() throws SQLException {
         checkNotClosed();
-        index = 0;
+        index(0);
     }
 
     @Override
     public void afterLast() throws SQLException {
         checkNotClosed();
-        index = size() + 1;
+        index(size() + 1);
     }
 
     @Override
@@ -455,7 +451,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
         // [#11099] TODO: Possibly optimise this logic similar to that of MockResultSet.get(int, Class)
         Converter<?, ?> converter = Converters.inverse(field(columnLabel).getConverter());
-        T value = Convert.convert(result.get(index - 1).get(columnLabel, converter), type);
+        T value = Convert.convert(record.get(columnLabel, converter), type);
         wasNull = (value == null);
         return value;
     }
@@ -463,9 +459,17 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     private <T> T get(int columnIndex, Class<T> type) throws SQLException {
         checkInRange();
 
-        T value = Convert.convert(result.get(index - 1).get(columnIndex - 1, converter(columnIndex)), type);
+        T value = Convert.convert(record.get(columnIndex - 1, converter(columnIndex)), type);
         wasNull = (value == null);
         return value;
+    }
+
+    private boolean index(int newIndex) {
+        int s = size();
+        index = Math.min(Math.max(newIndex, 0), s + 1);
+        boolean inRange = index > 0 && index <= s;
+        record = inRange ? result.get(index - 1) : null;
+        return inRange;
     }
 
     @Override
@@ -1265,7 +1269,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         String prefixEmpty = StringUtils.leftPad("", prefix.length());
 
         Result<Record> r = DSL.using(DEFAULT).newResult(result.fields());
-        r.addAll(result.subList(Math.max(0, index - 3), Math.min(result.size(), index + 2)));
+        r.addAll(result.subList(Math.max(0, index - 3), Math.min(size, index + 2)));
 
         StringBuilder sb = new StringBuilder();
         String[] split = r.toString().split("\n");

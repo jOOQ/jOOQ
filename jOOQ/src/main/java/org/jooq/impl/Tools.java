@@ -5896,12 +5896,12 @@ final class Tools {
         return result;
     }
 
-    private static final DataType<?> dataType(Field<?> field) {
+    static final DataType<?> dataType(Field<?> field) {
         return dataType(OTHER, field, false);
     }
 
     @SuppressWarnings("unchecked")
-    private static final <T> DataType<T> dataType(DataType<T> defaultType, Field<?> field, boolean preferDefault) {
+    static final <T> DataType<T> dataType(DataType<T> defaultType, Field<?> field, boolean preferDefault) {
         return field == null
              ? defaultType
              : preferDefault && field.getType() != defaultType.getType()

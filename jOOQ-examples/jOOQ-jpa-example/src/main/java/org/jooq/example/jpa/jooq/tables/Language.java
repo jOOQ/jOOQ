@@ -4,9 +4,6 @@
 package org.jooq.example.jpa.jooq.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -32,7 +29,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = -985164033;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>LANGUAGE</code>
@@ -103,11 +100,6 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public UniqueKey<LanguageRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_C;
-    }
-
-    @Override
-    public List<UniqueKey<LanguageRecord>> getKeys() {
-        return Arrays.<UniqueKey<LanguageRecord>>asList(Keys.CONSTRAINT_C);
     }
 
     @Override

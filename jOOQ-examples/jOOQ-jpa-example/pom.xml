@@ -47,6 +47,10 @@
             <artifactId>hibernate-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
@@ -143,6 +147,13 @@
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.persistence</groupId>
+                        <artifactId>javax.persistence-api</artifactId>
+                        <version>${javax.persistence-api.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <!-- Run the JavaFX application right after building -->
@@ -159,6 +170,7 @@
                         </goals>
                         <configuration>
                             <mainClass>org.jooq.example.jpa.JPAExample</mainClass>
+                            <classpathScope>compile</classpathScope>
                         </configuration>
                     </execution>
                 </executions>

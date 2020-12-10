@@ -4,9 +4,6 @@
 package org.jooq.example.jpa.jooq.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -32,7 +29,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = -976374127;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>ACTOR</code>
@@ -108,11 +105,6 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public UniqueKey<ActorRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_3;
-    }
-
-    @Override
-    public List<UniqueKey<ActorRecord>> getKeys() {
-        return Arrays.<UniqueKey<ActorRecord>>asList(Keys.CONSTRAINT_3);
     }
 
     @Override

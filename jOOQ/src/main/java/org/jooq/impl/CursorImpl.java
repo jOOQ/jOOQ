@@ -1551,7 +1551,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         /**
          * The (potentially) pre-fetched next record
          */
-        private R                             next;
+        private R                                    next;
 
         /**
          * Whether the underlying {@link ResultSet} has a next record. This
@@ -1562,12 +1562,15 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
          * <li>false: there aren't any next records</li>
          * </ul>
          */
-        private Boolean                       hasNext;
+        private Boolean                              hasNext;
 
         /**
          * [#11099] Cache this instance for the entire cursor.
          */
-        private final CursorRecordInitialiser initialiser = new CursorRecordInitialiser(fields, 0);
+        private final CursorRecordInitialiser        initialiser    = new CursorRecordInitialiser(fields, 0);
+
+        @SuppressWarnings("unchecked")
+        private final RecordDelegate<AbstractRecord> recordDelegate = Tools.newRecord(true, (F0<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration());
 
         @Override
         public final boolean hasNext() {
@@ -1601,9 +1604,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
             try {
                 if (!isClosed && rs.next()) {
-                    record = Tools.newRecord(true, (F0<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration())
-                                  .operate(initialiser.reset());
-
+                    record = recordDelegate.operate(initialiser.reset());
                     rows++;
                 }
             }

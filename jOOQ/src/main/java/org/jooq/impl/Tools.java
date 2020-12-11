@@ -1406,6 +1406,8 @@ final class Tools {
     static final <R extends Record, O extends Record> ReferenceImpl<R, O> aliasedKey(ForeignKey<R, O> key, Table<R> child, Table<O> parent) {
 
         // [#10603] [#5050] TODO: Solve aliasing constraints more generically
+        // [#8762] We can't dereference child.fields() or parent.fields() here yet, because this method is being called by
+        //         the TableImpl constructor, meaning the fields are not initialised yet.
         return new ReferenceImpl<>(
             child,
             key.getQualifiedName(),

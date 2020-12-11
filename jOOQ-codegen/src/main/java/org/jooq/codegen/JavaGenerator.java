@@ -5683,6 +5683,22 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // Outbound (to-one) implicit join paths
                 if (generateImplicitJoinPathsToOne()) {
+                    if (scala) {}
+                    else {
+                        out.println();
+
+                        // [#8762] Cache these calls for much improved runtime performance!
+                        for (ForeignKeyDefinition foreignKey : foreignKeys) {
+                            final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
+                            final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+
+                            if (kotlin)
+                                out.println("private lateinit var _%s: %s", keyMethodName, referencedTableClassName);
+                            else
+                                out.println("private transient %s _%s;", referencedTableClassName, keyMethodName);
+                        }
+                    }
+
                     for (ForeignKeyDefinition foreignKey : foreignKeys) {
                         final String keyFullId = kotlin
                             ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
@@ -5691,15 +5707,23 @@ public class JavaGenerator extends AbstractGenerator {
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
                         if (scala) {
-                            out.println("%sdef %s: %s = new %s(this, %s)", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
+                            out.println("%slazy val %s: %s = { new %s(this, %s) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
                         }
                         else if (kotlin) {
-                            out.println("%sfun %s(): %s = %s(this, %s)", visibility(), keyMethodName, referencedTableClassName, referencedTableClassName, keyFullId);
+                            out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencedTableClassName);
+                            out.println("if (!%s::_%s.isInitialized)", className, keyMethodName);
+                            out.println("_%s = %s(this, %s)", keyMethodName, referencedTableClassName, keyFullId);
+                            out.println();
+                            out.println("return _%s;", keyMethodName);
+                            out.println("}");
                         }
                         else {
                             out.println();
                             out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);
-                            out.println("return new %s(this, %s);", referencedTableClassName, keyFullId);
+                            out.println("if (_%s == null)", keyMethodName);
+                            out.println("_%s = new %s(this, %s);", keyMethodName, referencedTableClassName, keyFullId);
+                            out.println();
+                            out.println("return _%s;", keyMethodName);
                             out.println("}");
                         }
                     }

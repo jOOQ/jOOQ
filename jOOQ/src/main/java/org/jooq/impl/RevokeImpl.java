@@ -49,8 +49,8 @@ import static org.jooq.SQLDialect.*;
 import org.jooq.*;
 import org.jooq.impl.*;
 
-import java.math.*;
 import java.util.*;
+
 
 /**
  * The <code>REVOKE GRANT OPTION FOR</code> statement.

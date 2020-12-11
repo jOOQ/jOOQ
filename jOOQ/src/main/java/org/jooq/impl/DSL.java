@@ -15220,7 +15220,7 @@ public class DSL {
      * The <code>MD5</code> function.
      */
     @NotNull
-    @Support
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> md5(String string) {
         return new Md5(Tools.field(string));
     }
@@ -15229,7 +15229,7 @@ public class DSL {
      * The <code>MD5</code> function.
      */
     @NotNull
-    @Support
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> md5(Field<String> string) {
         return new Md5(string);
     }
@@ -15895,6 +15895,96 @@ public class DSL {
     @Support
     public static Field<String> substring(Field<String> string, Field<? extends Number> startingPosition) {
         return new Substring(string, startingPosition);
+    }
+
+    /**
+     * The <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static Field<String> toChar(Object value, String formatMask) {
+        return new ToChar(Tools.field(value), Tools.field(formatMask));
+    }
+
+    /**
+     * The <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static Field<String> toChar(Object value, Field<String> formatMask) {
+        return new ToChar(Tools.field(value), formatMask);
+    }
+
+    /**
+     * The <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static Field<String> toChar(Field<?> value, String formatMask) {
+        return new ToChar(value, Tools.field(formatMask));
+    }
+
+    /**
+     * The <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static Field<String> toChar(Field<?> value, Field<String> formatMask) {
+        return new ToChar(value, formatMask);
+    }
+
+    /**
+     * The <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> toChar(Object value) {
+        return new ToChar(Tools.field(value));
+    }
+
+    /**
+     * The <code>TO_CHAR</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> toChar(Field<?> value) {
+        return new ToChar(value);
+    }
+
+    /**
+     * The <code>TO_DATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Date> toDate(String value, String formatMask) {
+        return new ToDate(Tools.field(value), Tools.field(formatMask));
+    }
+
+    /**
+     * The <code>TO_DATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Date> toDate(String value, Field<String> formatMask) {
+        return new ToDate(Tools.field(value), formatMask);
+    }
+
+    /**
+     * The <code>TO_DATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Date> toDate(Field<String> value, String formatMask) {
+        return new ToDate(value, Tools.field(formatMask));
+    }
+
+    /**
+     * The <code>TO_DATE</code> function.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Date> toDate(Field<String> value, Field<String> formatMask) {
+        return new ToDate(value, formatMask);
     }
 
     /**
@@ -18443,108 +18533,6 @@ public class DSL {
         return new DateOrTime<>(field, SQLDataType.INSTANT);
     }
 
-
-    /**
-     * The Oracle-specific <code>TO_CHAR</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> toChar(Object value) {
-        return toChar(val(value));
-    }
-
-    /**
-     * The Oracle-specific <code>TO_CHAR</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> toChar(Field<?> value) {
-        return new ToChar(value, null);
-    }
-
-    /**
-     * The Oracle-specific <code>TO_CHAR</code> function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static Field<String> toChar(Object value, String formatMask) {
-        return toChar(val(value), val(formatMask));
-    }
-
-    /**
-     * The Oracle-specific <code>TO_CHAR</code> function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static Field<String> toChar(Object value, Field<String> formatMask) {
-        return toChar(val(value), formatMask);
-    }
-
-    /**
-     * The Oracle-specific <code>TO_CHAR</code> function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static Field<String> toChar(Field<?> value, String formatMask) {
-        return toChar(value, val(formatMask));
-    }
-
-    /**
-     * The Oracle-specific <code>TO_CHAR</code> function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static Field<String> toChar(Field<?> value, Field<String> formatMask) {
-        return new ToChar(value, formatMask);
-    }
-
-    /**
-     * Parse a value to a <code>DATE</code>.
-     *
-     * @param value The formatted <code>DATE</code> value.
-     * @param format The vendor-specific formatting string.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Date> toDate(String value, String format) {
-        return toDate(Tools.field(value), Tools.field(format));
-    }
-
-    /**
-     * Parse a value to a <code>DATE</code>.
-     *
-     * @param value The formatted <code>DATE</code> value.
-     * @param format The vendor-specific formatting string.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Date> toDate(String value, Field<String> format) {
-        return toDate(Tools.field(value), Tools.nullSafe(format));
-    }
-
-    /**
-     * Parse a value to a <code>DATE</code>.
-     *
-     * @param value The formatted <code>DATE</code> value.
-     * @param format The vendor-specific formatting string.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Date> toDate(Field<String> value, String format) {
-        return toDate(Tools.nullSafe(value), Tools.field(format));
-    }
-
-    /**
-     * Parse a value to a <code>DATE</code>.
-     *
-     * @param value The formatted <code>DATE</code> value.
-     * @param format The vendor-specific formatting string.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Date> toDate(Field<String> value, Field<String> format) {
-        return function("to_date", SQLDataType.DATE, value, format);
-    }
 
     /**
      * Parse a value to a <code>TIMESTAMP</code>.

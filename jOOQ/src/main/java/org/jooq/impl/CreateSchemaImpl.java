@@ -49,8 +49,8 @@ import static org.jooq.SQLDialect.*;
 import org.jooq.*;
 import org.jooq.impl.*;
 
-import java.math.*;
 import java.util.*;
+
 
 /**
  * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.

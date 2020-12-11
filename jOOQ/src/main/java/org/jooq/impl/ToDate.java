@@ -50,28 +50,31 @@ import org.jooq.*;
 import org.jooq.impl.*;
 
 import java.util.*;
-import java.math.BigDecimal;
+import java.sql.Date;
 
 
 /**
- * The <code>SINH</code> statement.
+ * The <code>TO DATE</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Sinh
+final class ToDate
 extends
-    AbstractField<BigDecimal>
+    AbstractField<Date>
 {
 
     private static final long serialVersionUID = 1L;
 
-    private final Field<? extends Number> number;
+    private final Field<String> value;
+    private final Field<String> formatMask;
 
-    Sinh(
-        Field<? extends Number> number
+    ToDate(
+        Field<String> value,
+        Field<String> formatMask
     ) {
-        super(N_SINH, allNotNull(NUMERIC, number));
+        super(N_TO_DATE, allNotNull(DATE, value, formatMask));
 
-        this.number = nullSafeNotNull(number, INTEGER);
+        this.value = nullSafeNotNull(value, VARCHAR);
+        this.formatMask = nullSafeNotNull(formatMask, VARCHAR);
     }
 
     // -------------------------------------------------------------------------
@@ -82,36 +85,7 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-                ctx.visit(idiv(
-                    isub(DSL.exp(imul(number, two())), one()),
-                    imul(DSL.exp(number), two())
-                ));
-                break;
-
-            default:
-                ctx.visit(N_SINH).sql('(').visit(number).sql(')');
-                break;
-        }
+        ctx.visit(function(N_TO_DATE, getDataType(), value, formatMask));
     }
 
 

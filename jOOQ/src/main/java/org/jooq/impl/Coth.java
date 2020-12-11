@@ -49,8 +49,9 @@ import static org.jooq.SQLDialect.*;
 import org.jooq.*;
 import org.jooq.impl.*;
 
-import java.math.*;
 import java.util.*;
+import java.math.BigDecimal;
+
 
 /**
  * The <code>COTH</code> statement.

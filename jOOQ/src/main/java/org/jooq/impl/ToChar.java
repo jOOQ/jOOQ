@@ -37,58 +37,82 @@
  */
 package org.jooq.impl;
 
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-import static org.jooq.impl.Names.N_TO_CHAR;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.SQLDialect;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>TO CHAR</code> statement.
  */
-final class ToChar extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class ToChar
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID  = 2484479701190490450L;
-    private static final Set<SQLDialect> SUPPORT_NATIVE = SQLDialect.supportedBy(H2, POSTGRES);
-    private final Field<?>               field;
-    private final Field<String>          format;
+    private static final long serialVersionUID = 1L;
 
-    ToChar(Field<?> field, Field<String> format) {
-        super(N_TO_CHAR, VARCHAR);
+    private final Field<?>      value;
+    private final Field<String> formatMask;
 
-        this.field = field;
-        this.format = format;
+    ToChar(
+        Field<?> value
+    ) {
+        super(N_TO_CHAR, allNotNull(VARCHAR, value));
+
+        this.value = nullSafeNotNull(value, OTHER);
+        this.formatMask = null;
     }
+
+    ToChar(
+        Field<?> value,
+        Field<String> formatMask
+    ) {
+        super(N_TO_CHAR, allNotNull(VARCHAR, value, formatMask));
+
+        this.value = nullSafeNotNull(value, OTHER);
+        this.formatMask = nullSafeNotNull(formatMask, VARCHAR);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Set<SQLDialect> SUPPORT_NATIVE = SQLDialect.supportedBy(H2, POSTGRES);
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (format == null && !SUPPORT_NATIVE.contains(ctx.dialect()))
+        if (formatMask == null && !SUPPORT_NATIVE.contains(ctx.dialect()))
             acceptCast(ctx);
         else
             acceptNative(ctx);
     }
 
     private final void acceptNative(Context<?> ctx) {
-        ctx.visit(N_TO_CHAR).sql('(').visit(field);
+        ctx.visit(N_TO_CHAR).sql('(').visit(value);
 
-        if (format != null)
-            ctx.sql(", ").visit(format);
+        if (formatMask != null)
+            ctx.sql(", ").visit(formatMask);
 
         ctx.sql(')');
     }
 
     private final void acceptCast(Context<?> ctx) {
-        ctx.visit(DSL.cast(field, VARCHAR));
+        ctx.visit(DSL.cast(value, VARCHAR));
     }
+
+
 }

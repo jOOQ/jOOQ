@@ -7066,87 +7066,6 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
-    // XXX Session Statements
-    // -------------------------------------------------------------------------
-
-    /**
-     * Set the current catalog to a new value.
-     *
-     * @see DSL#catalog(Name)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    public static RowCountQuery setCatalog(String catalog) {
-        return dsl().setCatalog(catalog);
-    }
-
-    /**
-     * Set the current catalog to a new value.
-     *
-     * @see DSL#catalog(Name)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    public static RowCountQuery setCatalog(Name catalog) {
-        return dsl().setCatalog(catalog);
-    }
-
-    /**
-     * Set the current catalog to a new value.
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    public static RowCountQuery setCatalog(Catalog catalog) {
-        return dsl().setCatalog(catalog);
-    }
-
-    /**
-     * Set the current schema to a new value.
-     *
-     * @see DSL#schema(Name)
-     * @see DSLContext#setSchema(String)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static RowCountQuery setSchema(String schema) {
-        return dsl().setSchema(schema);
-    }
-
-    /**
-     * Set the current schema to a new value.
-     *
-     * @see DSL#schema(Name)
-     * @see DSLContext#setSchema(Name)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static RowCountQuery setSchema(Name schema) {
-        return dsl().setSchema(schema);
-    }
-
-    /**
-     * Set the current schema to a new value.
-     *
-     * @see DSLContext#setSchema(Schema)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static RowCountQuery setSchema(Schema schema) {
-        return dsl().setSchema(schema);
-    }
-
-    /**
-     * Set a vendor specific flag to a new value.
-     *
-     * @see DSLContext#set(Name, Param)
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static RowCountQuery set(Name name, Param<?> param) {
-        return dsl().set(name, param);
-    }
-
-    // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 
@@ -7975,6 +7894,97 @@ public class DSL {
     @Support({ HSQLDB, POSTGRES })
     public static org.jooq.RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
         return dsl().revokeGrantOptionFor(privileges);
+    }
+
+    /**
+     * The <code>SET</code> statement.
+     * <p>
+     * Set a vendor specific flag to a new value.
+     *
+     * @see DSLContext#set(Name,Param)
+     */
+    @NotNull
+    @Support({ MYSQL })
+    public static org.jooq.RowCountQuery set(Name name, Param<?> value) {
+        return dsl().set(name, value);
+    }
+
+    /**
+     * The <code>SET CATALOG</code> statement.
+     * <p>
+     * Set the current catalog to a new value.
+     *
+     * @see DSLContext#setCatalog(String)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.RowCountQuery setCatalog(String catalog) {
+        return dsl().setCatalog(catalog);
+    }
+
+    /**
+     * The <code>SET CATALOG</code> statement.
+     * <p>
+     * Set the current catalog to a new value.
+     *
+     * @see DSLContext#setCatalog(Name)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.RowCountQuery setCatalog(Name catalog) {
+        return dsl().setCatalog(catalog);
+    }
+
+    /**
+     * The <code>SET CATALOG</code> statement.
+     * <p>
+     * Set the current catalog to a new value.
+     *
+     * @see DSLContext#setCatalog(Catalog)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.RowCountQuery setCatalog(Catalog catalog) {
+        return dsl().setCatalog(catalog);
+    }
+
+    /**
+     * The <code>SET SCHEMA</code> statement.
+     * <p>
+     * Set the current schema to a new value.
+     *
+     * @see DSLContext#setSchema(String)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.RowCountQuery setSchema(String schema) {
+        return dsl().setSchema(schema);
+    }
+
+    /**
+     * The <code>SET SCHEMA</code> statement.
+     * <p>
+     * Set the current schema to a new value.
+     *
+     * @see DSLContext#setSchema(Name)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.RowCountQuery setSchema(Name schema) {
+        return dsl().setSchema(schema);
+    }
+
+    /**
+     * The <code>SET SCHEMA</code> statement.
+     * <p>
+     * Set the current schema to a new value.
+     *
+     * @see DSLContext#setSchema(Schema)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.RowCountQuery setSchema(Schema schema) {
+        return dsl().setSchema(schema);
     }
 
 

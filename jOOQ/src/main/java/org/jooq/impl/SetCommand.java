@@ -37,29 +37,40 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_SET;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Name;
-import org.jooq.Param;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
+
 
 /**
- * A <code>SET</code> command.
- *
- * @author Lukas Eder
+ * The <code>SET</code> statement.
  */
-final class SetCommand extends AbstractRowCountQuery {
+@SuppressWarnings({ "rawtypes", "unused" })
+final class SetCommand
+extends
+    AbstractRowCountQuery
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6018875346107141474L;
+    private static final long serialVersionUID = 1L;
 
-    private final Name        name;
-    private final Param<?>    value;
+    private final Name     name;
+    private final Param<?> value;
 
-    SetCommand(Configuration configuration, Name name, Param<?> value) {
+    SetCommand(
+        Configuration configuration,
+        Name name,
+        Param<?> value
+    ) {
         super(configuration);
 
         this.name = name;
@@ -69,12 +80,16 @@ final class SetCommand extends AbstractRowCountQuery {
     final Name     $name()  { return name; }
     final Param<?> $value() { return value; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(K_SET).sql(' ').visit(name).sql(" = ").visit(value);
     }
+
+
 }

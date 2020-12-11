@@ -9128,73 +9128,6 @@ public interface DSLContext extends Scope {
     Queries ddl(Collection<? extends Table<?>> tables, DDLExportConfiguration configuration);
 
     // -------------------------------------------------------------------------
-    // XXX Session Statements
-    // -------------------------------------------------------------------------
-
-    /**
-     * Set the current catalog to a new value.
-     *
-     * @see DSL#catalog(Name)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    RowCountQuery setCatalog(String catalog);
-
-    /**
-     * Set the current catalog to a new value.
-     *
-     * @see DSL#catalog(Name)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    RowCountQuery setCatalog(Name catalog);
-
-    /**
-     * Set the current catalog to a new value.
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    RowCountQuery setCatalog(Catalog catalog);
-
-    /**
-     * Set the current schema to a new value.
-     *
-     * @see DSL#schema(Name)
-     * @see DSL#setSchema(String)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    RowCountQuery setSchema(String schema);
-
-    /**
-     * Set the current schema to a new value.
-     *
-     * @see DSL#schema(Name)
-     * @see DSL#setSchema(Name)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    RowCountQuery setSchema(Name schema);
-
-    /**
-     * Set the current schema to a new value.
-     *
-     * @see DSL#setSchema(Schema)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    RowCountQuery setSchema(Schema schema);
-
-    /**
-     * Set a vendor specific flag to a new value.
-     *
-     * @see DSL#set(Name, Param)
-     */
-    @NotNull
-    @Support({ MYSQL })
-    RowCountQuery set(Name name, Param<?> param);
-
-    // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 
@@ -9874,6 +9807,83 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ HSQLDB, POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges);
+
+    /**
+     * The <code>SET</code> statement.
+     * <p>
+     * Set a vendor specific flag to a new value.
+     *
+     * @see DSL#set(Name,Param)
+     */
+    @NotNull
+    @Support({ MYSQL })
+    RowCountQuery set(Name name, Param<?> value);
+
+    /**
+     * The <code>SET CATALOG</code> statement.
+     * <p>
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#setCatalog(String)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    RowCountQuery setCatalog(String catalog);
+
+    /**
+     * The <code>SET CATALOG</code> statement.
+     * <p>
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#setCatalog(Name)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    RowCountQuery setCatalog(Name catalog);
+
+    /**
+     * The <code>SET CATALOG</code> statement.
+     * <p>
+     * Set the current catalog to a new value.
+     *
+     * @see DSL#setCatalog(Catalog)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    RowCountQuery setCatalog(Catalog catalog);
+
+    /**
+     * The <code>SET SCHEMA</code> statement.
+     * <p>
+     * Set the current schema to a new value.
+     *
+     * @see DSL#setSchema(String)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    RowCountQuery setSchema(String schema);
+
+    /**
+     * The <code>SET SCHEMA</code> statement.
+     * <p>
+     * Set the current schema to a new value.
+     *
+     * @see DSL#setSchema(Name)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    RowCountQuery setSchema(Name schema);
+
+    /**
+     * The <code>SET SCHEMA</code> statement.
+     * <p>
+     * Set the current schema to a new value.
+     *
+     * @see DSL#setSchema(Schema)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    RowCountQuery setSchema(Schema schema);
 
 
 

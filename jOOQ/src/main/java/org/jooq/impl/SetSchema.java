@@ -37,34 +37,50 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_ALTER;
-import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
-import static org.jooq.impl.Keywords.K_DATABASE;
-import static org.jooq.impl.Keywords.K_SCHEMA;
-import static org.jooq.impl.Keywords.K_SEARCH_PATH;
-import static org.jooq.impl.Keywords.K_SESSION;
-import static org.jooq.impl.Keywords.K_SET;
-import static org.jooq.impl.Keywords.K_USE;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Schema;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>SET SCHEMA</code> statement.
  */
-final class SetSchema extends AbstractRowCountQuery {
+@SuppressWarnings({ "unused" })
+final class SetSchema
+extends
+    AbstractRowCountQuery
+{
 
-    private static final long serialVersionUID = -3996953205762741746L;
-    private final Schema      schema;
+    private static final long serialVersionUID = 1L;
 
-    SetSchema(Configuration configuration, Schema schema) {
+    private final Schema schema;
+
+    SetSchema(
+        Configuration configuration,
+        Schema schema
+    ) {
         super(configuration);
 
         this.schema = schema;
     }
 
     final Schema $schema() { return schema; }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -104,4 +120,6 @@ final class SetSchema extends AbstractRowCountQuery {
                 break;
         }
     }
+
+
 }

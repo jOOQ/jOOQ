@@ -37,27 +37,50 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_CATALOG;
-import static org.jooq.impl.Keywords.K_SET;
-import static org.jooq.impl.Keywords.K_USE;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Catalog;
-import org.jooq.Configuration;
-import org.jooq.Context;
+import org.jooq.*;
+import org.jooq.impl.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>SET CATALOG</code> statement.
  */
-final class SetCatalog extends AbstractRowCountQuery {
+@SuppressWarnings({ "unused" })
+final class SetCatalog
+extends
+    AbstractRowCountQuery
+{
 
-    private static final long serialVersionUID = -3996953205762741746L;
-    private final Catalog     catalog;
+    private static final long serialVersionUID = 1L;
 
-    SetCatalog(Configuration configuration, Catalog catalog) {
+    private final Catalog catalog;
+
+    SetCatalog(
+        Configuration configuration,
+        Catalog catalog
+    ) {
         super(configuration);
 
         this.catalog = catalog;
     }
+
+    final Catalog $catalog() { return catalog; }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -90,4 +113,6 @@ final class SetCatalog extends AbstractRowCountQuery {
                 break;
         }
     }
+
+
 }

@@ -37,45 +37,55 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_VARCHAR;
-import static org.jooq.impl.Names.N_CONVERT;
-import static org.jooq.impl.Names.N_HASHBYTES;
-import static org.jooq.impl.Names.N_LOWER;
-import static org.jooq.impl.Names.N_MD5;
-import static org.jooq.impl.Names.N_RAWTOHEX;
-import static org.jooq.impl.Names.N_STANDARD_HASH;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Name;
+import org.jooq.*;
+import org.jooq.impl.*;
 // ...
-// ...
+
+import java.math.*;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>MD5</code> statement.
  */
-final class MD5 extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Md5
+extends
+    AbstractField<String>
+{
 
+    private static final long serialVersionUID = 1L;
 
+    private final Field<String> string;
 
+    Md5(
+        Field<String> string
+    ) {
+        super(N_MD5, allNotNull(VARCHAR, string));
 
-
-
-
-
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -7273879239726265322L;
-
-    private final Field<String> argument;
-
-    MD5(Field<String> argument) {
-        super(N_MD5, VARCHAR);
-
-        this.argument = argument;
+        this.string = nullSafeNotNull(string, VARCHAR);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -105,8 +115,10 @@ final class MD5 extends AbstractField<String> {
 
 
             default:
-                ctx.visit(N_MD5).sql('(').visit(argument).sql(')');
+                ctx.visit(N_MD5).sql('(').visit(string).sql(')');
                 break;
         }
     }
+
+
 }

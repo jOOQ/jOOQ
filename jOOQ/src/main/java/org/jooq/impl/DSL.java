@@ -15217,6 +15217,24 @@ public class DSL {
     }
 
     /**
+     * The <code>MD5</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> md5(String string) {
+        return new Md5(Tools.field(string));
+    }
+
+    /**
+     * The <code>MD5</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> md5(Field<String> string) {
+        return new Md5(string);
+    }
+
+    /**
      * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
      */
     @NotNull
@@ -16154,78 +16172,6 @@ public class DSL {
     @Support
     public static Field<String> concat(Field<?>... fields) {
         return new Concat(Tools.nullSafe(fields));
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX Hash function factory
-    // ------------------------------------------------------------------------
-
-    /**
-     * Get the MySQL-specific <code>MD5()</code> function.
-     * <p>
-     * These are the implementations for various databases:
-     * <p>
-     * <table border="1">
-     * <tr>
-     * <th>Database</th>
-     * <th>Implementation</th>
-     * </tr>
-     * <tr>
-     * <td>MySQL</td>
-     * <td><code>MD5( ... )</code></td>
-     * </tr>
-     * <tr>
-     * <td>Oracle 11g</td>
-     * <td>
-     * <code>LOWER(RAWTOHEX(SYS.DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW( ... ), SYS.DBMS_CRYPTO.HASH_MD5)))</code>
-     * </td>
-     * </tr>
-     * <tr>
-     * <td>Oracle 12c</td>
-     * <td>
-     * <code>LOWER(STANDARD_HASH( ... , 'MD5'))</code>
-     * </td>
-     * </tr>
-     * </table>
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static Field<String> md5(String string) {
-        return md5(Tools.field(string));
-    }
-
-    /**
-     * Get the MySQL-specific <code>MD5()</code> function.
-     * <p>
-     * These are the implementations for various databases:
-     * <p>
-     * <table border="1">
-     * <tr>
-     * <th>Database</th>
-     * <th>Implementation</th>
-     * </tr>
-     * <tr>
-     * <td>MySQL</td>
-     * <td><code>MD5( ... )</code></td>
-     * </tr>
-     * <tr>
-     * <td>Oracle 11g</td>
-     * <td>
-     * <code>LOWER(RAWTOHEX(SYS.DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW( ... ), SYS.DBMS_CRYPTO.HASH_MD5)))</code>
-     * </td>
-     * </tr>
-     * <tr>
-     * <td>Oracle 12c</td>
-     * <td>
-     * <code>LOWER(STANDARD_HASH( ... , 'MD5'))</code>
-     * </td>
-     * </tr>
-     * </table>
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static Field<String> md5(Field<String> string) {
-        return new MD5(Tools.nullSafe(string));
     }
 
     // ------------------------------------------------------------------------

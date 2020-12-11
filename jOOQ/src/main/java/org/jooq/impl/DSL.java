@@ -16500,6 +16500,62 @@ public class DSL {
     }
 
     /**
+     * The <code>TO_TIMESTAMP</code> function.
+     * <p>
+     * Parse a string-formatted timestamp value to a timestamp.
+     *
+     * @param value The formatted TIMESTAMP value.
+     * @param formatMask The vendor-specific formatting string.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Timestamp> toTimestamp(String value, String formatMask) {
+        return new ToTimestamp(Tools.field(value), Tools.field(formatMask));
+    }
+
+    /**
+     * The <code>TO_TIMESTAMP</code> function.
+     * <p>
+     * Parse a string-formatted timestamp value to a timestamp.
+     *
+     * @param value The formatted TIMESTAMP value.
+     * @param formatMask The vendor-specific formatting string.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Timestamp> toTimestamp(String value, Field<String> formatMask) {
+        return new ToTimestamp(Tools.field(value), formatMask);
+    }
+
+    /**
+     * The <code>TO_TIMESTAMP</code> function.
+     * <p>
+     * Parse a string-formatted timestamp value to a timestamp.
+     *
+     * @param value The formatted TIMESTAMP value.
+     * @param formatMask The vendor-specific formatting string.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Timestamp> toTimestamp(Field<String> value, String formatMask) {
+        return new ToTimestamp(value, Tools.field(formatMask));
+    }
+
+    /**
+     * The <code>TO_TIMESTAMP</code> function.
+     * <p>
+     * Parse a string-formatted timestamp value to a timestamp.
+     *
+     * @param value The formatted TIMESTAMP value.
+     * @param formatMask The vendor-specific formatting string.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> formatMask) {
+        return new ToTimestamp(value, formatMask);
+    }
+
+    /**
      * The <code>TRANSLATE</code> function.
      * <p>
      * Translate a set of characters to another set of characters in a string.
@@ -19100,57 +19156,6 @@ public class DSL {
     public static Field<Instant> instant(Field<Instant> field) {
         return new DateOrTime<>(field, SQLDataType.INSTANT);
     }
-
-
-    /**
-     * Parse a value to a <code>TIMESTAMP</code>.
-     *
-     * @param value The formatted <code>TIMESTAMP</code> value.
-     * @param format The vendor-specific formatting string.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Timestamp> toTimestamp(String value, String format) {
-        return toTimestamp(Tools.field(value), Tools.field(format));
-    }
-
-    /**
-     * Parse a value to a <code>TIMESTAMP</code>.
-     *
-     * @param value The formatted <code>TIMESTAMP</code> value.
-     * @param format The vendor-specific formatting string.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Timestamp> toTimestamp(String value, Field<String> format) {
-        return toTimestamp(Tools.field(value), Tools.nullSafe(format));
-    }
-
-    /**
-     * Parse a value to a <code>TIMESTAMP</code>.
-     *
-     * @param value The formatted <code>TIMESTAMP</code> value.
-     * @param format The vendor-specific formatting string.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Timestamp> toTimestamp(Field<String> value, String format) {
-        return toTimestamp(Tools.nullSafe(value), Tools.field(format));
-    }
-
-    /**
-     * Parse a value to a <code>TIMESTAMP</code>.
-     *
-     * @param value The formatted <code>TIMESTAMP</code> value.
-     * @param format The vendor-specific formatting string.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> format) {
-        return function("to_timestamp", SQLDataType.TIMESTAMP, value, format);
-    }
-
-
 
     /**
      * Parse a value to a <code>DATE</code>.

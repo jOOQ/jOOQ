@@ -14894,6 +14894,8 @@ public class DSL {
 
     /**
      * The <code>ASCII</code> function.
+     * <p>
+     * The ASCII value of a character.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -14903,6 +14905,8 @@ public class DSL {
 
     /**
      * The <code>ASCII</code> function.
+     * <p>
+     * The ASCII value of a character.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -14912,6 +14916,8 @@ public class DSL {
 
     /**
      * The <code>BIT_LENGTH</code> function.
+     * <p>
+     * The length of a string in bits.
      */
     @NotNull
     @Support
@@ -14921,6 +14927,8 @@ public class DSL {
 
     /**
      * The <code>BIT_LENGTH</code> function.
+     * <p>
+     * The length of a string in bits.
      */
     @NotNull
     @Support
@@ -14930,6 +14938,8 @@ public class DSL {
 
     /**
      * The <code>CHAR_LENGTH</code> function.
+     * <p>
+     * The length of a string in characters.
      */
     @NotNull
     @Support
@@ -14939,6 +14949,8 @@ public class DSL {
 
     /**
      * The <code>CHAR_LENGTH</code> function.
+     * <p>
+     * The length of a string in characters.
      */
     @NotNull
     @Support
@@ -15020,6 +15032,10 @@ public class DSL {
 
     /**
      * The <code>DEG</code> function.
+     * <p>
+     * Turn a value in radians to degrees.
+     *
+     * @param radians The value in radians.
      */
     @NotNull
     @Support
@@ -15029,6 +15045,10 @@ public class DSL {
 
     /**
      * The <code>DEG</code> function.
+     * <p>
+     * Turn a value in radians to degrees.
+     *
+     * @param radians The value in radians.
      */
     @NotNull
     @Support
@@ -15038,6 +15058,11 @@ public class DSL {
 
     /**
      * The <code>LEFT</code> function.
+     * <p>
+     * Get the left outermost characters from a string.
+     *
+     * @param string The string whose characters are extracted.
+     * @param length The number of characters to extract from the string.
      */
     @NotNull
     @Support
@@ -15047,6 +15072,11 @@ public class DSL {
 
     /**
      * The <code>LEFT</code> function.
+     * <p>
+     * Get the left outermost characters from a string.
+     *
+     * @param string The string whose characters are extracted.
+     * @param length The number of characters to extract from the string.
      */
     @NotNull
     @Support
@@ -15056,6 +15086,11 @@ public class DSL {
 
     /**
      * The <code>LEFT</code> function.
+     * <p>
+     * Get the left outermost characters from a string.
+     *
+     * @param string The string whose characters are extracted.
+     * @param length The number of characters to extract from the string.
      */
     @NotNull
     @Support
@@ -15065,6 +15100,11 @@ public class DSL {
 
     /**
      * The <code>LEFT</code> function.
+     * <p>
+     * Get the left outermost characters from a string.
+     *
+     * @param string The string whose characters are extracted.
+     * @param length The number of characters to extract from the string.
      */
     @NotNull
     @Support
@@ -15074,6 +15114,8 @@ public class DSL {
 
     /**
      * The <code>LENGTH</code> function, an alias for the <code>CHAR_LENGTH</code> function.
+     * <p>
+     * The length of a string in characters.
      */
     @NotNull
     @Support
@@ -15083,6 +15125,8 @@ public class DSL {
 
     /**
      * The <code>LENGTH</code> function, an alias for the <code>CHAR_LENGTH</code> function.
+     * <p>
+     * The length of a string in characters.
      */
     @NotNull
     @Support
@@ -15092,6 +15136,8 @@ public class DSL {
 
     /**
      * The <code>LOWER</code> function.
+     * <p>
+     * Turn a string into lower case.
      */
     @NotNull
     @Support
@@ -15101,6 +15147,8 @@ public class DSL {
 
     /**
      * The <code>LOWER</code> function.
+     * <p>
+     * Turn a string into lower case.
      */
     @NotNull
     @Support
@@ -15110,6 +15158,12 @@ public class DSL {
 
     /**
      * The <code>LPAD</code> function.
+     * <p>
+     * Left-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
+     * @param character The padding character, if different from whitespace
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15119,6 +15173,12 @@ public class DSL {
 
     /**
      * The <code>LPAD</code> function.
+     * <p>
+     * Left-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
+     * @param character The padding character, if different from whitespace
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15128,6 +15188,12 @@ public class DSL {
 
     /**
      * The <code>LPAD</code> function.
+     * <p>
+     * Left-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
+     * @param character The padding character, if different from whitespace
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15137,6 +15203,12 @@ public class DSL {
 
     /**
      * The <code>LPAD</code> function.
+     * <p>
+     * Left-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
+     * @param character The padding character, if different from whitespace
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15146,6 +15218,11 @@ public class DSL {
 
     /**
      * The <code>LPAD</code> function.
+     * <p>
+     * Left-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15155,6 +15232,11 @@ public class DSL {
 
     /**
      * The <code>LPAD</code> function.
+     * <p>
+     * Left-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15164,6 +15246,11 @@ public class DSL {
 
     /**
      * The <code>LTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15173,6 +15260,11 @@ public class DSL {
 
     /**
      * The <code>LTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15182,6 +15274,11 @@ public class DSL {
 
     /**
      * The <code>LTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15191,6 +15288,11 @@ public class DSL {
 
     /**
      * The <code>LTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15200,6 +15302,10 @@ public class DSL {
 
     /**
      * The <code>LTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
      */
     @NotNull
     @Support
@@ -15209,6 +15315,10 @@ public class DSL {
 
     /**
      * The <code>LTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
      */
     @NotNull
     @Support
@@ -15218,6 +15328,8 @@ public class DSL {
 
     /**
      * The <code>MD5</code> function.
+     * <p>
+     * Calculate an MD5 hash from a string.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
@@ -15227,6 +15339,8 @@ public class DSL {
 
     /**
      * The <code>MD5</code> function.
+     * <p>
+     * Calculate an MD5 hash from a string.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
@@ -15236,6 +15350,12 @@ public class DSL {
 
     /**
      * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
      */
     @NotNull
     @Support
@@ -15245,6 +15365,12 @@ public class DSL {
 
     /**
      * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
      */
     @NotNull
     @Support
@@ -15254,6 +15380,12 @@ public class DSL {
 
     /**
      * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
      */
     @NotNull
     @Support
@@ -15263,6 +15395,12 @@ public class DSL {
 
     /**
      * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
      */
     @NotNull
     @Support
@@ -15272,6 +15410,11 @@ public class DSL {
 
     /**
      * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
      */
     @NotNull
     @Support
@@ -15281,6 +15424,11 @@ public class DSL {
 
     /**
      * The <code>MID</code> function, an alias for the <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
      */
     @NotNull
     @Support
@@ -15290,6 +15438,8 @@ public class DSL {
 
     /**
      * The <code>OCTET_LENGTH</code> function.
+     * <p>
+     * The length of a string in octets.
      */
     @NotNull
     @Support
@@ -15299,6 +15449,8 @@ public class DSL {
 
     /**
      * The <code>OCTET_LENGTH</code> function.
+     * <p>
+     * The length of a string in octets.
      */
     @NotNull
     @Support
@@ -15308,6 +15460,13 @@ public class DSL {
 
     /**
      * The <code>OVERLAY</code> function.
+     * <p>
+     * Place a string on top of another string, replacing the original contents.
+     *
+     * @param in The original string on top of which the overlay is placed.
+     * @param placing The string that is being placed on top of the other string.
+     * @param startIndex The start index (1-based) starting from where the overlay is placed.
+     * @param length The length in the original string that will be replaced, if different from the overlay length.
      */
     @NotNull
     @Support
@@ -15317,6 +15476,13 @@ public class DSL {
 
     /**
      * The <code>OVERLAY</code> function.
+     * <p>
+     * Place a string on top of another string, replacing the original contents.
+     *
+     * @param in The original string on top of which the overlay is placed.
+     * @param placing The string that is being placed on top of the other string.
+     * @param startIndex The start index (1-based) starting from where the overlay is placed.
+     * @param length The length in the original string that will be replaced, if different from the overlay length.
      */
     @NotNull
     @Support
@@ -15326,6 +15492,12 @@ public class DSL {
 
     /**
      * The <code>OVERLAY</code> function.
+     * <p>
+     * Place a string on top of another string, replacing the original contents.
+     *
+     * @param in The original string on top of which the overlay is placed.
+     * @param placing The string that is being placed on top of the other string.
+     * @param startIndex The start index (1-based) starting from where the overlay is placed.
      */
     @NotNull
     @Support
@@ -15335,6 +15507,12 @@ public class DSL {
 
     /**
      * The <code>OVERLAY</code> function.
+     * <p>
+     * Place a string on top of another string, replacing the original contents.
+     *
+     * @param in The original string on top of which the overlay is placed.
+     * @param placing The string that is being placed on top of the other string.
+     * @param startIndex The start index (1-based) starting from where the overlay is placed.
      */
     @NotNull
     @Support
@@ -15344,6 +15522,12 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
     @Support
@@ -15353,6 +15537,12 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
     @Support
@@ -15362,6 +15552,12 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
     @Support
@@ -15371,6 +15567,12 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
     @Support
@@ -15380,6 +15582,12 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
     @Support
@@ -15389,6 +15597,12 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
     @Support
@@ -15398,6 +15612,12 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
     @Support
@@ -15407,6 +15627,12 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
     @Support
@@ -15416,6 +15642,11 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
      */
     @NotNull
     @Support
@@ -15425,6 +15656,11 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
      */
     @NotNull
     @Support
@@ -15434,6 +15670,11 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
      */
     @NotNull
     @Support
@@ -15443,6 +15684,11 @@ public class DSL {
 
     /**
      * The <code>POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
      */
     @NotNull
     @Support
@@ -15452,6 +15698,10 @@ public class DSL {
 
     /**
      * The <code>RAD</code> function.
+     * <p>
+     * Turn a value in degrees to radians.
+     *
+     * @param degrees The value in degrees.
      */
     @NotNull
     @Support
@@ -15461,6 +15711,10 @@ public class DSL {
 
     /**
      * The <code>RAD</code> function.
+     * <p>
+     * Turn a value in degrees to radians.
+     *
+     * @param degrees The value in degrees.
      */
     @NotNull
     @Support
@@ -15470,6 +15724,11 @@ public class DSL {
 
     /**
      * The <code>REPEAT</code> function.
+     * <p>
+     * Repeat a string a number of times.
+     *
+     * @param string The string to be repeated.
+     * @param count The number of times to repeat the string.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15479,6 +15738,11 @@ public class DSL {
 
     /**
      * The <code>REPEAT</code> function.
+     * <p>
+     * Repeat a string a number of times.
+     *
+     * @param string The string to be repeated.
+     * @param count The number of times to repeat the string.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15488,6 +15752,11 @@ public class DSL {
 
     /**
      * The <code>REPEAT</code> function.
+     * <p>
+     * Repeat a string a number of times.
+     *
+     * @param string The string to be repeated.
+     * @param count The number of times to repeat the string.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15497,6 +15766,11 @@ public class DSL {
 
     /**
      * The <code>REPEAT</code> function.
+     * <p>
+     * Repeat a string a number of times.
+     *
+     * @param string The string to be repeated.
+     * @param count The number of times to repeat the string.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15506,6 +15780,12 @@ public class DSL {
 
     /**
      * The <code>REPLACE</code> function.
+     * <p>
+     * Replace all occurrences of a substring in another string.
+     *
+     * @param string The string in which to replace contents.
+     * @param search The substring to search for.
+     * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15515,6 +15795,12 @@ public class DSL {
 
     /**
      * The <code>REPLACE</code> function.
+     * <p>
+     * Replace all occurrences of a substring in another string.
+     *
+     * @param string The string in which to replace contents.
+     * @param search The substring to search for.
+     * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15524,6 +15810,12 @@ public class DSL {
 
     /**
      * The <code>REPLACE</code> function.
+     * <p>
+     * Replace all occurrences of a substring in another string.
+     *
+     * @param string The string in which to replace contents.
+     * @param search The substring to search for.
+     * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15533,6 +15825,12 @@ public class DSL {
 
     /**
      * The <code>REPLACE</code> function.
+     * <p>
+     * Replace all occurrences of a substring in another string.
+     *
+     * @param string The string in which to replace contents.
+     * @param search The substring to search for.
+     * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15542,6 +15840,11 @@ public class DSL {
 
     /**
      * The <code>REPLACE</code> function.
+     * <p>
+     * Replace all occurrences of a substring in another string.
+     *
+     * @param string The string in which to replace contents.
+     * @param search The substring to search for.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15551,6 +15854,11 @@ public class DSL {
 
     /**
      * The <code>REPLACE</code> function.
+     * <p>
+     * Replace all occurrences of a substring in another string.
+     *
+     * @param string The string in which to replace contents.
+     * @param search The substring to search for.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15560,6 +15868,8 @@ public class DSL {
 
     /**
      * The <code>REVERSE</code> function.
+     * <p>
+     * Reverse a string.
      */
     @NotNull
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -15569,6 +15879,8 @@ public class DSL {
 
     /**
      * The <code>REVERSE</code> function.
+     * <p>
+     * Reverse a string.
      */
     @NotNull
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -15578,6 +15890,11 @@ public class DSL {
 
     /**
      * The <code>RIGHT</code> function.
+     * <p>
+     * Get the right outermost characters from a string.
+     *
+     * @param string The string whose characters are extracted.
+     * @param length The number of characters to extract from the string.
      */
     @NotNull
     @Support
@@ -15587,6 +15904,11 @@ public class DSL {
 
     /**
      * The <code>RIGHT</code> function.
+     * <p>
+     * Get the right outermost characters from a string.
+     *
+     * @param string The string whose characters are extracted.
+     * @param length The number of characters to extract from the string.
      */
     @NotNull
     @Support
@@ -15596,6 +15918,11 @@ public class DSL {
 
     /**
      * The <code>RIGHT</code> function.
+     * <p>
+     * Get the right outermost characters from a string.
+     *
+     * @param string The string whose characters are extracted.
+     * @param length The number of characters to extract from the string.
      */
     @NotNull
     @Support
@@ -15605,6 +15932,11 @@ public class DSL {
 
     /**
      * The <code>RIGHT</code> function.
+     * <p>
+     * Get the right outermost characters from a string.
+     *
+     * @param string The string whose characters are extracted.
+     * @param length The number of characters to extract from the string.
      */
     @NotNull
     @Support
@@ -15614,6 +15946,12 @@ public class DSL {
 
     /**
      * The <code>RPAD</code> function.
+     * <p>
+     * Right-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
+     * @param character The padding character, if different from whitespace
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15623,6 +15961,12 @@ public class DSL {
 
     /**
      * The <code>RPAD</code> function.
+     * <p>
+     * Right-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
+     * @param character The padding character, if different from whitespace
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15632,6 +15976,12 @@ public class DSL {
 
     /**
      * The <code>RPAD</code> function.
+     * <p>
+     * Right-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
+     * @param character The padding character, if different from whitespace
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15641,6 +15991,12 @@ public class DSL {
 
     /**
      * The <code>RPAD</code> function.
+     * <p>
+     * Right-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
+     * @param character The padding character, if different from whitespace
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15650,6 +16006,11 @@ public class DSL {
 
     /**
      * The <code>RPAD</code> function.
+     * <p>
+     * Right-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15659,6 +16020,11 @@ public class DSL {
 
     /**
      * The <code>RPAD</code> function.
+     * <p>
+     * Right-pad a string with a character (whitespace as default) for a number of times.
+     *
+     * @param string The string to be padded.
+     * @param length The maximum length to pad the string to.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15668,6 +16034,11 @@ public class DSL {
 
     /**
      * The <code>RTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15677,6 +16048,11 @@ public class DSL {
 
     /**
      * The <code>RTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15686,6 +16062,11 @@ public class DSL {
 
     /**
      * The <code>RTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15695,6 +16076,11 @@ public class DSL {
 
     /**
      * The <code>RTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15704,6 +16090,10 @@ public class DSL {
 
     /**
      * The <code>RTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
      */
     @NotNull
     @Support
@@ -15713,6 +16103,10 @@ public class DSL {
 
     /**
      * The <code>RTRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
      */
     @NotNull
     @Support
@@ -15737,6 +16131,8 @@ public class DSL {
 
     /**
      * The <code>SIGN</code> function.
+     * <p>
+     * Get the sign of a number and return it as any of +1, 0, -1.
      */
     @NotNull
     @Support
@@ -15746,6 +16142,8 @@ public class DSL {
 
     /**
      * The <code>SIGN</code> function.
+     * <p>
+     * Get the sign of a number and return it as any of +1, 0, -1.
      */
     @NotNull
     @Support
@@ -15791,6 +16189,10 @@ public class DSL {
 
     /**
      * The <code>SPACE</code> function.
+     * <p>
+     * Get a string of spaces of a given length.
+     *
+     * @param count The number of spaces to produce.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15800,6 +16202,10 @@ public class DSL {
 
     /**
      * The <code>SPACE</code> function.
+     * <p>
+     * Get a string of spaces of a given length.
+     *
+     * @param count The number of spaces to produce.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -15809,6 +16215,12 @@ public class DSL {
 
     /**
      * The <code>SPLIT_PART</code> function.
+     * <p>
+     * Split a string into tokens, and retrieve the nth token.
+     *
+     * @param string The string to be split into parts.
+     * @param delimiter The delimiter used for splitting.
+     * @param n The token number (1-based).
      */
     @NotNull
     @Support({ POSTGRES })
@@ -15818,6 +16230,12 @@ public class DSL {
 
     /**
      * The <code>SPLIT_PART</code> function.
+     * <p>
+     * Split a string into tokens, and retrieve the nth token.
+     *
+     * @param string The string to be split into parts.
+     * @param delimiter The delimiter used for splitting.
+     * @param n The token number (1-based).
      */
     @NotNull
     @Support({ POSTGRES })
@@ -15827,6 +16245,12 @@ public class DSL {
 
     /**
      * The <code>SPLIT_PART</code> function.
+     * <p>
+     * Split a string into tokens, and retrieve the nth token.
+     *
+     * @param string The string to be split into parts.
+     * @param delimiter The delimiter used for splitting.
+     * @param n The token number (1-based).
      */
     @NotNull
     @Support({ POSTGRES })
@@ -15836,6 +16260,12 @@ public class DSL {
 
     /**
      * The <code>SPLIT_PART</code> function.
+     * <p>
+     * Split a string into tokens, and retrieve the nth token.
+     *
+     * @param string The string to be split into parts.
+     * @param delimiter The delimiter used for splitting.
+     * @param n The token number (1-based).
      */
     @NotNull
     @Support({ POSTGRES })
@@ -15845,6 +16275,12 @@ public class DSL {
 
     /**
      * The <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
      */
     @NotNull
     @Support
@@ -15854,6 +16290,12 @@ public class DSL {
 
     /**
      * The <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
      */
     @NotNull
     @Support
@@ -15863,6 +16305,12 @@ public class DSL {
 
     /**
      * The <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
      */
     @NotNull
     @Support
@@ -15872,6 +16320,12 @@ public class DSL {
 
     /**
      * The <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
      */
     @NotNull
     @Support
@@ -15881,6 +16335,11 @@ public class DSL {
 
     /**
      * The <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
      */
     @NotNull
     @Support
@@ -15890,6 +16349,11 @@ public class DSL {
 
     /**
      * The <code>SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a string, from a given position.
+     *
+     * @param string The string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
      */
     @NotNull
     @Support
@@ -15899,6 +16363,11 @@ public class DSL {
 
     /**
      * The <code>TO_CHAR</code> function.
+     * <p>
+     * Format an arbitrary value as a string.
+     *
+     * @param value The value to be formatted.
+     * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
     @Support({ H2, POSTGRES })
@@ -15908,6 +16377,11 @@ public class DSL {
 
     /**
      * The <code>TO_CHAR</code> function.
+     * <p>
+     * Format an arbitrary value as a string.
+     *
+     * @param value The value to be formatted.
+     * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
     @Support({ H2, POSTGRES })
@@ -15917,6 +16391,11 @@ public class DSL {
 
     /**
      * The <code>TO_CHAR</code> function.
+     * <p>
+     * Format an arbitrary value as a string.
+     *
+     * @param value The value to be formatted.
+     * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
     @Support({ H2, POSTGRES })
@@ -15926,6 +16405,11 @@ public class DSL {
 
     /**
      * The <code>TO_CHAR</code> function.
+     * <p>
+     * Format an arbitrary value as a string.
+     *
+     * @param value The value to be formatted.
+     * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
     @Support({ H2, POSTGRES })
@@ -15935,6 +16419,10 @@ public class DSL {
 
     /**
      * The <code>TO_CHAR</code> function.
+     * <p>
+     * Format an arbitrary value as a string.
+     *
+     * @param value The value to be formatted.
      */
     @NotNull
     @Support
@@ -15944,6 +16432,10 @@ public class DSL {
 
     /**
      * The <code>TO_CHAR</code> function.
+     * <p>
+     * Format an arbitrary value as a string.
+     *
+     * @param value The value to be formatted.
      */
     @NotNull
     @Support
@@ -15953,6 +16445,11 @@ public class DSL {
 
     /**
      * The <code>TO_DATE</code> function.
+     * <p>
+     * Parse a string-formatted date value to a date.
+     *
+     * @param value The formatted DATE value.
+     * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
@@ -15962,6 +16459,11 @@ public class DSL {
 
     /**
      * The <code>TO_DATE</code> function.
+     * <p>
+     * Parse a string-formatted date value to a date.
+     *
+     * @param value The formatted DATE value.
+     * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
@@ -15971,6 +16473,11 @@ public class DSL {
 
     /**
      * The <code>TO_DATE</code> function.
+     * <p>
+     * Parse a string-formatted date value to a date.
+     *
+     * @param value The formatted DATE value.
+     * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
@@ -15980,6 +16487,11 @@ public class DSL {
 
     /**
      * The <code>TO_DATE</code> function.
+     * <p>
+     * Parse a string-formatted date value to a date.
+     *
+     * @param value The formatted DATE value.
+     * @param formatMask The vendor-specific formatting string.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
@@ -15989,6 +16501,12 @@ public class DSL {
 
     /**
      * The <code>TRANSLATE</code> function.
+     * <p>
+     * Translate a set of characters to another set of characters in a string.
+     *
+     * @param string The string to translate.
+     * @param from The set of source characters.
+     * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
@@ -15998,6 +16516,12 @@ public class DSL {
 
     /**
      * The <code>TRANSLATE</code> function.
+     * <p>
+     * Translate a set of characters to another set of characters in a string.
+     *
+     * @param string The string to translate.
+     * @param from The set of source characters.
+     * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
@@ -16007,6 +16531,12 @@ public class DSL {
 
     /**
      * The <code>TRANSLATE</code> function.
+     * <p>
+     * Translate a set of characters to another set of characters in a string.
+     *
+     * @param string The string to translate.
+     * @param from The set of source characters.
+     * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
@@ -16016,6 +16546,12 @@ public class DSL {
 
     /**
      * The <code>TRANSLATE</code> function.
+     * <p>
+     * Translate a set of characters to another set of characters in a string.
+     *
+     * @param string The string to translate.
+     * @param from The set of source characters.
+     * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
@@ -16025,6 +16561,11 @@ public class DSL {
 
     /**
      * The <code>TRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -16034,6 +16575,11 @@ public class DSL {
 
     /**
      * The <code>TRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -16043,6 +16589,11 @@ public class DSL {
 
     /**
      * The <code>TRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -16052,6 +16603,11 @@ public class DSL {
 
     /**
      * The <code>TRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
+     * @param characters The characters to be trimmed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -16061,6 +16617,10 @@ public class DSL {
 
     /**
      * The <code>TRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
      */
     @NotNull
     @Support
@@ -16070,6 +16630,10 @@ public class DSL {
 
     /**
      * The <code>TRIM</code> function.
+     * <p>
+     * Trim characters (whitespace as default) from both sides of a string.
+     *
+     * @param string The string to be trimmed.
      */
     @NotNull
     @Support
@@ -16079,6 +16643,8 @@ public class DSL {
 
     /**
      * The <code>UPPER</code> function.
+     * <p>
+     * Turn a string into upper case.
      */
     @NotNull
     @Support
@@ -16088,6 +16654,8 @@ public class DSL {
 
     /**
      * The <code>UPPER</code> function.
+     * <p>
+     * Turn a string into upper case.
      */
     @NotNull
     @Support

@@ -15289,6 +15289,42 @@ public class DSL {
     }
 
     /**
+     * The <code>OVERLAY</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> overlay(Field<String> in, String placing, Number startIndex, Number length) {
+        return new Overlay(in, Tools.field(placing), Tools.field(startIndex), Tools.field(length));
+    }
+
+    /**
+     * The <code>OVERLAY</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex, Field<? extends Number> length) {
+        return new Overlay(in, placing, startIndex, length);
+    }
+
+    /**
+     * The <code>OVERLAY</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> overlay(Field<String> in, String placing, Number startIndex) {
+        return new Overlay(in, Tools.field(placing), Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>OVERLAY</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex) {
+        return new Overlay(in, placing, startIndex);
+    }
+
+    /**
      * The <code>POSITION</code> function.
      */
     @NotNull
@@ -16051,42 +16087,6 @@ public class DSL {
     @Support({ MYSQL, POSTGRES })
     public static Field<String> regexpReplaceFirst(Field<String> field, Field<String> pattern, Field<String> replacement) {
         return new RegexpReplace(field, Tools.nullSafe(pattern), Tools.nullSafe(replacement), false);
-    }
-
-    /**
-     * Get the overlay(in, placing, startIndex) function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> overlay(Field<String> in, String placing, Number startIndex) {
-        return new Overlay(Tools.nullSafe(in), Tools.field(placing), Tools.field(startIndex));
-    }
-
-    /**
-     * Get the overlay(in, placing, startIndex) function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex) {
-        return new Overlay(Tools.nullSafe(in), Tools.nullSafe(placing), Tools.nullSafe(startIndex));
-    }
-
-    /**
-     * Get the overlay(in, placing, startIndex, length) function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> overlay(Field<String> in, String placing, Number startIndex, Number length) {
-        return new Overlay(Tools.nullSafe(in), Tools.field(placing), Tools.field(startIndex), Tools.field(length));
-    }
-
-    /**
-     * Get the overlay(in, placing, startIndex, length) function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex, Field<? extends Number> length) {
-        return new Overlay(Tools.nullSafe(in), Tools.nullSafe(placing), Tools.nullSafe(startIndex), Tools.nullSafe(length));
     }
 
     /**

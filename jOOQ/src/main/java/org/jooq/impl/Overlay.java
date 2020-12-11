@@ -35,70 +35,74 @@
  *
  *
  */
-
 package org.jooq.impl;
 
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.isub;
-import static org.jooq.impl.Keywords.K_FOR;
-import static org.jooq.impl.Keywords.K_FROM;
-import static org.jooq.impl.Keywords.K_PLACING;
-import static org.jooq.impl.Names.N_INSERT;
-import static org.jooq.impl.Names.N_OVERLAY;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.SQLDialect;
+import java.math.*;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>OVERLAY</code> statement.
  */
-final class Overlay extends AbstractField<String> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Overlay
+extends
+    AbstractField<String>
+{
 
-    private static final long             serialVersionUID = 3544690069533526544L;
-    private static final Set<SQLDialect>  NO_SUPPORT       = SQLDialect.supportedBy(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect>  SUPPORT_INSERT   = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final long serialVersionUID = 1L;
 
     private final Field<String>           in;
     private final Field<String>           placing;
     private final Field<? extends Number> startIndex;
     private final Field<? extends Number> length;
 
-    Overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex) {
-        this(in, placing, startIndex, null);
+    Overlay(
+        Field<String> in,
+        Field<String> placing,
+        Field<? extends Number> startIndex
+    ) {
+        super(N_OVERLAY, allNotNull(VARCHAR, in, placing, startIndex));
+
+        this.in = nullSafeNotNull(in, VARCHAR);
+        this.placing = nullSafeNotNull(placing, VARCHAR);
+        this.startIndex = nullSafeNotNull(startIndex, INTEGER);
+        this.length = null;
     }
 
-    Overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex, Field<? extends Number> length) {
-        super(N_OVERLAY, in.getDataType());
+    Overlay(
+        Field<String> in,
+        Field<String> placing,
+        Field<? extends Number> startIndex,
+        Field<? extends Number> length
+    ) {
+        super(N_OVERLAY, allNotNull(VARCHAR, in, placing, startIndex, length));
 
-        this.in = in;
-        this.placing = placing;
-        this.startIndex = startIndex;
-        this.length = length;
+        this.in = nullSafeNotNull(in, VARCHAR);
+        this.placing = nullSafeNotNull(placing, VARCHAR);
+        this.startIndex = nullSafeNotNull(startIndex, INTEGER);
+        this.length = nullSafeNotNull(length, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Set<SQLDialect> NO_SUPPORT     = SQLDialect.supportedBy(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_INSERT = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -146,4 +150,6 @@ final class Overlay extends AbstractField<String> {
             }
         }
     }
+
+
 }

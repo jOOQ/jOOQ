@@ -5415,16 +5415,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println();
-            out.println("%soverride def getSchema: %s = %s", visibilityPublic(), Schema.class, schemaId);
+            out.println("%soverride def getSchema: %s = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
         }
         else if (kotlin) {
-            out.println("%soverride fun getSchema(): %s = %s", visibilityPublic(), Schema.class, schemaId);
+            out.println("%soverride fun getSchema(): %s? = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
         }
         else {
             out.overrideInherit();
             printNonnullAnnotation(out);
             out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
-            out.println("return %s;", schemaId);
+            out.println("return aliased() ? null : %s;", schemaId);
             out.println("}");
         }
 

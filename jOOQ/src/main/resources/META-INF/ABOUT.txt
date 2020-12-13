@@ -56,6 +56,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Timur Shaidullin
 - Thomas Darimont
 - Tsukasa Kitachi
+- Vaclav Kuzel
 - Victor Bronstein
 - Victor Z. Peng
 - Vladimir Kulev

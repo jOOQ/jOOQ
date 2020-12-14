@@ -15966,6 +15966,88 @@ public class DSL {
     }
 
     /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     * @param decimals The decimals to round to.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(T value, int decimals) {
+        return new Round(Tools.field(value), Tools.field(decimals));
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     * @param decimals The decimals to round to.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(T value, Field<Integer> decimals) {
+        return new Round(Tools.field(value), decimals);
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     * @param decimals The decimals to round to.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(Field<T> value, int decimals) {
+        return new Round(value, Tools.field(decimals));
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     * @param decimals The decimals to round to.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(Field<T> value, Field<Integer> decimals) {
+        return new Round(value, decimals);
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(T value) {
+        return new Round(Tools.field(value));
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(Field<T> value) {
+        return new Round(value);
+    }
+
+    /**
      * The <code>RPAD</code> function.
      * <p>
      * Right-pad a string with a character (whitespace as default) for a number of times.
@@ -20117,68 +20199,6 @@ public class DSL {
     @Support
     public static <T extends Number> Field<T> minus(Field<T> field) {
         return field.neg();
-    }
-
-    /**
-     * Get rounded value of a numeric field: round(field).
-     *
-     * @see #round(Field)
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(T value) {
-        return round(Tools.field(value));
-    }
-
-    /**
-     * Get rounded value of a numeric field: round(field).
-     * <p>
-     * This renders the round function where available:
-     * <code><pre>round([field]) or
-     * round([field], 0)</pre></code>
-     * ... or emulates it elsewhere using floor and ceil
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(Field<T> field) {
-        return new Round<>(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get rounded value of a numeric field: round(field, decimals).
-     *
-     * @see #round(Field, int)
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(T value, int decimals) {
-        return round(Tools.field(value), decimals);
-    }
-
-    /**
-     * Get rounded value of a numeric field: round(field, decimals).
-     * <p>
-     * This renders the round function where available:
-     * <code><pre>round([field], [decimals])</pre></code>
-     * ... or emulates it elsewhere using floor and ceil
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
-        return new Round<>(Tools.nullSafe(field), Tools.field(decimals));
-    }
-
-    /**
-     * Get rounded value of a numeric field: round(field, decimals).
-     * <p>
-     * This renders the round function where available:
-     * <code><pre>round([field], [decimals])</pre></code>
-     * ... or emulates it elsewhere using floor and ceil
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(Field<T> field, Field<Integer> decimals) {
-        return new Round<>(Tools.nullSafe(field), decimals);
     }
 
     /**

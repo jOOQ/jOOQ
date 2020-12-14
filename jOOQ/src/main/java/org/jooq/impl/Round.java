@@ -37,46 +37,61 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Internal.idiv;
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Internal.isub;
-import static org.jooq.impl.Names.N_ROUND;
-import static org.jooq.impl.SQLDataType.NUMERIC;
-import static org.jooq.impl.Tools.castIfNeeded;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.math.BigDecimal;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Param;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>ROUND</code> statement.
  */
-final class Round<T extends Number> extends AbstractField<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Round<T extends Number>
+extends
+    AbstractField<T>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<T>       argument;
+    private final Field<T>       value;
     private final Field<Integer> decimals;
 
-    Round(Field<T> argument) {
-        this(argument, null);
+    Round(
+        Field<T> value
+    ) {
+        super(N_ROUND, allNotNull((DataType) dataType(INTEGER, value, false), value));
+
+        this.value = nullSafeNotNull(value, INTEGER);
+        this.decimals = null;
     }
 
-    Round(Field<T> argument, Field<Integer> decimals) {
-        super(N_ROUND, argument.getDataType());
+    Round(
+        Field<T> value,
+        Field<Integer> decimals
+    ) {
+        super(N_ROUND, allNotNull((DataType) dataType(INTEGER, value, false), value, decimals));
 
-        this.argument = argument;
-        this.decimals = decimals;
+        this.value = nullSafeNotNull(value, INTEGER);
+        this.decimals = nullSafeNotNull(decimals, INTEGER);
     }
 
-    @SuppressWarnings("unchecked")
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -85,16 +100,16 @@ final class Round<T extends Number> extends AbstractField<T> {
             case DERBY: {
                 if (decimals == null) {
                     ctx.visit(DSL
-                        .when(isub(argument, DSL.floor(argument))
-                        .lessThan((T) Double.valueOf(0.5)), DSL.floor(argument))
-                        .otherwise(DSL.ceil(argument)));
+                        .when(isub(value, DSL.floor(value))
+                        .lessThan((T) Double.valueOf(0.5)), DSL.floor(value))
+                        .otherwise(DSL.ceil(value)));
 
                     return;
                 }
                 else if (decimals instanceof Param) {
                     Integer decimalsValue = ((Param<Integer>) decimals).getValue();
-                    Field<BigDecimal> factor = DSL.val(BigDecimal.ONE.movePointRight(decimalsValue));
-                    Field<T> mul = imul(argument, factor);
+                    Field<?> factor = DSL.val(java.math.BigDecimal.ONE.movePointRight(decimalsValue));
+                    Field<T> mul = imul(value, factor);
 
                     ctx.visit(DSL
                         .when(isub(mul, DSL.floor(mul))
@@ -135,19 +150,37 @@ final class Round<T extends Number> extends AbstractField<T> {
             // There's no function round(double precision, integer) in Postgres
             case POSTGRES:
                 if (decimals == null)
-                    ctx.visit(function(N_ROUND, getDataType(), argument));
+                    ctx.visit(function(N_ROUND, getDataType(), value));
                 else
-                    ctx.visit(function(N_ROUND, getDataType(), castIfNeeded(argument, BigDecimal.class), decimals));
+                    ctx.visit(function(N_ROUND, getDataType(), castIfNeeded(value, NUMERIC), decimals));
 
                 return;
 
             default:
                 if (decimals == null)
-                    ctx.visit(function(N_ROUND, getDataType(), argument));
+                    ctx.visit(function(N_ROUND, getDataType(), value));
                 else
-                    ctx.visit(function(N_ROUND, getDataType(), argument, decimals));
+                    ctx.visit(function(N_ROUND, getDataType(), value, decimals));
 
                 return;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Round) {
+            return
+                StringUtils.equals(value, ((Round) that).value) &&
+                StringUtils.equals(decimals, ((Round) that).decimals)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

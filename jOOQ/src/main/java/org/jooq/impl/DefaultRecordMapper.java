@@ -1033,7 +1033,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return converted;
         }
 
-        private final Object[] mapNested(R record) {
+        private final Object[] mapNested(final R record) {
             Object[] converted = new Object[prefixes().size()];
 
             for (int i = 0; i < converted.length; i++) {
@@ -1048,6 +1048,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         public AbstractRecord operate(AbstractRecord rec) {
                             for (int j = 0; j < indexLookup.size(); j++)
                                 rec.set(j, record.get(indexLookup.get(j)));
+
                             return rec;
                         }
                     }));

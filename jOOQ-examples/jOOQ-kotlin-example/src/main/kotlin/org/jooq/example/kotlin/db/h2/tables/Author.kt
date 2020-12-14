@@ -108,7 +108,7 @@ open class Author(
     constructor(): this(DSL.name("AUTHOR"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, AuthorRecord>): this(Internal.createPathAlias(child, key), child, key, AUTHOR, null)
-    override fun getSchema(): Schema = Public.PUBLIC
+    override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getIdentity(): Identity<AuthorRecord, Int?> = super.getIdentity() as Identity<AuthorRecord, Int?>
     override fun getPrimaryKey(): UniqueKey<AuthorRecord> = PK_T_AUTHOR
     override fun `as`(alias: String): Author = Author(DSL.name(alias), this)

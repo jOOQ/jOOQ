@@ -94,11 +94,24 @@ open class BookToBookStore(
     constructor(): this(DSL.name("BOOK_TO_BOOK_STORE"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BookToBookStoreRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK_TO_BOOK_STORE, null)
-    override fun getSchema(): Schema = Public.PUBLIC
+    override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<BookToBookStoreRecord> = PK_B2BS
     override fun getReferences(): List<ForeignKey<BookToBookStoreRecord, *>> = listOf(FK_B2BS_BS_NAME, FK_B2BS_B_ID)
-    fun bookStore(): BookStore = BookStore(this, FK_B2BS_BS_NAME)
-    fun book(): Book = Book(this, FK_B2BS_B_ID)
+
+    private lateinit var _bookStore: BookStore
+    private lateinit var _book: Book
+    fun bookStore(): BookStore {
+        if (!this::_bookStore.isInitialized)
+            _bookStore = BookStore(this, FK_B2BS_BS_NAME)
+
+        return _bookStore;
+    }
+    fun book(): Book {
+        if (!this::_book.isInitialized)
+            _book = Book(this, FK_B2BS_B_ID)
+
+        return _book;
+    }
     override fun `as`(alias: String): BookToBookStore = BookToBookStore(DSL.name(alias), this)
     override fun `as`(alias: Name): BookToBookStore = BookToBookStore(alias, this)
 

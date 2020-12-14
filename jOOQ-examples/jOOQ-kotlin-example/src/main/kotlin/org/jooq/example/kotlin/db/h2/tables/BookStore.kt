@@ -80,7 +80,7 @@ open class BookStore(
     constructor(): this(DSL.name("BOOK_STORE"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BookStoreRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK_STORE, null)
-    override fun getSchema(): Schema = Public.PUBLIC
+    override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<BookStoreRecord> = UK_T_BOOK_STORE_NAME
     override fun `as`(alias: String): BookStore = BookStore(DSL.name(alias), this)
     override fun `as`(alias: Name): BookStore = BookStore(alias, this)

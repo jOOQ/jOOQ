@@ -137,12 +137,25 @@ open class Book(
     constructor(): this(DSL.name("BOOK"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BookRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK, null)
-    override fun getSchema(): Schema = Public.PUBLIC
+    override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getIdentity(): Identity<BookRecord, Int?> = super.getIdentity() as Identity<BookRecord, Int?>
     override fun getPrimaryKey(): UniqueKey<BookRecord> = PK_T_BOOK
     override fun getReferences(): List<ForeignKey<BookRecord, *>> = listOf(FK_T_BOOK_AUTHOR_ID, FK_T_BOOK_CO_AUTHOR_ID)
-    fun fkTBookAuthorId(): Author = Author(this, FK_T_BOOK_AUTHOR_ID)
-    fun fkTBookCoAuthorId(): Author = Author(this, FK_T_BOOK_CO_AUTHOR_ID)
+
+    private lateinit var _fkTBookAuthorId: Author
+    private lateinit var _fkTBookCoAuthorId: Author
+    fun fkTBookAuthorId(): Author {
+        if (!this::_fkTBookAuthorId.isInitialized)
+            _fkTBookAuthorId = Author(this, FK_T_BOOK_AUTHOR_ID)
+
+        return _fkTBookAuthorId;
+    }
+    fun fkTBookCoAuthorId(): Author {
+        if (!this::_fkTBookCoAuthorId.isInitialized)
+            _fkTBookCoAuthorId = Author(this, FK_T_BOOK_CO_AUTHOR_ID)
+
+        return _fkTBookCoAuthorId;
+    }
     override fun `as`(alias: String): Book = Book(DSL.name(alias), this)
     override fun `as`(alias: Name): Book = Book(alias, this)
 

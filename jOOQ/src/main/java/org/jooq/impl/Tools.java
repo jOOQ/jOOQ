@@ -950,7 +950,7 @@ final class Tools {
         return row0(new Fields<>(fields));
     }
 
-    static final Class<? extends Record> recordType(int length) {
+    static final Class<? extends AbstractRecord> recordType(int length) {
         switch (length) {
 
 

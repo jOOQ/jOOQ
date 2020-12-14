@@ -38,6 +38,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.CTX;
+
 import java.sql.SQLException;
 
 import org.jooq.Attachable;
@@ -65,7 +67,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // -------------------------------------------------------------------------
 
     Configuration configuration() {
-        return new DefaultConfiguration();
+        return CTX.configuration();
     }
 
     // -------------------------------------------------------------------------

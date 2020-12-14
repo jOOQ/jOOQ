@@ -190,6 +190,8 @@ public class Settings
     protected Boolean returnRecordToPojo = true;
     @XmlElement(defaultValue = "true")
     protected Boolean mapJPAAnnotations = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean mapConstructorPropertiesParameterNames = true;
     @XmlElement(defaultValue = "false")
     protected Boolean mapConstructorParameterNames = false;
     @XmlElement(defaultValue = "true")
@@ -1724,6 +1726,30 @@ public class Settings
     }
 
     /**
+     * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMapConstructorPropertiesParameterNames() {
+        return mapConstructorPropertiesParameterNames;
+    }
+
+    /**
+     * Sets the value of the mapConstructorPropertiesParameterNames property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMapConstructorPropertiesParameterNames(Boolean value) {
+        this.mapConstructorPropertiesParameterNames = value;
+    }
+
+    /**
      * Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.
      * 
      * @return
@@ -3008,6 +3034,11 @@ public class Settings
         return this;
     }
 
+    public Settings withMapConstructorPropertiesParameterNames(Boolean value) {
+        setMapConstructorPropertiesParameterNames(value);
+        return this;
+    }
+
     public Settings withMapConstructorParameterNames(Boolean value) {
         setMapConstructorParameterNames(value);
         return this;
@@ -3414,6 +3445,7 @@ public class Settings
         builder.append("returnAllOnUpdatableRecord", returnAllOnUpdatableRecord);
         builder.append("returnRecordToPojo", returnRecordToPojo);
         builder.append("mapJPAAnnotations", mapJPAAnnotations);
+        builder.append("mapConstructorPropertiesParameterNames", mapConstructorPropertiesParameterNames);
         builder.append("mapConstructorParameterNames", mapConstructorParameterNames);
         builder.append("mapConstructorParameterNamesInKotlin", mapConstructorParameterNamesInKotlin);
         builder.append("queryPoolable", queryPoolable);
@@ -4043,6 +4075,15 @@ public class Settings
                 return false;
             }
         }
+        if (mapConstructorPropertiesParameterNames == null) {
+            if (other.mapConstructorPropertiesParameterNames!= null) {
+                return false;
+            }
+        } else {
+            if (!mapConstructorPropertiesParameterNames.equals(other.mapConstructorPropertiesParameterNames)) {
+                return false;
+            }
+        }
         if (mapConstructorParameterNames == null) {
             if (other.mapConstructorParameterNames!= null) {
                 return false;
@@ -4482,6 +4523,7 @@ public class Settings
         result = ((prime*result)+((returnAllOnUpdatableRecord == null)? 0 :returnAllOnUpdatableRecord.hashCode()));
         result = ((prime*result)+((returnRecordToPojo == null)? 0 :returnRecordToPojo.hashCode()));
         result = ((prime*result)+((mapJPAAnnotations == null)? 0 :mapJPAAnnotations.hashCode()));
+        result = ((prime*result)+((mapConstructorPropertiesParameterNames == null)? 0 :mapConstructorPropertiesParameterNames.hashCode()));
         result = ((prime*result)+((mapConstructorParameterNames == null)? 0 :mapConstructorParameterNames.hashCode()));
         result = ((prime*result)+((mapConstructorParameterNamesInKotlin == null)? 0 :mapConstructorParameterNamesInKotlin.hashCode()));
         result = ((prime*result)+((queryPoolable == null)? 0 :queryPoolable.hashCode()));

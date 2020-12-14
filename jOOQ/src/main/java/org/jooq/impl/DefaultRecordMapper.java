@@ -415,15 +415,16 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         });
 
-        // [#1837] If any java.beans.ConstructorProperties annotations are
-        // present use those rather than matching constructors by the number of
-        // arguments
-        for (Constructor<E> constructor : constructors) {
-            ConstructorProperties properties = constructor.getAnnotation(ConstructorProperties.class);
+        // [#1837] [#10349] [#11123] If any java.beans.ConstructorProperties annotations are
+        // present use those rather than matching constructors by the number of arguments
+        if (!FALSE.equals(configuration.settings().isMapConstructorPropertiesParameterNames())) {
+            for (Constructor<E> constructor : constructors) {
+                ConstructorProperties properties = constructor.getAnnotation(ConstructorProperties.class);
 
-            if (properties != null) {
-                delegate = new ImmutablePOJOMapperWithParameterNames(constructor, Arrays.asList(properties.value()), true);
-                return;
+                if (properties != null) {
+                    delegate = new ImmutablePOJOMapperWithParameterNames(constructor, Arrays.asList(properties.value()), true);
+                    return;
+                }
             }
         }
 

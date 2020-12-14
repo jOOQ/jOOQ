@@ -297,4 +297,23 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     public final void clear() {
         wrapped.clear();
     }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return wrapped.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+
+        // [#11126] Speed up comparisons of two QueryPartCollectionViews of the same type
+        if (that instanceof QueryPartCollectionView && getClass() == that.getClass())
+            return wrapped.equals(((QueryPartCollectionView<?>) that).wrapped);
+        else
+            return super.equals(that);
+    }
 }

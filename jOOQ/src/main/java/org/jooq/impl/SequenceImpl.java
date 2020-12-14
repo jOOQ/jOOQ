@@ -85,17 +85,19 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 6224349401603636427L;
-    private static final Clause[] CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
+    private static final long         serialVersionUID = 6224349401603636427L;
+    private static final Clause[]     CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
-    private final boolean         nameIsPlainSQL;
-    private final Schema          schema;
-    private final Field<T>        startWith;
-    private final Field<T>        incrementBy;
-    private final Field<T>        minvalue;
-    private final Field<T>        maxvalue;
-    private final boolean         cycle;
-    private final Field<T>        cache;
+    private final boolean             nameIsPlainSQL;
+    private final Schema              schema;
+    private final Field<T>            startWith;
+    private final Field<T>            incrementBy;
+    private final Field<T>            minvalue;
+    private final Field<T>            maxvalue;
+    private final boolean             cycle;
+    private final Field<T>            cache;
+    private final SequenceFunction<T> currval;
+    private final SequenceFunction<T> nextval;
 
     @Deprecated
     public SequenceImpl(String name, Schema schema, DataType<T> type) {
@@ -133,6 +135,8 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
         this.maxvalue = maxvalue;
         this.cycle = cycle;
         this.cache = cache;
+        this.currval = new SequenceFunction<>(SequenceMethod.CURRVAL, this);
+        this.nextval = new SequenceFunction<>(SequenceMethod.NEXTVAL, this);
     }
 
     @Override
@@ -177,12 +181,12 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
 
     @Override
     public final Field<T> currval() {
-        return new SequenceFunction(SequenceMethod.CURRVAL);
+        return currval;
     }
 
     @Override
     public final Field<T> nextval() {
-        return new SequenceFunction(SequenceMethod.NEXTVAL);
+        return nextval;
     }
 
     @Override
@@ -203,18 +207,20 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
         }
     }
 
-    private class SequenceFunction extends AbstractField<T> {
+    private static class SequenceFunction<T extends Number> extends AbstractField<T> {
 
         /**
          * Generated UID
          */
-        private static final long    serialVersionUID = 2292275568395094887L;
-        private final SequenceMethod method;
+        private static final long     serialVersionUID = 2292275568395094887L;
+        private final SequenceMethod  method;
+        private final SequenceImpl<T> sequence;
 
-        SequenceFunction(SequenceMethod method) {
-            super(method.name, SequenceImpl.this.getDataType());
+        SequenceFunction(SequenceMethod method, SequenceImpl<T> sequence) {
+            super(method.name, sequence.getDataType());
 
             this.method = method;
+            this.sequence = sequence;
         }
 
         @Override
@@ -237,7 +243,7 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
 
                 case POSTGRES: {
                     ctx.visit(method.keyword).sql('(');
-                    ctx.sql('\'').stringLiteral(true).visit(SequenceImpl.this).stringLiteral(false).sql('\'');
+                    ctx.sql('\'').stringLiteral(true).visit(sequence).stringLiteral(false).sql('\'');
                     ctx.sql(')');
                     break;
                 }
@@ -251,15 +257,15 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
                 case HSQLDB:
                 case MARIADB: {
                     if (method == SequenceMethod.NEXTVAL)
-                        ctx.visit(K_NEXT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
+                        ctx.visit(K_NEXT_VALUE_FOR).sql(' ').visit(sequence);
                     else if (family == H2)
-                        ctx.visit(SequenceImpl.this).sql('.').visit(method.keyword);
+                        ctx.visit(sequence).sql('.').visit(method.keyword);
                     else if (family == HSQLDB)
-                        ctx.visit(K_CURRENT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
+                        ctx.visit(K_CURRENT_VALUE_FOR).sql(' ').visit(sequence);
                     else if (family == MARIADB)
-                        ctx.visit(K_PREVIOUS_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
+                        ctx.visit(K_PREVIOUS_VALUE_FOR).sql(' ').visit(sequence);
                     else if (family == FIREBIRD)
-                        ctx.visit(N_GEN_ID).sql('(').visit(SequenceImpl.this).sql(", 0)");
+                        ctx.visit(N_GEN_ID).sql('(').visit(sequence).sql(", 0)");
 
 
 
@@ -281,7 +287,7 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
                 }
 
                 case CUBRID: {
-                    ctx.visit(SequenceImpl.this).sql('.');
+                    ctx.visit(sequence).sql('.');
 
                     if (method == SequenceMethod.NEXTVAL)
                         ctx.visit(DSL.keyword("next_value"));
@@ -293,10 +299,23 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
 
                 // Default is needed for hashCode() and toString()
                 default: {
-                    ctx.visit(SequenceImpl.this).sql('.').visit(method.keyword);
+                    ctx.visit(sequence).sql('.').visit(method.keyword);
                     break;
                 }
             }
+        }
+
+        // -------------------------------------------------------------------------
+        // The Object API
+        // -------------------------------------------------------------------------
+
+        @Override
+        public boolean equals(Object that) {
+            if (that instanceof SequenceFunction)
+                return method == ((SequenceFunction<?>) that).method
+                    && sequence.equals(((SequenceFunction<?>) that).sequence);
+            else
+                return super.equals(that);
         }
     }
 
@@ -321,5 +340,17 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
+    }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof SequenceImpl)
+            return getQualifiedName().equals(((SequenceImpl) that).getQualifiedName());
+        else
+            return super.equals(that);
     }
 }

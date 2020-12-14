@@ -11157,7 +11157,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type) {
-        return new QualifiedField<>(name, type);
+        return field(name, type, null);
     }
 
     /**
@@ -11185,7 +11185,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type, Comment comment) {
-        return new QualifiedField<>(name, type, comment);
+        return new TableFieldImpl<>(name, type, comment);
     }
 
     /**

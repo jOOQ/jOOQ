@@ -58,17 +58,26 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-final class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T> {
+class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T> {
 
     private static final long     serialVersionUID = -2211214195583539735L;
     private static final Clause[] CLAUSES          = { FIELD, FIELD_REFERENCE };
 
     private final Table<R>        table;
 
+    @SuppressWarnings("unchecked")
+    TableFieldImpl(Name name, DataType<T> type, Comment comment) {
+        this(name, type, (Table<R>) table(name), comment, type.getBinding());
+    }
+
     TableFieldImpl(Name name, DataType<T> type, Table<R> table, Comment comment, Binding<?, T> binding) {
         super(qualify(table, name), type, comment, binding);
 
         this.table = table;
+    }
+
+    private static final Table<Record> table(Name name) {
+        return name.qualified() ? DSL.table(name.qualifier()) : null;
     }
 
     @Override
@@ -89,8 +98,8 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
     public final void accept(Context<?> ctx) {
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true);
 
-        if (ctx.qualify()) {
-            ctx.visit(table);
+        if (ctx.qualify() && getTable() != null) {
+            ctx.visit(getTable());
             ctx.sql('.');
         }
 
@@ -104,9 +113,8 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
 
     @Override
     public boolean equals(Object that) {
-        if (this == that) {
+        if (this == that)
             return true;
-        }
 
         // [#2144] TableFieldImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

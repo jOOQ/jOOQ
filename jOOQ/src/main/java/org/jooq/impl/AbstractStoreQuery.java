@@ -109,15 +109,31 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
          * Generated UID
          */
         private static final long serialVersionUID = -8950654583203020935L;
+        private final int         index;
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
         UnknownField(int index) {
             super(DSL.name("unknown field " + index), (DataType) SQLDataType.OTHER);
+
+            this.index = index;
         }
 
         @Override
         public void accept(Context<?> ctx) {
             ctx.visit(getUnqualifiedName());
+        }
+
+        @Override
+        public int hashCode() {
+            return index;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (that instanceof UnknownField)
+                return index == ((UnknownField<?>) that).index;
+            else
+                return false;
         }
     }
 }

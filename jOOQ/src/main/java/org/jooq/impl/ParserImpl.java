@@ -6386,7 +6386,7 @@ final class ParserContext {
                 return condition((Field) part);
 
             // [#7266] Support parsing column references as predicates
-            else if (part instanceof QualifiedField)
+            else if (part instanceof TableFieldImpl)
                 return condition((Field) part);
             else
                 throw expected("Boolean field");

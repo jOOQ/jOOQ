@@ -375,10 +375,16 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
         if (this == that)
             return true;
 
-        // [#1626] NameImpl equality can be decided without executing the
+        // [#1626] [#11126] NameImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof AbstractName)
-            return Arrays.equals(getName(), (((AbstractName) that).getName()));
+        if (that instanceof AbstractName) {
+
+            // [#11126] No need to access name arrays if not both names are equally qualified
+            if (qualified() != ((AbstractName) that).qualified())
+                return false;
+            else
+                return Arrays.equals(getName(), (((AbstractName) that).getName()));
+        }
 
         return super.equals(that);
     }

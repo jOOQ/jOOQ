@@ -171,4 +171,16 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     public Class<? extends R> getRecordType() {
         return alias.wrapped().getRecordType();
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof TableAlias)
+            return getUnqualifiedName().equals(((TableAlias<?>) that).getUnqualifiedName());
+        else
+            return super.equals(that);
+    }
 }

@@ -70,4 +70,17 @@ final class Function<T> extends AbstractField<T> {
     public final void accept(Context<?> ctx) {
         ctx.visit(getQualifiedName()).sql('(').visit(arguments).sql(')');
     }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Function)
+            return getQualifiedName().equals(((Function<?>) that).getQualifiedName())
+                && arguments.equals(((Function<?>) that).arguments);
+        else
+            return super.equals(that);
+    }
 }

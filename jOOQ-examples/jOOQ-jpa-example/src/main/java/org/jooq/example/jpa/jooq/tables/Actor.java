@@ -4,6 +4,9 @@
 package org.jooq.example.jpa.jooq.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -105,6 +108,11 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public UniqueKey<ActorRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_3;
+    }
+
+    @Override
+    public List<UniqueKey<ActorRecord>> getKeys() {
+        return Arrays.<UniqueKey<ActorRecord>>asList(Keys.CONSTRAINT_3);
     }
 
     @Override

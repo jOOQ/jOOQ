@@ -173,8 +173,8 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements Recor
     public BookRecord(Integer id, Integer authorId, String title) {
         super(Book.BOOK);
 
-        set(0, id);
-        set(1, authorId);
-        set(2, title);
+        setId(id);
+        setAuthorId(authorId);
+        setTitle(title);
     }
 }

@@ -100,16 +100,30 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     }
 
     @Override
+    public List<UniqueKey<FilmActorRecord>> getKeys() {
+        return Arrays.<UniqueKey<FilmActorRecord>>asList(Keys.CONSTRAINT_7);
+    }
+
+    @Override
     public List<ForeignKey<FilmActorRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<FilmActorRecord, ?>>asList(Keys.FK3FSUXQ0JJ1XONRE7BHROOPVBX, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2);
     }
 
+    private transient Film _film;
+    private transient Actor _actor;
+
     public Film film() {
-        return new Film(this, Keys.FK3FSUXQ0JJ1XONRE7BHROOPVBX);
+        if (_film == null)
+            _film = new Film(this, Keys.FK3FSUXQ0JJ1XONRE7BHROOPVBX);
+
+        return _film;
     }
 
     public Actor actor() {
-        return new Actor(this, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2);
+        if (_actor == null)
+            _actor = new Actor(this, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2);
+
+        return _actor;
     }
 
     @Override

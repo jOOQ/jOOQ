@@ -12,7 +12,16 @@ import java.io.Serializable
  */
 @Suppress("UNCHECKED_CAST")
 data class BookStore(
-      var name: String? = null
+    var name: String? = null
 ): Serializable {
 
+
+    override fun toString(): String {
+        val sb = StringBuilder("BookStore (")
+
+        sb.append(name)
+
+        sb.append(")")
+        return sb.toString()
+    }
 }

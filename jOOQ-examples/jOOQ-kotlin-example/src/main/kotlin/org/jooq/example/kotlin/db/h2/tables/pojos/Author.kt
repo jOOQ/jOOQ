@@ -13,12 +13,26 @@ import java.time.LocalDate
  */
 @Suppress("UNCHECKED_CAST")
 data class Author(
-      var id: Int? = null
-    , var firstName: String? = null
-    , var lastName: String? = null
-    , var dateOfBirth: LocalDate? = null
-    , var yearOfBirth: Int? = null
-    , var address: String? = null
+    var id: Int? = null, 
+    var firstName: String? = null, 
+    var lastName: String? = null, 
+    var dateOfBirth: LocalDate? = null, 
+    var yearOfBirth: Int? = null, 
+    var address: String? = null
 ): Serializable {
 
+
+    override fun toString(): String {
+        val sb = StringBuilder("Author (")
+
+        sb.append(id)
+        sb.append(", ").append(firstName)
+        sb.append(", ").append(lastName)
+        sb.append(", ").append(dateOfBirth)
+        sb.append(", ").append(yearOfBirth)
+        sb.append(", ").append(address)
+
+        sb.append(")")
+        return sb.toString()
+    }
 }

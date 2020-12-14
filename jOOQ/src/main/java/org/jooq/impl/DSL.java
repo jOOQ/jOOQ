@@ -14947,6 +14947,28 @@ public class DSL {
     }
 
     /**
+     * The <code>CEIL</code> function.
+     * <p>
+     * Get the smallest integer value equal or greater to a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> ceil(T value) {
+        return new Ceil(Tools.field(value));
+    }
+
+    /**
+     * The <code>CEIL</code> function.
+     * <p>
+     * Get the smallest integer value equal or greater to a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> ceil(Field<T> value) {
+        return new Ceil(value);
+    }
+
+    /**
      * The <code>CHAR_LENGTH</code> function.
      * <p>
      * The length of a string in characters.
@@ -15064,6 +15086,28 @@ public class DSL {
     @Support
     public static Field<BigDecimal> deg(Field<? extends Number> radians) {
         return new Degrees(radians);
+    }
+
+    /**
+     * The <code>FLOOR</code> function.
+     * <p>
+     * Get the biggest integer value equal or less than a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> floor(T value) {
+        return new Floor(Tools.field(value));
+    }
+
+    /**
+     * The <code>FLOOR</code> function.
+     * <p>
+     * Get the biggest integer value equal or less than a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> floor(Field<T> value) {
+        return new Floor(value);
     }
 
     /**
@@ -16798,6 +16842,62 @@ public class DSL {
     @Support
     public static Field<String> trim(Field<String> string) {
         return new Trim(string);
+    }
+
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     *
+     * @param value The number to be truncated
+     * @param decimals The decimals to truncate to.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T extends Number> Field<T> trunc(T value, int decimals) {
+        return new Trunc(Tools.field(value), Tools.field(decimals));
+    }
+
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     *
+     * @param value The number to be truncated
+     * @param decimals The decimals to truncate to.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T extends Number> Field<T> trunc(T value, Field<Integer> decimals) {
+        return new Trunc(Tools.field(value), decimals);
+    }
+
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     *
+     * @param value The number to be truncated
+     * @param decimals The decimals to truncate to.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T extends Number> Field<T> trunc(Field<T> value, int decimals) {
+        return new Trunc(value, Tools.field(decimals));
+    }
+
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     *
+     * @param value The number to be truncated
+     * @param decimals The decimals to truncate to.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T extends Number> Field<T> trunc(Field<T> value, Field<Integer> decimals) {
+        return new Trunc(value, decimals);
     }
 
     /**
@@ -20202,57 +20302,6 @@ public class DSL {
     }
 
     /**
-     * Get the largest integer value not greater than [this].
-     *
-     * @see #floor(Field)
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> floor(T value) {
-        return floor(Tools.field(value));
-    }
-
-    /**
-     * Get the largest integer value not greater than [this].
-     * <p>
-     * This renders the floor function where available:
-     * <code><pre>floor([this])</pre></code>
-     * ... or emulates it elsewhere using round:
-     * <code><pre>round([this] - 0.499999999999999)</pre></code>
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> floor(Field<T> field) {
-        return new Floor<>(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the smallest integer value not less than [this].
-     *
-     * @see #ceil(Field)
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> ceil(T value) {
-        return ceil(Tools.field(value));
-    }
-
-    /**
-     * Get the smallest integer value not less than [field].
-     * <p>
-     * This renders the ceil or ceiling function where available:
-     * <code><pre>ceil([field]) or
-     * ceiling([field])</pre></code>
-     * ... or emulates it elsewhere using round:
-     * <code><pre>round([field] + 0.499999999999999)</pre></code>
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> ceil(Field<T> field) {
-        return new Ceil<>(Tools.nullSafe(field));
-    }
-
-    /**
      * Truncate a number to a given number of decimals.
      *
      * @see #trunc(Field, Field)
@@ -20261,88 +20310,6 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(T number) {
         return trunc(Tools.field(number), inline(0));
-    }
-
-    /**
-     * Truncate a number to a given number of decimals.
-     *
-     * @see #trunc(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T extends Number> Field<T> trunc(T number, int decimals) {
-        return trunc(Tools.field(number), inline(decimals));
-    }
-
-    /**
-     * Truncate a number to a given number of decimals.
-     *
-     * @see #trunc(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T extends Number> Field<T> trunc(Field<T> number, int decimals) {
-        return trunc(Tools.nullSafe(number), inline(decimals));
-    }
-
-    /**
-     * Truncate a number to a given number of decimals.
-     *
-     * @see #trunc(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T extends Number> Field<T> trunc(T number, Field<Integer> decimals) {
-        return trunc(Tools.field(number), Tools.nullSafe(decimals));
-    }
-
-    /**
-     * Truncate a number to a given number of decimals.
-     * <p>
-     * This function truncates <code>number</code> to the amount of decimals
-     * specified in <code>decimals</code>. Passing <code>decimals = 0</code> to
-     * this function is the same as using {@link #floor(Field)}. Passing
-     * positive values for <code>decimal</code> has a similar effect as
-     * {@link #round(Field, int)}. Passing negative values for
-     * <code>decimal</code> will truncate <code>number</code> to a given power
-     * of 10. Some examples
-     * <table border="1">
-     * <tr>
-     * <th>Function call</th>
-     * <th>yields...</th>
-     * </tr>
-     * <tr>
-     * <td>trunc(125.815)</td>
-     * <td>125</td>
-     * </tr>
-     * <tr>
-     * <td>trunc(125.815, 0)</td>
-     * <td>125</td>
-     * </tr>
-     * <tr>
-     * <td>trunc(125.815, 1)</td>
-     * <td>125.8</td>
-     * </tr>
-     * <tr>
-     * <td>trunc(125.815, 2)</td>
-     * <td>125.81</td>
-     * </tr>
-     * <tr>
-     * <td>trunc(125.815, -1)</td>
-     * <td>120</td>
-     * </tr>
-     * <tr>
-     * <td>trunc(125.815, -2)</td>
-     * <td>100</td>
-     * </tr>
-     * </table>
-     *
-     * @see #trunc(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T extends Number> Field<T> trunc(Field<T> number, Field<Integer> decimals) {
-        return new Trunc<>(Tools.nullSafe(number), Tools.nullSafe(decimals));
     }
 
     /**

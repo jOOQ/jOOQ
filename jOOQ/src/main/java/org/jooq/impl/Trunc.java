@@ -37,44 +37,51 @@
  */
 package org.jooq.impl;
 
-import static java.math.BigDecimal.TEN;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Internal.idiv;
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Names.N_ROUND;
-import static org.jooq.impl.Names.N_ROUND_DOWN;
-import static org.jooq.impl.Names.N_TRUNC;
-import static org.jooq.impl.Names.N_TRUNCATE;
-import static org.jooq.impl.Names.N_TRUNCNUM;
-import static org.jooq.impl.Tools.castIfNeeded;
-import static org.jooq.impl.Tools.extractParamValue;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>TRUNC</code> statement.
  */
-final class Trunc<T> extends AbstractField<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Trunc<T extends Number>
+extends
+    AbstractField<T>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = 4291348230758816484L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<T>       field;
+    private final Field<T>       value;
     private final Field<Integer> decimals;
 
-    Trunc(Field<T> field, Field<Integer> decimals) {
-        super(N_TRUNC, field.getDataType());
+    Trunc(
+        Field<T> value,
+        Field<Integer> decimals
+    ) {
+        super(N_TRUNC, allNotNull((DataType) dataType(INTEGER, value, false), value, decimals));
 
-        this.field = field;
-        this.decimals = decimals;
+        this.value = nullSafeNotNull(value, INTEGER);
+        this.decimals = nullSafeNotNull(decimals, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -84,19 +91,19 @@ final class Trunc<T> extends AbstractField<T> {
 
 
             case DERBY: {
-                Field<BigDecimal> power;
+                Field<?> power;
 
                 // [#1334] if possible, calculate the power in Java to prevent
                 // inaccurate arithmetics in the Derby database
                 Integer decimalsVal = extractParamValue(decimals);
                 if (decimalsVal != null)
-                    power = inline(TEN.pow(decimalsVal, MathContext.DECIMAL128));
+                    power = inline(java.math.BigDecimal.TEN.pow(decimalsVal, java.math.MathContext.DECIMAL128));
                 else
-                    power = DSL.power(inline(TEN), decimals);
+                    power = DSL.power(inline(java.math.BigDecimal.TEN), decimals);
 
                 ctx.visit(DSL.decode()
-                    .when(field.sign().greaterOrEqual(zero()), idiv(imul(field, power).floor(), power))
-                    .otherwise(idiv(imul(field, power).ceil(), power)));
+                    .when(value.sign().greaterOrEqual(zero()), idiv(imul(value, power).floor(), power))
+                    .otherwise(idiv(imul(value, power).ceil(), power)));
                 break;
             }
 
@@ -107,7 +114,7 @@ final class Trunc<T> extends AbstractField<T> {
             case H2:
             case MARIADB:
             case MYSQL:
-                ctx.visit(N_TRUNCATE).sql('(').visit(field).sql(", ").visit(decimals).sql(')');
+                ctx.visit(N_TRUNCATE).sql('(').visit(value).sql(", ").visit(decimals).sql(')');
                 break;
 
             // Postgres TRUNC() only takes NUMERIC arguments, no
@@ -118,11 +125,11 @@ final class Trunc<T> extends AbstractField<T> {
 
             case POSTGRES:
                 ctx.visit(castIfNeeded(
-                    DSL.function("trunc", SQLDataType.NUMERIC,
-                        castIfNeeded(field, BigDecimal.class),
+                    DSL.function("trunc", NUMERIC,
+                        castIfNeeded(value, NUMERIC),
                         decimals
                     ),
-                    field.getDataType()
+                    value.getDataType()
                 ));
                 break;
 
@@ -150,8 +157,26 @@ final class Trunc<T> extends AbstractField<T> {
             case CUBRID:
             case HSQLDB:
             default:
-                ctx.visit(N_TRUNC).sql('(').visit(field).sql(", ").visit(decimals).sql(')');
+                ctx.visit(N_TRUNC).sql('(').visit(value).sql(", ").visit(decimals).sql(')');
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Trunc) {
+            return
+                StringUtils.equals(value, ((Trunc) that).value) &&
+                StringUtils.equals(decimals, ((Trunc) that).decimals)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

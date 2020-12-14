@@ -57,7 +57,7 @@ import java.util.*;
  * The <code>ABS</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Abs<T>
+final class Abs<T extends Number>
 extends
     AbstractField<T>
 {

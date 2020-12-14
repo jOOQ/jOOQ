@@ -37,29 +37,48 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_CEIL;
-import static org.jooq.impl.Names.N_CEILING;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>CEIL</code> statement.
  */
-final class Ceil<T extends Number> extends AbstractField<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Ceil<T extends Number>
+extends
+    AbstractField<T>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<T>    argument;
+    private final Field<T> value;
 
-    Ceil(Field<T> argument) {
-        super(N_CEIL, argument.getDataType());
+    Ceil(
+        Field<T> value
+    ) {
+        super(N_CEIL, allNotNull((DataType) dataType(INTEGER, value, false), value));
 
-        this.argument = argument;
+        this.value = nullSafeNotNull(value, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -73,8 +92,8 @@ final class Ceil<T extends Number> extends AbstractField<T> {
 
             // [#8275] Improved emulation for SQLite
             case SQLITE:
-                Field<Long> cast = DSL.cast(argument, SQLDataType.BIGINT);
-                ctx.sql('(').visit(cast).sql(" + (").visit(argument).sql(" > ").visit(cast).sql("))");
+                Field<Long> cast = DSL.cast(value, SQLDataType.BIGINT);
+                ctx.sql('(').visit(cast).sql(" + (").visit(value).sql(" > ").visit(cast).sql("))");
                 break;
 
 
@@ -83,12 +102,29 @@ final class Ceil<T extends Number> extends AbstractField<T> {
 
 
             case H2:
-                ctx.visit(N_CEILING).sql('(').visit(argument).sql(')');
+                ctx.visit(N_CEILING).sql('(').visit(value).sql(')');
                 break;
 
             default:
-                ctx.visit(N_CEIL).sql('(').visit(argument).sql(')');
+                ctx.visit(N_CEIL).sql('(').visit(value).sql(')');
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Ceil) {
+            return
+                StringUtils.equals(value, ((Ceil) that).value)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

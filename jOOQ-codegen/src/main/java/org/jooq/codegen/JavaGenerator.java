@@ -5711,7 +5711,7 @@ public class JavaGenerator extends AbstractGenerator {
                         }
                         else if (kotlin) {
                             out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencedTableClassName);
-                            out.println("if (!%s::_%s.isInitialized)", className, keyMethodName);
+                            out.println("if (!this::_%s.isInitialized)", keyMethodName);
                             out.println("_%s = %s(this, %s)", keyMethodName, referencedTableClassName, keyFullId);
                             out.println();
                             out.println("return _%s;", keyMethodName);

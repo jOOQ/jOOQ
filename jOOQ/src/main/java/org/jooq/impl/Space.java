@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 
@@ -131,4 +132,19 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Space) {
+            return
+                StringUtils.equals(count, ((Space) that).count)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

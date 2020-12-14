@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 
@@ -152,4 +153,22 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Overlay) {
+            return
+                StringUtils.equals(in, ((Overlay) that).in) &&
+                StringUtils.equals(placing, ((Overlay) that).placing) &&
+                StringUtils.equals(startIndex, ((Overlay) that).startIndex) &&
+                StringUtils.equals(length, ((Overlay) that).length)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

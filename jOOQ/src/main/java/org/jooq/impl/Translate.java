@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 
@@ -105,4 +106,21 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Translate) {
+            return
+                StringUtils.equals(string, ((Translate) that).string) &&
+                StringUtils.equals(from, ((Translate) that).from) &&
+                StringUtils.equals(to, ((Translate) that).to)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

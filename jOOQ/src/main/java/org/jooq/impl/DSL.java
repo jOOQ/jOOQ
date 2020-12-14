@@ -15733,6 +15733,17 @@ public class DSL {
     }
 
     /**
+     * The <code>RAND</code> function.
+     * <p>
+     * Turn a value in degrees to radians.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> rand() {
+        return new Rand();
+    }
+
+    /**
      * The <code>REPEAT</code> function.
      * <p>
      * Repeat a string a number of times.
@@ -19989,15 +20000,6 @@ public class DSL {
     // ------------------------------------------------------------------------
     // XXX Mathematical functions
     // ------------------------------------------------------------------------
-
-    /**
-     * Get the rand() function.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> rand() {
-        return new Rand();
-    }
 
     /**
      * Find the greatest among all values.

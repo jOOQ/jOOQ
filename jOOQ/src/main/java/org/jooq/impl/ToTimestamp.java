@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 import java.sql.Timestamp;
@@ -89,4 +90,20 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof ToTimestamp) {
+            return
+                StringUtils.equals(value, ((ToTimestamp) that).value) &&
+                StringUtils.equals(formatMask, ((ToTimestamp) that).formatMask)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

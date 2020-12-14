@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 
@@ -136,4 +137,21 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Rpad) {
+            return
+                StringUtils.equals(string, ((Rpad) that).string) &&
+                StringUtils.equals(length, ((Rpad) that).length) &&
+                StringUtils.equals(character, ((Rpad) that).character)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

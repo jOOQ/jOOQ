@@ -37,38 +37,49 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
-import static org.jooq.impl.Keywords.K_NUMERIC;
-import static org.jooq.impl.Names.N_RAND;
-import static org.jooq.impl.Names.N_RANDOM;
-import static org.jooq.impl.Names.N_RND;
-import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
 import java.math.BigDecimal;
 
-import org.jooq.Context;
-// ...
-import org.jooq.QueryPart;
 
 /**
- * @author Lukas Eder
+ * The <code>RAND</code> statement.
  */
-final class Rand extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "unused" })
+final class Rand
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
-
-
-
-
+    private static final long serialVersionUID = 1L;
 
 
     Rand() {
-        super(N_RANDOM, NUMERIC);
+        super(N_RAND, allNotNull(NUMERIC));
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+
+
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -102,5 +113,20 @@ final class Rand extends AbstractField<BigDecimal> {
                 ctx.visit(N_RAND).sql("()");
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Rand) {
+            return true;
+        }
+        else
+            return super.equals(that);
     }
 }

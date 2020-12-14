@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 
@@ -160,4 +161,21 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Substring) {
+            return
+                StringUtils.equals(string, ((Substring) that).string) &&
+                StringUtils.equals(startingPosition, ((Substring) that).startingPosition) &&
+                StringUtils.equals(length, ((Substring) that).length)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 import java.math.BigDecimal;
@@ -86,4 +87,19 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Sin) {
+            return
+                StringUtils.equals(number, ((Sin) that).number)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

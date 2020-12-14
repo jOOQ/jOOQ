@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 
@@ -91,4 +92,21 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof SplitPart) {
+            return
+                StringUtils.equals(string, ((SplitPart) that).string) &&
+                StringUtils.equals(delimiter, ((SplitPart) that).delimiter) &&
+                StringUtils.equals(n, ((SplitPart) that).n)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

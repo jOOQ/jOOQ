@@ -197,17 +197,17 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
         if (this == that)
             return true;
 
-        if (that instanceof AbstractParam) {
-            AbstractParam<?> thatParam = (AbstractParam<?>) that;
+        if (that instanceof Param) {
+            Object thatValue = ((Param<?>) that).getValue();
 
             if (value == null)
-                return thatParam.value == null;
-            else if (value instanceof byte[] && thatParam.value instanceof byte[])
-                return Arrays.equals((byte[]) value, (byte[]) thatParam.value);
-            else if (value instanceof Object[] && thatParam.value instanceof Object[])
-                return Arrays.equals((Object[]) value, (Object[]) thatParam.value);
+                return thatValue == null;
+            else if (value instanceof byte[] && thatValue instanceof byte[])
+                return Arrays.equals((byte[]) value, (byte[]) thatValue);
+            else if (value instanceof Object[] && thatValue instanceof Object[])
+                return Arrays.equals((Object[]) value, (Object[]) thatValue);
             else
-                return value.equals(thatParam.value);
+                return value.equals(thatValue);
         }
         else
             return false;

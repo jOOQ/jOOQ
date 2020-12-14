@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 import java.sql.Date;
@@ -89,4 +90,20 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof ToDate) {
+            return
+                StringUtils.equals(value, ((ToDate) that).value) &&
+                StringUtils.equals(formatMask, ((ToDate) that).formatMask)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

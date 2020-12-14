@@ -118,4 +118,23 @@ final class ConvertedVal<T> extends AbstractField<T> implements Param<T> {
     public final ParamMode getParamMode() {
         return delegate.getParamMode();
     }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return delegate.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        return delegate.equals(that);
+    }
 }

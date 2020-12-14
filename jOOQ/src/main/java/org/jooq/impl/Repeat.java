@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 
@@ -120,4 +121,20 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Repeat) {
+            return
+                StringUtils.equals(string, ((Repeat) that).string) &&
+                StringUtils.equals(count, ((Repeat) that).count)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
 import org.jooq.impl.*;
+import org.jooq.tools.*;
 
 import java.util.*;
 
@@ -123,4 +124,20 @@ extends
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Rtrim) {
+            return
+                StringUtils.equals(string, ((Rtrim) that).string) &&
+                StringUtils.equals(characters, ((Rtrim) that).characters)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

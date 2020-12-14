@@ -37,40 +37,57 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.idiv;
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Internal.isub;
-import static org.jooq.impl.Names.N_WIDTH_BUCKET;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>WIDTH BUCKET</code> statement.
  */
-final class WidthBucket<T extends Number> extends AbstractField<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class WidthBucket<T extends Number>
+extends
+    AbstractField<T>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = -4866100604361006859L;
+    private static final long serialVersionUID = 1L;
+
     private final Field<T>       field;
     private final Field<T>       low;
     private final Field<T>       high;
     private final Field<Integer> buckets;
 
-    WidthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
-        super(N_WIDTH_BUCKET, field.getDataType());
+    WidthBucket(
+        Field<T> field,
+        Field<T> low,
+        Field<T> high,
+        Field<Integer> buckets
+    ) {
+        super(N_WIDTH_BUCKET, allNotNull((DataType) dataType(INTEGER, field, false), field, low, high, buckets));
 
-        this.field = field;
-        this.low = low;
-        this.high = high;
-        this.buckets = buckets;
+        this.field = nullSafeNotNull(field, INTEGER);
+        this.low = nullSafeNotNull(low, INTEGER);
+        this.high = nullSafeNotNull(high, INTEGER);
+        this.buckets = nullSafeNotNull(buckets, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @SuppressWarnings({ "unchecked" })
     @Override
@@ -105,4 +122,23 @@ final class WidthBucket<T extends Number> extends AbstractField<T> {
         }
     }
 
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof WidthBucket) {
+            return
+                StringUtils.equals(field, ((WidthBucket) that).field) &&
+                StringUtils.equals(low, ((WidthBucket) that).low) &&
+                StringUtils.equals(high, ((WidthBucket) that).high) &&
+                StringUtils.equals(buckets, ((WidthBucket) that).buckets)
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

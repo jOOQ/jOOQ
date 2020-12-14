@@ -15735,7 +15735,7 @@ public class DSL {
     /**
      * The <code>RAND</code> function.
      * <p>
-     * Turn a value in degrees to radians.
+     * Get a random numeric value.
      */
     @NotNull
     @Support
@@ -16738,6 +16738,38 @@ public class DSL {
     @Support
     public static Field<String> upper(Field<String> string) {
         return new Upper(string);
+    }
+
+    /**
+     * The <code>WIDTH_BUCKET</code> function.
+     * <p>
+     * Divide a range into buckets of equal size.
+     *
+     * @param field The value to divide into the range.
+     * @param low The lower bound of the range.
+     * @param high The upper bound of the range.
+     * @param buckets The number of buckets to produce.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
+        return new WidthBucket(field, Tools.field(low), Tools.field(high), Tools.field(buckets));
+    }
+
+    /**
+     * The <code>WIDTH_BUCKET</code> function.
+     * <p>
+     * Divide a range into buckets of equal size.
+     *
+     * @param field The value to divide into the range.
+     * @param low The lower bound of the range.
+     * @param high The upper bound of the range.
+     * @param buckets The number of buckets to produce.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
+        return new WidthBucket(field, low, high, buckets);
     }
 
 
@@ -20063,26 +20095,6 @@ public class DSL {
     @Support
     public static <T> Field<T> least(Field<T> field, Field<?>... others) {
         return new Least<>(Tools.nullSafeDataType(field), Tools.nullSafe(combine(field, others)));
-    }
-
-    /**
-     * Get the <code>WIDTH_BUCKET</code> function which divides a range (low,
-     * high) in buckets of equal size.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
-        return widthBucket(field, Tools.field(low, field), Tools.field(high, field), Tools.field(buckets));
-    }
-
-    /**
-     * Get the <code>WIDTH_BUCKET</code> function which divides a range (low,
-     * high) in buckets of equal size.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
-        return new WidthBucket<>(field, low, high, buckets);
     }
 
     /**

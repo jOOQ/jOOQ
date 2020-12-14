@@ -102,13 +102,13 @@ open class BookToBookStore(
     private lateinit var _bookStore: BookStore
     private lateinit var _book: Book
     fun bookStore(): BookStore {
-        if (!BookToBookStore::_bookStore.isInitialized)
+        if (!this::_bookStore.isInitialized)
             _bookStore = BookStore(this, FK_B2BS_BS_NAME)
 
         return _bookStore;
     }
     fun book(): Book {
-        if (!BookToBookStore::_book.isInitialized)
+        if (!this::_book.isInitialized)
             _book = Book(this, FK_B2BS_B_ID)
 
         return _book;

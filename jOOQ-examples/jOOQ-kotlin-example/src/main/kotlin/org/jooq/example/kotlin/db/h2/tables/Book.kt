@@ -146,13 +146,13 @@ open class Book(
     private lateinit var _fkTBookAuthorId: Author
     private lateinit var _fkTBookCoAuthorId: Author
     fun fkTBookAuthorId(): Author {
-        if (!Book::_fkTBookAuthorId.isInitialized)
+        if (!this::_fkTBookAuthorId.isInitialized)
             _fkTBookAuthorId = Author(this, FK_T_BOOK_AUTHOR_ID)
 
         return _fkTBookAuthorId;
     }
     fun fkTBookCoAuthorId(): Author {
-        if (!Book::_fkTBookCoAuthorId.isInitialized)
+        if (!this::_fkTBookCoAuthorId.isInitialized)
             _fkTBookCoAuthorId = Author(this, FK_T_BOOK_CO_AUTHOR_ID)
 
         return _fkTBookCoAuthorId;

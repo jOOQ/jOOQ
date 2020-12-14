@@ -816,9 +816,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         @Override
-        public final E map(R record) {
+        public final E map(final R record) {
             try {
-                E result = instance != null ? instance : constructor.call();
+                final E result = instance != null ? instance : constructor.call();
 
                 for (int i = 0; i < fields.length; i++) {
                     for (java.lang.reflect.Field member : members[i])

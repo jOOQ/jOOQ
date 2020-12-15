@@ -16954,6 +16954,24 @@ public class DSL {
         return new WidthBucket(field, low, high, buckets);
     }
 
+    /**
+     * The <code>XMLCOMMENT</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlcomment(String comment) {
+        return new Xmlcomment(Tools.field(comment));
+    }
+
+    /**
+     * The <code>XMLCOMMENT</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlcomment(Field<String> comment) {
+        return new Xmlcomment(comment);
+    }
+
 
 
     /**
@@ -20746,24 +20764,6 @@ public class DSL {
     @Support({ POSTGRES })
     public static Field<XML> xmlparseContent(Field<String> content) {
         return new XMLParse(content, DocumentOrContent.CONTENT);
-    }
-
-    /**
-     * The XML comment constructor.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlcomment(String comment) {
-        return xmlcomment(val(comment));
-    }
-
-    /**
-     * The XML comment constructor.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlcomment(Field<String> comment) {
-        return new XMLComment(comment);
     }
 
     /**

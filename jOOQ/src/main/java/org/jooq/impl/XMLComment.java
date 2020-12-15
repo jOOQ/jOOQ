@@ -37,31 +37,68 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_XMLCOMMENT;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.XML;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>XMLCOMMENT</code> statement.
  */
-final class XMLComment extends AbstractField<XML> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Xmlcomment
+extends
+    AbstractField<XML>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = 4505809303211506197L;
+    private static final long serialVersionUID = 1L;
+
     private final Field<String> comment;
 
-    XMLComment(Field<String> comment) {
-        super(N_XMLCOMMENT, SQLDataType.XML);
+    Xmlcomment(
+        Field<String> comment
+    ) {
+        super(N_XMLCOMMENT, allNotNull(XML, comment));
 
-        this.comment = comment;
+        this.comment = nullSafeNotNull(comment, VARCHAR);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(N_XMLCOMMENT).sql('(').visit(comment).sql(')');
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Xmlcomment) {
+            return
+                StringUtils.equals(comment, ((Xmlcomment) that).comment)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

@@ -14925,6 +14925,42 @@ public class DSL {
     }
 
     /**
+     * The <code>ATAN2</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan2(Number x, Number y) {
+        return new Atan2(Tools.field(x), Tools.field(y));
+    }
+
+    /**
+     * The <code>ATAN2</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
+        return new Atan2(Tools.field(x), y);
+    }
+
+    /**
+     * The <code>ATAN2</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
+        return new Atan2(x, Tools.field(y));
+    }
+
+    /**
+     * The <code>ATAN2</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
+        return new Atan2(x, y);
+    }
+
+    /**
      * The <code>BIT_LENGTH</code> function.
      * <p>
      * The length of a string in bits.
@@ -20573,52 +20609,6 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
         return new Atan(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the atan2(field, y) function.
-     *
-     * @see #atan2(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan2(Number x, Number y) {
-        return atan2(Tools.field(x), Tools.field(y));
-    }
-
-    /**
-     * Get the atan2(field, y) function.
-     *
-     * @see #atan2(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
-        return atan2(Tools.field(x), Tools.nullSafe(y));
-    }
-
-    /**
-     * Get the atan2(field, y) function.
-      *
-     * @see #atan2(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
-        return atan2(Tools.nullSafe(x), Tools.field(y));
-    }
-
-    /**
-     * Get the atan2(field, y) function.
-     * <p>
-     * This renders the atan2 or atn2 function where available:
-     * <code><pre>atan2([x], [y]) or
-     * atn2([x], [y])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
-        return new DefaultAggregateFunction<>(Term.ATAN2, SQLDataType.NUMERIC, Tools.nullSafe(x), Tools.nullSafe(y));
     }
 
     /**

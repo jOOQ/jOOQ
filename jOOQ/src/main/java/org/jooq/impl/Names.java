@@ -67,7 +67,9 @@ final class Names {
     static final Name N_ASCII_VAL              = unquotedName("ascii_val");
     static final Name N_ASIN                   = unquotedName("asin");
     static final Name N_ATAN                   = unquotedName("atan");
+    static final Name N_ATAN2                  = unquotedName("atan2");
     static final Name N_ATN                    = unquotedName("atn");
+    static final Name N_ATN2                   = unquotedName("atn2");
     static final Name N_BIT_COUNT              = unquotedName("bit_count");
     static final Name N_BIT_LENGTH             = unquotedName("bit_length");
     static final Name N_BOOL_AND               = unquotedName("bool_and");

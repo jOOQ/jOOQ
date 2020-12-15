@@ -51,21 +51,6 @@ import org.jooq.SQLDialect;
 @Deprecated
 enum Term {
 
-    ATAN2 {
-        @Override
-        public String translate(SQLDialect dialect) {
-
-
-
-
-
-
-
-
-
-            return "atan2";
-        }
-    },
     STDDEV_POP {
         @Override
         public String translate(SQLDialect dialect) {

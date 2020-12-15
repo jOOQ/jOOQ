@@ -55,12 +55,12 @@ import org.jooq.conf.ParamType;
  *             not needed.
  */
 @Deprecated
-final class ConvertedVal<T> extends AbstractField<T> implements Param<T> {
+final class ConvertedVal<T> extends AbstractParamX<T> {
 
     private static final long serialVersionUID = 1258437916133900173L;
-    final Param<?>            delegate;
+    final AbstractParamX<?>   delegate;
 
-    ConvertedVal(Param<?> delegate, DataType<T> type) {
+    ConvertedVal(AbstractParamX<?> delegate, DataType<T> type) {
         super(delegate.getUnqualifiedName(), type);
 
         this.delegate = delegate instanceof ConvertedVal ? ((ConvertedVal<?>) delegate).delegate : delegate;
@@ -90,18 +90,13 @@ final class ConvertedVal<T> extends AbstractField<T> implements Param<T> {
     }
 
     @Override
-    public final void setValue(T value) {
-        delegate.setConverted(value);
+    public final void setConverted0(Object value) {
+        delegate.setConverted0(value);
     }
 
     @Override
-    public final void setConverted(Object value) {
-        delegate.setConverted(value);
-    }
-
-    @Override
-    public final void setInline(boolean inline) {
-        delegate.setInline(inline);
+    public final void setInline0(boolean inline) {
+        delegate.setInline0(inline);
     }
 
     @Override

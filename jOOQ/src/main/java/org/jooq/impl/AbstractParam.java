@@ -56,6 +56,7 @@ import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.UDTRecord;
 import org.jooq.conf.ParamType;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -63,17 +64,17 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
+abstract class AbstractParam<T> extends AbstractParamX<T> {
 
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 1311856649676227970L;
-    private static final Clause[] CLAUSES          = { FIELD, FIELD_VALUE };
+    private static final long       serialVersionUID = 1311856649676227970L;
+    private static final Clause[]   CLAUSES          = { FIELD, FIELD_VALUE };
 
-    private final String      paramName;
-    T                         value;
-    private boolean           inline;
+    private final String            paramName;
+    T                               value;
+    private boolean                 inline;
 
     AbstractParam(T value, DataType<T> type) {
         this(value, type, null);
@@ -130,12 +131,7 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     // ------------------------------------------------------------------------
 
     @Override
-    public final void setValue(T value) {
-        setConverted(value);
-    }
-
-    @Override
-    public final void setConverted(Object value) {
+    final void setConverted0(Object value) {
         this.value = getDataType().convert(value);
     }
 
@@ -150,7 +146,7 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     }
 
     @Override
-    public final void setInline(boolean inline) {
+    final void setInline0(boolean inline) {
         this.inline = inline;
     }
 

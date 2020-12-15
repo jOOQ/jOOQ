@@ -375,7 +375,7 @@ final class Expression<T> extends AbstractTransformable<T> {
             Param<U> result = val(u);
 
             if (((Param<?>) rhs).isInline())
-                result.setInline(true);
+                ((AbstractParamX<?>) result).setInline0(true);
 
             return result;
         }

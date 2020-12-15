@@ -175,7 +175,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             throw new IllegalArgumentException("No such parameter : " + param);
 
         for (Param<?> p : params) {
-            p.setConverted(value);
+            ((AbstractParamX<?>) p).setConverted0(value);
             closeIfNecessary(p);
         }
 
@@ -195,8 +195,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
         if (index < 1 || index > params.length)
             throw new IllegalArgumentException("Index out of range for Query parameters : " + index);
 
-        Param<?> param = params[index - 1];
-        param.setConverted(value);
+        AbstractParamX<?> param = (AbstractParamX<?>) params[index - 1];
+        param.setConverted0(value);
         closeIfNecessary(param);
         return this;
     }

@@ -23522,8 +23522,8 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> inline(T value) {
-        Param<T> val = val(value);
-        val.setInline(true);
+        AbstractParamX<T> val = (AbstractParamX<T>) val(value);
+        val.setInline0(true);
         return val;
     }
 
@@ -24365,8 +24365,8 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> inline(Object value, Class<T> type) {
-        Param<T> val = val(value, type);
-        val.setInline(true);
+        AbstractParamX<T> val = (AbstractParamX<T>) val(value, type);
+        val.setInline0(true);
         return val;
     }
 
@@ -24389,8 +24389,8 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> inline(Object value, Field<T> field) {
-        Param<T> val = val(value, field);
-        val.setInline(true);
+        AbstractParamX<T> val = (AbstractParamX<T>) val(value, field);
+        val.setInline0(true);
         return val;
     }
 
@@ -24413,8 +24413,8 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> inline(Object value, DataType<T> type) {
-        Param<T> val = val(value, type);
-        val.setInline(true);
+        AbstractParamX<T> val = (AbstractParamX<T>) val(value, type);
+        val.setInline0(true);
         return val;
     }
 

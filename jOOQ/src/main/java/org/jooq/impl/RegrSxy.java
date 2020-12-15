@@ -55,24 +55,26 @@ import java.math.BigDecimal;
 
 
 /**
- * The <code>MEDIAN</code> statement.
+ * The <code>REGR S X Y</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Median
+final class RegrSxy
 extends
     DefaultAggregateFunction<BigDecimal>
 {
 
     private static final long serialVersionUID = 1L;
 
-    Median(
-        Field<? extends Number> field
+    RegrSxy(
+        Field<? extends Number> y,
+        Field<? extends Number> x
     ) {
         super(
             false,
-            N_MEDIAN,
+            N_REGR_SXY,
             NUMERIC,
-            nullSafeNotNull(field, INTEGER)
+            nullSafeNotNull(y, INTEGER),
+            nullSafeNotNull(x, INTEGER)
         );
     }
 
@@ -80,17 +82,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
-    private static final Set<SQLDialect> EMULATE_WITH_PERCENTILES = SQLDialect.supportedBy(POSTGRES);
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        if (EMULATE_WITH_PERCENTILES.contains(ctx.dialect()))
-            ctx.visit(percentileCont(inline(new BigDecimal("0.5"))).withinGroupOrderBy(arguments));
-        else
-            super.accept(ctx);
-    }
 
 
 }

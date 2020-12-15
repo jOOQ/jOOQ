@@ -209,6 +209,16 @@ final class Names {
     static final Name N_RAWTOHEX               = unquotedName("rawtohex");
     static final Name N_REGEXP_REPLACE         = unquotedName("regexp_replace");
     static final Name N_REGEX_REPLACE          = unquotedName("regex_replace");
+
+    static final Name N_REGR_AVGX              = unquotedName("regr_avgx");
+    static final Name N_REGR_AVGY              = unquotedName("regr_avgy");
+    static final Name N_REGR_COUNT             = unquotedName("regr_count");
+    static final Name N_REGR_INTERCEPT         = unquotedName("regr_intercept");
+    static final Name N_REGR_R2                = unquotedName("regr_r2");
+    static final Name N_REGR_SLOPE             = unquotedName("regr_slope");
+    static final Name N_REGR_SXX               = unquotedName("regr_sxx");
+    static final Name N_REGR_SXY               = unquotedName("regr_sxy");
+    static final Name N_REGR_SYY               = unquotedName("regr_syy");
     static final Name N_REPEAT                 = unquotedName("repeat");
     static final Name N_REPLACE                = unquotedName("replace");
     static final Name N_REPLICATE              = unquotedName("replicate");

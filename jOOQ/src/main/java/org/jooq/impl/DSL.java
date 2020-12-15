@@ -17027,6 +17027,96 @@ public class DSL {
     }
 
     /**
+     * The <code>MEDIAN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
+    public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
+        return new Median(field);
+    }
+
+    /**
+     * The <code>REGR_AVG_X</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrAvgX(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrAvgx(y, x);
+    }
+
+    /**
+     * The <code>REGR_AVG_Y</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrAvgY(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrAvgy(y, x);
+    }
+
+    /**
+     * The <code>REGR_COUNT</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrCount(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrCount(y, x);
+    }
+
+    /**
+     * The <code>REGR_INTERCEPT</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrIntercept(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrIntercept(y, x);
+    }
+
+    /**
+     * The <code>REGR_R2</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrR2(y, x);
+    }
+
+    /**
+     * The <code>REGR_SLOPE</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrSlope(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrSlope(y, x);
+    }
+
+    /**
+     * The <code>REGR_S_X_X</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrSXX(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrSxx(y, x);
+    }
+
+    /**
+     * The <code>REGR_S_X_Y</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrSXY(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrSxy(y, x);
+    }
+
+    /**
+     * The <code>REGR_S_Y_Y</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static AggregateFunction<BigDecimal> regrSYY(Field<? extends Number> y, Field<? extends Number> x) {
+        return new RegrSyy(y, x);
+    }
+
+    /**
      * The <code>STDDEV_POP</code> function.
      */
     @NotNull
@@ -21900,159 +21990,6 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static <T> AggregateFunction<T> mode(Field<T> field) {
         return new Mode(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the median over a numeric field: median(field).
-     */
-    @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
-        return new Median(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the <code>REGR_SLOPE</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrSlope(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_slope", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
-    }
-
-    /**
-     * Get the <code>REGR_INTERCEPT</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrIntercept(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_intercept", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
-    }
-
-    /**
-     * Get the <code>REGR_COUNT</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrCount(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_count", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
-    }
-
-    /**
-     * Get the <code>REGR_R2</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_r2", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
-    }
-
-    /**
-     * Get the <code>REGR_AVGX</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrAvgX(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_avgx", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
-    }
-
-    /**
-     * Get the <code>REGR_AVGY</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrAvgY(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_avgy", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
-    }
-
-    /**
-     * Get the <code>REGR_SXX</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrSXX(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_sxx", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
-    }
-
-    /**
-     * Get the <code>REGR_SYY</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrSYY(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_syy", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
-    }
-
-    /**
-     * Get the <code>REGR_SXY</code> linear regression function.
-     * <p>
-     * The linear regression functions fit an ordinary-least-squares regression
-     * line to a set of number pairs. You can use them as both aggregate and
-     * window functions, where this is supported.
-     * <p>
-     * Note that {@link SQLDialect#DB2} does not support linear regression
-     * window functions.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AggregateFunction<BigDecimal> regrSXY(Field<? extends Number> y, Field<? extends Number> x) {
-        return new DefaultAggregateFunction<>("regr_sxy", SQLDataType.NUMERIC, Tools.nullSafe(y), Tools.nullSafe(x));
     }
 
     /**

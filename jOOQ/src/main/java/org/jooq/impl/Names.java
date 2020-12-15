@@ -209,7 +209,6 @@ final class Names {
     static final Name N_RAWTOHEX               = unquotedName("rawtohex");
     static final Name N_REGEXP_REPLACE         = unquotedName("regexp_replace");
     static final Name N_REGEX_REPLACE          = unquotedName("regex_replace");
-
     static final Name N_REGR_AVGX              = unquotedName("regr_avgx");
     static final Name N_REGR_AVGY              = unquotedName("regr_avgy");
     static final Name N_REGR_COUNT             = unquotedName("regr_count");
@@ -280,6 +279,7 @@ final class Names {
     static final Name N_TO_DATE                = unquotedName("to_date");
     static final Name N_TO_NUMBER              = unquotedName("to_number");
     static final Name N_TO_TIMESTAMP           = unquotedName("to_timestamp");
+    static final Name N_TAU                    = unquotedName("tau");
     static final Name N_TRANSLATE              = unquotedName("translate");
     static final Name N_TRIM                   = unquotedName("trim");
     static final Name N_TRUNC                  = unquotedName("trunc");

@@ -15152,6 +15152,17 @@ public class DSL {
     }
 
     /**
+     * The <code>E</code> function.
+     * <p>
+     * The E literal (Euler number).
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> e() {
+        return new E();
+    }
+
+    /**
      * The <code>FLOOR</code> function.
      * <p>
      * Get the biggest integer value equal or less than a value.
@@ -15635,6 +15646,17 @@ public class DSL {
     @Support
     public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex) {
         return new Overlay(in, placing, startIndex);
+    }
+
+    /**
+     * The <code>PI</code> function.
+     * <p>
+     * The π literal.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> pi() {
+        return new Pi();
     }
 
     /**
@@ -16569,6 +16591,17 @@ public class DSL {
     @Support
     public static Field<String> substring(Field<String> string, Field<? extends Number> startingPosition) {
         return new Substring(string, startingPosition);
+    }
+
+    /**
+     * The <code>TAU</code> function.
+     * <p>
+     * The τ literal, or π, in a better world.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> tau() {
+        return new Tau();
     }
 
     /**
@@ -26650,45 +26683,6 @@ public class DSL {
     @Support
     public static Param<Integer> two() {
         return inline(2);
-    }
-
-    /**
-     * The <code>π</code> literal.
-     * <p>
-     * This will be any of the following:
-     * <ul>
-     * <li>The underlying RDBMS' <code>PI</code> literal or <code>PI()</code> function</li>
-     * <li>{@link Math#PI}</li>
-     * </ul>
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> pi() {
-        return new Pi();
-    }
-
-    /**
-     * The <code>τ</code> literal, or <code>π</code>, in a better world.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> tau() {
-        return imul(pi(), two());
-    }
-
-    /**
-     * The <code>E</code> literal (Euler number).
-     * <p>
-     * This will be any of the following:
-     * <ul>
-     * <li>The underlying RDBMS' <code>E</code> literal or <code>E()</code> function</li>
-     * <li>{@link Math#E}</li>
-     * </ul>
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> e() {
-        return new Euler();
     }
 
     // -------------------------------------------------------------------------

@@ -37,29 +37,46 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.Names.N_E;
-import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
 import java.math.BigDecimal;
 
-import org.jooq.Context;
 
 /**
- * @author Lukas Eder
+ * The <code>E</code> statement.
  */
-final class Euler extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "unused" })
+final class E
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -420788300355442056L;
+    private static final long serialVersionUID = 1L;
 
-    Euler() {
-        super(N_E, NUMERIC.notNull());
+    E() {
+        super(
+            N_E,
+            allNotNull(NUMERIC)
+        );
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -100,8 +117,23 @@ final class Euler extends AbstractField<BigDecimal> {
 
             // The Euler number doesn't seem to exist in any dialect...
             default:
-                ctx.visit(function("e", getDataType()));
+                ctx.visit(function(N_E, getDataType()));
                 return;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof E) {
+            return true;
+        }
+        else
+            return super.equals(that);
     }
 }

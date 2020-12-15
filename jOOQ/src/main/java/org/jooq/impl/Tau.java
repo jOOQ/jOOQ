@@ -55,19 +55,19 @@ import java.math.BigDecimal;
 
 
 /**
- * The <code>PI</code> statement.
+ * The <code>TAU</code> statement.
  */
 @SuppressWarnings({ "unused" })
-final class Pi
+final class Tau
 extends
     AbstractField<BigDecimal>
 {
 
     private static final long serialVersionUID = 1L;
 
-    Pi() {
+    Tau() {
         super(
-            N_PI,
+            N_TAU,
             allNotNull(NUMERIC)
         );
     }
@@ -80,26 +80,7 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-            case SQLITE:
-                ctx.visit(inline(Math.PI, BigDecimal.class));
-                return;
-
-            default:
-                ctx.visit(function("pi", getDataType()));
-                return;
-        }
+        ctx.visit(imul(pi(), two()));
     }
 
 
@@ -110,7 +91,7 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Pi) {
+        if (that instanceof Tau) {
             return true;
         }
         else

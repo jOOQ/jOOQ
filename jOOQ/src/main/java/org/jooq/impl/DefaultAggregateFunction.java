@@ -61,9 +61,6 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
 
     private static final long serialVersionUID = 347252741712134044L;
 
-    // Mutually exclusive attributes: super.getName(), this.term
-    private final Term        term;
-
     // -------------------------------------------------------------------------
     // XXX Constructors
     // -------------------------------------------------------------------------
@@ -76,24 +73,12 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
         this(false, name, type, arguments);
     }
 
-    DefaultAggregateFunction(Term term, DataType<T> type, Field<?>... arguments) {
-        this(false, term, type, arguments);
-    }
-
     DefaultAggregateFunction(boolean distinct, String name, DataType<T> type, Field<?>... arguments) {
         this(distinct, DSL.unquotedName(name), type, arguments);
     }
 
     DefaultAggregateFunction(boolean distinct, Name name, DataType<T> type, Field<?>... arguments) {
         super(distinct, name, type, arguments);
-
-        this.term = null;
-    }
-
-    DefaultAggregateFunction(boolean distinct, Term term, DataType<T> type, Field<?>... arguments) {
-        super(distinct, term.toName(), type, arguments);
-
-        this.term = term;
     }
 
     // -------------------------------------------------------------------------
@@ -150,9 +135,6 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
     }
 
     /* non-final */ void acceptFunctionName(Context<?> ctx) {
-        if (term != null)
-            ctx.sql(term.translate(ctx.dialect()));
-        else
-            ctx.visit(getQualifiedName());
+        ctx.visit(getQualifiedName());
     }
 }

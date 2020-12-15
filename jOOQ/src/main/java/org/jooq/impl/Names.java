@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.unquotedName;
 
 import org.jooq.Name;
+import org.jooq.SQLDialect;
 
 /**
  * An internal {@link Name} cache.
@@ -79,8 +80,8 @@ final class Names {
     static final Name N_CAST                   = unquotedName("cast");
     static final Name N_CEIL                   = unquotedName("ceil");
     static final Name N_CEILING                = unquotedName("ceiling");
-    static final Name N_CHAR_LENGTH            = unquotedName("char_length");
     static final Name N_CHARINDEX              = unquotedName("charindex");
+    static final Name N_CHAR_LENGTH            = unquotedName("char_length");
     static final Name N_CHOOSE                 = unquotedName("choose");
     static final Name N_CLNG                   = unquotedName("clng");
     static final Name N_COALESCE               = unquotedName("coalesce");
@@ -93,6 +94,7 @@ final class Names {
     static final Name N_COTH                   = unquotedName("coth");
     static final Name N_COUNT                  = unquotedName("count");
     static final Name N_COUNTSET               = unquotedName("countset");
+    static final Name N_CURRENTUSER            = unquotedName("currentuser");
     static final Name N_CURRENT_BIGDATETIME    = unquotedName("current_bigdatetime");
     static final Name N_CURRENT_CATALOG        = unquotedName("current_catalog");
     static final Name N_CURRENT_DATABASE       = unquotedName("current_database");
@@ -101,18 +103,17 @@ final class Names {
     static final Name N_CURRENT_TIME           = unquotedName("current_time");
     static final Name N_CURRENT_TIMESTAMP      = unquotedName("current_timestamp");
     static final Name N_CURRENT_USER           = unquotedName("current_user");
-    static final Name N_CURRENTUSER            = unquotedName("currentuser");
     static final Name N_CURRVAL                = unquotedName("currval");
     static final Name N_DATALENGTH             = unquotedName("datalength");
-    static final Name N_DATE_ADD               = unquotedName("date_add");
-    static final Name N_DATE_DIFF              = unquotedName("date_diff");
-    static final Name N_DATE_TRUNC             = unquotedName("date_trunc");
     static final Name N_DATEADD                = unquotedName("dateadd");
     static final Name N_DATEDIFF               = unquotedName("datediff");
     static final Name N_DATEPART               = unquotedName("datepart");
-    static final Name N_DAYS                   = unquotedName("days");
+    static final Name N_DATE_ADD               = unquotedName("date_add");
+    static final Name N_DATE_DIFF              = unquotedName("date_diff");
+    static final Name N_DATE_TRUNC             = unquotedName("date_trunc");
     static final Name N_DAYOFWEEK              = unquotedName("dayofweek");
     static final Name N_DAYOFYEAR              = unquotedName("dayofyear");
+    static final Name N_DAYS                   = unquotedName("days");
     static final Name N_DAYS_BETWEEN           = unquotedName("days_between");
     static final Name N_DB_NAME                = unquotedName("db_name");
     static final Name N_DECODE                 = unquotedName("decode");
@@ -126,8 +127,8 @@ final class Names {
     static final Name N_FLASHBACK              = unquotedName("flashback");
     static final Name N_FLOOR                  = unquotedName("floor");
     static final Name N_FUNCTION               = unquotedName("function");
-    static final Name N_GEN_ID                 = unquotedName("gen_id");
     static final Name N_GENERATE_SERIES        = unquotedName("generate_series");
+    static final Name N_GEN_ID                 = unquotedName("gen_id");
     static final Name N_GETDATE                = unquotedName("getdate");
     static final Name N_GREATEST               = unquotedName("greatest");
     static final Name N_GROUP_CONCAT           = unquotedName("group_concat");
@@ -141,6 +142,13 @@ final class Names {
     static final Name N_ISJSON                 = unquotedName("isjson");
     static final Name N_ISOWEEK                = unquotedName("isoweek");
     static final Name N_JOIN                   = unquotedName("join");
+    static final Name N_JSONB_AGG              = unquotedName("jsonb_agg");
+    static final Name N_JSONB_BUILD_ARRAY      = unquotedName("jsonb_build_array");
+    static final Name N_JSONB_OBJECT           = unquotedName("jsonb_object");
+    static final Name N_JSONB_OBJECTAGG        = unquotedName("jsonb_objectagg");
+    static final Name N_JSONB_OBJECT_AGG       = unquotedName("jsonb_object_agg");
+    static final Name N_JSONB_PATH_EXISTS      = unquotedName("jsonb_path_exists");
+    static final Name N_JSONB_PATH_QUERY_FIRST = unquotedName("jsonb_path_query_first");
     static final Name N_JSON_AGG               = unquotedName("json_agg");
     static final Name N_JSON_ARRAY             = unquotedName("json_array");
     static final Name N_JSON_ARRAYAGG          = unquotedName("json_arrayagg");
@@ -149,19 +157,12 @@ final class Names {
     static final Name N_JSON_EXTRACT           = unquotedName("json_extract");
     static final Name N_JSON_MERGE             = unquotedName("json_merge");
     static final Name N_JSON_OBJECT            = unquotedName("json_object");
-    static final Name N_JSON_OBJECT_AGG        = unquotedName("json_object_agg");
     static final Name N_JSON_OBJECTAGG         = unquotedName("json_objectagg");
+    static final Name N_JSON_OBJECT_AGG        = unquotedName("json_object_agg");
     static final Name N_JSON_QUOTE             = unquotedName("json_quote");
     static final Name N_JSON_TABLE             = unquotedName("json_table");
     static final Name N_JSON_VALID             = unquotedName("json_valid");
     static final Name N_JSON_VALUE             = unquotedName("json_value");
-    static final Name N_JSONB_AGG              = unquotedName("jsonb_agg");
-    static final Name N_JSONB_BUILD_ARRAY      = unquotedName("jsonb_build_array");
-    static final Name N_JSONB_OBJECT           = unquotedName("jsonb_object");
-    static final Name N_JSONB_OBJECT_AGG       = unquotedName("jsonb_object_agg");
-    static final Name N_JSONB_OBJECTAGG        = unquotedName("jsonb_objectagg");
-    static final Name N_JSONB_PATH_EXISTS      = unquotedName("jsonb_path_exists");
-    static final Name N_JSONB_PATH_QUERY_FIRST = unquotedName("jsonb_path_query_first");
     static final Name N_LCASE                  = unquotedName("lcase");
     static final Name N_LEAST                  = unquotedName("least");
     static final Name N_LEFT                   = unquotedName("left");
@@ -206,8 +207,8 @@ final class Names {
     static final Name N_RANDOM                 = unquotedName("random");
     static final Name N_RATIO_TO_REPORT        = unquotedName("ratio_to_report");
     static final Name N_RAWTOHEX               = unquotedName("rawtohex");
-    static final Name N_REGEX_REPLACE          = unquotedName("regex_replace");
     static final Name N_REGEXP_REPLACE         = unquotedName("regexp_replace");
+    static final Name N_REGEX_REPLACE          = unquotedName("regex_replace");
     static final Name N_REPEAT                 = unquotedName("repeat");
     static final Name N_REPLACE                = unquotedName("replace");
     static final Name N_REPLICATE              = unquotedName("replicate");
@@ -218,9 +219,9 @@ final class Names {
     static final Name N_ROUND                  = unquotedName("round");
     static final Name N_ROUND_DOWN             = unquotedName("round_down");
     static final Name N_ROW                    = unquotedName("row");
-    static final Name N_ROW_NUMBER             = unquotedName("row_number");
     static final Name N_ROWNUM                 = unquotedName("rownum");
     static final Name N_ROWSFROM               = unquotedName("rowsfrom");
+    static final Name N_ROW_NUMBER             = unquotedName("row_number");
     static final Name N_RPAD                   = unquotedName("rpad");
     static final Name N_RTRIM                  = unquotedName("rtrim");
     static final Name N_SCHEMA_NAME            = unquotedName("schema_name");
@@ -279,6 +280,12 @@ final class Names {
     static final Name N_USER                   = unquotedName("user");
     static final Name N_VALUE                  = unquotedName("value");
     static final Name N_VALUES                 = unquotedName("values");
+    static final Name N_VAR                    = unquotedName("var");
+    static final Name N_VARIANCE               = unquotedName("variance");
+    static final Name N_VARIANCE_SAMP          = unquotedName("variance_samp");
+    static final Name N_VARP                   = unquotedName("varp");
+    static final Name N_VAR_POP                = unquotedName("var_pop");
+    static final Name N_VAR_SAMP               = unquotedName("var_samp");
     static final Name N_WEEKDAY                = unquotedName("weekday");
     static final Name N_WIDTH_BUCKET           = unquotedName("width_bucket");
     static final Name N_XMLAGG                 = unquotedName("xmlagg");

@@ -17044,6 +17044,24 @@ public class DSL {
         return new StddevSamp(field);
     }
 
+    /**
+     * The <code>VAR_POP</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
+        return new VarPop(field);
+    }
+
+    /**
+     * The <code>VAR_SAMP</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
+        return new VarSamp(field);
+    }
+
 
 
     /**
@@ -21891,24 +21909,6 @@ public class DSL {
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new Median(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the population variance of a numeric field: var_pop(field).
-     */
-    @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(Term.VAR_POP, SQLDataType.NUMERIC, Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the sample variance of a numeric field: var_samp(field).
-     */
-    @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(Term.VAR_SAMP, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     /**

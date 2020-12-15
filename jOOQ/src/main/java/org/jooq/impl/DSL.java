@@ -17374,6 +17374,17 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Timestamp> currentTimestamp(int precision) {
+        return currentTimestamp(Tools.field(precision));
+    }
+
+    /**
+     * Get the current_timestamp() function returning a SQL standard
+     * {@link SQLDataType#TIMESTAMP} type with the specified fractional
+     * seconds precision.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Timestamp> currentTimestamp(Field<Integer> precision) {
         return new CurrentTimestamp<>(TIMESTAMP.notNull(), precision);
     }
@@ -17437,6 +17448,28 @@ public class DSL {
     @Support
     public static Field<LocalDateTime> currentLocalDateTime() {
         return new CurrentTimestamp<>(SQLDataType.LOCALDATETIME.notNull());
+    }
+
+    /**
+     * Get the current_timestamp() function returning a SQL standard
+     * {@link SQLDataType#TIMESTAMP} type with the specified fractional
+     * seconds precision.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<LocalDateTime> currentLocalDateTime(int precision) {
+        return currentLocalDateTime(Tools.field(precision));
+    }
+
+    /**
+     * Get the current_timestamp() function returning a SQL standard
+     * {@link SQLDataType#TIMESTAMP} type with the specified fractional
+     * seconds precision.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<LocalDateTime> currentLocalDateTime(Field<Integer> precision) {
+        return new CurrentTimestamp<>(SQLDataType.LOCALDATETIME.notNull(), precision);
     }
 
     /**

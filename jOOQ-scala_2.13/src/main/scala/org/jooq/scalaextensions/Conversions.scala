@@ -40,11 +40,9 @@ package org.jooq.scalaextensions
 import java.sql.ResultSet
 
 import org.jooq._
-import org.jooq.impl._
+import org.jooq.impl.{Array => _, _}
 
-// Avoid ambiguity with the internal org.jooq.impl.Array type.
-import scala.Array
-import scala.collection.JavaConverters
+import scala.language.implicitConversions
 
 /**
  * jOOQ type conversions used to enhance the jOOQ Java API with Scala Traits
@@ -157,6 +155,7 @@ object Conversions {
 
   implicit class ScalaResultQuery[R <: Record](val query : ResultQuery[R]) {
     import scala.collection.mutable._
+    import JDKCollectionConvertersCompat.Converters._
 
     def fetchAnyOption                 ()                                                         : Option[R]                   = Option(query.fetchAny)
     def fetchAnyOption[E]              (mapper : RecordMapper[_ >: R, E])                         : Option[E]                   = Option(query.fetchAny(mapper))
@@ -172,7 +171,7 @@ object Conversions {
     def fetchAnyOptionArray            ()                                                         : Option[Array[AnyRef]]       = Option(query.fetchAnyArray)
     def fetchAnyOptionInto[E]          (newType : Class[_ <: E])                                  : Option[E]                   = Option(query.fetchAnyInto(newType))
     def fetchAnyOptionInto[Z <: Record](table : Table[Z])                                         : Option[Z]                   = Option(query.fetchAnyInto(table))
-    def fetchAnyOptionMap              ()                                                         : Option[Map[String, AnyRef]] = Option(query.fetchAnyMap).map((m: java.util.Map[String, AnyRef]) => JavaConverters.asScala(m))
+    def fetchAnyOptionMap              ()                                                         : Option[Map[String, AnyRef]] = Option(query.fetchAnyMap).map((m: java.util.Map[String, AnyRef]) => m.asScala)
 
     def fetchOneOption                 ()                                                         : Option[R]                   = Option(query.fetchOne)
     def fetchOneOption[E]              (mapper : RecordMapper[_ >: R, E])                         : Option[E]                   = Option(query.fetchOne(mapper))
@@ -188,7 +187,7 @@ object Conversions {
     def fetchOneOptionArray            ()                                                         : Option[Array[AnyRef]]       = Option(query.fetchOneArray)
     def fetchOneOptionInto[E]          (newType : Class[_ <: E])                                  : Option[E]                   = Option(query.fetchOneInto(newType))
     def fetchOneOptionInto[Z <: Record](table : Table[Z])                                         : Option[Z]                   = Option(query.fetchOneInto(table))
-    def fetchOneOptionMap              ()                                                         : Option[Map[String, AnyRef]] = Option(query.fetchOneMap).map((m: java.util.Map[String, AnyRef]) => JavaConverters.asScala(m))
+    def fetchOneOptionMap              ()                                                         : Option[Map[String, AnyRef]] = Option(query.fetchOneMap).map((m: java.util.Map[String, AnyRef]) => m.asScala)
   }
 
   // -------------------------------------------------------------------------
@@ -822,4 +821,30 @@ object Conversions {
 
 // [jooq-tools] START [handler]
 // [jooq-tools] END [handler]
+
+  /** Magic to get cross-compiling access to `scala.jdk.CollectionConverters`
+   *  with a fallback on `scala.collection.JavaConverters`, without deprecation
+   *  warning in any Scala version. Credit to
+   *  https://github.com/scala/scala-collection-compat/issues/208#issuecomment-497735669
+   */
+  private object JDKCollectionConvertersCompat {
+    object Scope1 {
+      object jdk {
+        type CollectionConverters = Int
+      }
+    }
+    import Scope1._
+
+    object Scope2 {
+      import scala.collection.{JavaConverters => CollectionConverters}
+      object Inner {
+        import scala._
+        import jdk.CollectionConverters
+        val Converters = CollectionConverters
+      }
+    }
+
+    val Converters = Scope2.Inner.Converters
+  }
+
 }

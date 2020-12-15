@@ -37,42 +37,77 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_XMLFOREST;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Collection;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.XML;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>XMLFOREST</code> statement.
  */
-final class XMLForest extends AbstractField<XML> {
+@SuppressWarnings({ "rawtypes", "unused" })
+final class Xmlforest
+extends
+    AbstractField<XML>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = 4505809303211506197L;
-    private final SelectFieldList<Field<?>> args;
+    private static final long serialVersionUID = 1L;
 
-    XMLForest(Collection<? extends Field<?>> args) {
-        super(N_XMLFOREST, SQLDataType.XML);
+    private final Collection<? extends Field<?>> fields;
 
-        this.args = new SelectFieldList<>(args);
+    Xmlforest(
+        Collection<? extends Field<?>> fields
+    ) {
+        super(N_XMLFOREST, allNotNull(XML));
+
+        this.fields = fields;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
         boolean declareFields = ctx.declareFields();
-
         Object previous = ctx.data(DATA_AS_REQUIRED, true);
+
         ctx.visit(N_XMLFOREST).sql('(')
            .declareFields(true)
-           .visit(args)
+           .visit(new SelectFieldList<>(fields))
            .declareFields(declareFields)
            .sql(')');
+
         ctx.data(DATA_AS_REQUIRED, previous);
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Xmlforest) {
+            return
+                StringUtils.equals(fields, ((Xmlforest) that).fields)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

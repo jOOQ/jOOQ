@@ -16972,6 +16972,24 @@ public class DSL {
         return new Xmlcomment(comment);
     }
 
+    /**
+     * The <code>XMLFOREST</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlforest(Field<?>... fields) {
+        return new Xmlforest(Arrays.asList(fields));
+    }
+
+    /**
+     * The <code>XMLFOREST</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static Field<XML> xmlforest(Collection<? extends Field<?>> fields) {
+        return new Xmlforest(fields);
+    }
+
 
 
     /**
@@ -20923,24 +20941,6 @@ public class DSL {
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(Name target, Field<?> content) {
         return new XMLPI(target, content);
-    }
-
-    /**
-     * The XML forest constructor.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlforest(Field<?>... fields) {
-        return xmlforest(asList(fields));
-    }
-
-    /**
-     * The XML forest constructor.
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static Field<XML> xmlforest(Collection<? extends Field<?>> fields) {
-        return new XMLForest(fields);
     }
 
     /**

@@ -121,7 +121,7 @@ object Conversions {
         i = i + 1;
       }
 
-      sb.result
+      sb.result()
     }
   }
 

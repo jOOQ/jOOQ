@@ -15099,6 +15099,33 @@ public class DSL {
     }
 
     /**
+     * The <code>CURRENT_CATALOG</code> function.
+     */
+    @NotNull
+    @Support({ FIREBIRD, POSTGRES, SQLITE })
+    public static Field<String> currentCatalog() {
+        return new CurrentCatalog();
+    }
+
+    /**
+     * The <code>CURRENT_SCHEMA</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> currentSchema() {
+        return new CurrentSchema();
+    }
+
+    /**
+     * The <code>CURRENT_USER</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> currentUser() {
+        return new CurrentUser();
+    }
+
+    /**
      * The <code>DEG</code> function.
      * <p>
      * Turn a value in radians to degrees.
@@ -26662,37 +26689,6 @@ public class DSL {
     @Support
     public static Field<BigDecimal> e() {
         return new Euler();
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX System functions
-    // -------------------------------------------------------------------------
-
-    /**
-     * Get the <code>current_user()</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> currentUser() {
-        return new CurrentUser();
-    }
-
-    /**
-     * Get the <code>current_schema()</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> currentSchema() {
-        return new CurrentSchema();
-    }
-
-    /**
-     * Get the <code>current_catalog()</code> function.
-     */
-    @NotNull
-    @Support({ FIREBIRD, POSTGRES, SQLITE })
-    public static Field<String> currentCatalog() {
-        return new CurrentCatalog();
     }
 
     // -------------------------------------------------------------------------

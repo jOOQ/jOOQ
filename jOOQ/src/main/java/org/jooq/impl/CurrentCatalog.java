@@ -37,28 +37,45 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.unquotedName;
-import static org.jooq.impl.Names.N_CURRENT_CATALOG;
-import static org.jooq.impl.Names.N_CURRENT_DATABASE;
-import static org.jooq.impl.Names.N_DB_NAME;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>CURRENT CATALOG</code> statement.
  */
-final class CurrentCatalog extends AbstractField<String> {
+@SuppressWarnings({ "unused" })
+final class CurrentCatalog
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
     CurrentCatalog() {
-        super(N_CURRENT_CATALOG, VARCHAR.notNull());
+        super(
+            N_CURRENT_CATALOG,
+            allNotNull(VARCHAR)
+        );
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -86,5 +103,20 @@ final class CurrentCatalog extends AbstractField<String> {
                 ctx.visit(N_CURRENT_DATABASE).sql("()");
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof CurrentCatalog) {
+            return true;
+        }
+        else
+            return super.equals(that);
     }
 }

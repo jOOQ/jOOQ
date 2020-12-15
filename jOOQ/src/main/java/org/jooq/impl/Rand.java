@@ -65,7 +65,6 @@ extends
 
     private static final long serialVersionUID = 1L;
 
-
     Rand() {
         super(
             N_RAND,

@@ -37,31 +37,45 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.K_CURRENT;
-import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
-import static org.jooq.impl.Keywords.K_DATABASE;
-import static org.jooq.impl.Keywords.K_SCHEMA;
-import static org.jooq.impl.Names.N_CURRENT_SCHEMA;
-import static org.jooq.impl.Names.N_SCHEMA_NAME;
-import static org.jooq.impl.Names.N_USER;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>CURRENT SCHEMA</code> statement.
  */
-final class CurrentSchema extends AbstractField<String> {
+@SuppressWarnings({ "unused" })
+final class CurrentSchema
+extends
+    AbstractField<String>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
     CurrentSchema() {
-        super(N_CURRENT_SCHEMA, VARCHAR.notNull());
+        super(
+            N_CURRENT_SCHEMA,
+            allNotNull(VARCHAR)
+        );
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -121,5 +135,20 @@ final class CurrentSchema extends AbstractField<String> {
                 ctx.visit(K_CURRENT_SCHEMA).sql("()");
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof CurrentSchema) {
+            return true;
+        }
+        else
+            return super.equals(that);
     }
 }

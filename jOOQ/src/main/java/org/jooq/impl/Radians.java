@@ -70,7 +70,10 @@ extends
     Radians(
         Field<? extends Number> degrees
     ) {
-        super(N_RADIANS, allNotNull(NUMERIC, degrees));
+        super(
+            N_RADIANS,
+            allNotNull(NUMERIC, degrees)
+        );
 
         this.degrees = nullSafeNotNull(degrees, INTEGER);
     }

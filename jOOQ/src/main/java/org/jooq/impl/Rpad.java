@@ -72,7 +72,10 @@ extends
         Field<String> string,
         Field<? extends Number> length
     ) {
-        super(N_RPAD, allNotNull(VARCHAR, string, length));
+        super(
+            N_RPAD,
+            allNotNull(VARCHAR, string, length)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.length = nullSafeNotNull(length, INTEGER);
@@ -84,7 +87,10 @@ extends
         Field<? extends Number> length,
         Field<String> character
     ) {
-        super(N_RPAD, allNotNull(VARCHAR, string, length, character));
+        super(
+            N_RPAD,
+            allNotNull(VARCHAR, string, length, character)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.length = nullSafeNotNull(length, INTEGER);

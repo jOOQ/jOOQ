@@ -69,7 +69,10 @@ extends
     Upper(
         Field<String> string
     ) {
-        super(N_UPPER, allNotNull(VARCHAR, string));
+        super(
+            N_UPPER,
+            allNotNull(VARCHAR, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
     }

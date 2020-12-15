@@ -73,7 +73,10 @@ extends
         Field<String> from,
         Field<String> to
     ) {
-        super(N_TRANSLATE, allNotNull(VARCHAR, string, from, to));
+        super(
+            N_TRANSLATE,
+            allNotNull(VARCHAR, string, from, to)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.from = nullSafeNotNull(from, VARCHAR);

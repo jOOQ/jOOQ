@@ -69,7 +69,10 @@ extends
     Space(
         Field<? extends Number> count
     ) {
-        super(N_SPACE, allNotNull(VARCHAR, count));
+        super(
+            N_SPACE,
+            allNotNull(VARCHAR, count)
+        );
 
         this.count = nullSafeNotNull(count, INTEGER);
     }

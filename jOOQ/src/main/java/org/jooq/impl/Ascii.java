@@ -69,7 +69,10 @@ extends
     Ascii(
         Field<String> string
     ) {
-        super(N_ASCII, allNotNull(INTEGER, string));
+        super(
+            N_ASCII,
+            allNotNull(INTEGER, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
     }

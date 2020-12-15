@@ -70,7 +70,10 @@ extends
     Ltrim(
         Field<String> string
     ) {
-        super(N_LTRIM, allNotNull(VARCHAR, string));
+        super(
+            N_LTRIM,
+            allNotNull(VARCHAR, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.characters = null;
@@ -80,7 +83,10 @@ extends
         Field<String> string,
         Field<String> characters
     ) {
-        super(N_LTRIM, allNotNull(VARCHAR, string, characters));
+        super(
+            N_LTRIM,
+            allNotNull(VARCHAR, string, characters)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.characters = nullSafeNotNull(characters, VARCHAR);

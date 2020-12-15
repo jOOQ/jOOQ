@@ -17026,6 +17026,24 @@ public class DSL {
         return new Xmlforest(fields);
     }
 
+    /**
+     * The <code>STDDEV_POP</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
+        return new StddevPop(field);
+    }
+
+    /**
+     * The <code>STDDEV_SAMP</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
+        return new StddevSamp(field);
+    }
+
 
 
     /**
@@ -21873,24 +21891,6 @@ public class DSL {
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new Median(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the population standard deviation of a numeric field: stddev_pop(field).
-     */
-    @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(Term.STDDEV_POP, SQLDataType.NUMERIC, Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the sample standard deviation of a numeric field: stddev_samp(field).
-     */
-    @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     /**

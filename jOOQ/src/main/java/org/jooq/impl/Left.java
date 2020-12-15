@@ -71,7 +71,10 @@ extends
         Field<String> string,
         Field<? extends Number> length
     ) {
-        super(N_LEFT, allNotNull(VARCHAR, string, length));
+        super(
+            N_LEFT,
+            allNotNull(VARCHAR, string, length)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.length = nullSafeNotNull(length, INTEGER);

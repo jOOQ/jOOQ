@@ -70,7 +70,10 @@ extends
     Sin(
         Field<? extends Number> number
     ) {
-        super(N_SIN, allNotNull(NUMERIC, number));
+        super(
+            N_SIN,
+            allNotNull(NUMERIC, number)
+        );
 
         this.number = nullSafeNotNull(number, INTEGER);
     }

@@ -71,7 +71,10 @@ extends
         Field<String> string,
         Field<? extends Number> count
     ) {
-        super(N_REPEAT, allNotNull(VARCHAR, string, count));
+        super(
+            N_REPEAT,
+            allNotNull(VARCHAR, string, count)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.count = nullSafeNotNull(count, INTEGER);

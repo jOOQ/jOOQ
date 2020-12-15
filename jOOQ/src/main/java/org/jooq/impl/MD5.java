@@ -69,7 +69,10 @@ extends
     Md5(
         Field<String> string
     ) {
-        super(N_MD5, allNotNull(VARCHAR, string));
+        super(
+            N_MD5,
+            allNotNull(VARCHAR, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
     }

@@ -72,7 +72,10 @@ extends
         Field<? extends Number> x,
         Field<? extends Number> y
     ) {
-        super(N_ATAN2, allNotNull(NUMERIC, x, y));
+        super(
+            N_ATAN2,
+            allNotNull(NUMERIC, x, y)
+        );
 
         this.x = nullSafeNotNull(x, INTEGER);
         this.y = nullSafeNotNull(y, INTEGER);

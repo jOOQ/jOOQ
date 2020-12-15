@@ -246,6 +246,11 @@ final class Names {
     static final Name N_SQRT                   = unquotedName("sqrt");
     static final Name N_STANDARD_HASH          = unquotedName("standard_hash");
     static final Name N_STATS_MODE             = unquotedName("stats_mode");
+    static final Name N_STDDEV                 = unquotedName("stddev");
+    static final Name N_STDDEV_POP             = unquotedName("stddev_pop");
+    static final Name N_STDDEV_SAMP            = unquotedName("stddev_samp");
+    static final Name N_STDEV                  = unquotedName("stdev");
+    static final Name N_STDEVP                 = unquotedName("stdevp");
     static final Name N_STRFTIME               = unquotedName("strftime");
     static final Name N_STRING_AGG             = unquotedName("string_agg");
     static final Name N_STRREVERSE             = unquotedName("strreverse");

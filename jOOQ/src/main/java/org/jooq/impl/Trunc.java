@@ -71,7 +71,10 @@ extends
         Field<T> value,
         Field<Integer> decimals
     ) {
-        super(N_TRUNC, allNotNull((DataType) dataType(INTEGER, value, false), value, decimals));
+        super(
+            N_TRUNC,
+            allNotNull((DataType) dataType(INTEGER, value, false), value, decimals)
+        );
 
         this.value = nullSafeNotNull(value, INTEGER);
         this.decimals = nullSafeNotNull(decimals, INTEGER);

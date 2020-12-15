@@ -69,7 +69,10 @@ extends
     Ceil(
         Field<T> value
     ) {
-        super(N_CEIL, allNotNull((DataType) dataType(INTEGER, value, false), value));
+        super(
+            N_CEIL,
+            allNotNull((DataType) dataType(INTEGER, value, false), value)
+        );
 
         this.value = nullSafeNotNull(value, INTEGER);
     }

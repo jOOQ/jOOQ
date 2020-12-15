@@ -67,7 +67,10 @@ extends
 
 
     Rand() {
-        super(N_RAND, allNotNull(NUMERIC));
+        super(
+            N_RAND,
+            allNotNull(NUMERIC)
+        );
     }
 
     // -------------------------------------------------------------------------

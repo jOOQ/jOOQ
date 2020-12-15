@@ -143,13 +143,13 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
      * Render function arguments and argument modifiers
      */
     private final void toSQLArguments(Context<?> ctx) {
-        toSQLFunctionName(ctx);
+        acceptFunctionName(ctx);
         ctx.sql('(');
         acceptArguments0(ctx);
         ctx.sql(')');
     }
 
-    private final void toSQLFunctionName(Context<?> ctx) {
+    /* non-final */ void acceptFunctionName(Context<?> ctx) {
         if (term != null)
             ctx.sql(term.translate(ctx.dialect()));
         else

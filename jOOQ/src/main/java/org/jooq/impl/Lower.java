@@ -69,7 +69,10 @@ extends
     Lower(
         Field<String> string
     ) {
-        super(N_LOWER, allNotNull(VARCHAR, string));
+        super(
+            N_LOWER,
+            allNotNull(VARCHAR, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
     }

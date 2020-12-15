@@ -74,7 +74,10 @@ extends
         Field<String> placing,
         Field<? extends Number> startIndex
     ) {
-        super(N_OVERLAY, allNotNull(VARCHAR, in, placing, startIndex));
+        super(
+            N_OVERLAY,
+            allNotNull(VARCHAR, in, placing, startIndex)
+        );
 
         this.in = nullSafeNotNull(in, VARCHAR);
         this.placing = nullSafeNotNull(placing, VARCHAR);
@@ -88,7 +91,10 @@ extends
         Field<? extends Number> startIndex,
         Field<? extends Number> length
     ) {
-        super(N_OVERLAY, allNotNull(VARCHAR, in, placing, startIndex, length));
+        super(
+            N_OVERLAY,
+            allNotNull(VARCHAR, in, placing, startIndex, length)
+        );
 
         this.in = nullSafeNotNull(in, VARCHAR);
         this.placing = nullSafeNotNull(placing, VARCHAR);

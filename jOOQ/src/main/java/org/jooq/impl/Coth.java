@@ -70,7 +70,10 @@ extends
     Coth(
         Field<? extends Number> number
     ) {
-        super(N_COTH, allNotNull(NUMERIC, number));
+        super(
+            N_COTH,
+            allNotNull(NUMERIC, number)
+        );
 
         this.number = nullSafeNotNull(number, INTEGER);
     }

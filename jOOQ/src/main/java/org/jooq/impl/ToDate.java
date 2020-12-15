@@ -72,7 +72,10 @@ extends
         Field<String> value,
         Field<String> formatMask
     ) {
-        super(N_TO_DATE, allNotNull(DATE, value, formatMask));
+        super(
+            N_TO_DATE,
+            allNotNull(DATE, value, formatMask)
+        );
 
         this.value = nullSafeNotNull(value, VARCHAR);
         this.formatMask = nullSafeNotNull(formatMask, VARCHAR);

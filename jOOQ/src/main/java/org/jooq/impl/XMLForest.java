@@ -69,7 +69,10 @@ extends
     Xmlforest(
         Collection<? extends Field<?>> fields
     ) {
-        super(N_XMLFOREST, allNotNull(XML));
+        super(
+            N_XMLFOREST,
+            allNotNull(XML)
+        );
 
         this.fields = fields;
     }

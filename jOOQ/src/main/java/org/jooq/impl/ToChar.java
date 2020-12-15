@@ -70,7 +70,10 @@ extends
     ToChar(
         Field<?> value
     ) {
-        super(N_TO_CHAR, allNotNull(VARCHAR, value));
+        super(
+            N_TO_CHAR,
+            allNotNull(VARCHAR, value)
+        );
 
         this.value = nullSafeNotNull(value, OTHER);
         this.formatMask = null;
@@ -80,7 +83,10 @@ extends
         Field<?> value,
         Field<String> formatMask
     ) {
-        super(N_TO_CHAR, allNotNull(VARCHAR, value, formatMask));
+        super(
+            N_TO_CHAR,
+            allNotNull(VARCHAR, value, formatMask)
+        );
 
         this.value = nullSafeNotNull(value, OTHER);
         this.formatMask = nullSafeNotNull(formatMask, VARCHAR);

@@ -72,7 +72,10 @@ extends
         Field<String> in,
         Field<String> search
     ) {
-        super(N_POSITION, allNotNull(INTEGER, in, search));
+        super(
+            N_POSITION,
+            allNotNull(INTEGER, in, search)
+        );
 
         this.in = nullSafeNotNull(in, VARCHAR);
         this.search = nullSafeNotNull(search, VARCHAR);
@@ -84,7 +87,10 @@ extends
         Field<String> search,
         Field<? extends Number> startIndex
     ) {
-        super(N_POSITION, allNotNull(INTEGER, in, search, startIndex));
+        super(
+            N_POSITION,
+            allNotNull(INTEGER, in, search, startIndex)
+        );
 
         this.in = nullSafeNotNull(in, VARCHAR);
         this.search = nullSafeNotNull(search, VARCHAR);

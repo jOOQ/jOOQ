@@ -51,45 +51,29 @@ import org.jooq.impl.*;
 import org.jooq.tools.*;
 
 import java.util.*;
+import java.math.BigDecimal;
 
 
 /**
- * The <code>TRIM</code> statement.
+ * The <code>STDDEV POP</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class Trim
+final class StddevPop
 extends
-    AbstractField<String>
+    DefaultAggregateFunction<BigDecimal>
 {
 
     private static final long serialVersionUID = 1L;
 
-    private final Field<String> string;
-    private final Field<String> characters;
-
-    Trim(
-        Field<String> string
+    StddevPop(
+        Field<? extends Number> field
     ) {
         super(
-            N_TRIM,
-            allNotNull(VARCHAR, string)
+            false,
+            N_STDDEV_POP,
+            NUMERIC,
+            nullSafeNotNull(field, INTEGER)
         );
-
-        this.string = nullSafeNotNull(string, VARCHAR);
-        this.characters = null;
-    }
-
-    Trim(
-        Field<String> string,
-        Field<String> characters
-    ) {
-        super(
-            N_TRIM,
-            allNotNull(VARCHAR, string, characters)
-        );
-
-        this.string = nullSafeNotNull(string, VARCHAR);
-        this.characters = nullSafeNotNull(characters, VARCHAR);
     }
 
     // -------------------------------------------------------------------------
@@ -98,46 +82,30 @@ extends
 
 
 
-
-
-
-
-
     @Override
-    public final void accept(Context<?> ctx) {
-        if (characters == null) {
+    void acceptFunctionName(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
 
 
-            ctx.visit(N_TRIM).sql('(').visit(string).sql(')');
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                super.acceptFunctionName(ctx);
+                break;
         }
-        else if (ctx.family() == SQLITE)
-            ctx.visit(N_TRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
-
-
-
-
-        else
-            ctx.visit(N_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(string).sql(')');
     }
 
 
-
-    // -------------------------------------------------------------------------
-    // The Object API
-    // -------------------------------------------------------------------------
-
-    @Override
-    public boolean equals(Object that) {
-        if (that instanceof Trim) {
-            return
-                StringUtils.equals(string, ((Trim) that).string) &&
-                StringUtils.equals(characters, ((Trim) that).characters)
-            ;
-        }
-        else
-            return super.equals(that);
-    }
 }

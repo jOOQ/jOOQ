@@ -70,7 +70,10 @@ extends
     Sinh(
         Field<? extends Number> number
     ) {
-        super(N_SINH, allNotNull(NUMERIC, number));
+        super(
+            N_SINH,
+            allNotNull(NUMERIC, number)
+        );
 
         this.number = nullSafeNotNull(number, INTEGER);
     }

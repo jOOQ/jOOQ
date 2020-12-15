@@ -69,7 +69,10 @@ extends
     CharLength(
         Field<String> string
     ) {
-        super(N_CHAR_LENGTH, allNotNull(INTEGER, string));
+        super(
+            N_CHAR_LENGTH,
+            allNotNull(INTEGER, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
     }

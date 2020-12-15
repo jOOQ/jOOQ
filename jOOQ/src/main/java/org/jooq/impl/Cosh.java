@@ -70,7 +70,10 @@ extends
     Cosh(
         Field<? extends Number> number
     ) {
-        super(N_COSH, allNotNull(NUMERIC, number));
+        super(
+            N_COSH,
+            allNotNull(NUMERIC, number)
+        );
 
         this.number = nullSafeNotNull(number, INTEGER);
     }

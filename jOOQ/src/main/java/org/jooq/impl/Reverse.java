@@ -69,7 +69,10 @@ extends
     Reverse(
         Field<String> string
     ) {
-        super(N_REVERSE, allNotNull(VARCHAR, string));
+        super(
+            N_REVERSE,
+            allNotNull(VARCHAR, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
     }

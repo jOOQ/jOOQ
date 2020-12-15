@@ -69,7 +69,10 @@ extends
     BitLength(
         Field<String> string
     ) {
-        super(N_BIT_LENGTH, allNotNull(INTEGER, string));
+        super(
+            N_BIT_LENGTH,
+            allNotNull(INTEGER, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
     }

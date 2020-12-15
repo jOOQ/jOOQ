@@ -70,7 +70,10 @@ extends
     Cos(
         Field<? extends Number> number
     ) {
-        super(N_COS, allNotNull(NUMERIC, number));
+        super(
+            N_COS,
+            allNotNull(NUMERIC, number)
+        );
 
         this.number = nullSafeNotNull(number, INTEGER);
     }

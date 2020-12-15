@@ -73,7 +73,10 @@ extends
         Field<String> delimiter,
         Field<? extends Number> n
     ) {
-        super(N_SPLIT_PART, allNotNull(VARCHAR, string, delimiter, n));
+        super(
+            N_SPLIT_PART,
+            allNotNull(VARCHAR, string, delimiter, n)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.delimiter = nullSafeNotNull(delimiter, VARCHAR);

@@ -69,7 +69,10 @@ extends
     Floor(
         Field<T> value
     ) {
-        super(N_FLOOR, allNotNull((DataType) dataType(INTEGER, value, false), value));
+        super(
+            N_FLOOR,
+            allNotNull((DataType) dataType(INTEGER, value, false), value)
+        );
 
         this.value = nullSafeNotNull(value, INTEGER);
     }

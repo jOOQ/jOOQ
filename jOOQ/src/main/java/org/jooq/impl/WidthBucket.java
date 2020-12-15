@@ -75,7 +75,10 @@ extends
         Field<T> high,
         Field<Integer> buckets
     ) {
-        super(N_WIDTH_BUCKET, allNotNull((DataType) dataType(INTEGER, field, false), field, low, high, buckets));
+        super(
+            N_WIDTH_BUCKET,
+            allNotNull((DataType) dataType(INTEGER, field, false), field, low, high, buckets)
+        );
 
         this.field = nullSafeNotNull(field, INTEGER);
         this.low = nullSafeNotNull(low, INTEGER);

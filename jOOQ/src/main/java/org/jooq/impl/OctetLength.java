@@ -69,7 +69,10 @@ extends
     OctetLength(
         Field<String> string
     ) {
-        super(N_OCTET_LENGTH, allNotNull(INTEGER, string));
+        super(
+            N_OCTET_LENGTH,
+            allNotNull(INTEGER, string)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
     }

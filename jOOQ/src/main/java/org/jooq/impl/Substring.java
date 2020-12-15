@@ -72,7 +72,10 @@ extends
         Field<String> string,
         Field<? extends Number> startingPosition
     ) {
-        super(N_SUBSTRING, allNotNull(VARCHAR, string, startingPosition));
+        super(
+            N_SUBSTRING,
+            allNotNull(VARCHAR, string, startingPosition)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.startingPosition = nullSafeNotNull(startingPosition, INTEGER);
@@ -84,7 +87,10 @@ extends
         Field<? extends Number> startingPosition,
         Field<? extends Number> length
     ) {
-        super(N_SUBSTRING, allNotNull(VARCHAR, string, startingPosition, length));
+        super(
+            N_SUBSTRING,
+            allNotNull(VARCHAR, string, startingPosition, length)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.startingPosition = nullSafeNotNull(startingPosition, INTEGER);

@@ -69,7 +69,10 @@ extends
     Sign(
         Field<? extends Number> number
     ) {
-        super(N_SIGN, allNotNull(INTEGER, number));
+        super(
+            N_SIGN,
+            allNotNull(INTEGER, number)
+        );
 
         this.number = nullSafeNotNull(number, INTEGER);
     }

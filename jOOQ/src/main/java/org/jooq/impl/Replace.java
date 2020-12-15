@@ -72,7 +72,10 @@ extends
         Field<String> string,
         Field<String> search
     ) {
-        super(N_REPLACE, allNotNull(VARCHAR, string, search));
+        super(
+            N_REPLACE,
+            allNotNull(VARCHAR, string, search)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.search = nullSafeNotNull(search, VARCHAR);
@@ -84,7 +87,10 @@ extends
         Field<String> search,
         Field<String> replace
     ) {
-        super(N_REPLACE, allNotNull(VARCHAR, string, search, replace));
+        super(
+            N_REPLACE,
+            allNotNull(VARCHAR, string, search, replace)
+        );
 
         this.string = nullSafeNotNull(string, VARCHAR);
         this.search = nullSafeNotNull(search, VARCHAR);

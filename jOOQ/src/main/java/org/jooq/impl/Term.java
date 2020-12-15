@@ -51,47 +51,6 @@ import org.jooq.SQLDialect;
 @Deprecated
 enum Term {
 
-    STDDEV_POP {
-        @Override
-        public String translate(SQLDialect dialect) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            return "stddev_pop";
-        }
-    },
-    STDDEV_SAMP {
-        @Override
-        public String translate(SQLDialect dialect) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            return "stddev_samp";
-        }
-    },
     VAR_POP {
         @Override
         public String translate(SQLDialect dialect) {

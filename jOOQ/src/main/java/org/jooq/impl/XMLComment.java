@@ -69,7 +69,10 @@ extends
     Xmlcomment(
         Field<String> comment
     ) {
-        super(N_XMLCOMMENT, allNotNull(XML, comment));
+        super(
+            N_XMLCOMMENT,
+            allNotNull(XML, comment)
+        );
 
         this.comment = nullSafeNotNull(comment, VARCHAR);
     }

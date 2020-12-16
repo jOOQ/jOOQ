@@ -139,8 +139,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         }
     }
 
-    static final F1<Field<?>, Field<?>> jsonCastMapper(final Context<?> ctx) {
-        return new F1<Field<?>, Field<?>>() {
+    static final F.F1<Field<?>, Field<?>> jsonCastMapper(final Context<?> ctx) {
+        return new F.F1<Field<?>, Field<?>>() {
             @Override
             public Field<?> apply(Field<?> field) {
                 return jsonCast(ctx, field);

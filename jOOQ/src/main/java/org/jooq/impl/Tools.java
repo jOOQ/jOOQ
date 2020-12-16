@@ -913,7 +913,7 @@ final class Tools {
     /**
      * Create a new record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, F0<R> factory, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, F.F0<R> factory, Configuration configuration) {
         return new RecordDelegate<>(configuration, factory, fetched);
     }
 
@@ -995,39 +995,39 @@ final class Tools {
      * Create a new record factory.
      */
     @SuppressWarnings({ "unchecked" })
-    static final <R extends Record> F0<R> recordFactory(final Class<R> type, final AbstractRow row) {
+    static final <R extends Record> F.F0<R> recordFactory(final Class<R> type, final AbstractRow row) {
 
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
         if (type == AbstractRecord.class || type == Record.class || InternalRecord.class.isAssignableFrom(type)) {
             switch (row.size()) {
 
 
-                case 1: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl1<>(row); } };
-                case 2: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl2<>(row); } };
-                case 3: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl3<>(row); } };
-                case 4: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl4<>(row); } };
-                case 5: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl5<>(row); } };
-                case 6: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl6<>(row); } };
-                case 7: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl7<>(row); } };
-                case 8: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl8<>(row); } };
-                case 9: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl9<>(row); } };
-                case 10: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl10<>(row); } };
-                case 11: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl11<>(row); } };
-                case 12: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl12<>(row); } };
-                case 13: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl13<>(row); } };
-                case 14: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl14<>(row); } };
-                case 15: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl15<>(row); } };
-                case 16: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl16<>(row); } };
-                case 17: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl17<>(row); } };
-                case 18: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl18<>(row); } };
-                case 19: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl19<>(row); } };
-                case 20: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl20<>(row); } };
-                case 21: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl21<>(row); } };
-                case 22: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl22<>(row); } };
+                case 1: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl1<>(row); } };
+                case 2: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl2<>(row); } };
+                case 3: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl3<>(row); } };
+                case 4: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl4<>(row); } };
+                case 5: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl5<>(row); } };
+                case 6: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl6<>(row); } };
+                case 7: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl7<>(row); } };
+                case 8: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl8<>(row); } };
+                case 9: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl9<>(row); } };
+                case 10: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl10<>(row); } };
+                case 11: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl11<>(row); } };
+                case 12: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl12<>(row); } };
+                case 13: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl13<>(row); } };
+                case 14: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl14<>(row); } };
+                case 15: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl15<>(row); } };
+                case 16: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl16<>(row); } };
+                case 17: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl17<>(row); } };
+                case 18: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl18<>(row); } };
+                case 19: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl19<>(row); } };
+                case 20: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl20<>(row); } };
+                case 21: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl21<>(row); } };
+                case 22: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl22<>(row); } };
 
 
 
-                default: return new F0<R>() { @Override public R apply() { return (R) new RecordImplN(row); } };
+                default: return new F.F0<R>() { @Override public R get() { return (R) new RecordImplN(row); } };
             }
         }
 
@@ -1038,9 +1038,9 @@ final class Tools {
                 // [#919] Allow for accessing non-public constructors
                 final Constructor<R> constructor = Reflect.accessible(type.getDeclaredConstructor());
 
-                return new F0<R>() {
+                return new F.F0<R>() {
                     @Override
-                    public R apply() {
+                    public R get() {
                         try {
                             return constructor.newInstance();
                         }
@@ -3318,7 +3318,7 @@ final class Tools {
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, F0<V> operation, DataCacheKey type, Object key) {
+        static final <V> V run(Configuration configuration, F.F0<V> operation, DataCacheKey type, Object key) {
 
             // If no configuration is provided take the default configuration that loads the default Settings
             if (configuration == null)
@@ -3326,7 +3326,7 @@ final class Tools {
 
             // Shortcut caching when the relevant Settings flag isn't set.
             if (!reflectionCaching(configuration.settings()))
-                return operation.apply();
+                return operation.get();
 
             Map<Object, Object> cache = (Map<Object, Object>) configuration.data(type);
             if (cache == null) {
@@ -3346,7 +3346,7 @@ final class Tools {
                     result = cache.get(key);
 
                     if (result == null) {
-                        result = operation.apply();
+                        result = operation.get();
                         cache.put(key, result == null ? NULL : result);
                     }
                 }
@@ -3542,10 +3542,10 @@ final class Tools {
      * or methods
      */
     static final boolean hasColumnAnnotations(final Configuration configuration, final Class<?> type) {
-        return Cache.run(configuration, new F0<Boolean>() {
+        return Cache.run(configuration, new F.F0<Boolean>() {
 
             @Override
-            public Boolean apply() {
+            public Boolean get() {
                 if (!isJPAAvailable())
                     return false;
 
@@ -3587,10 +3587,10 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F0<List<java.lang.reflect.Field>>() {
+        return Cache.run(configuration, new F.F0<List<java.lang.reflect.Field>>() {
 
             @Override
-            public List<java.lang.reflect.Field> apply() {
+            public List<java.lang.reflect.Field> get() {
                 List<java.lang.reflect.Field> result = new ArrayList<>();
 
                 for (java.lang.reflect.Field member : getInstanceMembers(type)) {
@@ -3633,10 +3633,10 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F0<List<java.lang.reflect.Field>>() {
+        return Cache.run(configuration, new F.F0<List<java.lang.reflect.Field>>() {
 
             @Override
-            public List<java.lang.reflect.Field> apply() {
+            public List<java.lang.reflect.Field> get() {
                 List<java.lang.reflect.Field> result = new ArrayList<>();
 
                 // [#1942] Caching these values before the field-loop significantly
@@ -3664,10 +3664,10 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F0<List<Method>>() {
+        return Cache.run(configuration, new F.F0<List<Method>>() {
 
             @Override
-            public List<Method> apply() {
+            public List<Method> get() {
                 Set<SourceMethod> set = new LinkedHashSet<>();
 
                 for (Method method : getInstanceMethods(type)) {
@@ -3720,10 +3720,10 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F0<Method>() {
+        return Cache.run(configuration, new F.F0<Method>() {
 
             @Override
-            public Method apply() {
+            public Method get() {
                 for (Method method : getInstanceMethods(type)) {
                     Column column = method.getAnnotation(Column.class);
 
@@ -3776,10 +3776,10 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F0<List<Method>>() {
+        return Cache.run(configuration, new F.F0<List<Method>>() {
 
             @Override
-            public List<Method> apply() {
+            public List<Method> get() {
 
                 // [#8460] Prevent duplicate methods in the call hierarchy
                 Set<SourceMethod> set = new LinkedHashSet<>();
@@ -3819,10 +3819,10 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F0<Method>() {
+        return Cache.run(configuration, new F.F0<Method>() {
 
             @Override
-            public Method apply() {
+            public Method get() {
                 // [#1942] Caching these values before the method-loop significantly
                 // accerates POJO mapping
                 String camelCase = StringUtils.toCamelCase(name);

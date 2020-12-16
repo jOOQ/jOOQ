@@ -121,7 +121,7 @@ final class CombinedCondition extends AbstractCondition {
         return operator == AND ? trueCondition() : falseCondition();
     }
 
-    final Condition transform(F1<? super Condition, ? extends Condition> function) {
+    final Condition transform(F.F1<? super Condition, ? extends Condition> function) {
         List<Condition> newList = null;
 
         for (int i = 0; i < conditions.size(); i++) {

@@ -80,9 +80,9 @@ public class DefaultRecordMapperProvider implements RecordMapperProvider, Serial
     @Override
     public final <R extends Record, E> RecordMapper<R, E> provide(final RecordType<R> rowType, final Class<? extends E> type) {
         if (configuration != null && TRUE.equals(configuration.settings().isCacheRecordMappers()))
-            return Cache.run(configuration, new F0<RecordMapper<R, E>>() {
+            return Cache.run(configuration, new F.F0<RecordMapper<R, E>>() {
                 @Override
-                public RecordMapper<R, E> apply() {
+                public RecordMapper<R, E> get() {
                     return new DefaultRecordMapper<>(rowType, type, configuration);
                 }
             }, DATA_CACHE_RECORD_MAPPERS, Cache.key(rowType, type));

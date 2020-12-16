@@ -70,6 +70,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import org.jooq.Condition;
@@ -100,6 +101,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.jooq.impl.F;
 import org.jooq.impl.ParserException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
@@ -3098,8 +3100,8 @@ public abstract class AbstractDatabase implements Database {
 
                     // TODO: Add a Meta implementation that is based on jOOQ-meta
                     final Meta meta = create().meta();
-
-                    final Select<?> select = create()
+                    final List<Param<?>> params = new ArrayList<>();
+                    final Configuration configuration = create()
                         .configuration()
                         .derive(settings)
                         .derive(new MetaProvider() {
@@ -3107,15 +3109,25 @@ public abstract class AbstractDatabase implements Database {
                             public Meta provide() {
                                 return meta;
                             }
-                        })
+                        });
+
+                    // [#8722] [#11054] Before a public API is available, use this internal, undocumented
+                    //                  API to collect params from the parser
+                    configuration.data("org.jooq.parser.param-collector", new F.A1<Param<?>>() {
+                        @Override
+                        public void accept(Param<?> param) {
+                            params.add(param);
+                        }
+                    });
+
+                    final Select<?> select = configuration
                         .dsl()
                         .parser()
                         .parseSelect(view.getSql());
 
-                    final Map<String, Param<?>> params = new LinkedHashMap<>(select.getParams());
-                    final Iterator<Entry<String, Param<?>>> it = params.entrySet().iterator();
+                    final Iterator<Param<?>> it = params.iterator();
                     while (it.hasNext())
-                        if (it.next().getValue().isInline())
+                        if (it.next().isInline())
                             it.remove();
 
                     final RoutineDefinition routine = params.isEmpty() ? null : new AbstractRoutineDefinition(schema, null, view.getName(), view.getComment(), null) {
@@ -3123,7 +3135,7 @@ public abstract class AbstractDatabase implements Database {
                         protected void init0() throws SQLException {
                             int i = 0;
 
-                            for (Param<?> param : params.values()) {
+                            for (Param<?> param : params) {
                                 addParameter(InOutDefinition.IN, new DefaultParameterDefinition(
                                     this,
                                     param.getParamName(),

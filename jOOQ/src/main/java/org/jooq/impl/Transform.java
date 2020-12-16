@@ -60,9 +60,9 @@ import org.jooq.QueryPart;
  */
 final class Transform {
 
-    final F1<Field<?>, Field<?>> fieldTransformer;
+    final F.F1<Field<?>, Field<?>> fieldTransformer;
 
-    Transform(F1<Field<?>, Field<?>> fieldTransformer) {
+    Transform(F.F1<Field<?>, Field<?>> fieldTransformer) {
         this.fieldTransformer = fieldTransformer;
     }
 

@@ -62,15 +62,15 @@ import org.jooq.exception.ControlFlowSignal;
 final class RecordDelegate<R extends Record> {
 
     private final Configuration       configuration;
-    private final F0<R>               recordSupplier;
+    private final F.F0<R>             recordSupplier;
     private final Boolean             fetched;
     private final RecordLifecycleType type;
 
-    RecordDelegate(Configuration configuration, F0<R> recordSupplier, Boolean fetched) {
+    RecordDelegate(Configuration configuration, F.F0<R> recordSupplier, Boolean fetched) {
         this(configuration, recordSupplier, fetched, LOAD);
     }
 
-    RecordDelegate(Configuration configuration, F0<R> recordSupplier, Boolean fetched, RecordLifecycleType type) {
+    RecordDelegate(Configuration configuration, F.F0<R> recordSupplier, Boolean fetched, RecordLifecycleType type) {
         this.configuration = configuration;
         this.recordSupplier = recordSupplier;
         this.fetched = fetched;
@@ -84,9 +84,9 @@ final class RecordDelegate<R extends Record> {
     ) {
         return new RecordDelegate<>(
             configuration,
-            new F0<R>() {
+            new F.F0<R>() {
                 @Override
-                public R apply() {
+                public R get() {
                     return record;
                 }
             },
@@ -97,7 +97,7 @@ final class RecordDelegate<R extends Record> {
 
     @SuppressWarnings("unchecked")
     final <E extends Exception> R operate(RecordOperation<? super R, E> operation) throws E {
-        R record = recordSupplier.apply();
+        R record = recordSupplier.get();
 
         // [#3300] Records that were fetched from the database
         if (fetched != null && record instanceof AbstractRecord)

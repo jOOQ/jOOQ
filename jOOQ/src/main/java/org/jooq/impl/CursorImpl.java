@@ -105,7 +105,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
     private final boolean                                  keepStatement;
     private final boolean                                  autoclosing;
     private final int                                      maxRows;
-    private final F0<? extends R>                          factory;
+    private final F.F0<? extends R>                        factory;
     private boolean                                        isClosed;
 
     private transient CursorResultSet                      rs;
@@ -1570,7 +1570,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         private final CursorRecordInitialiser        initialiser    = new CursorRecordInitialiser(fields, 0);
 
         @SuppressWarnings("unchecked")
-        private final RecordDelegate<AbstractRecord> recordDelegate = Tools.newRecord(true, (F0<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration());
+        private final RecordDelegate<AbstractRecord> recordDelegate = Tools.newRecord(true, (F.F0<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration());
 
         @Override
         public final boolean hasNext() {

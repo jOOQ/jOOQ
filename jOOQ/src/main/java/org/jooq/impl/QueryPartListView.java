@@ -86,7 +86,7 @@ class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> 
     }
 
     @Override
-    QueryPartListView<T> map(F1<? super T, ? extends T> newMapper) {
+    QueryPartListView<T> map(F.F1<? super T, ? extends T> newMapper) {
         return (QueryPartListView<T>) super.map(newMapper);
     }
 

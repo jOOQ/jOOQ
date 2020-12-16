@@ -39,14 +39,12 @@ package org.jooq;
 
 import org.jetbrains.annotations.*;
 
+import java.util.function.Consumer;
 
 import org.jooq.impl.ParserException;
 
 /**
- * This is experimental functionality.
- * <p>
- * While the parser API will probably not change between versions, the
- * functionality itself may be subject to change in future releases.
+ * A SQL parser.
  *
  * @author Lukas Eder
  */

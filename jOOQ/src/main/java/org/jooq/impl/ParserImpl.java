@@ -365,6 +365,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -533,6 +534,7 @@ import org.jooq.UpdateWhereStep;
 import org.jooq.User;
 // ...
 // ...
+import org.jooq.VisitContext;
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFromFirstLastStep;
@@ -582,9 +584,13 @@ final class ParserImpl implements Parser {
         this.meta = metaLookups == IGNORE_ON_FAILURE || metaLookups == THROW_ON_FAILURE ? dsl.meta() : null;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // Top level parsing
-    // -----------------------------------------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // XXX: Parser configuration
+    // -------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
+    // XXX: Top level parsing
+    // -------------------------------------------------------------------------
 
     private final ParserContext ctx(String sql, Object... bindings) {
         return new ParserContext(dsl, meta, metaLookups, sql, bindings);
@@ -733,8 +739,7 @@ final class ParserContext {
         }
         while (parseDelimiterIf(true) && !done());
 
-        done("Unexpected token or missing query delimiter");
-        return dsl.queries(result);
+        return done("Unexpected token or missing query delimiter", dsl.queries(result));
     }
 
     private static final Pattern P_SEARCH_PATH = Pattern.compile("(?i:select\\s+(pg_catalog\\s*\\.\\s*)?set_config\\s*\\(\\s*'search_path'\\s*,\\s*'([^']*)'\\s*,\\s*\\w+\\s*\\))");
@@ -772,18 +777,12 @@ final class ParserContext {
     }
 
     public final Query parseQuery0() {
-        Query result = parseQuery(false, false);
-
-        done("Unexpected clause");
-        return result;
+        return done("Unexpected clause", parseQuery(false, false));
     }
 
     final Statement parseStatement0() {
-        Statement result = parseStatementAndSemicolon();
-        this.done("Unexpected content");
-        return result;
+        return this.done("Unexpected content", parseStatementAndSemicolon());
     }
-
 
 
 
@@ -799,52 +798,31 @@ final class ParserContext {
 
 
     final ResultQuery<?> parseResultQuery0() {
-        ResultQuery<?> result = (ResultQuery<?>) parseQuery(true, false);
-
-        done("Unexpected content after end of query input");
-        return result;
+        return done("Unexpected content after end of query input", (ResultQuery<?>) parseQuery(true, false));
     }
 
     final Select<?> parseSelect0() {
-        Select<?> result = (Select<?>) parseQuery(true, true);
-
-        done("Unexpected content after end of query input");
-        return result;
+        return done("Unexpected content after end of query input", (Select<?>) parseQuery(true, true));
     }
 
     final Table<?> parseTable0() {
-        Table<?> result = parseTable();
-
-        done("Unexpected content after end of table input");
-        return result;
+        return done("Unexpected content after end of table input", parseTable());
     }
 
     final Field<?> parseField0() {
-        Field<?> result = parseField();
-
-        done("Unexpected content after end of field input");
-        return result;
+        return done("Unexpected content after end of field input", parseField());
     }
 
     final Row parseRow0() {
-        Row result = parseRow();
-
-        done("Unexpected content after end of row input");
-        return result;
+        return done("Unexpected content after end of row input", parseRow());
     }
 
     final Condition parseCondition0() {
-        Condition result = parseCondition();
-
-        done("Unexpected content after end of condition input");
-        return result;
+        return done("Unexpected content after end of condition input", parseCondition());
     }
 
     final Name parseName0() {
-        Name result = parseName();
-
-        done("Unexpected content after end of name input");
-        return result;
+        return done("Unexpected content after end of name input", parseName());
     }
 
 
@@ -10892,20 +10870,33 @@ final class ParserContext {
 
         // [#11074] Bindings can be Param or even Field types
         Object binding = nextBinding();
+        String paramName;
 
         switch (character()) {
             case '?':
                 parse('?');
-                return binding instanceof Field ? (Field<?>) binding : DSL.val(binding, Object.class);
+                paramName = "" + bindIndex;
+                break;
 
             case ':':
                 parse(':', false);
                 Name identifier = parseIdentifier();
-                return binding instanceof Field ? (Field<?>) binding : DSL.param(identifier.last(), binding);
+                paramName = identifier.last();
+                break;
 
             default:
                 throw exception("Illegal bind variable character");
         }
+
+        if (binding instanceof Field)
+            return (Field<?>) binding;
+
+        Param<?> param = DSL.param(paramName, binding);
+
+        if (bindParamListener != null)
+            bindParams.put(paramName, param);
+
+        return param;
     }
 
     private final Comment parseComment() {
@@ -12193,10 +12184,12 @@ final class ParserContext {
     private final char[]                            sql;
     private final ParseWithMetaLookups              metaLookups;
     private boolean                                 metaLookupsForceIgnore;
+    private final F.A1<Param<?>>                    bindParamListener;
     private int                                     position               = 0;
     private boolean                                 ignoreHints            = true;
     private final Object[]                          bindings;
     private int                                     bindIndex              = 0;
+    private final Map<String, Param<?>>             bindParams             = new LinkedHashMap<>();
     private String                                  delimiter              = ";";
     private final ScopeStack<Name, Table<?>>        tableScope             = new ScopeStack<>(null);
     private final ScopeStack<Name, Field<?>>        fieldScope             = new ScopeStack<>(null);
@@ -12221,6 +12214,9 @@ final class ParserContext {
         this.sql = sqlString != null ? sqlString.toCharArray() : new char[0];
         this.bindings = bindings;
 
+        // [#8722] This is an undocumented flag that allows for collecting parameters from the parser
+        //         Do not rely on this flag. It will change incompatibly in the future.
+        this.bindParamListener = (F.A1<Param<?>>) dsl.configuration().data("org.jooq.parser.param-collector");
         parseWhitespaceIf();
     }
 
@@ -12319,12 +12315,12 @@ final class ParserContext {
     }
 
     private final Object nextBinding() {
-        if (bindIndex < bindings.length)
-            return bindings[bindIndex++];
+        if (bindIndex++ < bindings.length)
+            return bindings[bindIndex - 1];
         else if (bindings.length == 0)
             return null;
         else
-            throw exception("No binding provided for bind index " + (bindIndex + 1));
+            throw exception("No binding provided for bind index " + bindIndex);
     }
 
     private final int[] line() {
@@ -12473,11 +12469,37 @@ final class ParserContext {
         return position >= sql.length && (bindings.length == 0 || bindings.length == bindIndex);
     }
 
-    private final boolean done(String message) {
+    private final <Q extends QueryPart> Q done(String message, Q result) {
         if (done())
-            return true;
+            return notify(result);
         else
             throw exception(message);
+    }
+
+    private final <Q extends QueryPart> Q notify(Q result) {
+        if (bindParamListener != null) {
+            final Map<String, Param<?>> params = new LinkedHashMap<>();
+
+            // [#8722]  TODO Replace this by a public SPI
+            // [#11054] Use a VisitListener to find actual Params in the expression tree,
+            //          which may have more refined DataTypes attached to them, from context
+            dsl.configuration().derive(new DefaultVisitListener() {
+                @Override
+                public void visitStart(VisitContext context) {
+                    if (context.queryPart() instanceof Param) {
+                        Param<?> p = (Param<?>) context.queryPart();
+
+                        if (!params.containsKey(p.getParamName()))
+                            params.put(p.getParamName(), p);
+                    }
+                }
+            }).dsl().render(result);
+
+            for (String name : bindParams.keySet())
+                bindParamListener.accept(params.get(name));
+        }
+
+        return result;
     }
 
     private final String mark() {

@@ -37,11 +37,10 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-import java.util.function.Consumer;
-
 import org.jooq.impl.ParserException;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A SQL parser.

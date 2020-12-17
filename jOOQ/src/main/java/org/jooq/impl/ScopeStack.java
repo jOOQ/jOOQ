@@ -94,43 +94,89 @@ final class ScopeStack<K, V> implements Iterable<V> {
         return !iterator().hasNext();
     }
 
-    @Override
-    public final Iterator<V> iterator() {
-        return new Iterator<V>() {
-            Iterator<List<V>> it = stack().values().iterator();
-            V next;
-
+    final Iterable<Value<V>> valueIterable() {
+        return new Iterable<Value<V>>() {
             @Override
-            public boolean hasNext() {
-                return move() != null;
-            }
-
-            @Override
-            public V next() {
-                if (next == null) {
-                    return move();
-                }
-                else {
-                    V result = next;
-                    next = null;
-                    return result;
-                }
-            }
-
-            private V move() {
-                List<V> list;
-                while (it.hasNext())
-                    if (!(list = it.next()).isEmpty() && (next = list.get(list.size() - 1)) != null)
-                        break;
-
-                return next;
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException("remove");
+            public Iterator<Value<V>> iterator() {
+                return new ScopeStackIterator<Value<V>>(new F.F1<List<V>, Value<V>>() {
+                    @Override
+                    public Value<V> apply(List<V> list) {
+                        return Value.lastOf(list);
+                    }
+                });
             }
         };
+    }
+
+    @Override
+    public final Iterator<V> iterator() {
+        return new ScopeStackIterator<>(new F.F1<List<V>, V>() {
+            @Override
+            public V apply(List<V> list) {
+                return list.get(list.size() - 1);
+            }
+        });
+    }
+
+    static final class Value<V> {
+        final int scopeLevel;
+        final V   value;
+
+        Value(int scopeLevel, V value) {
+            this.scopeLevel = scopeLevel;
+            this.value = value;
+        }
+
+        static <V> Value<V> of(int scopeLevel, V value) {
+            return value == null ? null : new Value<>(scopeLevel, value);
+        }
+
+        static <V> Value<V> lastOf(List<V> list) {
+            int size = list.size();
+            V value = list.get(size - 1);
+            return of(size - 1, value);
+        }
+    }
+
+    private final class ScopeStackIterator<U> implements Iterator<U> {
+        final Iterator<List<V>> it = stack().values().iterator();
+        final F.F1<List<V>, U>  valueExtractor;
+        U                       next;
+
+        ScopeStackIterator(F.F1<List<V>, U> valueExtractor) {
+            this.valueExtractor = valueExtractor;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return move() != null;
+        }
+
+        @Override
+        public U next() {
+            if (next == null) {
+                return move();
+            }
+            else {
+                U result = next;
+                next = null;
+                return result;
+            }
+        }
+
+        private U move() {
+            List<V> list;
+            while (it.hasNext())
+                if (!(list = it.next()).isEmpty() && ((next = valueExtractor.apply(list)) != null))
+                    break;
+
+            return next;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
     }
 
     final void setAll(V value) {

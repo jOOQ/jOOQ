@@ -561,6 +561,7 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.JSONNull.JSONNullType;
+import org.jooq.impl.ScopeStack.Value;
 import org.jooq.impl.XMLParse.DocumentOrContent;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
@@ -12527,7 +12528,7 @@ final class ParserContext {
         List<FieldProxy<?>> retain = new ArrayList<>();
 
         for (FieldProxy<?> lookup : lookupFields) {
-            Field<?> found = null;
+            Value<Field<?>> found = null;
 
             for (Field<?> f : fieldScope) {
                 if (f.getName().equals(lookup.getName())) {
@@ -12536,13 +12537,14 @@ final class ParserContext {
                         throw exception("Ambiguous field identifier");
                     }
 
-                    found = f;
+                    // TODO: Does this instance of "found" really interact with the one below?
+                    found = new Value<>(0, f);
                 }
             }
 
-            found = resolveInTableScope(tableScope, lookup.getQualifiedName(), lookup, found);
+            found = resolveInTableScope(tableScope.valueIterable(), lookup.getQualifiedName(), lookup, found);
             if (found != null)
-                lookup.delegate((AbstractField) found);
+                lookup.delegate((AbstractField) found.value);
             else
                 retain.add(lookup);
         }
@@ -12559,14 +12561,20 @@ final class ParserContext {
                     unknownField(r);
     }
 
-    private final Field<?> resolveInTableScope(Iterable<Table<?>> tables, Name lookupName, FieldProxy<?> lookup, Field<?> found) {
+    private final Value<Field<?>> resolveInTableScope(Iterable<Value<Table<?>>> tables, Name lookupName, FieldProxy<?> lookup, Value<Field<?>> found) {
 
         tableScopeLoop:
-        for (Table<?> t : tables) {
-            Field<?> f;
+        for (Value<Table<?>> t : tables) {
+            Value<Field<?>> f;
 
-            if (t instanceof JoinTable) {
-                found = resolveInTableScope(Arrays.asList(((JoinTable) t).lhs, ((JoinTable) t).rhs), lookupName, lookup, found);
+            if (t.value instanceof JoinTable) {
+                found = resolveInTableScope(
+                    Arrays.asList(
+                        new Value<>(t.scopeLevel, ((JoinTable) t.value).lhs),
+                        new Value<>(t.scopeLevel, ((JoinTable) t.value).rhs)
+                    ),
+                    lookupName, lookup, found
+                );
             }
             else if (lookupName.qualified()) {
 
@@ -12576,17 +12584,18 @@ final class ParserContext {
                 // - Test fully qualified column names vs partially qualified column names
                 Name q = lookupName.qualifier();
                 boolean x = q.qualified();
-                if (x && q.equals(t.getQualifiedName()) || !x && q.last().equals(t.getName()))
-                    if ((found = t.field(lookup.getName())) != null)
+                if (x && q.equals(t.value.getQualifiedName()) || !x && q.last().equals(t.value.getName()))
+                    if ((found = Value.of(t.scopeLevel, t.value.field(lookup.getName()))) != null)
                         break tableScopeLoop;
             }
-            else if ((f = t.field(lookup.getName())) != null) {
-                if (found != null) {
+            else if ((f = Value.of(t.scopeLevel, t.value.field(lookup.getName()))) != null) {
+                if (found == null || found.scopeLevel < f.scopeLevel) {
+                    found = f;
+                }
+                else {
                     position(lookup.position());
                     throw exception("Ambiguous field identifier");
                 }
-
-                found = f;
             }
         }
 

@@ -12489,7 +12489,7 @@ final class ParserContext {
 
             if (t.value instanceof JoinTable) {
                 found = resolveInTableScope(
-                    Arrays.asList(
+                    Arrays.<Value<Table<?>>>asList(
                         new Value<>(t.scopeLevel, ((JoinTable) t.value).lhs),
                         new Value<>(t.scopeLevel, ((JoinTable) t.value).rhs)
                     ),
@@ -12505,10 +12505,10 @@ final class ParserContext {
                 Name q = lookupName.qualifier();
                 boolean x = q.qualified();
                 if (x && q.equals(t.value.getQualifiedName()) || !x && q.last().equals(t.value.getName()))
-                    if ((found = Value.of(t.scopeLevel, t.value.field(lookup.getName()))) != null)
+                    if ((found = Value.<Field<?>>of(t.scopeLevel, t.value.field(lookup.getName()))) != null)
                         break tableScopeLoop;
             }
-            else if ((f = Value.of(t.scopeLevel, t.value.field(lookup.getName()))) != null) {
+            else if ((f = Value.<Field<?>>of(t.scopeLevel, t.value.field(lookup.getName()))) != null) {
                 if (found == null || found.scopeLevel < f.scopeLevel) {
                     found = f;
                 }

@@ -12170,27 +12170,27 @@ final class ParserContext {
         "FOR"
     };
 
-    private static final DDLQuery                   IGNORE                 = Reflect.on(DSL.query("/* ignored */")).as(DDLQuery.class, QueryPartInternal.class);
-    private static final Query                      IGNORE_NO_DELIMITER    = Reflect.on(DSL.query("/* ignored */")).as(Query.class, QueryPartInternal.class);
-    private static final boolean                    PRO_EDITION            = false ;
+    private static final DDLQuery                 IGNORE                 = Reflect.on(DSL.query("/* ignored */")).as(DDLQuery.class, QueryPartInternal.class);
+    private static final Query                    IGNORE_NO_DELIMITER    = Reflect.on(DSL.query("/* ignored */")).as(Query.class, QueryPartInternal.class);
+    private static final boolean                  PRO_EDITION            = false ;
 
-    private final DSLContext                        dsl;
-    private final Locale                            locale;
-    private final Meta                              meta;
-    private final char[]                            sql;
-    private final ParseWithMetaLookups              metaLookups;
-    private boolean                                 metaLookupsForceIgnore;
-    private final F.A1<Param<?>>                    bindParamListener;
-    private int                                     position               = 0;
-    private boolean                                 ignoreHints            = true;
-    private final Object[]                          bindings;
-    private int                                     bindIndex              = 0;
-    private final Map<String, Param<?>>             bindParams             = new LinkedHashMap<>();
-    private String                                  delimiter              = ";";
-    private final ScopeStack<Name, Table<?>>        tableScope             = new ScopeStack<>(null);
-    private final ScopeStack<Name, Field<?>>        fieldScope             = new ScopeStack<>(null);
-    private final ScopeStack<String, FieldProxy<?>> lookupFields           = new ScopeStack<>(null);
-    private boolean                                 scopeClear             = false;
+    private final DSLContext                      dsl;
+    private final Locale                          locale;
+    private final Meta                            meta;
+    private final char[]                          sql;
+    private final ParseWithMetaLookups            metaLookups;
+    private boolean                               metaLookupsForceIgnore;
+    private final F.A1<Param<?>>                  bindParamListener;
+    private int                                   position               = 0;
+    private boolean                               ignoreHints            = true;
+    private final Object[]                        bindings;
+    private int                                   bindIndex              = 0;
+    private final Map<String, Param<?>>           bindParams             = new LinkedHashMap<>();
+    private String                                delimiter              = ";";
+    private final ScopeStack<Name, Table<?>>      tableScope             = new ScopeStack<>(null);
+    private final ScopeStack<Name, Field<?>>      fieldScope             = new ScopeStack<>(null);
+    private final ScopeStack<Name, FieldProxy<?>> lookupFields           = new ScopeStack<>(null);
+    private boolean                               scopeClear             = false;
 
 
 
@@ -12552,9 +12552,9 @@ final class ParserContext {
         fieldScope.scopeEnd();
 
         for (FieldProxy<?> r : retain)
-            if (lookupFields.get(r.getName()) == null)
+            if (lookupFields.get(r.getQualifiedName()) == null)
                 if (lookupFields.inScope())
-                    lookupFields.set(r.getName(), r);
+                    lookupFields.set(r.getQualifiedName(), r);
                 else
                     unknownField(r);
     }
@@ -12634,24 +12634,12 @@ final class ParserContext {
     }
 
     private final Field<?> lookupField(Name name) {
-        // TODO: Restore this logic if name is qualified as [CATALOG.]SCHEMA.TABLE.FIELD
-//        if (meta != null) {
-//            List<Table<?>> tables = meta.getTables(name.qualifier());
-//
-//            if (tables.size() == 1) {
-//                Field<?> field = tables.get(0).field(name);
-//
-//                if (field != null)
-//                    return field;
-//            }
-//        }
-
         if (metaLookups == ParseWithMetaLookups.OFF)
             return field(name);
 
-        FieldProxy<?> field = lookupFields.get(name.last());
+        FieldProxy<?> field = lookupFields.get(name);
         if (field == null)
-            lookupFields.set(name.last(), field = new FieldProxy<>((AbstractField<Object>) field(name), position));
+            lookupFields.set(name, field = new FieldProxy<>((AbstractField<Object>) field(name), position));
 
         return field;
     }

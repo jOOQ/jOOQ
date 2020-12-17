@@ -12124,23 +12124,23 @@ final class ParserImpl implements Parser {
 }
 
 final class ParserContext {
-    private static final boolean                    PRO_EDITION     = false ;
+    private static final boolean                  PRO_EDITION     = false ;
 
-    final DSLContext                                dsl;
-    final Locale                                    locale;
-    final Meta                                      meta;
-    final char[]                                    sql;
-    private final ParseWithMetaLookups              metaLookups;
-    private boolean                                 metaLookupsForceIgnore;
-    private int                                     position        = 0;
-    private boolean                                 ignoreHints     = true;
-    private final Object[]                          bindings;
-    private int                                     bindIndex       = 0;
-    private String                                  delimiter       = ";";
-    private final ScopeStack<Name, Table<?>>        tableScope      = new ScopeStack<>(null);
-    private final ScopeStack<Name, Field<?>>        fieldScope      = new ScopeStack<>(null);
-    private final ScopeStack<String, FieldProxy<?>> lookupFields    = new ScopeStack<>(null);
-    private boolean                                 scopeClear      = false;
+    final DSLContext                              dsl;
+    final Locale                                  locale;
+    final Meta                                    meta;
+    final char[]                                  sql;
+    private final ParseWithMetaLookups            metaLookups;
+    private boolean                               metaLookupsForceIgnore;
+    private int                                   position        = 0;
+    private boolean                               ignoreHints     = true;
+    private final Object[]                        bindings;
+    private int                                   bindIndex       = 0;
+    private String                                delimiter       = ";";
+    private final ScopeStack<Name, Table<?>>      tableScope      = new ScopeStack<>(null);
+    private final ScopeStack<Name, Field<?>>      fieldScope      = new ScopeStack<>(null);
+    private final ScopeStack<Name, FieldProxy<?>> lookupFields    = new ScopeStack<>(null);
+    private boolean                               scopeClear      = false;
 
 
 
@@ -12472,9 +12472,9 @@ final class ParserContext {
         fieldScope.scopeEnd();
 
         for (FieldProxy<?> r : retain)
-            if (lookupFields.get(r.getName()) == null)
+            if (lookupFields.get(r.getQualifiedName()) == null)
                 if (lookupFields.inScope())
-                    lookupFields.set(r.getName(), r);
+                    lookupFields.set(r.getQualifiedName(), r);
                 else
                     unknownField(r);
     }
@@ -12557,9 +12557,9 @@ final class ParserContext {
         if (metaLookups == ParseWithMetaLookups.OFF)
             return field(name);
 
-        FieldProxy<?> field = lookupFields.get(name.last());
+        FieldProxy<?> field = lookupFields.get(name);
         if (field == null)
-            lookupFields.set(name.last(), field = new FieldProxy<>((AbstractField<Object>) field(name), position));
+            lookupFields.set(name, field = new FieldProxy<>((AbstractField<Object>) field(name), position));
 
         return field;
     }

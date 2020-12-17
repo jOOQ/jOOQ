@@ -12554,18 +12554,6 @@ final class ParserContext {
     }
 
     Field<?> lookupField(Name name) {
-        // TODO: Restore this logic if name is qualified as [CATALOG.]SCHEMA.TABLE.FIELD
-//        if (meta != null) {
-//            List<Table<?>> tables = meta.getTables(name.qualifier());
-//
-//            if (tables.size() == 1) {
-//                Field<?> field = tables.get(0).field(name);
-//
-//                if (field != null)
-//                    return field;
-//            }
-//        }
-
         if (metaLookups == ParseWithMetaLookups.OFF)
             return field(name);
 

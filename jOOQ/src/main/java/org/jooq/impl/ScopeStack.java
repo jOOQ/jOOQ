@@ -165,11 +165,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
         }
 
         private U move() {
-            List<V> list;
-            while (it.hasNext())
-                if (!(list = it.next()).isEmpty() && ((next = valueExtractor.apply(list)) != null))
-                    break;
-
+            for (List<V> list; it.hasNext() && ((list = it.next()).isEmpty() || ((next = valueExtractor.apply(list)) == null)););
             return next;
         }
 

@@ -156,9 +156,20 @@ public interface Name extends QueryPart, Comparable<Name> {
     /**
      * Whether this is a qualified name.
      * <p>
-     * This is <code>true</code> as soon as {@link #getName()} has a length of more than <code>1</code>.
+     * This is <code>true</code> as soon as {@link #getName()} has a length of
+     * more than <code>1</code> and {@link #qualifier()} is not null.
      */
     boolean qualified();
+
+    /**
+     * Whether this is a qualified name and the {@link #qualifier()} is also a
+     * qualified name.
+     * <p>
+     * This is <code>true</code> as soon as {@link #getName()} has a length of
+     * more than <code>2</code> and {@link #qualifier()} is not null and its
+     * {@link #qualified()} property is also true.
+     */
+    boolean qualifierQualified();
 
     /**
      * This name's qualifier (if it is {@link #qualified()}), or <code>null</code>.

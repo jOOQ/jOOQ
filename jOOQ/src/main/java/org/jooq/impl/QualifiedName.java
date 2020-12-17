@@ -193,6 +193,11 @@ final class QualifiedName extends AbstractName {
     }
 
     @Override
+    public final boolean qualifierQualified() {
+        return qualifiedName.length > 2;
+    }
+
+    @Override
     public final Name qualifier() {
         if (qualifiedName.length <= 1)
             return null;

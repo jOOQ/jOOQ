@@ -107,6 +107,11 @@ final class UnqualifiedName extends AbstractName {
     }
 
     @Override
+    public final boolean qualifierQualified() {
+        return false;
+    }
+
+    @Override
     public final Name qualifier() {
         return null;
     }

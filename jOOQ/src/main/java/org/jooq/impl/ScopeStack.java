@@ -98,7 +98,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
         return new Iterable<Value<V>>() {
             @Override
             public Iterator<Value<V>> iterator() {
-                return new ScopeStackIterator<Value<V>>(new F.F1<List<V>, Value<V>>() {
+                return new ScopeStackIterator<Value<V>>(new F1<List<V>, Value<V>>() {
                     @Override
                     public Value<V> apply(List<V> list) {
                         return Value.lastOf(list);
@@ -110,7 +110,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
     @Override
     public final Iterator<V> iterator() {
-        return new ScopeStackIterator<>(new F.F1<List<V>, V>() {
+        return new ScopeStackIterator<>(new F1<List<V>, V>() {
             @Override
             public V apply(List<V> list) {
                 return list.get(list.size() - 1);
@@ -140,10 +140,10 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
     private final class ScopeStackIterator<U> implements Iterator<U> {
         final Iterator<List<V>> it = stack().values().iterator();
-        final F.F1<List<V>, U>  valueExtractor;
+        final F1<List<V>, U>    valueExtractor;
         U                       next;
 
-        ScopeStackIterator(F.F1<List<V>, U> valueExtractor) {
+        ScopeStackIterator(F1<List<V>, U> valueExtractor) {
             this.valueExtractor = valueExtractor;
         }
 

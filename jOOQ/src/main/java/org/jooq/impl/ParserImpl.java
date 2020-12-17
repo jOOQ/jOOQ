@@ -585,10 +585,6 @@ final class ParserImpl implements Parser {
     }
 
     // -------------------------------------------------------------------------
-    // XXX: Parser configuration
-    // -------------------------------------------------------------------------
-
-    // -------------------------------------------------------------------------
     // XXX: Top level parsing
     // -------------------------------------------------------------------------
 
@@ -12530,36 +12526,25 @@ final class ParserContext {
     private final void scopeEnd() {
         List<FieldProxy<?>> retain = new ArrayList<>();
 
-        for (FieldProxy<?> f : lookupFields) {
-            Field<?> f1 = null;
+        for (FieldProxy<?> lookup : lookupFields) {
+            Field<?> found = null;
 
-            for (Field<?> a : fieldScope) {
-                if (a.getName().equals(f.getName())) {
-                    if (f1 != null) {
-                        position(f.position());
+            for (Field<?> f : fieldScope) {
+                if (f.getName().equals(lookup.getName())) {
+                    if (found != null) {
+                        position(lookup.position());
                         throw exception("Ambiguous field identifier");
                     }
 
-                    f1 = a;
-                }
-            }
-            for (Table<?> t : tableScope) {
-                Field<?> f2;
-
-                if ((f2 = t.field(f.getName())) != null) {
-                    if (f1 != null) {
-                        position(f.position());
-                        throw exception("Ambiguous field identifier");
-                    }
-
-                    f1 = f2;
+                    found = f;
                 }
             }
 
-            if (f1 != null)
-                f.delegate((AbstractField) f1);
+            found = resolveInTableScope(tableScope, lookup.getQualifiedName(), lookup, found);
+            if (found != null)
+                lookup.delegate((AbstractField) found);
             else
-                retain.add(f);
+                retain.add(lookup);
         }
 
         lookupFields.scopeEnd();
@@ -12572,6 +12557,40 @@ final class ParserContext {
                     lookupFields.set(r.getName(), r);
                 else
                     unknownField(r);
+    }
+
+    private final Field<?> resolveInTableScope(Iterable<Table<?>> tables, Name lookupName, FieldProxy<?> lookup, Field<?> found) {
+
+        tableScopeLoop:
+        for (Table<?> t : tables) {
+            Field<?> f;
+
+            if (t instanceof JoinTable) {
+                found = resolveInTableScope(Arrays.asList(((JoinTable) t).lhs, ((JoinTable) t).rhs), lookupName, lookup, found);
+            }
+            else if (lookupName.qualified()) {
+
+                // Additional tests:
+                // - More complex search paths
+                // - Ambiguities from multiple search paths, when S1.T and S2.T conflict
+                // - Test fully qualified column names vs partially qualified column names
+                Name q = lookupName.qualifier();
+                boolean x = q.qualified();
+                if (x && q.equals(t.getQualifiedName()) || !x && q.last().equals(t.getName()))
+                    if ((found = t.field(lookup.getName())) != null)
+                        break tableScopeLoop;
+            }
+            else if ((f = t.field(lookup.getName())) != null) {
+                if (found != null) {
+                    position(lookup.position());
+                    throw exception("Ambiguous field identifier");
+                }
+
+                found = f;
+            }
+        }
+
+        return found;
     }
 
     private final void scopeClear() {
@@ -12615,16 +12634,17 @@ final class ParserContext {
     }
 
     private final Field<?> lookupField(Name name) {
-        if (meta != null) {
-            List<Table<?>> tables = meta.getTables(name.qualifier());
-
-            if (tables.size() == 1) {
-                Field<?> field = tables.get(0).field(name);
-
-                if (field != null)
-                    return field;
-            }
-        }
+        // TODO: Restore this logic if name is qualified as [CATALOG.]SCHEMA.TABLE.FIELD
+//        if (meta != null) {
+//            List<Table<?>> tables = meta.getTables(name.qualifier());
+//
+//            if (tables.size() == 1) {
+//                Field<?> field = tables.get(0).field(name);
+//
+//                if (field != null)
+//                    return field;
+//            }
+//        }
 
         if (metaLookups == ParseWithMetaLookups.OFF)
             return field(name);

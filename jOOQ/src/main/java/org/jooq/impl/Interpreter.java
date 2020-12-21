@@ -820,7 +820,7 @@ final class Interpreter {
 
         MutableTable existing = schema.table(table);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$alterViewIfExists())
                 throw viewNotExists(table);
 
             return;

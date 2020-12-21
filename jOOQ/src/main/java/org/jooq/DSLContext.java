@@ -9513,6 +9513,60 @@ public interface DSLContext extends Scope {
     AlterSchemaStep alterSchemaIfExists(Schema schema);
 
     /**
+     * The <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterView(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    AlterViewStep alterView(String view);
+
+    /**
+     * The <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterView(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    AlterViewStep alterView(Name view);
+
+    /**
+     * The <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterView(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    AlterViewStep alterView(Table<?> view);
+
+    /**
+     * The <code>ALTER VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#alterViewIfExists(String)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    AlterViewStep alterViewIfExists(String view);
+
+    /**
+     * The <code>ALTER VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#alterViewIfExists(Name)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    AlterViewStep alterViewIfExists(Name view);
+
+    /**
+     * The <code>ALTER VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#alterViewIfExists(Table)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    AlterViewStep alterViewIfExists(Table<?> view);
+
+    /**
      * The <code>COMMENT ON TABLE</code> statement.
      *
      * @see DSL#commentOnTable(String)
@@ -10892,60 +10946,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSL#alterView(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    AlterViewStep alterView(String view);
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSL#alterView(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    AlterViewStep alterView(Name view);
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSL#alterView(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    AlterViewStep alterView(Table<?> view);
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSL#alterViewIfExists(String)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    AlterViewStep alterViewIfExists(String view);
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSL#alterViewIfExists(Name)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    AlterViewStep alterViewIfExists(Name view);
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSL#alterViewIfExists(Table)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    AlterViewStep alterViewIfExists(Table<?> view);
 
     /**
      * Create a new DSL <code>ALTER INDEX</code> statement.

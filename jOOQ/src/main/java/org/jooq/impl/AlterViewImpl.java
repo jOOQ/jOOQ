@@ -37,115 +37,115 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.ALTER_VIEW;
-import static org.jooq.Clause.ALTER_VIEW_RENAME;
-import static org.jooq.Clause.ALTER_VIEW_VIEW;
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-// ...
-import static org.jooq.impl.DSL.commentOnView;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Keywords.K_ALTER;
-import static org.jooq.impl.Keywords.K_EXEC;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RENAME;
-import static org.jooq.impl.Keywords.K_RENAME_TO;
-import static org.jooq.impl.Keywords.K_TABLE;
-import static org.jooq.impl.Keywords.K_TO;
-import static org.jooq.impl.Keywords.K_VIEW;
-import static org.jooq.impl.Tools.beginTryCatch;
-import static org.jooq.impl.Tools.endTryCatch;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.AlterViewFinalStep;
-import org.jooq.AlterViewStep;
-import org.jooq.Clause;
-import org.jooq.Comment;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Name;
-// ...
-import org.jooq.SQLDialect;
-import org.jooq.Table;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>ALTER VIEW IF EXISTS</code> statement.
  */
-final class AlterViewImpl extends AbstractRowCountQuery implements
-
-    // Cascading interface implementations for ALTER VIEW behaviour
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
+final class AlterViewImpl
+extends
+    AbstractRowCountQuery
+implements
     AlterViewStep,
-    AlterViewFinalStep {
+    AlterViewFinalStep
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long                serialVersionUID  = 8904572826501186329L;
-    private static final Clause[]            CLAUSES           = { ALTER_VIEW };
-    private static final Set<SQLDialect>     SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final long serialVersionUID = 1L;
 
-    private final Table<?>                   view;
-    private final boolean                    ifExists;
-    private Comment                          comment;
-    private Table<?>                         renameTo;
+    private final Table<?> view;
+    private final boolean  alterViewIfExists;
+    private       Comment  comment;
+    private       Table<?> renameTo;
 
-    AlterViewImpl(Configuration configuration, Table<?> view) {
-        this(configuration, view, false);
+    AlterViewImpl(
+        Configuration configuration,
+        Table<?> view,
+        boolean alterViewIfExists
+    ) {
+        this(
+            configuration,
+            view,
+            alterViewIfExists,
+            null,
+            null
+        );
     }
 
-    AlterViewImpl(Configuration configuration, Table<?> view, boolean ifExists) {
+    AlterViewImpl(
+        Configuration configuration,
+        Table<?> view,
+        boolean alterViewIfExists,
+        Comment comment,
+        Table<?> renameTo
+    ) {
         super(configuration);
 
         this.view = view;
-        this.ifExists = ifExists;
+        this.alterViewIfExists = alterViewIfExists;
+        this.comment = comment;
+        this.renameTo = renameTo;
     }
 
-    final Table<?> $view()     { return view; }
-    final boolean  $ifExists() { return ifExists; }
-    final Table<?> $renameTo() { return renameTo; }
+    final Table<?> $view()              { return view; }
+    final boolean  $alterViewIfExists() { return alterViewIfExists; }
+    final Comment  $comment()           { return comment; }
+    final Table<?> $renameTo()          { return renameTo; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
 
     @Override
-    public final AlterViewImpl comment(String c) {
-        return comment(DSL.comment(c));
+    public final AlterViewImpl comment(String comment) {
+        return comment(DSL.comment(comment));
     }
 
     @Override
-    public final AlterViewImpl comment(Comment c) {
-        this.comment = c;
+    public final AlterViewImpl comment(Comment comment) {
+        this.comment = comment;
         return this;
     }
 
     @Override
-    public final AlterViewImpl renameTo(Table<?> newName) {
-        this.renameTo = newName;
+    public final AlterViewImpl renameTo(String renameTo) {
+        return renameTo(DSL.table(DSL.name(renameTo)));
+    }
+
+    @Override
+    public final AlterViewImpl renameTo(Name renameTo) {
+        return renameTo(DSL.table(renameTo));
+    }
+
+    @Override
+    public final AlterViewImpl renameTo(Table<?> renameTo) {
+        this.renameTo = renameTo;
         return this;
     }
 
-    @Override
-    public final AlterViewImpl renameTo(Name newName) {
-        return renameTo(DSL.table(newName));
-    }
-
-    @Override
-    public final AlterViewImpl renameTo(String newName) {
-        return renameTo(name(newName));
-    }
-
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES           = { Clause.ALTER_VIEW };
+    private static final Set<SQLDialect> SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !SUPPORT_IF_EXISTS.contains(ctx.dialect());
@@ -153,7 +153,7 @@ final class AlterViewImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (alterViewIfExists && !supportsIfExists(ctx)) {
             beginTryCatch(ctx, DDLStatementType.ALTER_VIEW);
             accept0(ctx);
             endTryCatch(ctx, DDLStatementType.ALTER_VIEW);
@@ -245,26 +245,26 @@ final class AlterViewImpl extends AbstractRowCountQuery implements
 
 
     private final void accept1(Context<?> ctx) {
-        ctx.start(ALTER_VIEW_VIEW)
+        ctx.start(Clause.ALTER_VIEW_VIEW)
            .visit(K_ALTER).sql(' ')
            .visit(ctx.family() == HSQLDB ? K_TABLE : K_VIEW);
 
-        if (ifExists && supportsIfExists(ctx))
+        if (alterViewIfExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(view)
-           .end(ALTER_VIEW_VIEW)
+           .end(Clause.ALTER_VIEW_VIEW)
            .formatIndentStart()
            .formatSeparator();
 
         if (renameTo != null) {
             boolean qualify = ctx.qualify();
 
-            ctx.start(ALTER_VIEW_RENAME)
+            ctx.start(Clause.ALTER_VIEW_RENAME)
                .qualify(false)
                .visit(K_RENAME_TO).sql(' ').visit(renameTo)
                .qualify(qualify)
-               .end(ALTER_VIEW_RENAME);
+               .end(Clause.ALTER_VIEW_RENAME);
         }
 
         ctx.formatIndentEnd();
@@ -274,4 +274,6 @@ final class AlterViewImpl extends AbstractRowCountQuery implements
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

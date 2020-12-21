@@ -37,26 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-
-import org.jooq.impl.DSL;
-
 /**
- * The step in the <code>ALTER VIEW</code> where the action can be decided.
+ * A step in the construction of the <code>ALTER VIEW</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -75,54 +63,42 @@ import org.jooq.impl.DSL;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface AlterViewStep {
 
     /**
-     * Specify a comment for a table using MySQL's syntax (which MySQL currently
-     * doesn't support on views).
-     *
-     * @see DSL#commentOnView(Table)
-     * @see DSLContext#commentOnView(Table)
+     * Add the <code>COMMENT</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @NotNull
     AlterViewFinalStep comment(String comment);
 
     /**
-     * Specify a comment for a table using MySQL's syntax (which MySQL currently
-     * doesn't support on views).
-     *
-     * @see DSL#commentOnView(Table)
-     * @see DSLContext#commentOnView(Table)
+     * Add the <code>COMMENT</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @NotNull
     AlterViewFinalStep comment(Comment comment);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    AlterViewFinalStep renameTo(Table<?> newName);
+    @NotNull
+    AlterViewFinalStep renameTo(String renameTo);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    AlterViewFinalStep renameTo(Name newName);
+    @NotNull
+    AlterViewFinalStep renameTo(Name renameTo);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    AlterViewFinalStep renameTo(String newName);
+    @NotNull
+    AlterViewFinalStep renameTo(Table<?> renameTo);
 }

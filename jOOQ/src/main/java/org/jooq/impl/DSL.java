@@ -7441,6 +7441,72 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterView(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.AlterViewStep alterView(String view) {
+        return dsl().alterView(view);
+    }
+
+    /**
+     * The <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterView(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.AlterViewStep alterView(Name view) {
+        return dsl().alterView(view);
+    }
+
+    /**
+     * The <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterView(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.AlterViewStep alterView(Table<?> view) {
+        return dsl().alterView(view);
+    }
+
+    /**
+     * The <code>ALTER VIEW IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterViewIfExists(String)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static org.jooq.AlterViewStep alterViewIfExists(String view) {
+        return dsl().alterViewIfExists(view);
+    }
+
+    /**
+     * The <code>ALTER VIEW IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterViewIfExists(Name)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static org.jooq.AlterViewStep alterViewIfExists(Name view) {
+        return dsl().alterViewIfExists(view);
+    }
+
+    /**
+     * The <code>ALTER VIEW IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterViewIfExists(Table)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static org.jooq.AlterViewStep alterViewIfExists(Table<?> view) {
+        return dsl().alterViewIfExists(view);
+    }
+
+    /**
      * The <code>COMMENT ON TABLE</code> statement.
      *
      * @see DSLContext#commentOnTable(String)
@@ -8892,72 +8958,6 @@ public class DSL {
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSLContext#alterView(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static AlterViewStep alterView(String view) {
-        return dsl().alterView(view);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSLContext#alterView(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static AlterViewStep alterView(Name view) {
-        return dsl().alterView(view);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSLContext#alterView(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static AlterViewStep alterView(Table<?> view) {
-        return dsl().alterView(view);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSLContext#alterViewIfExists(String)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static AlterViewStep alterViewIfExists(String view) {
-        return dsl().alterViewIfExists(view);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSLContext#alterViewIfExists(Name)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static AlterViewStep alterViewIfExists(Name view) {
-        return dsl().alterViewIfExists(view);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER VIEW</code> statement.
-     *
-     * @see DSLContext#alterViewIfExists(Table)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static AlterViewStep alterViewIfExists(Table<?> view) {
-        return dsl().alterViewIfExists(view);
     }
 
     /**

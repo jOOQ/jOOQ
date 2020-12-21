@@ -3173,6 +3173,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.AlterViewStep alterView(String view) {
+        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), false);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterView(Name view) {
+        return new AlterViewImpl(configuration(), DSL.table(view), false);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterView(Table<?> view) {
+        return new AlterViewImpl(configuration(), view, false);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterViewIfExists(String view) {
+        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), true);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterViewIfExists(Name view) {
+        return new AlterViewImpl(configuration(), DSL.table(view), true);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterViewIfExists(Table<?> view) {
+        return new AlterViewImpl(configuration(), view, true);
+    }
+
+    @Override
     public org.jooq.CommentOnIsStep commentOnTable(String table) {
         return new CommentOnImpl(configuration(), DSL.table(DSL.name(table)), false, null);
     }
@@ -3912,36 +3942,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTableIfExists(Table<?> table) {
         return new AlterTableImpl(configuration(), table, true);
-    }
-
-    @Override
-    public AlterViewStep alterView(String table) {
-        return alterView(name(table));
-    }
-
-    @Override
-    public AlterViewStep alterView(Name table) {
-        return alterView(table(table));
-    }
-
-    @Override
-    public AlterViewStep alterView(Table<?> table) {
-        return new AlterViewImpl(configuration(), table);
-    }
-
-    @Override
-    public AlterViewStep alterViewIfExists(String table) {
-        return alterViewIfExists(name(table));
-    }
-
-    @Override
-    public AlterViewStep alterViewIfExists(Name table) {
-        return alterViewIfExists(table(table));
-    }
-
-    @Override
-    public AlterViewStep alterViewIfExists(Table<?> table) {
-        return new AlterViewImpl(configuration(), table, true);
     }
 
     @Override

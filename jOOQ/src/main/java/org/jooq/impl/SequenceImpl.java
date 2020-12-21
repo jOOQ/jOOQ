@@ -241,6 +241,7 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
 
 
 
+
                 case POSTGRES: {
                     ctx.visit(method.keyword).sql('(');
                     ctx.sql('\'').stringLiteral(true).visit(sequence).stringLiteral(false).sql('\'');

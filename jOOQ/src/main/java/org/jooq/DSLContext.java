@@ -9513,6 +9513,87 @@ public interface DSLContext extends Scope {
     AlterSchemaStep alterSchemaIfExists(Schema schema);
 
     /**
+     * The <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSL#commentOnTable(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CommentOnIsStep commentOnTable(String table);
+
+    /**
+     * The <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSL#commentOnTable(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CommentOnIsStep commentOnTable(Name table);
+
+    /**
+     * The <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSL#commentOnTable(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CommentOnIsStep commentOnTable(Table<?> table);
+
+    /**
+     * The <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSL#commentOnView(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnView(String view);
+
+    /**
+     * The <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSL#commentOnView(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnView(Name view);
+
+    /**
+     * The <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSL#commentOnView(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CommentOnIsStep commentOnView(Table<?> view);
+
+    /**
+     * The <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSL#commentOnColumn(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CommentOnIsStep commentOnColumn(String field);
+
+    /**
+     * The <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSL#commentOnColumn(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CommentOnIsStep commentOnColumn(Name field);
+
+    /**
+     * The <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSL#commentOnColumn(Field)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CommentOnIsStep commentOnColumn(Field<?> field);
+
+    /**
      * The <code>DROP DATABASE</code> statement.
      *
      * @see DSL#dropDatabase(String)
@@ -9887,84 +9968,6 @@ public interface DSLContext extends Scope {
     RowCountQuery setSchema(Schema schema);
 
 
-
-    /**
-     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
-     *
-     * @see DSL#commentOnTable(String)
-     * @see AlterTableStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CommentOnIsStep commentOnTable(String tableName);
-
-    /**
-     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
-     *
-     * @see DSL#commentOnTable(Name)
-     * @see AlterTableStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CommentOnIsStep commentOnTable(Name tableName);
-
-    /**
-     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
-     *
-     * @see DSL#commentOnTable(Table)
-     * @see AlterTableStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CommentOnIsStep commentOnTable(Table<?> table);
-
-    /**
-     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
-     *
-     * @see DSL#commentOnView(String)
-     * @see AlterViewStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CommentOnIsStep commentOnView(String viewName);
-
-    /**
-     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
-     *
-     * @see DSL#commentOnView(Name)
-     * @see AlterViewStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CommentOnIsStep commentOnView(Name viewName);
-
-    /**
-     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
-     *
-     * @see DSL#commentOnView(Table)
-     * @see AlterViewStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CommentOnIsStep commentOnView(Table<?> view);
-
-    /**
-     * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
-     *
-     * @see DSL#commentOnColumn(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CommentOnIsStep commentOnColumn(Name columnName);
-
-    /**
-     * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
-     *
-     * @see DSL#commentOnColumn(Field)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CommentOnIsStep commentOnColumn(Field<?> field);
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.

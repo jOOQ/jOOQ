@@ -37,75 +37,69 @@
  */
 package org.jooq.impl;
 
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-import static org.jooq.impl.DSL.comment;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.K_ALTER_TABLE;
-import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
-import static org.jooq.impl.Keywords.K_BEGIN_TRY;
-import static org.jooq.impl.Keywords.K_COLUMN;
-import static org.jooq.impl.Keywords.K_COMMENT;
-import static org.jooq.impl.Keywords.K_DECLARE;
-import static org.jooq.impl.Keywords.K_DEFAULT;
-import static org.jooq.impl.Keywords.K_END_CATCH;
-import static org.jooq.impl.Keywords.K_END_TRY;
-import static org.jooq.impl.Keywords.K_EXEC;
-import static org.jooq.impl.Keywords.K_IS;
-import static org.jooq.impl.Keywords.K_ON;
-import static org.jooq.impl.Keywords.K_TABLE;
-import static org.jooq.impl.Keywords.K_VIEW;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Comment;
-import org.jooq.CommentOnFinalStep;
-import org.jooq.CommentOnIsStep;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Name;
-// ...
-import org.jooq.SQLDialect;
-import org.jooq.Table;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>COMMENT ON COLUMN</code> statement.
  */
-class CommentOnImpl extends AbstractRowCountQuery
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
+final class CommentOnImpl
+extends
+    AbstractRowCountQuery
 implements
     CommentOnIsStep,
-    CommentOnFinalStep {
+    CommentOnFinalStep
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long                serialVersionUID         = 2665659331902435568L;
-    private static final Set<SQLDialect>     SUPPORTS_COMMENT_ON_VIEW = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
+    private static final long serialVersionUID = 1L;
 
-    private final Table<?>                   table;
-    private final boolean                    isView;
-    private final Field<?>                   field;
-    private Comment                          comment;
+    private final Table<?> table;
+    private final boolean  isView;
+    private final Field<?> field;
+    private       Comment  comment;
 
-    CommentOnImpl(Configuration configuration, Table<?> table, boolean isView) {
+    CommentOnImpl(
+        Configuration configuration,
+        Table<?> table,
+        boolean isView,
+        Field<?> field
+    ) {
+        this(
+            configuration,
+            table,
+            isView,
+            field,
+            null
+        );
+    }
+
+    CommentOnImpl(
+        Configuration configuration,
+        Table<?> table,
+        boolean isView,
+        Field<?> field,
+        Comment comment
+    ) {
         super(configuration);
 
         this.table = table;
         this.isView = isView;
-        this.field = null;
-    }
-
-    CommentOnImpl(Configuration configuration, Field<?> field) {
-        super(configuration);
-
-        this.table = null;
-        this.isView = false;
         this.field = field;
+        this.comment = comment;
     }
 
     final Table<?> $table()   { return table; }
@@ -113,28 +107,36 @@ implements
     final Field<?> $field()   { return field; }
     final Comment  $comment() { return comment; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     @Override
-    public final CommentOnImpl is(String c) {
-        return is(comment(c));
+    public final CommentOnImpl is(String comment) {
+        return is(DSL.comment(comment));
     }
 
     @Override
-    public final CommentOnImpl is(Comment c) {
-        this.comment = c;
+    public final CommentOnImpl is(Comment comment) {
+        this.comment = comment;
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Set<SQLDialect> SUPPORTS_COMMENT_ON_VIEW = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
 
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -204,6 +206,18 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     private final void acceptMySQL(Context<?> ctx) {
         ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_COMMENT).sql(" = ").visit(comment);
     }
@@ -222,4 +236,6 @@ implements
 
         ctx.sql(' ').visit(K_IS).sql(' ').visit(comment);
     }
+
+
 }

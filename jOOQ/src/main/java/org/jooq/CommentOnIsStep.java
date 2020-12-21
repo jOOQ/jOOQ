@@ -37,29 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-
 /**
- * The step in the <code>COMMENT ON [ object type ]</code> statement where the
- * comment can be specified.
+ * A step in the construction of the <code>COMMENT ON TABLE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -78,22 +63,21 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CommentOnIsStep {
 
     /**
-     * Specify the comment for the given object type.
+     * Add the <code>IS</code> clause to the <code>COMMENT ON TABLE</code> statement.
      */
-    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @NotNull
     CommentOnFinalStep is(String comment);
 
     /**
-     * Specify the comment for the given object type.
+     * Add the <code>IS</code> clause to the <code>COMMENT ON TABLE</code> statement.
      */
-    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @NotNull
     CommentOnFinalStep is(Comment comment);
 }

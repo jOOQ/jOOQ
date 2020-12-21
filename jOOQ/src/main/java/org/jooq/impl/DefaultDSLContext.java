@@ -3173,6 +3173,51 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.CommentOnIsStep commentOnTable(String table) {
+        return new CommentOnImpl(configuration(), DSL.table(DSL.name(table)), false, null);
+    }
+
+    @Override
+    public org.jooq.CommentOnIsStep commentOnTable(Name table) {
+        return new CommentOnImpl(configuration(), DSL.table(table), false, null);
+    }
+
+    @Override
+    public org.jooq.CommentOnIsStep commentOnTable(Table<?> table) {
+        return new CommentOnImpl(configuration(), table, false, null);
+    }
+
+    @Override
+    public org.jooq.CommentOnIsStep commentOnView(String view) {
+        return new CommentOnImpl(configuration(), DSL.table(DSL.name(view)), true, null);
+    }
+
+    @Override
+    public org.jooq.CommentOnIsStep commentOnView(Name view) {
+        return new CommentOnImpl(configuration(), DSL.table(view), true, null);
+    }
+
+    @Override
+    public org.jooq.CommentOnIsStep commentOnView(Table<?> view) {
+        return new CommentOnImpl(configuration(), view, true, null);
+    }
+
+    @Override
+    public org.jooq.CommentOnIsStep commentOnColumn(String field) {
+        return new CommentOnImpl(configuration(), null, false, DSL.field(DSL.name(field)));
+    }
+
+    @Override
+    public org.jooq.CommentOnIsStep commentOnColumn(Name field) {
+        return new CommentOnImpl(configuration(), null, false, DSL.field(field));
+    }
+
+    @Override
+    public org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
+        return new CommentOnImpl(configuration(), null, false, field);
+    }
+
+    @Override
     public org.jooq.DropDatabaseFinalStep dropDatabase(String database) {
         return new DropDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
     }
@@ -3452,46 +3497,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
-
-    @Override
-    public CommentOnIsStep commentOnTable(String tableName) {
-        return commentOnTable(name(tableName));
-    }
-
-    @Override
-    public CommentOnIsStep commentOnTable(Name tableName) {
-        return commentOnTable(table(tableName));
-    }
-
-    @Override
-    public CommentOnIsStep commentOnTable(Table<?> table) {
-        return new CommentOnImpl(configuration(), table, false);
-    }
-
-    @Override
-    public CommentOnIsStep commentOnView(String viewName) {
-        return commentOnView(name(viewName));
-    }
-
-    @Override
-    public CommentOnIsStep commentOnView(Name viewName) {
-        return commentOnView(table(viewName));
-    }
-
-    @Override
-    public CommentOnIsStep commentOnView(Table<?> view) {
-        return new CommentOnImpl(configuration(), view, true);
-    }
-
-    @Override
-    public CommentOnIsStep commentOnColumn(Name columnName) {
-        return commentOnColumn(field(columnName));
-    }
-
-    @Override
-    public CommentOnIsStep commentOnColumn(Field<?> field) {
-        return new CommentOnImpl(configuration(), field);
-    }
 
     @Override
     public CreateViewAsStep<Record> createView(String view, String... fields) {

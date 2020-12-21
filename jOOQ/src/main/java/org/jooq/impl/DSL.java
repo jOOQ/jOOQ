@@ -6258,100 +6258,6 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
-     *
-     * @see DSLContext#commentOnTable(String)
-     * @see AlterTableStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static CommentOnIsStep commentOnTable(String tableName) {
-        return dsl().commentOnTable(tableName);
-    }
-
-    /**
-     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
-     *
-     * @see DSLContext#commentOnTable(Name)
-     * @see AlterTableStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static CommentOnIsStep commentOnTable(Name tableName) {
-        return dsl().commentOnTable(tableName);
-    }
-
-    /**
-     * Create a new DSL <code>COMMENT ON TABLE</code> statement.
-     *
-     * @see DSLContext#commentOnTable(Table)
-     * @see AlterTableStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static CommentOnIsStep commentOnTable(Table<?> table) {
-        return dsl().commentOnTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
-     *
-     * @see DSLContext#commentOnView(String)
-     * @see AlterViewStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CommentOnIsStep commentOnView(String viewName) {
-        return dsl().commentOnView(viewName);
-    }
-
-    /**
-     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
-     *
-     * @see DSLContext#commentOnView(Name)
-     * @see AlterViewStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CommentOnIsStep commentOnView(Name viewName) {
-        return dsl().commentOnView(viewName);
-    }
-
-    /**
-     * Create a new DSL <code>COMMENT ON VIEW</code> statement.
-     *
-     * @see DSLContext#commentOnView(Table)
-     * @see AlterViewStep#comment(Comment)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CommentOnIsStep commentOnView(Table<?> view) {
-        return dsl().commentOnView(view);
-    }
-
-    /**
-     * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
-     *
-     * @see DSLContext#commentOnColumn(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static CommentOnIsStep commentOnColumn(Name columnName) {
-        return dsl().commentOnColumn(columnName);
-    }
-
-    /**
-     * Create a new DSL <code>COMMENT ON COLUMN</code> statement.
-     *
-     * @see DSLContext#commentOnColumn(Field)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static CommentOnIsStep commentOnColumn(Field<?> field) {
-        return dsl().commentOnColumn(field);
-    }
-
-    /**
      * Create an unnamed (system named) <code>CONSTRAINT</code> specification.
      */
     @NotNull
@@ -7532,6 +7438,105 @@ public class DSL {
     @Support({ H2 })
     public static org.jooq.AlterSchemaStep alterSchemaIfExists(Schema schema) {
         return dsl().alterSchemaIfExists(schema);
+    }
+
+    /**
+     * The <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSLContext#commentOnTable(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnTable(String table) {
+        return dsl().commentOnTable(table);
+    }
+
+    /**
+     * The <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSLContext#commentOnTable(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnTable(Name table) {
+        return dsl().commentOnTable(table);
+    }
+
+    /**
+     * The <code>COMMENT ON TABLE</code> statement.
+     *
+     * @see DSLContext#commentOnTable(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnTable(Table<?> table) {
+        return dsl().commentOnTable(table);
+    }
+
+    /**
+     * The <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSLContext#commentOnView(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnView(String view) {
+        return dsl().commentOnView(view);
+    }
+
+    /**
+     * The <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSLContext#commentOnView(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnView(Name view) {
+        return dsl().commentOnView(view);
+    }
+
+    /**
+     * The <code>COMMENT ON VIEW</code> statement.
+     *
+     * @see DSLContext#commentOnView(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnView(Table<?> view) {
+        return dsl().commentOnView(view);
+    }
+
+    /**
+     * The <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSLContext#commentOnColumn(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnColumn(String field) {
+        return dsl().commentOnColumn(field);
+    }
+
+    /**
+     * The <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSLContext#commentOnColumn(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnColumn(Name field) {
+        return dsl().commentOnColumn(field);
+    }
+
+    /**
+     * The <code>COMMENT ON COLUMN</code> statement.
+     *
+     * @see DSLContext#commentOnColumn(Field)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
+        return dsl().commentOnColumn(field);
     }
 
     /**

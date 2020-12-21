@@ -37,32 +37,52 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.Names.N_EXP;
-import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
 import java.math.BigDecimal;
 
-import org.jooq.Context;
-import org.jooq.Field;
 
 /**
- * @author Lukas Eder
+ * The <code>EXP</code> statement.
  */
-final class Exp extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Exp
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<? extends Number> argument;
+    private final Field<? extends Number> value;
 
-    Exp(Field<? extends Number> argument) {
-        super(N_EXP, NUMERIC);
+    Exp(
+        Field<? extends Number> value
+    ) {
+        super(
+            N_EXP,
+            allNotNull(NUMERIC, value)
+        );
 
-        this.argument = argument;
+        this.value = nullSafeNotNull(value, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -79,8 +99,25 @@ final class Exp extends AbstractField<BigDecimal> {
 
 
             default:
-                ctx.visit(function(N_EXP, NUMERIC, argument));
+                ctx.visit(function(N_EXP, NUMERIC, value));
                 return;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Exp) {
+            return
+                StringUtils.equals(value, ((Exp) that).value)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

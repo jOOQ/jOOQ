@@ -65,6 +65,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -164,11 +165,18 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             SQLDialect family = context.family();
             boolean emulatedDerivedColumnList = false;
 
+
+
+
+
+
+
+
             // [#454] [#1801] Some databases don't allow "derived column names" in
             // "simple class specifications", or "common table expression references".
             // Hence, wrap the table reference in a subselect
             if (fieldAliases != null
-                    && SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect)
+                    && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect))
                     && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
                 visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)), true);
@@ -178,7 +186,8 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // They can be emulated by concatenating a dummy SELECT with no
             // results using UNION ALL
             else if (fieldAliases != null && (
-                    SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(dialect)
+                    emulatedDerivedColumnList
+                 || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(dialect)
                  || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect))) {
 
                 emulatedDerivedColumnList = true;

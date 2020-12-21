@@ -37,14 +37,14 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.CUBRID;
+// ...
 // ...
 // ...
 
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic

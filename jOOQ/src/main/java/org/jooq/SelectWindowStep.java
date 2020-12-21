@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -54,6 +51,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -61,6 +59,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 
 import java.util.Collection;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic

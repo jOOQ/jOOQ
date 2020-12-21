@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -59,8 +56,11 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 
 import java.util.Collection;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.

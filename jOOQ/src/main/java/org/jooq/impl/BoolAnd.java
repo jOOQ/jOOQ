@@ -37,9 +37,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Names.N_BOOL_AND;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
 
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -58,15 +58,31 @@ final class BoolAnd extends DefaultAggregateFunction<Boolean> {
     private final Condition   condition;
 
     BoolAnd(Condition condition) {
-        super(N_BOOL_AND, SQLDataType.BOOLEAN, DSL.field(condition));
+        super(N_BOOL_AND, BOOLEAN, DSL.field(condition));
 
         this.condition = condition;
+    }
+
+    @Override
+    final void acceptFunctionName(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                super.acceptFunctionName(ctx);
+                break;
+        }
     }
 
     @SuppressWarnings("serial")
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 

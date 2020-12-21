@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 import java.util.Collection;
 

@@ -58,16 +58,16 @@ import java.math.BigDecimal;
  * The <code>E</code> statement.
  */
 @SuppressWarnings({ "unused" })
-final class E
+final class Euler
 extends
     AbstractField<BigDecimal>
 {
 
     private static final long serialVersionUID = 1L;
 
-    E() {
+    Euler() {
         super(
-            N_E,
+            N_EULER,
             allNotNull(NUMERIC)
         );
     }
@@ -81,6 +81,7 @@ extends
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 
@@ -130,7 +131,7 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof E) {
+        if (that instanceof Euler) {
             return true;
         }
         else

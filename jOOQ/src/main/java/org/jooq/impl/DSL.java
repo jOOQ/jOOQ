@@ -79,6 +79,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -15159,7 +15160,25 @@ public class DSL {
     @NotNull
     @Support
     public static Field<BigDecimal> e() {
-        return new E();
+        return new Euler();
+    }
+
+    /**
+     * The <code>EXP</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> exp(Number value) {
+        return new Exp(Tools.field(value));
+    }
+
+    /**
+     * The <code>EXP</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> exp(Field<? extends Number> value) {
+        return new Exp(value);
     }
 
     /**
@@ -17049,6 +17068,80 @@ public class DSL {
     public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
         return new WidthBucket(field, low, high, buckets);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The <code>XMLCOMMENT</code> function.
@@ -20629,29 +20722,6 @@ public class DSL {
     }
 
     /**
-     * Get the exp(field) function, taking this field as the power of e.
-     *
-     * @see #exp(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> exp(Number value) {
-        return exp(Tools.field(value));
-    }
-
-    /**
-     * Get the exp(field) function, taking this field as the power of e.
-     * <p>
-     * This renders the same on all dialects:
-     * <code><pre>exp([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> exp(Field<? extends Number> field) {
-        return new Exp(Tools.nullSafe(field));
-    }
-
-    /**
      * Get the ln(field) function, taking the natural logarithm of this field.
      *
      * @see #ln(Field)
@@ -20877,81 +20947,6 @@ public class DSL {
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
         return new Tanh(Tools.nullSafe(field));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------
     // XXX XML functions

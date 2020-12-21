@@ -118,6 +118,7 @@ extends
 
 
 
+
                 case SQLITE:
                     ctx.visit(N_LTRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
                     break;

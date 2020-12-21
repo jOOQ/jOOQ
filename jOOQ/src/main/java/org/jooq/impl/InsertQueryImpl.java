@@ -402,6 +402,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+
                 case DERBY:
                 case FIREBIRD:
                 case H2:
@@ -564,6 +565,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
+
+
 
 
 

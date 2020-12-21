@@ -113,14 +113,26 @@ extends
 
             ctx.visit(N_TRIM).sql('(').visit(string).sql(')');
         }
-        else if (ctx.family() == SQLITE)
-            ctx.visit(N_TRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
+        else {
+            switch (ctx.family()) {
+
+
+
+                case SQLITE:
+                    ctx.visit(N_TRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
+                    break;
 
 
 
 
-        else
-            ctx.visit(N_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(string).sql(')');
+
+
+
+                default:
+                    ctx.visit(N_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(string).sql(')');
+                    break;
+            }
+        }
     }
 
 

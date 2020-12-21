@@ -37,12 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
+// ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the window function DSL API.

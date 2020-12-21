@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -69,6 +70,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.conf.RenderDefaultNullability.IMPLICIT_NULL;
+import static org.jooq.conf.RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED;
 import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
@@ -279,6 +281,7 @@ import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.RenderDefaultNullability;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.ThrowExceptions;
@@ -828,6 +831,8 @@ final class Tools {
     private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX               = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect> DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
+
+
 
 
 
@@ -4948,6 +4953,7 @@ final class Tools {
 
 
 
+
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
                 case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
@@ -5122,9 +5128,8 @@ final class Tools {
 
         // [#6841] SQLite usually recognises int/integer as both meaning the same thing, but not in the
         //         context of an autoincrement column, in case of which explicit "integer" types are required.
-        else if (type.identity() && ctx.family() == SQLITE && type.isNumeric()) {
+        else if (type.identity() && ctx.family() == SQLITE && type.isNumeric())
             ctx.sql("integer");
-        }
 
 
 
@@ -5135,9 +5140,9 @@ final class Tools {
 
 
 
-        else {
+
+        else
             ctx.sql(typeName);
-        }
 
         // [#8041] Character sets are vendor-specific storage clauses, which we might need to ignore
         if (type.characterSet() != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
@@ -5766,6 +5771,36 @@ final class Tools {
         public final void remove() {
             throw new UnsupportedOperationException("remove");
         }
+    }
+
+    static final boolean anyQuoted(Settings settings, Name... names) {
+        RenderQuotedNames renderQuotedNames = SettingsTools.getRenderQuotedNames(settings);
+
+        switch (renderQuotedNames) {
+            case ALWAYS:
+                return true;
+            case NEVER:
+                return false;
+            case EXPLICIT_DEFAULT_QUOTED:
+            case EXPLICIT_DEFAULT_UNQUOTED:
+                for (Name name : names) {
+                    Name n = name.unqualifiedName();
+
+                    switch (n.quoted()) {
+                        case QUOTED:
+                            return true;
+                        case DEFAULT:
+                            if (renderQuotedNames == EXPLICIT_DEFAULT_QUOTED)
+                                return true;
+                            else
+                                break;
+                    }
+                }
+
+                break;
+        }
+
+        return false;
     }
 
     static final String asString(Name name) {

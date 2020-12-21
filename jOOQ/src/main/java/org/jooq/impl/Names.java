@@ -75,6 +75,8 @@ final class Names {
     static final Name N_BIT_LENGTH             = unquotedName("bit_length");
     static final Name N_BOOL_AND               = unquotedName("bool_and");
     static final Name N_BOOL_OR                = unquotedName("bool_or");
+    static final Name N_BOOLAND_AGG            = unquotedName("booland_agg");
+    static final Name N_BOOLOR_AGG             = unquotedName("boolor_agg");
     static final Name N_CARDINALITY            = unquotedName("cardinality");
     static final Name N_CASE                   = unquotedName("case");
     static final Name N_CAST                   = unquotedName("cast");
@@ -87,6 +89,9 @@ final class Names {
     static final Name N_COALESCE               = unquotedName("coalesce");
     static final Name N_COLLECT                = unquotedName("collect");
     static final Name N_CONCAT                 = unquotedName("concat");
+    static final Name N_CONNECT_BY_IS_CYCLE    = unquotedName("connect_by_iscycle");
+    static final Name N_CONNECT_BY_IS_LEAF     = unquotedName("connect_by_isleaf");
+    static final Name N_CONNECT_BY_ROOT        = unquotedName("connect_by_root");
     static final Name N_CONVERT                = unquotedName("convert");
     static final Name N_COS                    = unquotedName("cos");
     static final Name N_COSH                   = unquotedName("cosh");
@@ -120,6 +125,7 @@ final class Names {
     static final Name N_DEGREES                = unquotedName("degrees");
     static final Name N_DUAL                   = unquotedName("dual");
     static final Name N_E                      = unquotedName("e");
+    static final Name N_EULER                  = unquotedName("e");
     static final Name N_EXP                    = unquotedName("exp");
     static final Name N_EXTRACT                = unquotedName("extract");
     static final Name N_EXTRACT_DURATION       = unquotedName("extract_duration");
@@ -169,6 +175,7 @@ final class Names {
     static final Name N_LEN                    = unquotedName("len");
     static final Name N_LENGTH                 = unquotedName("length");
     static final Name N_LENGTHB                = unquotedName("lengthb");
+    static final Name N_LEVEL                  = unquotedName("level");
     static final Name N_LIST                   = unquotedName("list");
     static final Name N_LISTAGG                = unquotedName("listagg");
     static final Name N_LN                     = unquotedName("ln");
@@ -269,9 +276,11 @@ final class Names {
     static final Name N_SYSDATE                = unquotedName("sysdate");
     static final Name N_SYSTEM_RANGE           = unquotedName("system_range");
     static final Name N_SYSTEM_TIME            = unquotedName("system_time");
+    static final Name N_SYS_CONNECT_BY_PATH    = unquotedName("sys_connect_by_path");
     static final Name N_T                      = unquotedName("t");
     static final Name N_TAN                    = unquotedName("tan");
     static final Name N_TANH                   = unquotedName("tanh");
+    static final Name N_TAU                    = unquotedName("tau");
     static final Name N_TIMESTAMPADD           = unquotedName("timestampadd");
     static final Name N_TIMESTAMPDIFF          = unquotedName("timestampdiff");
     static final Name N_TO_CHAR                = unquotedName("to_char");
@@ -279,7 +288,6 @@ final class Names {
     static final Name N_TO_DATE                = unquotedName("to_date");
     static final Name N_TO_NUMBER              = unquotedName("to_number");
     static final Name N_TO_TIMESTAMP           = unquotedName("to_timestamp");
-    static final Name N_TAU                    = unquotedName("tau");
     static final Name N_TRANSLATE              = unquotedName("translate");
     static final Name N_TRIM                   = unquotedName("trim");
     static final Name N_TRUNC                  = unquotedName("trunc");

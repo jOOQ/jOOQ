@@ -289,20 +289,20 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
             case MYSQL:
             case SQLITE: {
                 ctx.castMode(NEVER)
-                       .formatSeparator()
-                       .visit(K_LIMIT)
-                       .sql(' ').visit(numberOfRowsOrMax);
+                   .formatSeparator()
+                   .visit(K_LIMIT)
+                   .sql(' ').visit(numberOfRowsOrMax);
 
                 if (!offsetZero())
                     ctx.formatSeparator()
-                           .visit(K_OFFSET)
-                           .sql(' ').visit(offsetOrZero);
+                       .visit(K_OFFSET)
+                       .sql(' ').visit(offsetOrZero);
 
                 ctx.castMode(castMode);
-
                 break;
             }
 

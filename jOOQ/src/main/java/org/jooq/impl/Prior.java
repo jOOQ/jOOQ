@@ -37,35 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Keywords.K_PRIOR;
-import static org.jooq.impl.Names.N_PRIOR;
-import static org.jooq.impl.Tools.nullSafeDataType;
-
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.TableField;
-
-/**
- * @author Lukas Eder
- */
-final class Prior<T> extends AbstractField<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 4532570030471782063L;
-    private final Field<T>    field;
-
-    Prior(Field<T> field) {
-        super(N_PRIOR, nullSafeDataType(field));
-
-        this.field = field;
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
 
 
 
@@ -92,10 +63,79 @@ final class Prior<T> extends AbstractField<T> {
 
 
 
-            case CUBRID:
-            default:
-                ctx.visit(K_PRIOR).sql(' ').visit(field);
-                break;
-        }
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

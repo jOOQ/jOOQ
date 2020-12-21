@@ -37,14 +37,14 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 import java.util.Collection;
 
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the {@link Delete}'s DSL API.

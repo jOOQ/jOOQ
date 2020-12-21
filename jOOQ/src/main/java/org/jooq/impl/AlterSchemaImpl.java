@@ -105,6 +105,7 @@ implements
     // XXX: DSL API
     // -------------------------------------------------------------------------
     
+    
     @Override
     public final AlterSchemaImpl renameTo(String renameTo) {
         return renameTo(DSL.schema(DSL.name(renameTo)));

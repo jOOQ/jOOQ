@@ -117,6 +117,7 @@ implements
     // XXX: DSL API
     // -------------------------------------------------------------------------
     
+    
     @Override
     public final <T> CreateDomainImpl<T> as(Class<T> dataType) {
         return as(DefaultDataType.getDataType(null, dataType));

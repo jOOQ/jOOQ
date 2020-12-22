@@ -37,43 +37,56 @@
  */
 package org.jooq.impl;
 
-// ...
+import java.sql.ResultSet;
+import java.util.Iterator;
 
-import org.jooq.Fetchable;
 import org.jooq.Record;
-import org.jooq.RowCountQuery;
+import org.jooq.Result;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDelegatingRowCountQuery<R extends Record, Q extends RowCountQuery>
-    extends AbstractDelegatingQuery<R, Q>
-    implements RowCountQuery, Fetchable<R> {
+final class ResultAsCursor<R extends Record> extends AbstractCursor<R> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6710523592699040547L;
+    private static final long serialVersionUID = 3711590697891578695L;
+    private final Result<R>   result;
+    private int               index;
 
-    AbstractDelegatingRowCountQuery(Q delegate) {
-        super(delegate);
+    ResultAsCursor(Result<R> result) {
+        super(result.configuration(), (AbstractRow) result.fieldsRow());
+
+        this.result = result;
     }
-
-
-
-
-
-
-
-
-
-
-
 
     @Override
-    public final void subscribe(org.reactivestreams.Subscriber<? super Integer> subscriber) {
-        getDelegate().subscribe(subscriber);
+    public final Iterator<R> iterator() {
+        return result.iterator();
     }
 
+    @Override
+    public final Result<R> fetchNext(int number) {
+        Result<R> r = new ResultImpl<R>(configuration, fields);
 
+        for (int i = 0; i < number && i + index < result.size(); i++)
+            r.add(result.get(i + index));
+
+        index += number;
+        return r;
+    }
+
+    @Override
+    public void close() {}
+
+    @Override
+    public boolean isClosed() {
+        return false;
+    }
+
+    @Override
+    public final ResultSet resultSet() {
+        return result.intoResultSet();
+    }
 }

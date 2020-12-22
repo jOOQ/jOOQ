@@ -37,22 +37,6 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-
-import java.util.Optional;
-
-import org.jooq.exception.DataAccessException;
-import org.jooq.exception.TooManyRowsException;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -95,56 +79,6 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface UpdateResultStep<R extends Record> extends Update<R> {
-
-    /**
-     * The result holding returned values as specified by the
-     * {@link UpdateReturningStep}.
-     *
-     * @return The returned values as specified by the
-     *         {@link UpdateReturningStep}. Note:
-     *         <ul>
-     *         <li>Not all databases / JDBC drivers support returning several
-     *         values on multi-row inserts!</li><li>This may return an empty
-     *         <code>Result</code> in case jOOQ could not retrieve any generated
-     *         keys from the JDBC driver.</li>
-     *         </ul>
-     * @throws DataAccessException if something went wrong executing the query
-     * @see UpdateQuery#getReturnedRecords()
-     */
-    @NotNull
-    @Support({ FIREBIRD, POSTGRES })
-    Result<R> fetch() throws DataAccessException;
-
-    /**
-     * The record holding returned values as specified by the
-     * {@link UpdateReturningStep}.
-     *
-     * @return The returned value as specified by the
-     *         {@link UpdateReturningStep}. This may return <code>null</code> in
-     *         case jOOQ could not retrieve any generated keys from the JDBC
-     *         driver.
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws TooManyRowsException if the query returned more than one record
-     * @see UpdateQuery#getReturnedRecord()
-     */
-    @Nullable
-    @Support({ FIREBIRD, POSTGRES })
-    R fetchOne() throws DataAccessException, TooManyRowsException;
-
-
-    /**
-     * The record holding returned values as specified by the
-     * {@link UpdateReturningStep}.
-     *
-     * @return The returned value as specified by the
-     *         {@link UpdateReturningStep}.
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws TooManyRowsException if the query returned more than one record
-     * @see UpdateQuery#getReturnedRecord()
-     */
-    @NotNull
-    @Support({ FIREBIRD, POSTGRES })
-    Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
+public interface UpdateResultStep<R extends Record> extends Update<R>, Fetchable<R> {
 
 }

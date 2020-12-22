@@ -93,7 +93,7 @@ import org.jooq.TableLike;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class DeleteImpl<R extends Record>
-    extends AbstractDelegatingRowCountQuery<DeleteQueryImpl<R>>
+    extends AbstractDelegatingRowCountQuery<R, DeleteQueryImpl<R>>
     implements
 
     // Cascading interface implementations for Delete behaviour
@@ -519,17 +519,4 @@ final class DeleteImpl<R extends Record>
         getDelegate().execute();
         return returningResult ? (Result<R>) getDelegate().getResult() : getDelegate().getReturnedRecords();
     }
-
-    @Override
-    public final R fetchOne() {
-        getDelegate().execute();
-        return filterOne(returningResult ? (Result<R>) getDelegate().getResult() : getDelegate().getReturnedRecords());
-    }
-
-
-    @Override
-    public final Optional<R> fetchOptional() {
-        return Optional.ofNullable(fetchOne());
-    }
-
 }

@@ -73,6 +73,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
@@ -88,7 +89,7 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQuery extends AbstractQueryPart implements Query {
+abstract class AbstractQuery<R extends Record> extends AbstractFetchable<R> implements Query {
 
     private static final long       serialVersionUID = -8046199737354507547L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);

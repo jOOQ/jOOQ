@@ -37,14 +37,6 @@
  */
 package org.jooq;
 
-import java.util.Optional;
-
-import org.jooq.exception.DataAccessException;
-import org.jooq.exception.TooManyRowsException;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
@@ -95,56 +87,6 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface InsertResultStep<R extends Record> extends Insert<R> {
-
-    /**
-     * The result holding returned values as specified by the
-     * {@link InsertReturningStep}.
-     *
-     * @return The returned values as specified by the
-     *         {@link InsertReturningStep}. Note:
-     *         <ul>
-     *         <li>Not all databases / JDBC drivers support returning several
-     *         values on multi-row inserts!</li><li>This may return an empty
-     *         <code>Result</code> in case jOOQ could not retrieve any generated
-     *         keys from the JDBC driver.</li>
-     *         </ul>
-     * @throws DataAccessException if something went wrong executing the query
-     * @see InsertQuery#getReturnedRecords()
-     */
-    @NotNull
-    @Support
-    Result<R> fetch() throws DataAccessException;
-
-    /**
-     * The record holding returned values as specified by the
-     * {@link InsertReturningStep}.
-     *
-     * @return The returned value as specified by the
-     *         {@link InsertReturningStep}. This may return <code>null</code> in
-     *         case jOOQ could not retrieve any generated keys from the JDBC
-     *         driver.
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws TooManyRowsException if the query returned more than one record
-     * @see InsertQuery#getReturnedRecord()
-     */
-    @Nullable
-    @Support
-    R fetchOne() throws DataAccessException, TooManyRowsException;
-
-
-    /**
-     * The record holding returned values as specified by the
-     * {@link InsertReturningStep}.
-     *
-     * @return The returned value as specified by the
-     *         {@link InsertReturningStep}
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws TooManyRowsException if the query returned more than one record
-     * @see InsertQuery#getReturnedRecord()
-     */
-    @NotNull
-    @Support
-    Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
+public interface InsertResultStep<R extends Record> extends Insert<R>, Fetchable<R> {
 
 }

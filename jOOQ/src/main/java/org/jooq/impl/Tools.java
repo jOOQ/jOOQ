@@ -3168,7 +3168,7 @@ final class Tools {
         if (select instanceof SelectQueryImpl)
             return (SelectQueryImpl<R>) select;
         else if (select instanceof AbstractDelegatingQuery)
-            return ((AbstractDelegatingQuery<SelectQueryImpl<R>>) select).getDelegate();
+            return ((AbstractDelegatingQuery<R, SelectQueryImpl<R>>) select).getDelegate();
         else
             return null;
     }

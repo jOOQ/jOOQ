@@ -101,7 +101,7 @@ import org.jooq.tools.jdbc.MockResultSet;
  * @author Ivan Dugic
  */
 @SuppressWarnings({"rawtypes", "unchecked" })
-final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Result<R> {
+final class ResultImpl<R extends Record> extends AbstractResult<R> implements Result<R> {
 
     /**
      * Generated UID

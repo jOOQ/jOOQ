@@ -123,7 +123,7 @@ import org.jooq.UpdateWhereStep;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class UpdateImpl<R extends Record>
-    extends AbstractDelegatingRowCountQuery<UpdateQuery<R>>
+    extends AbstractDelegatingRowCountQuery<R, UpdateQuery<R>>
     implements
 
     // Cascading interface implementations for Update behaviour
@@ -866,17 +866,4 @@ final class UpdateImpl<R extends Record>
         getDelegate().execute();
         return returningResult ? (Result<R>) getDelegate().getResult() : getDelegate().getReturnedRecords();
     }
-
-    @Override
-    public final R fetchOne() {
-        getDelegate().execute();
-        return filterOne(returningResult ? (Result<R>) getDelegate().getResult() : getDelegate().getReturnedRecords());
-    }
-
-
-    @Override
-    public final Optional<R> fetchOptional() {
-        return Optional.ofNullable(fetchOne());
-    }
-
 }

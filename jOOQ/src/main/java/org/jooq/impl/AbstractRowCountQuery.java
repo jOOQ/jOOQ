@@ -38,12 +38,13 @@
 package org.jooq.impl;
 
 import org.jooq.Configuration;
+import org.jooq.Record;
 import org.jooq.RowCountQuery;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractRowCountQuery extends AbstractQuery implements RowCountQuery {
+abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements RowCountQuery {
 
     /**
      * Generated UID

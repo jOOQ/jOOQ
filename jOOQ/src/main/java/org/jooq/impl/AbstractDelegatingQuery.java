@@ -46,12 +46,15 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.Record;
 import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPart implements Query {
+abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
+    extends AbstractFetchable<R>
+    implements Query {
 
     /**
      * Generated UID

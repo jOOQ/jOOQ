@@ -217,7 +217,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     public Row fieldsRow() {
         if (fieldsRow == null)
             fieldsRow = Tools.row0(fields0());
-        
+
         return fieldsRow;
     }
 
@@ -1027,6 +1027,12 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     public final Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction) {
         return as(otherTable.getUnqualifiedName(), (f, i) -> aliasFunction.apply(f, i).getUnqualifiedName());
     }
+
+
+
+
+
+
 
 
 

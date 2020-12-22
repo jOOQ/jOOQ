@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+ * The <code>DROP SEQUENCE</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
 final class DropSequenceImpl

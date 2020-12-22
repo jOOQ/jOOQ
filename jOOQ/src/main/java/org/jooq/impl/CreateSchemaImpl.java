@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+ * The <code>CREATE SCHEMA</code> statement.
  */
 @SuppressWarnings({ "unused" })
 final class CreateSchemaImpl

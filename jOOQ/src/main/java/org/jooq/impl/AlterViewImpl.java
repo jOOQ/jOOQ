@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>ALTER VIEW IF EXISTS</code> statement.
+ * The <code>ALTER VIEW</code> statement.
  */
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class AlterViewImpl

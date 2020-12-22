@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+ * The <code>ALTER DOMAIN</code> statement.
  */
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
 final class AlterDomainImpl<T>

@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>DROP DOMAIN IF EXISTS</code> statement.
+ * The <code>DROP DOMAIN</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
 final class DropDomainImpl

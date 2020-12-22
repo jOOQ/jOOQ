@@ -55,7 +55,7 @@ import java.math.BigDecimal;
 
 
 /**
- * The <code>LOG</code> statement.
+ * The <code>LN</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class Log

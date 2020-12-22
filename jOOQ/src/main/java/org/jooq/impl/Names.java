@@ -41,7 +41,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.unquotedName;
 
 import org.jooq.Name;
-import org.jooq.SQLDialect;
 
 /**
  * An internal {@link Name} cache.
@@ -99,6 +98,8 @@ final class Names {
     static final Name N_COTH                   = unquotedName("coth");
     static final Name N_COUNT                  = unquotedName("count");
     static final Name N_COUNTSET               = unquotedName("countset");
+    static final Name N_COVAR_POP              = unquotedName("covar_pop");
+    static final Name N_COVAR_SAMP             = unquotedName("covar_samp");
     static final Name N_CURRENTUSER            = unquotedName("currentuser");
     static final Name N_CURRENT_BIGDATETIME    = unquotedName("current_bigdatetime");
     static final Name N_CURRENT_CATALOG        = unquotedName("current_catalog");

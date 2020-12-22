@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>REVOKE GRANT OPTION FOR</code> statement.
+ * The <code>REVOKE</code> statement.
  */
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
 final class RevokeImpl

@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+ * The <code>CREATE DOMAIN</code> statement.
  */
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
 final class CreateDomainImpl<T>

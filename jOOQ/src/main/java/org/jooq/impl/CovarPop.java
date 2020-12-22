@@ -51,70 +51,37 @@ import org.jooq.impl.*;
 import org.jooq.tools.*;
 
 import java.util.*;
+import java.math.BigDecimal;
 
 
 /**
- * The <code>DROP DATABASE</code> statement.
+ * The <code>COVAR POP</code> statement.
  */
-@SuppressWarnings({ "unused" })
-final class DropDatabaseImpl
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class CovarPop
 extends
-    AbstractRowCountQuery
-implements
-    DropDatabaseFinalStep
+    DefaultAggregateFunction<BigDecimal>
 {
 
     private static final long serialVersionUID = 1L;
 
-    private final Catalog database;
-    private final boolean dropDatabaseIfExists;
-
-    DropDatabaseImpl(
-        Configuration configuration,
-        Catalog database,
-        boolean dropDatabaseIfExists
+    CovarPop(
+        Field<? extends Number> y,
+        Field<? extends Number> x
     ) {
-        super(configuration);
-
-        this.database = database;
-        this.dropDatabaseIfExists = dropDatabaseIfExists;
+        super(
+            false,
+            N_COVAR_POP,
+            NUMERIC,
+            nullSafeNotNull(y, INTEGER),
+            nullSafeNotNull(x, INTEGER)
+        );
     }
-
-    final Catalog $database()             { return database; }
-    final boolean $dropDatabaseIfExists() { return dropDatabaseIfExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
-
-    private final boolean supportsIfExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        if (dropDatabaseIfExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.DROP_DATABASE);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.DROP_DATABASE);
-        }
-        else {
-            accept0(ctx);
-        }
-    }
-
-    private void accept0(Context<?> ctx) {
-        ctx.visit(K_DROP).sql(' ').visit(K_DATABASE);
-
-        if (dropDatabaseIfExists && supportsIfExists(ctx))
-            ctx.sql(' ').visit(K_IF_EXISTS);
-
-        ctx.sql(' ').visit(database);
-    }
 
 
 }

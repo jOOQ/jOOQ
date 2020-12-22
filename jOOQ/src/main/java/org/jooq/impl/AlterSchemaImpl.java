@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+ * The <code>ALTER SCHEMA</code> statement.
  */
 @SuppressWarnings({ "hiding", "unused" })
 final class AlterSchemaImpl

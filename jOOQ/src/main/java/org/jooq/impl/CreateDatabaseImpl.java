@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+ * The <code>CREATE DATABASE</code> statement.
  */
 @SuppressWarnings({ "unused" })
 final class CreateDatabaseImpl

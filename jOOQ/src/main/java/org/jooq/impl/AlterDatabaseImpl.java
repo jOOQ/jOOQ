@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>ALTER DATABASE IF EXISTS</code> statement.
+ * The <code>ALTER DATABASE</code> statement.
  */
 @SuppressWarnings({ "hiding", "unused" })
 final class AlterDatabaseImpl

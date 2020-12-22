@@ -17293,6 +17293,24 @@ public class DSL {
     }
 
     /**
+     * The <code>COVAR_SAMP</code> function.
+     */
+    @NotNull
+    @Support({ FIREBIRD, POSTGRES })
+    public static AggregateFunction<BigDecimal> covarSamp(Field<? extends Number> y, Field<? extends Number> x) {
+        return new CovarSamp(y, x);
+    }
+
+    /**
+     * The <code>COVAR_POP</code> function.
+     */
+    @NotNull
+    @Support({ FIREBIRD, POSTGRES })
+    public static AggregateFunction<BigDecimal> covarPop(Field<? extends Number> y, Field<? extends Number> x) {
+        return new CovarPop(y, x);
+    }
+
+    /**
      * The <code>MEDIAN</code> function.
      */
     @NotNull

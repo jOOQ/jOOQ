@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>DROP SCHEMA IF EXISTS</code> statement.
+ * The <code>DROP SCHEMA</code> statement.
  */
 @SuppressWarnings({ "unused" })
 final class DropSchemaImpl

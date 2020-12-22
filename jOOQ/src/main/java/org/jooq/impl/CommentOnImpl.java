@@ -54,7 +54,7 @@ import java.util.*;
 
 
 /**
- * The <code>COMMENT ON COLUMN</code> statement.
+ * The <code>COMMENT ON TABLE</code> statement.
  */
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class CommentOnImpl

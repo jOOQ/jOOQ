@@ -150,7 +150,6 @@ implements
     // XXX: DSL API
     // -------------------------------------------------------------------------
     
-    
     @Override
     public final CreateSequenceImpl startWith(Number startWith) {
         return startWith(Tools.field(startWith, sequence.getDataType()));

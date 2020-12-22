@@ -15287,6 +15287,60 @@ public class DSL {
     }
 
     /**
+     * The <code>LN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> ln(Number value) {
+        return new Log(Tools.field(value));
+    }
+
+    /**
+     * The <code>LN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> ln(Field<? extends Number> value) {
+        return new Log(value);
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Number value, int base) {
+        return new Log(Tools.field(value), Tools.field(base));
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Number value, Field<? extends Number> base) {
+        return new Log(Tools.field(value), base);
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Field<? extends Number> value, int base) {
+        return new Log(value, Tools.field(base));
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Field<? extends Number> value, Field<? extends Number> base) {
+        return new Log(value, base);
+    }
+
+    /**
      * The <code>LOWER</code> function.
      * <p>
      * Turn a string into lower case.
@@ -15857,6 +15911,42 @@ public class DSL {
     @Support
     public static Field<Integer> position(Field<String> in, Field<String> search) {
         return new Position(in, search);
+    }
+
+    /**
+     * The <code>POWER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> power(Number value, Number exponent) {
+        return new Power(Tools.field(value), Tools.field(exponent));
+    }
+
+    /**
+     * The <code>POWER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
+        return new Power(Tools.field(value), exponent);
+    }
+
+    /**
+     * The <code>POWER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> power(Field<? extends Number> value, Number exponent) {
+        return new Power(value, Tools.field(exponent));
+    }
+
+    /**
+     * The <code>POWER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> power(Field<? extends Number> value, Field<? extends Number> exponent) {
+        return new Power(value, exponent);
     }
 
     /**
@@ -16467,6 +16557,24 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> space(Field<? extends Number> count) {
         return new Space(count);
+    }
+
+    /**
+     * The <code>SQRT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sqrt(Number value) {
+        return new Sqrt(Tools.field(value));
+    }
+
+    /**
+     * The <code>SQRT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sqrt(Field<? extends Number> value) {
+        return new Sqrt(value);
     }
 
     /**
@@ -20699,141 +20807,6 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(T number) {
         return trunc(Tools.field(number), inline(0));
-    }
-
-    /**
-     * Get the sqrt(field) function.
-     *
-     * @see #sqrt(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sqrt(Number value) {
-        return sqrt(Tools.field(value));
-    }
-
-    /**
-     * Get the sqrt(field) function.
-     * <p>
-     * This renders the sqrt function where available:
-     * <code><pre>sqrt([field])</pre></code> ... or emulates it elsewhere using
-     * power (which in turn may also be emulated using ln and exp functions):
-     * <code><pre>power([field], 0.5)</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
-        return new Sqrt(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the ln(field) function, taking the natural logarithm of this field.
-     *
-     * @see #ln(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> ln(Number value) {
-        return ln(Tools.field(value));
-    }
-
-    /**
-     * Get the ln(field) function, taking the natural logarithm of this field.
-     * <p>
-     * This renders the ln or log function where available:
-     * <code><pre>ln([field]) or
-     * log([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> ln(Field<? extends Number> field) {
-        return new Ln(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the log(field, base) function.
-     *
-     * @see #log(Field, int)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log(Number value, int base) {
-        return log(Tools.field(value), base);
-    }
-
-    /**
-     * Get the log(field, base) function.
-     * <p>
-     * This renders the log function where available:
-     * <code><pre>log([field])</pre></code> ... or emulates it elsewhere (in
-     * most RDBMS) using the natural logarithm:
-     * <code><pre>ln([field]) / ln([base])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
-        return new Ln(Tools.nullSafe(field), Tools.field(base));
-    }
-
-    /**
-     * Get the log(field, base) function.
-     * <p>
-     * This renders the log function where available:
-     * <code><pre>log([field])</pre></code> ... or emulates it elsewhere (in
-     * most RDBMS) using the natural logarithm:
-     * <code><pre>ln([field]) / ln([base])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log(Field<? extends Number> field, Field<? extends Number> base) {
-        return new Ln(Tools.nullSafe(field), base);
-    }
-
-    /**
-     * Get the power(field, exponent) function.
-     *
-     * @see #power(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> power(Number value, Number exponent) {
-        return power(Tools.field(value), Tools.field(exponent));
-    }
-
-    /**
-     * Get the power(field, exponent) function.
-     *
-     * @see #power(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
-        return power(Tools.nullSafe(field), Tools.field(exponent));
-    }
-
-    /**
-     * Get the power(field, exponent) function.
-     *
-     * @see #power(Field, Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
-        return power(Tools.field(value), Tools.nullSafe(exponent));
-    }
-
-    /**
-     * Get the power(field, exponent) function.
-     * <p>
-     * This renders the power function where available:
-     * <code><pre>power([field], [exponent])</pre></code> ... or emulates it
-     * elsewhere using ln and exp:
-     * <code><pre>exp(ln([field]) * [exponent])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
-        return new Power(Tools.nullSafe(field), Tools.nullSafe(exponent));
     }
 
     /**

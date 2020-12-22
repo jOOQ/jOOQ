@@ -111,7 +111,6 @@ implements
     // XXX: DSL API
     // -------------------------------------------------------------------------
     
-    
     @Override
     public final CommentOnImpl is(String comment) {
         return is(DSL.comment(comment));

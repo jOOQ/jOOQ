@@ -162,7 +162,6 @@ implements
     // XXX: DSL API
     // -------------------------------------------------------------------------
     
-    
     @Override
     public final AlterDomainImpl<T> add(Constraint addConstraint) {
         this.addConstraint = addConstraint;

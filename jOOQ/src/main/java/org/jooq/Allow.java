@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQL99;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -152,6 +153,7 @@ public @interface Allow {
      */
     @SuppressWarnings("deprecation")
     SQLDialect[] value() default {
+
 
 
 

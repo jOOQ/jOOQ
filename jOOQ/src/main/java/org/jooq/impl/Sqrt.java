@@ -37,32 +37,52 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_SQR;
-import static org.jooq.impl.Names.N_SQRT;
-import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
 import java.math.BigDecimal;
 
-import org.jooq.Context;
-import org.jooq.Field;
 
 /**
- * @author Lukas Eder
+ * The <code>SQRT</code> statement.
  */
-final class Sqrt extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Sqrt
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<? extends Number> argument;
+    private final Field<? extends Number> value;
 
-    Sqrt(Field<? extends Number> argument) {
-        super(N_SQRT, NUMERIC);
+    Sqrt(
+        Field<? extends Number> value
+    ) {
+        super(
+            N_SQRT,
+            allNotNull(NUMERIC, value)
+        );
 
-        this.argument = argument;
+        this.value = nullSafeNotNull(value, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -83,12 +103,29 @@ final class Sqrt extends AbstractField<BigDecimal> {
 
 
             case SQLITE:
-                ctx.visit(DSL.power(argument, 0.5));
+                ctx.visit(DSL.power(value, inline(0.5)));
                 break;
 
             default:
-                ctx.visit(N_SQRT).sql('(').visit(argument).sql(')');
+                ctx.visit(N_SQRT).sql('(').visit(value).sql(')');
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Sqrt) {
+            return
+                StringUtils.equals(value, ((Sqrt) that).value)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

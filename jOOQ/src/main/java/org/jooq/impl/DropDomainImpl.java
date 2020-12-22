@@ -105,7 +105,6 @@ implements
     // XXX: DSL API
     // -------------------------------------------------------------------------
     
-    
     @Override
     public final DropDomainImpl cascade() {
         this.cascade = true;

@@ -109,8 +109,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
-
+    
     @Override
     public final AlterViewImpl comment(String comment) {
         return comment(DSL.comment(comment));

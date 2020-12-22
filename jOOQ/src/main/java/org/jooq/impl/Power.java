@@ -37,34 +37,55 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Names.N_POWER;
-import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
 import java.math.BigDecimal;
 
-import org.jooq.Context;
-import org.jooq.Field;
 
 /**
- * @author Lukas Eder
+ * The <code>POWER</code> statement.
  */
-final class Power extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Power
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<? extends Number> arg1;
-    private final Field<? extends Number> arg2;
+    private final Field<? extends Number> value;
+    private final Field<? extends Number> exponent;
 
-    Power(Field<? extends Number> arg1, Field<? extends Number> arg2) {
-        super(N_POWER, NUMERIC);
+    Power(
+        Field<? extends Number> value,
+        Field<? extends Number> exponent
+    ) {
+        super(
+            N_POWER,
+            allNotNull(NUMERIC, value, exponent)
+        );
 
-        this.arg1 = arg1;
-        this.arg2 = arg2;
+        this.value = nullSafeNotNull(value, INTEGER);
+        this.exponent = nullSafeNotNull(exponent, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -77,12 +98,30 @@ final class Power extends AbstractField<BigDecimal> {
 
             case DERBY:
             case SQLITE:
-                ctx.visit(DSL.exp(imul(DSL.ln(arg1), arg2)));
+                ctx.visit(DSL.exp(imul(DSL.ln(value), exponent)));
                 break;
 
             default:
-                ctx.visit(N_POWER).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                ctx.visit(N_POWER).sql('(').visit(value).sql(", ").visit(exponent).sql(')');
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Power) {
+            return
+                StringUtils.equals(value, ((Power) that).value) &&
+                StringUtils.equals(exponent, ((Power) that).exponent)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

@@ -420,31 +420,6 @@ extends
     Cursor<R> fetchLazy() throws DataAccessException;
 
     /**
-     * Execute the query and "lazily" return the generated result.
-     * <p>
-     * The returned {@link Cursor} holds a reference to the executed
-     * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
-     * be fetched (or iterated over) lazily, fetching records from the
-     * {@link ResultSet} one by one.
-     * <p>
-     * Depending on your JDBC driver's behaviour, this will load only
-     * <code>fetchSize</code> records from the database into memory at once. For
-     * more details, see also {@link Statement#setFetchSize(int)}
-     * <p>
-     * Client code is responsible for closing the cursor after use.
-     *
-     * @return The resulting cursor.
-     * @throws DataAccessException if something went wrong executing the query
-     * @see #fetchLazy()
-     * @see Statement#setFetchSize(int)
-     * @deprecated - [#2811] - 3.3.0 - Use {@link #fetchSize(int)} and
-     *             {@link #fetchLazy()} instead.
-     */
-    @Deprecated
-    @NotNull
-    Cursor<R> fetchLazy(int fetchSize) throws DataAccessException;
-
-    /**
      * Execute a query, possibly returning several result sets.
      * <p>
      * Example (Sybase ASE):
@@ -4260,70 +4235,6 @@ extends
     CompletionStage<Result<R>> fetchAsync(Executor executor);
 
 
-
-    /**
-     * Fetch results asynchronously.
-     * <p>
-     * This method wraps fetching of records in a
-     * {@link java.util.concurrent.Future}, such that you can access the actual
-     * records at a future instant. This is especially useful when
-     * <ul>
-     * <li>You want to load heavy data in the background, for instance when the
-     * user logs in and accesses a pre-calculated dashboard screen, before they
-     * access the heavy data.</li>
-     * <li>You want to parallelise several independent OLAP queries before
-     * merging all data into a single report</li>
-     * <li>...</li>
-     * </ul>
-     * <p>
-     * This will internally create a "single thread executor", that is shut down
-     * at the end of the {@link FutureResult}'s lifecycle. Use
-     * {@link #fetchLater(ExecutorService)} instead, if you want control over
-     * your executing threads.
-     * <p>
-     * The result and its contained records are attached to the original
-     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
-     * to override this behaviour.
-     *
-     * @return A future result
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 3.2.0 - [#2581] - This method will be removed in jOOQ 4.0
-     */
-    @NotNull
-    @Deprecated
-    FutureResult<R> fetchLater() throws DataAccessException;
-
-    /**
-     * Fetch results asynchronously.
-     * <p>
-     * This method wraps fetching of records in a
-     * {@link java.util.concurrent.Future}, such that you can access the actual
-     * records at a future instant. This is especially useful when
-     * <ul>
-     * <li>You want to load heavy data in the background, for instance when the
-     * user logs in and accesses a pre-calculated dashboard screen, before they
-     * access the heavy data.</li>
-     * <li>You want to parallelise several independent OLAP queries before
-     * merging all data into a single report</li>
-     * <li>...</li>
-     * </ul>
-     * <p>
-     * Use this method rather than {@link #fetchLater()}, in order to keep
-     * control over thread lifecycles, if you manage threads in a J2EE container
-     * or with Spring, for instance.
-     * <p>
-     * The result and its contained records are attached to the original
-     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
-     * to override this behaviour.
-     *
-     * @param executor A custom executor
-     * @return A future result
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 3.2.0 - [#2581] - This method will be removed in jOOQ 4.0
-     */
-    @NotNull
-    @Deprecated
-    FutureResult<R> fetchLater(ExecutorService executor) throws DataAccessException;
 
     /**
      * The record type produced by this query.

@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.concurrent.Executors.newSingleThreadExecutor;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -59,13 +58,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 // ...
-import java.util.concurrent.Future;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
@@ -447,7 +443,18 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Cursor<R> fetchLazy() {
-        return fetchLazy(fetchSize);
+
+        // [#3515] TODO: Avoid modifying a Query's per-execution state
+        lazy = true;
+
+        try {
+            execute();
+        }
+        finally {
+            lazy = false;
+        }
+
+        return cursor;
     }
 
     /**
@@ -466,26 +473,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         finally {
             autoclosing = previousAutoClosing;
         }
-    }
-
-    @Override
-    @Deprecated
-    public final Cursor<R> fetchLazy(int size) {
-        final int previousFetchSize = fetchSize;
-
-        // [#3515] TODO: Avoid modifying a Query's per-execution state
-        lazy = true;
-        fetchSize = size;
-
-        try {
-            execute();
-        }
-        finally {
-            lazy = false;
-            fetchSize = previousFetchSize;
-        }
-
-        return cursor;
     }
 
     @Override
@@ -1561,34 +1548,8 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    @Deprecated
-    public final org.jooq.FutureResult<R> fetchLater() {
-        ExecutorService executor = newSingleThreadExecutor();
-        Future<Result<R>> future = executor.submit(new ResultQueryCallable());
-        return new FutureResultImpl<>(future, executor);
-    }
-
-    @Override
-    @Deprecated
-    public final org.jooq.FutureResult<R> fetchLater(ExecutorService executor) {
-        Future<Result<R>> future = executor.submit(new ResultQueryCallable());
-        return new FutureResultImpl<>(future);
-    }
-
-    @Override
     public final Result<R> getResult() {
         return result;
-    }
-
-    /**
-     * A wrapper for the {@link ResultQuery#fetch()} method
-     */
-    private final class ResultQueryCallable implements Callable<Result<R>> {
-
-        @Override
-        public final Result<R> call() throws Exception {
-            return fetch();
-        }
     }
 
     @SuppressWarnings("rawtypes")

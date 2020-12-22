@@ -2939,12 +2939,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    @Deprecated
-    public final Cursor<R> fetchLazy(int fetchSize) {
-        return getDelegate().fetchLazy(fetchSize);
-    }
-
-    @Override
     public final Results fetchMany() {
         return getDelegate().fetchMany();
     }
@@ -3962,18 +3956,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return getDelegate().fetchAsync(executor);
     }
 
-
-    @Override
-    @Deprecated
-    public final org.jooq.FutureResult<R> fetchLater() {
-        return getDelegate().fetchLater();
-    }
-
-    @Override
-    @Deprecated
-    public final org.jooq.FutureResult<R> fetchLater(ExecutorService executor) {
-        return getDelegate().fetchLater(executor);
-    }
 
     @Override
     public final Table<R> asTable() {

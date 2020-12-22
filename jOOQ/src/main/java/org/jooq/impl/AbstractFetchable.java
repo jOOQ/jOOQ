@@ -64,6 +64,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Results;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 
@@ -1200,11 +1201,14 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
         return fetch().map(mapper);
     }
 
-    @SuppressWarnings("rawtypes")
     private final boolean hasLimit1() {
-        if (this instanceof SelectQueryImpl) {
-            Limit l = ((SelectQueryImpl) this).getLimit();
-            return !l.withTies() && !l.percent() && l.limitOne();
+        if (this instanceof Select) {
+            SelectQueryImpl<?> s = Tools.selectQueryImpl((Select<?>) this);
+
+            if (s != null) {
+                Limit l = s.getLimit();
+                return !l.withTies() && !l.percent() && l.limitOne();
+            }
         }
 
         return false;

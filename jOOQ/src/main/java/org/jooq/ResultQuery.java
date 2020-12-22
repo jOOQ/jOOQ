@@ -1865,6 +1865,8 @@ extends
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param key The key field. Client code must assure that this field is
@@ -1890,6 +1892,8 @@ extends
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field. Client code must assure that this
      *            field is unique in the result set.
@@ -1914,6 +1918,8 @@ extends
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field. Client code must assure that this
      *            field is unique in the result set.
@@ -1938,6 +1944,8 @@ extends
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field. Client code must assure that this
      *            field is unique in the result set.
@@ -1957,7 +1965,9 @@ extends
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field, Field)} instead, if your keys
-     * are non-unique
+     * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -1980,7 +1990,9 @@ extends
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(int, int)} instead, if your keys are
-     * non-unique
+     * non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field. Client code must assure that this
      *            field is unique in the result set.
@@ -2001,7 +2013,9 @@ extends
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(String, String)} instead, if your keys
-     * are non-unique
+     * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field. Client code must assure that this
      *            field is unique in the result set.
@@ -2022,7 +2036,9 @@ extends
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name, Name)} instead, if your keys
-     * are non-unique
+     * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field. Client code must assure that this
      *            field is unique in the result set.
@@ -2044,6 +2060,8 @@ extends
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field[])} instead, if your keys are
      * non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set.
@@ -2064,6 +2082,8 @@ extends
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(int[])} instead, if your keys are
      * non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. Client code must assure that keys are
      *            unique in the result set.
@@ -2084,6 +2104,8 @@ extends
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String[])} instead, if your keys are
      * non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set.
@@ -2104,6 +2126,8 @@ extends
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name[])} instead, if your keys are
      * non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set.
@@ -2124,6 +2148,8 @@ extends
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field[], Field[])} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set.
@@ -2145,6 +2171,8 @@ extends
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(int[], int[])} instead, if your keys
      * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. Client code must assure that keys are
      *            unique in the result set.
@@ -2166,6 +2194,8 @@ extends
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String[], String[])} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set.
@@ -2187,6 +2217,8 @@ extends
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name[], Name[])} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set.
@@ -2208,6 +2240,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Field[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set. If this is <code>null</code> or an empty array,
@@ -2233,6 +2267,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(int[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -2258,6 +2294,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(String[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -2283,6 +2321,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Name[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -2308,6 +2348,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Field[], RecordMapper)}
      * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set. If this is <code>null</code> or an empty array,
@@ -2333,6 +2375,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(int[], RecordMapper)} instead,
      * if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -2358,6 +2402,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(String[], RecordMapper)}
      * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -2383,6 +2429,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Name[], RecordMapper)}
      * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -2412,6 +2460,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Class)} instead, if your keys
      * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -2438,6 +2488,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Class, Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -2465,6 +2517,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Class, RecordMapper)} instead,
      * if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -2492,6 +2546,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(RecordMapper)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @return A Map containing grouped results. This will never be
@@ -2517,6 +2573,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(RecordMapper, Class)} instead,
      * if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @param valueType The value type.
@@ -2543,6 +2601,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(RecordMapper, RecordMapper)}
      * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @param valueMapper The value mapper.
@@ -2565,6 +2625,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys turn out to be
      * non-unique in the result set. Use {@link #fetchGroups(Table)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
@@ -2585,6 +2647,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys turn out to be
      * non-unique in the result set. Use {@link #fetchGroups(Table, Table)}
      * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyTable The key table. Client code must assure that keys are
      *            unique in the result set. May not be <code>null</code>.
@@ -2606,6 +2670,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Table, Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
@@ -2630,6 +2696,8 @@ extends
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Table, RecordMapper)} instead,
      * if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
@@ -2654,6 +2722,8 @@ extends
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param key The key. Client code must assure that key is unique in the
      *            result set.
@@ -2675,6 +2745,8 @@ extends
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(int, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key. Client code must assure that key is unique
      *            in the result set.
@@ -2696,6 +2768,8 @@ extends
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
@@ -2717,6 +2791,8 @@ extends
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
@@ -2738,6 +2814,8 @@ extends
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param key The key. Client code must assure that key is unique in the
      *            result set.
@@ -2759,6 +2837,8 @@ extends
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(int, Class)} instead, if your key is
      * non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key. Client code must assure that key is unique
      *            in the result set.
@@ -2780,6 +2860,8 @@ extends
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
@@ -2801,6 +2883,8 @@ extends
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
@@ -2825,6 +2909,8 @@ extends
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param key The key field.
@@ -2846,6 +2932,8 @@ extends
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field index.
      * @return A Map containing the results. This will never be
@@ -2866,6 +2954,8 @@ extends
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @return A Map containing the results. This will never be
@@ -2886,6 +2976,8 @@ extends
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @return A Map containing the results. This will never be
@@ -2902,6 +2994,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Field, Field)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -2921,6 +3015,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(int, int)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field index.
      * @param valueFieldIndex The value field index.
@@ -2938,6 +3034,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(String, String)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param valueFieldName The value field name.
@@ -2955,6 +3053,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Name, Name)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param valueFieldName The value field name.
@@ -2972,6 +3072,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Field[])}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -2990,6 +3092,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(int[])}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -3008,6 +3112,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(String[])}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -3026,6 +3132,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Name[])}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -3044,6 +3152,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Field[], Field[])}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -3063,6 +3173,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(int[], int[])}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -3082,6 +3194,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(String[], String[])}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -3101,6 +3215,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Name[], Name[])}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -3120,6 +3236,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Field[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
@@ -3141,6 +3259,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(int[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -3162,6 +3282,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(String[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -3183,6 +3305,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Name[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -3204,6 +3328,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Field[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
@@ -3225,6 +3351,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(int[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -3246,6 +3374,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(String[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -3267,6 +3397,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Name[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -3292,6 +3424,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Class)}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -3314,6 +3448,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Class, Class)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -3337,6 +3473,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Class, RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -3360,6 +3498,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(RecordMapper, RecordMapper)}, this method allows
      * for non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @return A Map containing the results. This will never be
@@ -3381,6 +3521,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(RecordMapper, Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @param valueType The value type.
@@ -3403,6 +3545,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(RecordMapper, RecordMapper)}, this method allows
      * for non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @param valueMapper The value mapper.
@@ -3421,6 +3565,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Table)}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. May not be <code>null</code>.
      * @return A Map containing the results. This will never be
@@ -3437,6 +3583,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Table, Table)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyTable The key table. May not be <code>null</code>.
      * @param valueTable The value table. May not be <code>null</code>.
@@ -3454,6 +3602,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Table, Class)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. May not be <code>null</code>.
      * @param type The entity type.
@@ -3474,6 +3624,8 @@ extends
      * <p>
      * Unlike {@link #fetchMap(Table, RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. May not be <code>null</code>.
      * @param mapper The mapper callback.
@@ -3491,6 +3643,8 @@ extends
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param <E> The generic entity type.
@@ -3510,6 +3664,8 @@ extends
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field index.
      * @param type The entity type.
@@ -3527,6 +3683,8 @@ extends
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param type The entity type.
@@ -3544,6 +3702,8 @@ extends
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param type The entity type.
@@ -3561,6 +3721,8 @@ extends
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param <E> The generic entity type.
@@ -3580,6 +3742,8 @@ extends
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field index.
      * @param mapper The mapper callback.
@@ -3597,6 +3761,8 @@ extends
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param mapper The mapper callback.
@@ -3614,6 +3780,8 @@ extends
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param mapper The mapper callback.

@@ -54,7 +54,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A wrapper for database results returned by <code>{@link SelectQuery}</code>
+ * A wrapper for database results returned by <code>{@link SelectQuery}</code>.
  *
  * @param <R> The record type contained in this result
  * @author Lukas Eder
@@ -376,12 +376,14 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
      * non-unique in the result set. Use {@link #intoGroups(Field)} instead, if
-     * your keys are non-unique
+     * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
-     * @param <K> The key's generic field type
+     * @param <K> The key's generic field type.
      * @param key The key field. Client code must assure that this field is
      *            unique in the result set.
-     * @return A Map containing the results
+     * @return A Map containing the results.
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      * @throws InvalidResultException if the key field returned two or more
@@ -396,7 +398,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
      * non-unique in the result set. Use {@link #intoGroups(int)} instead, if
-     * your keys are non-unique
+     * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The 0-based key field index. Client code must assure
      *            that this field is unique in the result set.
@@ -415,7 +419,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
      * non-unique in the result set. Use {@link #intoGroups(String)} instead, if
-     * your keys are non-unique
+     * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name. Client code must assure that this
      *            field is unique in the result set.
@@ -434,7 +440,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
      * non-unique in the result set. Use {@link #intoGroups(Name)} instead, if
-     * your keys are non-unique
+     * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name. Client code must assure that this
      *            field is unique in the result set.
@@ -453,7 +461,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
      * non-unique in the result set. Use {@link #intoGroups(Field, Field)}
-     * instead, if your keys are non-unique
+     * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -475,7 +485,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
      * non-unique in the result set. Use {@link #intoGroups(int, int)} instead,
-     * if your keys are non-unique
+     * if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The 0-based key field index. Client code must assure
      *            that this field is unique in the result set.
@@ -495,7 +507,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
      * non-unique in the result set. Use {@link #intoGroups(String, String)}
-     * instead, if your keys are non-unique
+     * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name. Client code must assure that this
      *            field is unique in the result set.
@@ -515,7 +529,9 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * An {@link InvalidResultException} is thrown, if the key turns out to be
      * non-unique in the result set. Use {@link #intoGroups(Name, Name)}
-     * instead, if your keys are non-unique
+     * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name. Client code must assure that this
      *            field is unique in the result set.
@@ -536,6 +552,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
      * the result set. Use {@link #intoGroups(Field, Class)} instead, if your
      * key is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param key The key. Client code must assure that key is unique in the
      *            result set.
@@ -559,6 +577,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
      * the result set. Use {@link #intoGroups(int, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The 0-based key field index. Client code must assure
      *            that key is unique in the result set.
@@ -582,6 +602,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
      * the result set. Use {@link #intoGroups(String, Class)} instead, if your
      * key is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
@@ -605,6 +627,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
      * the result set. Use {@link #intoGroups(Name, Class)} instead, if your
      * key is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
@@ -628,6 +652,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
      * the result set. Use {@link #intoGroups(Field, Class)} instead, if your
      * key is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param key The key. Client code must assure that key is unique in the
      *            result set.
@@ -651,6 +677,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
      * the result set. Use {@link #intoGroups(int, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The 0-based key field index. Client code must assure
      *            that key is unique in the result set.
@@ -674,6 +702,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
      * the result set. Use {@link #intoGroups(String, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
@@ -697,6 +727,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the key is non-unique in
      * the result set. Use {@link #intoGroups(Name, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
@@ -720,6 +752,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Field[])} instead, if your keys
      * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set. If this is <code>null</code> or an empty array,
@@ -740,6 +774,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(int[])} instead, if your keys
      * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The 0-based key field indexes. Client code must
      *            assure that keys are unique in the result set. If this is
@@ -761,6 +797,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(String[])} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -781,6 +819,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Name[])} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -801,6 +841,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Field[], Field[])} instead, if your keys
      * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set. If this is <code>null</code> or an empty array,
@@ -822,6 +864,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(int[], int[])} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The 0-based key field indexes. Client code must
      *            assure that keys are unique in the result set. If this is
@@ -844,6 +888,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(String[], String[])} instead,
      * if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -865,6 +911,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Name[], Name[])} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -886,6 +934,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Field[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set. If this is <code>null</code> or an empty array,
@@ -910,6 +960,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(int[], Class)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The 0-based key field indexes. Client code must
      *            assure that keys are unique in the result set. If this is
@@ -935,6 +987,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(String[], Class)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -959,6 +1013,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Name[], Class)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -983,6 +1039,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Field[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set. If this is <code>null</code> or an empty array,
@@ -1007,6 +1065,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(int[], Class)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The 0-based key field indexes. Client code must
      *            assure that keys are unique in the result set. If this is
@@ -1032,6 +1092,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(String[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -1056,6 +1118,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Name[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set. If this is <code>null</code> or an
@@ -1083,6 +1147,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Class)} instead, if your keys
      * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -1107,6 +1173,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Class, Class)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -1132,6 +1200,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Class, RecordMapper)} instead,
      * if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -1157,6 +1227,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(RecordMapper)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @return A Map containing grouped results
@@ -1180,6 +1252,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(RecordMapper, Class)} instead,
      * if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @param valueType The value type.
@@ -1204,6 +1278,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(RecordMapper, RecordMapper)}
      * instead, if your keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @param valueMapper The value mapper.
@@ -1224,6 +1300,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Table)} instead, if your keys
      * are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
@@ -1243,6 +1321,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Table, Table)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyTable The key table. Client code must assure that keys are
      *            unique in the result set. May not be <code>null</code>.
@@ -1263,6 +1343,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Table, Class)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
@@ -1286,6 +1368,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #intoGroups(Table, Class)} instead, if your
      * keys are non-unique.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
@@ -1308,6 +1392,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Field)}, this method allows for non-unique keys in
      * the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param key The key field.
@@ -1324,6 +1410,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(int)}, this method allows for non-unique keys in
      * the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The 0-based key field index.
      * @return A Map containing the results
@@ -1339,6 +1427,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(String)}, this method allows for non-unique keys in
      * the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @return A Map containing the results
@@ -1354,6 +1444,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Name)}, this method allows for non-unique keys in
      * the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @return A Map containing the results
@@ -1369,6 +1461,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Field, Field)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -1387,6 +1481,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(int, int)}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The 0-based key field index.
      * @param valueFieldIndex The 0-based value field index.
@@ -1403,6 +1499,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(String, String)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param valueFieldName The value field name.
@@ -1419,6 +1517,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Name, Name)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param valueFieldName The value field name.
@@ -1433,6 +1533,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
      * <p>
+     * Unlike {@link #intoMap(Field, Class)}, this method allows for
+     * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param <E> The generic entity type.
@@ -1451,6 +1555,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
      * <p>
+     * Unlike {@link #intoMap(int, Class)}, this method allows for
+     * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The 0-based key field index.
      * @param type The entity type.
@@ -1467,6 +1575,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
      * <p>
+     * Unlike {@link #intoMap(String, Class)}, this method allows for
+     * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param type The entity type.
@@ -1483,6 +1595,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
      * <p>
+     * Unlike {@link #intoMap(Name, Class)}, this method allows for
+     * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param type The entity type.
@@ -1498,6 +1614,11 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * Unlike {@link #intoMap(Field, RecordMapper)}, this method allows for
+     * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
      * @param <E> The generic entity type.
@@ -1514,6 +1635,11 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * Unlike {@link #intoMap(int, RecordMapper)}, this method allows for
+     * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The 0-based key field index.
      * @param mapper The mapper callback.
@@ -1528,6 +1654,11 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * Unlike {@link #intoMap(String, RecordMapper)}, this method allows for
+     * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param mapper The mapper callback.
@@ -1542,6 +1673,11 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * Unlike {@link #intoMap(Name, RecordMapper)}, this method allows for
+     * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
      * @param mapper The mapper callback.
@@ -1558,6 +1694,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Field[])}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
@@ -1573,6 +1711,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(int[])}, this method allows for non-unique keys in
      * the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The 0-based key field indexes. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -1589,6 +1729,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(String[])}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -1604,6 +1746,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Name[])}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -1619,6 +1763,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Field[], Field[])}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
@@ -1635,6 +1781,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(int[], int[])}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The 0-based key field indexes. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -1652,6 +1800,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(String[], String[])}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -1668,6 +1818,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Name[], Name[])}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -1685,6 +1837,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Field[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
@@ -1705,6 +1859,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(int[], Class)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The 0-based key field indexes. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -1726,6 +1882,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(String[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -1746,6 +1904,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Name[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -1766,6 +1926,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Field[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
@@ -1786,6 +1948,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(int[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The 0-based key field indexes. If this is
      *            <code>null</code> or an empty array, the resulting map will
@@ -1807,6 +1971,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(String[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -1827,6 +1993,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Name[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
@@ -1850,6 +2018,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Class)}, this method allows for non-unique keys in
      * the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -1871,6 +2041,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Class, Class)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -1893,6 +2065,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Class, RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
@@ -1915,6 +2089,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(RecordMapper, RecordMapper)}, this method allows
      * for non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @return A Map containing grouped results
@@ -1935,6 +2111,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(RecordMapper, Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @param valueType The value type.
@@ -1956,6 +2134,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(RecordMapper, RecordMapper)}, this method allows
      * for non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
      * @param valueMapper The value mapper.
@@ -1972,6 +2152,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Table)}, this method allows for non-unique keys in
      * the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. May not be <code>null</code>.
      * @return A Map containing grouped results
@@ -1986,6 +2168,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Table, Table)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param keyTable The key table. May not be <code>null</code>.
      * @param valueTable The value table. May not be <code>null</code>.
@@ -2002,6 +2186,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Table, Class)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. May not be <code>null</code>.
      * @param type The entity type.
@@ -2021,6 +2207,8 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * <p>
      * Unlike {@link #intoMap(Table, RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * The resulting map is iteration order preserving.
      *
      * @param table The key table. May not be <code>null</code>.
      * @param mapper The mapper callback.

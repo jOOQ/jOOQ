@@ -80,16 +80,35 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
 
 
 
-            case H2:
-                ctx.visit(N_RATIO_TO_REPORT).sql('(').visit(field).sql(')');
+
+
+
+
+
+
+
+
+
+
+
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+                ctx.visit(castIfNeeded(field, (DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
+                   .sql(" / ")
+                   .visit(DSL.sum(field));
                 acceptOverClause(ctx);
                 break;
 
 
+
+
+
+
+            case H2:
             default:
-                ctx.visit(castIfNeeded(field, (DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
-                   .sql(" / ")
-                   .visit(DSL.sum(field));
+                ctx.visit(N_RATIO_TO_REPORT).sql('(').visit(field).sql(')');
                 acceptOverClause(ctx);
                 break;
         }

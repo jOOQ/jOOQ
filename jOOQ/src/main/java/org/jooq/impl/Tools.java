@@ -2236,7 +2236,7 @@ final class Tools {
             else if (size == 1)
                 return result.get(0);
             else
-                throw exception((CursorImpl<R>) cursor, new TooManyRowsException("Cursor returned more than one result"));
+                throw exception(cursor, new TooManyRowsException("Cursor returned more than one result"));
         }
         finally {
             cursor.close();
@@ -2284,23 +2284,28 @@ final class Tools {
             int size = result.size();
 
             if (size == 0)
-                throw exception((CursorImpl<R>) cursor, new NoDataFoundException("Cursor returned no rows"));
+                throw exception(cursor, new NoDataFoundException("Cursor returned no rows"));
             else if (size == 1)
                 return result.get(0);
             else
-                throw exception((CursorImpl<R>) cursor, new TooManyRowsException("Cursor returned more than one result"));
+                throw exception(cursor, new TooManyRowsException("Cursor returned more than one result"));
         }
         finally {
             cursor.close();
         }
     }
 
-    private static final RuntimeException exception(CursorImpl<?> cursor, RuntimeException e) {
+    private static final RuntimeException exception(Cursor<?> cursor, RuntimeException e) {
 
         // [#8877] Make sure these exceptions pass through ExecuteListeners as well
-        cursor.ctx.exception(e);
-        cursor.listener.exception(cursor.ctx);
-        return cursor.ctx.exception();
+        if (cursor instanceof CursorImpl) {
+            CursorImpl<?> c = (CursorImpl<?>) cursor;
+            c.ctx.exception(e);
+            c.listener.exception(c.ctx);
+            return c.ctx.exception();
+        }
+        else
+            return e;
     }
 
     static final void visitSubquery(Context<?> ctx, QueryPart query) {

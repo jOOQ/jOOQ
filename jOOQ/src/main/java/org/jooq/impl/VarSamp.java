@@ -99,8 +99,6 @@ extends
 
 
 
-
-
             default:
                 super.acceptFunctionName(ctx);
                 break;

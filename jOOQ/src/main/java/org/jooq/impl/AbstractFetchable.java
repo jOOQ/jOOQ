@@ -109,6 +109,8 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
         return fetch().iterator();
     }
 
+
+
     @Override
     public final CompletionStage<Result<R>> fetchAsync() {
         return fetchAsync(Tools.configuration(this).executorProvider().provide());
@@ -145,6 +147,7 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
             return c.collect(collector);
         }
     }
+
 
 
     @Override

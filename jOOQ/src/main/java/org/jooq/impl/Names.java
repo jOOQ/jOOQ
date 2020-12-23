@@ -269,6 +269,7 @@ final class Names {
     static final Name N_STDDEV_SAMP            = unquotedName("stddev_samp");
     static final Name N_STDEV                  = unquotedName("stdev");
     static final Name N_STDEVP                 = unquotedName("stdevp");
+    static final Name N_STDEV_SAMP             = unquotedName("stdev_samp");
     static final Name N_STRFTIME               = unquotedName("strftime");
     static final Name N_STRING_AGG             = unquotedName("string_agg");
     static final Name N_STRREVERSE             = unquotedName("strreverse");

@@ -136,7 +136,6 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
             this.delegateConnectionProvider = delegate;
         }
 
-        @NotNull
         @Override
         public final Connection acquire() {
             Connection local = localTxConnection.get();

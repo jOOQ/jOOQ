@@ -1010,7 +1010,7 @@ public enum SQLDialect {
      */
     @NotNull
     public final String getNameLC() {
-        return name == null ? null : name.toLowerCase();
+        return name.toLowerCase();
     }
 
     /**
@@ -1018,7 +1018,7 @@ public enum SQLDialect {
      */
     @NotNull
     public final String getNameUC() {
-        return name == null ? null : name.toUpperCase();
+        return name.toUpperCase();
     }
 
     /**

@@ -682,18 +682,22 @@ implements
             }
 
             if (search(lhs, keyFields[0].getTable()) != null) {
-                for (ForeignKey<?, ?> key : lhs.getReferences()) {
-                    if (key.getFields().containsAll(unaliased)) {
+                for (ForeignKey<?, ?> key : lhs.getReferences())
+                    if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
                         return onKey(key);
-                    }
-                }
+
+                for (ForeignKey<?, ?> key : lhs.getReferences())
+                    if (key.getFields().containsAll(unaliased))
+                        return onKey(key);
             }
             else if (search(rhs, keyFields[0].getTable()) != null) {
-                for (ForeignKey<?, ?> key : rhs.getReferences()) {
-                    if (key.getFields().containsAll(unaliased)) {
+                for (ForeignKey<?, ?> key : rhs.getReferences())
+                    if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
                         return onKey(key);
-                    }
-                }
+
+                for (ForeignKey<?, ?> key : rhs.getReferences())
+                    if (key.getFields().containsAll(unaliased))
+                        return onKey(key);
             }
         }
 

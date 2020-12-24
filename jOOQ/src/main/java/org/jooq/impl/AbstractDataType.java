@@ -527,12 +527,12 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public final T[] convert(Object... objects) {
-        return (T[]) Convert.convertArray(objects, getType());
+        return Convert.convertArray(objects, getConverter());
     }
 
     @Override
     public final List<T> convert(Collection<?> objects) {
-        return Convert.convert(objects, getType());
+        return Convert.convert(objects, getConverter());
     }
 
     @Override

@@ -237,29 +237,22 @@ public final class Convert {
      * This converts <code>values[i]</code> to <code>fields[i].getType()</code>
      */
     public static final Object[] convert(Object[] values, Field<?>[] fields) {
+        if (values == null)
+            return null;
 
         // [#1005] Convert values from the <code>VALUES</code> clause to appropriate
         // values as specified by the <code>INTO</code> clause's column list.
-        if (values != null) {
-            Object[] result = new Object[values.length];
+        Object[] result = new Object[values.length];
 
-            for (int i = 0; i < values.length; i++) {
+        // TODO [#1008] Should fields be cast? Check this with
+        // appropriate integration tests
+        for (int i = 0; i < values.length; i++)
+            if (values[i] instanceof Field<?>)
+                result[i] = values[i];
+            else
+                result[i] = convert(values[i], fields[i].getType());
 
-                // TODO [#1008] Should fields be cast? Check this with
-                // appropriate integration tests
-                if (values[i] instanceof Field<?>) {
-                    result[i] = values[i];
-                }
-                else {
-                    result[i] = convert(values[i], fields[i].getType());
-                }
-            }
-
-            return result;
-        }
-        else {
-            return null;
-        }
+        return result;
     }
 
     /**
@@ -268,29 +261,22 @@ public final class Convert {
      * This converts <code>values[i]</code> to <code>types[i]</code>
      */
     public static final Object[] convert(Object[] values, Class<?>[] types) {
+        if (values == null)
+            return null;
 
         // [#1005] Convert values from the <code>VALUES</code> clause to appropriate
         // values as specified by the <code>INTO</code> clause's column list.
-        if (values != null) {
-            Object[] result = new Object[values.length];
+        Object[] result = new Object[values.length];
 
-            for (int i = 0; i < values.length; i++) {
+        // TODO [#1008] Should fields be cast? Check this with
+        // appropriate integration tests
+        for (int i = 0; i < values.length; i++)
+            if (values[i] instanceof Field<?>)
+                result[i] = values[i];
+            else
+                result[i] = convert(values[i], types[i]);
 
-                // TODO [#1008] Should fields be cast? Check this with
-                // appropriate integration tests
-                if (values[i] instanceof Field<?>) {
-                    result[i] = values[i];
-                }
-                else {
-                    result[i] = convert(values[i], types[i]);
-                }
-            }
-
-            return result;
-        }
-        else {
-            return null;
-        }
+        return result;
     }
     /**
      * Convert an array into another one using a converter
@@ -306,19 +292,16 @@ public final class Convert {
      */
     @SuppressWarnings("unchecked")
     public static final <U> U[] convertArray(Object[] from, Converter<?, ? extends U> converter) throws DataTypeException {
-        if (from == null) {
+        if (from == null)
             return null;
-        }
-        else {
-            Object[] arrayOfT = convertArray(from, converter.fromType());
-            Object[] arrayOfU = (Object[]) Array.newInstance(converter.toType(), from.length);
 
-            for (int i = 0; i < arrayOfT.length; i++) {
-                arrayOfU[i] = convert(arrayOfT[i], converter);
-            }
+        Object[] arrayOfT = convertArray(from, converter.fromType());
+        Object[] arrayOfU = (Object[]) Array.newInstance(converter.toType(), from.length);
 
-            return (U[]) arrayOfU;
-        }
+        for (int i = 0; i < arrayOfT.length; i++)
+            arrayOfU[i] = convert(arrayOfT[i], converter);
+
+        return (U[]) arrayOfU;
     }
 
     /**
@@ -339,30 +322,24 @@ public final class Convert {
      */
     @SuppressWarnings("unchecked")
     public static final Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
-        if (from == null) {
+        if (from == null)
             return null;
-        }
-        else if (!toClass.isArray()) {
+        else if (!toClass.isArray())
             return convertArray(from, Array.newInstance(toClass, 0).getClass());
-        }
-        else if (toClass == from.getClass()) {
+        else if (toClass == from.getClass())
             return from;
-        }
         else {
             final Class<?> toComponentType = toClass.getComponentType();
 
-            if (from.length == 0) {
+            if (from.length == 0)
                 return Arrays.copyOf(from, from.length, (Class<? extends Object[]>) toClass);
-            }
-            else if (from[0] != null && from[0].getClass() == toComponentType) {
+            else if (from[0] != null && from[0].getClass() == toComponentType)
                 return Arrays.copyOf(from, from.length, (Class<? extends Object[]>) toClass);
-            }
             else {
                 final Object[] result = (Object[]) Array.newInstance(toComponentType, from.length);
 
-                for (int i = 0; i < from.length; i++) {
+                for (int i = 0; i < from.length; i++)
                     result[i] = convert(from[i], toComponentType);
-                }
 
                 return result;
             }

@@ -49,18 +49,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Check;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
+import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.ParserException;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
+import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
+import org.jooq.tools.JooqLogger;
 
 /**
  * SQLite table definition
@@ -69,7 +75,9 @@ import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
  */
 public class SQLiteTableDefinition extends AbstractTableDefinition {
 
-    private static Boolean existsSqliteSequence;
+    private static final JooqLogger log = JooqLogger.getLogger(SQLiteTableDefinition.class);
+    private static Boolean          existsSqliteSequence;
+    private Table<?>                interpretedTable;
 
     public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
@@ -77,6 +85,27 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
 
     public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType, String source) {
         super(schema, name, comment, tableType, source);
+    }
+
+    Table<?> interpretedTable() {
+        if (interpretedTable == null) {
+            try {
+                Configuration c = create().configuration().derive();
+                c.settings().withParseWithMetaLookups(THROW_ON_FAILURE);
+                Query query = create().parser().parseQuery(getSource());
+
+                for (Table<?> t : create().meta(query).getTables(getInputName()))
+                    return interpretedTable = t;
+            }
+            catch (ParserException e) {
+                log.info("Cannot parse SQL: " + getSource(), e);
+            }
+            catch (DataDefinitionException e) {
+                log.info("Cannot interpret SQL: " + getSource(), e);
+            }
+        }
+
+        return interpretedTable;
     }
 
     @Override
@@ -89,7 +118,6 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         Field<String> fDefaultValue = field(name("dflt_value"), String.class);
         Field<Integer> fPk = field(name("pk"), int.class);
 
-        Table<?> interpreted = null;
         for (Record record : create()
             .select(fName, fType, fNotnull, fDefaultValue, fPk)
             .from("pragma_table_info({0})", inline(getName()))
@@ -106,30 +134,18 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             int pk = record.get(fPk);
             boolean identity = false;
 
-            // [#8278] SQLite doesn't store the data type for all views
-            if (isView() && (isBlank(dataType) || "other".equals(dataType))) {
-                if (interpreted == null) {
-                    try {
-                        Configuration c = create().configuration().derive();
-                        c.settings().withParseWithMetaLookups(THROW_ON_FAILURE);
-                        interpreted = c.dsl().meta(
-                            create().select(SQLiteMaster.SQL)
-                                    .from(SQLITE_MASTER)
-                                    .where(SQLiteMaster.TBL_NAME.eq(getInputName()))
-                                    .fetchOne(SQLiteMaster.SQL)
-                        ).getTables(getInputName()).get(0);
-                    }
-                    catch (Exception e) {
-                        throw new RuntimeException("Something went wrong when interpreting the SQL of view " + getInputName());
-                    }
-                }
+            // [#8278] [#11172] SQLite doesn't store the data type for all views or virtual tables
+            if (isBlank(dataType) || "other".equals(dataType)) {
+                Table<?> t = interpretedTable();
 
-                Field<?> f = interpreted.field(name);
+                if (t != null) {
+                    Field<?> f = t.field(name);
 
-                if (f != null) {
-                    dataType = f.getDataType().getName();
-                    precision = f.getDataType().precision();
-                    scale = f.getDataType().scale();
+                    if (f != null) {
+                        dataType = f.getDataType().getName();
+                        precision = f.getDataType().precision();
+                        scale = f.getDataType().scale();
+                    }
                 }
             }
 
@@ -141,12 +157,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                     .get(0, Boolean.class);
 
                 if (!identity && !create().fetchExists(selectOne().from("{0}", DSL.name(getName()))))
-                    identity = create()
-                        .select(SQLiteMaster.SQL)
-                        .from(SQLITE_MASTER)
-                        .where(SQLiteMaster.NAME.eq(getName()))
-                        .fetchOneInto(String.class)
-                        .matches("(?s:.*\\b" + getName() + "\\b[^,]*(?i:\\bautoincrement\\b)[^,]*.*)");
+                    identity = getSource().matches("(?s:.*\\b" + getName() + "\\b[^,]*(?i:\\bautoincrement\\b)[^,]*.*)");
             }
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(

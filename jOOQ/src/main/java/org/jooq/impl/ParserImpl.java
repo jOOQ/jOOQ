@@ -2548,6 +2548,8 @@ final class ParserContext {
             case 'V':
                 if (parseKeywordIf("VIEW"))
                     return parseCreateView(false);
+                else if (parseKeywordIf("VIRTUAL") && parseKeyword("TABLE"))
+                    return parseCreateTable(false);
 
                 break;
         }
@@ -3685,6 +3687,10 @@ final class ParserContext {
     private final DDLQuery parseCreateTable(boolean temporary) {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Table<?> tableName = DSL.table(parseTableName().getQualifiedName());
+
+        if (parseKeywordIf("USING"))
+            parseIdentifier();
+
         CreateTableCommentStep commentStep;
         CreateTableStorageStep storageStep;
 

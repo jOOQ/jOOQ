@@ -84,6 +84,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean includeCheckConstraints = true;
     @XmlElement(defaultValue = "false")
+    protected Boolean includeSystemTables = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean includeSystemIndexes = false;
     @XmlElement(defaultValue = "false")
     protected Boolean includeSystemCheckConstraints = false;
@@ -814,6 +816,30 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeCheckConstraints(Boolean value) {
         this.includeCheckConstraints = value;
+    }
+
+    /**
+     * This flag indicates whether system tables should be included in output produced by this database
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeSystemTables() {
+        return includeSystemTables;
+    }
+
+    /**
+     * Sets the value of the includeSystemTables property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeSystemTables(Boolean value) {
+        this.includeSystemTables = value;
     }
 
     /**
@@ -1887,6 +1913,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withIncludeSystemTables(Boolean value) {
+        setIncludeSystemTables(value);
+        return this;
+    }
+
     public Database withIncludeSystemIndexes(Boolean value) {
         setIncludeSystemIndexes(value);
         return this;
@@ -2364,6 +2395,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includeUniqueKeys", includeUniqueKeys);
         builder.append("includeForeignKeys", includeForeignKeys);
         builder.append("includeCheckConstraints", includeCheckConstraints);
+        builder.append("includeSystemTables", includeSystemTables);
         builder.append("includeSystemIndexes", includeSystemIndexes);
         builder.append("includeSystemCheckConstraints", includeSystemCheckConstraints);
         builder.append("includeSystemSequences", includeSystemSequences);
@@ -2626,6 +2658,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeCheckConstraints.equals(other.includeCheckConstraints)) {
+                return false;
+            }
+        }
+        if (includeSystemTables == null) {
+            if (other.includeSystemTables!= null) {
+                return false;
+            }
+        } else {
+            if (!includeSystemTables.equals(other.includeSystemTables)) {
                 return false;
             }
         }
@@ -2992,6 +3033,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includeUniqueKeys == null)? 0 :includeUniqueKeys.hashCode()));
         result = ((prime*result)+((includeForeignKeys == null)? 0 :includeForeignKeys.hashCode()));
         result = ((prime*result)+((includeCheckConstraints == null)? 0 :includeCheckConstraints.hashCode()));
+        result = ((prime*result)+((includeSystemTables == null)? 0 :includeSystemTables.hashCode()));
         result = ((prime*result)+((includeSystemIndexes == null)? 0 :includeSystemIndexes.hashCode()));
         result = ((prime*result)+((includeSystemCheckConstraints == null)? 0 :includeSystemCheckConstraints.hashCode()));
         result = ((prime*result)+((includeSystemSequences == null)? 0 :includeSystemSequences.hashCode()));

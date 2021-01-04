@@ -66,11 +66,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import org.jooq.Condition;
@@ -102,7 +100,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.F;
-import org.jooq.impl.ParserException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
@@ -167,6 +164,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeSequences                     = true;
     private boolean                                                          includeIndexes                       = true;
     private boolean                                                          includeCheckConstraints              = true;
+    private boolean                                                          includeSystemTables                  = false;
     private boolean                                                          includeSystemIndexes                 = false;
     private boolean                                                          includeSystemCheckConstraints        = false;
     private boolean                                                          includeSystemSequences               = false;
@@ -1093,6 +1091,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean getIncludeCheckConstraints() {
         return includeCheckConstraints;
+    }
+
+    @Override
+    public final void setIncludeSystemTables(boolean includeSystemTables) {
+        this.includeSystemTables = includeSystemTables;
+    }
+
+    @Override
+    public final boolean getIncludeSystemTables() {
+        return includeSystemTables;
     }
 
     @Override

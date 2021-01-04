@@ -501,6 +501,16 @@ public interface Database extends AutoCloseable {
     boolean getIncludeCheckConstraints();
 
     /**
+     * whether system generated tables should be included.
+     */
+    void setIncludeSystemTables(boolean systemTables);
+
+    /**
+     * whether system generated tables should be included.
+     */
+    boolean getIncludeSystemTables();
+
+    /**
      * whether system generated indexes should be included.
      */
     void setIncludeSystemIndexes(boolean systemIndexes);

@@ -37,10 +37,17 @@
  */
 package org.jooq.meta.sqlite;
 
+import static org.jooq.impl.DSL.all;
+import static org.jooq.impl.DSL.any;
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.replace;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -54,12 +61,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.Check;
+import org.jooq.CommonTableExpression;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Query;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
+import org.jooq.SelectConditionStep;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
@@ -370,7 +381,14 @@ public class SQLiteDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 
+        CommonTableExpression<Record1<String>> virtualTables =
+            name("virtual_tables").fields("name").as(
+            select(coalesce(SQLiteMaster.NAME, inline("")))
+            .from(SQLITE_MASTER)
+            .where(SQLiteMaster.SQL.likeIgnoreCase(inline("%create virtual table%"))));
+
         for (Record record : create()
+                .with(virtualTables)
                 .select(
                     SQLiteMaster.NAME,
                     when(SQLiteMaster.TYPE.eq(inline("view")), inline(TableType.VIEW.name()))
@@ -378,6 +396,21 @@ public class SQLiteDatabase extends AbstractDatabase {
                     SQLiteMaster.SQL)
                 .from(SQLITE_MASTER)
                 .where(SQLiteMaster.TYPE.in("table", "view"))
+                .and(getIncludeSystemTables()
+                    ? noCondition()
+                    : SQLiteMaster.NAME.notLike(all(
+                        inline("%!_content"),
+                        inline("%!_segments"),
+                        inline("%!_segdir"),
+                        inline("%!_docsize"),
+                        inline("%!_stat")
+                      )).escape('!')
+                        .or(SQLiteMaster.NAME.like(inline("%!_content" )).escape('!').and(replace(SQLiteMaster.NAME, inline("_content" )).notIn(selectFrom(virtualTables))))
+                        .or(SQLiteMaster.NAME.like(inline("%!_segments")).escape('!').and(replace(SQLiteMaster.NAME, inline("_segments")).notIn(selectFrom(virtualTables))))
+                        .or(SQLiteMaster.NAME.like(inline("%!_segdir"  )).escape('!').and(replace(SQLiteMaster.NAME, inline("_segdir"  )).notIn(selectFrom(virtualTables))))
+                        .or(SQLiteMaster.NAME.like(inline("%!_docsize" )).escape('!').and(replace(SQLiteMaster.NAME, inline("_docsize" )).notIn(selectFrom(virtualTables))))
+                        .or(SQLiteMaster.NAME.like(inline("%!_stat"    )).escape('!').and(replace(SQLiteMaster.NAME, inline("_stat"    )).notIn(selectFrom(virtualTables))))
+                )
                 .orderBy(SQLiteMaster.NAME)) {
 
             String name = record.get(SQLiteMaster.NAME);

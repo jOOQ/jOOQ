@@ -347,6 +347,11 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     @SuppressWarnings("unchecked")
     @Override
     public /* non-final */ <Z> List<P> fetch(Field<Z> field, Z... values) {
+        return fetch(field, Arrays.asList(values));
+    }
+
+    @Override
+    public /* non-final */ <Z> List<P> fetch(Field<Z> field, Collection<? extends Z> values) {
         return ctx()
             .selectFrom(table)
             .where(field.in(values))

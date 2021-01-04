@@ -1923,10 +1923,13 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#3130] Invalid UDTs may have a degree of 0
         // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
-        generateRecordConstructor(tableUdtOrEmbeddable, out, replacingEmbeddablesAndUnreplacedColumns);
+        generateRecordConstructor(tableUdtOrEmbeddable, out, replacingEmbeddablesAndUnreplacedColumns, false);
 
         if (!replacingEmbeddablesAndUnreplacedColumns.equals(embeddablesOrColumns))
-            generateRecordConstructor(tableUdtOrEmbeddable, out, embeddablesOrColumns);
+            generateRecordConstructor(tableUdtOrEmbeddable, out, embeddablesOrColumns, false);
+
+        if (generatePojos())
+            generateRecordConstructor(tableUdtOrEmbeddable, out, replacingEmbeddablesAndUnreplacedColumns, true);
 
         if (tableUdtOrEmbeddable instanceof TableDefinition)
             generateRecordClassFooter((TableDefinition) tableUdtOrEmbeddable, out);
@@ -2030,8 +2033,11 @@ public class JavaGenerator extends AbstractGenerator {
     private void generateRecordConstructor(
         Definition tableUdtOrEmbeddable,
         JavaWriter out,
-        Collection<? extends Definition> columns
+        Collection<? extends Definition> columns,
+        boolean pojoArgument
     ) {
+        if (pojoArgument && !generatePojos())
+            return;
 
 
 
@@ -2040,6 +2046,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.RECORD);
+        final String pojoNameFull = getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.POJO);
         final String tableIdentifier = !(tableUdtOrEmbeddable instanceof EmbeddableDefinition)
             ? out.ref(getStrategy().getFullJavaIdentifier(tableUdtOrEmbeddable), 2)
             : null;
@@ -2073,18 +2080,28 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Create a detached, initialised %s", className);
 
             if (scala) {
-                out.println("%sdef this([[%s]]) = {", visibility(), arguments);
+                if (pojoArgument)
+                    out.println("%sdef this(value: %s) = {", visibility(), out.ref(pojoNameFull));
+                else
+                    out.println("%sdef this([[%s]]) = {", visibility(), arguments);
+
                 out.println("this()", tableIdentifier);
                 out.println();
             }
             else if (kotlin) {
-                out.println("%sconstructor([[%s]]): this() {", visibility(), arguments);
+                if (pojoArgument)
+                    out.println("%sconstructor(value: %s): this() {", visibility(), out.ref(pojoNameFull));
+                else
+                    out.println("%sconstructor([[%s]]): this() {", visibility(), arguments);
             }
             else {
                 if (generateConstructorPropertiesAnnotationOnRecords())
                     out.println("@%s({ [[%s]] })", ConstructorProperties.class, properties);
 
-                out.println("%s%s([[%s]]) {", visibility(), className, arguments);
+                if (pojoArgument)
+                    out.println("%s%s(%s value) {", visibility(), className, out.ref(pojoNameFull));
+                else
+                    out.println("%s%s([[%s]]) {", visibility(), className, arguments);
 
                 if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
                     out.println("this();", tableIdentifier);
@@ -2099,29 +2116,72 @@ public class JavaGenerator extends AbstractGenerator {
 
                     // TODO: Setters of X properties cannot accept X? in Kotlin: https://twitter.com/lukaseder/status/1296371561214234624
                     if (kotlin)
-                        out.println("this.%s = %s ?: %s([[%s]])",
-                            getStrategy().getJavaMemberName(column, Mode.POJO),
-                            getStrategy().getJavaMemberName(column, Mode.POJO),
-                            out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                            Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
+                        if (pojoArgument)
+                            out.println("this.%s = %s(%s) ?: %s([[%s]])",
+                                getStrategy().getJavaMemberName(column, Mode.POJO),
+                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
+                                getStrategy().getJavaMemberName(column, Mode.POJO),
+                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
+                                Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
+                        else
+                            out.println("this.%s = %s ?: %s([[%s]])",
+                                getStrategy().getJavaMemberName(column, Mode.POJO),
+                                getStrategy().getJavaMemberName(column, Mode.POJO),
+                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
+                                Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
 
                     // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
                     else if (scala)
-                        out.println("this.%s(%s)", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.DEFAULT));
+                        if (pojoArgument)
+                            out.println("this.%s(new %s(value.%s))",
+                                getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
+                                getStrategy().getJavaGetterName(column, Mode.DEFAULT));
+                        else
+                            out.println("this.%s(%s)",
+                                getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                getStrategy().getJavaMemberName(column, Mode.DEFAULT));
                     else
-                        out.println("%s(%s);", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.DEFAULT));
+                        if (pojoArgument)
+                            out.println("%s(new %s(value.%s()));",
+                                getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
+                                getStrategy().getJavaGetterName(column, Mode.DEFAULT));
+                        else
+                            out.println("%s(%s);",
+                                getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                getStrategy().getJavaMemberName(column, Mode.DEFAULT));
                 }
                 else {
                     if (kotlin)
-                        out.println("this.%s = %s",
-                            getStrategy().getJavaMemberName(column, Mode.POJO),
-                            getStrategy().getJavaMemberName(column, Mode.POJO));
+                        if (pojoArgument)
+                            out.println("this.%s = value.%s",
+                                getStrategy().getJavaMemberName(column, Mode.POJO),
+                                getStrategy().getJavaMemberName(column, Mode.POJO));
+                        else
+                            out.println("this.%s = %s",
+                                getStrategy().getJavaMemberName(column, Mode.POJO),
+                                getStrategy().getJavaMemberName(column, Mode.POJO));
 
                     // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
                     else if (scala)
-                        out.println("this.%s(%s)", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.POJO));
+                        if (pojoArgument)
+                            out.println("this.%s(value.%s)",
+                                getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                getStrategy().getJavaGetterName(column, Mode.POJO));
+                        else
+                            out.println("this.%s(%s)",
+                                getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                getStrategy().getJavaMemberName(column, Mode.POJO));
                     else
-                        out.println("%s(%s);", getStrategy().getJavaSetterName(column, Mode.RECORD), getStrategy().getJavaMemberName(column, Mode.POJO));
+                        if (pojoArgument)
+                            out.println("%s(value.%s());",
+                                getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                getStrategy().getJavaGetterName(column, Mode.POJO));
+                        else
+                            out.println("%s(%s);",
+                                getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                getStrategy().getJavaMemberName(column, Mode.POJO));
                 }
             }
 
@@ -2130,8 +2190,12 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String getJavaType(Definition column, JavaWriter out) {
+        return getJavaType(column, out, Mode.RECORD);
+    }
+
+    private String getJavaType(Definition column, JavaWriter out, Mode mode) {
         return column instanceof EmbeddableDefinition
-            ? getStrategy().getFullJavaClassName(column, Mode.RECORD)
+            ? getStrategy().getFullJavaClassName(column, mode)
             : getJavaType(((TypedElementDefinition<?>) column).getType(resolver(out)), out);
     }
 
@@ -4134,18 +4198,12 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("}");
 
-        for (ColumnDefinition column : table.getColumns()) {
-
-
-
-
-
-
-
-
+        List<Definition> embeddablesAndUnreplacedColumns = embeddablesAndUnreplacedColumns(table);
+        for (Definition column : embeddablesAndUnreplacedColumns) {
             final String colName = column.getOutputName();
             final String colClass = getStrategy().getJavaClassName(column);
-            final String colTypeFull = getJavaType(column.getType(resolver(out)), out);
+            final String colTypeFull = getJavaType(column, out, Mode.POJO);
+            final String colTypeRecord = out.ref(getJavaType(column, out, Mode.RECORD));
             final String colType = out.ref(colTypeFull);
             final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
 
@@ -4155,17 +4213,30 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Fetch records that have <code>%s BETWEEN lowerInclusive AND upperInclusive</code>", colName);
 
             if (scala) {
-                out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, lowerInclusive, upperInclusive)",
-                    visibility(), colClass, colType, colType, List.class, pType, colIdentifier);
+                if (column instanceof EmbeddableDefinition)
+                    out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, new %s(lowerInclusive), new %s(upperInclusive))",
+                        visibility(), colClass, colType, colType, List.class, pType, colIdentifier, colTypeRecord, colTypeRecord);
+                else
+                    out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, lowerInclusive, upperInclusive)",
+                        visibility(), colClass, colType, colType, List.class, pType, colIdentifier);
             }
             else if (kotlin) {
-                out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
-                    visibility(), colClass, colType, colType, out.ref(KLIST), pType, colIdentifier);
+                if (column instanceof EmbeddableDefinition)
+                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, if (lowerInclusive != null) %s(lowerInclusive) else null, if (upperInclusive != null) %s(upperInclusive) else null)",
+                        visibility(), colClass, colType, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord, colTypeRecord);
+                else
+                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
+                        visibility(), colClass, colType, colType, out.ref(KLIST), pType, colIdentifier);
             }
             else {
                 printNonnullAnnotation(out);
                 out.println("%s%s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", visibility(), List.class, pType, colClass, colType, colType);
-                out.println("return fetchRange(%s, lowerInclusive, upperInclusive);", colIdentifier);
+
+                if (column instanceof EmbeddableDefinition)
+                    out.println("return fetchRange(%s, new %s(lowerInclusive), new %s(upperInclusive));", colIdentifier, colTypeRecord, colTypeRecord);
+                else
+                    out.println("return fetchRange(%s, lowerInclusive, upperInclusive);", colIdentifier);
+
                 out.println("}");
             }
 
@@ -4175,45 +4246,67 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Fetch records that have <code>%s IN (values)</code>", colName);
 
             if (scala) {
-                out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values:_*)",
-                    visibility(), colClass, colType, List.class, pType, colIdentifier);
+                if (column instanceof EmbeddableDefinition)
+                    out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values.map(v => new %s(v)).toArray:_*)",
+                        visibility(), colClass, colType, List.class, pType, colIdentifier, colTypeRecord);
+                else
+                    out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values:_*)",
+                        visibility(), colClass, colType, List.class, pType, colIdentifier);
             }
             else if (kotlin) {
                 String toTypedArray = PRIMITIVE_WRAPPERS.contains(colTypeFull) ? ".toTypedArray()" : "";
-                out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)",
-                    visibility(), colClass, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
+
+                if (column instanceof EmbeddableDefinition)
+                    out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, values.map { %s(it) })",
+                        visibility(), colClass, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord);
+                else
+                    out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)",
+                        visibility(), colClass, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
             }
             else {
                 printNonnullAnnotation(out);
                 out.println("%s%s<%s> fetchBy%s(%s... values) {", visibility(), List.class, pType, colClass, colType);
-                out.println("return fetch(%s, values);", colIdentifier);
+
+                if (column instanceof EmbeddableDefinition) {
+                    out.println("%s[] records = new %s[values.length];", colTypeRecord, colTypeRecord);
+                    out.println();
+                    out.println("for (int i = 0; i < values.length; i++)");
+                    out.tab(1).println("records[i] = new %s(values[i]);", colTypeRecord);
+                    out.println();
+                    out.println("return fetch(%s, records);", colIdentifier);
+                }
+                else
+                    out.println("return fetch(%s, values);", colIdentifier);
+
                 out.println("}");
             }
 
             // fetchOneBy[Column]([T])
             // -----------------------
             ukLoop:
-            for (UniqueKeyDefinition uk : column.getKeys()) {
+            if (column instanceof ColumnDefinition) {
+                for (UniqueKeyDefinition uk : ((ColumnDefinition) column).getKeys()) {
 
-                // If column is part of a single-column unique key...
-                if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column)) {
-                    if (!printDeprecationIfUnknownType(out, colTypeFull))
-                        out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
+                    // If column is part of a single-column unique key...
+                    if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column)) {
+                        if (!printDeprecationIfUnknownType(out, colTypeFull))
+                            out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
-                    if (scala) {
-                        out.println("%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), colClass, colType, pType, colIdentifier);
-                    }
-                    else if (kotlin) {
-                        out.println("%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), colClass, colType, pType, colIdentifier);
-                    }
-                    else {
-                        printNullableAnnotation(out);
-                        out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colClass, colType);
-                        out.println("return fetchOne(%s, value);", colIdentifier);
-                        out.println("}");
-                    }
+                        if (scala) {
+                            out.println("%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), colClass, colType, pType, colIdentifier);
+                        }
+                        else if (kotlin) {
+                            out.println("%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), colClass, colType, pType, colIdentifier);
+                        }
+                        else {
+                            printNullableAnnotation(out);
+                            out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colClass, colType);
+                            out.println("return fetchOne(%s, value);", colIdentifier);
+                            out.println("}");
+                        }
 
-                    break ukLoop;
+                        break ukLoop;
+                    }
                 }
             }
         }

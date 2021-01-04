@@ -328,6 +328,18 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     <Z> List<P> fetch(Field<Z> field, Z... values) throws DataAccessException;
 
     /**
+     * Find records by a given field and a set of values.
+     *
+     * @param field The field to compare values against
+     * @param values The accepted values
+     * @return A list of records fulfilling <code>field IN (values)</code>
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @NotNull
+    @Support
+    <Z> List<P> fetch(Field<Z> field, Collection<? extends Z> values) throws DataAccessException;
+
+    /**
      * Find records by a given field and a range of values.
      *
      * @param field The field to compare values against

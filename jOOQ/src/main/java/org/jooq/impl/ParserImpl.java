@@ -332,6 +332,7 @@ import static org.jooq.impl.ParserContext.Type.S;
 import static org.jooq.impl.ParserContext.Type.X;
 import static org.jooq.impl.ParserContext.Type.Y;
 import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
@@ -3687,8 +3688,9 @@ final class ParserContext {
     private final DDLQuery parseCreateTable(boolean temporary) {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Table<?> tableName = DSL.table(parseTableName().getQualifiedName());
+        boolean using = parseKeywordIf("USING");
 
-        if (parseKeywordIf("USING"))
+        if (using)
             parseIdentifier();
 
         CreateTableCommentStep commentStep;
@@ -3798,7 +3800,7 @@ final class ParserContext {
 
             parse(')');
         }
-        else
+        else if (!using)
             ctas = true;
 
         CreateTableColumnStep columnStep = ifNotExists
@@ -3811,6 +3813,10 @@ final class ParserContext {
 
         if (!fields.isEmpty())
             columnStep = columnStep.columns(fields);
+
+        // [#11172] SQLite VIRTUAL tables without explicit column definitions default to a single (content text) column.
+        else if (using)
+            columnStep = columnStep.columns(field(unquotedName("content"), CLOB));
 
         if (TRUE.equals(ctas) && parseKeyword("AS") ||
            !FALSE.equals(ctas) && parseKeywordIf("AS")) {

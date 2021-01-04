@@ -927,7 +927,7 @@ public class GenerationTool {
                 + "- case sensitive regular expressions\n"
                 + "- regular expressions depending on whitespace (Pattern.COMMENTS is turned on!)\n"
                 + "- missing or inadequate object qualification\n"
-                + "- the " + objectType + " are obsolete\n"
+                + "- the object to which the configuration was applied in the past has been dropped\n"
                 + "Try turning on DEBUG logging (-X in Maven, and <logging/> in jOOQ) to get additional info about the schema"
             );
 

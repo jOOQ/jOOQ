@@ -4044,6 +4044,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
 
         for (ColumnDefinition column : table.getColumns()) {
+
+
+
+
+
+
+
+
             final String colName = column.getOutputName();
             final String colClass = getStrategy().getJavaClassName(column);
             final String colTypeFull = getJavaType(column.getType(resolver(out)), out);

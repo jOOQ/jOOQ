@@ -620,10 +620,10 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateEmbeddables() && database.getEmbeddables(schema).size() > 0)
             generateEmbeddables(schema);
 
-        if (generateEmbeddables() && generateInterfaces() && database.getTables(schema).size() > 0)
+        if (generateEmbeddables() && generateInterfaces() && database.getEmbeddables(schema).size() > 0)
             generateEmbeddableInterfaces(schema);
 
-        if (generateEmbeddables() && generatePojos() && database.getTables(schema).size() > 0)
+        if (generateEmbeddables() && generatePojos() && database.getEmbeddables(schema).size() > 0)
             generateEmbeddablePojos(schema);
 
         if (generatePojos() && database.getTables(schema).size() > 0)

@@ -115,32 +115,20 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
 
 
 
-
-
-
-
-
-
-
-
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
+            case MARIADB:
+            case MYSQL:
                 if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.dialect()))
-                    ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP).sql('(').visit(precision).sql(')');
+                    ctx.visit(N_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
                 else
-                    ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP);
+                    ctx.visit(N_CURRENT_TIMESTAMP).sql("()");
 
                 break;
 
             default:
                 if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.dialect()))
-                    ctx.visit(N_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
+                    ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP).sql('(').visit(precision).sql(')');
                 else
-                    ctx.visit(N_CURRENT_TIMESTAMP).sql("()");
+                    ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP);
 
                 break;
         }

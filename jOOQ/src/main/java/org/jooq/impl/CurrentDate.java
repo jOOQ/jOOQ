@@ -92,22 +92,13 @@ final class CurrentDate<T> extends AbstractField<T> {
 
 
 
-
-
-
-
-
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
-                ctx.visit(K_CURRENT).sql('_').visit(K_DATE);
+            case MARIADB:
+            case MYSQL:
+                ctx.visit(N_CURRENT_DATE).sql("()");
                 break;
 
             default:
-                ctx.visit(N_CURRENT_DATE).sql("()");
+                ctx.visit(K_CURRENT).sql('_').visit(K_DATE);
                 break;
         }
     }

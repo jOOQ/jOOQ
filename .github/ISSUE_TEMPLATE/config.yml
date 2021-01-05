@@ -4,4 +4,4 @@ contact_links:
     about: Please use the mailing list for open ended discussions and to reach out to the community.
   - name: StackOverflow
     url: https://stackoverflow.com/questions/tagged/jooq
-    about: For questions about how to use jOOQ, consider asking your question on Stack Overflow, tagged `jooq`.
+    about: For questions about how to use jOOQ, consider asking your question on Stack Overflow, tagged [jooq].

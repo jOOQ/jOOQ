@@ -258,26 +258,34 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         if (blockComment) {
             int lineLength = 0;
 
+            stringLoop:
             for (int i = 0; i < string.length(); i++) {
-                sb.append(string.charAt(i));
-                lineLength++;
+                if (peek(string, i, newlineString)) {
+                    lineLength = 0;
+                }
 
-                if (peekNewline(string, i)) {
+                // [#9728] TODO A more sophisticated way to handle Javadoc tags would be interesting.
+                else if (i > 0 && peek(string, i, "@deprecated")) {
+                    sb.append(indent);
                     lineLength = 0;
                 }
                 else if (lineLength > 70 && Character.isWhitespace(string.charAt(i))) {
                     sb.append(indent);
                     lineLength = 0;
+                    continue stringLoop;
                 }
+
+                sb.append(string.charAt(i));
+                lineLength++;
             }
         }
         else
             sb.append(string);
     }
 
-    private boolean peekNewline(String string, int i) {
-        for (int j = 0; j < newlineString.length(); j++)
-            if (i + j >= string.length() || string.charAt(i + j) != newlineString.charAt(j))
+    private boolean peek(String string, int i, String peek) {
+        for (int j = 0; j < peek.length(); j++)
+            if (i + j >= string.length() || string.charAt(i + j) != peek.charAt(j))
                 return false;
 
         return true;

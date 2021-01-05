@@ -6885,20 +6885,21 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala) {
-                out.println("%soverride def get%ss: %s[%s%s] = {", visibilityPublic(), type.getSimpleName(), List.class, type, generic);
-
                 if (definitions.size() > maxMembersPerInitialiser()) {
+                    out.println("%soverride def get%ss: %s[%s%s] = {", visibilityPublic(), type.getSimpleName(), List.class, type, generic);
                     out.println("val result = new %s[%s%s]", ArrayList.class, type, generic);
 
                     for (int i = 0; i < definitions.size(); i += maxMembersPerInitialiser())
                         out.println("result.addAll(get%ss%s)", type.getSimpleName(), i / maxMembersPerInitialiser());
 
                     out.println("result");
+                    out.println("}");
                 }
-                else
-                    out.println("return %s.asList[%s%s]([[before=\n\t\t\t][separator=,\n\t\t\t][%s]])", Arrays.class, type, generic, references);
-
-                out.println("}");
+                else {
+                    out.println("%soverride def get%ss: %s[%s%s] = %s.asList[%s%s](", visibilityPublic(), type.getSimpleName(), List.class, type, generic, Arrays.class, type, generic);
+                    out.println("[[separator=,\n][%s]]", references);
+                    out.println(")");
+                }
             }
             else if (kotlin) {
                 if (definitions.size() > maxMembersPerInitialiser()) {
@@ -6913,7 +6914,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     out.println("%soverride fun get%ss(): %s<%s%s> = listOf(", visibilityPublic(), type.getSimpleName(), out.ref(KLIST), type, generic);
-                    out.println("[[separator=,\n\t\t][%s]]", references);
+                    out.println("[[separator=,\n][%s]]", references);
                     out.println(")");
                 }
             }
@@ -6931,7 +6932,9 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("return result;");
                 }
                 else {
-                    out.println("return %s.<%s%s>asList([[before=\n\t\t\t][separator=,\n\t\t\t][%s]]);", Arrays.class, type, generic, references);
+                    out.println("return %s.<%s%s>asList(", Arrays.class, type, generic);
+                    out.println("[[separator=,\n][%s]]", references);
+                    out.println(");");
                 }
 
                 out.println("}");
@@ -6943,17 +6946,19 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala) {
                         out.println("private def get%ss%s(): %s[%s%s] = %s.asList[%s%s](", type.getSimpleName(), i / maxMembersPerInitialiser(), List.class, type, generic, Arrays.class, type, generic);
-                        out.println("[[before=\n\t\t\t][separator=,\n\t\t\t][%s]]", references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
+                        out.println("[[separator=,\n][%s]]", references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
                         out.println(")");
                     }
                     else if (kotlin) {
                         out.println("private fun get%ss%s(): %s<%s%s> = listOf(", type.getSimpleName(), i / maxMembersPerInitialiser(), out.ref(KLIST), type, generic);
-                        out.println("[[before=\t][separator=,\n\t\t\t][%s]]", references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
+                        out.println("[[separator=,\n][%s]]", references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
                         out.println(")");
                     }
                     else {
                         out.println("private final %s<%s%s> get%ss%s() {", List.class, type, generic, type.getSimpleName(), i / maxMembersPerInitialiser());
-                        out.println("return %s.<%s%s>asList([[before=\n\t\t\t][separator=,\n\t\t\t][%s]]);", Arrays.class, type, generic, references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
+                        out.println("return %s.<%s%s>asList(", Arrays.class, type, generic);
+                        out.println("[[separator=,\n][%s]]", references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
+                        out.println(");");
                         out.println("}");
                     }
                 }
@@ -8048,9 +8053,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("/**");
 
             if (comment != null && comment.length() > 0)
-                printJavadocParagraph(out, comment, "");
+                out.println(JavaWriter.escapeJavadoc(comment));
             else
-                out.println(" * This class is generated by jOOQ.");
+                out.println("This class is generated by jOOQ.");
 
             out.println(" */");
         }
@@ -8199,16 +8204,6 @@ public class JavaGenerator extends AbstractGenerator {
         return result;
     }
 
-    /**
-     * This method is used to add line breaks in lengthy javadocs
-     */
-    protected void printJavadocParagraph(JavaWriter out, String comment, String indent) {
-
-        // [#3450] [#4880] [#7693] Must not print */ inside Javadoc
-        String escaped = JavaWriter.escapeJavadoc(comment);
-        printParagraph(out, escaped, indent + " * ");
-    }
-
     protected void printParagraph(GeneratorWriter<?> out, String comment, String indent) {
         boolean newLine = true;
         int lineLength = 0;
@@ -8266,7 +8261,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (!StringUtils.isBlank(header)) {
             out.println("/*");
-            printJavadocParagraph(out, header, "");
+            out.println(JavaWriter.escapeJavadoc(header));
             out.println(" */");
         }
     }
@@ -8276,7 +8271,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (!StringUtils.isBlank(header)) {
             out.println("/*");
-            printJavadocParagraph(out, header, "");
+            out.println(JavaWriter.escapeJavadoc(header));
             out.println(" */");
         }
     }

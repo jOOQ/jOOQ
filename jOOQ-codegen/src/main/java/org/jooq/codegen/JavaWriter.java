@@ -101,7 +101,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                 escapedArgs[i] = escapeJavadoc(escapedArgs[i]);
 
             println("/**");
-            println(" * " + escaped, escapedArgs);
+            println(escaped, escapedArgs);
             println(" */");
         }
 

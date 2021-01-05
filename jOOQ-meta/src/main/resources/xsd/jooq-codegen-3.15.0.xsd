@@ -678,6 +678,10 @@ See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord
 This is a Java regular expression. Use the pipe to separate several expressions.
 See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="comments" type="tns:CommentsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The documentation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="syntheticObjects" type="tns:SyntheticObjectsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The synthetic objects configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -919,6 +923,33 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
 
       <element name="logSlowResultsAfterSeconds" type="int" minOccurs="0" maxOccurs="1" default="5">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="CommentsType">
+    <sequence>
+      <element name="comment" type="tns:CommentType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="CommentType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[The documentation configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all objects that should be commented.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="message" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A comment that should be added to objects matched by this configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="deprecated" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the comment is a deprecation notice.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="includeSchemaComment" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the schema comment (if available) should be included and prepended to the message.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

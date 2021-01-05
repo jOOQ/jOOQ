@@ -566,6 +566,7 @@ public class GenerationTool {
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
             database.setConfiguredEmbeddables(d.getEmbeddables());
+            database.setConfiguredComments(d.getComments());
             database.setConfiguredSyntheticObjects(d.getSyntheticObjects());
             database.setEmbeddablePrimaryKeys(d.getEmbeddablePrimaryKeys());
             database.setEmbeddableUniqueKeys(d.getEmbeddableUniqueKeys());

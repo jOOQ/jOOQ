@@ -102,6 +102,7 @@ import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.F;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
+import org.jooq.meta.jaxb.CommentType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.EmbeddableDefinitionType;
 import org.jooq.meta.jaxb.EmbeddableField;
@@ -190,6 +191,8 @@ public abstract class AbstractDatabase implements Database {
     private Set<ForcedType>                                                  unusedForcedTypes                    = new HashSet<>();
     private List<EmbeddableDefinitionType>                                   configuredEmbeddables                = new ArrayList<>();
     private Set<EmbeddableDefinitionType>                                    unusedEmbeddables                    = new HashSet<>();
+    private List<CommentType>                                                configuredComments                   = new ArrayList<>();
+    private Set<CommentType>                                                 unusedComments                       = new HashSet<>();
     private List<SyntheticIdentityType>                                      configuredSyntheticIdentities        = new ArrayList<>();
     private Set<SyntheticIdentityType>                                       unusedSyntheticIdentities            = new HashSet<>();
     private List<SyntheticPrimaryKeyType>                                    configuredSyntheticPrimaryKeys       = new ArrayList<>();
@@ -2853,6 +2856,41 @@ public abstract class AbstractDatabase implements Database {
 
     protected static final String fetchedSize(List<?> fetched, List<?> included) {
         return fetched.size() + " (" + included.size() + " included, " + (fetched.size() - included.size()) + " excluded)";
+    }
+
+    @SuppressWarnings("unused")
+    @Override
+    public void setConfiguredComments(List<CommentType> configuredComments) {
+        if (configuredComments != null) {
+            getConfiguredComments().addAll(configuredComments);
+            unusedComments.addAll(configuredComments);
+
+
+
+
+
+
+            if (!configuredComments.isEmpty())
+                log.info("Commercial feature", "Comments are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+        }
+    }
+
+    @Override
+    public List<CommentType> getConfiguredComments() {
+        if (configuredComments == null)
+            configuredComments = new ArrayList<>();
+
+        return configuredComments;
+    }
+
+    @Override
+    public void markUsed(CommentType object) {
+        unusedComments.remove(object);
+    }
+
+    @Override
+    public List<CommentType> getUnusedComments() {
+        return new ArrayList<>(unusedComments);
     }
 
     @SuppressWarnings("unused")

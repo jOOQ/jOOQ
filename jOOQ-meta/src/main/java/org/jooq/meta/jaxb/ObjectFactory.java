@@ -158,6 +158,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CommentType }
+     * 
+     */
+    public CommentType createCommentType() {
+        return new CommentType();
+    }
+
+    /**
      * Create an instance of {@link SyntheticObjectsType }
      * 
      */

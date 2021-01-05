@@ -84,6 +84,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     private String               tabString     = "    ";
     private String               newlineString = "\n";
     private boolean              newline       = true;
+    private boolean              blockComment  = false;
 
     protected GeneratorWriter(File file) {
         this(file, null, null);
@@ -157,23 +158,38 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         //   the character is interpreted erroneously as being semantic.
         if (string.startsWith("}") || string.startsWith("]") || string.startsWith(")"))
             indentTabsAllLines--;
+        else if (string.endsWith("*/"))
+            blockComment = false;
 
         if (indentTabsAllLines < 0 && !Boolean.getBoolean("mute-indentation-error"))
             new IllegalStateException("A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196").printStackTrace(System.err);
 
         int indentTabsThisLine0 = indentTabsThisLine;
-        if (newline && indentTabsThisLine + indentTabsAllLines > 0) {
-            for (int i = 0; i < indentTabsThisLine + indentTabsAllLines; i++)
-                sb.append(tabString);
+        StringBuilder indent = new StringBuilder();
 
+        if (newline) {
             newline = false;
-            indentTabsThisLine = 0;
+
+            if (indentTabsThisLine + indentTabsAllLines > 0) {
+                for (int i = 0; i < indentTabsThisLine + indentTabsAllLines; i++)
+                    indent.append(tabString);
+
+                indentTabsThisLine = 0;
+            }
+
+            if (blockComment)
+                indent.append(" * ");
+
+            sb.append(indent);
+            indent.insert(0, newlineString);
         }
 
         if (string.endsWith("{") || string.endsWith("[") || string.endsWith("("))
             indentTabsAllLines++;
         else if (string.startsWith("if") || string.startsWith("else") || string.startsWith("for") || string.startsWith("while"))
             indentTabsThisLine = indentTabsThisLine0 + 1;
+        else if (string.startsWith("/*"))
+            blockComment = true;
 
         if (args.length > 0) {
             List<Object> originals = Arrays.asList(args);
@@ -185,9 +201,8 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                         translated.add(ref((Class<?>) arg));
                     }
                     else if (arg instanceof Object[] || arg instanceof Collection) {
-                        if (arg instanceof Collection) {
+                        if (arg instanceof Collection)
                             arg = ((Collection<?>) arg).toArray();
-                        }
 
                         int start = string.indexOf("[[");
                         int end = string.indexOf("]]");
@@ -213,30 +228,26 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                             separator = gSeparator;
                         }
 
-                        if (((Object[]) arg).length > 0) {
+                        if (((Object[]) arg).length > 0)
                             replacement.append(gAfter);
-                        }
 
                         string = string.substring(0, start) + replacement + string.substring(end + 2);
                     }
-                    else {
+                    else
                         translated.add(arg);
-                    }
                 }
 
-                if (!string.contains("[[")) {
+                if (!string.contains("[["))
                     break;
-                }
 
                 originals = translated;
                 translated = new ArrayList<>();
             }
 
-            sb.append(String.format(string, translated.toArray()));
+            sb.append(String.format(string, translated.toArray()).replace(newlineString, indent));
         }
-        else {
-            sb.append(string);
-        }
+        else
+            sb.append(string.replace(newlineString, indent));
 
         return (W) this;
     }

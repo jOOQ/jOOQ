@@ -49,6 +49,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.meta.jaxb.CatalogMappingType;
+import org.jooq.meta.jaxb.CommentType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.EmbeddableDefinitionType;
 import org.jooq.meta.jaxb.EnumType;
@@ -1025,6 +1026,26 @@ public interface Database extends AutoCloseable {
      * A regular expression matching domain type definitions for which embeddable types should be generated.
      */
     void setEmbeddableDomains(String embeddableDomains);
+
+    /**
+     * Configure the comments.
+     */
+    void setConfiguredComments(List<CommentType> configuredComments);
+
+    /**
+     * Get the configured comments.
+     */
+    List<CommentType> getConfiguredComments();
+
+    /**
+     * Mark a comment as used.
+     */
+    void markUsed(CommentType comment);
+
+    /**
+     * Retrieve the not-yet used comments.
+     */
+    List<CommentType> getUnusedComments();
 
     /**
      * Configure the synthetic objects.

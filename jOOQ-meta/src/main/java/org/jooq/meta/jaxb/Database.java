@@ -156,6 +156,9 @@ public class Database implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "properties")
     @XmlElement(name = "property")
     protected List<Property> properties;
+    @XmlElementWrapper(name = "comments")
+    @XmlElement(name = "comment")
+    protected List<CommentType> comments;
     @XmlElementWrapper(name = "catalogs")
     @XmlElement(name = "catalog")
     protected List<CatalogMappingType> catalogs;
@@ -1603,6 +1606,17 @@ public class Database implements Serializable, XMLAppendable
         this.properties = properties;
     }
 
+    public List<CommentType> getComments() {
+        if (comments == null) {
+            comments = new ArrayList<CommentType>();
+        }
+        return comments;
+    }
+
+    public void setComments(List<CommentType> comments) {
+        this.comments = comments;
+    }
+
     public List<CatalogMappingType> getCatalogs() {
         if (catalogs == null) {
             catalogs = new ArrayList<CatalogMappingType>();
@@ -2238,6 +2252,27 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withComments(CommentType... values) {
+        if (values!= null) {
+            for (CommentType value: values) {
+                getComments().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Database withComments(Collection<CommentType> values) {
+        if (values!= null) {
+            getComments().addAll(values);
+        }
+        return this;
+    }
+
+    public Database withComments(List<CommentType> comments) {
+        setComments(comments);
+        return this;
+    }
+
     public Database withCatalogs(CatalogMappingType... values) {
         if (values!= null) {
             for (CatalogMappingType value: values) {
@@ -2427,6 +2462,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
         builder.append("logSlowResultsAfterSeconds", logSlowResultsAfterSeconds);
         builder.append("properties", "property", properties);
+        builder.append("comments", "comment", comments);
         builder.append("catalogs", "catalog", catalogs);
         builder.append("schemata", "schema", schemata);
         builder.append("embeddables", "embeddable", embeddables);
@@ -2949,6 +2985,15 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (comments == null) {
+            if (other.comments!= null) {
+                return false;
+            }
+        } else {
+            if (!comments.equals(other.comments)) {
+                return false;
+            }
+        }
         if (catalogs == null) {
             if (other.catalogs!= null) {
                 return false;
@@ -3065,6 +3110,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));
         result = ((prime*result)+((logSlowResultsAfterSeconds == null)? 0 :logSlowResultsAfterSeconds.hashCode()));
         result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
+        result = ((prime*result)+((comments == null)? 0 :comments.hashCode()));
         result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
         result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
         result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));

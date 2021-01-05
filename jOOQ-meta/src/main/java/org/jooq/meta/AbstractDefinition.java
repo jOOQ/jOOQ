@@ -38,6 +38,9 @@
 
 package org.jooq.meta;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.name;
 
 import java.sql.Connection;
@@ -47,6 +50,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
+import org.jooq.meta.jaxb.CommentType;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -60,7 +64,10 @@ public abstract class AbstractDefinition implements Definition {
     private final SchemaDefinition  schema;
     private final PackageDefinition pkg;
     private final String            name;
-    private final String            comment;
+    private final String            schemaComment;
+
+
+
     private final String            overload;
     private final String            source;
 
@@ -96,9 +103,9 @@ public abstract class AbstractDefinition implements Definition {
             : schema;
         this.pkg = pkg;
         this.name = name;
-        this.comment = comment;
         this.overload = overload;
         this.source = source;
+        this.schemaComment = comment;
     }
 
     @Override
@@ -155,7 +162,28 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public final String getComment() {
-        return comment;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return schemaComment;
     }
 
     @Override

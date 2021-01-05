@@ -2,6 +2,6 @@ contact_links:
   - name: jOOQ User Group
     url: https://groups.google.com/g/jooq-user
     about: Please use the mailing list for open ended discussions and to reach out to the community.
-  - name: StackOverflow
+  - name: Stack Overflow
     url: https://stackoverflow.com/questions/tagged/jooq
     about: For questions about how to use jOOQ, consider asking your question on Stack Overflow, tagged [jooq].

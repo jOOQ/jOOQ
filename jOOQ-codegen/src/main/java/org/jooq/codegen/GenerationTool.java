@@ -887,6 +887,7 @@ public class GenerationTool {
 
             logUnused("forced type", "forced types", database.getUnusedForcedTypes());
             logUnused("embeddable", "embeddables", database.getUnusedEmbeddables());
+            logUnused("comment", "comments", database.getUnusedComments());
             logUnused("synthetic identity", "synthetic identities", database.getUnusedSyntheticIdentities());
             logUnused("synthetic primary key", "synthetic primary keys", database.getUnusedSyntheticPrimaryKeys());
             logUnused("synthetic unique key", "synthetic unique keys", database.getUnusedSyntheticUniqueKeys());

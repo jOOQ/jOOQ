@@ -8204,36 +8204,6 @@ public class JavaGenerator extends AbstractGenerator {
         return result;
     }
 
-    protected void printParagraph(GeneratorWriter<?> out, String comment, String indent) {
-        boolean newLine = true;
-        int lineLength = 0;
-
-        for (int i = 0; i < comment.length(); i++) {
-            if (newLine) {
-                out.print(indent);
-
-                newLine = false;
-            }
-
-            out.print(comment.charAt(i));
-            lineLength++;
-
-            if (comment.charAt(i) == '\n') {
-                lineLength = 0;
-                newLine = true;
-            }
-            else if (lineLength > 70 && Character.isWhitespace(comment.charAt(i))) {
-                out.println();
-                lineLength = 0;
-                newLine = true;
-            }
-        }
-
-        if (!newLine) {
-            out.println();
-        }
-    }
-
     protected void printPackage(JavaWriter out, Definition definition) {
         printPackage(out, definition, Mode.DEFAULT);
     }

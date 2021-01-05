@@ -244,12 +244,43 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 translated = new ArrayList<>();
             }
 
-            sb.append(String.format(string, translated.toArray()).replace(newlineString, indent));
+            appendWrapped(String.format(string, translated.toArray()), indent.toString());
         }
         else
-            sb.append(string.replace(newlineString, indent));
+            appendWrapped(string, indent.toString());
 
         return (W) this;
+    }
+
+    private void appendWrapped(String string, String indent) {
+        string = string.replace(newlineString, indent);
+
+        if (blockComment) {
+            int lineLength = 0;
+
+            for (int i = 0; i < string.length(); i++) {
+                sb.append(string.charAt(i));
+                lineLength++;
+
+                if (peekNewline(string, i)) {
+                    lineLength = 0;
+                }
+                else if (lineLength > 70 && Character.isWhitespace(string.charAt(i))) {
+                    sb.append(indent);
+                    lineLength = 0;
+                }
+            }
+        }
+        else
+            sb.append(string);
+    }
+
+    private boolean peekNewline(String string, int i) {
+        for (int j = 0; j < newlineString.length(); j++)
+            if (i + j >= string.length() || string.charAt(i + j) != newlineString.charAt(j))
+                return false;
+
+        return true;
     }
 
     @SuppressWarnings("unchecked")

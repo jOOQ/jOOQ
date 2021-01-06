@@ -267,12 +267,16 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             final int newlineStringLength = newlineString.length();
             int lineLength = indentLength;
 
+            // [#11194] Edge case when the first word of a line is longer than the print margin
+            boolean whitespaceEncountered = false;
+
             stringLoop:
             for (int i = 0; i < stringLength; i++) {
                 if (peek(string, i, newlineString)) {
                     sb.append(newlineString).append(indent);
                     lineLength = indentLength;
                     i += newlineStringLength - 1;
+                    whitespaceEncountered = false;
                 }
 
                 // [#9728] TODO A more sophisticated way to handle Javadoc tags would be interesting.
@@ -288,11 +292,15 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
                     for (int j = 0; (p = i + j) < stringLength; j++) {
                         final boolean end = p + 1 >= stringLength;
+                        final boolean whitespace = Character.isWhitespace(string.charAt(p));
+                        whitespaceEncountered |= whitespace;
 
-                        if (j > 0 && Character.isWhitespace(string.charAt(p)) || end) {
-                            if (printMarginForBlockComment > 0 && (lineLength += j) > printMarginForBlockComment) {
+                        if (j > 0 && whitespace || end) {
+                            lineLength += (end ? j + 1 : j);
+
+                            if (printMarginForBlockComment > 0 && lineLength > printMarginForBlockComment && (!end || whitespaceEncountered)) {
                                 sb.append(newlineString).append(indent);
-                                lineLength = indentLength + j;
+                                lineLength = indentLength + j - 1;
                                 i++;
                             }
 
@@ -530,6 +538,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      */
     protected List<String> ref(List<String> clazzOrId, int keepSegments) {
         return clazzOrId == null ? Collections.<String>emptyList() : clazzOrId;
+    }
+
+    public String content() {
+        return sb.toString();
     }
 
     @Override

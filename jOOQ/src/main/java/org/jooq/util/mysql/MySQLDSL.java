@@ -71,7 +71,10 @@ public class MySQLDSL extends DSL {
      * Get the MySQL-specific <code>DECODE()</code> function.
      * <p>
      * Don't mix this up with the various {@link DSL#decode()} methods!
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<String> decode(String cryptString, String keyString) {
@@ -82,7 +85,10 @@ public class MySQLDSL extends DSL {
      * Get the MySQL-specific <code>DECODE()</code> function.
      * <p>
      * Don't mix this up with the various {@link DSL#decode()} methods!
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> decode(byte[] cryptString, byte[] keyString) {
@@ -93,7 +99,10 @@ public class MySQLDSL extends DSL {
      * Get the MySQL-specific <code>DECODE()</code> function.
      * <p>
      * Don't mix this up with the various {@link DSL#decode()} methods!
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> decode(Field<T> cryptString, Field<T> keyString) {
@@ -102,7 +111,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>ENCODE()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<String> encode(String string, String keyString) {
@@ -111,7 +123,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>ENCODE()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> encode(byte[] string, byte[] keyString) {
@@ -120,7 +135,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>ENCODE()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> encode(Field<T> string, Field<T> keyString) {
@@ -183,7 +201,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<String> desDecrypt(String cryptString) {
@@ -192,7 +213,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> desDecrypt(byte[] cryptString) {
@@ -201,7 +225,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desDecrypt(Field<T> cryptString) {
@@ -210,7 +237,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<String> desDecrypt(String cryptString, String keyString) {
@@ -219,7 +249,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> desDecrypt(byte[] cryptString, byte[] keyString) {
@@ -228,7 +261,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desDecrypt(Field<T> cryptString, Field<T> keyString) {
@@ -237,7 +273,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<String> desEncrypt(String string) {
@@ -246,7 +285,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> desEncrypt(byte[] string) {
@@ -255,7 +297,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desEncrypt(Field<T> string) {
@@ -264,7 +309,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<String> desEncrypt(String string, String keyString) {
@@ -273,7 +321,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> desEncrypt(byte[] string, byte[] keyString) {
@@ -282,7 +333,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desEncrypt(Field<T> string, Field<T> keyString) {
@@ -426,7 +480,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>PASSWORD()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<String> password(String string) {
@@ -435,7 +492,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>PASSWORD()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> password(byte[] string) {
@@ -444,7 +504,10 @@ public class MySQLDSL extends DSL {
 
     /**
      * Get the MySQL-specific <code>PASSWORD()</code> function.
+     *
+     * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
+    @Deprecated
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> password(Field<T> string) {

@@ -14,6 +14,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * The documentation configuration.
+ * <p>
+ * This feature is available in the commercial distribution only.
  * 
  * 
  * 

@@ -1461,6 +1461,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public String getEmbeddablePrimaryKeys() {
@@ -1469,6 +1471,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public void setEmbeddablePrimaryKeys(String value) {
@@ -1477,6 +1481,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public String getEmbeddableUniqueKeys() {
@@ -1485,6 +1491,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public void setEmbeddableUniqueKeys(String value) {
@@ -1493,6 +1501,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all domain type declarations for which wrapper types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public String getEmbeddableDomains() {
@@ -1501,6 +1511,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all domain type declarations for which wrapper types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public void setEmbeddableDomains(String value) {
@@ -2178,6 +2190,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public Database withEmbeddablePrimaryKeys(String value) {
@@ -2187,6 +2201,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public Database withEmbeddableUniqueKeys(String value) {
@@ -2196,6 +2212,8 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * A regular expression matching all domain type declarations for which wrapper types should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      */
     public Database withEmbeddableDomains(String value) {

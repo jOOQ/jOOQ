@@ -680,7 +680,9 @@ See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord
       </element>
       
       <element name="comments" type="tns:CommentsType" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The documentation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The documentation configuration.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="syntheticObjects" type="tns:SyntheticObjectsType" minOccurs="0" maxOccurs="1">
@@ -862,15 +864,21 @@ This comparator can be used to influence the order of any object that is produce
       </element>
             
       <element name="embeddablePrimaryKeys" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all primary key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="embeddableUniqueKeys" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all unique key declarations for which wrapper types should be generated, and for their referencing foreign keys.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="embeddableDomains" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all domain type declarations for which wrapper types should be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all domain type declarations for which wrapper types should be generated.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
@@ -934,7 +942,9 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
   </complexType>
 
   <complexType name="CommentType">
-    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[The documentation configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[The documentation configuration.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="expression" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all objects that should be commented.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -966,11 +976,15 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="uniqueKeys" type="tns:SyntheticUniqueKeysType" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic unique key configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic unique key configuration.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="foreignKeys" type="tns:SyntheticForeignKeysType" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic unique key configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic unique key configuration.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="views" type="tns:SyntheticViewsType" minOccurs="0" maxOccurs="1">
@@ -1032,7 +1046,9 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
   </complexType>
   
   <complexType name="SyntheticUniqueKeyType">
-    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic unique key configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic unique key configuration.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     <all>
       <element name="name" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The optional unique key name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -1055,7 +1071,9 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
   </complexType>
   
   <complexType name="SyntheticForeignKeyType">
-    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic foreign key configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic foreign key configuration.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     <all>
       <element name="name" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The optional foreign key name.]]></jxb:javadoc></jxb:property></appinfo></annotation>

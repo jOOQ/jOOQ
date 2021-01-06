@@ -152,6 +152,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateEmptySchemas                    = false;
     String                             generateNewline                         = "\n";
     String                             generateIndentation;
+    int                                generatePrintMarginForBlockComment      = 80;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                          = "UTF-8";
@@ -1156,6 +1157,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateIndentation(String indentation) {
         this.generateIndentation = indentation;
+    }
+
+    @Override
+    public int generatePrintMarginForBlockComment() {
+        return generatePrintMarginForBlockComment;
+    }
+
+    @Override
+    public void setGeneratePrintMarginForBlockComment(int printMarginForBlockComment) {
+        this.generatePrintMarginForBlockComment = printMarginForBlockComment;
     }
 
     // ----

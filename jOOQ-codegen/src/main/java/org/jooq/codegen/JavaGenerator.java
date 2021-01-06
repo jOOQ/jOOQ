@@ -8769,6 +8769,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateNewline != null)
             result.newlineString(generateNewline);
 
+        result.printMarginForBlockComment(generatePrintMarginForBlockComment);
         return result;
     }
 

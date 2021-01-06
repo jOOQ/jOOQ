@@ -1045,6 +1045,16 @@ public interface Generator {
     void setGenerateIndentation(String indentation);
 
     /**
+     * The print margin for Javadoc and other block comments to be used in generated code.
+     */
+    int generatePrintMarginForBlockComment();
+
+    /**
+     * The print margin for Javadoc and other block comments to be used in generated code.
+     */
+    void setGeneratePrintMarginForBlockComment(int printMarginForBlockComment);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

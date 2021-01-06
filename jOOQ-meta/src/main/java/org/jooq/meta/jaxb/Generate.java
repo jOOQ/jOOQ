@@ -207,6 +207,8 @@ public class Generate implements Serializable, XMLAppendable
     protected String newline = "\\n";
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String indentation;
+    @XmlElement(defaultValue = "80")
+    protected Integer printMarginForBlockComment = 80;
 
     /**
      * Generate index information.
@@ -2232,6 +2234,22 @@ public class Generate implements Serializable, XMLAppendable
         this.indentation = value;
     }
 
+    /**
+     * The print margin to apply to generated Javadoc and other block comments, for automatic line wrapping. The feature is turned off if the print margin is <code>0</code>.
+     * 
+     */
+    public Integer getPrintMarginForBlockComment() {
+        return printMarginForBlockComment;
+    }
+
+    /**
+     * The print margin to apply to generated Javadoc and other block comments, for automatic line wrapping. The feature is turned off if the print margin is <code>0</code>.
+     * 
+     */
+    public void setPrintMarginForBlockComment(Integer value) {
+        this.printMarginForBlockComment = value;
+    }
+
     public Generate withIndexes(Boolean value) {
         setIndexes(value);
         return this;
@@ -2707,6 +2725,15 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The print margin to apply to generated Javadoc and other block comments, for automatic line wrapping. The feature is turned off if the print margin is <code>0</code>.
+     * 
+     */
+    public Generate withPrintMarginForBlockComment(Integer value) {
+        setPrintMarginForBlockComment(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("indexes", indexes);
@@ -2795,6 +2822,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("javaTimeTypes", javaTimeTypes);
         builder.append("newline", newline);
         builder.append("indentation", indentation);
+        builder.append("printMarginForBlockComment", printMarginForBlockComment);
     }
 
     @Override
@@ -3590,6 +3618,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (printMarginForBlockComment == null) {
+            if (other.printMarginForBlockComment!= null) {
+                return false;
+            }
+        } else {
+            if (!printMarginForBlockComment.equals(other.printMarginForBlockComment)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -3683,6 +3720,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((javaTimeTypes == null)? 0 :javaTimeTypes.hashCode()));
         result = ((prime*result)+((newline == null)? 0 :newline.hashCode()));
         result = ((prime*result)+((indentation == null)? 0 :indentation.hashCode()));
+        result = ((prime*result)+((printMarginForBlockComment == null)? 0 :printMarginForBlockComment.hashCode()));
         return result;
     }
 

@@ -83,6 +83,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     private int                  indentTabsAllLines;
     private String               tabString     = "    ";
     private String               newlineString = "\n";
+    private int                  printMarginForBlockComment   = 80;
     private boolean              newline       = true;
     private boolean              blockComment  = false;
 
@@ -121,6 +122,14 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
     public void newlineString(String string) {
         this.newlineString = string.replace("\\n", "\n").replace("\\r", "\r");
+    }
+
+    public int printMarginForBlockComment() {
+        return printMarginForBlockComment;
+    }
+
+    public void printMarginForBlockComment(int i) {
+        this.printMarginForBlockComment = i;
     }
 
     public File file() {
@@ -181,7 +190,6 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 indent.append(" * ");
 
             sb.append(indent);
-            indent.insert(0, newlineString);
         }
 
         if (string.endsWith("{") || string.endsWith("[") || string.endsWith("("))
@@ -253,30 +261,53 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     private void appendWrapped(String string, String indent) {
-        string = string.replace(newlineString, indent);
-
         if (blockComment) {
-            int lineLength = 0;
+            final int indentLength = indent.length();
+            final int stringLength = string.length();
+            final int newlineStringLength = newlineString.length();
+            int lineLength = indentLength;
 
             stringLoop:
-            for (int i = 0; i < string.length(); i++) {
+            for (int i = 0; i < stringLength; i++) {
                 if (peek(string, i, newlineString)) {
-                    lineLength = 0;
+                    sb.append(newlineString).append(indent);
+                    lineLength = indentLength;
+                    i += newlineStringLength - 1;
                 }
 
                 // [#9728] TODO A more sophisticated way to handle Javadoc tags would be interesting.
                 else if (i > 0 && peek(string, i, "@deprecated")) {
-                    sb.append(indent);
-                    lineLength = 0;
-                }
-                else if (lineLength > 70 && Character.isWhitespace(string.charAt(i))) {
-                    sb.append(indent);
-                    lineLength = 0;
-                    continue stringLoop;
-                }
+                    final int l = "@deprecated".length();
 
-                sb.append(string.charAt(i));
-                lineLength++;
+                    sb.append(newlineString).append(indent).append("@deprecated");
+                    lineLength = indentLength + l;
+                    i += l - 1;
+                }
+                else {
+                    int p;
+
+                    for (int j = 0; (p = i + j) < stringLength; j++) {
+                        final boolean end = p + 1 >= stringLength;
+
+                        if (j > 0 && Character.isWhitespace(string.charAt(p)) || end) {
+                            if (printMarginForBlockComment > 0 && (lineLength += j) > printMarginForBlockComment) {
+                                sb.append(newlineString).append(indent);
+                                lineLength = indentLength + j;
+                                i++;
+                            }
+
+                            sb.append(string.subSequence(i, p));
+                            i = p - 1;
+
+                            if (end) {
+                                sb.append(string.charAt(p));
+                                break stringLoop;
+                            }
+                            else
+                                continue stringLoop;
+                        }
+                    }
+                }
             }
         }
         else

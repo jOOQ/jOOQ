@@ -1886,6 +1886,10 @@ This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb
       <element name="indentation" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="printMarginForBlockComment" type="int" minOccurs="0" maxOccurs="1" default="80">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The print margin to apply to generated Javadoc and other block comments, for automatic line wrapping. The feature is turned off if the print margin is <code>0</code>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

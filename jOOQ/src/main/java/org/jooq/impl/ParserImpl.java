@@ -175,6 +175,7 @@ import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.listAgg;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
+import static org.jooq.impl.DSL.log10;
 // ...
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.lpad;
@@ -6908,6 +6909,8 @@ final class ParserContext {
                         return length((Field) parseFieldParenthesised(S));
                     else if (parseFunctionNameIf("LN"))
                         return ln((Field) parseFieldNumericOpParenthesised());
+                    else if (parseFunctionNameIf("LOG10"))
+                        return log10((Field) parseFieldNumericOpParenthesised());
                     else if ((field = parseFieldLogIf()) != null)
                         return field;
                     else if (parseKeywordIf("LEVEL") && requireProEdition()) {

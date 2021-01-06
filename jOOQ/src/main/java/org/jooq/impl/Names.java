@@ -182,6 +182,7 @@ final class Names {
     static final Name N_LN                     = unquotedName("ln");
     static final Name N_LOCATE                 = unquotedName("locate");
     static final Name N_LOG                    = unquotedName("log");
+    static final Name N_LOG10                  = unquotedName("log10");
     static final Name N_LOGN                   = unquotedName("logn");
     static final Name N_LOWER                  = unquotedName("lower");
     static final Name N_LPAD                   = unquotedName("lpad");

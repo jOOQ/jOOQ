@@ -15341,6 +15341,24 @@ public class DSL {
     }
 
     /**
+     * The <code>LOG10</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log10(Number value) {
+        return new Log10(Tools.field(value));
+    }
+
+    /**
+     * The <code>LOG10</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log10(Field<? extends Number> value) {
+        return new Log10(value);
+    }
+
+    /**
      * The <code>LOWER</code> function.
      * <p>
      * Turn a string into lower case.

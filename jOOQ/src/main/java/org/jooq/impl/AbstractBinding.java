@@ -45,6 +45,7 @@ import static org.jooq.impl.Keywords.K_NULL;
 
 import java.sql.SQLData;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 
 import org.jooq.Binding;
 import org.jooq.BindingGetSQLInputContext;
@@ -126,18 +127,26 @@ public abstract class AbstractBinding<T, U> implements Binding<T, U> {
     // -------------------------------------------------------------------------
 
     @Override
-    public void register(BindingRegisterContext<U> ctx) throws SQLException {}
+    public void register(BindingRegisterContext<U> ctx) throws SQLException {
+        throw new SQLFeatureNotSupportedException("AbstractBinding::register");
+    }
 
     @Override
-    public void get(BindingGetStatementContext<U> ctx) throws SQLException {}
+    public void get(BindingGetStatementContext<U> ctx) throws SQLException {
+        throw new SQLFeatureNotSupportedException("AbstractBinding::get");
+    }
 
     // -------------------------------------------------------------------------
     // Empty base implementations for SQLData serialisation support:
     // -------------------------------------------------------------------------
 
     @Override
-    public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {}
+    public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
+        throw new SQLFeatureNotSupportedException("AbstractBinding::set");
+    }
 
     @Override
-    public void get(BindingGetSQLInputContext<U> ctx) throws SQLException {}
+    public void get(BindingGetSQLInputContext<U> ctx) throws SQLException {
+        throw new SQLFeatureNotSupportedException("AbstractBinding::get");
+    }
 }

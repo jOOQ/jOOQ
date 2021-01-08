@@ -2862,6 +2862,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.AlterIndexOnStep alterIndex(String index) {
+        return new AlterIndexImpl(configuration(), DSL.index(DSL.name(index)), false);
+    }
+
+    @Override
+    public org.jooq.AlterIndexOnStep alterIndex(Name index) {
+        return new AlterIndexImpl(configuration(), DSL.index(index), false);
+    }
+
+    @Override
+    public org.jooq.AlterIndexOnStep alterIndex(Index index) {
+        return new AlterIndexImpl(configuration(), index, false);
+    }
+
+    @Override
+    public org.jooq.AlterIndexOnStep alterIndexIfExists(String index) {
+        return new AlterIndexImpl(configuration(), DSL.index(DSL.name(index)), true);
+    }
+
+    @Override
+    public org.jooq.AlterIndexOnStep alterIndexIfExists(Name index) {
+        return new AlterIndexImpl(configuration(), DSL.index(index), true);
+    }
+
+    @Override
+    public org.jooq.AlterIndexOnStep alterIndexIfExists(Index index) {
+        return new AlterIndexImpl(configuration(), index, true);
+    }
+
+    @Override
     public org.jooq.AlterSchemaStep alterSchema(String schema) {
         return new AlterSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
@@ -3655,36 +3685,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTableIfExists(Table<?> table) {
         return new AlterTableImpl(configuration(), table, true);
-    }
-
-    @Override
-    public AlterIndexOnStep alterIndex(String index) {
-        return alterIndex(name(index));
-    }
-
-    @Override
-    public AlterIndexOnStep alterIndex(Name index) {
-        return alterIndex(index(index));
-    }
-
-    @Override
-    public AlterIndexOnStep alterIndex(Index index) {
-        return new AlterIndexImpl(configuration(), index);
-    }
-
-    @Override
-    public AlterIndexStep alterIndexIfExists(String index) {
-        return alterIndexIfExists(name(index));
-    }
-
-    @Override
-    public AlterIndexStep alterIndexIfExists(Name index) {
-        return alterIndexIfExists(index(index));
-    }
-
-    @Override
-    public AlterIndexStep alterIndexIfExists(Index index) {
-        return new AlterIndexImpl(configuration(), index, true);
     }
 
     @Override

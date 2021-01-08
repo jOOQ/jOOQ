@@ -9437,6 +9437,60 @@ public interface DSLContext extends Scope {
     <T> AlterDomainStep<T> alterDomainIfExists(Domain<T> domain);
 
     /**
+     * The <code>ALTER INDEX</code> statement.
+     *
+     * @see DSL#alterIndex(String)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterIndexOnStep alterIndex(String index);
+
+    /**
+     * The <code>ALTER INDEX</code> statement.
+     *
+     * @see DSL#alterIndex(Name)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterIndexOnStep alterIndex(Name index);
+
+    /**
+     * The <code>ALTER INDEX</code> statement.
+     *
+     * @see DSL#alterIndex(Index)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterIndexOnStep alterIndex(Index index);
+
+    /**
+     * The <code>ALTER INDEX IF EXISTS</code> statement.
+     *
+     * @see DSL#alterIndexIfExists(String)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    AlterIndexOnStep alterIndexIfExists(String index);
+
+    /**
+     * The <code>ALTER INDEX IF EXISTS</code> statement.
+     *
+     * @see DSL#alterIndexIfExists(Name)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    AlterIndexOnStep alterIndexIfExists(Name index);
+
+    /**
+     * The <code>ALTER INDEX IF EXISTS</code> statement.
+     *
+     * @see DSL#alterIndexIfExists(Index)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    AlterIndexOnStep alterIndexIfExists(Index index);
+
+    /**
      * The <code>ALTER SCHEMA</code> statement.
      *
      * @see DSL#alterSchema(String)
@@ -10918,60 +10972,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSL#alterIndex(String)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexOnStep alterIndex(String index);
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSL#alterIndex(Name)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexOnStep alterIndex(Name index);
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSL#alterIndex(Name)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexOnStep alterIndex(Index index);
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSL#alterIndexIfExists(String)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    AlterIndexStep alterIndexIfExists(String index);
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSL#alterIndexIfExists(Name)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    AlterIndexStep alterIndexIfExists(Name index);
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSL#alterIndexIfExists(Name)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    AlterIndexStep alterIndexIfExists(Index index);
 
     /**
      * Create a new DSL <code>DROP VIEW</code> statement.

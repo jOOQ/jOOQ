@@ -37,29 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-
 /**
- * The step in the <code>ALTER INDEX</code> where the table can be specified for
- * the index.
+ * A step in the construction of the <code>ALTER INDEX</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -78,51 +63,46 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface AlterIndexOnStep extends AlterIndexStep {
 
     /**
-     * Specify the table expression on which to alter an index.
+     * Add the <code>ON</code> clause to the <code>ALTER INDEX</code> statement.
      * <p>
-     * {@link SQLDialect#MYSQL}, {@link SQLDialect#MARIADB}, and
-     * {@link SQLDialect#SQLSERVER} use table-scoped index names, not
-     * schema-scoped names. This means that in these databases, the
-     * <code>ON</code> clause is mandatory in order to unambiguously identify an
-     * index. In all other databases, the <code>ON</code> clause will simply be
-     * ignored for compatibility reasons.
+     * {@link SQLDialect#MYSQL}, {@link SQLDialect#MARIADB}, and {@link SQLDialect#SQLSERVER}
+     * use table-scoped index names, not schema-scoped names. This means that in these databases,
+     * the <code>ON</code> clause is mandatory in order to unambiguously identify an index.
+     * In all other databases, the <code>ON</code> clause will simply be ignored for compatibility
+     * reasons.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexStep on(Table<?> table);
+    @NotNull
+    AlterIndexStep on(String on);
 
     /**
-     * Specify the table expression on which to alter an index.
+     * Add the <code>ON</code> clause to the <code>ALTER INDEX</code> statement.
      * <p>
-     * {@link SQLDialect#MYSQL}, {@link SQLDialect#MARIADB}, and
-     * {@link SQLDialect#SQLSERVER} use table-scoped index names, not
-     * schema-scoped names. This means that in these databases, the
-     * <code>ON</code> clause is mandatory in order to unambiguously identify an
-     * index. In all other databases, the <code>ON</code> clause will simply be
-     * ignored for compatibility reasons.
+     * {@link SQLDialect#MYSQL}, {@link SQLDialect#MARIADB}, and {@link SQLDialect#SQLSERVER}
+     * use table-scoped index names, not schema-scoped names. This means that in these databases,
+     * the <code>ON</code> clause is mandatory in order to unambiguously identify an index.
+     * In all other databases, the <code>ON</code> clause will simply be ignored for compatibility
+     * reasons.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexStep on(String tableName);
+    @NotNull
+    AlterIndexStep on(Name on);
 
     /**
-     * Specify the table expression on which to alter an index.
+     * Add the <code>ON</code> clause to the <code>ALTER INDEX</code> statement.
      * <p>
-     * {@link SQLDialect#MYSQL}, {@link SQLDialect#MARIADB}, and
-     * {@link SQLDialect#SQLSERVER} use table-scoped index names, not
-     * schema-scoped names. This means that in these databases, the
-     * <code>ON</code> clause is mandatory in order to unambiguously identify an
-     * index. In all other databases, the <code>ON</code> clause will simply be
-     * ignored for compatibility reasons.
+     * {@link SQLDialect#MYSQL}, {@link SQLDialect#MARIADB}, and {@link SQLDialect#SQLSERVER}
+     * use table-scoped index names, not schema-scoped names. This means that in these databases,
+     * the <code>ON</code> clause is mandatory in order to unambiguously identify an index.
+     * In all other databases, the <code>ON</code> clause will simply be ignored for compatibility
+     * reasons.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexStep on(Name tableName);
-
+    @NotNull
+    AlterIndexStep on(Table<?> on);
 }

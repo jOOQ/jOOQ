@@ -7371,6 +7371,72 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER INDEX</code> statement.
+     *
+     * @see DSLContext#alterIndex(String)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.AlterIndexOnStep alterIndex(String index) {
+        return dsl().alterIndex(index);
+    }
+
+    /**
+     * The <code>ALTER INDEX</code> statement.
+     *
+     * @see DSLContext#alterIndex(Name)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.AlterIndexOnStep alterIndex(Name index) {
+        return dsl().alterIndex(index);
+    }
+
+    /**
+     * The <code>ALTER INDEX</code> statement.
+     *
+     * @see DSLContext#alterIndex(Index)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.AlterIndexOnStep alterIndex(Index index) {
+        return dsl().alterIndex(index);
+    }
+
+    /**
+     * The <code>ALTER INDEX IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterIndexIfExists(String)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static org.jooq.AlterIndexOnStep alterIndexIfExists(String index) {
+        return dsl().alterIndexIfExists(index);
+    }
+
+    /**
+     * The <code>ALTER INDEX IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterIndexIfExists(Name)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static org.jooq.AlterIndexOnStep alterIndexIfExists(Name index) {
+        return dsl().alterIndexIfExists(index);
+    }
+
+    /**
+     * The <code>ALTER INDEX IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterIndexIfExists(Index)
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static org.jooq.AlterIndexOnStep alterIndexIfExists(Index index) {
+        return dsl().alterIndexIfExists(index);
+    }
+
+    /**
      * The <code>ALTER SCHEMA</code> statement.
      *
      * @see DSLContext#alterSchema(String)
@@ -8948,72 +9014,6 @@ public class DSL {
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSLContext#alterIndex(String)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AlterIndexOnStep alterIndex(String index) {
-        return dsl().alterIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSLContext#alterIndex(Name)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AlterIndexOnStep alterIndex(Name index) {
-        return dsl().alterIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSLContext#alterIndex(Index)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AlterIndexOnStep alterIndex(Index index) {
-        return dsl().alterIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSLContext#alterIndexIfExists(String)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static AlterIndexStep alterIndexIfExists(String index) {
-        return dsl().alterIndexIfExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSLContext#alterIndexIfExists(Name)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static AlterIndexStep alterIndexIfExists(Name index) {
-        return dsl().alterIndexIfExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER INDEX</code> statement.
-     *
-     * @see DSLContext#alterIndexIfExists(Index)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    public static AlterIndexStep alterIndexIfExists(Index index) {
-        return dsl().alterIndexIfExists(index);
     }
 
     /**

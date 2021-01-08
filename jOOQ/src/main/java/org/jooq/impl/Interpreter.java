@@ -969,7 +969,7 @@ final class Interpreter {
     private final void accept0(AlterIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableIndex existing = index(index, table, query.$ifExists(), true);
+        MutableIndex existing = index(index, table, query.$alterIndexIfExists(), true);
 
         if (existing != null) {
             if (query.$renameTo() != null)

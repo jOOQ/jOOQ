@@ -37,28 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-
 /**
- * The step in the <code>ALTER INDEX</code> where the action can be decided.
+ * A step in the construction of the <code>ALTER INDEX</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -77,47 +63,40 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface AlterIndexStep {
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER INDEX</code> statement.
      * <p>
-     * Note that in some databases, including MySQL and SQL Server, the index
-     * namespace is tied to a table, not a schema. In those databases, it is
-     * recommended to call {@link DSLContext#alterTable(String)} with
-     * {@link AlterTableStep#renameIndex(String)} instead.
+     * Note that in some databases, including MySQL and SQL Server, the index namespace
+     * is tied to a table, not a schema. In those databases, it is recommended to call {@link
+     * DSLContext#alterTable(String)} with {@link AlterTableStep#renameIndex(String)} instead.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexFinalStep renameTo(String newName);
+    @NotNull
+    AlterIndexFinalStep renameTo(String renameTo);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER INDEX</code> statement.
      * <p>
-     * Note that in some databases, including MySQL and SQL Server, the index
-     * namespace is tied to a table, not a schema. In those databases, it is
-     * recommended to call {@link DSLContext#alterTable(Name)} with
-     * {@link AlterTableStep#renameIndex(Name)} instead.
+     * Note that in some databases, including MySQL and SQL Server, the index namespace
+     * is tied to a table, not a schema. In those databases, it is recommended to call {@link
+     * DSLContext#alterTable(String)} with {@link AlterTableStep#renameIndex(String)} instead.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexFinalStep renameTo(Name newName);
+    @NotNull
+    AlterIndexFinalStep renameTo(Name renameTo);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER INDEX</code> statement.
      * <p>
-     * Note that in some databases, including MySQL and SQL Server, the index
-     * namespace is tied to a table, not a schema. In those databases, it is
-     * recommended to call {@link DSLContext#alterTable(Name)} with
-     * {@link AlterTableStep#renameIndex(Index)} instead.
+     * Note that in some databases, including MySQL and SQL Server, the index namespace
+     * is tied to a table, not a schema. In those databases, it is recommended to call {@link
+     * DSLContext#alterTable(String)} with {@link AlterTableStep#renameIndex(String)} instead.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexFinalStep renameTo(Index newName);
+    @NotNull
+    AlterIndexFinalStep renameTo(Index renameTo);
 }

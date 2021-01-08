@@ -661,7 +661,22 @@ final class MetaImpl extends AbstractMeta {
             Result<Record> result = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    ResultSet rs = meta.getImportedKeys(null, getSchema().getName(), getName());
+                    String schema = getSchema().getName();
+                    ResultSet rs;
+
+                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                    if (inverseSchemaCatalog)
+                        rs = meta.getImportedKeys(schema, null, getName());
+
+
+
+
+
+
+
+                    else
+                        rs = meta.getImportedKeys(null, schema, getName());
+
                     return dsl().fetch(
                         rs,
                         String.class,  // PKTABLE_CAT
@@ -954,7 +969,21 @@ final class MetaImpl extends AbstractMeta {
             Result<Record> result = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    ResultSet rs = meta.getExportedKeys(null, getTable().getSchema().getName(), getTable().getName());
+                    String schema = getTable().getSchema().getName();
+                    ResultSet rs;
+
+                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                    if (inverseSchemaCatalog)
+                        rs = meta.getExportedKeys(schema, null, getName());
+
+
+
+
+
+
+
+                    else
+                        rs = meta.getExportedKeys(null, schema, getName());
 
                     return dsl().fetch(
                         rs,

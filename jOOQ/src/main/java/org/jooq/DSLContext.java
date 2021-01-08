@@ -9950,6 +9950,60 @@ public interface DSLContext extends Scope {
     DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
     /**
+     * The <code>DROP VIEW</code> statement.
+     *
+     * @see DSL#dropView(String)
+     */
+    @NotNull
+    @Support
+    DropViewFinalStep dropView(String view);
+
+    /**
+     * The <code>DROP VIEW</code> statement.
+     *
+     * @see DSL#dropView(Name)
+     */
+    @NotNull
+    @Support
+    DropViewFinalStep dropView(Name view);
+
+    /**
+     * The <code>DROP VIEW</code> statement.
+     *
+     * @see DSL#dropView(Table)
+     */
+    @NotNull
+    @Support
+    DropViewFinalStep dropView(Table<?> view);
+
+    /**
+     * The <code>DROP VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#dropViewIfExists(String)
+     */
+    @NotNull
+    @Support
+    DropViewFinalStep dropViewIfExists(String view);
+
+    /**
+     * The <code>DROP VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#dropViewIfExists(Name)
+     */
+    @NotNull
+    @Support
+    DropViewFinalStep dropViewIfExists(Name view);
+
+    /**
+     * The <code>DROP VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#dropViewIfExists(Table)
+     */
+    @NotNull
+    @Support
+    DropViewFinalStep dropViewIfExists(Table<?> view);
+
+    /**
      * The <code>GRANT</code> statement.
      *
      * @see DSL#grant(Privilege)
@@ -11026,69 +11080,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>DROP VIEW</code> statement.
-     *
-     * @see DSL#dropView(String)
-     */
-    @NotNull
-    @Support
-    DropViewFinalStep dropView(String view);
-
-    /**
-     * Create a new DSL <code>DROP VIEW</code> statement.
-     *
-     * @see DSL#dropView(Name)
-     */
-    @NotNull
-    @Support
-    DropViewFinalStep dropView(Name view);
-
-    /**
-     * Create a new DSL <code>DROP VIEW</code> statement.
-     *
-     * @see DSL#dropView(Table)
-     */
-    @NotNull
-    @Support
-    DropViewFinalStep dropView(Table<?> view);
-
-    /**
-     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropViewIfExists(String)
-     */
-    @NotNull
-    @Support
-    DropViewFinalStep dropViewIfExists(String view);
-
-    /**
-     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropViewIfExists(Name)
-     */
-    @NotNull
-    @Support
-    DropViewFinalStep dropViewIfExists(Name view);
-
-    /**
-     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropViewIfExists(Table)
-     */
-    @NotNull
-    @Support
-    DropViewFinalStep dropViewIfExists(Table<?> view);
 
     /**
      * Create a new DSL <code>DROP TABLE</code> statement.

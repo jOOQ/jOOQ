@@ -7998,6 +7998,72 @@ public class DSL {
     }
 
     /**
+     * The <code>DROP VIEW</code> statement.
+     *
+     * @see DSLContext#dropView(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropViewFinalStep dropView(String view) {
+        return dsl().dropView(view);
+    }
+
+    /**
+     * The <code>DROP VIEW</code> statement.
+     *
+     * @see DSLContext#dropView(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropViewFinalStep dropView(Name view) {
+        return dsl().dropView(view);
+    }
+
+    /**
+     * The <code>DROP VIEW</code> statement.
+     *
+     * @see DSLContext#dropView(Table)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropViewFinalStep dropView(Table<?> view) {
+        return dsl().dropView(view);
+    }
+
+    /**
+     * The <code>DROP VIEW IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropViewIfExists(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropViewFinalStep dropViewIfExists(String view) {
+        return dsl().dropViewIfExists(view);
+    }
+
+    /**
+     * The <code>DROP VIEW IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropViewIfExists(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropViewFinalStep dropViewIfExists(Name view) {
+        return dsl().dropViewIfExists(view);
+    }
+
+    /**
+     * The <code>DROP VIEW IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropViewIfExists(Table)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
+        return dsl().dropViewIfExists(view);
+    }
+
+    /**
      * The <code>GRANT</code> statement.
      *
      * @see DSLContext#grant(Privilege)
@@ -9080,81 +9146,6 @@ public class DSL {
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP VIEW</code> statement.
-     *
-     * @see DSLContext#dropView(String)
-     */
-    @NotNull
-    @Support
-    public static DropViewFinalStep dropView(String view) {
-        return dsl().dropView(view);
-    }
-
-    /**
-     * Create a new DSL <code>DROP VIEW</code> statement.
-     *
-     * @see DSLContext#dropView(Name)
-     */
-    @NotNull
-    @Support
-    public static DropViewFinalStep dropView(Name view) {
-        return dsl().dropView(view);
-    }
-
-    /**
-     * Create a new DSL <code>DROP VIEW</code> statement.
-     *
-     * @see DSLContext#dropView(Table)
-     */
-    @NotNull
-    @Support
-    public static DropViewFinalStep dropView(Table<?> view) {
-        return dsl().dropView(view);
-    }
-
-    /**
-     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropViewIfExists(String)
-     */
-    @NotNull
-    @Support
-    public static DropViewFinalStep dropViewIfExists(String view) {
-        return dsl().dropViewIfExists(view);
-    }
-
-    /**
-     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropViewIfExists(Name)
-     */
-    @NotNull
-    @Support
-    public static DropViewFinalStep dropViewIfExists(Name view) {
-        return dsl().dropViewIfExists(view);
-    }
-
-    /**
-     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropViewIfExists(Table)
-     */
-    @NotNull
-    @Support
-    public static DropViewFinalStep dropViewIfExists(Table<?> view) {
-        return dsl().dropViewIfExists(view);
     }
 
     /**

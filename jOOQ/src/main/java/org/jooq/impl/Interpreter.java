@@ -836,7 +836,7 @@ final class Interpreter {
 
         MutableTable existing = schema.table(table);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$dropViewIfExists())
                 throw viewNotExists(table);
 
             return;
@@ -985,7 +985,7 @@ final class Interpreter {
     private final void accept0(DropIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableIndex existing = index(index, table, query.$ifExists(), true);
+        MutableIndex existing = index(index, table, query.$dropIndexIfExists(), true);
 
         if (existing != null)
             existing.table.indexes.remove(existing);

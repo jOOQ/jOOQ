@@ -3147,6 +3147,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.DropViewFinalStep dropView(String view) {
+        return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), false);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropView(Name view) {
+        return new DropViewImpl(configuration(), DSL.table(view), false);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropView(Table<?> view) {
+        return new DropViewImpl(configuration(), view, false);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropViewIfExists(String view) {
+        return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), true);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropViewIfExists(Name view) {
+        return new DropViewImpl(configuration(), DSL.table(view), true);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
+        return new DropViewImpl(configuration(), view, true);
+    }
+
+    @Override
     public org.jooq.GrantOnStep grant(Privilege privileges) {
         return new GrantImpl(configuration(), Arrays.asList(privileges));
     }
@@ -3715,36 +3745,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTableIfExists(Table<?> table) {
         return new AlterTableImpl(configuration(), table, true);
-    }
-
-    @Override
-    public DropViewFinalStep dropView(String view) {
-        return dropView(name(view));
-    }
-
-    @Override
-    public DropViewFinalStep dropView(Name view) {
-        return dropView(table(view));
-    }
-
-    @Override
-    public DropViewFinalStep dropView(Table<?> view) {
-        return new DropViewImpl(configuration(), view);
-    }
-
-    @Override
-    public DropViewFinalStep dropViewIfExists(String view) {
-        return dropViewIfExists(name(view));
-    }
-
-    @Override
-    public DropViewFinalStep dropViewIfExists(Name view) {
-        return dropViewIfExists(table(view));
-    }
-
-    @Override
-    public DropViewFinalStep dropViewIfExists(Table<?> view) {
-        return new DropViewImpl(configuration(), view, true);
     }
 
     @Override

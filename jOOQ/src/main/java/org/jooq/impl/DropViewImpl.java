@@ -37,65 +37,60 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DROP_VIEW;
-import static org.jooq.Clause.DROP_VIEW_TABLE;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_DROP_VIEW;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.DropViewFinalStep;
-import org.jooq.SQLDialect;
-import org.jooq.Table;
+import java.util.*;
 
 
 /**
- * @author Lukas Eder
+ * The <code>DROP VIEW</code> statement.
  */
-final class DropViewImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "rawtypes", "unused" })
+final class DropViewImpl
+extends
+    AbstractRowCountQuery
+implements
+    DropViewFinalStep
+{
 
-    // Cascading interface implementations for DROP VIEW behaviour
-    DropViewFinalStep {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]        CLAUSES              = { DROP_VIEW };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private final Table<?> view;
+    private final boolean  dropViewIfExists;
 
-    private final Table<?>               view;
-    private final boolean                ifExists;
-
-    DropViewImpl(Configuration configuration, Table<?> view) {
-        this(configuration, view, false);
-    }
-
-    DropViewImpl(Configuration configuration, Table<?> view, boolean ifExists) {
+    DropViewImpl(
+        Configuration configuration,
+        Table<?> view,
+        boolean dropViewIfExists
+    ) {
         super(configuration);
 
         this.view = view;
-        this.ifExists = ifExists;
+        this.dropViewIfExists = dropViewIfExists;
     }
 
-    final Table<?> $view()     { return view; }
-    final boolean  $ifExists() { return ifExists; }
+    final Table<?> $view()             { return view; }
+    final boolean  $dropViewIfExists() { return dropViewIfExists; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES              = { Clause.DROP_VIEW };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
@@ -103,21 +98,20 @@ final class DropViewImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (dropViewIfExists && !supportsIfExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.DROP_VIEW);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.DROP_VIEW);
         }
-        else {
+        else
             accept0(ctx);
-        }
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.start(DROP_VIEW_TABLE)
+        ctx.start(Clause.DROP_VIEW_TABLE)
            .visit(K_DROP_VIEW).sql(' ');
 
-        if (ifExists && supportsIfExists(ctx))
+        if (dropViewIfExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
 
@@ -132,11 +126,13 @@ final class DropViewImpl extends AbstractRowCountQuery implements
 
         ctx.visit(view);
 
-        ctx.end(DROP_VIEW_TABLE);
+        ctx.end(Clause.DROP_VIEW_TABLE);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

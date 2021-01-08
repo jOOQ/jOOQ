@@ -7998,6 +7998,138 @@ public class DSL {
     }
 
     /**
+     * The <code>DROP TABLE</code> statement.
+     *
+     * @see DSLContext#dropTable(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropTableStep dropTable(String table) {
+        return dsl().dropTable(table);
+    }
+
+    /**
+     * The <code>DROP TABLE</code> statement.
+     *
+     * @see DSLContext#dropTable(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropTableStep dropTable(Name table) {
+        return dsl().dropTable(table);
+    }
+
+    /**
+     * The <code>DROP TABLE</code> statement.
+     *
+     * @see DSLContext#dropTable(Table)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropTableStep dropTable(Table<?> table) {
+        return dsl().dropTable(table);
+    }
+
+    /**
+     * The <code>DROP TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTableIfExists(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropTableStep dropTableIfExists(String table) {
+        return dsl().dropTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTableIfExists(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropTableStep dropTableIfExists(Name table) {
+        return dsl().dropTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTableIfExists(Table)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropTableStep dropTableIfExists(Table<?> table) {
+        return dsl().dropTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTable(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropTableStep dropTemporaryTable(String table) {
+        return dsl().dropTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTable(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropTableStep dropTemporaryTable(Name table) {
+        return dsl().dropTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTable(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropTableStep dropTemporaryTable(Table<?> table) {
+        return dsl().dropTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTableIfExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropTableStep dropTemporaryTableIfExists(String table) {
+        return dsl().dropTemporaryTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTableIfExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropTableStep dropTemporaryTableIfExists(Name table) {
+        return dsl().dropTemporaryTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTableIfExists(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
+        return dsl().dropTemporaryTableIfExists(table);
+    }
+
+    /**
      * The <code>DROP VIEW</code> statement.
      *
      * @see DSLContext#dropView(String)
@@ -9146,147 +9278,6 @@ public class DSL {
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TABLE</code> statement.
-     *
-     * @see DSLContext#dropTable(String)
-     */
-    @NotNull
-    @Support
-    public static DropTableStep dropTable(String table) {
-        return dsl().dropTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TABLE</code> statement.
-     *
-     * @see DSLContext#dropTable(Name)
-     */
-    @NotNull
-    @Support
-    public static DropTableStep dropTable(Name table) {
-        return dsl().dropTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TABLE</code> statement.
-     *
-     * @see DSLContext#dropTable(Table)
-     */
-    @NotNull
-    @Support
-    public static DropTableStep dropTable(Table<?> table) {
-        return dsl().dropTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#dropTemporaryTable(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    public static DropTableStep dropTemporaryTable(String table) {
-        return dsl().dropTemporaryTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#dropTemporaryTable(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    public static DropTableStep dropTemporaryTable(Name table) {
-        return dsl().dropTemporaryTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
-     *
-     * @see DSLContext#dropTemporaryTable(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    public static DropTableStep dropTemporaryTable(Table<?> table) {
-        return dsl().dropTemporaryTable(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
-     *
-     * @see DSLContext#dropTemporaryTableIfExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    public static DropTableStep dropTemporaryTableIfExists(String table) {
-        return dsl().dropTemporaryTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
-     *
-     * @see DSLContext#dropTemporaryTableIfExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    public static DropTableStep dropTemporaryTableIfExists(Name table) {
-        return dsl().dropTemporaryTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
-     *
-     * @see DSLContext#dropTemporaryTableIfExists(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    public static DropTableStep dropTemporaryTableIfExists(Table<?> table) {
-        return dsl().dropTemporaryTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropTableIfExists(String)
-     */
-    @NotNull
-    @Support
-    public static DropTableStep dropTableIfExists(String table) {
-        return dsl().dropTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropTableIfExists(Name)
-     */
-    @NotNull
-    @Support
-    public static DropTableStep dropTableIfExists(Name table) {
-        return dsl().dropTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropTableIfExists(Table)
-     */
-    @NotNull
-    @Support
-    public static DropTableStep dropTableIfExists(Table<?> table) {
-        return dsl().dropTableIfExists(table);
     }
 
     /**

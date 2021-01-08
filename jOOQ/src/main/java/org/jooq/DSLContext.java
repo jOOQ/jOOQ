@@ -9950,6 +9950,114 @@ public interface DSLContext extends Scope {
     DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
     /**
+     * The <code>DROP TABLE</code> statement.
+     *
+     * @see DSL#dropTable(String)
+     */
+    @NotNull
+    @Support
+    DropTableStep dropTable(String table);
+
+    /**
+     * The <code>DROP TABLE</code> statement.
+     *
+     * @see DSL#dropTable(Name)
+     */
+    @NotNull
+    @Support
+    DropTableStep dropTable(Name table);
+
+    /**
+     * The <code>DROP TABLE</code> statement.
+     *
+     * @see DSL#dropTable(Table)
+     */
+    @NotNull
+    @Support
+    DropTableStep dropTable(Table<?> table);
+
+    /**
+     * The <code>DROP TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTableIfExists(String)
+     */
+    @NotNull
+    @Support
+    DropTableStep dropTableIfExists(String table);
+
+    /**
+     * The <code>DROP TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTableIfExists(Name)
+     */
+    @NotNull
+    @Support
+    DropTableStep dropTableIfExists(Name table);
+
+    /**
+     * The <code>DROP TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTableIfExists(Table)
+     */
+    @NotNull
+    @Support
+    DropTableStep dropTableIfExists(Table<?> table);
+
+    /**
+     * The <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropTemporaryTable(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTable(String table);
+
+    /**
+     * The <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropTemporaryTable(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTable(Name table);
+
+    /**
+     * The <code>DROP TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropTemporaryTable(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTable(Table<?> table);
+
+    /**
+     * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTemporaryTableIfExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTableIfExists(String table);
+
+    /**
+     * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTemporaryTableIfExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTableIfExists(Name table);
+
+    /**
+     * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTemporaryTableIfExists(Table)
+     */
+    @NotNull
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTableIfExists(Table<?> table);
+
+    /**
      * The <code>DROP VIEW</code> statement.
      *
      * @see DSL#dropView(String)
@@ -11080,123 +11188,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>DROP TABLE</code> statement.
-     *
-     * @see DSL#dropTable(String)
-     */
-    @NotNull
-    @Support
-    DropTableStep dropTable(String table);
-
-    /**
-     * Create a new DSL <code>DROP TABLE</code> statement.
-     *
-     * @see DSL#dropTable(Name)
-     */
-    @NotNull
-    @Support
-    DropTableStep dropTable(Name table);
-
-    /**
-     * Create a new DSL <code>DROP TABLE</code> statement.
-     *
-     * @see DSL#dropTable(Table)
-     */
-    @NotNull
-    @Support
-    DropTableStep dropTable(Table<?> table);
-
-    /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropTableIfExists(String)
-     */
-    @NotNull
-    @Support
-    DropTableStep dropTableIfExists(String table);
-
-    /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropTableIfExists(Name)
-     */
-    @NotNull
-    @Support
-    DropTableStep dropTableIfExists(Name table);
-
-    /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropTableIfExists(Table)
-     */
-    @NotNull
-    @Support
-    DropTableStep dropTableIfExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#dropTemporaryTable(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    DropTableStep dropTemporaryTable(String table);
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#dropTemporaryTable(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    DropTableStep dropTemporaryTable(Name table);
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE</code> statement.
-     *
-     * @see DSL#dropTemporaryTable(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    DropTableStep dropTemporaryTable(Table<?> table);
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
-     *
-     * @see DSL#dropTemporaryTableIfExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    DropTableStep dropTemporaryTableIfExists(String table);
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
-     *
-     * @see DSL#dropTemporaryTableIfExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    DropTableStep dropTemporaryTableIfExists(Name table);
-
-    /**
-     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
-     *
-     * @see DSL#dropTemporaryTableIfExists(Table)
-     */
-    @NotNull
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    DropTableStep dropTemporaryTableIfExists(Table<?> table);
 
     /**
      * Create a new DSL truncate statement.

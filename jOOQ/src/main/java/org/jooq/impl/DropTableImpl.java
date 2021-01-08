@@ -37,100 +37,101 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DROP_TABLE;
-import static org.jooq.Clause.DROP_TABLE_TABLE;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
-// ...
-import static org.jooq.impl.Cascade.CASCADE;
-import static org.jooq.impl.Cascade.RESTRICT;
-import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_DROP;
-import static org.jooq.impl.Keywords.K_DROP_TABLE;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_TABLE;
-import static org.jooq.impl.Keywords.K_TEMPORARY;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.DropTableStep;
-import org.jooq.SQLDialect;
-import org.jooq.Table;
+import java.util.*;
 
 
 /**
- * @author Lukas Eder
+ * The <code>DROP TABLE</code> statement.
  */
-final class DropTableImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "rawtypes", "unused" })
+final class DropTableImpl
+extends
+    AbstractRowCountQuery
+implements
+    DropTableStep,
+    DropTableFinalStep
+{
 
-    // Cascading interface implementations for DROP TABLE behaviour
-    DropTableStep {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]        CLAUSES              = { DROP_TABLE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supportedBy(MYSQL);
+    private final Boolean  temporary;
+    private final Table<?> table;
+    private final boolean  dropTableIfExists;
+    private       Boolean  cascade;
 
-    private final Table<?>               table;
-    private final boolean                temporary;
-    private final boolean                ifExists;
-    private Cascade                      cascade;
-
-    DropTableImpl(Configuration configuration, Table<?> table) {
-        this(configuration, table, false, false);
+    DropTableImpl(
+        Configuration configuration,
+        Boolean temporary,
+        Table<?> table,
+        boolean dropTableIfExists
+    ) {
+        this(
+            configuration,
+            temporary,
+            table,
+            dropTableIfExists,
+            null
+        );
     }
 
-    DropTableImpl(Configuration configuration, Table<?> table, boolean ifExists) {
-        this(configuration, table, ifExists, false);
-    }
-
-    DropTableImpl(Configuration configuration, Table<?> table, boolean ifExists, boolean temporary) {
+    DropTableImpl(
+        Configuration configuration,
+        Boolean temporary,
+        Table<?> table,
+        boolean dropTableIfExists,
+        Boolean cascade
+    ) {
         super(configuration);
 
-        this.table = table;
-        this.ifExists = ifExists;
         this.temporary = temporary;
+        this.table = table;
+        this.dropTableIfExists = dropTableIfExists;
+        this.cascade = cascade;
     }
 
-    final Table<?> $table()     { return table; }
-    final boolean  $temporary() { return temporary; }
-    final boolean  $ifExists()  { return ifExists; }
-    final Cascade  $cascade()   { return cascade; }
+    final Boolean  $temporary()         { return temporary; }
+    final Table<?> $table()             { return table; }
+    final boolean  $dropTableIfExists() { return dropTableIfExists; }
+    final Boolean  $cascade()           { return cascade; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     @Override
     public final DropTableImpl cascade() {
-        cascade = CASCADE;
+        this.cascade = true;
         return this;
     }
 
     @Override
     public final DropTableImpl restrict() {
-        cascade = RESTRICT;
+        this.cascade = false;
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES              = { Clause.DROP_TABLE };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supportedBy(MYSQL);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
@@ -138,18 +139,17 @@ final class DropTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (dropTableIfExists && !supportsIfExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.DROP_TABLE);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.DROP_TABLE);
         }
-        else {
+        else
             accept0(ctx);
-        }
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.start(DROP_TABLE_TABLE);
+        ctx.start(Clause.DROP_TABLE_TABLE);
 
         // [#6371] [#9019] While many dialects do not require this keyword, in
         //                 some dialects (e.g. MySQL), there is a semantic
@@ -160,17 +160,17 @@ final class DropTableImpl extends AbstractRowCountQuery implements
             ctx.visit(K_DROP_TABLE).sql(' ');
 
 
-        if (ifExists && supportsIfExists(ctx))
+        if (dropTableIfExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(table);
 
-        if (cascade == CASCADE)
+        if (Boolean.TRUE.equals(cascade))
             ctx.sql(' ').visit(K_CASCADE);
-        else if (cascade == RESTRICT)
+        else if (Boolean.FALSE.equals(cascade))
             ctx.sql(' ').visit(K_RESTRICT);
 
-        ctx.end(DROP_TABLE_TABLE);
+        ctx.end(Clause.DROP_TABLE_TABLE);
     }
 
 
@@ -178,4 +178,6 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

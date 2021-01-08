@@ -42,5 +42,15 @@ package org.jooq.impl;
  * @author Lukas Eder
  */
 enum Cascade {
-    CASCADE, RESTRICT
+    CASCADE,
+    RESTRICT;
+
+    static Cascade of(Boolean b) {
+        if (b == null)
+            return null;
+        else if (b)
+            return CASCADE;
+        else
+            return RESTRICT;
+    }
 }

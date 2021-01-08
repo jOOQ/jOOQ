@@ -37,13 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-
 /**
- * The step in the <code>DROP TABLE</code> DSL used to specify <code>DROP</code>
- * behaviour.
+ * A step in the construction of the <code>DROP TABLE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -62,24 +63,21 @@ import org.jetbrains.annotations.*;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface DropTableStep extends DropTableFinalStep {
 
     /**
-     * Add a <code>CASCADE</code> clause to the <code>DROP TABLE</code>
-     * statement.
+     * Add the <code>CASCADE</code> clause to the <code>DROP TABLE</code> statement.
      */
-    @NotNull
     @Support
+    @NotNull
     DropTableFinalStep cascade();
 
     /**
-     * Add a <code>RESTRICT</code> clause to the <code>DROP TABLE</code>
-     * statement.
+     * Add the <code>RESTRICT</code> clause to the <code>DROP TABLE</code> statement.
      */
-    @NotNull
     @Support
+    @NotNull
     DropTableFinalStep restrict();
 }

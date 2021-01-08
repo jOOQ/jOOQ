@@ -3147,6 +3147,66 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.DropTableStep dropTable(String table) {
+        return new DropTableImpl(configuration(), false, DSL.table(DSL.name(table)), false);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTable(Name table) {
+        return new DropTableImpl(configuration(), false, DSL.table(table), false);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTable(Table<?> table) {
+        return new DropTableImpl(configuration(), false, table, false);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTableIfExists(String table) {
+        return new DropTableImpl(configuration(), false, DSL.table(DSL.name(table)), true);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTableIfExists(Name table) {
+        return new DropTableImpl(configuration(), false, DSL.table(table), true);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTableIfExists(Table<?> table) {
+        return new DropTableImpl(configuration(), false, table, true);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTemporaryTable(String table) {
+        return new DropTableImpl(configuration(), true, DSL.table(DSL.name(table)), false);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTemporaryTable(Name table) {
+        return new DropTableImpl(configuration(), true, DSL.table(table), false);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTemporaryTable(Table<?> table) {
+        return new DropTableImpl(configuration(), true, table, false);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTemporaryTableIfExists(String table) {
+        return new DropTableImpl(configuration(), true, DSL.table(DSL.name(table)), true);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTemporaryTableIfExists(Name table) {
+        return new DropTableImpl(configuration(), true, DSL.table(table), true);
+    }
+
+    @Override
+    public org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
+        return new DropTableImpl(configuration(), true, table, true);
+    }
+
+    @Override
     public org.jooq.DropViewFinalStep dropView(String view) {
         return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), false);
     }
@@ -3745,66 +3805,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTableIfExists(Table<?> table) {
         return new AlterTableImpl(configuration(), table, true);
-    }
-
-    @Override
-    public DropTableStep dropTable(String table) {
-        return dropTable(name(table));
-    }
-
-    @Override
-    public DropTableStep dropTable(Name table) {
-        return dropTable(table(table));
-    }
-
-    @Override
-    public DropTableStep dropTable(Table<?> table) {
-        return new DropTableImpl(configuration(), table);
-    }
-
-    @Override
-    public DropTableStep dropTemporaryTable(String table) {
-        return dropTemporaryTable(name(table));
-    }
-
-    @Override
-    public DropTableStep dropTemporaryTable(Name table) {
-        return dropTemporaryTable(table(table));
-    }
-
-    @Override
-    public DropTableStep dropTemporaryTable(Table<?> table) {
-        return new DropTableImpl(configuration(), table, false, true);
-    }
-
-    @Override
-    public DropTableStep dropTemporaryTableIfExists(String table) {
-        return dropTemporaryTableIfExists(name(table));
-    }
-
-    @Override
-    public DropTableStep dropTemporaryTableIfExists(Name table) {
-        return dropTemporaryTableIfExists(table(table));
-    }
-
-    @Override
-    public DropTableStep dropTemporaryTableIfExists(Table<?> table) {
-        return new DropTableImpl(configuration(), table, true, true);
-    }
-
-    @Override
-    public DropTableStep dropTableIfExists(String table) {
-        return dropTableIfExists(name(table));
-    }
-
-    @Override
-    public DropTableStep dropTableIfExists(Name table) {
-        return dropTableIfExists(table(table));
-    }
-
-    @Override
-    public DropTableStep dropTableIfExists(Table<?> table) {
-        return new DropTableImpl(configuration(), table, true);
     }
 
     @Override

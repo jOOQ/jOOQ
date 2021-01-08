@@ -759,7 +759,7 @@ final class Interpreter {
         MutableSchema schema = getSchema(table.getSchema());
         MutableTable existing = schema.table(table);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$dropTableIfExists())
                 throw notExists(table);
 
             return;
@@ -769,7 +769,7 @@ final class Interpreter {
         else if (query.$temporary() && existing.options.type() != TableType.TEMPORARY)
             throw objectNotTemporaryTable(table);
 
-        drop(schema.tables, existing, query.$cascade());
+        drop(schema.tables, existing, Cascade.of(query.$cascade()));
     }
 
     private final void accept0(TruncateImpl<?> query) {

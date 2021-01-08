@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
 import static org.jooq.SortOrder.DESC;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
     private static final long serialVersionUID = -1825164005148183725L;
 
     SortFieldList() {
-        this(Collections.<SortField<?>>emptyList());
+        this(emptyList());
     }
 
     SortFieldList(List<SortField<?>> wrappedList) {

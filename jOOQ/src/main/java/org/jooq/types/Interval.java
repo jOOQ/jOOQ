@@ -176,7 +176,6 @@ public interface Interval extends Serializable {
      */
     short shortValue();
 
-
     /**
      * Get a duration representation of this interval.
      * <p>
@@ -193,5 +192,4 @@ public interface Interval extends Serializable {
      * <code>EXTRACT(EPOCH FROM my_interval)</code> behaviour.
      */
     Duration toDuration();
-
 }

@@ -37,6 +37,7 @@
  */
 package org.jooq.tools.jdbc;
 
+import static java.util.Collections.emptyMap;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.sql.CallableStatement;
@@ -368,7 +369,7 @@ public class BatchedConnection extends DefaultConnection {
             executeLastBatch();
         }
         catch (SQLException e) {
-            throw new SQLClientInfoException(Collections.<String, ClientInfoStatus>emptyMap(), e);
+            throw new SQLClientInfoException(emptyMap(), e);
         }
 
         super.setClientInfo(name, value);
@@ -380,7 +381,7 @@ public class BatchedConnection extends DefaultConnection {
             executeLastBatch();
         }
         catch (SQLException e) {
-            throw new SQLClientInfoException(Collections.<String, ClientInfoStatus>emptyMap(), e);
+            throw new SQLClientInfoException(emptyMap(), e);
         }
 
         super.setClientInfo(properties);

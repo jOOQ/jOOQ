@@ -72,8 +72,6 @@ public interface TransactionalRunnable {
      */
     void run(Configuration configuration) throws Throwable;
 
-
-
     /**
      * Wrap a set of nested {@link TransactionalRunnable} objects in a single
      * global {@link TransactionalRunnable}.
@@ -92,6 +90,4 @@ public interface TransactionalRunnable {
                 configuration.dsl().transaction(runnable);
         };
     }
-
-
 }

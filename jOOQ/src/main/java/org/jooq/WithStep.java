@@ -149,7 +149,6 @@ public interface WithStep extends QueryPart {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(Name alias, Collection<? extends Name> fieldAliases);
 
-
     /**
      * Add another common table expression to the <code>WITH</code> clause.
      * <p>
@@ -185,7 +184,6 @@ public interface WithStep extends QueryPart {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
-
 
 
 

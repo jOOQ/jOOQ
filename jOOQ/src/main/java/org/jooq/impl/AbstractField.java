@@ -197,14 +197,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return as(otherField.getUnqualifiedName());
     }
 
-
-
     @Override
     public final Field<T> as(Function<? super Field<T>, ? extends String> aliasFunction) {
         return as(aliasFunction.apply(this));
     }
-
-
 
     // ------------------------------------------------------------------------
     // XXX: Type casts
@@ -270,7 +266,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<Integer> sortAsc(Collection<T> sortList) {
-        return Tools.isEmpty(sortList) ? this.<Integer>sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).asc();
+        return Tools.isEmpty(sortList) ? sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).asc();
     }
 
     @Override
@@ -281,7 +277,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final SortField<Integer> sortDesc(Collection<T> sortList) {
-        return Tools.isEmpty(sortList) ? this.<Integer>sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).desc();
+        return Tools.isEmpty(sortList) ? sortConstant() : DSL.field(this, fieldsArray(sortList.toArray(), getDataType())).desc();
     }
 
     @Override
@@ -292,7 +288,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
-        return sortMap == null || sortMap.isEmpty() ? this.<Z>sortConstant() : DSL.case_(this).mapValues(sortMap).asc();
+        return sortMap == null || sortMap.isEmpty() ? sortConstant() : DSL.case_(this).mapValues(sortMap).asc();
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -462,105 +458,79 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitNot() {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitNot((Field) this);
-        return result;
+        return DSL.bitNot((Field) this);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitAnd(T value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitAnd((Field) this, (Field) val(value, this));
-        return result;
+        return DSL.bitAnd((Field) this, (Field) val(value, this));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitAnd(Field<T> value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitAnd((Field) this, (Field) value);
-        return result;
+        return DSL.bitAnd((Field) this, (Field) value);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitNand(T value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitNand((Field) this, (Field) val(value, this));
-        return result;
+        return DSL.bitNand((Field) this, (Field) val(value, this));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitNand(Field<T> value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitNand((Field) this, (Field) value);
-        return result;
+        return DSL.bitNand((Field) this, (Field) value);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitOr(T value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitOr((Field) this, (Field) val(value, this));
-        return result;
+        return DSL.bitOr((Field) this, (Field) val(value, this));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitOr(Field<T> value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitOr((Field) this, (Field) value);
-        return result;
+        return DSL.bitOr((Field) this, (Field) value);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitNor(T value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitNor((Field) this, (Field) val(value, this));
-        return result;
+        return DSL.bitNor((Field) this, (Field) val(value, this));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitNor(Field<T> value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitNor((Field) this, (Field) value);
-        return result;
+        return DSL.bitNor((Field) this, (Field) value);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitXor(T value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitXor((Field) this, (Field) val(value, this));
-        return result;
+        return DSL.bitXor((Field) this, (Field) val(value, this));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitXor(Field<T> value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitXor((Field) this, (Field) value);
-        return result;
+        return DSL.bitXor((Field) this, (Field) value);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitXNor(T value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitXNor((Field) this, (Field) val(value, this));
-        return result;
+        return DSL.bitXNor((Field) this, (Field) val(value, this));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Field<T> bitXNor(Field<T> value) {
-        // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.bitXNor((Field) this, (Field) value);
-        return result;
+        return DSL.bitXNor((Field) this, (Field) value);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

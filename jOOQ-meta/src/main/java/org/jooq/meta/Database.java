@@ -1279,9 +1279,7 @@ public interface Database extends AutoCloseable {
     /**
      * Release any resources that this Database may have allocated.
      */
-
     @Override
-
     void close();
 
     /**

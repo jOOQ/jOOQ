@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import static java.util.Comparator.naturalOrder;
 import static org.jooq.FilePattern.Sort.SEMANTIC;
 
 import java.io.File;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import org.jooq.exception.IOException;
@@ -169,12 +171,7 @@ public final class FilePattern {
 
         switch (sort) {
             case ALPHANUMERIC:
-                return new Comparator<File>() {
-                    @Override
-                    public int compare(File o1, File o2) {
-                        return o1.compareTo(o2);
-                    }
-                };
+                return naturalOrder();
             case NONE:
                 return null;
             case FLYWAY:
@@ -200,14 +197,7 @@ public final class FilePattern {
      */
     public final List<Source> collect() {
         final List<Source> list = new ArrayList<>();
-
-        load(new Loader() {
-            @Override
-            public void load(Source source) {
-                list.add(source);
-            }
-        });
-
+        load(list::add);
         return list;
     }
 
@@ -216,7 +206,7 @@ public final class FilePattern {
      *
      * @throws IOException if something goes wrong while loading file contents.
      */
-    public final void load(Loader loader) {
+    public final void load(Consumer<Source> loader) {
         boolean loaded = false;
         URL url = null;
 
@@ -289,7 +279,7 @@ public final class FilePattern {
         File file,
         Comparator<File> fileComparator,
         Pattern regex,
-        Loader loader
+        Consumer<Source> loader
     ) throws java.io.IOException {
         if (file.isFile()) {
             if (regex == null || regex.matcher(file.getCanonicalPath().replace("\\", "/")).matches()) {
@@ -312,9 +302,9 @@ public final class FilePattern {
         }
     }
 
-    private final void load0(File file, Loader loader) {
+    private final void load0(File file, Consumer<Source> loader) {
         try {
-            loader.load(Source.of(file, encoding));
+            loader.accept(Source.of(file, encoding));
         }
         catch (RuntimeException e) {
             log.error("Error while loading file: " + file);
@@ -325,14 +315,6 @@ public final class FilePattern {
     @Override
     public String toString() {
         return pattern;
-    }
-
-    /**
-     * A callback interface that allows for loading a {@link Source}.
-     */
-    @FunctionalInterface
-    public interface Loader {
-        void load(Source source);
     }
 
     /**

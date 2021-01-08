@@ -38,6 +38,8 @@
 
 package org.jooq.meta.postgres;
 
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.condition;
@@ -94,6 +96,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
@@ -612,20 +615,14 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<>();
 
         // [#1409] Shouldn't select from INFORMATION_SCHEMA.SCHEMATA, as that
         // would only return schemata of which CURRENT_USER is the owner
-        for (String name : create()
-                .select(PG_NAMESPACE.NSPNAME)
+        return
+        create().select(PG_NAMESPACE.NSPNAME)
                 .from(PG_NAMESPACE)
                 .orderBy(PG_NAMESPACE.NSPNAME)
-                .fetch(PG_NAMESPACE.NSPNAME)) {
-
-            result.add(new SchemaDefinition(this, name, ""));
-        }
-
-        return result;
+                .collect(mapping(r -> new SchemaDefinition(this, r.value1(), ""), toList()));
     }
 
     @Override
@@ -894,7 +891,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             : field("{0}.proisagg", SQLDataType.BOOLEAN, PG_PROC)
         ).as("is_agg");
 
-        for (Record record : create().select(
+        return
+        create().select(
                 r1.ROUTINE_SCHEMA,
                 r1.ROUTINE_NAME,
                 r1.SPECIFIC_NAME,
@@ -940,12 +938,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 r1.ROUTINE_SCHEMA.asc(),
                 r1.ROUTINE_NAME.asc(),
                 field(name("overload")).asc())
-            .fetch()) {
-
-            result.add(new PostgresRoutineDefinition(this, record));
-        }
-
-        return result;
+            .collect(mapping(r -> new PostgresRoutineDefinition(this, r), Collectors.<RoutineDefinition>toList()));
     }
 
     @Override

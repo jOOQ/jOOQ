@@ -62,7 +62,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface Query extends Statement, Attachable , AutoCloseable {
+public interface Query extends Statement, Attachable, AutoCloseable {
 
     /**
      * Execute the query, if it has been created with a proper configuration.
@@ -80,8 +80,6 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      * @throws DataAccessException If anything goes wrong in the database
      */
     int execute() throws DataAccessException;
-
-
 
     /**
      * Execute the query in a new {@link CompletionStage}.
@@ -121,8 +119,6 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      */
     @NotNull
     CompletionStage<Integer> executeAsync(Executor executor);
-
-
 
     /**
      * Whether this query is executable in its current state.
@@ -352,9 +348,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      * @throws DataAccessException If something went wrong closing the statement
      * @see java.sql.Statement#close()
      */
-
     @Override
-
     void close() throws DataAccessException;
 
     /**

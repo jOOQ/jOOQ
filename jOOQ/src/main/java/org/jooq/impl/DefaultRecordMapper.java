@@ -73,7 +73,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -362,13 +361,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return;
         }
 
-
         if (Stream.class.isAssignableFrom(type)) {
             RecordMapper<R, Object[]> local = configuration.recordMapperProvider().provide(rowType, Object[].class);
             delegate = r -> (E) Stream.of(local.map(r));
             return;
         }
-
 
         // [#10071] Single-field Record1 types can be mapped if there is a ConverterProvider allowing for this mapping
         if (fields.length == 1 && Tools.converter(configuration, fields[0].getType(), type) != null) {
@@ -408,12 +405,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         Constructor<E>[] constructors = (Constructor<E>[]) type.getDeclaredConstructors();
 
         // [#6868] Prefer public constructors
-        Arrays.sort(constructors, new Comparator<Constructor<E>>() {
-            @Override
-            public int compare(Constructor<E> c1, Constructor<E> c2) {
-                return (c2.getModifiers() & Modifier.PUBLIC) - (c1.getModifiers() & Modifier.PUBLIC);
-            }
-        });
+        Arrays.sort(constructors, (c1, c2) -> (c2.getModifiers() & Modifier.PUBLIC) - (c1.getModifiers() & Modifier.PUBLIC));
 
         // [#1837] [#10349] [#11123] If any java.beans.ConstructorProperties annotations are
         // present use those rather than matching constructors by the number of arguments
@@ -450,7 +442,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     for (int i = 0; i < parameterTypes.length; i++) {
                         Reflect parameter = Reflect.on(parameters.get(i));
                         Object typeClassifier = parameter.call("getType").call("getClassifier").get();
-                        String name = parameter.call("getName").<String>get();
+                        String name = parameter.call("getName").get();
 
                         // [#8578] If the constructor parameter is a KTypeParameter, we need an additional step to
                         //         extract the first upper bounds' classifier, which (hopefully) is a KClass
@@ -476,15 +468,10 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     return;
                 }
             }
-            catch (ReflectException ignore) {}
-            catch (NoSuchMethodException ignore) {}
-            catch (IllegalAccessException ignore) {}
-            catch (InvocationTargetException ignore) {}
+            catch (ReflectException | InvocationTargetException | IllegalAccessException | NoSuchMethodException ignore) {}
         }
 
-
         boolean mapConstructorParameterNames = TRUE.equals(configuration.settings().isMapConstructorParameterNames());
-
 
         // [#1837] Without ConstructorProperties, match constructors by matching
         //         argument length
@@ -497,7 +484,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 // Match the first constructor by parameter length
                 if (parameterTypes.length == (supportsNesting ? prefixes().size() : fields.length)) {
 
-
                     // [#4627] use parameter names from byte code if available
                     if (mapConstructorParameterNames) {
                         Parameter[] parameters = constructor.getParameters();
@@ -506,7 +492,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                             delegate = new ImmutablePOJOMapperWithParameterNames(constructor, collectParameterNames(parameters), supportsNesting);
                     }
 
-
                     if (delegate == null)
                         delegate = new ImmutablePOJOMapper(constructor, parameterTypes, supportsNesting);
 
@@ -514,7 +499,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 }
             }
         }
-
 
         // [#4627] if there is no exact match in terms of the number of parameters,
         // but using parameter annotations is allowed and those are in fact present,
@@ -529,15 +513,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-
         throw new MappingException("No matching constructor found on type " + type + " for row type " + rowType);
     }
-
 
     private List<String> collectParameterNames(Parameter[] parameters) {
         return Arrays.stream(parameters).map(Parameter::getName).collect(Collectors.toList());
     }
-
 
     @Override
     public final E map(R record) {
@@ -614,18 +595,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ProxyMapper implements RecordMapper<R, E> {
 
-
         private Constructor<Lookup>     constructor;
-
         private final MutablePOJOMapper pojomapper;
 
         ProxyMapper() {
-            this.pojomapper = new MutablePOJOMapper(new Callable<E>() {
-                @Override
-                public E call() throws Exception {
-                    return proxy();
-                }
-            }, null);
+            this.pojomapper = new MutablePOJOMapper(() -> proxy(), null);
         }
 
         @Override
@@ -636,43 +610,36 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         private E proxy() {
             final Object[] result = new Object[1];
             final Map<String, Object> map = new HashMap<>();
-            final InvocationHandler handler = new InvocationHandler() {
+            final InvocationHandler handler = (proxy, method, args) -> {
+                String name = method.getName();
 
-                @SuppressWarnings("null")
-                @Override
-                public Object invoke(Object proxy, Method method, Object[] args) {
-                    String name = method.getName();
+                int length = (args == null ? 0 : args.length);
 
-                    int length = (args == null ? 0 : args.length);
+                if (length == 0 && name.startsWith("get"))
+                    return map.get(name.substring(3));
+                else if (length == 0 && name.startsWith("is"))
+                    return map.get(name.substring(2));
+                else if (length == 1 && name.startsWith("set"))
+                    map.put(name.substring(3), args[0]);
 
-                    if (length == 0 && name.startsWith("get"))
-                        return map.get(name.substring(3));
-                    else if (length == 0 && name.startsWith("is"))
-                        return map.get(name.substring(2));
-                    else if (length == 1 && name.startsWith("set"))
-                        map.put(name.substring(3), args[0]);
+                // [#5442] Default methods should be invoked to run client implementation
+                else if (method.isDefault())
+                    try {
+                        if (constructor == null)
+                            constructor = accessible(Lookup.class.getDeclaredConstructor(Class.class, int.class));
 
+                        Class<?> declaringClass = method.getDeclaringClass();
+                        return constructor
+                            .newInstance(declaringClass, Lookup.PRIVATE)
+                            .unreflectSpecial(method, declaringClass)
+                            .bindTo(result[0])
+                            .invokeWithArguments(args);
+                    }
+                    catch (Throwable e) {
+                        throw new MappingException("Cannot invoke default method", e);
+                    }
 
-                    // [#5442] Default methods should be invoked to run client implementation
-                    else if (method.isDefault())
-                        try {
-                            if (constructor == null)
-                                constructor = accessible(Lookup.class.getDeclaredConstructor(Class.class, int.class));
-
-                            Class<?> declaringClass = method.getDeclaringClass();
-                            return constructor
-                                .newInstance(declaringClass, Lookup.PRIVATE)
-                                .unreflectSpecial(method, declaringClass)
-                                .bindTo(result[0])
-                                .invokeWithArguments(args);
-                        }
-                        catch (Throwable e) {
-                            throw new MappingException("Cannot invoke default method", e);
-                        }
-
-
-                    return null;
-                }
+                return null;
             };
 
             result[0] = Proxy.newProxyInstance(type.getClassLoader(), new Class[] { type }, handler);
@@ -759,16 +726,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         if (nestedMappedFields == null)
                             nestedMappedFields = new HashMap<>();
 
-                        List<Field<?>> f = nestedMappedFields.get(prefix);
-                        if (f == null)
-                            nestedMappedFields.put(prefix, f = new ArrayList<>());
+                        nestedMappedFields
+                            .computeIfAbsent(prefix, p -> new ArrayList<>())
+                            .add(field(name(name.substring(prefix.length() + 1)), field.getDataType()));
 
-                        NestedMappingInfo nestedMappingInfo = nestedMappingInfos.get(prefix);
-                        if (nestedMappingInfo == null)
-                            nestedMappingInfos.put(prefix, nestedMappingInfo = new NestedMappingInfo());
-
-                        f.add(field(name(name.substring(prefix.length() + 1)), field.getDataType()));
-                        nestedMappingInfo.indexLookup.add(i);
+                        nestedMappingInfos
+                            .computeIfAbsent(prefix, p -> new NestedMappingInfo())
+                            .indexLookup
+                            .add(i);
 
                         members[i] = Collections.emptyList();
                         methods[i] = Collections.emptyList();
@@ -783,11 +748,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
 
             if (nestedMappedFields != null) {
-                for (Entry<String, List<Field<?>>> entry : nestedMappedFields.entrySet()) {
-                    String prefix = entry.getKey();
-
+                nestedMappedFields.forEach((prefix, list) -> {
                     NestedMappingInfo nestedMappingInfo = nestedMappingInfos.get(prefix);
-                    nestedMappingInfo.row = Tools.row0(entry.getValue());
+                    nestedMappingInfo.row = Tools.row0(list);
                     nestedMappingInfo.recordDelegate = newRecord(true, recordType(nestedMappingInfo.row.size()), nestedMappingInfo.row, configuration);
 
                     for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true))
@@ -799,7 +762,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         nestedMappingInfo.mappers.add(configuration
                             .recordMapperProvider()
                             .provide((RecordType<AbstractRecord>) nestedMappingInfo.row.fields, method.getParameterTypes()[0]));
-                }
+                });
             }
         }
 
@@ -817,7 +780,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         @Override
-        public final E map(final R record) {
+        public final E map(R record) {
             try {
                 final E result = instance != null ? instance : constructor.call();
 
@@ -845,26 +808,23 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     final String prefix = entry.getKey();
 
                     for (final RecordMapper<AbstractRecord, Object> mapper : entry.getValue().mappers) {
-                        entry.getValue().recordDelegate.operate(new RecordOperation<AbstractRecord, Exception>() {
-                            @Override
-                            public AbstractRecord operate(AbstractRecord rec) throws Exception {
-                                List<Integer> indexes = entry.getValue().indexLookup;
-                                for (int index = 0; index < indexes.size(); index++)
-                                    rec.set(index, record.get(indexes.get(index)));
+                        entry.getValue().recordDelegate.operate(rec -> {
+                            List<Integer> indexes = entry.getValue().indexLookup;
+                            for (int index = 0; index < indexes.size(); index++)
+                                rec.set(index, record.get(indexes.get(index)));
 
-                                Object value = mapper.map(rec);
-                                for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true)) {
+                            Object value = mapper.map(rec);
+                            for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true)) {
 
-                                    // [#935] Avoid setting final fields
-                                    if ((member.getModifiers() & Modifier.FINAL) == 0)
-                                        map(value, result, member);
-                                }
-
-                                for (Method method : getMatchingSetters(configuration, type, prefix, true))
-                                    method.invoke(result, value);
-
-                                return rec;
+                                // [#935] Avoid setting final fields
+                                if ((member.getModifiers() & Modifier.FINAL) == 0)
+                                    map(value, result, member);
                             }
+
+                            for (Method method : getMatchingSetters(configuration, type, prefix, true))
+                                method.invoke(result, value);
+
+                            return rec;
                         });
                     }
                 }
@@ -1044,14 +1004,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 else {
                     final List<Integer> indexLookup = nestedMappingInfo[i].indexLookup;
 
-                    converted[i] = nestedMappingInfo[i].mappers.get(0).map(nestedMappingInfo[i].recordDelegate.operate(new RecordOperation<AbstractRecord, RuntimeException>() {
-                        @Override
-                        public AbstractRecord operate(AbstractRecord rec) {
-                            for (int j = 0; j < indexLookup.size(); j++)
-                                rec.set(j, record.get(indexLookup.get(j)));
+                    converted[i] = nestedMappingInfo[i].mappers.get(0).map(nestedMappingInfo[i].recordDelegate.operate(rec -> {
+                        for (int j = 0; j < indexLookup.size(); j++)
+                            rec.set(j, record.get(indexLookup.get(j)));
 
-                            return rec;
-                        }
+                        return rec;
                     }));
                 }
             }

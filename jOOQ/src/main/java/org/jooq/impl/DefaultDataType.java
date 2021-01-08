@@ -315,23 +315,15 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         int ordinal = dialect == null ? SQLDialect.DEFAULT.ordinal() : dialect.family().ordinal();
 
         // [#3225] Avoid normalisation if not necessary
-        if (!TYPES_BY_NAME[ordinal].containsKey(typeName.toUpperCase())) {
-            String normalised = DefaultDataType.normalise(typeName);
+        if (!TYPES_BY_NAME[ordinal].containsKey(typeName.toUpperCase()))
+            TYPES_BY_NAME[ordinal].putIfAbsent(DefaultDataType.normalise(typeName), this);
 
-            if (TYPES_BY_NAME[ordinal].get(normalised) == null)
-                TYPES_BY_NAME[ordinal].put(normalised, this);
-        }
-
-        if (TYPES_BY_TYPE[ordinal].get(type) == null)
-            TYPES_BY_TYPE[ordinal].put(type, this);
-
-        if (TYPES_BY_SQL_DATATYPE[ordinal].get(this.sqlDataType) == null)
-            TYPES_BY_SQL_DATATYPE[ordinal].put(this.sqlDataType, this);
+        TYPES_BY_TYPE[ordinal].putIfAbsent(type, this);
+        TYPES_BY_SQL_DATATYPE[ordinal].putIfAbsent(this.sqlDataType, this);
 
         // Global data types
         if (dialect == null)
-            if (SQL_DATATYPES_BY_TYPE.get(type) == null)
-                SQL_DATATYPES_BY_TYPE.put(type, this);
+            SQL_DATATYPES_BY_TYPE.putIfAbsent(type, this);
 
         this.binding = binding != null ? binding : binding(this);
         this.tType = this.binding.converter().fromType();

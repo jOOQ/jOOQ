@@ -38,19 +38,16 @@
 package org.jooq.impl;
 
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jooq.ConnectionCallable;
 import org.jooq.DSLContext;
 import org.jooq.Explain;
 import org.jooq.Field;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * @author Lukas Eder
@@ -61,16 +58,6 @@ final class ExplainQuery {
         Result<Record> result = null;
 
         switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
 
 
 

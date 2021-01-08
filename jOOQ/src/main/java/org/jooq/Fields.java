@@ -62,16 +62,12 @@ public interface Fields {
     @NotNull
     Row fieldsRow();
 
-
-
     /**
      * Get this table's fields as a {@link Stream}, if this table knows its
      * field references.
      */
     @NotNull
     Stream<Field<?>> fieldStream();
-
-
 
     /**
      * Get a field by field reference.

@@ -45,6 +45,7 @@ import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.Tools.attachRecords;
 
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 import org.jooq.Configuration;
 import org.jooq.ExecuteType;
@@ -62,15 +63,15 @@ import org.jooq.exception.ControlFlowSignal;
 final class RecordDelegate<R extends Record> {
 
     private final Configuration       configuration;
-    private final F.F0<R>             recordSupplier;
+    private final Supplier<R>         recordSupplier;
     private final Boolean             fetched;
     private final RecordLifecycleType type;
 
-    RecordDelegate(Configuration configuration, F.F0<R> recordSupplier, Boolean fetched) {
+    RecordDelegate(Configuration configuration, Supplier<R> recordSupplier, Boolean fetched) {
         this(configuration, recordSupplier, fetched, LOAD);
     }
 
-    RecordDelegate(Configuration configuration, F.F0<R> recordSupplier, Boolean fetched, RecordLifecycleType type) {
+    RecordDelegate(Configuration configuration, Supplier<R> recordSupplier, Boolean fetched, RecordLifecycleType type) {
         this.configuration = configuration;
         this.recordSupplier = recordSupplier;
         this.fetched = fetched;
@@ -78,18 +79,13 @@ final class RecordDelegate<R extends Record> {
     }
 
     static final <R extends Record> RecordDelegate<R> delegate(
-        final Configuration configuration,
-        final R record,
-        final RecordLifecycleType type
+        Configuration configuration,
+        R record,
+        RecordLifecycleType type
     ) {
         return new RecordDelegate<>(
             configuration,
-            new F.F0<R>() {
-                @Override
-                public R get() {
-                    return record;
-                }
-            },
+            () -> record,
             null,
             type
         );

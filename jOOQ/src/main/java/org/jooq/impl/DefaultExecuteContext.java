@@ -89,41 +89,41 @@ import org.jetbrains.annotations.NotNull;
  */
 class DefaultExecuteContext implements ExecuteContext {
 
-    private static final JooqLogger                   log       = JooqLogger.getLogger(DefaultExecuteContext.class);
+    private static final JooqLogger                       log       = JooqLogger.getLogger(DefaultExecuteContext.class);
 
     // Persistent attributes (repeatable)
-    private final Configuration                       originalConfiguration;
-    private final Configuration                       derivedConfiguration;
-    private final Map<Object, Object>                 data;
-    private final Query                               query;
-    private final Routine<?>                          routine;
-    private String                                    sql;
+    private final Configuration                           originalConfiguration;
+    private final Configuration                           derivedConfiguration;
+    private final Map<Object, Object>                     data;
+    private final Query                                   query;
+    private final Routine<?>                              routine;
+    private String                                        sql;
 
-    private final boolean                             batch;
-    private final Query[]                             batchQueries;
-    private final String[]                            batchSQL;
-    private final int[]                               batchRows;
+    private final boolean                                 batch;
+    private final Query[]                                 batchQueries;
+    private final String[]                                batchSQL;
+    private final int[]                                   batchRows;
 
     // Transient attributes (created afresh per execution)
-    transient ConnectionProvider                      connectionProvider;
-    private transient Connection                      connection;
-    private transient SettingsEnabledConnection       wrappedConnection;
-    private transient PreparedStatement               statement;
-    private transient int                             statementExecutionCount;
-    private transient ResultSet                       resultSet;
-    private transient Record                          record;
-    private transient Result<?>                       result;
-    private transient int                             rows      = -1;
-    private transient RuntimeException                exception;
-    private transient SQLException                    sqlException;
-    private transient SQLWarning                      sqlWarning;
-    private transient String[]                        serverOutput;
+    transient ConnectionProvider                          connectionProvider;
+    private transient Connection                          connection;
+    private transient SettingsEnabledConnection           wrappedConnection;
+    private transient PreparedStatement                   statement;
+    private transient int                                 statementExecutionCount;
+    private transient ResultSet                           resultSet;
+    private transient Record                              record;
+    private transient Result<?>                           result;
+    private transient int                                 rows      = -1;
+    private transient RuntimeException                    exception;
+    private transient SQLException                        sqlException;
+    private transient SQLWarning                          sqlWarning;
+    private transient String[]                            serverOutput;
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling blob / clob lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<List<Closeable>> RESOURCES = new ThreadLocal<>();
+    private static final ThreadLocal<List<AutoCloseable>> RESOURCES = new ThreadLocal<>();
 
     /**
      * Clean up blobs, clobs and the local configuration.
@@ -159,10 +159,10 @@ class DefaultExecuteContext implements ExecuteContext {
      *      href="http://stackoverflow.com/q/11439543/521799">http://stackoverflow.com/q/11439543/521799</a>
      */
     static final void clean() {
-        List<Closeable> resources = RESOURCES.get();
+        List<AutoCloseable> resources = RESOURCES.get();
 
         if (resources != null) {
-            for (Closeable resource : resources)
+            for (AutoCloseable resource : resources)
                 JDBCUtils.safeClose(resource);
 
             RESOURCES.remove();
@@ -176,76 +176,36 @@ class DefaultExecuteContext implements ExecuteContext {
     /**
      * Register a blob for later cleanup with {@link #clean()}
      */
-    static final void register(final Blob blob) {
-        register(new Closeable() {
-            @Override
-            public void close() throws IOException {
-                try {
-                    blob.free();
-                }
-                catch (SQLException e) {
-                    throw new IOException(e);
-                }
-            }
-        });
+    static final void register(Blob blob) {
+        register((AutoCloseable) blob::free);
     }
 
     /**
      * Register a clob for later cleanup with {@link #clean()}
      */
-    static final void register(final Clob clob) {
-        register(new Closeable() {
-            @Override
-            public void close() throws IOException {
-                try {
-                    clob.free();
-                }
-                catch (SQLException e) {
-                    throw new IOException(e);
-                }
-            }
-        });
+    static final void register(Clob clob) {
+        register((AutoCloseable) clob::free);
     }
 
     /**
      * Register an xml for later cleanup with {@link #clean()}
      */
-    static final void register(final SQLXML xml) {
-        register(new Closeable() {
-            @Override
-            public void close() throws IOException {
-                try {
-                    xml.free();
-                }
-                catch (SQLException e) {
-                    throw new IOException(e);
-                }
-            }
-        });
+    static final void register(SQLXML xml) {
+        register((AutoCloseable) xml::free);
     }
 
     /**
      * Register an array for later cleanup with {@link #clean()}
      */
-    static final void register(final Array array) {
-        register(new Closeable() {
-            @Override
-            public void close() throws IOException {
-                try {
-                    array.free();
-                }
-                catch (SQLException e) {
-                    throw new IOException(e);
-                }
-            }
-        });
+    static final void register(Array array) {
+        register((AutoCloseable) array::free);
     }
 
     /**
      * Register a closeable for later cleanup with {@link #clean()}
      */
-    static final void register(Closeable closeable) {
-        List<Closeable> list = RESOURCES.get();
+    static final void register(AutoCloseable closeable) {
+        List<AutoCloseable> list = RESOURCES.get();
 
         if (list == null) {
             list = new ArrayList<>();
@@ -254,28 +214,6 @@ class DefaultExecuteContext implements ExecuteContext {
 
         list.add(closeable);
     }
-
-
-    /**
-     * Register a closeable for later cleanup with {@link #clean()}
-     */
-    static final void register(final AutoCloseable closeable) {
-        if (closeable instanceof Closeable)
-            register((Closeable) closeable);
-        else
-            register(new Closeable() {
-                @Override
-                public void close() throws IOException {
-                    try {
-                        closeable.close();
-                    }
-                    catch (Exception e) {
-                        throw new IOException(e);
-                    }
-                }
-            });
-    }
-
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling Configuration lifecycle

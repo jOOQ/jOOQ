@@ -203,7 +203,6 @@ public interface Binding<T, U> extends Serializable {
      */
     void get(BindingGetSQLInputContext<U> ctx) throws SQLException;
 
-
     /**
      * Construct a binding from functions.
      */
@@ -312,5 +311,4 @@ public interface Binding<T, U> extends Serializable {
             }
         };
     }
-
 }

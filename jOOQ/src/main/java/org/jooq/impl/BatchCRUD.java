@@ -119,16 +119,8 @@ final class BatchCRUD extends AbstractBatch {
                 String sql = e.getSQL();
 
                 // Aggregate executable queries by identical SQL
-                if (query.isExecutable()) {
-                    List<Query> list = queries.get(sql);
-
-                    if (list == null) {
-                        list = new ArrayList<>();
-                        queries.put(sql, list);
-                    }
-
-                    list.add(query);
-                }
+                if (query.isExecutable())
+                    queries.computeIfAbsent(sql, s -> new ArrayList<>()).add(query);
             }
             finally {
                 records[i].attach(previous);
@@ -139,16 +131,16 @@ final class BatchCRUD extends AbstractBatch {
         // SQL statement may have several queries with different bind values.
         // The order is preserved as much as possible
         List<Integer> result = new ArrayList<>();
-        for (Entry<String, List<Query>> entry : queries.entrySet()) {
-            BatchBindStep batch = dsl.batch(entry.getValue().get(0));
+        queries.forEach((k, v) -> {
+            BatchBindStep batch = dsl.batch(v.get(0));
 
-            for (Query query : entry.getValue())
+            for (Query query : v)
                 batch.bind(query.getBindValues().toArray());
 
             int[] array = batch.execute();
             for (int i : array)
                 result.add(i);
-        }
+        });
 
         int[] array = new int[result.size()];
         for (int i = 0; i < result.size(); i++)

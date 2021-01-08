@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptySet;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -77,8 +80,8 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     DefaultDiagnosticsContext(String actualStatement, String normalisedStatement, Set<String> duplicateStatements, List<String> repeatedStatements) {
         this.actualStatement = actualStatement;
         this.normalisedStatement = normalisedStatement;
-        this.duplicateStatements = duplicateStatements == null ? Collections.<String>emptySet() : duplicateStatements;
-        this.repeatedStatements = repeatedStatements == null ? Collections.<String>emptyList() : repeatedStatements;
+        this.duplicateStatements = duplicateStatements == null ? emptySet() : duplicateStatements;
+        this.repeatedStatements = repeatedStatements == null ? emptyList() : repeatedStatements;
     }
 
     @Override

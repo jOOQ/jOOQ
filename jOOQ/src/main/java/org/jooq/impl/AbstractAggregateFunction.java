@@ -111,13 +111,6 @@ implements
     // XXX QueryPart API
     // -------------------------------------------------------------------------
 
-    final void acceptArguments(Context<?> ctx) {
-        ctx.visit(getQualifiedName());
-        ctx.sql('(');
-        acceptArguments0(ctx);
-        ctx.sql(')');
-    }
-
     final void acceptArguments0(Context<?> ctx) {
         acceptArguments1(ctx, arguments);
     }

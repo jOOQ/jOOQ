@@ -43,7 +43,6 @@ import java.time.LocalDateTime;
 /**
  * @author Lukas Eder
  */
-
 public final class TimestampToLocalDateTimeConverter extends AbstractConverter<Timestamp, LocalDateTime> {
 
     /**

@@ -37,6 +37,8 @@
  */
 package org.jooq.codegen;
 
+import static java.util.Collections.emptyList;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,11 +71,11 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      */
     private static final Pattern PATTERN_LIST = Pattern.compile(
         "\\[" +
-           "(?:\\[before=([^\\]]+)\\])?" +
-           "(?:\\[separator=([^\\]]+)\\])?" +
-           "(?:\\[after=([^\\]]+)\\])?" +
-           "(?:\\[(.*)\\])" +
-        "\\]", Pattern.DOTALL);
+           "(?:\\[before=([^]]+)])?" +
+           "(?:\\[separator=([^]]+)])?" +
+           "(?:\\[after=([^]]+)])?" +
+           "(?:\\[(.*)])" +
+        "]", Pattern.DOTALL);
 
     private final Files          files;
     private final File           file;
@@ -436,17 +438,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             // [#3756] Regenerate files only if there is a difference
             String oldContent = null;
             if (file.exists() && file.length() == newContent.getBytes(encoding()).length) {
-                RandomAccessFile old = null;
-
-                try {
-                    old = new RandomAccessFile(file, "r");
+                try (RandomAccessFile old = new RandomAccessFile(file, "r")) {
                     byte[] oldBytes = new byte[(int) old.length()];
                     old.readFully(oldBytes);
                     oldContent = new String(oldBytes, encoding());
-                }
-                finally {
-                    if (old != null)
-                        old.close();
                 }
             }
 
@@ -514,7 +509,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      * Subtypes may override this to generate import statements.
      */
     public List<String> ref(List<String> clazzOrId) {
-        return clazzOrId == null ? Collections.<String>emptyList() : ref(clazzOrId, 1);
+        return clazzOrId == null ? emptyList() : ref(clazzOrId, 1);
     }
 
     /**
@@ -537,7 +532,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      * Subtypes may override this to generate import statements.
      */
     protected List<String> ref(List<String> clazzOrId, int keepSegments) {
-        return clazzOrId == null ? Collections.<String>emptyList() : clazzOrId;
+        return clazzOrId == null ? emptyList() : clazzOrId;
     }
 
     public String content() {

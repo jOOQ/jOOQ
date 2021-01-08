@@ -1,5 +1,6 @@
 package org.jooq.codegen;
 
+import static java.util.stream.Collectors.toList;
 import static org.jooq.codegen.GenerationUtil.PLAIN_GENERIC_TYPE_PATTERN;
 import static org.jooq.codegen.GenerationUtil.TYPE_REFERENCE_PATTERN;
 
@@ -16,6 +17,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.tools.StringUtils;
@@ -110,17 +112,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     @SuppressWarnings("unchecked")
     static Object escapeJavadoc(Object object) {
-        if (object instanceof String) {
+        if (object instanceof String)
             return escapeJavadoc((String) object);
-        }
-        else if (object instanceof List) {
-            List<Object> result = new ArrayList<>();
-
-            for (Object o : (List<Object>) object)
-                result.add(escapeJavadoc(o));
-
-            return result;
-        }
+        else if (object instanceof List)
+            return ((List<Object>) object).stream().map(JavaWriter::escapeJavadoc).collect(toList());
         else
             return object;
     }
@@ -203,7 +198,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     protected String beforeClose(String string) {
         string = super.beforeClose(string);
         StringBuilder importString = new StringBuilder();
-        Pattern samePackagePattern = Pattern.compile(packageName + "\\.[^\\.]+");
+        Pattern samePackagePattern = Pattern.compile(packageName + "\\.[^.]+");
         String dotClassName = "." + className;
 
         String previous = "";

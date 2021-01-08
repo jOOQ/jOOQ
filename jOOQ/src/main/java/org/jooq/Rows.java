@@ -58,8 +58,6 @@ import org.jooq.impl.DSL;
 @Internal
 public final class Rows {
 
-
-
     /**
      * Create a collector that can collect into an array of {@link RowN}.
      */
@@ -1122,8 +1120,6 @@ public final class Rows {
             }
         );
     }
-
-
 
 
 }

@@ -110,8 +110,7 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<>();
-        result.addAll(getSchema().getDefinitionPath());
+        List<Definition> result = new ArrayList<>(getSchema().getDefinitionPath());
 
         if (getPackage() != null)
             result.add(getPackage());

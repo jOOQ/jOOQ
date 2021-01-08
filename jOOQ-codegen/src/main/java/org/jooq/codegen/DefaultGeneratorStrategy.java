@@ -231,7 +231,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             if (name.length() > 1 && Character.isUpperCase(name.charAt(1)))
                 return name;
 
-            char chars[] = name.toCharArray();
+            char[] chars = name.toCharArray();
             chars[0] = Character.toUpperCase(chars[0]);
             return new String(chars);
         }

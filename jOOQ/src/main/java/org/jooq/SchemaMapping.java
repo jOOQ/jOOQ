@@ -561,9 +561,7 @@ public class SchemaMapping implements Serializable {
      * Initialise SchemaMapping. Added for better interoperability with Spring
      */
     public void setSchemaMapping(Map<String, String> schemaMap) {
-        for (Entry<String, String> entry : schemaMap.entrySet()) {
-            add(entry.getKey(), entry.getValue());
-        }
+        schemaMap.forEach(this::add);
     }
 
     private final Map<String, Catalog> getCatalogs() {

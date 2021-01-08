@@ -64,8 +64,6 @@ abstract class AbstractBatch implements Batch {
         this.dsl = DSL.using(configuration);
     }
 
-
-
     @Override
     public final CompletionStage<int[]> executeAsync() {
         return executeAsync(configuration.executorProvider().provide());
@@ -75,7 +73,4 @@ abstract class AbstractBatch implements Batch {
     public final CompletionStage<int[]> executeAsync(Executor executor) {
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(blocking(this::execute), executor), () -> executor);
     }
-
-
-
 }

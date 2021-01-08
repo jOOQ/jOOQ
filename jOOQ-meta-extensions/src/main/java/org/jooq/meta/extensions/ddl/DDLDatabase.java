@@ -50,7 +50,6 @@ import java.util.regex.Pattern;
 
 import org.jooq.DSLContext;
 import org.jooq.FilePattern;
-import org.jooq.FilePattern.Loader;
 import org.jooq.FilePattern.Sort;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
@@ -154,12 +153,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                     .basedir(new File(getBasedir()))
                     .pattern(scripts)
                     .sort(Sort.of(sort))
-                    .load(new Loader() {
-                @Override
-                public void load(Source source) {
-                    DDLDatabase.this.load(ctx, source);
-                }
-            });
+                    .load(source -> DDLDatabase.this.load(ctx, source));
         }
         catch (ParserException e) {
             log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);

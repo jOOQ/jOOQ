@@ -51,6 +51,7 @@ import static org.jooq.impl.Keywords.K_OR;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -121,7 +122,7 @@ final class CombinedCondition extends AbstractCondition {
         return operator == AND ? trueCondition() : falseCondition();
     }
 
-    final Condition transform(F.F1<? super Condition, ? extends Condition> function) {
+    final Condition transform(Function<? super Condition, ? extends Condition> function) {
         List<Condition> newList = null;
 
         for (int i = 0; i < conditions.size(); i++) {

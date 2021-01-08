@@ -40,6 +40,7 @@ package org.jooq.meta;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.jooq.Log.Level.ERROR;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -69,7 +70,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -99,7 +102,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultExecuteListenerProvider;
-import org.jooq.impl.F;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CommentType;
@@ -305,7 +307,6 @@ public abstract class AbstractDatabase implements Database {
         return create(false);
     }
 
-    @SuppressWarnings("serial")
     protected final DSLContext create(boolean muteExceptions) {
 
         // [#3800] Make sure that faulty queries are logged in a formatted
@@ -361,8 +362,8 @@ public abstract class AbstractDatabase implements Database {
                         }
 
                         // [#7248] Unsupported dialects might not be able to run queries on the DUAL table
-                        catch (DataAccessException ignore) {
-                            log.debug("Error while running init query", ignore);
+                        catch (DataAccessException e) {
+                            log.debug("Error while running init query", e);
                         }
 
                         initialised = true;
@@ -454,12 +455,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final boolean exists(TableField<?, ?> field) {
-        Boolean result = existFields.get(field);
-
-        if (result == null)
-            existFields.put(field, result = exists0(field));
-
-        return result;
+        return existFields.computeIfAbsent(field, this::exists0);
     }
 
     /**
@@ -510,21 +506,12 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final boolean existAll(TableField<?, ?>... f) {
-        for (TableField<?, ?> field : f)
-            if (!exists(field))
-                return false;
-
-        return true;
+        return Stream.of(f).allMatch(this::exists);
     }
 
     @Override
     public final boolean exists(Table<?> table) {
-        Boolean result = existTables.get(table);
-
-        if (result == null)
-            existTables.put(table, result = exists0(table));
-
-        return result;
+        return existTables.computeIfAbsent(table, this::exists0);
     }
 
     /**
@@ -570,11 +557,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final boolean existAll(Table<?>... t) {
-        for (Table<?> table : t)
-            if (!exists(table))
-                return false;
-
-        return true;
+        return Stream.of(t).allMatch(this::exists);
     }
 
     final boolean matches(Pattern pattern, Definition definition) {
@@ -616,13 +599,7 @@ public abstract class AbstractDatabase implements Database {
         if (catalogs == null) {
             catalogs = new ArrayList<>();
 
-            onError(ERROR, "Could not load catalogs", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    catalogs = sort(getCatalogs0());
-                }
-            });
-
+            onError(ERROR, "Could not load catalogs", () -> catalogs = sort(getCatalogs0()));
             boolean onlyDefaultCatalog = true;
 
             Iterator<CatalogDefinition> it = catalogs.iterator();
@@ -664,20 +641,9 @@ public abstract class AbstractDatabase implements Database {
         if (schemata == null) {
             schemata = new ArrayList<>();
 
-            onError(ERROR, "Could not load schemata", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    schemata = sort(getSchemata0());
-                }
-            });
-
+            onError(ERROR, "Could not load schemata", () -> schemata = sort(getSchemata0()));
             Iterator<SchemaDefinition> it = schemata.iterator();
-            while (it.hasNext()) {
-                SchemaDefinition schema = it.next();
-
-                if (!getInputSchemata().contains(schema.getName()))
-                    it.remove();
-            }
+            schemata.removeIf(schema -> !getInputSchemata().contains(schema.getName()));
 
             if (schemata.isEmpty()) {
                 log.warn(
@@ -720,12 +686,9 @@ public abstract class AbstractDatabase implements Database {
             // [#1312] Allow for ommitting inputSchema configuration. Generate
             // All catalogs instead
             if (configuredCatalogs.size() == 1 && StringUtils.isBlank(configuredCatalogs.get(0).getInputCatalog())) {
-                onError(ERROR, "Could not load catalogs", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        for (CatalogDefinition catalog : sort(getCatalogs0()))
-                            inputCatalogs.add(catalog.getName());
-                    }
+                onError(ERROR, "Could not load catalogs", () -> {
+                    for (CatalogDefinition catalog : sort(getCatalogs0()))
+                        inputCatalogs.add(catalog.getName());
                 });
             }
             else {
@@ -799,12 +762,7 @@ public abstract class AbstractDatabase implements Database {
                               ? getInputCatalogs()
                               : Collections.singletonList(catalog.getInputCatalog())
                         ) {
-                            List<String> list = inputSchemataPerCatalog.get(inputCatalog);
-
-                            if (list == null)
-                                inputSchemataPerCatalog.put(inputCatalog, list = new ArrayList<>());
-
-                            list.add(inputSchema);
+                            inputSchemataPerCatalog.computeIfAbsent(inputCatalog, c -> new ArrayList<>()).add(inputSchema);
                         }
                     }
                 }
@@ -815,18 +773,10 @@ public abstract class AbstractDatabase implements Database {
     }
 
     private void initAllSchemata() {
-        onError(ERROR, "Could not load schemata", new ExceptionRunnable() {
-            @Override
-            public void run() throws Exception {
-                for (SchemaDefinition schema : sort(getSchemata0())) {
-                    inputSchemata.add(schema.getName());
-                    List<String> list = inputSchemataPerCatalog.get(schema.getCatalog().getName());
-
-                    if (list == null)
-                        inputSchemataPerCatalog.put(schema.getCatalog().getName(), list = new ArrayList<>());
-
-                    list.add(schema.getName());
-                }
+        onError(ERROR, "Could not load schemata", () -> {
+            for (SchemaDefinition schema : sort(getSchemata0())) {
+                inputSchemata.add(schema.getName());
+                inputSchemataPerCatalog.computeIfAbsent(schema.getCatalog().getName(), c -> new ArrayList<>()).add(schema.getName());
             }
         });
     }
@@ -841,9 +791,7 @@ public abstract class AbstractDatabase implements Database {
 
         // Init if necessary
         getInputSchemata();
-        return inputSchemataPerCatalog.containsKey(catalog)
-            ? inputSchemataPerCatalog.get(catalog)
-            : Collections.<String>emptyList();
+        return inputSchemataPerCatalog.getOrDefault(catalog, emptyList());
     }
 
     @Override
@@ -1583,14 +1531,11 @@ public abstract class AbstractDatabase implements Database {
             sequences = new ArrayList<>();
 
             if (getIncludeSequences()) {
-                onError(ERROR, "Error while fetching sequences", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<SequenceDefinition> s = getSequences0();
+                onError(ERROR, "Error while fetching sequences", () -> {
+                    List<SequenceDefinition> s = getSequences0();
 
-                        sequences = sort(filterExcludeInclude(s));
-                        log.info("Sequences fetched", fetchedSize(s, sequences));
-                    }
+                    sequences = sort(filterExcludeInclude(s));
+                    log.info("Sequences fetched", fetchedSize(s, sequences));
                 });
             }
             else
@@ -1639,8 +1584,7 @@ public abstract class AbstractDatabase implements Database {
             if (getIncludeUniqueKeys())
                 for (SchemaDefinition s : getSchemata())
                     for (TableDefinition table : getTables(s))
-                        for (UniqueKeyDefinition uniqueKey : table.getUniqueKeys())
-                            uniqueKeys.add(uniqueKey);
+                        uniqueKeys.addAll(table.getUniqueKeys());
 
             sort(uniqueKeys);
         }
@@ -1689,8 +1633,7 @@ public abstract class AbstractDatabase implements Database {
             if (getIncludeUniqueKeys() || getIncludePrimaryKeys())
                 for (SchemaDefinition s : getSchemata())
                     for (TableDefinition table : getTables(s))
-                        for (UniqueKeyDefinition key : table.getKeys())
-                            keys.add(key);
+                        keys.addAll(table.getKeys());
 
             sort(keys);
         }
@@ -1714,8 +1657,7 @@ public abstract class AbstractDatabase implements Database {
             if (getIncludeForeignKeys())
                 for (SchemaDefinition s : getSchemata())
                     for (TableDefinition table : getTables(s))
-                        for (ForeignKeyDefinition foreignKey : table.getForeignKeys())
-                            foreignKeys.add(foreignKey);
+                        foreignKeys.addAll(table.getForeignKeys());
 
             sort(foreignKeys);
         }
@@ -1739,8 +1681,7 @@ public abstract class AbstractDatabase implements Database {
             if (getIncludeCheckConstraints())
                 for (SchemaDefinition s : getSchemata())
                     for (TableDefinition table : getTables(s))
-                        for (CheckConstraintDefinition checkConstraint : table.getCheckConstraints())
-                            checkConstraints.add(checkConstraint);
+                        checkConstraints.addAll(table.getCheckConstraints());
 
             sort(checkConstraints);
         }
@@ -1757,14 +1698,11 @@ public abstract class AbstractDatabase implements Database {
             tables = new ArrayList<>();
 
             if (getIncludeTables()) {
-                onError(ERROR, "Error while fetching tables", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<TableDefinition> t = getTables0();
-                        syntheticViews(t);
-                        tables = sort(filterExcludeInclude(t));
-                        log.info("Tables fetched", fetchedSize(t, tables));
-                    }
+                onError(ERROR, "Error while fetching tables", () -> {
+                    List<TableDefinition> t = getTables0();
+                    syntheticViews(t);
+                    tables = sort(filterExcludeInclude(t));
+                    log.info("Tables fetched", fetchedSize(t, tables));
                 });
             }
             else
@@ -1807,16 +1745,13 @@ public abstract class AbstractDatabase implements Database {
         if (enums == null) {
             enums = new ArrayList<>();
 
-            onError(ERROR, "Error while fetching enums", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    List<EnumDefinition> e = getEnums0();
+            onError(ERROR, "Error while fetching enums", () -> {
+                List<EnumDefinition> e = getEnums0();
 
-                    enums = sort(filterExcludeInclude(e));
-                    enums.addAll(getConfiguredEnums());
+                enums = sort(filterExcludeInclude(e));
+                enums.addAll(getConfiguredEnums());
 
-                    log.info("Enums fetched", fetchedSize(e, enums));
-                }
+                log.info("Enums fetched", fetchedSize(e, enums));
             });
         }
 
@@ -1999,15 +1934,12 @@ public abstract class AbstractDatabase implements Database {
             embeddables = new ArrayList<>();
 
             if (getIncludeEmbeddables()) {
-                onError(ERROR, "Error while fetching embeddables", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<EmbeddableDefinition> r = getEmbeddables0();
+                onError(ERROR, "Error while fetching embeddables", () -> {
+                    List<EmbeddableDefinition> r = getEmbeddables0();
 
-                        embeddables = sort(r);
-                        // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
-                        log.info("Embeddables fetched", fetchedSize(r, embeddables));
-                    }
+                    embeddables = sort(r);
+                    // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
+                    log.info("Embeddables fetched", fetchedSize(r, embeddables));
                 });
             }
             else
@@ -2246,14 +2178,11 @@ public abstract class AbstractDatabase implements Database {
             domains = new ArrayList<>();
 
             if (getIncludeDomains()) {
-                onError(ERROR, "Error while fetching domains", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<DomainDefinition> e = getDomains0();
+                onError(ERROR, "Error while fetching domains", () -> {
+                    List<DomainDefinition> e = getDomains0();
 
-                        domains = sort(filterExcludeInclude(e));
-                        log.info("Domains fetched", fetchedSize(e, domains));
-                    }
+                    domains = sort(filterExcludeInclude(e));
+                    log.info("Domains fetched", fetchedSize(e, domains));
                 });
             }
             else
@@ -2297,14 +2226,11 @@ public abstract class AbstractDatabase implements Database {
             arrays = new ArrayList<>();
 
             if (getIncludeUDTs()) {
-                onError(ERROR, "Error while fetching ARRAYs", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<ArrayDefinition> a = getArrays0();
+                onError(ERROR, "Error while fetching ARRAYs", () -> {
+                    List<ArrayDefinition> a = getArrays0();
 
-                        arrays = sort(filterExcludeInclude(a));
-                        log.info("ARRAYs fetched", fetchedSize(a, arrays));
-                    }
+                    arrays = sort(filterExcludeInclude(a));
+                    log.info("ARRAYs fetched", fetchedSize(a, arrays));
                 });
             }
             else
@@ -2343,14 +2269,11 @@ public abstract class AbstractDatabase implements Database {
             udts = new ArrayList<>();
 
             if (getIncludeUDTs()) {
-                onError(ERROR, "Error while fetching UDTs", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<UDTDefinition> u = getUDTs0();
+                onError(ERROR, "Error while fetching UDTs", () -> {
+                    List<UDTDefinition> u = getUDTs0();
 
-                        udts = sort(filterExcludeInclude(u));
-                        log.info("UDTs fetched", fetchedSize(u, udts));
-                    }
+                    udts = sort(filterExcludeInclude(u));
+                    log.info("UDTs fetched", fetchedSize(u, udts));
                 });
             }
             else
@@ -2403,14 +2326,8 @@ public abstract class AbstractDatabase implements Database {
 
             // [#3559] If the code generator doesn't need relation information, we shouldn't
             // populate them here to avoid running potentially expensive queries.
-            if (includeRelations) {
-                onError(ERROR, "Error while fetching relations", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        relations = getRelations0();
-                    }
-                });
-            }
+            if (includeRelations)
+                onError(ERROR, "Error while fetching relations", () -> relations = getRelations0());
         }
 
         return relations;
@@ -2422,15 +2339,12 @@ public abstract class AbstractDatabase implements Database {
             indexes = new ArrayList<>();
 
             if (getIncludeIndexes()) {
-                onError(ERROR, "Error while fetching indexes", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<IndexDefinition> r = getIndexes0();
+                onError(ERROR, "Error while fetching indexes", () -> {
+                    List<IndexDefinition> r = getIndexes0();
 
-                        indexes = sort(r);
-                        // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
-                        log.info("Indexes fetched", fetchedSize(r, indexes));
-                    }
+                    indexes = sort(r);
+                    // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
+                    log.info("Indexes fetched", fetchedSize(r, indexes));
                 });
             }
             else
@@ -2456,14 +2370,8 @@ public abstract class AbstractDatabase implements Database {
                 if (!indexesByTable.containsKey(otherTable))
                     indexesByTable.put(otherTable, new ArrayList<>());
 
-            for (IndexDefinition index : getIndexes(table.getSchema())) {
-                List<IndexDefinition> otherList = indexesByTable.get(index.getTable());
-
-                if (otherList == null)
-                    indexesByTable.put(index.getTable(), otherList = new ArrayList<>());
-
-                otherList.add(index);
-            }
+            for (IndexDefinition index : getIndexes(table.getSchema()))
+                indexesByTable.computeIfAbsent(index.getTable(), k -> new ArrayList<>()).add(index);
         }
 
         return list;
@@ -2475,14 +2383,11 @@ public abstract class AbstractDatabase implements Database {
             routines = new ArrayList<>();
 
             if (getIncludeRoutines()) {
-                onError(ERROR, "Error while fetching routines", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<RoutineDefinition> r = getRoutines0();
+                onError(ERROR, "Error while fetching routines", () -> {
+                    List<RoutineDefinition> r = getRoutines0();
 
-                        routines = sort(filterExcludeInclude(r));
-                        log.info("Routines fetched", fetchedSize(r, routines));
-                    }
+                    routines = sort(filterExcludeInclude(r));
+                    log.info("Routines fetched", fetchedSize(r, routines));
                 });
             }
             else
@@ -2501,14 +2406,11 @@ public abstract class AbstractDatabase implements Database {
             packages = new ArrayList<>();
 
             if (getIncludePackages()) {
-                onError(ERROR, "Error while fetching packages", new ExceptionRunnable() {
-                    @Override
-                    public void run() throws Exception {
-                        List<PackageDefinition> p = getPackages0();
+                onError(ERROR, "Error while fetching packages", () -> {
+                    List<PackageDefinition> p = getPackages0();
 
-                        packages = sort(filterExcludeInclude(p));
-                        log.info("Packages fetched", fetchedSize(p, packages));
-                    }
+                    packages = sort(filterExcludeInclude(p));
+                    log.info("Packages fetched", fetchedSize(p, packages));
                 });
             }
             else
@@ -2557,12 +2459,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     protected final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema, Map<SchemaDefinition, List<T>> cache) {
-        List<T> result = cache.get(schema);
-
-        if (result == null)
-            cache.put(schema, result = filterSchema(definitions, schema));
-
-        return result;
+        return cache.computeIfAbsent(schema, s -> filterSchema(definitions, s));
     }
 
     protected final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema) {
@@ -2579,12 +2476,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     protected final <T extends Definition> List<T> filterPackage(List<T> definitions, PackageDefinition pkg, Map<PackageDefinition, List<T>> cache) {
-        List<T> result = cache.get(pkg);
-
-        if (result == null)
-            cache.put(pkg, result = filterPackage(definitions, pkg));
-
-        return result;
+        return cache.computeIfAbsent(pkg, p -> filterPackage(definitions, p));
     }
 
     protected final <T extends Definition> List<T> filterPackage(List<T> definitions, PackageDefinition pkg) {
@@ -2663,7 +2555,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final <T extends Definition> List<T> sort(List<T> definitions) {
         if (orderProvider != null)
-            Collections.sort(definitions, orderProvider);
+            definitions.sort(orderProvider);
 
         return definitions;
     }
@@ -2697,7 +2589,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String e, String i) {
-        return filterExcludeInclude(definitions, new String[] { e }, new String[] { i != null ? i : ".*" }, Collections.<Filter>emptyList());
+        return filterExcludeInclude(definitions, new String[] { e }, new String[] { i != null ? i : ".*" }, emptyList());
     }
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] e, String[] i, List<Filter> f) {
@@ -2752,69 +2644,22 @@ public abstract class AbstractDatabase implements Database {
     protected final Relations getRelations0() {
         final DefaultRelations result = relations instanceof DefaultRelations ? (DefaultRelations) relations : new DefaultRelations();
 
-        if (getIncludePrimaryKeys()) {
-            onError(ERROR, "Error while fetching primary keys", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    loadPrimaryKeys(result);
-                }
-            });
-        }
+        if (getIncludePrimaryKeys())
+            onError(ERROR, "Error while fetching primary keys", () -> loadPrimaryKeys(result));
 
-        if (getIncludeUniqueKeys()) {
-            onError(ERROR, "Error while fetching unique keys", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    loadUniqueKeys(result);
-                }
-            });
-        }
+        if (getIncludeUniqueKeys())
+            onError(ERROR, "Error while fetching unique keys", () -> loadUniqueKeys(result));
 
-        if (getIncludeForeignKeys()) {
-            onError(ERROR, "Error while fetching foreign keys", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    loadForeignKeys(result);
-                }
-            });
-        }
+        if (getIncludeForeignKeys())
+            onError(ERROR, "Error while fetching foreign keys", () -> loadForeignKeys(result));
 
-        if (getIncludeCheckConstraints()) {
-            onError(ERROR, "Error while fetching check constraints", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    loadCheckConstraints(result);
-                }
-            });
-        }
+        if (getIncludeCheckConstraints())
+            onError(ERROR, "Error while fetching check constraints", () -> loadCheckConstraints(result));
 
         if (getIncludePrimaryKeys()) {
-            onError(ERROR, "Error while generating synthetic primary keys", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    syntheticPrimaryKeys(result);
-                }
-            });
-
-            onError(ERROR, "Error while generating overridden primary keys", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    overridePrimaryKeys(result);
-                }
-            });
+            onError(ERROR, "Error while generating synthetic primary keys", () -> syntheticPrimaryKeys(result));
+            onError(ERROR, "Error while generating overridden primary keys", () -> overridePrimaryKeys(result));
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3138,100 +2983,85 @@ public abstract class AbstractDatabase implements Database {
             if (schema == null)
                 continue viewLoop;
 
-            onError(ERROR, "Error while parsing view", new ExceptionRunnable() {
-                @Override
-                public void run() throws Exception {
-                    final Settings settings = SettingsTools.clone(create().settings())
-                        .withParseWithMetaLookups(ParseWithMetaLookups.THROW_ON_FAILURE);
+            onError(ERROR, "Error while parsing view", () -> {
+                final Settings settings = SettingsTools.clone(create().settings())
+                    .withParseWithMetaLookups(ParseWithMetaLookups.THROW_ON_FAILURE);
 
-                    // TODO: Add a Meta implementation that is based on jOOQ-meta
-                    final Meta meta = create().meta();
-                    final List<Param<?>> params = new ArrayList<>();
-                    final Configuration configuration = create()
-                        .configuration()
-                        .derive(settings)
-                        .derive(new MetaProvider() {
-                            @Override
-                            public Meta provide() {
-                                return meta;
-                            }
-                        });
+                // TODO: Add a Meta implementation that is based on jOOQ-meta
+                final Meta meta = create().meta();
+                final List<Param<?>> params = new ArrayList<>();
+                final Configuration configuration = create()
+                    .configuration()
+                    .derive(settings)
+                    .derive((MetaProvider) () -> meta);
 
-                    // [#8722] [#11054] Before a public API is available, use this internal, undocumented
-                    //                  API to collect params from the parser
-                    configuration.data("org.jooq.parser.param-collector", new F.A1<Param<?>>() {
-                        @Override
-                        public void accept(Param<?> param) {
-                            params.add(param);
+                // [#8722] [#11054] Before a public API is available, use this internal, undocumented
+                //                  API to collect params from the parser
+                configuration.data("org.jooq.parser.param-collector", (Consumer<Param<?>>) param -> {
+                    if (!param.isInline())
+                        params.add(param);
+                });
+
+                final Select<?> select = configuration
+                    .dsl()
+                    .parser()
+                    .parseSelect(view.getSql());
+
+                final RoutineDefinition routine = params.isEmpty() ? null : new AbstractRoutineDefinition(schema, null, view.getName(), view.getComment(), null) {
+                    @Override
+                    protected void init0() throws SQLException {
+                        int i = 0;
+
+                        for (Param<?> param : params) {
+                            addParameter(InOutDefinition.IN, new DefaultParameterDefinition(
+                                this,
+                                param.getParamName(),
+                                ++i,
+                                type(schema, param)
+                            ));
                         }
-                    });
+                    }
+                };
 
-                    final Select<?> select = configuration
-                        .dsl()
-                        .parser()
-                        .parseSelect(view.getSql());
+                t.add(new AbstractTableDefinition(schema, view.getName(), view.getComment(), routine == null ? TableType.VIEW : TableType.FUNCTION, view.getSql()) {
 
-                    final Iterator<Param<?>> it = params.iterator();
-                    while (it.hasNext())
-                        if (it.next().isInline())
-                            it.remove();
+                    @Override
+                    public boolean isSynthetic() {
+                        return true;
+                    }
 
-                    final RoutineDefinition routine = params.isEmpty() ? null : new AbstractRoutineDefinition(schema, null, view.getName(), view.getComment(), null) {
-                        @Override
-                        protected void init0() throws SQLException {
-                            int i = 0;
+                    @Override
+                    protected List<ColumnDefinition> getElements0() throws SQLException {
+                        List<ColumnDefinition> result = new ArrayList<>();
 
-                            for (Param<?> param : params) {
-                                addParameter(InOutDefinition.IN, new DefaultParameterDefinition(
-                                    this,
-                                    param.getParamName(),
-                                    ++i,
-                                    type(schema, param)
-                                ));
-                            }
-                        }
-                    };
-
-                    t.add(new AbstractTableDefinition(schema, view.getName(), view.getComment(), routine == null ? TableType.VIEW : TableType.FUNCTION, view.getSql()) {
-
-                        @Override
-                        public boolean isSynthetic() {
-                            return true;
-                        }
-
-                        @Override
-                        protected List<ColumnDefinition> getElements0() throws SQLException {
-                            List<ColumnDefinition> result = new ArrayList<>();
-
-                            int i = 0;
-                            for (Field<?> field : select.getSelect()) {
-                                result.add(new DefaultColumnDefinition(
-                                    this,
-                                    field.getName(),
-                                    ++i,
-                                    type(getSchema(), field),
-                                    false,
-                                    field.getComment()
-                                ));
-                            }
-
-                            return result;
+                        int i = 0;
+                        for (Field<?> field : select.getSelect()) {
+                            result.add(new DefaultColumnDefinition(
+                                this,
+                                field.getName(),
+                                ++i,
+                                type(getSchema(), field),
+                                false,
+                                field.getComment()
+                            ));
                         }
 
-                        @Override
-                        protected List<ParameterDefinition> getParameters0() {
-                            List<ParameterDefinition> result = new ArrayList<>();
+                        return result;
+                    }
 
-                            if (routine != null) {
-                                result.addAll(routine.getInParameters());
-                            }
+                    @Override
+                    protected List<ParameterDefinition> getParameters0() {
+                        List<ParameterDefinition> result = new ArrayList<>();
 
-                            return result;
+                        if (routine != null) {
+                            result.addAll(routine.getInParameters());
                         }
-                    });
 
-                    log.info("Synthetic view added", view.getName());
-                }
+                        return result;
+                    }
+                });
+
+                log.info("Synthetic view added", view.getName());
             });
 
             // TODO: Can we really have unused views?

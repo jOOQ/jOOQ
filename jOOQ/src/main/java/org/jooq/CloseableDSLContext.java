@@ -47,7 +47,7 @@ import org.jooq.impl.DSL;
  * A resourceful {@link DSLContext} that should be closed in a
  * try-with-resources statement.
  */
-public interface CloseableDSLContext extends DSLContext , AutoCloseable {
+public interface CloseableDSLContext extends DSLContext, AutoCloseable {
 
     // -------------------------------------------------------------------------
     // XXX AutoCloseable API
@@ -67,9 +67,7 @@ public interface CloseableDSLContext extends DSLContext , AutoCloseable {
      * @throws DataAccessException When something went wrong closing the
      *             underlying resources.
      */
-
     @Override
-
     void close() throws DataAccessException;
 
 }

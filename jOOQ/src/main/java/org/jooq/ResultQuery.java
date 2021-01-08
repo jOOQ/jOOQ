@@ -139,7 +139,7 @@ public interface ResultQuery<R extends Record>
 extends
     Query
   , Fetchable<R>
-, org.reactivestreams.Publisher<R>
+  , org.reactivestreams.Publisher<R>
 
 {
 

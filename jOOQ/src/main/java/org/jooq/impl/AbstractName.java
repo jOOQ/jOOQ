@@ -123,8 +123,6 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
         return new DerivedColumnListImpl(unqualifiedName(), fieldNames);
     }
 
-
-
     @Override
     public final DerivedColumnListImpl fields(Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return fields((f, i) -> fieldNameFunction.apply(f));
@@ -134,8 +132,6 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
     public final DerivedColumnListImpl fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
         return new DerivedColumnListImpl(first(), fieldNameFunction);
     }
-
-
 
 
 

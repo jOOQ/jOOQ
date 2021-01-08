@@ -119,12 +119,10 @@ public class MockConfiguration implements Configuration {
         return delegate.data(key, value);
     }
 
-
     @Override
     public Clock clock() {
         return delegate.clock();
     }
-
 
     @Override
     public ConnectionProvider connectionProvider() {
@@ -236,12 +234,10 @@ public class MockConfiguration implements Configuration {
         return delegate.settings();
     }
 
-
     @Override
     public Configuration set(Clock newClock) {
         return delegate.set(newClock);
     }
-
 
     @Override
     public Configuration set(ConnectionProvider newConnectionProvider) {
@@ -398,12 +394,10 @@ public class MockConfiguration implements Configuration {
         return delegate.derive();
     }
 
-
     @Override
     public Configuration derive(Clock newClock) {
         return delegate.derive(newClock);
     }
-
 
     @Override
     public Configuration derive(Connection newConnection) {

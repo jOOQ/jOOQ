@@ -122,12 +122,10 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
         return Collections.emptyList();
     }
 
-
     @Override
     public final Stream<Schema> schemaStream() {
         return getSchemas().stream();
     }
-
 
     // ------------------------------------------------------------------------
     // XXX: Object API

@@ -49,6 +49,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.inlined;
 
 import java.util.UUID;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -139,13 +140,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         }
     }
 
-    static final F.F1<Field<?>, Field<?>> jsonCastMapper(final Context<?> ctx) {
-        return new F.F1<Field<?>, Field<?>>() {
-            @Override
-            public Field<?> apply(Field<?> field) {
-                return jsonCast(ctx, field);
-            }
-        };
+    static final Function<Field<?>, Field<?>> jsonCastMapper(final Context<?> ctx) {
+        return field -> jsonCast(ctx, field);
     }
 
     static final Field<?> jsonCast(Context<?> ctx, Field<?> field) {

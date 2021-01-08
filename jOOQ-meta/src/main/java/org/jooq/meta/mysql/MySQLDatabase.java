@@ -38,6 +38,8 @@
 
 package org.jooq.meta.mysql;
 
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
@@ -62,6 +64,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -394,17 +397,10 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<>();
-
-        for (String name : create()
-                .select(SCHEMATA.SCHEMA_NAME)
+        return
+        create().select(SCHEMATA.SCHEMA_NAME)
                 .from(SCHEMATA)
-                .fetch(SCHEMATA.SCHEMA_NAME)) {
-
-            result.add(new SchemaDefinition(this, name, ""));
-        }
-
-        return result;
+                .collect(mapping(r -> new SchemaDefinition(this, r.value1(), ""), toList()));
     }
 
     @Override
@@ -571,12 +567,8 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
         // [#1908] This indirection is necessary as MySQL allows for overloading
         // procedures and functions with the same signature.
-        for (Entry<Record, Result<Record6<String, String, String, byte[], byte[], ProcType>>> entry : groups.entrySet()) {
-            Result<?> overloads = entry.getValue();
-
-            for (int i = 0; i < overloads.size(); i++) {
-                Record record = overloads.get(i);
-
+        groups.forEach((k, overloads) -> {
+            overloads.forEach(record -> {
                 SchemaDefinition schema = getSchema(record.get(ROUTINES.ROUTINE_SCHEMA));
                 String name = record.get(ROUTINES.ROUTINE_NAME);
                 String comment = record.get(ROUTINES.ROUTINE_COMMENT);
@@ -588,8 +580,8 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                     result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns, type, "_" + type.name()));
                 else
                     result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns, type, null));
-            }
-        }
+            });
+        });
 
         return result;
     }

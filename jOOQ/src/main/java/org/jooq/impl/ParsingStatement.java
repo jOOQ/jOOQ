@@ -102,8 +102,6 @@ final class ParsingStatement extends DefaultCallableStatement {
         return super.execute(connection.translate(sql), columnNames);
     }
 
-
-
     @Override
     public final long executeLargeUpdate(String sql) throws SQLException {
         return super.executeLargeUpdate(connection.translate(sql));
@@ -123,8 +121,6 @@ final class ParsingStatement extends DefaultCallableStatement {
     public final long executeLargeUpdate(String sql, String[] columnNames) throws SQLException {
         return super.executeLargeUpdate(connection.translate(sql), columnNames);
     }
-
-
 
     @Override
     public final void addBatch(String sql) throws SQLException {

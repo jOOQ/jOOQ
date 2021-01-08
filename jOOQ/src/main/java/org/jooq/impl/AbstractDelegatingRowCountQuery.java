@@ -48,7 +48,7 @@ import org.jooq.RowCountQuery;
  */
 abstract class AbstractDelegatingRowCountQuery<R extends Record, Q extends RowCountQuery>
     extends AbstractDelegatingQuery<R, Q>
-    implements RowCountQuery, Fetchable<R> {
+    implements RowCountQuery {
 
     /**
      * Generated UID
@@ -68,12 +68,8 @@ abstract class AbstractDelegatingRowCountQuery<R extends Record, Q extends RowCo
 
 
 
-
-
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super Integer> subscriber) {
         getDelegate().subscribe(subscriber);
     }
-
-
 }

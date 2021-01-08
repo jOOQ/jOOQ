@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.createSchema;
 import static org.jooq.impl.DSL.name;
@@ -175,7 +176,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
                 if (list == null)
                     list = new ArrayList<>();
 
-                list.add(new Parent(new VersionImpl(ctx, parent.version.id(), parent.version.meta, Collections.<Parent>emptyList()), parent.queries));
+                list.add(new Parent(new VersionImpl(ctx, parent.version.id(), parent.version.meta, emptyList()), parent.queries));
             }
             else {
                 VersionImpl p = parent.version.subgraphTo(ancestor);

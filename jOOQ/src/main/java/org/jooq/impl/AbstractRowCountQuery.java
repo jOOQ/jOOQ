@@ -55,8 +55,6 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
         super(configuration);
     }
 
-
-
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super Integer> subscriber) {
         subscriber.onSubscribe(new org.reactivestreams.Subscription() {
@@ -80,8 +78,6 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
             }
         });
     }
-
-
 
 
 

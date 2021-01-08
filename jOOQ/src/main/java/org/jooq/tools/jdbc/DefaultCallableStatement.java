@@ -643,8 +643,6 @@ public class DefaultCallableStatement extends DefaultPreparedStatement implement
         getDelegateCallableStatement().setNClob(parameterName, reader);
     }
 
-
-
     // ------------------------------------------------------------------------
     // JDBC 4.1
     // ------------------------------------------------------------------------
@@ -702,6 +700,4 @@ public class DefaultCallableStatement extends DefaultPreparedStatement implement
     public void registerOutParameter(String parameterName, SQLType sqlType, String typeName) throws SQLException {
         getDelegate().registerOutParameter(parameterName, sqlType, typeName);
     }
-
-
 }

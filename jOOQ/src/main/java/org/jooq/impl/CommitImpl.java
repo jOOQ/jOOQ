@@ -329,26 +329,14 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
             Map<String, List<String>> keys = new LinkedHashMap<>();
             Set<String> remove = new LinkedHashSet<>();
 
-            for (Entry<String, File> entry : result.entrySet()) {
-                String key = entry.getKey();
-                File file = entry.getValue();
-                String path = file.path();
-
-                if (file.type() == SCHEMA) {
-                    List<String> list = keys.get(path);
-
-                    if (list == null)
-                        keys.put(path, list = new ArrayList<>());
-
-                    list.add(key);
-                }
-                else {
+            result.forEach((key, file) -> {
+                if (file.type() == SCHEMA)
+                    keys.computeIfAbsent(file.path(), p -> new ArrayList<>()).add(key);
+                else
                     moveAllButLast(keys, remove);
-                }
-            }
+            });
 
             moveAllButLast(keys, remove);
-
             for (String r : remove)
                 result.remove(r);
         }

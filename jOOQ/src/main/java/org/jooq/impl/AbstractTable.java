@@ -221,14 +221,10 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return fieldsRow;
     }
 
-
-
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
-
-
 
     @Override
     public final <T> Field<T> field(Field<T> field) {
@@ -395,7 +391,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return as(alias, fieldAliases);
     }
 
-
     @Override
     public final Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
         return as(alias, aliasFunction);
@@ -406,7 +401,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return as(alias, aliasFunction);
     }
 
-
     @Override
     public /* non-final for covariant overriding */ Table<R> as(String alias) {
         return as(DSL.name(alias));
@@ -416,7 +410,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     public /* non-final for covariant overriding */ Table<R> as(String alias, String... fieldAliases) {
         return as(DSL.name(alias), Tools.names(fieldAliases));
     }
-
 
     @Override
     public final Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
@@ -432,7 +425,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return as(alias, names);
     }
 
-
     @Override
     public /* non-final for covariant overriding */ Table<R> as(Name alias) {
         return new TableAlias<>(this, alias);
@@ -442,7 +434,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     public /* non-final for covariant overriding */ Table<R> as(Name alias, Name... fieldAliases) {
         return new TableAlias<>(this, alias, fieldAliases);
     }
-
 
     @Override
     public final Table<R> as(Name alias, Function<? super Field<?>, ? extends Name> aliasFunction) {
@@ -457,7 +448,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
             names[i] = aliasFunction.apply(fields[i], i);
         return as(alias, names);
     }
-
 
     // ------------------------------------------------------------------------
     // XXX: Table API
@@ -1017,7 +1007,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return as(otherTable.getUnqualifiedName(), Tools.fieldNames(otherFields));
     }
 
-
     @Override
     public final Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction) {
         return as(otherTable.getUnqualifiedName(), f -> aliasFunction.apply(f).getUnqualifiedName());
@@ -1027,7 +1016,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     public final Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction) {
         return as(otherTable.getUnqualifiedName(), (f, i) -> aliasFunction.apply(f, i).getUnqualifiedName());
     }
-
 
 
 

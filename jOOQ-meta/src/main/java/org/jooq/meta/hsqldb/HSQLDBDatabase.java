@@ -38,6 +38,8 @@
 
 package org.jooq.meta.hsqldb;
 
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -69,6 +71,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -379,17 +382,13 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<>();
-
-        for (String name : create()
-                .select(SCHEMATA.SCHEMA_NAME)
+        return
+        create().select(SCHEMATA.SCHEMA_NAME)
                 .from(SCHEMATA)
-                .fetch(SCHEMATA.SCHEMA_NAME)) {
-
-            result.add(new SchemaDefinition(this, name, ""));
-        }
-
-        return result;
+                .collect(mapping(
+                    r -> new SchemaDefinition(this, r.value1(), ""),
+                    toList()
+                ));
     }
 
     @Override

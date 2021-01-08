@@ -112,16 +112,12 @@ public class HSQLDBDataType {
     public static final DataType<Date>        DATE                     = new DefaultDataType<>(FAMILY, SQLDataType.DATE, "date");
     public static final DataType<Time>        TIME                     = new DefaultDataType<>(FAMILY, SQLDataType.TIME, "time(p)");
     public static final DataType<Time>        TIMEWITHOUTTIMEZONE      = new DefaultDataType<>(FAMILY, SQLDataType.TIME, "time(p) without time zone");
-
     public static final DataType<OffsetTime>  TIMEWITHTIMEZONE         = new DefaultDataType<>(FAMILY, SQLDataType.TIMEWITHTIMEZONE, "time(p) with time zone");
-
     public static final DataType<Timestamp>   TIMESTAMP                = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p)");
     public static final DataType<Timestamp>   TIMESTAMPWITHOUTTIMEZONE = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p) without time zone");
     public static final DataType<Timestamp>   DATETIME                 = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMP, "datetime(p)");
-
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp(p) with time zone");
     public static final DataType<Instant>     INSTANT                  = new DefaultDataType<>(FAMILY, SQLDataType.INSTANT, "timestamp(p) with time zone");
-
     public static final DataType<byte[]>       LONGVARBINARY            = new DefaultDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "longvarbinary(l)");
     public static final DataType<byte[]>       VARBINARY                = new DefaultDataType<>(FAMILY, SQLDataType.VARBINARY, "varbinary(l)", "varbinary(32672)");
     public static final DataType<byte[]>       BINARY                   = new DefaultDataType<>(FAMILY, SQLDataType.BINARY, "binary(l)");

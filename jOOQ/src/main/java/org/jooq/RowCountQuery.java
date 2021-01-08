@@ -48,7 +48,7 @@ package org.jooq;
 public interface RowCountQuery
 extends
     Query
-    , org.reactivestreams.Publisher<Integer>
+  , org.reactivestreams.Publisher<Integer>
     
 {
 

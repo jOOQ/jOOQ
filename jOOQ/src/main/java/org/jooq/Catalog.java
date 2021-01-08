@@ -103,11 +103,9 @@ public interface Catalog extends Named {
     @Nullable
     Schema getSchema(Name name);
 
-
     /**
      * Stream all schemas contained in this catalog.
      */
     @NotNull
     Stream<Schema> schemaStream();
-
 }

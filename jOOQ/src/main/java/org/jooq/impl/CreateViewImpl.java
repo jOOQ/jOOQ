@@ -108,9 +108,7 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
     private final boolean                                                           ifNotExists;
     private final boolean                                                           orReplace;
     private final Table<?>                                                          view;
-
     private final BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction;
-
     private Field<?>[]                                                              fields;
     private ResultQuery<?>                                                          select;
     private transient Select<?>                                                     parsed;
@@ -120,13 +118,10 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
         this.view = view;
         this.fields = fields;
-
         this.fieldNameFunction = null;
-
         this.ifNotExists = ifNotExists;
         this.orReplace = orReplace;
     }
-
 
     CreateViewImpl(Configuration configuration, Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction, boolean ifNotExists, boolean orReplace) {
         super(configuration);
@@ -137,7 +132,6 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
         this.ifNotExists = ifNotExists;
         this.orReplace = orReplace;
     }
-
 
     final boolean    $ifNotExists() { return ifNotExists; }
     final boolean    $orReplace()   { return orReplace; }
@@ -153,14 +147,12 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
     public final CreateViewFinalStep as(Select<? extends R> s) {
         this.select = s;
 
-
         if (fieldNameFunction != null) {
             List<Field<?>> source = s.getSelect();
             fields = new Field[source.size()];
             for (int i = 0; i < fields.length; i++)
                 fields[i] = fieldNameFunction.apply(source.get(i), i);
         }
-
 
         return this;
     }
@@ -169,7 +161,6 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
     public final CreateViewFinalStep as(SQL sql) {
         this.select = DSL.resultQuery(sql);
 
-
         if (fieldNameFunction != null) {
             Select<?> s = parsed();
             List<Field<?>> source = s.getSelect();
@@ -177,7 +168,6 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
             for (int i = 0; i < fields.length; i++)
                 fields[i] = fieldNameFunction.apply(source.get(i), i);
         }
-
 
         return this;
     }

@@ -71,32 +71,18 @@ public interface EnumType {
      * <code>null</code>
      */
     @Nullable
-
-    default
-
-    Catalog getCatalog()
-
-    {
+    default Catalog getCatalog() {
         return null;
     }
-
-    ;
 
     /**
      * The schema of the enum type, if applicable (Postgres schema-scope enum
      * type only). Otherwise, this returns <code>null</code>
      */
     @Nullable
-
-    default
-
-    Schema getSchema()
-
-    {
+    default Schema getSchema() {
         return null;
     }
-
-    ;
 
     /**
      * The type name as registered in the database, if applicable (Postgres

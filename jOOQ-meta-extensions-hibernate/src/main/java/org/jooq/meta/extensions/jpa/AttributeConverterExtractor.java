@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.extensions.jpa;
 
+import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.name;
 
 import java.util.ArrayList;
@@ -150,12 +151,7 @@ final class AttributeConverterExtractor implements Integrator {
     }
 
     private IntegratorProvider integratorProvider() {
-        return new IntegratorProvider() {
-            @Override
-            public List<Integrator> getIntegrators() {
-                return Collections.<Integrator>singletonList(AttributeConverterExtractor.this);
-            }
-        };
+        return () -> singletonList(AttributeConverterExtractor.this);
     }
 
     private final PersistenceUnitInfoImpl persistenceUnitInfo(String name) {

@@ -108,9 +108,7 @@ public class DefaultConfiguration implements Configuration {
     // Configuration objects
     private SQLDialect                                  dialect;
     private Settings                                    settings;
-
     private Clock                                       clock;
-
 
     // These objects may be user defined and thus not necessarily serialisable
     private transient ConnectionProvider                connectionProvider;
@@ -185,9 +183,7 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
-
             null,
-
             dialect,
             settings,
             null
@@ -222,9 +218,7 @@ public class DefaultConfiguration implements Configuration {
             configuration.unwrapperProvider,
             configuration.charsetProvider,
             configuration.converterProvider,
-
             configuration.clock,
-
             configuration.dialect,
             configuration.settings,
             configuration.data
@@ -258,9 +252,7 @@ public class DefaultConfiguration implements Configuration {
         UnwrapperProvider unwrapperProvider,
         CharsetProvider charsetProvider,
         ConverterProvider converterProvider,
-
         Clock clock,
-
         SQLDialect dialect,
         Settings settings,
         Map<Object, Object> data)
@@ -283,9 +275,7 @@ public class DefaultConfiguration implements Configuration {
         set(unwrapperProvider);
         set(charsetProvider);
         set(converterProvider);
-
         set(clock);
-
         set(dialect);
         set(settings);
 
@@ -343,9 +333,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -373,9 +361,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -403,9 +389,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -438,9 +422,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -468,9 +450,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -503,9 +483,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -538,9 +516,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -573,9 +549,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -608,9 +582,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -643,9 +615,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -678,9 +648,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -713,9 +681,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -748,9 +714,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -783,9 +747,7 @@ public class DefaultConfiguration implements Configuration {
             newUnwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -813,9 +775,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             newCharsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             settings,
             data
@@ -843,15 +803,12 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             newConverterProvider,
-
             clock,
-
             dialect,
             settings,
             data
         );
     }
-
 
     @Override
     public final Configuration derive(Clock newClock) {
@@ -881,7 +838,6 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-
     @Override
     public final Configuration derive(SQLDialect newDialect) {
         return new DefaultConfiguration(
@@ -903,9 +859,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             newDialect,
             settings,
             data
@@ -933,9 +887,7 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
-
             clock,
-
             dialect,
             newSettings,
             data
@@ -1143,7 +1095,6 @@ public class DefaultConfiguration implements Configuration {
         return this;
     }
 
-
     @Override
     public final Configuration set(Clock newClock) {
 
@@ -1151,7 +1102,6 @@ public class DefaultConfiguration implements Configuration {
         this.clock = newClock == null ? Clock.systemUTC() : newClock;
         return this;
     }
-
 
     @Override
     public final Configuration set(SQLDialect newDialect) {
@@ -1361,14 +1311,12 @@ public class DefaultConfiguration implements Configuration {
         set(newUnwrapperProvider);
     }
 
-
     /**
      * @see #set(Clock)
      */
     public final void setClock(Clock newClock) {
         set(newClock);
     }
-
 
     /**
      * @see #set(SQLDialect)
@@ -1522,12 +1470,10 @@ public class DefaultConfiguration implements Configuration {
             : new DefaultConverterProvider();
     }
 
-
     @Override
     public final Clock clock() {
         return clock;
     }
-
 
     @Override
     public final SQLDialect dialect() {

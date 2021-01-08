@@ -282,14 +282,12 @@ public interface Configuration extends Serializable {
     // Getters
     // -------------------------------------------------------------------------
 
-
     /**
      * Get this configuration's {@link Clock}, which is used for optimistic
      * locking, transaction time, and other time-depending features.
      */
     @NotNull
     Clock clock();
-
 
     /**
      * Get this configuration's underlying connection provider.
@@ -551,7 +549,6 @@ public interface Configuration extends Serializable {
     // Setters
     // -------------------------------------------------------------------------
 
-
     /**
      * Change this configuration to hold a new {@link Clock}.
      * <p>
@@ -564,7 +561,6 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration set(Clock newClock);
-
 
     /**
      * Change this configuration to hold a new connection provider.
@@ -998,7 +994,6 @@ public interface Configuration extends Serializable {
     @NotNull
     Configuration derive();
 
-
     /**
      * Create a derived configuration from this one, with a new {@link Clock}.
      *
@@ -1008,7 +1003,6 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(Clock newClock);
-
 
     /**
      * Create a derived configuration from this one, with a new connection

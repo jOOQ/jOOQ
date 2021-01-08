@@ -214,7 +214,6 @@ public class Plugin extends AbstractMojo {
             // [#2886] Restore old class loader
             Thread.currentThread().setContextClassLoader(oldCL);
 
-
             // [#7630] Close URLClassLoader to help free resources
             try {
                 pluginClassLoader.close();
@@ -224,7 +223,6 @@ public class Plugin extends AbstractMojo {
             catch (Throwable e) {
                 getLog().error("Couldn't close the classloader.", e);
             }
-
         }
 
         project.addCompileSourceRoot(generator.getTarget().getDirectory());
@@ -237,9 +235,7 @@ public class Plugin extends AbstractMojo {
         if (!f.isAbsolute())
             f = new File(project.getBasedir(), file);
 
-        FileInputStream in = null;
-        try {
-            in = new FileInputStream(f);
+        try (FileInputStream in = new FileInputStream(f)) {
             Configuration configuration = GenerationTool.load(in);
             logging = MiniJAXB.append(logging, configuration.getLogging());
             onError = MiniJAXB.append(onError, configuration.getOnError());
@@ -248,14 +244,6 @@ public class Plugin extends AbstractMojo {
         }
         catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        finally {
-            if (in != null) {
-                try {
-                    in.close();
-                }
-                catch (IOException ignore) {}
-            }
         }
     }
 

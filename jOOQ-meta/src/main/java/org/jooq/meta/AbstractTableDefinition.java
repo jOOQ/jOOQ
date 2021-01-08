@@ -58,10 +58,10 @@ public abstract class AbstractTableDefinition
 extends AbstractElementContainerDefinition<ColumnDefinition>
 implements TableDefinition {
 
-    private List<ParameterDefinition> parameters;
-    private TableDefinition           parentTable;
-    private List<TableDefinition>     childTables;
-    private TableType                 tableType;
+    private       List<ParameterDefinition> parameters;
+    private       TableDefinition           parentTable;
+    private final List<TableDefinition>     childTables;
+    private final TableType                 tableType;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
         this(schema, name, comment, TableType.TABLE, null);
@@ -155,16 +155,11 @@ implements TableDefinition {
 
     @Override
     public final IdentityDefinition getIdentity() {
-        IdentityDefinition identity = null;
+        for (ColumnDefinition column : getColumns())
+            if (column.isIdentity())
+                return new DefaultIdentityDefinition(column);
 
-        for (ColumnDefinition column : getColumns()) {
-            if (column.isIdentity()) {
-                identity = new DefaultIdentityDefinition(column);
-                break;
-            }
-        }
-
-        return identity;
+        return null;
     }
 
     public final void setParentTable(TableDefinition parentTable) {

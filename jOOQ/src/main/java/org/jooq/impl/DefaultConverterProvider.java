@@ -89,10 +89,8 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
         if (tWrapper == uWrapper
             || uWrapper.isAssignableFrom(tWrapper)
             || isCollection(tWrapper) && isCollection(uWrapper)
-
             || tWrapper == Optional.class
             || uWrapper == Optional.class
-
             || uWrapper == String.class
             || uWrapper == byte[].class
             || Number.class.isAssignableFrom(uWrapper) // No fail-fast implemented yet!
@@ -160,9 +158,7 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
     private final boolean isDate(Class<?> type) {
         return java.util.Date.class.isAssignableFrom(type)
             || Calendar.class.isAssignableFrom(type)
-
             || Temporal.class.isAssignableFrom(type)
-
             || type == Long.class
             || type == String.class;
     }

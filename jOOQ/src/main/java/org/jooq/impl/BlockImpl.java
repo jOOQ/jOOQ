@@ -307,8 +307,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
-
-
         acceptNonDeclarations(ctx, statements, wrapInBeginEnd);
 
 

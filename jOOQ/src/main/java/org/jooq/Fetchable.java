@@ -120,8 +120,6 @@ public interface Fetchable<R extends Record> extends Iterable<R> {
     @Override
     Iterator<R> iterator() throws DataAccessException;
 
-
-
     /**
      * Execute the query using {@link #fetch()} and pass all results to a
      * consumer.
@@ -307,8 +305,6 @@ public interface Fetchable<R extends Record> extends Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      */
     <X, A> X collect(Collector<? super R, A, X> collector) throws DataAccessException;
-
-
 
     /**
      * Execute the query and "lazily" return the generated result.
@@ -1162,7 +1158,6 @@ public interface Fetchable<R extends Record> extends Iterable<R> {
     @NotNull
     <Z extends Record> Z fetchSingleInto(Table<Z> table) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
-
     /**
      * Execute the query and return at most one resulting value for a
      * field from the generated result.
@@ -1437,7 +1432,6 @@ public interface Fetchable<R extends Record> extends Iterable<R> {
      */
     @NotNull
     <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
-
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -4122,8 +4116,6 @@ public interface Fetchable<R extends Record> extends Iterable<R> {
     @NotNull
     <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
-
-
     /**
      * Fetch results in a new {@link CompletionStage}.
      * <p>
@@ -4146,6 +4138,4 @@ public interface Fetchable<R extends Record> extends Iterable<R> {
      */
     @NotNull
     CompletionStage<Result<R>> fetchAsync(Executor executor);
-
-
 }

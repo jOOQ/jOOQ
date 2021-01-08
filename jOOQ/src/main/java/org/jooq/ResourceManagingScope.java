@@ -108,13 +108,10 @@ public interface ResourceManagingScope extends Scope {
      */
     <R extends Closeable> R autoClose(R closeable);
 
-
     /**
      * Register an {@link AutoCloseable} for auto closing after this scope ends.
      *
      * @return The argument closeable, for convenience.
      */
     <R extends AutoCloseable> R autoClose(R closeable);
-
-
 }

@@ -174,12 +174,7 @@ public final class GitCommitProvider implements CommitProvider {
         return commits;
     }
 
-    private static final Comparator<RevCommit> COMMIT_COMPARATOR = new Comparator<RevCommit>() {
-        @Override
-        public int compare(RevCommit o1, RevCommit o2) {
-            return o1.getCommitTime() - o2.getCommitTime();
-        }
-    };
+    private static final Comparator<RevCommit> COMMIT_COMPARATOR = (o1, o2) -> o1.getCommitTime() - o2.getCommitTime();
 
     private final Commit commit(Commit commit, Status status) {
         List<File> files = new ArrayList<>();

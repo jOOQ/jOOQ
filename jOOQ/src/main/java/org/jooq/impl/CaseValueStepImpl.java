@@ -91,10 +91,7 @@ final class CaseValueStepImpl<V> implements CaseValueStep<V> {
     @Override
     public final <T> CaseWhenStep<V, T> mapValues(Map<V, T> values) {
         Map<Field<V>, Field<T>> fields = new LinkedHashMap<>();
-
-        for (Entry<V, T> entry : values.entrySet())
-            fields.put(Tools.field(entry.getKey(), value), Tools.field(entry.getValue()));
-
+        values.forEach((k, v) -> fields.put(Tools.field(k, value), Tools.field(v)));
         return mapFields(fields);
     }
 

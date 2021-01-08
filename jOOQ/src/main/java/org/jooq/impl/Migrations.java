@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
+
 import java.util.Collections;
 
 import org.jooq.Commit;
@@ -57,7 +59,7 @@ public final class Migrations {
     @Internal
     @NotNull
     public static final Commits commits(Configuration configuration) {
-        return new CommitsImpl(configuration, new CommitImpl(configuration, "init", "init", Collections.<Commit>emptyList(), Collections.<File>emptyList()));
+        return new CommitsImpl(configuration, new CommitImpl(configuration, "init", "init", emptyList(), emptyList()));
     }
 
     @Internal

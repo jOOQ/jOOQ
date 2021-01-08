@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -60,9 +61,9 @@ import org.jooq.QueryPart;
  */
 final class Transform {
 
-    final F.F1<Field<?>, Field<?>> fieldTransformer;
+    final Function<Field<?>, Field<?>> fieldTransformer;
 
-    Transform(F.F1<Field<?>, Field<?>> fieldTransformer) {
+    Transform(Function<Field<?>, Field<?>> fieldTransformer) {
         this.fieldTransformer = fieldTransformer;
     }
 

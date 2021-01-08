@@ -411,8 +411,6 @@ abstract class AbstractQuery<R extends Record> extends AbstractFetchable<R> impl
         }
     }
 
-
-
     @Override
     public final CompletionStage<Integer> executeAsync() {
         return executeAsync(Tools.configuration(this).executorProvider().provide());
@@ -422,8 +420,6 @@ abstract class AbstractQuery<R extends Record> extends AbstractFetchable<R> impl
     public final CompletionStage<Integer> executeAsync(Executor executor) {
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(blocking(this::execute), executor), () -> executor);
     }
-
-
 
     /**
      * Default implementation to indicate whether this query should close the

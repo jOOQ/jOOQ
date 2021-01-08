@@ -210,13 +210,11 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
             || tType == BigDecimal.class
             || tType == Timestamp.class
             || tType == Time.class
-
             || tType == LocalDateTime.class
             || tType == LocalTime.class
             || tType == OffsetDateTime.class
             || tType == OffsetTime.class
             || tType == Instant.class
-
         ;
     }
 
@@ -348,7 +346,6 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         else if (Tools.isTimestamp(tType))
             return Types.TIMESTAMP;
 
-
         // [#5779] Few JDBC drivers support the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types.
         else if (tType == OffsetTime.class)
             return Types.VARCHAR;
@@ -356,7 +353,6 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
             return Types.VARCHAR;
         else if (tType == Instant.class)
             return Types.VARCHAR;
-
 
         // The type byte[] is handled earlier.
         else if (tType.isArray())
@@ -573,9 +569,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     public final boolean isDateTime() {
         Class<?> tType = tType0();
         return java.util.Date.class.isAssignableFrom(tType)
-
             || java.time.temporal.Temporal.class.isAssignableFrom(tType)
-
         ;
     }
 
@@ -583,9 +577,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     public final boolean isDate() {
         Class<?> tType = tType0();
         return java.sql.Date.class.isAssignableFrom(tType)
-
             || java.time.LocalDate.class.isAssignableFrom(tType)
-
         ;
     }
 
@@ -593,9 +585,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     public final boolean isTimestamp() {
         Class<?> tType = tType0();
         return java.sql.Timestamp.class.isAssignableFrom(tType)
-
             || java.time.LocalDateTime.class.isAssignableFrom(tType)
-
         ;
     }
 
@@ -603,9 +593,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     public final boolean isTime() {
         Class<?> tType = tType0();
         return java.sql.Time.class.isAssignableFrom(tType)
-
             || java.time.LocalTime.class.isAssignableFrom(tType)
-
         ;
     }
 

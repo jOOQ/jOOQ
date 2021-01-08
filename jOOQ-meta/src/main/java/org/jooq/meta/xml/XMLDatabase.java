@@ -56,7 +56,6 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -77,12 +76,10 @@ import javax.xml.transform.stream.StreamSource;
 import org.jooq.Constants;
 import org.jooq.DSLContext;
 import org.jooq.FilePattern;
-import org.jooq.FilePattern.Loader;
 import org.jooq.FilePattern.Sort;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
-import org.jooq.Source;
 import org.jooq.TableOptions.TableType;
 import org.jooq.exception.IOException;
 import org.jooq.impl.DSL;
@@ -161,79 +158,76 @@ public class XMLDatabase extends AbstractDatabase {
                         .basedir(new File(getBasedir()))
                         .pattern(xml)
                         .sort(Sort.of(sort))
-                        .load(new Loader() {
-                    @Override
-                    public void load(Source source) {
-                        String content;
-                        Reader reader = null;
+                        .load(source -> {
+                            String content;
+                            Reader reader = null;
 
-                        try {
-                            if (StringUtils.isBlank(xsl)) {
+                            try {
+                                if (StringUtils.isBlank(xsl)) {
 
-                                // [#7414] Default to reading UTF-8
-                                content = source.readString();
+                                    // [#7414] Default to reading UTF-8
+                                    content = source.readString();
 
-                                // [#7414] Alternatively, read the encoding from the XML file
-                                try {
-                                    XMLStreamReader xmlReader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(content));
-                                    String encoding = xmlReader.getCharacterEncodingScheme();
+                                    // [#7414] Alternatively, read the encoding from the XML file
+                                    try {
+                                        XMLStreamReader xmlReader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(content));
+                                        String encoding = xmlReader.getCharacterEncodingScheme();
 
-                                    // Returned encoding can be null in the presence of a BOM
-                                    // See https://stackoverflow.com/a/27147259/521799
-                                    if (encoding != null && !"UTF-8".equals(encoding))
-                                        content = new String(content.getBytes("UTF-8"), encoding);
+                                        // Returned encoding can be null in the presence of a BOM
+                                        // See https://stackoverflow.com/a/27147259/521799
+                                        if (encoding != null && !"UTF-8".equals(encoding))
+                                            content = new String(content.getBytes("UTF-8"), encoding);
+                                    }
+                                    catch (XMLStreamException e1) {
+                                        log.warn("Could not open XML Stream: " + e1.getMessage());
+                                    }
+                                    catch (UnsupportedEncodingException e2) {
+                                        log.warn("Unsupported encoding: " + e2.getMessage());
+                                    }
                                 }
-                                catch (XMLStreamException e) {
-                                    log.warn("Could not open XML Stream: " + e.getMessage());
-                                }
-                                catch (UnsupportedEncodingException e) {
-                                    log.warn("Unsupported encoding: " + e.getMessage());
+                                else {
+                                    InputStream xslIs = null;
+
+                                    try {
+                                        log.info("Using XSL file", xsl);
+
+                                        xslIs = XMLDatabase.class.getResourceAsStream(xsl);
+                                        if (xslIs == null)
+                                            xslIs = new FileInputStream(xsl);
+
+                                        StringWriter writer = new StringWriter();
+                                        TransformerFactory factory = TransformerFactory.newInstance();
+                                        Transformer transformer = factory.newTransformer(new StreamSource(xslIs));
+
+                                        transformer.transform(new StreamSource(reader), new StreamResult(writer));
+                                        content = writer.getBuffer().toString();
+                                    }
+                                    catch (java.io.IOException e3) {
+                                        throw new IOException("Error while loading XSL file", e3);
+                                    }
+                                    catch (TransformerException e4) {
+                                        throw new RuntimeException("Error while transforming XML file " + xml + " with XSL file " + xsl, e4);
+                                    }
+                                    finally {
+                                        JDBCUtils.safeClose(xslIs);
+                                    }
                                 }
                             }
-                            else {
-                                InputStream xslIs = null;
-
-                                try {
-                                    log.info("Using XSL file", xsl);
-
-                                    xslIs = XMLDatabase.class.getResourceAsStream(xsl);
-                                    if (xslIs == null)
-                                        xslIs = new FileInputStream(xsl);
-
-                                    StringWriter writer = new StringWriter();
-                                    TransformerFactory factory = TransformerFactory.newInstance();
-                                    Transformer transformer = factory.newTransformer(new StreamSource(xslIs));
-
-                                    transformer.transform(new StreamSource(reader), new StreamResult(writer));
-                                    content = writer.getBuffer().toString();
-                                }
-                                catch (java.io.IOException e) {
-                                    throw new IOException("Error while loading XSL file", e);
-                                }
-                                catch (TransformerException e) {
-                                    throw new RuntimeException("Error while transforming XML file " + xml + " with XSL file " + xsl, e);
-                                }
-                                finally {
-                                    JDBCUtils.safeClose(xslIs);
-                                }
+                            finally {
+                                JDBCUtils.safeClose(reader);
                             }
-                        }
-                        finally {
-                            JDBCUtils.safeClose(reader);
-                        }
 
-                        // TODO [#1201] Add better error handling here
-                        content = content.replaceAll(
-                            "<(\\w+:)?information_schema xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-meta-\\d+\\.\\d+\\.\\d+.xsd\">",
-                            "<$1information_schema xmlns$2=\"" + Constants.NS_META + "\">");
+                            // TODO [#1201] Add better error handling here
+                            content = content.replaceAll(
+                                "<(\\w+:)?information_schema xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-meta-\\d+\\.\\d+\\.\\d+.xsd\">",
+                                "<$1information_schema xmlns$2=\"" + Constants.NS_META + "\">");
 
-                        content = content.replace(
-                            "<information_schema>",
-                            "<information_schema xmlns=\"" + Constants.NS_META + "\">");
+                            content = content.replace(
+                                "<information_schema>",
+                                "<information_schema xmlns=\"" + Constants.NS_META + "\">");
 
-                        info = MiniJAXB.append(info, MiniJAXB.unmarshal(content, InformationSchema.class));
-                    }
-                });
+                            info = MiniJAXB.append(info, MiniJAXB.unmarshal(content, InformationSchema.class));
+                        });
             }
             catch (Exception e) {
                 throw new RuntimeException("Error while opening files " + xml + " or " + xsl, e);
@@ -265,34 +259,27 @@ public class XMLDatabase extends AbstractDatabase {
         for (IndexColumnUsage ic : info().getIndexColumnUsages()) {
             Name name = name(ic.getIndexCatalog(), ic.getIndexSchema(), ic.getTableName(), ic.getIndexName());
 
-            SortedSet<IndexColumnUsage> list = indexColumnUsage.get(name);
-            if (list == null) {
-                list = new TreeSet<IndexColumnUsage>(new Comparator<IndexColumnUsage>() {
-                    @Override
-                    public int compare(IndexColumnUsage o1, IndexColumnUsage o2) {
-                        int r = 0;
+            SortedSet<IndexColumnUsage> list = indexColumnUsage.computeIfAbsent(name, k -> new TreeSet<>((o1, o2) -> {
+                int r = 0;
 
-                        r = defaultIfNull(o1.getIndexCatalog(), "").compareTo(defaultIfNull(o2.getIndexCatalog(), ""));
-                        if (r != 0)
-                            return r;
+                r = defaultIfNull(o1.getIndexCatalog(), "").compareTo(defaultIfNull(o2.getIndexCatalog(), ""));
+                if (r != 0)
+                    return r;
 
-                        r = defaultIfNull(o1.getIndexSchema(), "").compareTo(defaultIfNull(o2.getIndexSchema(), ""));
-                        if (r != 0)
-                            return r;
+                r = defaultIfNull(o1.getIndexSchema(), "").compareTo(defaultIfNull(o2.getIndexSchema(), ""));
+                if (r != 0)
+                    return r;
 
-                        r = defaultIfNull(o1.getTableName(), "").compareTo(defaultIfNull(o2.getTableName(), ""));
-                        if (r != 0)
-                            return r;
+                r = defaultIfNull(o1.getTableName(), "").compareTo(defaultIfNull(o2.getTableName(), ""));
+                if (r != 0)
+                    return r;
 
-                        r = defaultIfNull(o1.getIndexName(), "").compareTo(defaultIfNull(o2.getIndexName(), ""));
-                        if (r != 0)
-                            return r;
+                r = defaultIfNull(o1.getIndexName(), "").compareTo(defaultIfNull(o2.getIndexName(), ""));
+                if (r != 0)
+                    return r;
 
-                        return Integer.valueOf(o1.getOrdinalPosition()).compareTo(o2.getOrdinalPosition());
-                    }
-                });
-                indexColumnUsage.put(name, list);
-            }
+                return Integer.compare(o1.getOrdinalPosition(), o2.getOrdinalPosition());
+            }));
 
             list.add(ic);
         }
@@ -389,25 +376,22 @@ public class XMLDatabase extends AbstractDatabase {
 
                         result.add(usage);
 
-        Collections.sort(result, new Comparator<KeyColumnUsage>() {
-            @Override
-            public int compare(KeyColumnUsage o1, KeyColumnUsage o2) {
-                int r = 0;
+        result.sort((o1, o2) -> {
+            int r = 0;
 
-                r = defaultIfNull(o1.getConstraintCatalog(), "").compareTo(defaultIfNull(o2.getConstraintCatalog(), ""));
-                if (r != 0)
-                    return r;
+            r = defaultIfNull(o1.getConstraintCatalog(), "").compareTo(defaultIfNull(o2.getConstraintCatalog(), ""));
+            if (r != 0)
+                return r;
 
-                r = defaultIfNull(o1.getConstraintSchema(), "").compareTo(defaultIfNull(o2.getConstraintSchema(), ""));
-                if (r != 0)
-                    return r;
+            r = defaultIfNull(o1.getConstraintSchema(), "").compareTo(defaultIfNull(o2.getConstraintSchema(), ""));
+            if (r != 0)
+                return r;
 
-                r = defaultIfNull(o1.getConstraintName(), "").compareTo(defaultIfNull(o2.getConstraintName(), ""));
-                if (r != 0)
-                    return r;
+            r = defaultIfNull(o1.getConstraintName(), "").compareTo(defaultIfNull(o2.getConstraintName(), ""));
+            if (r != 0)
+                return r;
 
-                return Integer.valueOf(o1.getOrdinalPosition()).compareTo(o2.getOrdinalPosition());
-            }
+            return Integer.compare(o1.getOrdinalPosition(), o2.getOrdinalPosition());
         });
 
         return result;

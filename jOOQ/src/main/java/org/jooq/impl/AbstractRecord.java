@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
@@ -175,7 +176,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             }
         }
 
-        return result == null ? Collections.<Attachable>emptyList() : result;
+        return result == null ? emptyList() : result;
     }
 
     // ------------------------------------------------------------------------
@@ -187,14 +188,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return fields.fields();
     }
 
-
-
     @Override
     public final Stream<Field<?>> fieldStream() {
         return fields.fieldStream();
     }
-
-
 
     @Override
     public final <T> Field<T> field(Field<T> field) {
@@ -541,18 +538,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public Record original() {
         return Tools.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields, configuration())
-                    .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
+                    .operate(record -> {
+                        for (int i = 0; i < originals.length; i++) {
+                            record.values[i] = originals[i];
+                            record.originals[i] = originals[i];
+                        }
 
-            @Override
-            public AbstractRecord operate(AbstractRecord record) throws RuntimeException {
-                for (int i = 0; i < originals.length; i++) {
-                    record.values[i] = originals[i];
-                    record.originals[i] = originals[i];
-                }
-
-                return record;
-            }
-        });
+                        return record;
+                    });
     }
 
     @Override
@@ -678,12 +671,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return Arrays.asList(intoArray());
     }
 
-
     @Override
     public final Stream<Object> intoStream() {
         return into(Stream.class);
     }
-
 
     @Override
     public final Map<String, Object> intoMap() {
@@ -852,11 +843,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <R extends Record> R into(Table<R> table) {
-        return Tools.newRecord(fetched, table, configuration()).operate(new TransferRecordState<R>(table.fields()));
+        return Tools.newRecord(fetched, table, configuration()).operate(new TransferRecordState<>(table.fields()));
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<R>(null));
+        return Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<>(null));
     }
 
     private class TransferRecordState<R extends Record> implements RecordOperation<R, MappingException> {

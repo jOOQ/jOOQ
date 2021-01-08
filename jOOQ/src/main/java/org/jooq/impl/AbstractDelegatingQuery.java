@@ -122,8 +122,6 @@ abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
         return delegate.execute();
     }
 
-
-
     @Override
     public final CompletionStage<Integer> executeAsync() {
         return delegate.executeAsync();
@@ -133,8 +131,6 @@ abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
     public final CompletionStage<Integer> executeAsync(Executor executor) {
         return delegate.executeAsync(executor);
     }
-
-
 
     @Override
     public final boolean isExecutable() {

@@ -59,6 +59,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.util.xml.jaxb.InformationSchema;
@@ -360,16 +361,6 @@ public interface Meta extends Scope {
     @NotNull
     @Support
     List<Index> getIndexes(Name name) throws DataAccessException;
-
-    /**
-     * A predicate to filter out query parts of a given type from meta data.
-     */
-    interface Predicate<Q extends QueryPart>extends java.util.function.Predicate<Q> {
-
-        @Override
-
-        boolean test(Q t);
-    }
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some catalogs.

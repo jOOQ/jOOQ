@@ -324,8 +324,6 @@ public class DefaultConnection extends JDBC41Connection implements Connection {
         return getDelegate().createStruct(typeName, attributes);
     }
 
-
-
     // ------------------------------------------------------------------------
     // JDBC 4.1
     // ------------------------------------------------------------------------
@@ -354,8 +352,6 @@ public class DefaultConnection extends JDBC41Connection implements Connection {
     public int getNetworkTimeout() throws SQLException {
         return getDelegate().getNetworkTimeout();
     }
-
-
 
 
 

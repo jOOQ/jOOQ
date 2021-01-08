@@ -42,6 +42,7 @@ import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.jooq.QueryPart;
 
@@ -78,7 +79,7 @@ class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
     }
 
     @Override
-    QueryPartList<T> map(F.F1<? super T, ? extends T> newMapper) {
+    QueryPartList<T> map(Function<? super T, ? extends T> newMapper) {
         return (QueryPartList<T>) super.map(newMapper);
     }
 

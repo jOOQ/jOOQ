@@ -828,7 +828,6 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         return get(columnLabel, Object.class);
     }
 
-
     // ---------------------------------------------------------------------
     // XXX: JDBC 4.1 methods
     // ---------------------------------------------------------------------
@@ -842,7 +841,6 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
         return get(columnLabel, type);
     }
-
 
     // -------------------------------------------------------------------------
     // XXX: Setters and row update methods

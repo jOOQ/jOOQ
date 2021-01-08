@@ -109,8 +109,6 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
         return fetch().iterator();
     }
 
-
-
     @Override
     public final CompletionStage<Result<R>> fetchAsync() {
         return fetchAsync(Tools.configuration(this).executorProvider().provide());
@@ -147,8 +145,6 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
             return c.collect(collector);
         }
     }
-
-
 
     @Override
     public final <T> List<T> fetch(Field<T> field) {
@@ -407,7 +403,6 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
         return fetchSingle().into(table);
     }
 
-
     @Override
     public final <T> Optional<T> fetchOptional(Field<T> field) {
         return Optional.ofNullable(fetchOne(field));
@@ -498,7 +493,6 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
         return Optional.ofNullable(fetchOneInto(table));
     }
 
-
     @Override
     public final <T> T fetchAny(Field<T> field) {
         R record = fetchAny();
@@ -573,13 +567,8 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
 
     @Override
     public final R fetchAny() {
-        Cursor<R> c = fetchLazyNonAutoClosing();
-
-        try {
+        try (Cursor<R> c = fetchLazyNonAutoClosing()) {
             return c.fetchNext();
-        }
-        finally {
-            c.close();
         }
     }
 

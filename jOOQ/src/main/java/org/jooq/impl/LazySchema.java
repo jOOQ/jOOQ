@@ -228,8 +228,6 @@ public final class LazySchema extends AbstractNamed implements Schema {
         return schema().getSequence(name);
     }
 
-
-
     @Override
     public final Stream<Table<?>> tableStream() {
         return schema().tableStream();
@@ -269,7 +267,4 @@ public final class LazySchema extends AbstractNamed implements Schema {
     public final Stream<Sequence<?>> sequenceStream() {
         return schema().sequenceStream();
     }
-
-
-
 }

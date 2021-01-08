@@ -316,8 +316,6 @@ public class SchemaImpl extends AbstractNamed implements Schema {
         return Collections.emptyList();
     }
 
-
-
     @Override
     public final Stream<Table<?>> tableStream() {
         return getTables().stream();
@@ -357,8 +355,6 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     public final Stream<Sequence<?>> sequenceStream() {
         return getSequences().stream();
     }
-
-
 
     // ------------------------------------------------------------------------
     // XXX: Object API

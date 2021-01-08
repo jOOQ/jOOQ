@@ -38,14 +38,15 @@
 package org.jooq.codegen;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Collections.emptySet;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.jooq.meta.Database;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
@@ -165,7 +166,7 @@ abstract class AbstractGenerator implements Generator {
     }
 
     enum Language {
-        JAVA, SCALA, KOTLIN, XML;
+        JAVA, SCALA, KOTLIN, XML
     }
 
     void logDatabaseParameters(Database db) {
@@ -209,11 +210,7 @@ abstract class AbstractGenerator implements Generator {
         if (array == null)
             return false;
 
-        for (String string : array)
-            if (string != null && string.indexOf(c) > -1)
-                return true;
-
-        return false;
+        return Stream.of(array).anyMatch(s -> s != null && s.indexOf(c) > -1);
     }
 
     @Override
@@ -1226,7 +1223,7 @@ abstract class AbstractGenerator implements Generator {
      * If file is a file, delete it.
      */
     protected void empty(File file, String suffix) {
-        empty(file, suffix, Collections.<File>emptySet(), Collections.<File>emptySet());
+        empty(file, suffix, emptySet(), emptySet());
     }
 
     /**
@@ -1264,9 +1261,8 @@ abstract class AbstractGenerator implements Generator {
                 if (childrenAfterDeletion != null && childrenAfterDeletion.length == 0)
                     file.delete();
             }
-            else if (file.getName().endsWith(suffix) && !keep.contains(file)) {
+            else if (file.getName().endsWith(suffix) && !keep.contains(file))
                 file.delete();
-            }
         }
     }
 }

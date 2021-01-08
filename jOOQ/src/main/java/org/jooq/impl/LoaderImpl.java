@@ -70,7 +70,6 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
-import org.jooq.ConnectionRunnable;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
@@ -180,7 +179,7 @@ final class LoaderImpl<R extends Record> implements
     // -----------
     private LoaderRowListener            onRowStart;
     private LoaderRowListener            onRowEnd;
-    private LoaderContext                rowCtx                           = new DefaultLoaderContext();
+    private final LoaderContext          rowCtx                           = new DefaultLoaderContext();
     private int                          ignored;
     private int                          processed;
     private int                          stored;
@@ -327,21 +326,16 @@ final class LoaderImpl<R extends Record> implements
 
     @Override
     public final LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records) {
-        return loadArrays(new MappingIterator<Record, Object[]>(records, new F.F1<Record, Object[]>() {
-            @Override
-            public final Object[] apply(Record value) {
-                if (value == null)
-                    return null;
+        return loadArrays(new MappingIterator<Record, Object[]>(records, value -> {
+            if (value == null)
+                return null;
 
-                if (source == null)
-                    source = value.fields();
+            if (source == null)
+                source = value.fields();
 
-                return value.intoArray();
-            }
+            return value.intoArray();
         }));
     }
-
-
 
     @Override
     public final LoaderRowsStep<R> loadArrays(Stream<? extends Object[]> a) {
@@ -352,8 +346,6 @@ final class LoaderImpl<R extends Record> implements
     public final LoaderRowsStep<R> loadRecords(Stream<? extends Record> records) {
         return loadRecords(records.iterator());
     }
-
-
 
     @Override
     public final LoaderImpl<R> loadCSV(File file) {
@@ -729,7 +721,7 @@ final class LoaderImpl<R extends Record> implements
         executeSQL(arrays);
     }
 
-    private static final class CachedPSListener extends DefaultExecuteListener {
+    private static final class CachedPSListener extends DefaultExecuteListener implements AutoCloseable {
 
         /**
          * Generated UID
@@ -755,6 +747,7 @@ final class LoaderImpl<R extends Record> implements
             }
         }
 
+        @Override
         public void close() {
             for (CachedPS ps : map.values())
                 safeClose(ps.getDelegate());
@@ -771,30 +764,19 @@ final class LoaderImpl<R extends Record> implements
     }
 
     private final void executeSQL(final Iterator<? extends Object[]> iterator) {
-        configuration.dsl().connection(new ConnectionRunnable() {
-            @Override
-            public void run(Connection connection) throws Exception {
-                Configuration c = configuration.derive(new DefaultConnectionProvider(connection));
+        configuration.dsl().connection(connection -> {
+            Configuration c = configuration.derive(new DefaultConnectionProvider(connection));
 
-                if (FALSE.equals(c.settings().isCachePreparedStatementInLoader())) {
-                    executeSQL(iterator, c.dsl());
-                }
+            if (FALSE.equals(c.settings().isCachePreparedStatementInLoader())) {
+                executeSQL(iterator, c.dsl());
+            }
 
-                else {
-                    CachedPSListener cache = new CachedPSListener();
-
-                    try {
-                        executeSQL(iterator, c
-                            .derive(combine(new DefaultExecuteListenerProvider(cache), c.executeListenerProviders()))
-                            .dsl()
-                        );
-                    }
-                    finally {
-                        try {
-                            cache.close();
-                        }
-                        catch (Exception e) {}
-                    }
+            else {
+                try (CachedPSListener cache = new CachedPSListener()) {
+                    executeSQL(iterator, c
+                        .derive(combine(new DefaultExecuteListenerProvider(cache), c.executeListenerProviders()))
+                        .dsl()
+                    );
                 }
             }
         });

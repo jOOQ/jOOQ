@@ -78,7 +78,7 @@ public final class ExceptionTools {
      * Sneaky throw any type of Throwable.
      */
     public static void sneakyThrow(Throwable throwable) {
-        ExceptionTools.<RuntimeException> sneakyThrow0(throwable);
+        ExceptionTools.sneakyThrow0(throwable);
     }
 
     /**

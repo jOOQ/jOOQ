@@ -210,7 +210,6 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
         }
     }
 
-
     @Override
     public final Duration toDuration() {
         long hours = years * 8766L  // 365.25 * 24
@@ -221,7 +220,6 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
 
         return Duration.ofHours(hours);
     }
-
 
     // -------------------------------------------------------------------------
     // XXX Interval API

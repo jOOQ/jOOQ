@@ -43,7 +43,6 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.*;
 import static org.jooq.impl.Comparators.CHECK_COMP;
 import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;
 import static org.jooq.impl.Comparators.INDEX_COMP;
@@ -133,177 +132,123 @@ final class Diff {
             // TODO Implement this for SQL Server support.
             null,
 
-            new Merge<Catalog>() {
-                @Override
-                public void merge(DiffResult r, Catalog c1, Catalog c2) {
-                    appendSchemas(r, c1.getSchemas(), c2.getSchemas());
+            (r, c1, c2) -> appendSchemas(r, c1.getSchemas(), c2.getSchemas())
+        );
+    }
+
+    private final DiffResult appendSchemas(DiffResult result, List<Schema> l1, List<Schema> l2) {
+        return append(result, l1, l2, null,
+            (r, s) -> r.queries.addAll(Arrays.asList(ctx.ddl(s).queries())),
+            (r, s) -> {
+                if (s.getTables().isEmpty() && s.getSequences().isEmpty()) {
+                    if (!StringUtils.isEmpty(s.getName()))
+                        r.queries.add(ctx.dropSchema(s));
+                }
+                else if (migrateConf.dropSchemaCascade()) {
+
+                    // TODO: Can we reuse the logic from DROP_TABLE?
+                    for (Table<?> t1 : s.getTables())
+                        for (UniqueKey<?> uk : t1.getKeys())
+                            for (ForeignKey<?, ?> fk : uk.getReferences())
+                                r.droppedFks.add(fk);
+
+                    if (!StringUtils.isEmpty(s.getName()))
+                        r.queries.add(ctx.dropSchema(s).cascade());
+                }
+                else {
+                    for (Table<?> t2 : s.getTables())
+                        dropTable().drop(r, t2);
+
+                    for (Sequence<?> seq : s.getSequences())
+                        dropSequence().drop(r, seq);
+
+                    if (!StringUtils.isEmpty(s.getName()))
+                        r.queries.add(ctx.dropSchema(s));
+                }
+            },
+            (r, s1, s2) -> {
+                appendDomains(r, s1.getDomains(), s2.getDomains());
+                appendTables(r, s1.getTables(), s2.getTables());
+                appendSequences(r, s1.getSequences(), s2.getSequences());
+            }
+        );
+    }
+
+    private final Drop<Sequence<?>> dropSequence() {
+        return (r, s) -> r.queries.add(ctx.dropSequence(s));
+    }
+
+    private final DiffResult appendSequences(DiffResult result, List<? extends Sequence<?>> l1, List<? extends Sequence<?>> l2) {
+        return append(result, l1, l2, null,
+            (r, s) -> r.queries.add(ddl.createSequence(s)),
+            dropSequence(),
+            (r, s1, s2) -> {
+                AlterSequenceFlagsStep stmt = null;
+                AlterSequenceFlagsStep stmt0 = ctx.alterSequence(s1);
+
+                if (s2.getStartWith() != null && !s2.getStartWith().equals(s1.getStartWith()))
+                    stmt = defaultIfNull(stmt, stmt0).startWith(s2.getStartWith());
+                else if (s2.getStartWith() == null && s1.getStartWith() != null)
+                    stmt = defaultIfNull(stmt, stmt0).startWith(1);
+
+                if (s2.getIncrementBy() != null && !s2.getIncrementBy().equals(s1.getIncrementBy()))
+                    stmt = defaultIfNull(stmt, stmt0).incrementBy(s2.getIncrementBy());
+                else if (s2.getIncrementBy() == null && s1.getIncrementBy() != null)
+                    stmt = defaultIfNull(stmt, stmt0).incrementBy(1);
+
+                if (s2.getMinvalue() != null && !s2.getMinvalue().equals(s1.getMinvalue()))
+                    stmt = defaultIfNull(stmt, stmt0).minvalue(s2.getMinvalue());
+                else if (s2.getMinvalue() == null && s1.getMinvalue() != null)
+                    stmt = defaultIfNull(stmt, stmt0).noMinvalue();
+
+                if (s2.getMaxvalue() != null && !s2.getMaxvalue().equals(s1.getMaxvalue()))
+                    stmt = defaultIfNull(stmt, stmt0).maxvalue(s2.getMaxvalue());
+                else if (s2.getMaxvalue() == null && s1.getMaxvalue() != null)
+                    stmt = defaultIfNull(stmt, stmt0).noMaxvalue();
+
+                if (s2.getCache() != null && !s2.getCache().equals(s1.getCache()))
+                    stmt = defaultIfNull(stmt, stmt0).cache(s2.getCache());
+                else if (s2.getCache() == null && s1.getCache() != null)
+                    stmt = defaultIfNull(stmt, stmt0).noCache();
+
+                if (s2.getCycle() && !s1.getCycle())
+                    stmt = defaultIfNull(stmt, stmt0).cycle();
+                else if (!s2.getCycle() && s1.getCycle())
+                    stmt = defaultIfNull(stmt, stmt0).noCycle();
+
+                if (stmt != null)
+                    r.queries.add(stmt);
+            }
+        );
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private final DiffResult appendDomains(DiffResult result, List<? extends Domain<?>> l1, List<? extends Domain<?>> l2) {
+        return append(result, l1, l2, null,
+            (r, d) -> r.queries.add(ddl.createDomain(d)),
+            (r, d) -> r.queries.add(ctx.dropDomain(d)),
+            (r, d1, d2) -> {
+                if (!d1.getDataType().getSQLDataType().equals(d2.getDataType().getSQLDataType())) {
+                    r.queries.addAll(Arrays.asList(ctx.dropDomain(d1), ddl.createDomain(d2)));
+                }
+                else {
+                    if (d1.getDataType().defaulted() && !d2.getDataType().defaulted())
+                        r.queries.add(ctx.alterDomain(d1).dropDefault());
+                    else if (d2.getDataType().defaulted() && !d2.getDataType().defaultValue().equals(d1.getDataType().defaultValue()))
+                        r.queries.add(ctx.alterDomain(d1).setDefault((Field) d2.getDataType().defaultValue()));
+
+                    appendChecks(r, d1, d1.getChecks(), d2.getChecks());
                 }
             }
         );
     }
 
-    private final Create<Schema> CREATE_SCHEMA = new Create<Schema>() {
-        @Override
-        public void create(DiffResult r, Schema s) {
-            r.queries.addAll(Arrays.asList(ctx.ddl(s).queries()));
-        }
-    };
-
-    private final Drop<Schema> DROP_SCHEMA = new Drop<Schema>() {
-        @Override
-        public void drop(DiffResult r, Schema s) {
-            if (s.getTables().isEmpty() && s.getSequences().isEmpty()) {
-                if (!StringUtils.isEmpty(s.getName()))
-                    r.queries.add(ctx.dropSchema(s));
-            }
-            else if (migrateConf.dropSchemaCascade()) {
-
-                // TODO: Can we reuse the logic from DROP_TABLE?
-                for (Table<?> t : s.getTables())
-                    for (UniqueKey<?> uk : t.getKeys())
-                        for (ForeignKey<?, ?> fk : uk.getReferences())
-                            r.droppedFks.add(fk);
-
-                if (!StringUtils.isEmpty(s.getName()))
-                    r.queries.add(ctx.dropSchema(s).cascade());
-            }
-            else {
-                for (Table<?> t : s.getTables())
-                    DROP_TABLE.drop(r, t);
-
-                for (Sequence<?> seq : s.getSequences())
-                    DROP_SEQUENCE.drop(r, seq);
-
-                if (!StringUtils.isEmpty(s.getName()))
-                    r.queries.add(ctx.dropSchema(s));
-            }
-        }
-    };
-
-    private final Merge<Schema> MERGE_SCHEMA = new Merge<Schema>() {
-        @Override
-        public void merge(DiffResult r, Schema s1, Schema s2) {
-            appendDomains(r, s1.getDomains(), s2.getDomains());
-            appendTables(r, s1.getTables(), s2.getTables());
-            appendSequences(r, s1.getSequences(), s2.getSequences());
-        }
-    };
-
-    private final DiffResult appendSchemas(DiffResult result, List<Schema> l1, List<Schema> l2) {
-        return append(result, l1, l2, null,
-            CREATE_SCHEMA,
-            DROP_SCHEMA,
-            MERGE_SCHEMA
-        );
+    private final Create<Table<?>> createTable() {
+        return (r, t) -> r.queries.addAll(Arrays.asList(ddl.queries(t).queries()));
     }
 
-    private final Create<Sequence<?>> CREATE_SEQUENCE = new Create<Sequence<?>>() {
-        @Override
-        public void create(DiffResult r, Sequence<?> s) {
-            r.queries.add(ddl.createSequence(s));
-        }
-    };
-
-    private final Drop<Sequence<?>> DROP_SEQUENCE = new Drop<Sequence<?>>() {
-        @Override
-        public void drop(DiffResult r, Sequence<?> s) {
-            r.queries.add(ctx.dropSequence(s));
-        }
-    };
-
-    private final Merge<Sequence<?>> MERGE_SEQUENCE = new Merge<Sequence<?>>() {
-        @Override
-        public void merge(DiffResult r, Sequence<?> s1, Sequence<?> s2) {
-            AlterSequenceFlagsStep stmt = null;
-            AlterSequenceFlagsStep stmt0 = ctx.alterSequence(s1);
-
-            if (s2.getStartWith() != null && !s2.getStartWith().equals(s1.getStartWith()))
-                stmt = defaultIfNull(stmt, stmt0).startWith(s2.getStartWith());
-            else if (s2.getStartWith() == null && s1.getStartWith() != null)
-                stmt = defaultIfNull(stmt, stmt0).startWith(1);
-
-            if (s2.getIncrementBy() != null && !s2.getIncrementBy().equals(s1.getIncrementBy()))
-                stmt = defaultIfNull(stmt, stmt0).incrementBy(s2.getIncrementBy());
-            else if (s2.getIncrementBy() == null && s1.getIncrementBy() != null)
-                stmt = defaultIfNull(stmt, stmt0).incrementBy(1);
-
-            if (s2.getMinvalue() != null && !s2.getMinvalue().equals(s1.getMinvalue()))
-                stmt = defaultIfNull(stmt, stmt0).minvalue(s2.getMinvalue());
-            else if (s2.getMinvalue() == null && s1.getMinvalue() != null)
-                stmt = defaultIfNull(stmt, stmt0).noMinvalue();
-
-            if (s2.getMaxvalue() != null && !s2.getMaxvalue().equals(s1.getMaxvalue()))
-                stmt = defaultIfNull(stmt, stmt0).maxvalue(s2.getMaxvalue());
-            else if (s2.getMaxvalue() == null && s1.getMaxvalue() != null)
-                stmt = defaultIfNull(stmt, stmt0).noMaxvalue();
-
-            if (s2.getCache() != null && !s2.getCache().equals(s1.getCache()))
-                stmt = defaultIfNull(stmt, stmt0).cache(s2.getCache());
-            else if (s2.getCache() == null && s1.getCache() != null)
-                stmt = defaultIfNull(stmt, stmt0).noCache();
-
-            if (s2.getCycle() && !s1.getCycle())
-                stmt = defaultIfNull(stmt, stmt0).cycle();
-            else if (!s2.getCycle() && s1.getCycle())
-                stmt = defaultIfNull(stmt, stmt0).noCycle();
-
-            if (stmt != null)
-                r.queries.add(stmt);
-        }
-    };
-
-    private final DiffResult appendSequences(DiffResult result, List<? extends Sequence<?>> l1, List<? extends Sequence<?>> l2) {
-        return append(result, l1, l2, null, CREATE_SEQUENCE, DROP_SEQUENCE, MERGE_SEQUENCE);
-    }
-
-    private final Create<Domain<?>> CREATE_DOMAIN = new Create<Domain<?>>() {
-        @Override
-        public void create(DiffResult r, Domain<?> d) {
-            r.queries.add(ddl.createDomain(d));
-        }
-    };
-
-    private final Drop<Domain<?>> DROP_DOMAIN = new Drop<Domain<?>>() {
-        @Override
-        public void drop(DiffResult r, Domain<?> d) {
-            r.queries.add(ctx.dropDomain(d));
-        }
-    };
-
-    private final Merge<Domain<?>> MERGE_DOMAIN = new Merge<Domain<?>>() {
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        @Override
-        public void merge(DiffResult r, Domain<?> d1, Domain<?> d2) {
-            if (!d1.getDataType().getSQLDataType().equals(d2.getDataType().getSQLDataType())) {
-                r.queries.addAll(Arrays.asList(ctx.dropDomain(d1), ddl.createDomain(d2)));
-            }
-            else {
-                if (d1.getDataType().defaulted() && !d2.getDataType().defaulted())
-                    r.queries.add(ctx.alterDomain(d1).dropDefault());
-                else if (d2.getDataType().defaulted() && !d2.getDataType().defaultValue().equals(d1.getDataType().defaultValue()))
-                    r.queries.add(ctx.alterDomain(d1).setDefault((Field) d2.getDataType().defaultValue()));
-
-                appendChecks(r, d1, d1.getChecks(), d2.getChecks());
-            }
-        }
-    };
-
-    private final DiffResult appendDomains(DiffResult result, List<? extends Domain<?>> l1, List<? extends Domain<?>> l2) {
-        return append(result, l1, l2, null, CREATE_DOMAIN, DROP_DOMAIN, MERGE_DOMAIN);
-    }
-
-    private final Create<Table<?>> CREATE_TABLE = new Create<Table<?>>() {
-        @Override
-        public void create(DiffResult r, Table<?> t) {
-
-            // [#10204] [#10276] DSLContext.ddl(Table) doesn't produce foreign keys
-            r.queries.addAll(Arrays.asList(ddl.queries(t).queries()));
-        }
-    };
-
-    private final Drop<Table<?>> DROP_TABLE = new Drop<Table<?>>() {
-        @Override
-        public void drop(DiffResult r, Table<?> t) {
+    private final Drop<Table<?>> dropTable() {
+        return (r, t) -> {
             for (UniqueKey<?> uk : t.getKeys())
                 for (ForeignKey<?, ?> fk : uk.getReferences())
                     if (r.droppedFks.add(fk) && !migrateConf.dropTableCascade())
@@ -317,8 +262,8 @@ final class Diff {
                 r.queries.add(migrateConf.dropTableCascade()
                     ? ctx.dropTable(t).cascade()
                     : ctx.dropTable(t));
-        }
-    };
+        };
+    }
 
     private final Merge<Table<?>> MERGE_TABLE = new Merge<Table<?>>() {
         @Override
@@ -362,14 +307,14 @@ final class Diff {
 
         private void replaceView(DiffResult r, Table<?> v1, Table<?> v2) {
             if (!migrateConf.createOrReplaceView())
-                DROP_TABLE.drop(r, v1);
+                dropTable().drop(r, v1);
 
-            CREATE_TABLE.create(r, v2);
+            createTable().create(r, v2);
         }
     };
 
     private final DiffResult appendTables(DiffResult result, List<? extends Table<?>> l1, List<? extends Table<?>> l2) {
-        return append(result, l1, l2, null, CREATE_TABLE, DROP_TABLE, MERGE_TABLE);
+        return append(result, l1, l2, null, createTable(), dropTable(), MERGE_TABLE);
     }
 
     private final List<UniqueKey<?>> removePrimary(List<? extends UniqueKey<?>> list) {
@@ -416,37 +361,31 @@ final class Diff {
         return false;
     }
 
-    private final DiffResult appendColumns(DiffResult result, final Table<?> t1, List<? extends Field<?>> l1, List<? extends Field<?>> l2) {
+    private final DiffResult appendColumns(DiffResult result, Table<?> t1, List<? extends Field<?>> l1, List<? extends Field<?>> l2) {
         final List<Field<?>> add = new ArrayList<>();
         final List<Field<?>> drop = new ArrayList<>();
 
         result = append(result, l1, l2, null,
-            new Create<Field<?>>() {
-                @Override
-                public void create(DiffResult r, Field<?> f) {
+            (r, f) -> {
 
-                    // Ignore synthetic columns
-                    if (isSynthetic(f))
-                        ;
-                    else if (migrateConf.alterTableAddMultiple())
-                        add.add(f);
-                    else
-                        r.queries.add(ctx.alterTable(t1).add(f));
-                }
+                // Ignore synthetic columns
+                if (isSynthetic(f))
+                    ;
+                else if (migrateConf.alterTableAddMultiple())
+                    add.add(f);
+                else
+                    r.queries.add(ctx.alterTable(t1).add(f));
             },
 
-            new Drop<Field<?>>() {
-                @Override
-                public void drop(DiffResult r, Field<?> f) {
+            (r, f) -> {
 
-                    // Ignore synthetic columns
-                    if (isSynthetic(f))
-                        ;
-                    else if (migrateConf.alterTableDropMultiple())
-                        drop.add(f);
-                    else
-                        r.queries.add(ctx.alterTable(t1).drop(f));
-                }
+                // Ignore synthetic columns
+                if (isSynthetic(f))
+                    ;
+                else if (migrateConf.alterTableDropMultiple())
+                    drop.add(f);
+                else
+                    r.queries.add(ctx.alterTable(t1).drop(f));
             },
 
             new Merge<Field<?>>() {
@@ -542,26 +481,20 @@ final class Diff {
     }
 
     private final DiffResult appendPrimaryKey(DiffResult result, final Table<?> t1, List<? extends UniqueKey<?>> pk1, List<? extends UniqueKey<?>> pk2) {
-        final Create<UniqueKey<?>> create = new Create<UniqueKey<?>>() {
-            @Override
-            public void create(DiffResult r, UniqueKey<?> pk) {
-                if (isSynthetic(pk))
-                    ;
-                else
-                    r.queries.add(ctx.alterTable(t1).add(pk.constraint()));
-            }
+        final Create<UniqueKey<?>> create = (r, pk) -> {
+            if (isSynthetic(pk))
+                ;
+            else
+                r.queries.add(ctx.alterTable(t1).add(pk.constraint()));
         };
 
-        final Drop<UniqueKey<?>> drop = new Drop<UniqueKey<?>>() {
-            @Override
-            public void drop(DiffResult r, UniqueKey<?> pk) {
-                if (isSynthetic(pk))
-                    ;
-                else if (isEmpty(pk.getName()))
-                    r.queries.add(ctx.alterTable(t1).dropPrimaryKey());
-                else
-                    r.queries.add(ctx.alterTable(t1).dropPrimaryKey(pk.constraint()));
-            }
+        final Drop<UniqueKey<?>> drop = (r, pk) -> {
+            if (isSynthetic(pk))
+                ;
+            else if (isEmpty(pk.getName()))
+                r.queries.add(ctx.alterTable(t1).dropPrimaryKey());
+            else
+                r.queries.add(ctx.alterTable(t1).dropPrimaryKey(pk.constraint()));
         };
 
         return append(result, pk1, pk2, KEY_COMP,
@@ -573,19 +506,8 @@ final class Diff {
     }
 
     private final DiffResult appendUniqueKeys(DiffResult result, final Table<?> t1, List<? extends UniqueKey<?>> uk1, List<? extends UniqueKey<?>> uk2) {
-        final Create<UniqueKey<?>> create = new Create<UniqueKey<?>>() {
-            @Override
-            public void create(DiffResult r, UniqueKey<?> u) {
-                r.queries.add(ctx.alterTable(t1).add(u.constraint()));
-            }
-        };
-
-        final Drop<UniqueKey<?>> drop = new Drop<UniqueKey<?>>() {
-            @Override
-            public void drop(DiffResult r, UniqueKey<?> u) {
-                r.queries.add(ctx.alterTable(t1).dropUnique(u.constraint()));
-            }
-        };
+        final Create<UniqueKey<?>> create = (r, u) -> r.queries.add(ctx.alterTable(t1).add(u.constraint()));
+        final Drop<UniqueKey<?>> drop = (r, u) -> r.queries.add(ctx.alterTable(t1).dropUnique(u.constraint()));
 
         return append(result, uk1, uk2, KEY_COMP,
             create,
@@ -595,74 +517,59 @@ final class Diff {
         );
     }
 
-    private final <K extends Named> Merge<K> keyMerge(final Table<?> t1, final Create<K> create, final Drop<K> drop, final ConstraintType type) {
-        return new Merge<K>() {
-            @Override
-            public void merge(DiffResult r, K k1, K k2) {
-                Name n1 = k1.getUnqualifiedName();
-                Name n2 = k2.getUnqualifiedName();
+    private final <K extends Named> Merge<K> keyMerge(Table<?> t1, Create<K> create, Drop<K> drop, ConstraintType type) {
+        return (r, k1, k2) -> {
+            Name n1 = k1.getUnqualifiedName();
+            Name n2 = k2.getUnqualifiedName();
 
-                if (n1.empty() ^ n2.empty()) {
-                    drop.drop(r, k1);
-                    create.create(r, k2);
+            if (n1.empty() ^ n2.empty()) {
+                drop.drop(r, k1);
+                create.create(r, k2);
 
-                    return;
-                }
-
-                if (NAMED_COMP.compare(k1, k2) != 0)
-
-                    // [#10813] Don't rename constraints in MySQL
-                    if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect()))
-                        r.queries.add(ctx.alterTable(t1).renameConstraint(n1).to(n2));
-
-
-
-
-
-
-
-
-
-
-
+                return;
             }
+
+            if (NAMED_COMP.compare(k1, k2) != 0)
+
+                // [#10813] Don't rename constraints in MySQL
+                if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect()))
+                    r.queries.add(ctx.alterTable(t1).renameConstraint(n1).to(n2));
+
+
+
+
+
+
+
+
+
+
+
         };
     }
 
-    private final <K extends Named> Merge<K> keyMerge(final Domain<?> d1, final Create<K> create, final Drop<K> drop) {
-        return new Merge<K>() {
-            @Override
-            public void merge(DiffResult r, K k1, K k2) {
-                Name n1 = k1.getUnqualifiedName();
-                Name n2 = k2.getUnqualifiedName();
+    private final <K extends Named> Merge<K> keyMerge(Domain<?> d1, Create<K> create, Drop<K> drop) {
+        return (r, k1, k2) -> {
+            Name n1 = k1.getUnqualifiedName();
+            Name n2 = k2.getUnqualifiedName();
 
-                if (n1.empty() ^ n2.empty()) {
-                    drop.drop(r, k1);
-                    create.create(r, k2);
+            if (n1.empty() ^ n2.empty()) {
+                drop.drop(r, k1);
+                create.create(r, k2);
 
-                    return;
-                }
-
-                if (NAMED_COMP.compare(k1, k2) != 0)
-                    r.queries.add(ctx.alterDomain(d1).renameConstraint(n1).to(n2));
+                return;
             }
+
+            if (NAMED_COMP.compare(k1, k2) != 0)
+                r.queries.add(ctx.alterDomain(d1).renameConstraint(n1).to(n2));
         };
     }
 
     private final DiffResult appendForeignKeys(DiffResult result, final Table<?> t1, List<? extends ForeignKey<?, ?>> fk1, List<? extends ForeignKey<?, ?>> fk2) {
-        final Create<ForeignKey<?, ?>> create = new Create<ForeignKey<?, ?>>() {
-            @Override
-            public void create(DiffResult r, ForeignKey<?, ?> fk) {
-                r.queries.add(ctx.alterTable(t1).add(fk.constraint()));
-            }
-        };
-
-        final Drop<ForeignKey<?, ?>> drop = new Drop<ForeignKey<?, ?>>() {
-            @Override
-            public void drop(DiffResult r, ForeignKey<?, ?> fk) {
-                if (r.droppedFks.add(fk))
-                    r.queries.add(ctx.alterTable(t1).dropForeignKey(fk.constraint()));
-            }
+        final Create<ForeignKey<?, ?>> create = (r, fk) -> r.queries.add(ctx.alterTable(t1).add(fk.constraint()));
+        final Drop<ForeignKey<?, ?>> drop = (r, fk) -> {
+            if (r.droppedFks.add(fk))
+                r.queries.add(ctx.alterTable(t1).dropForeignKey(fk.constraint()));
         };
 
         return append(result, fk1, fk2, FOREIGN_KEY_COMP,
@@ -673,20 +580,9 @@ final class Diff {
         );
     }
 
-    private final DiffResult appendChecks(DiffResult result, final Table<?> t1, List<? extends Check<?>> c1, List<? extends Check<?>> c2) {
-        final Create<Check<?>> create = new Create<Check<?>>() {
-            @Override
-            public void create(DiffResult r, Check<?> c) {
-                r.queries.add(ctx.alterTable(t1).add(c.constraint()));
-            }
-        };
-
-        final Drop<Check<?>> drop = new Drop<Check<?>>() {
-            @Override
-            public void drop(DiffResult r, Check<?> c) {
-                r.queries.add(ctx.alterTable(t1).drop(c.constraint()));
-            }
-        };
+    private final DiffResult appendChecks(DiffResult result, Table<?> t1, List<? extends Check<?>> c1, List<? extends Check<?>> c2) {
+        final Create<Check<?>> create = (r, c) -> r.queries.add(ctx.alterTable(t1).add(c.constraint()));
+        final Drop<Check<?>> drop = (r, c) -> r.queries.add(ctx.alterTable(t1).drop(c.constraint()));
 
         return append(result, c1, c2, CHECK_COMP,
             create,
@@ -696,20 +592,9 @@ final class Diff {
         );
     }
 
-    private final DiffResult appendChecks(DiffResult result, final Domain<?> d1, List<? extends Check<?>> c1, List<? extends Check<?>> c2) {
-        final Create<Check<?>> create = new Create<Check<?>>() {
-            @Override
-            public void create(DiffResult r, Check<?> c) {
-                r.queries.add(ctx.alterDomain(d1).add(c.constraint()));
-            }
-        };
-
-        final Drop<Check<?>> drop = new Drop<Check<?>>() {
-            @Override
-            public void drop(DiffResult r, Check<?> c) {
-                r.queries.add(ctx.alterDomain(d1).dropConstraint(c.constraint()));
-            }
-        };
+    private final DiffResult appendChecks(DiffResult result, Domain<?> d1, List<? extends Check<?>> c1, List<? extends Check<?>> c2) {
+        final Create<Check<?>> create = (r, c) -> r.queries.add(ctx.alterDomain(d1).add(c.constraint()));
+        final Drop<Check<?>> drop = (r, c) -> r.queries.add(ctx.alterDomain(d1).dropConstraint(c.constraint()));
 
         return append(result, c1, c2, CHECK_COMP,
             create,
@@ -719,33 +604,20 @@ final class Diff {
         );
     }
 
-    private final DiffResult appendIndexes(DiffResult result, final Table<?> t1, List<? extends Index> l1, List<? extends Index> l2) {
-        final Create<Index> create = new Create<Index>() {
-            @Override
-            public void create(DiffResult r, Index i) {
-                r.queries.add(ctx.createIndex(i).on(t1, i.getFields()));
-            }
-        };
-        final Drop<Index> drop = new Drop<Index>() {
-            @Override
-            public void drop(DiffResult r, Index i) {
-                r.queries.add(ctx.dropIndex(i).on(t1));
-            }
-        };
+    private final DiffResult appendIndexes(DiffResult result, Table<?> t1, List<? extends Index> l1, List<? extends Index> l2) {
+        final Create<Index> create = (r, i) -> r.queries.add(ctx.createIndex(i).on(t1, i.getFields()));
+        final Drop<Index> drop = (r, i) -> r.queries.add(ctx.dropIndex(i).on(t1));
 
         return append(result, l1, l2, INDEX_COMP,
             create,
             drop,
-            new Merge<Index>() {
-                @Override
-                public void merge(DiffResult r, Index ix1, Index ix2) {
-                    if (INDEX_COMP.compare(ix1, ix2) != 0) {
-                        drop.drop(r, ix1);
-                        create.create(r, ix2);
-                    }
-                    else if (NAMED_COMP.compare(ix1, ix2) != 0)
-                        r.queries.add(ctx.alterTable(t1).renameIndex(ix1).to(ix2));
+            (r, ix1, ix2) -> {
+                if (INDEX_COMP.compare(ix1, ix2) != 0) {
+                    drop.drop(r, ix1);
+                    create.create(r, ix2);
                 }
+                else if (NAMED_COMP.compare(ix1, ix2) != 0)
+                    r.queries.add(ctx.alterTable(t1).renameIndex(ix1).to(ix2));
             },
             true
         );
@@ -845,7 +717,7 @@ final class Diff {
 
     private static final <N extends Named> Iterator<N> sorted(List<N> list, Comparator<? super N> comp) {
         List<N> result = new ArrayList<>(list);
-        Collections.sort(result, comp);
+        result.sort(comp);
         return result.iterator();
     }
 

@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
 
-import java.io.Closeable;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -88,11 +87,7 @@ final class TranslatingMetaProvider implements MetaProvider {
 
     @Override
     public Meta provide() {
-        DDLDatabaseInitializer initializer = null;
-
-        try {
-            initializer = new DDLDatabaseInitializer();
-
+        try (DDLDatabaseInitializer initializer = new DDLDatabaseInitializer()) {
             for (Source script : scripts)
                 initializer.loadScript(script);
 
@@ -100,12 +95,9 @@ final class TranslatingMetaProvider implements MetaProvider {
                 configuration.derive().set(initializer.connection).set(configuration.settings().getInterpreterDialect())
             ).provide());
         }
-        finally {
-            JDBCUtils.safeClose(initializer);
-        }
     }
 
-    final class DDLDatabaseInitializer implements Closeable {
+    final class DDLDatabaseInitializer implements AutoCloseable {
         private Connection connection;
         private DSLContext ctx;
 

@@ -40,6 +40,7 @@ package org.jooq.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.jooq.Catalog;
 import org.jooq.Check;

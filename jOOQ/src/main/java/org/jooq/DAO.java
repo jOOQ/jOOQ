@@ -372,7 +372,6 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     @Support
     <Z> P fetchOne(Field<Z> field, Z value) throws DataAccessException;
 
-
     /**
      * Find a unique record by a given field and a value.
      *
@@ -388,7 +387,6 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     @NotNull
     @Support
     <Z> Optional<P> fetchOptional(Field<Z> field, Z value) throws DataAccessException;
-
 
     /**
      * Get the underlying table.

@@ -54,7 +54,6 @@ public class Reflect {
     // Static API used as entrance points to the fluent API
     // ---------------------------------------------------------------------
 
-
     /**
      * Compile a class at runtime and reflect on it.
      * <p>
@@ -103,7 +102,6 @@ public class Reflect {
     public static Reflect compile(String name, String content, CompileOptions options) throws ReflectException {
         return onClass(Compile.compile(name, content, options));
     }
-
 
     /**
      * Wrap a class name.

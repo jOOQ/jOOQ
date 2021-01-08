@@ -157,17 +157,13 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
         for (Catalog catalog : getCatalogsFromMeta())
             result.add(new CatalogDefinition(this, catalog.getName(), ""));
 
-        Collections.sort(result, COMP);
+        result.sort(COMP);
         return result;
     }
 
     private List<Catalog> getCatalogsFromMeta() {
-        if (catalogs == null) {
-            catalogs = new ArrayList<>();
-
-            for (Catalog catalog : getMeta0().getCatalogs())
-                catalogs.add(catalog);
-        }
+        if (catalogs == null)
+            catalogs = new ArrayList<>(getMeta0().getCatalogs());
 
         return catalogs;
     }
@@ -187,17 +183,13 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
                 result.add(new SchemaDefinition(this, schema.getName(), ""));
         }
 
-        Collections.sort(result, COMP);
+        result.sort(COMP);
         return result;
     }
 
     private List<Schema> getSchemasFromMeta() {
-        if (schemas == null) {
-            schemas = new ArrayList<>();
-
-            for (Schema schema : getMeta0().getSchemas())
-                schemas.add(schema);
-        }
+        if (schemas == null)
+            schemas = new ArrayList<>(getMeta0().getSchemas());
 
         return schemas;
     }
@@ -221,7 +213,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
             }
         }
 
-        Collections.sort(result, COMP);
+        result.sort(COMP);
         return result;
     }
 
@@ -237,7 +229,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
                     result.add(new DefaultMetaTableDefinition(sd, table));
         }
 
-        Collections.sort(result, COMP);
+        result.sort(COMP);
         return result;
     }
 
@@ -277,10 +269,5 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
         return result;
     }
 
-    private static final Comparator<Definition> COMP = new Comparator<Definition>() {
-        @Override
-        public int compare(Definition o1, Definition o2) {
-            return o1.getQualifiedInputName().compareTo(o2.getQualifiedInputName());
-        }
-    };
+    private static final Comparator<Definition> COMP = Comparator.comparing(Definition::getQualifiedInputName);
 }

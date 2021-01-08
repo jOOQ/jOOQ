@@ -78,7 +78,6 @@ public interface FieldLike {
     @NotNull
     <T> Field<T> asField(String alias);
 
-
     /**
      * The underlying field representation of this object.
      * <p>
@@ -113,6 +112,4 @@ public interface FieldLike {
     @NotNull
     @Support
     <T> Field<T> asField(Function<? super Field<T>, ? extends String> aliasFunction);
-
-
 }

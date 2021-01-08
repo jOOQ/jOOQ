@@ -625,7 +625,6 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     @NotNull
     List<Object> intoList();
 
-
     /**
      * Convert this record into a stream.
      * <p>
@@ -638,7 +637,6 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      */
     @NotNull
     Stream<Object> intoStream();
-
 
     /**
      * Return this record as a name/value map.

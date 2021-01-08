@@ -162,11 +162,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
 
         if (!includeLiquibaseTables) {
             List<String> liquibaseTables = Arrays.asList(databaseChangeLogTableName, databaseChangeLogLockTableName);
-
-            Iterator<TableDefinition> it = result.iterator();
-            while (it.hasNext())
-                if (liquibaseTables.contains(it.next().getName()))
-                    it.remove();
+            result.removeIf(t -> liquibaseTables.contains(t.getName()));
         }
 
         return result;

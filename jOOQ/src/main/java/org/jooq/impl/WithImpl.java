@@ -182,9 +182,7 @@ implements
 
     private Name                                                            alias;
     private Name[]                                                          fieldAliases;
-
     private BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction;
-
 
     WithImpl(Configuration configuration, boolean recursive) {
         this.configuration = configuration;
@@ -239,11 +237,9 @@ implements
     private final WithStep as0(Select select, Boolean materialized) {
         DerivedColumnList dcl;
 
-
         if (fieldNameFunction != null)
             dcl = name(alias).fields(fieldNameFunction);
         else
-
             dcl = name(alias).fields(fieldAliases);
 
         CommonTableExpression cte;
@@ -258,9 +254,7 @@ implements
         this.ctes.add(cte);
         this.alias = null;
         this.fieldAliases = null;
-
         this.fieldNameFunction = null;
-
 
         return this;
     }
@@ -313,7 +307,6 @@ implements
         return with(a, f.toArray(EMPTY_NAME));
     }
 
-
     @Override
     public final WithImpl with(String a, Function<? super Field<?>, ? extends String> f) {
         this.alias = DSL.name(a);
@@ -329,7 +322,6 @@ implements
 
         return this;
     }
-
 
 
 

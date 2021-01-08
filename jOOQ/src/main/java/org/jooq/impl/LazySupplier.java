@@ -47,15 +47,4 @@ import org.jooq.Internal;
  */
 @Internal
 @FunctionalInterface
-public interface LazySupplier<T> extends Serializable, Supplier<T> {
-
-    /**
-     * Gets a result.
-     *
-     * @return a result
-     */
-
-    @Override
-
-    T get();
-}
+public interface LazySupplier<T> extends Serializable, Supplier<T> {}

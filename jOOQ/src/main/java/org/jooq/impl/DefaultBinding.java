@@ -120,6 +120,7 @@ import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.on;
+import static org.jooq.tools.reflect.Reflect.onClass;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
@@ -162,6 +163,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.function.Function;
 
 // ...
 import org.jooq.Attachable;
@@ -279,7 +281,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultJSONBBinding(dataType, converter);
         else if (type == XML.class)
             return new DefaultXMLBinding(dataType, converter);
-
         else if (type == LocalDate.class) {
             DateToLocalDateConverter c1 = new DateToLocalDateConverter();
             Converter<LocalDate, U> c2 = (Converter<LocalDate, U>) converter;
@@ -298,17 +299,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Converter<Time, U> c3 = Converters.of(c1, c2);
             return (Binding<T, U>) new DelegatingBinding<>((DataType<LocalTime>) dataType, c1, c2, new DefaultTimeBinding<>(TIME, c3));
         }
-
         else if (type == Long.class || type == long.class)
             return new DefaultLongBinding(dataType, converter);
-
         else if (type == OffsetDateTime.class)
             return new DefaultOffsetDateTimeBinding(dataType, converter);
         else if (type == OffsetTime.class)
             return new DefaultOffsetTimeBinding(dataType, converter);
         else if (type == Instant.class)
             return new DefaultInstantBinding(dataType, converter);
-
         else if (type == RowId.class)
             return new DefaultRowIdBinding(dataType, converter);
         else if (type == Short.class || type == short.class)
@@ -1215,11 +1213,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // This might be a UDT (not implemented exception...)
                 catch (Exception e) {
                     List<Object> result = new ArrayList<>();
-                    ResultSet arrayRs = null;
 
                     // Try fetching the array as a JDBC ResultSet
-                    try {
-                        arrayRs = array.getResultSet();
+                    try (ResultSet arrayRs = array.getResultSet()) {
                         Binding<T, T> binding = binding((DataType<T>) dataType.getArrayComponentDataType());
                         DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<>(ctx.configuration(), ctx.data(), arrayRs, 2);
 
@@ -1239,10 +1235,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                         log.error("Cannot parse array", string, fatal);
                         return null;
-                    }
-
-                    finally {
-                        safeClose(arrayRs);
                     }
 
                     return (T) convertArray(result.toArray(), (Class<? extends Object[]>) dataType.getType());
@@ -1270,9 +1262,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
     }
-
-
-
 
 
 
@@ -2635,8 +2624,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-
-
     /**
      * [#7986] OffsetDateTime.parse() is way too slow and not lenient enough to
      * handle all the possible RDBMS output formats and quirks.
@@ -3138,8 +3125,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final Converter<OffsetDateTime, Instant> CONVERTER        = Converter.ofNullable(
             OffsetDateTime.class,
             Instant.class,
-            (java.util.function.Function<OffsetDateTime, Instant> & Serializable) o -> o.toInstant(),
-            (java.util.function.Function<Instant, OffsetDateTime> & Serializable) i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
+            (Function<OffsetDateTime, Instant> & Serializable) o -> o.toInstant(),
+            (Function<Instant, OffsetDateTime> & Serializable) i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
         );
 
         private final DefaultOffsetDateTimeBinding<U>           delegate;
@@ -3185,8 +3172,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return delegate.sqltype(statement, configuration);
         }
     }
-
-
 
     static final class DefaultOtherBinding<U> extends AbstractBinding<Object, U> {
 
@@ -3497,7 +3482,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return (T) Time.valueOf(string);
             else if (type == Timestamp.class)
                 return (T) Timestamp.valueOf(string);
-
             else if (type == LocalTime.class)
                 return (T) LocalTime.parse(string);
             else if (type == LocalDate.class)
@@ -3510,7 +3494,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return (T) OffsetDateTimeParser.offsetDateTime(string);
             else if (type == Instant.class)
                 return (T) OffsetDateTimeParser.offsetDateTime(string).toInstant();
-
             else if (type == UByte.class)
                 return (T) UByte.valueOf(string);
             else if (type == UShort.class)
@@ -3575,18 +3558,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 fields = Tools.row0(Tools.fields(values.size(), SQLDataType.VARCHAR));
 
             return Tools.newRecord(true, (Class<Record>) type, fields)
-                        .operate(new RecordOperation<Record, RuntimeException>() {
+                        .operate(record -> {
+                            Row row = record.fieldsRow();
 
-                    @Override
-                    public Record operate(Record record) {
-                        Row row = record.fieldsRow();
+                            for (int i = 0; i < row.size(); i++)
+                                pgSetValue(record, row.field(i), values.get(i));
 
-                        for (int i = 0; i < row.size(); i++)
-                            pgSetValue(record, row.field(i), values.get(i));
-
-                        return record;
-                    }
-                });
+                            return record;
+                        });
         }
 
         private static final <T> void pgSetValue(Record record, Field<T> field, String value) {
@@ -4615,7 +4594,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return Types.VARCHAR;
         }
 
-        @SuppressWarnings({ "serial" })
         private final Converter<byte[], JSONB> bytesConverter(final Configuration configuration) {
             return new AbstractConverter<byte[], JSONB>(byte[].class, JSONB.class) {
                 @Override

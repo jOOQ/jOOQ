@@ -1033,8 +1033,6 @@ public class DefaultResultSet extends JDBC41ResultSet implements ResultSet {
         getDelegate().updateNClob(columnLabel, reader);
     }
 
-
-
     // ------------------------------------------------------------------------
     // JDBC 4.1
     // ------------------------------------------------------------------------
@@ -1072,6 +1070,4 @@ public class DefaultResultSet extends JDBC41ResultSet implements ResultSet {
     public void updateObject(String columnLabel, Object x, SQLType targetSqlType) throws SQLException {
         getDelegate().updateObject(columnLabel, x, targetSqlType);
     }
-
-
 }

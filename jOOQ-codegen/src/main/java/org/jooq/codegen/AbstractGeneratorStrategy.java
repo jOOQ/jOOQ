@@ -37,25 +37,16 @@
  */
 package org.jooq.codegen;
 
-import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
+import org.jooq.meta.*;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-import org.jooq.meta.CatalogDefinition;
-import org.jooq.meta.ColumnDefinition;
-import org.jooq.meta.ConstraintDefinition;
-import org.jooq.meta.Definition;
-import org.jooq.meta.DomainDefinition;
-import org.jooq.meta.EmbeddableDefinition;
-import org.jooq.meta.IdentityDefinition;
-import org.jooq.meta.IndexDefinition;
-import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.SequenceDefinition;
-import org.jooq.meta.TypedElementDefinition;
+import static java.util.stream.Collectors.toList;
+import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
 
 /**
  * Common base class for convenience method abstraction
@@ -235,13 +226,11 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
 
     @Override
     public final List<String> getJavaIdentifiers(Collection<? extends Definition> definitions) {
-        List<? extends Definition> nonNull = nonNull(definitions);
-        List<String> result = new ArrayList<>(nonNull.size());
-
-        for (Definition definition : nonNull)
-            result.add(getJavaIdentifier(definition));
-
-        return result;
+        return definitions
+            .stream()
+            .filter(Objects::nonNull)
+            .map(this::getJavaIdentifier)
+            .collect(toList());
     }
 
     @Override
@@ -251,28 +240,16 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
 
     @Override
     public final List<String> getFullJavaIdentifiers(Collection<? extends Definition> definitions) {
-        List<? extends Definition> nonNull = nonNull(definitions);
-        List<String> result = new ArrayList<>(nonNull.size());
-
-        for (Definition definition : nonNull)
-            result.add(getFullJavaIdentifier(definition));
-
-        return result;
+        return definitions
+            .stream()
+            .filter(Objects::nonNull)
+            .map(this::getFullJavaIdentifier)
+            .collect(toList());
     }
 
     @Override
     public final List<String> getFullJavaIdentifiers(Definition... definitions) {
         return getFullJavaIdentifiers(Arrays.asList(definitions));
-    }
-
-    private static final <T> List<T> nonNull(Collection<? extends T> collection) {
-        List<T> result = new ArrayList<>();
-
-        for (T t : collection)
-            if (t != null)
-                result.add(t);
-
-        return result;
     }
 
     /**

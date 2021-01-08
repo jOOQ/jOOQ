@@ -43,6 +43,7 @@ import static java.util.Arrays.asList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
@@ -86,7 +87,7 @@ class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> 
     }
 
     @Override
-    QueryPartListView<T> map(F.F1<? super T, ? extends T> newMapper) {
+    QueryPartListView<T> map(Function<? super T, ? extends T> newMapper) {
         return (QueryPartListView<T>) super.map(newMapper);
     }
 

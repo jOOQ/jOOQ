@@ -70,24 +70,21 @@ public class Tests {
     @Test
     public void testTransaction() {
         try {
-            service.transactional(new Runnable() {
-                @Override
-                public void run() {
+            service.transactional(() -> {
 
-                    // This should work normally
-                    Author author = service.getAuthor(1);
-                    author.setFirstName("John");
-                    author.setLastName("Smith");
-                    assertEquals(1, service.mergeNames(author));
+                // This should work normally
+                Author author = service.getAuthor(1);
+                author.setFirstName("John");
+                author.setLastName("Smith");
+                assertEquals(1, service.mergeNames(author));
 
-                    author = service.getAuthor(1);
-                    assertEquals("John", author.getFirstName());
-                    assertEquals("Smith", author.getLastName());
+                author = service.getAuthor(1);
+                assertEquals("John", author.getFirstName());
+                assertEquals("Smith", author.getLastName());
 
-                    // But this shouldn't work. Authors have books, and there is no cascade delete
-                    service.deleteAuthor(1);
-                    fail();
-                }
+                // But this shouldn't work. Authors have books, and there is no cascade delete
+                service.deleteAuthor(1);
+                fail();
             });
 
             fail();

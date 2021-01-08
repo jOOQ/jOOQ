@@ -38,16 +38,17 @@
 package org.jooq.impl;
 
 import java.util.Iterator;
+import java.util.function.Function;
 
 /**
  * @author Lukas Eder
  */
 final class MappingIterator<T, U> implements Iterator<U> {
 
-    final Iterator<? extends T>        delegate;
-    final F.F1<? super T, ? extends U> mapper;
+    final Iterator<? extends T>            delegate;
+    final Function<? super T, ? extends U> mapper;
 
-    MappingIterator(Iterator<? extends T> delegate, F.F1<? super T, ? extends U> mapper) {
+    MappingIterator(Iterator<? extends T> delegate, Function<? super T, ? extends U> mapper) {
         this.delegate = delegate;
         this.mapper = mapper;
     }

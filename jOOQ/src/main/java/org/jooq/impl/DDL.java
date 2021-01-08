@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.DDLFlag.CHECK;
 import static org.jooq.DDLFlag.COMMENT;
 import static org.jooq.DDLFlag.DOMAIN;
@@ -132,23 +133,23 @@ final class DDL {
                         : temporary
                             ? ctx.createTemporaryTable(table)
                             : ctx.createTable(table))
-                .columns(sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder()))
+                .columns(sortIf(asList(table.fields()), !configuration.respectColumnOrder()))
                 .constraints(constraints);
 
         if (temporary && onCommit != null) {
             switch (table.getOptions().onCommit()) {
                 case DELETE_ROWS:
-                    return Arrays.<Query>asList(s0.onCommitDeleteRows());
+                    return asList(s0.onCommitDeleteRows());
                 case PRESERVE_ROWS:
-                    return Arrays.<Query>asList(s0.onCommitPreserveRows());
+                    return asList(s0.onCommitPreserveRows());
                 case DROP:
-                    return Arrays.<Query>asList(s0.onCommitDrop());
+                    return asList(s0.onCommitDrop());
                 default:
                     throw new IllegalStateException("Unsupported flag: " + onCommit);
             }
         }
 
-        return Arrays.<Query>asList(s0);
+        return asList(s0);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -427,8 +428,8 @@ final class DDL {
     private final <K extends Key<?>> List<K> sortKeysIf(List<K> input, boolean sort) {
         if (sort) {
             List<K> result = new ArrayList<>(input);
-            Collections.sort(result, KEY_COMP);
-            Collections.sort(result, NAMED_COMP);
+            result.sort(KEY_COMP);
+            result.sort(NAMED_COMP);
             return result;
         }
 
@@ -438,7 +439,7 @@ final class DDL {
     private final <N extends Named> List<N> sortIf(List<N> input, boolean sort) {
         if (sort) {
             List<N> result = new ArrayList<>(input);
-            Collections.sort(result, NAMED_COMP);
+            result.sort(NAMED_COMP);
             return result;
         }
 

@@ -338,7 +338,7 @@ public class JavaGenerator extends AbstractGenerator {
     private String visibilityPublic() {
         if (scala)
             return "";
-        else if (scala || kotlin)
+        else if (kotlin)
             return "".equals(visibility()) ? visibility() : "public ";
         else
             return "public ";
@@ -524,18 +524,15 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateEmptySchemas())
             return true;
 
-        if (database.getArrays(schema).isEmpty()
-            && database.getDomains(schema).isEmpty()
-            && database.getEmbeddables(schema).isEmpty()
-            && database.getEnums(schema).isEmpty()
-            && database.getPackages(schema).isEmpty()
-            && database.getRoutines(schema).isEmpty()
-            && database.getSequences(schema).isEmpty()
-            && database.getTables(schema).isEmpty()
-            && database.getUDTs(schema).isEmpty())
-            return false;
-
-        return true;
+        return !database.getArrays(schema).isEmpty()
+               || !database.getDomains(schema).isEmpty()
+               || !database.getEmbeddables(schema).isEmpty()
+               || !database.getEnums(schema).isEmpty()
+               || !database.getPackages(schema).isEmpty()
+               || !database.getRoutines(schema).isEmpty()
+               || !database.getSequences(schema).isEmpty()
+               || !database.getTables(schema).isEmpty()
+               || !database.getUDTs(schema).isEmpty();
     }
 
     private void generate(CatalogDefinition catalog) {
@@ -1459,7 +1456,6 @@ public class JavaGenerator extends AbstractGenerator {
             ? out.ref(getStrategy().getFullJavaIdentifier(tableUdtOrEmbeddable), 2)
             : null;
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.RECORD));
-        final List<? extends TypedElementDefinition<?>> columns = getTypedElements(tableUdtOrEmbeddable);
 
         printPackage(out, tableUdtOrEmbeddable, Mode.RECORD);
 
@@ -1946,22 +1942,16 @@ public class JavaGenerator extends AbstractGenerator {
         void accept(List<Definition> result, Set<EmbeddableDefinition> duplicates, int index, EmbeddableDefinition embeddable);
     }
 
-    private static final EmbeddableFilter EMBEDDABLES_OR_COLUMNS = new EmbeddableFilter() {
-        @Override
-        public void accept(List<Definition> result, Set<EmbeddableDefinition> duplicates, int index, EmbeddableDefinition embeddable) {
-            if (duplicates.add(embeddable))
-                result.set(index, embeddable);
-            else
-                result.remove(index);
-        }
+    private static final EmbeddableFilter EMBEDDABLES_OR_COLUMNS = (result, duplicates, index, embeddable) -> {
+        if (duplicates.add(embeddable))
+            result.set(index, embeddable);
+        else
+            result.remove(index);
     };
 
-    private static final EmbeddableFilter EMBEDDABLES_AND_COLUMNS = new EmbeddableFilter() {
-        @Override
-        public void accept(List<Definition> result, Set<EmbeddableDefinition> duplicates, int index, EmbeddableDefinition embeddable) {
-            if (duplicates.add(embeddable))
-                result.add(index, embeddable);
-        }
+    private static final EmbeddableFilter EMBEDDABLES_AND_COLUMNS = (result, duplicates, index, embeddable) -> {
+        if (duplicates.add(embeddable))
+            result.add(index, embeddable);
     };
 
     /**
@@ -1975,17 +1965,14 @@ public class JavaGenerator extends AbstractGenerator {
      * Get embeddables if they replace columns and all columns that are not replaced by embeddables.
      */
     private List<Definition> embeddablesAndUnreplacedColumns(Definition tableUdtOrEmbeddable) {
-        return embeddablesAndColumns(tableUdtOrEmbeddable, new EmbeddableFilter() {
-            @Override
-            public void accept(List<Definition> result, Set<EmbeddableDefinition> duplicates, int index, EmbeddableDefinition embeddable) {
+        return embeddablesAndColumns(tableUdtOrEmbeddable, (result, duplicates, index, embeddable) -> {
 
 
 
 
 
 
-                EMBEDDABLES_AND_COLUMNS.accept(result, duplicates, index, embeddable);
-            }
+            EMBEDDABLES_AND_COLUMNS.accept(result, duplicates, index, embeddable);
         });
     }
 
@@ -1993,14 +1980,11 @@ public class JavaGenerator extends AbstractGenerator {
      * Get embeddables if they replace columns and all columns that are not replaced by embeddables.
      */
     private List<Definition> replacingEmbeddablesAndUnreplacedColumns(Definition tableUdtOrEmbeddable) {
-        return embeddablesAndColumns(tableUdtOrEmbeddable, new EmbeddableFilter() {
-            @Override
-            public void accept(List<Definition> result, Set<EmbeddableDefinition> duplicates, int index, EmbeddableDefinition embeddable) {
+        return embeddablesAndColumns(tableUdtOrEmbeddable, (result, duplicates, index, embeddable) -> {
 
 
 
 
-            }
         });
     }
 
@@ -3328,12 +3312,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.println();
             out.println("private static final %s schema() {", Schema.class);
-            out.println("return new %s(%s.name(\"%s\"), %s.comment(\"\"), new %s<%s>() {", LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, LazySupplier.class, Schema.class);
-            out.override();
-            out.println("public %s get() {", Schema.class);
-            out.println("return %s;", schemaId);
-            out.println("}");
-            out.println("});");
+            out.println("return new %s(%s.name(\"%s\"), %s.comment(\"\"), () -> %s);", LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, schemaId);
             out.println("}");
         }
 
@@ -3557,8 +3536,8 @@ public class JavaGenerator extends AbstractGenerator {
         final List<String> literals = e.getLiterals();
         final List<String> identifiers = new ArrayList<>(literals.size());
 
-        for (int i = 0; i < literals.size(); i++) {
-            String identifier = convertToIdentifier(literals.get(i), language);
+        for (String literal : literals) {
+            String identifier = convertToIdentifier(literal, language);
 
             // [#2781] Disambiguate collisions with the leading package name
             if (identifier.equals(getStrategy().getJavaPackageName(e).replaceAll("\\..*", "")))
@@ -3577,8 +3556,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("object %s {", className);
             out.println();
 
-            for (int i = 0; i < identifiers.size(); i++)
-                out.println("val %s: %s = %s.%s", identifiers.get(i), className, getStrategy().getJavaPackageName(e), identifiers.get(i));
+            for (String identifier : identifiers)
+                out.println("val %s: %s = %s.%s", identifier, className, getStrategy().getJavaPackageName(e), identifier);
 
             out.println();
             out.println("def values: %s[%s] = %s(",
@@ -4083,11 +4062,11 @@ public class JavaGenerator extends AbstractGenerator {
             tType = getJavaType(keyColumns.get(0).getType(resolver(out)), out, Mode.POJO);
         }
         else if (keyColumns.size() <= Constants.MAX_ROW_DEGREE) {
-            String generics = "";
+            StringBuilder generics = new StringBuilder();
             String separator = "";
 
             for (ColumnDefinition column : keyColumns) {
-                generics += separator + out.ref(getJavaType(column.getType(resolver(out)), out));
+                generics.append(separator).append(out.ref(getJavaType(column.getType(resolver(out)), out)));
                 separator = ", ";
             }
 
@@ -4174,24 +4153,24 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#2574] This should be replaced by a call to a method on the target table's Key type
         else {
-            String params = "";
+            StringBuilder params = new StringBuilder();
             String separator = "";
 
             for (ColumnDefinition column : keyColumns) {
                 if (scala)
-                    params += separator + "o." + getStrategy().getJavaGetterName(column, Mode.POJO);
+                    params.append(separator).append("o.").append(getStrategy().getJavaGetterName(column, Mode.POJO));
                 else if (kotlin)
-                    params += separator + "o." + getStrategy().getJavaMemberName(column, Mode.POJO);
+                    params.append(separator).append("o.").append(getStrategy().getJavaMemberName(column, Mode.POJO));
                 else
-                    params += separator + "object." + getStrategy().getJavaGetterName(column, Mode.POJO) + "()";
+                    params.append(separator).append("object.").append(getStrategy().getJavaGetterName(column, Mode.POJO)).append("()");
 
                 separator = ", ";
             }
 
             if (scala || kotlin)
-                out.println("compositeKeyRecord(%s)", params);
+                out.println("compositeKeyRecord(%s)", params.toString());
             else
-                out.println("return compositeKeyRecord(%s);", params);
+                out.println("return compositeKeyRecord(%s);", params.toString());
         }
 
         if (scala || kotlin) {}
@@ -5551,7 +5530,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
                         out.println("%s%s<%s> getIndexes() {", visibilityPublic(), List.class, Index.class);
-                        out.println("return %s.<%s>asList([[%s]]);", Arrays.class, Index.class, indexFullIds);
+                        out.println("return %s.asList([[%s]]);", Arrays.class, indexFullIds);
                         out.println("}");
                     }
                 }
@@ -5587,7 +5566,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
                         out.println("%s%s<%s> getIndexes() {", visibilityPublic(), List.class, Index.class);
-                        out.println("return %s.<%s>asList(", Arrays.class, Index.class);
+                        out.println("return %s.asList(", Arrays.class);
 
                         for (IndexDefinition index : indexes) {
                             out.print("%s", separator);
@@ -5703,7 +5682,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
                         out.println("%s%s<%s<%s>> getUniqueKeys() {", visibilityPublic(), List.class, UniqueKey.class, recordType);
-                        out.println("return %s.<%s<%s>>asList([[%s]]);", Arrays.class, UniqueKey.class, recordType, keyFullIds);
+                        out.println("return %s.asList([[%s]]);", Arrays.class, keyFullIds);
                         out.println("}");
                     }
                 }
@@ -5741,7 +5720,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.overrideInherit();
                         printNonnullAnnotation(out);
                         out.println("%s%s<%s<%s>> getUniqueKeys() {", visibilityPublic(), List.class, UniqueKey.class, recordType);
-                        out.println("return %s.<%s<%s>>asList(", Arrays.class, UniqueKey.class, recordType);
+                        out.println("return %s.asList(", Arrays.class);
 
                         for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
                             out.print("%s", separator);
@@ -5778,7 +5757,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.overrideInherit();
                     printNonnullAnnotation(out);
                     out.println("%s%s<%s<%s, ?>> getReferences() {", visibilityPublic(), List.class, ForeignKey.class, recordType);
-                    out.println("return %s.<%s<%s, ?>>asList([[%s]]);", Arrays.class, ForeignKey.class, recordType, keyFullIds);
+                    out.println("return %s.asList([[%s]]);", Arrays.class, keyFullIds);
                     out.println("}");
                 }
 
@@ -5847,7 +5826,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.overrideInherit();
                 printNonnullAnnotation(out);
                 out.println("%s%s<%s<%s>> getChecks() {", visibilityPublic(), List.class, Check.class, recordType);
-                out.println("return %s.<%s<%s>>asList(", Arrays.class, Check.class, recordType);
+                out.println("return %s.asList(", Arrays.class);
             }
 
             String separator = "  ";
@@ -6358,7 +6337,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (i > 0)
                 sb.append("\".toString() + \"");
 
-            sb.append(result.substring(i, Math.min(i + max, result.length())));
+            sb.append(result, i, Math.min(i + max, result.length()));
         }
 
         return sb.append("\".toString() + \"").toString();
@@ -6932,7 +6911,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("return result;");
                 }
                 else {
-                    out.println("return %s.<%s%s>asList(", Arrays.class, type, generic);
+                    out.println("return %s.asList(", Arrays.class);
                     out.println("[[separator=,\n][%s]]", references);
                     out.println(");");
                 }
@@ -6956,7 +6935,7 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                     else {
                         out.println("private final %s<%s%s> get%ss%s() {", List.class, type, generic, type.getSimpleName(), i / maxMembersPerInitialiser());
-                        out.println("return %s.<%s%s>asList(", Arrays.class, type, generic);
+                        out.println("return %s.asList(", Arrays.class);
                         out.println("[[separator=,\n][%s]]", references.subList(i, Math.min(i + maxMembersPerInitialiser(), references.size())));
                         out.println(");");
                         out.println("}");
@@ -8098,7 +8077,7 @@ public class JavaGenerator extends AbstractGenerator {
                     try {
 
                         // Seems more reliable than tampering with java.version
-                        Reflect.on("java.util.Optional").call("of", new Object()).call("stream");
+                        Reflect.onClass("java.util.Optional").call("of", new Object()).call("stream");
                         generated = "javax.annotation.processing.Generated";
                     }
                     catch (ReflectException e) {
@@ -8180,28 +8159,18 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String readVersion(File file, String type) {
-        String result = null;
+        try (RandomAccessFile f = new RandomAccessFile(file, "r")) {
+            byte[] bytes = new byte[(int) f.length()];
+            f.readFully(bytes);
+            String string = new String(bytes);
 
-        try {
-            RandomAccessFile f = new RandomAccessFile(file, "r");
-
-            try {
-                byte[] bytes = new byte[(int) f.length()];
-                f.readFully(bytes);
-                String string = new String(bytes);
-
-                Matcher matcher = Pattern.compile("@(?:javax\\.annotation\\.)?Generated\\(\\s*?value\\s*?=\\s*?" + (scala ? "Array\\([^)]*?" : "\\{[^}]*?") + "\"" + type + " version:([^\"]*?)\"").matcher(string);
-                if (matcher.find()) {
-                    result = matcher.group(1);
-                }
-            }
-            finally {
-                f.close();
-            }
+            Matcher matcher = Pattern.compile("@(?:javax\\.annotation\\.)?Generated\\(\\s*?value\\s*?=\\s*?" + (scala ? "Array\\([^)]*?" : "\\{[^}]*?") + "\"" + type + " version:([^\"]*?)\"").matcher(string);
+            if (matcher.find())
+                return matcher.group(1);
         }
         catch (IOException ignore) {}
 
-        return result;
+        return null;
     }
 
     protected void printPackage(JavaWriter out, Definition definition) {
@@ -8677,7 +8646,6 @@ public class JavaGenerator extends AbstractGenerator {
     private DataType<?> mapJavaTimeTypes(DataType<?> dataType) {
         DataType<?> result = dataType;
 
-
         // [#4429] [#5713] This logic should be implemented in Configuration
         if (dataType.isDateTime() && generateJavaTimeTypes) {
             if (dataType.getType() == Date.class)
@@ -8687,7 +8655,6 @@ public class JavaGenerator extends AbstractGenerator {
             else if (dataType.getType() == Timestamp.class)
                 result = SQLDataType.LOCALDATETIME;
         }
-
 
         return result;
     }

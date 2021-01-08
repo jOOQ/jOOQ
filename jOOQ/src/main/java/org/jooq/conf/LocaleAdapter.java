@@ -37,11 +37,7 @@
  */
 package org.jooq.conf;
 
-import static org.jooq.tools.StringUtils.defaultIfNull;
-
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -50,10 +46,6 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 public class LocaleAdapter extends XmlAdapter<String, Locale> {
 
-
-
-
-
     @Override
     public Locale unmarshal(String v) throws Exception {
         Locale result = null;
@@ -61,24 +53,7 @@ public class LocaleAdapter extends XmlAdapter<String, Locale> {
         if (v == null)
             return result;
 
-
         result = Locale.forLanguageTag(v);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return result;
     }
 
@@ -89,29 +64,7 @@ public class LocaleAdapter extends XmlAdapter<String, Locale> {
         if (v == null)
             return result;
 
-
         result = v.toLanguageTag();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return result;
     }
 }

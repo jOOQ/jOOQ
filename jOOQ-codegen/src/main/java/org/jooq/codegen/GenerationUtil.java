@@ -62,11 +62,11 @@ import org.jooq.util.h2.H2DataType;
  */
 class GenerationUtil {
 
-    static final Pattern       TYPE_REFERENCE_PATTERN     = Pattern.compile("^((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[.*\\])*)$");
+    static final Pattern       TYPE_REFERENCE_PATTERN     = Pattern.compile("^((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[.*])*)$");
     static final Pattern       PLAIN_GENERIC_TYPE_PATTERN = Pattern.compile("[<\\[]((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)[>\\]]");
     static final Pattern       UNDERSCORE_PATTERN         = Pattern.compile("_+");
 
-    private static Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
+    private static final Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
         "abstract",
         "assert",
         "boolean",
@@ -121,7 +121,7 @@ class GenerationUtil {
         "volatile",
         "while")));
 
-    private static Set<String> SCALA_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
+    private static final Set<String> SCALA_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
         "abstract",
         "case",
         "catch",
@@ -173,7 +173,7 @@ class GenerationUtil {
         "@"*/
     )));
 
-    private static Set<String> KOTLIN_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
+    private static final Set<String> KOTLIN_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
 
         // Hard keywords https://kotlinlang.org/docs/reference/keyword-reference.html
         "as",
@@ -256,14 +256,14 @@ class GenerationUtil {
         "vararg"
     )));
 
-    private static Set<Character> SCALA_WHITESPACE = unmodifiableSet(new HashSet<>(asList(
+    private static final Set<Character> SCALA_WHITESPACE = unmodifiableSet(new HashSet<>(asList(
         (char)0x0020,
         (char)0x0009,
         (char)0x000D,
         (char)0x000A
     )));
 
-    private static Set<Character> SCALA_PARENTHESES = unmodifiableSet(new HashSet<>(asList(
+    private static final Set<Character> SCALA_PARENTHESES = unmodifiableSet(new HashSet<>(asList(
         '(',
         ')',
         '[',
@@ -272,7 +272,7 @@ class GenerationUtil {
         '}'
     )));
 
-    private static Set<Character> SCALA_DELIMITER = unmodifiableSet(new HashSet<>(asList(
+    private static final Set<Character> SCALA_DELIMITER = unmodifiableSet(new HashSet<>(asList(
         '`',
         '\'',
         '"',
@@ -281,7 +281,7 @@ class GenerationUtil {
         ','
     )));
 
-    private static Set<String> WINDOWS_FORBIDDEN = unmodifiableSet(new HashSet<>(asList(
+    private static final Set<String> WINDOWS_FORBIDDEN = unmodifiableSet(new HashSet<>(asList(
         "CON",
         "PRN",
         "AUX",
@@ -528,23 +528,6 @@ class GenerationUtil {
         }
 
         throw new SQLDialectNotSupportedException("getArrayBaseType() is not supported for dialect " + dialect);
-    }
-
-    /**
-     * Generate a range between two bounds
-     *
-     * @param from The lower bound (inclusive)
-     * @param to The upper bound (inclusive)
-     * @return A range from <code>from</code> to <code>to</code>
-     */
-    public static Integer[] range(Integer from, Integer to) {
-        Integer[] result = new Integer[to - from + 1];
-
-        for (int i = from; i <= to; i++) {
-            result[i - from] = i;
-        }
-
-        return result;
     }
 
     static ExpressionType expressionType(String expression) {

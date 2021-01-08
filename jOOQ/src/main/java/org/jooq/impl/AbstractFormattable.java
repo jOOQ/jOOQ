@@ -245,7 +245,7 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void formatJSON(Writer writer) {
-        formatJSON(writer, (JSONFormat) null);
+        formatJSON(writer, null);
     }
 
     @Override
@@ -262,7 +262,7 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void formatXML(OutputStream stream) {
-        formatXML(stream, (XMLFormat) null);
+        formatXML(stream, null);
     }
 
     @Override
@@ -272,7 +272,7 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void formatXML(Writer writer) {
-        formatXML(writer, (XMLFormat) null);
+        formatXML(writer, null);
     }
 
     @Override
@@ -347,6 +347,6 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final <H extends ContentHandler> H intoXML(H handler) throws SAXException {
-        return intoXML(handler, (XMLFormat) null);
+        return intoXML(handler, null);
     }
 }

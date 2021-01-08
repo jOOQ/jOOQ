@@ -78,8 +78,6 @@ public interface Batch extends Serializable {
     @NotNull
     int[] execute() throws DataAccessException;
 
-
-
     /**
      * Execute the batch operation in a new {@link CompletionStage}.
      * <p>
@@ -98,8 +96,6 @@ public interface Batch extends Serializable {
      */
     @NotNull
     CompletionStage<int[]> executeAsync(Executor executor);
-
-
 
     /**
      * Get the number of executed queries in this batch operation

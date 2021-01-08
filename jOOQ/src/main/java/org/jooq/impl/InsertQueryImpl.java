@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.nCopies;
+import static java.util.Collections.singletonList;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
@@ -426,7 +427,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     //         H2 1.4.197, qualification of columns in the ON DUPLICATE KEY UPDATE clause
                     //         wasn't supported (see https://github.com/h2database/h2database/issues/1027)
                     boolean oldQualify = ctx.qualify();
-                    boolean newQualify = ctx.family() == H2 ? false : oldQualify;
+                    boolean newQualify = ctx.family() != H2 && oldQualify;
 
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
@@ -770,16 +771,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         // [#7365] PostgreSQL ON CONFLICT (conflict columns) clause
         if (onConflict != null && onConflict.size() > 0)
-            return Collections.<List<? extends Field<?>>>singletonList(onConflict);
+            return singletonList(onConflict);
 
         // [#7409] PostgreSQL ON CONFLICT ON CONSTRAINT clause
         else if (onConstraintUniqueKey != null)
-            return Collections.<List<? extends Field<?>>>singletonList(onConstraintUniqueKey.getFields());
+            return singletonList(onConstraintUniqueKey.getFields());
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         Flag for backwards compatibility considers only PRIMARY KEY
         else if (TRUE.equals(Tools.settings(configuration).isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
-            return Collections.<List<? extends Field<?>>>singletonList(table().getPrimaryKey().getFields());
+            return singletonList(table().getPrimaryKey().getFields());
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         All conflicting keys are considered

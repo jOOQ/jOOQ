@@ -77,7 +77,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The cursor's record type
  * @author Lukas Eder
  */
-public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattable , AutoCloseable {
+public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattable, AutoCloseable {
 
     /**
      * Get this cursor's row type.
@@ -320,7 +320,6 @@ public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattab
     @Nullable
     <Z extends Record> Z fetchNextInto(Table<Z> table) throws DataAccessException, MappingException;
 
-
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptional()} instead.
      */
@@ -443,8 +442,6 @@ public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattab
      */
     <X, A> X collect(Collector<? super R, A, X> collector) throws DataAccessException;
 
-
-
     /**
      * Explicitly close the underlying {@link PreparedStatement} and
      * {@link ResultSet}.
@@ -455,9 +452,7 @@ public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattab
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-
     @Override
-
     void close() throws DataAccessException;
 
     /**

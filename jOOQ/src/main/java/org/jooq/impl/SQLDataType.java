@@ -425,7 +425,6 @@ public final class SQLDataType {
      */
     public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new DefaultDataType<>(null, DayToSecond.class, "interval day to second");
 
-
     // -------------------------------------------------------------------------
     // JSR310 types
     // -------------------------------------------------------------------------
@@ -588,7 +587,6 @@ public final class SQLDataType {
     public static final DataType<Instant> INSTANT(int precision) {
         return INSTANT.precision(precision);
     }
-
 
     // -------------------------------------------------------------------------
     // Binary types
@@ -798,7 +796,6 @@ public final class SQLDataType {
     }
 
     private static final void initJSR310Types(SQLDialect family) {
-
         Configuration configuration = new DefaultConfiguration(family);
 
         // [#8561] Register JSR-310 types according to their matching JDBC
@@ -806,7 +803,6 @@ public final class SQLDataType {
         new DefaultDataType<>(family, SQLDataType.LOCALDATE, DATE.getTypeName(configuration), DATE.getCastTypeName(configuration));
         new DefaultDataType<>(family, SQLDataType.LOCALTIME, TIME.getTypeName(configuration), TIME.getCastTypeName(configuration));
         new DefaultDataType<>(family, SQLDataType.LOCALDATETIME, TIMESTAMP.getTypeName(configuration), TIMESTAMP.getCastTypeName(configuration));
-
     }
 
     /**

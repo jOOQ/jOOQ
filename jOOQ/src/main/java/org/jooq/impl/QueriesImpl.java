@@ -103,7 +103,6 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
         return (Iterator) queries.iterator();
     }
 
-
     @Override
     public final Stream<Query> stream() {
         return queryStream();
@@ -114,7 +113,6 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
     public final Stream<Query> queryStream() {
         return (Stream) queries.stream();
     }
-
 
     // ------------------------------------------------------------------------
     // Execution API

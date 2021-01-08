@@ -180,7 +180,7 @@ public class GenerationTool {
 
                 // [#3668] Also check the local file system for configuration files
                 if (in == null && new File(file).exists())
-                    in = new FileInputStream(new File(file));
+                    in = new FileInputStream(file);
 
                 if (in == null) {
                     log.error("Cannot find " + file + " on classpath, or in directory " + new File(".").getCanonicalPath());
@@ -302,12 +302,7 @@ public class GenerationTool {
         // [#9744] The <locale/> is also needed in GenerationTool:
         Locale locale = Locale.getDefault();
         if (!StringUtils.isBlank(g.getTarget().getLocale()))
-
-            if (true)
-                locale = Locale.forLanguageTag(g.getTarget().getLocale());
-            else
-
-                log.info("Locale support", "Locale support has been added for the Java 8+ distributions only");
+            locale = Locale.forLanguageTag(g.getTarget().getLocale());
 
         Database database = null;
 
@@ -870,20 +865,6 @@ public class GenerationTool {
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());
             strategy.setJavaBeansGettersAndSetters(generator.generateJavaBeansGettersAndSetters());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             generator.generate(database);
 

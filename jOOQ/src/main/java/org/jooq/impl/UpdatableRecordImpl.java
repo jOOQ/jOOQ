@@ -101,7 +101,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public Record key() {
-        AbstractRecord result = Tools.newRecord(fetched, AbstractRecord.class, Tools.row0(getPrimaryKey().getFieldsArray())).<RuntimeException>operate(null);
+        AbstractRecord result = Tools.newRecord(fetched, AbstractRecord.class, Tools.row0(getPrimaryKey().getFieldsArray())).operate(null);
         result.setValues(result.fields.fields.fields, this);
         return result;
     }
@@ -138,13 +138,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, STORE)
-        .operate(new RecordOperation<Record, RuntimeException>() {
-
-            @Override
-            public Record operate(Record record) throws RuntimeException {
-                result[0] = store0(storeFields);
-                return record;
-            }
+        .operate(record -> {
+            result[0] = store0(storeFields);
+            return record;
         });
 
         return result[0];
@@ -225,13 +221,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, UPDATE)
-        .operate(new RecordOperation<Record, RuntimeException>() {
-
-            @Override
-            public Record operate(Record record) throws RuntimeException {
-                result[0] = storeUpdate0(storeFields, keys);
-                return record;
-            }
+        .operate(record -> {
+            result[0] = storeUpdate0(storeFields, keys);
+            return record;
         });
 
         return result[0];
@@ -245,13 +237,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, MERGE)
-        .operate(new RecordOperation<Record, RuntimeException>() {
-
-            @Override
-            public Record operate(Record record) throws RuntimeException {
-                result[0] = storeMerge0(storeFields, keys);
-                return record;
-            }
+        .operate(record -> {
+            result[0] = storeMerge0(storeFields, keys);
+            return record;
         });
 
         // MySQL returns 0 when nothing was updated, 1 when something was inserted, and 2 if something was updated
@@ -364,13 +352,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, DELETE)
-        .operate(new RecordOperation<Record, RuntimeException>() {
-
-            @Override
-            public Record operate(Record record) throws RuntimeException {
-                result[0] = delete0();
-                return record;
-            }
+        .operate(record -> {
+            result[0] = delete0();
+            return record;
         });
 
         return result[0];
@@ -424,12 +408,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             final AbstractRecord source = (AbstractRecord) select.getResult().get(0);
 
             delegate(configuration(), (Record) this, REFRESH)
-                .operate(new RecordOperation<Record, RuntimeException>() {
-                    @Override
-                    public Record operate(Record record) throws RuntimeException {
-                        setValues(refreshFields, source);
-                        return record;
-                    }
+                .operate(record -> {
+                    setValues(refreshFields, source);
+                    return record;
                 });
         }
         else {
@@ -442,51 +423,35 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         refresh(refreshFields.toArray(EMPTY_FIELD));
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final R copy() {
 
         // [#3359] The "fetched" flag must be set to false to enforce INSERT statements on
         // subsequent store() calls - when Settings.updatablePrimaryKeys is set.
-        return Tools.newRecord(false, getTable(), configuration())
-                    .operate(new RecordOperation<R, RuntimeException>() {
+        return (R) Tools.newRecord(false, getTable(), configuration())
+                    .operate(copy -> {
 
-            @Override
-            public R operate(R copy) throws RuntimeException {
+                        // Copy all fields. This marks them all as isChanged, which is important
+                        List<TableField<R, ?>> key = getPrimaryKey().getFields();
+                        for (Field<?> field : fields.fields.fields)
 
-                // Copy all fields. This marks them all as isChanged, which is important
-                List<TableField<R, ?>> key = getPrimaryKey().getFields();
-                for (Field<?> field : fields.fields.fields)
+                            // Don't copy key values
+                            if (!key.contains(field))
+                                copy.set((Field) field, get(field));
 
-                    // Don't copy key values
-                    if (!key.contains(field))
-                        setValue(copy, field);
-
-                return copy;
-            }
-
-            /**
-             * Extracted method to ensure generic type safety.
-             */
-            private final <T> void setValue(Record record, Field<T> field) {
-                record.set(field, get(field));
-            }
-        });
+                        return (R) copy;
+                    });
     }
 
     private final boolean isExecuteWithOptimisticLocking() {
         Configuration configuration = configuration();
-
-        return configuration != null
-            ? TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking())
-            : false;
+        return configuration != null && TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking());
     }
 
     private final boolean isExecuteWithOptimisticLockingIncludeUnversioned() {
         Configuration configuration = configuration();
-
-        return configuration != null
-            ? !TRUE.equals(configuration.settings().isExecuteWithOptimisticLockingExcludeUnversioned())
-            : true;
+        return configuration == null || !TRUE.equals(configuration.settings().isExecuteWithOptimisticLockingExcludeUnversioned());
     }
 
     private final void addConditionForVersionAndTimestamp(org.jooq.ConditionProvider query) {

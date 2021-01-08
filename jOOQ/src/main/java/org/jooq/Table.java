@@ -461,7 +461,6 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     @Support
     Table<R> as(String alias, String... fieldAliases);
 
-
     /**
      * Create an alias for this table and its fields.
      * <p>
@@ -511,7 +510,6 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     @NotNull
     @Support
     Table<R> as(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
-
 
     /**
      * Create an alias for this table.
@@ -590,7 +588,6 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     @Support
     Table<R> as(Name alias, Name... fieldAliases);
 
-
     /**
      * Create an alias for this table and its fields.
      * <p>
@@ -641,7 +638,6 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     @Support
     Table<R> as(Name alias, BiFunction<? super Field<?>, ? super Integer, ? extends Name> aliasFunction);
 
-
     /**
      * Create an alias for this table based on another table's name.
      *
@@ -663,7 +659,6 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     @NotNull
     @Support
     Table<R> as(Table<?> otherTable, Field<?>... otherFields);
-
 
     /**
      * Create an alias for this table and its fields.
@@ -714,7 +709,6 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     @NotNull
     @Support
     Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction);
-
 
     // -------------------------------------------------------------------------
     // XXX: WHERE clauses on tables

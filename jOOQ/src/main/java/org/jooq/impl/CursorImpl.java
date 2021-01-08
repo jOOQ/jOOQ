@@ -67,6 +67,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.ExecuteContext;
@@ -94,7 +95,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
     private final boolean                                  keepStatement;
     private final boolean                                  autoclosing;
     private final int                                      maxRows;
-    private final F.F0<? extends R>                        factory;
+    private final Supplier<? extends R>                    factory;
     private boolean                                        isClosed;
 
     private transient CursorResultSet                      rs;
@@ -765,8 +766,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             return ctx.resultSet().getURL(columnLabel);
         }
 
-
-
         // ---------------------------------------------------------------------
         // XXX: JDBC 4.1 methods
         // ---------------------------------------------------------------------
@@ -780,8 +779,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         public final <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
             return ctx.resultSet().getObject(columnLabel, type);
         }
-
-
 
         // ---------------------------------------------------------------------
         // XXX: Data modification
@@ -1331,8 +1328,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             ctx.resultSet().updateTimestamp(columnLabel, x);
         }
 
-
-
         // ------------------------------------------------------------------------
         // JDBC 4.2
         // ------------------------------------------------------------------------
@@ -1360,8 +1355,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateObject(columnLabel, x, targetSqlType);
         }
-
-
     }
 
     /**
@@ -1391,7 +1384,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         private final CursorRecordInitialiser        initialiser    = new CursorRecordInitialiser(fields, 0);
 
         @SuppressWarnings("unchecked")
-        private final RecordDelegate<AbstractRecord> recordDelegate = Tools.newRecord(true, (F.F0<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration());
+        private final RecordDelegate<AbstractRecord> recordDelegate = Tools.newRecord(true, (Supplier<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration());
 
         @Override
         public final boolean hasNext() {

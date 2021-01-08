@@ -49,14 +49,12 @@ import static org.jooq.meta.cubrid.dba.Tables.DB_SERIAL;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigInteger;
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Condition;
-import org.jooq.ConnectionRunnable;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record3;
@@ -130,42 +128,39 @@ public class CUBRIDDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(final DefaultRelations relations) throws SQLException {
-        create().connection(new ConnectionRunnable() {
-            @Override
-            public void run(Connection connection) throws SQLException {
-                DatabaseMetaData meta = connection.getMetaData();
+        create().connection(connection -> {
+            DatabaseMetaData meta = connection.getMetaData();
 
-                for (String table : create()
-                        .selectDistinct(DB_INDEX.CLASS_NAME)
-                        .from(DB_INDEX)
-                        .where(DB_INDEX.IS_FOREIGN_KEY.isTrue())
-                        .fetch(DB_INDEX.CLASS_NAME)) {
+            for (String table : create()
+                    .selectDistinct(DB_INDEX.CLASS_NAME)
+                    .from(DB_INDEX)
+                    .where(DB_INDEX.IS_FOREIGN_KEY.isTrue())
+                    .fetch(DB_INDEX.CLASS_NAME)) {
 
-                    for (Record record : create().fetch(meta.getImportedKeys(null, null, table))) {
-                        String foreignKeyName =
-                            record.get("FKTABLE_NAME", String.class) +
-                            "__" +
-                            record.get("FK_NAME", String.class);
-                        String foreignKeyTableName = record.get("FKTABLE_NAME", String.class);
-                        String foreignKeyColumnName = record.get("FKCOLUMN_NAME", String.class);
-                        String uniqueKeyName =
-                            record.get("PKTABLE_NAME", String.class) +
-                            "__" +
-                            record.get("PK_NAME", String.class);
-                        String uniqueKeyTableName = record.get("PKTABLE_NAME", String.class);
+                for (Record record : create().fetch(meta.getImportedKeys(null, null, table))) {
+                    String foreignKeyName =
+                        record.get("FKTABLE_NAME", String.class) +
+                        "__" +
+                        record.get("FK_NAME", String.class);
+                    String foreignKeyTableName = record.get("FKTABLE_NAME", String.class);
+                    String foreignKeyColumnName = record.get("FKCOLUMN_NAME", String.class);
+                    String uniqueKeyName =
+                        record.get("PKTABLE_NAME", String.class) +
+                        "__" +
+                        record.get("PK_NAME", String.class);
+                    String uniqueKeyTableName = record.get("PKTABLE_NAME", String.class);
 
-                        TableDefinition foreignKeyTable = getTable(getSchemata().get(0), foreignKeyTableName);
-                        TableDefinition uniqueKeyTable = getTable(getSchemata().get(0), uniqueKeyTableName);
+                    TableDefinition foreignKeyTable = getTable(getSchemata().get(0), foreignKeyTableName);
+                    TableDefinition uniqueKeyTable = getTable(getSchemata().get(0), uniqueKeyTableName);
 
-                        if (foreignKeyTable != null && uniqueKeyTable != null)
-                            relations.addForeignKey(
-                                foreignKeyName,
-                                foreignKeyTable,
-                                foreignKeyTable.getColumn(foreignKeyColumnName),
-                                uniqueKeyName,
-                                uniqueKeyTable
-                            );
-                    }
+                    if (foreignKeyTable != null && uniqueKeyTable != null)
+                        relations.addForeignKey(
+                            foreignKeyName,
+                            foreignKeyTable,
+                            foreignKeyTable.getColumn(foreignKeyColumnName),
+                            uniqueKeyName,
+                            uniqueKeyTable
+                        );
                 }
             }
         });

@@ -46,6 +46,8 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
@@ -60,12 +62,12 @@ import org.jooq.Statement;
  */
 class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements Collection<T> {
 
-    private static final long    serialVersionUID = -2936922742534009564L;
-    final Collection<T>          wrapped;
-    int                          indentSize;
-    Boolean                      qualify;
-    String                       separator;
-    F.F1<? super T, ? extends T> mapper;
+    private static final long        serialVersionUID = -2936922742534009564L;
+    final Collection<T>              wrapped;
+    int                              indentSize;
+    Boolean                          qualify;
+    String                           separator;
+    Function<? super T, ? extends T> mapper;
 
     static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
         return new QueryPartCollectionView<>(wrapped);
@@ -90,7 +92,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         return this;
     }
 
-    QueryPartCollectionView<T> map(F.F1<? super T, ? extends T> newMapper) {
+    QueryPartCollectionView<T> map(Function<? super T, ? extends T> newMapper) {
         this.mapper = newMapper;
         return this;
     }
@@ -270,17 +272,11 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
         if (containsNulls) {
             List<T> list = new ArrayList<>(c);
-            Iterator<T> it = list.iterator();
-
-            while (it.hasNext())
-                if (it.next() == null)
-                    it.remove();
-
+            list.removeIf(Objects::isNull);
             return list;
         }
-        else {
+        else
             return c;
-        }
     }
 
     @Override

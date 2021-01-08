@@ -102,8 +102,6 @@ final class DiagnosticsStatement extends DefaultCallableStatement {
         return super.execute(connection.parse(sql), columnNames);
     }
 
-
-
     @Override
     public final long executeLargeUpdate(String sql) throws SQLException {
         return super.executeLargeUpdate(connection.parse(sql));
@@ -123,8 +121,6 @@ final class DiagnosticsStatement extends DefaultCallableStatement {
     public final long executeLargeUpdate(String sql, String[] columnNames) throws SQLException {
         return super.executeLargeUpdate(connection.parse(sql), columnNames);
     }
-
-
 
     @Override
     public final void addBatch(String sql) throws SQLException {

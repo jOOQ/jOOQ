@@ -76,7 +76,6 @@ public interface Queries extends QueryPart, Attachable, Iterable<Query> {
     @NotNull
     Block block();
 
-
     /**
      * The wrapped collection of queries.
      *
@@ -91,7 +90,6 @@ public interface Queries extends QueryPart, Attachable, Iterable<Query> {
      */
     @NotNull
     Stream<Query> queryStream();
-
 
     // ------------------------------------------------------------------------
     // Execution API

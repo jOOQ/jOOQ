@@ -79,8 +79,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
     CaseWhenStepImpl(Field<V> value, Map<? extends Field<V>, ? extends Field<T>> map) {
         this(value, dataType(map));
 
-        for (Entry<? extends Field<V>, ? extends Field<T>> entry : map.entrySet())
-            when(entry.getKey(), entry.getValue());
+        mapFields(map);
     }
 
     private CaseWhenStepImpl(Field<V> value, DataType<T> type) {
@@ -147,17 +146,13 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
 
     @Override
     public final CaseWhenStep<V, T> mapValues(Map<V, T> values) {
-        for (Entry<V, T> entry : values.entrySet())
-            when(entry.getKey(), entry.getValue());
-
+        values.forEach((k, v) -> when(k, v));
         return this;
     }
 
     @Override
     public final CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
-        for (Entry<? extends Field<V>, ? extends Field<T>> entry : fields.entrySet())
-            when(entry.getKey(), entry.getValue());
-
+        fields.forEach((k, v) -> when(k, v));
         return this;
     }
 

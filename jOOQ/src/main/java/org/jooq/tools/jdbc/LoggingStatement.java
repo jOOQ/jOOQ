@@ -134,8 +134,6 @@ public class LoggingStatement extends DefaultStatement {
         super.addBatch(sql);
     }
 
-
-
     @Override
     public long executeLargeUpdate(String sql) throws SQLException {
         if (log.isDebugEnabled())
@@ -167,6 +165,4 @@ public class LoggingStatement extends DefaultStatement {
 
         return super.executeLargeUpdate(sql, columnNames);
     }
-
-
 }

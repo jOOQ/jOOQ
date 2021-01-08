@@ -38,6 +38,8 @@
 
 package org.jooq.meta;
 
+import static java.util.Arrays.asList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,9 +82,9 @@ public class SchemaDefinition extends AbstractDefinition {
     @Override
     public final List<Definition> getDefinitionPath() {
         if (StringUtils.isEmpty(catalog.getName()))
-            return Arrays.<Definition>asList(this);
+            return asList(this);
         else
-            return Arrays.<Definition>asList(catalog, this);
+            return asList(catalog, this);
     }
 
     public boolean isDefaultSchema() {

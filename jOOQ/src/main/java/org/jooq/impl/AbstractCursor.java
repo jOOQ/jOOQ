@@ -67,7 +67,6 @@ abstract class AbstractCursor<R extends Record> extends AbstractResult<R> implem
         super(configuration, row);
     }
 
-
     @Override
     public final Stream<R> stream() {
         return StreamSupport.stream(
@@ -83,7 +82,6 @@ abstract class AbstractCursor<R extends Record> extends AbstractResult<R> implem
     public final <X, A> X collect(Collector<? super R, A, X> collector) {
         return stream().collect(collector);
     }
-
 
     @Override
     public final boolean hasNext() {
@@ -135,8 +133,6 @@ abstract class AbstractCursor<R extends Record> extends AbstractResult<R> implem
         return null;
     }
 
-
-
     @Override
     @Deprecated
     public final Optional<R> fetchOptional() {
@@ -180,8 +176,6 @@ abstract class AbstractCursor<R extends Record> extends AbstractResult<R> implem
     public final <Z extends Record> Optional<Z> fetchNextOptionalInto(Table<Z> table) {
         return Optional.ofNullable(fetchNextInto(table));
     }
-
-
 
     @Override
     public final Result<R> fetch(int number) {

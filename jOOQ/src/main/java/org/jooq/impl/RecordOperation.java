@@ -46,6 +46,7 @@ import org.jooq.RecordListener;
  *
  * @author Lukas Eder
  */
+@FunctionalInterface
 interface RecordOperation<R extends Record, E extends Exception> {
 
     /**

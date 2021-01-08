@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Collections.emptyList;
 import static org.jooq.Clause.MERGE;
 import static org.jooq.Clause.MERGE_MERGE_INTO;
 import static org.jooq.Clause.MERGE_ON;
@@ -265,9 +266,9 @@ implements
 
     // Flags to keep track of DSL object creation state
     private boolean                      matchedClause;
-    private List<MatchedClause>          matched;
+    private final List<MatchedClause>    matched;
     private boolean                      notMatchedClause;
-    private List<NotMatchedClause>       notMatched;
+    private final List<NotMatchedClause> notMatched;
 
     // Objects for the UPSERT syntax (including H2 MERGE, HANA UPSERT, etc.)
     private boolean                      upsertStyle;
@@ -1016,7 +1017,7 @@ implements
         if (value == null)
             return set(field, (T) null);
         else
-            return set(field, value.<T>asField());
+            return set(field, value.asField());
     }
 
     @Override
@@ -1038,7 +1039,7 @@ implements
 
     @Override
     public final MergeImpl whenNotMatchedThenInsert() {
-        return whenNotMatchedThenInsert(Collections.<Field<?>>emptyList());
+        return whenNotMatchedThenInsert(emptyList());
     }
 
 

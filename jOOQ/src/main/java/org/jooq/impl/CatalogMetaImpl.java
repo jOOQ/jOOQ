@@ -44,6 +44,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
@@ -80,20 +81,15 @@ final class CatalogMetaImpl extends AbstractMeta {
         return filterCatalogs0(configuration, catalogs.toArray(EMPTY_CATALOG), catalogs);
     }
 
-    private static final Meta filterCatalogs0(Configuration configuration, Catalog[] array, final Set<Catalog> set) {
-        return new CatalogMetaImpl(configuration, array).filterCatalogs(new Predicate<Catalog>() {
-            @Override
-            public boolean test(Catalog catalog) {
-                return set.contains(catalog);
-            }
-        });
+    private static final Meta filterCatalogs0(Configuration configuration, Catalog[] array, Set<Catalog> set) {
+        return new CatalogMetaImpl(configuration, array).filterCatalogs(set::contains);
     }
 
     static final Meta filterSchemas(Configuration configuration, Schema[] schemas) {
         return filterSchemas(configuration, new HashSet<>(Arrays.asList(schemas)));
     }
 
-    static final Meta filterSchemas(Configuration configuration, final Set<Schema> schemas) {
+    static final Meta filterSchemas(Configuration configuration, Set<Schema> schemas) {
 
         // TODO: Some schemas may belong to another catalog
         Catalog defaultCatalog = new CatalogImpl("") {
@@ -107,25 +103,20 @@ final class CatalogMetaImpl extends AbstractMeta {
         for (Schema schema : schemas)
             c.add(schema.getCatalog() != null ? schema.getCatalog() : defaultCatalog);
 
-        return filterCatalogs(configuration, c).filterSchemas(new Predicate<Schema>() {
-            @Override
-            public boolean test(Schema schema) {
-                return schemas.contains(schema);
-            }
-        });
+        return filterCatalogs(configuration, c).filterSchemas(schemas::contains);
     }
 
     static final Meta filterTables(Configuration configuration, Table<?>[] tables) {
         return filterTables(configuration, new HashSet<>(Arrays.asList(tables)));
     }
 
-    static final Meta filterTables(Configuration configuration, final Set<Table<?>> tables) {
+    static final Meta filterTables(Configuration configuration, Set<Table<?>> tables) {
 
         // TODO: Some tables may belong to another schema
         Schema defaultSchema = new SchemaImpl("") {
             @Override
             public List<Table<?>> getTables() {
-                return new ArrayList<Table<?>>(tables);
+                return new ArrayList<>(tables);
             }
         };
 
@@ -134,23 +125,13 @@ final class CatalogMetaImpl extends AbstractMeta {
             s.add(table.getSchema() != null ? table.getSchema() : defaultSchema);
 
         return filterSchemas(configuration, s)
-              .filterTables(new Predicate<Table<?>>() {
-                  @Override
-                  public boolean test(Table<?> table) {
-                      return tables.contains(table);
-                  }
-              })
+              .filterTables(tables::contains)
               .filterSequences(none())
               .filterDomains(none())
               ;
     }
 
     static final <Q extends QueryPart> Predicate<Q> none() {
-        return new Predicate<Q>() {
-            @Override
-            public boolean test(Q t) {
-                return false;
-            }
-        };
+        return t -> false;
     }
 }

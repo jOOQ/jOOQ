@@ -110,12 +110,8 @@ public final class LazyCatalog extends AbstractNamed implements Catalog {
         return catalog().getSchema(name);
     }
 
-
-
     @Override
     public final Stream<Schema> schemaStream() {
         return catalog().schemaStream();
     }
-
-
 }

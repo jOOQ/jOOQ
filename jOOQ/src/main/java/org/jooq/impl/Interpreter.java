@@ -693,33 +693,28 @@ final class Interpreter {
             throw unsupportedQuery(query);
     }
 
-    private final Iterable<Field<?>> assertFields(final Query query, final Iterable<FieldOrConstraint> fields) {
-        return new Iterable<Field<?>>() {
+    private final Iterable<Field<?>> assertFields(Query query, Iterable<FieldOrConstraint> fields) {
+        return () -> new Iterator<Field<?>>() {
+            Iterator<FieldOrConstraint> it = fields.iterator();
+
             @Override
-            public Iterator<Field<?>> iterator() {
-                return new Iterator<Field<?>>() {
-                    Iterator<FieldOrConstraint> it = fields.iterator();
+            public boolean hasNext() {
+                return it.hasNext();
+            }
 
-                    @Override
-                    public boolean hasNext() {
-                        return it.hasNext();
-                    }
+            @Override
+            public Field<?> next() {
+                FieldOrConstraint next = it.next();
 
-                    @Override
-                    public Field<?> next() {
-                        FieldOrConstraint next = it.next();
+                if (next instanceof Field)
+                    return (Field<?>) next;
+                else
+                    throw unsupportedQuery(query);
+            }
 
-                        if (next instanceof Field)
-                            return (Field<?>) next;
-                        else
-                            throw unsupportedQuery(query);
-                    }
-
-                    @Override
-                    public void remove() {
-                        it.remove();
-                    }
-                };
+            @Override
+            public void remove() {
+                it.remove();
             }
         };
     }
@@ -1521,13 +1516,7 @@ final class Interpreter {
         }
 
         final InterpretedCatalog interpretedCatalog() {
-            Name qualifiedName = qualifiedName();
-            InterpretedCatalog result = interpretedCatalogs.get(qualifiedName);
-
-            if (result == null)
-                interpretedCatalogs.put(qualifiedName, result = new InterpretedCatalog());
-
-            return result;
+            return interpretedCatalogs.computeIfAbsent(qualifiedName(), n -> new InterpretedCatalog());
         }
 
         private final class InterpretedCatalog extends CatalogImpl {
@@ -1579,13 +1568,7 @@ final class Interpreter {
         }
 
         final InterpretedSchema interpretedSchema() {
-            Name qualifiedName = qualifiedName();
-            InterpretedSchema result = interpretedSchemas.get(qualifiedName);
-
-            if (result == null)
-                interpretedSchemas.put(qualifiedName, result = new InterpretedSchema(catalog.interpretedCatalog()));
-
-            return result;
+            return interpretedSchemas.computeIfAbsent(qualifiedName(), n -> new InterpretedSchema(catalog.interpretedCatalog()));
         }
 
         final boolean isEmpty() {
@@ -1677,13 +1660,7 @@ final class Interpreter {
         }
 
         final InterpretedTable interpretedTable() {
-            Name qualifiedName = qualifiedName();
-            InterpretedTable result = interpretedTables.get(qualifiedName);
-
-            if (result == null)
-                interpretedTables.put(qualifiedName, result = new InterpretedTable(schema.interpretedSchema()));
-
-            return result;
+            return interpretedTables.computeIfAbsent(qualifiedName(), n -> new InterpretedTable(schema.interpretedSchema()));
         }
 
         boolean hasReferencingKeys() {
@@ -1861,13 +1838,7 @@ final class Interpreter {
 
 
         final InterpretedDomain interpretedDomain() {
-            Name qualifiedName = qualifiedName();
-            InterpretedDomain result = interpretedDomains.get(qualifiedName);
-
-            if (result == null)
-                interpretedDomains.put(qualifiedName, result = new InterpretedDomain(schema.interpretedSchema()));
-
-            return result;
+            return interpretedDomains.computeIfAbsent(qualifiedName(), n -> new InterpretedDomain(schema.interpretedSchema()));
         }
 
         final Check<?>[] interpretedChecks() {
@@ -1913,13 +1884,7 @@ final class Interpreter {
         }
 
         final InterpretedSequence interpretedSequence() {
-            Name qualifiedName = qualifiedName();
-            InterpretedSequence result = interpretedSequences.get(qualifiedName);
-
-            if (result == null)
-                interpretedSequences.put(qualifiedName, result = new InterpretedSequence(schema.interpretedSchema()));
-
-            return result;
+            return interpretedSequences.computeIfAbsent(qualifiedName(), n -> new InterpretedSequence(schema.interpretedSchema()));
         }
 
         private final class InterpretedSequence extends SequenceImpl<Long> {

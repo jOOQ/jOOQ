@@ -117,8 +117,7 @@ final class InformationSchemaExport {
             if (s.getCatalog() != null)
                 includedCatalogs.add(s.getCatalog());
 
-            for (Table<?> t : s.getTables())
-                includedTables.add(t);
+            includedTables.addAll(s.getTables());
         }
 
         for (Catalog c : includedCatalogs)
@@ -147,8 +146,7 @@ final class InformationSchemaExport {
 
         for (Catalog c : catalogs)
             for (Schema s : c.getSchemas())
-                for (Table<?> t : s.getTables())
-                    includedTables.add(t);
+                includedTables.addAll(s.getTables());
 
         for (Catalog c : catalogs) {
             exportCatalog0(result, c);

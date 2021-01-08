@@ -87,13 +87,11 @@ public interface Schema extends Named {
     @Nullable
     Catalog getCatalog();
 
-
     /**
      * Stream all tables contained in this schema.
      */
     @NotNull
     Stream<Table<?>> tableStream();
-
 
     /**
      * List all tables contained in this schema.
@@ -115,13 +113,11 @@ public interface Schema extends Named {
     @Nullable
     Table<?> getTable(Name name);
 
-
     /**
      * Stream all primary keys contained in this schema.
      */
     @NotNull
     Stream<UniqueKey<?>> primaryKeyStream();
-
 
     /**
      * List all primary keys contained in this schema.
@@ -141,13 +137,11 @@ public interface Schema extends Named {
     @NotNull
     List<UniqueKey<?>> getPrimaryKeys(Name name);
 
-
     /**
      * Stream all unique keys (including primary keys) contained in this schema.
      */
     @NotNull
     Stream<UniqueKey<?>> uniqueKeyStream();
-
 
     /**
      * List all unique keys (including primary keys) contained in this schema.
@@ -169,13 +163,11 @@ public interface Schema extends Named {
     @NotNull
     List<UniqueKey<?>> getUniqueKeys(Name name);
 
-
     /**
      * Stream all foreign keys contained in this schema.
      */
     @NotNull
     Stream<ForeignKey<?, ?>> foreignKeyStream();
-
 
     /**
      * List all foreign keys contained in this schema.
@@ -195,13 +187,11 @@ public interface Schema extends Named {
     @NotNull
     List<ForeignKey<?, ?>> getForeignKeys(Name name);
 
-
     /**
      * Stream all indexes contained in this schema.
      */
     @NotNull
     Stream<Index> indexStream();
-
 
     /**
      * List all indexes contained in this schema.
@@ -221,13 +211,11 @@ public interface Schema extends Named {
     @NotNull
     List<Index> getIndexes(Name name);
 
-
     /**
      * Stream all UDTs contained in this schema.
      */
     @NotNull
     Stream<UDT<?>> udtStream();
-
 
     /**
      * List all UDTs contained in this schema.
@@ -249,13 +237,11 @@ public interface Schema extends Named {
     @Nullable
     UDT<?> getUDT(Name name);
 
-
     /**
      * Stream all domains contained in this schema.
      */
     @NotNull
     Stream<Domain<?>> domainStream();
-
 
     /**
      * List all domains contained in this schema.
@@ -277,13 +263,11 @@ public interface Schema extends Named {
     @Nullable
     Domain<?> getDomain(Name name);
 
-
     /**
      * Stream all sequences contained in this schema.
      */
     @NotNull
     Stream<Sequence<?>> sequenceStream();
-
 
     /**
      * List all sequences contained in this schema.

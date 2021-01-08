@@ -94,11 +94,9 @@ abstract class AbstractResourceManagingScope extends AbstractScope implements Re
         return closeable;
     }
 
-
     @Override
     public final <R extends AutoCloseable> R autoClose(R closeable) {
         DefaultExecuteContext.register(closeable);
         return closeable;
     }
-
 }

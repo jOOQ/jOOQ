@@ -563,8 +563,6 @@ public interface DSLContext extends Scope {
      */
     void transaction(ContextTransactionalRunnable transactional) throws ConfigurationException;
 
-
-
     /**
      * Run a {@link TransactionalCallable} asynchronously.
      * <p>
@@ -636,8 +634,6 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) throws ConfigurationException;
-
-
 
     /**
      * Run a {@link ConnectionCallable} in the context of this
@@ -1290,8 +1286,6 @@ public interface DSLContext extends Scope {
     @PlainSQL
     Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
 
-
-
     /**
      * Fetch results in a new {@link CompletionStage}.
      * <p>
@@ -1704,7 +1698,6 @@ public interface DSLContext extends Scope {
     @PlainSQL
     Stream<Record> fetchStream(String sql, QueryPart... parts) throws DataAccessException;
 
-
     /**
      * Execute a new query holding plain SQL, possibly returning several result
      * sets.
@@ -2069,7 +2062,6 @@ public interface DSLContext extends Scope {
     @PlainSQL
     Record fetchSingle(String sql, QueryPart... parts) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
-
     /**
      * Execute a new query holding plain SQL.
      * <p>
@@ -2193,7 +2185,6 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     Optional<Record> fetchOptional(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
-
 
     /**
      * Execute a new query holding plain SQL.
@@ -2327,7 +2318,6 @@ public interface DSLContext extends Scope {
     @PlainSQL
     Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
-
     /**
      * Execute a new query holding plain SQL.
      * <p>
@@ -2459,7 +2449,6 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     Optional<?> fetchOptionalValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
-
 
     /**
      * Execute a new query holding plain SQL.
@@ -3098,7 +3087,6 @@ public interface DSLContext extends Scope {
     @Support
     Record fetchSingle(ResultSet rs, Class<?>... types) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
-
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
      * {@link Record}.
@@ -3175,7 +3163,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     Optional<Record> fetchOptional(ResultSet rs, Class<?>... types) throws DataAccessException, TooManyRowsException;
-
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
@@ -3261,7 +3248,6 @@ public interface DSLContext extends Scope {
     @Support
     <T> T fetchValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
-
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
      * contained value.
@@ -3345,7 +3331,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     <T> Optional<T> fetchOptionalValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
-
 
     /**
      * Fetch a result from a JDBC {@link ResultSet} and return the only
@@ -3482,8 +3467,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException;
-
-
 
     /**
      * Fetch results in a new {@link CompletionStage}.
@@ -3684,7 +3667,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     Stream<Record> fetchStream(ResultSet rs, Class<?>... types) throws DataAccessException;
-
 
     /**
      * Fetch all data from a formatted string.
@@ -4151,7 +4133,6 @@ public interface DSLContext extends Scope {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(Name alias, Collection<? extends Name> fieldAliases);
 
-
     /**
      * Create a <code>WITH</code> clause to supply subsequent
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
@@ -4205,7 +4186,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
-
 
 
 
@@ -5111,7 +5091,6 @@ public interface DSLContext extends Scope {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(Name alias, Collection<? extends Name> fieldAliases);
 
-
     /**
      * Create a <code>WITH</code> clause to supply subsequent
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
@@ -5167,7 +5146,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
-
 
 
 
@@ -10185,7 +10163,6 @@ public interface DSLContext extends Scope {
     @Support
     CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
 
-
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      * <p>
@@ -10300,7 +10277,6 @@ public interface DSLContext extends Scope {
     @Support
     CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
-
     /**
      * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
      *
@@ -10327,7 +10303,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
-
 
     /**
      * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
@@ -10443,7 +10418,6 @@ public interface DSLContext extends Scope {
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
-
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      *
@@ -10470,7 +10444,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields);
-
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
@@ -10585,7 +10558,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
-
 
     /**
      * Create a new DSL <code>CREATE TYPE</code> statement.
@@ -12193,8 +12165,6 @@ public interface DSLContext extends Scope {
     @Support
     <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
 
-
-
     /**
      * Fetch results in a new {@link CompletionStage}.
      * <p>
@@ -12236,7 +12206,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) throws DataAccessException;
-
 
     /**
      * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
@@ -12280,7 +12249,6 @@ public interface DSLContext extends Scope {
     @Support
     <R extends Record> R fetchSingle(ResultQuery<R> query) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
-
     /**
      * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * a record.
@@ -12294,7 +12262,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
-
 
     /**
      * Fetch a single value from a single column table.
@@ -12346,7 +12313,6 @@ public interface DSLContext extends Scope {
     @Support
     <T> T fetchValue(Field<T> field) throws DataAccessException;
 
-
     /**
      * Execute a {@link ResultQuery} in the context of this
      * <code>DSLContext</code> and return a single value.
@@ -12376,7 +12342,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     <T> Optional<T> fetchOptionalValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
-
 
     /**
      * Fetch all values from a single column table.
@@ -13249,7 +13214,6 @@ public interface DSLContext extends Scope {
 
 
 
-
     /**
      * Execute and return zero or one record for
      * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
@@ -13319,7 +13283,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     <R extends Record> Optional<R> fetchOptional(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException, TooManyRowsException;
-
 
     /**
      * Execute and return zero or one record for
@@ -13452,8 +13415,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
-
-
 
     /**
      * Execute and return all records asynchronously for
@@ -13648,7 +13609,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     <R extends Record> Stream<R> fetchStream(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
-
 
     /**
      * Insert one record.

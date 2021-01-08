@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.JoinType.JOIN;
@@ -335,6 +337,7 @@ import static org.jooq.impl.ParserContext.Type.Y;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
@@ -366,6 +369,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -5487,8 +5491,9 @@ final class ParserContext {
                     }
                     else {
                         List<Field<?>> fields = null;
-                        if (parseIf(')'))
-                            fields = Collections.<Field<?>> emptyList();
+                        if (parseIf(')')) {
+                            fields = emptyList();
+                        }
                         else {
                             fields = new ArrayList<>();
                             do {
@@ -5512,8 +5517,9 @@ final class ParserContext {
                     }
                     else {
                         List<Field<?>> fields = null;
-                        if (parseIf(')'))
-                            fields = Collections.<Field<?>> emptyList();
+                        if (parseIf(')')) {
+                            fields = emptyList();
+                        }
                         else {
                             fields = new ArrayList<>();
                             do {
@@ -5777,12 +5783,6 @@ final class ParserContext {
             && !peekKeyword("FOR UPDATE")
             && !peekKeyword("FOR XML")
             && parseKeyword("FOR") && requireProEdition()) {
-
-
-
-
-
-
 
 
 
@@ -6215,7 +6215,7 @@ final class ParserContext {
         parse('(');
 
         if (parseIf(')')) {
-            return Collections.emptyList();
+            return emptyList();
         }
         else {
             List<Field<?>> result = parseFields();
@@ -7904,7 +7904,7 @@ final class ParserContext {
 
             List<Field<?>> fields;
             if (parseIf(']')) {
-                fields = Collections.<Field<?>>emptyList();
+                fields = emptyList();
             }
             else {
                 fields = parseFields();
@@ -10603,34 +10603,24 @@ final class ParserContext {
             case 'T':
                 if (parseKeywordOrIdentifierIf("TEXT"))
                     return parseDataTypeCollation(parseAndIgnoreDataTypeLength(SQLDataType.CLOB));
-
                 else if (parseKeywordOrIdentifierIf("TIMESTAMPTZ"))
                     return parseDataTypePrecisionIf(SQLDataType.TIMESTAMPWITHTIMEZONE);
-
                 else if (parseKeywordOrIdentifierIf("TIMESTAMP")) {
                     Integer precision = parseDataTypePrecisionIf();
 
-
                     if (parseKeywordOrIdentifierIf("WITH TIME ZONE"))
                         return precision == null ? SQLDataType.TIMESTAMPWITHTIMEZONE : SQLDataType.TIMESTAMPWITHTIMEZONE(precision);
-                    else
-
-                    if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
+                    else if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
                         return precision == null ? SQLDataType.TIMESTAMP : SQLDataType.TIMESTAMP(precision);
                 }
-
                 else if (parseKeywordOrIdentifierIf("TIMETZ"))
                     return parseDataTypePrecisionIf(SQLDataType.TIMEWITHTIMEZONE);
-
                 else if (parseKeywordOrIdentifierIf("TIME")) {
                     Integer precision = parseDataTypePrecisionIf();
 
-
                     if (parseKeywordOrIdentifierIf("WITH TIME ZONE"))
                         return precision == null ? SQLDataType.TIMEWITHTIMEZONE : SQLDataType.TIMEWITHTIMEZONE(precision);
-                    else
-
-                    if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
+                    else if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
                         return precision == null ? SQLDataType.TIME : SQLDataType.TIME(precision);
                 }
                 else if (parseKeywordOrIdentifierIf("TINYBLOB"))
@@ -10822,15 +10812,13 @@ final class ParserContext {
 
         // [#7025] TODO, replace this by a dynamic enum data type encoding, once available
         String className = "GeneratedEnum" + (literals.hashCode() & 0x7FFFFFF);
-
         StringBuilder content = new StringBuilder();
         content.append(
                     "package org.jooq.impl;\n"
                   + "enum ").append(className).append(" implements org.jooq.EnumType {\n");
 
-        for (int i = 0; i < literals.size(); i++) {
+        for (int i = 0; i < literals.size(); i++)
             content.append("  E").append(i).append("(\"").append(literals.get(i).replace("\"", "\\\"")).append("\"),\n");
-        }
 
         content.append(
                     "  ;\n"
@@ -10846,12 +10834,7 @@ final class ParserContext {
                   + "  }\n"
                   + "}");
 
-
-        return SQLDataType.VARCHAR(length)
-
-            .asEnumDataType(Reflect.compile("org.jooq.impl." + className, content.toString()).get())
-
-        ;
+        return VARCHAR(length).asEnumDataType(Reflect.compile("org.jooq.impl." + className, content.toString()).get());
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -12190,7 +12173,7 @@ final class ParserContext {
     private final char[]                          sql;
     private final ParseWithMetaLookups            metaLookups;
     private boolean                               metaLookupsForceIgnore;
-    private final F.A1<Param<?>>                  bindParamListener;
+    private final Consumer<Param<?>>              bindParamListener;
     private int                                   position               = 0;
     private boolean                               ignoreHints            = true;
     private final Object[]                        bindings;
@@ -12222,7 +12205,7 @@ final class ParserContext {
 
         // [#8722] This is an undocumented flag that allows for collecting parameters from the parser
         //         Do not rely on this flag. It will change incompatibly in the future.
-        this.bindParamListener = (F.A1<Param<?>>) dsl.configuration().data("org.jooq.parser.param-collector");
+        this.bindParamListener = (Consumer<Param<?>>) dsl.configuration().data("org.jooq.parser.param-collector");
         parseWhitespaceIf();
     }
 
@@ -12578,7 +12561,7 @@ final class ParserContext {
 
             if (t.value instanceof JoinTable) {
                 found = resolveInTableScope(
-                    Arrays.<Value<Table<?>>>asList(
+                    asList(
                         new Value<>(t.scopeLevel, ((JoinTable) t.value).lhs),
                         new Value<>(t.scopeLevel, ((JoinTable) t.value).rhs)
                     ),
@@ -12594,10 +12577,10 @@ final class ParserContext {
                 Name q = lookupName.qualifier();
                 boolean x = q.qualified();
                 if (x && q.equals(t.value.getQualifiedName()) || !x && q.last().equals(t.value.getName()))
-                    if ((found = Value.<Field<?>>of(t.scopeLevel, t.value.field(lookup.getName()))) != null)
+                    if ((found = Value.of(t.scopeLevel, t.value.field(lookup.getName()))) != null)
                         break tableScopeLoop;
             }
-            else if ((f = Value.<Field<?>>of(t.scopeLevel, t.value.field(lookup.getName()))) != null) {
+            else if ((f = Value.of(t.scopeLevel, t.value.field(lookup.getName()))) != null) {
                 if (found == null || found.scopeLevel < f.scopeLevel) {
                     found = f;
                 }

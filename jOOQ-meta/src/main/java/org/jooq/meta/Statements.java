@@ -66,20 +66,10 @@ final class Statements {
     }
 
     final Result<?> fetch(String sql) {
-        Result<?> result = sqlCache.get(sql);
-
-        if (result == null)
-            sqlCache.put(sql, result = ctx.fetch(sql));
-
-        return result;
+        return sqlCache.computeIfAbsent(sql, ctx::fetch);
     }
 
     final Set<?> fetchSet(String sql) {
-        Set<?> result = sqlCacheSingleColumnSet.get(sql);
-
-        if (result == null)
-            sqlCacheSingleColumnSet.put(sql, result = fetch(sql).intoSet(0));
-
-        return result;
+        return sqlCacheSingleColumnSet.computeIfAbsent(sql, s -> fetch(s).intoSet(0));
     }
 }

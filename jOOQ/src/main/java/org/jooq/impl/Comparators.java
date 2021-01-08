@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Comparator.comparing;
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.SortOrder.DEFAULT;
 import static org.jooq.impl.DSL.noCondition;
@@ -53,8 +54,6 @@ import org.jooq.Named;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * Commonly used comparators and related utilities.
  *
@@ -62,18 +61,11 @@ import org.jetbrains.annotations.NotNull;
  */
 final class Comparators {
 
-    static final Comparator<Named>            NAMED_COMP       = new NamedComparator();
+    static final Comparator<Named>            NAMED_COMP       = comparing(Named::getQualifiedName);
     static final Comparator<Key<?>>           KEY_COMP         = new KeyComparator();
     static final Comparator<ForeignKey<?, ?>> FOREIGN_KEY_COMP = new ForeignKeyComparator();
-    static final Comparator<Check<?>>         CHECK_COMP       = new CheckComparator();
+    static final Comparator<Check<?>>         CHECK_COMP       = comparing(c -> c.condition().toString());
     static final Comparator<Index>            INDEX_COMP       = new IndexComparator();
-
-    private static final class NamedComparator implements Comparator<Named> {
-        @Override
-        public final int compare(Named o1, Named o2) {
-            return o1.getQualifiedName().compareTo(o2.getQualifiedName());
-        }
-    }
 
     private static final class KeyComparator implements Comparator<Key<?>> {
         @Override
@@ -105,13 +97,6 @@ final class Comparators {
                 return c;
             else
                 return KEY_COMP.compare(o1.getKey(), o2.getKey());
-        }
-    }
-
-    private static final class CheckComparator implements Comparator<Check<?>> {
-        @Override
-        public int compare(Check<?> o1, Check<?> o2) {
-            return o1.condition().toString().compareTo(o2.condition().toString());
         }
     }
 

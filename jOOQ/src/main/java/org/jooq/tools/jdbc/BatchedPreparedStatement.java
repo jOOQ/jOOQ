@@ -156,8 +156,6 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
         return getMoreResults ? 0 : -1;
     }
 
-
-
     @Override
     public long executeLargeUpdate() throws SQLException {
         return executeUpdate();
@@ -167,8 +165,6 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
     public long getLargeUpdateCount() throws SQLException {
         return getUpdateCount();
     }
-
-
 
     @Override
     public void close() throws SQLException {}
@@ -212,15 +208,11 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
         return super.executeBatch();
     }
 
-
-
     @Override
     public long[] executeLargeBatch() throws SQLException {
         logExecution();
         return super.executeLargeBatch();
     }
-
-
 
     // -------------------------------------------------------------------------
     // XXX: Unsupported static statement execution features
@@ -271,8 +263,6 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
         throw new UnsupportedOperationException("No static statement methods can be called");
     }
 
-
-
     @Override
     public long executeLargeUpdate(String sql) throws SQLException {
         throw new UnsupportedOperationException("No static statement methods can be called");
@@ -292,8 +282,6 @@ public class BatchedPreparedStatement extends DefaultPreparedStatement {
     public long executeLargeUpdate(String sql, String[] columnNames) throws SQLException {
         throw new UnsupportedOperationException("No static statement methods can be called");
     }
-
-
 
     @Override
     public ResultSet executeQuery(String sql) throws SQLException {

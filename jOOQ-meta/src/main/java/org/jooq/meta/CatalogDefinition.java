@@ -38,6 +38,8 @@
 
 package org.jooq.meta;
 
+import static java.util.Arrays.asList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,7 +81,7 @@ public class CatalogDefinition extends AbstractDefinition {
 
     @Override
     public final List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(this);
+        return asList(this);
     }
 
     public boolean isDefaultCatalog() {

@@ -39,12 +39,11 @@ package org.jooq.codegen;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * A cache for directories and their contents.
@@ -62,19 +61,10 @@ public final class Files {
     }
 
     public final String[] list(File dir, FilenameFilter filter) {
-        String[] list = lists.get(dir);
-
-        if (list == null) {
-            list = dir.list();
-            lists.put(dir, list);
-        }
-
-        List<String> result = new ArrayList<>();
-        for (String s : list)
-            if (filter.accept(dir, s))
-                result.add(s);
-
-        return result.toArray(new String[0]);
+        return Stream
+            .of(lists.computeIfAbsent(dir, File::list))
+            .filter(e -> filter.accept(dir, e))
+            .toArray(String[]::new);
     }
 
     public final void mkdirs(File dir) {

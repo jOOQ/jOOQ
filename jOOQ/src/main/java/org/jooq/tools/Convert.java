@@ -533,11 +533,8 @@ public final class Convert {
                         return convert(0, toClass);
                 }
 
-
                 else if (toClass == Optional.class)
                     return (U) Optional.empty();
-
-
                 else
                     return null;
             }
@@ -603,11 +600,8 @@ public final class Convert {
                     else
                         return (U) convertArray(fromArray, toClass);
                 }
-
-
                 else if (toClass == Optional.class)
                     return (U) Optional.of(from);
-
 
                 // All types can be converted into String
                 else if (toClass == String.class) {
@@ -688,15 +682,11 @@ public final class Convert {
                     if (wrapperFrom == Boolean.class)
                         return (U) (((Boolean) from) ? Long.valueOf(1L) : Long.valueOf(0L));
 
-                    if (java.util.Date.class.isAssignableFrom(fromClass)) {
+                    if (java.util.Date.class.isAssignableFrom(fromClass))
                         return (U) Long.valueOf(((java.util.Date) from).getTime());
-                    }
 
-
-                    if (Temporal.class.isAssignableFrom(fromClass)) {
+                    if (Temporal.class.isAssignableFrom(fromClass))
                         return (U) Long.valueOf(millis((Temporal) from));
-                    }
-
 
                     try {
                         String fromString = from.toString().trim();
@@ -764,10 +754,8 @@ public final class Convert {
                     if (java.util.Date.class.isAssignableFrom(fromClass))
                         return (U) ulong(((java.util.Date) from).getTime());
 
-
                     if (Temporal.class.isAssignableFrom(fromClass))
                         return (U) ulong(millis((Temporal) from));
-
 
                     try {
                         String fromString = from.toString().trim();
@@ -865,23 +853,17 @@ public final class Convert {
                 else if (java.util.Date.class.isAssignableFrom(fromClass)) {
                     return toDate(((java.util.Date) from).getTime(), toClass);
                 }
-
-
                 else if (Temporal.class.isAssignableFrom(fromClass)) {
                     return toDate(convert(from, Long.class), toClass);
                 }
-
 
                 // Long may also be converted into a date type
                 else if (wrapperFrom == Long.class && java.util.Date.class.isAssignableFrom(toClass)) {
                     return toDate((Long) from, toClass);
                 }
-
-
                 else if (wrapperFrom == Long.class && Temporal.class.isAssignableFrom(toClass)) {
                     return toDate((Long) from, toClass);
                 }
-
 
                 // [#1501] Strings can be converted to java.sql.Date
                 else if (fromClass == String.class && toClass == java.sql.Date.class) {
@@ -912,8 +894,6 @@ public final class Convert {
                         return null;
                     }
                 }
-
-
                 else if (fromClass == String.class && toClass == LocalDate.class) {
 
                     // Try "lenient" ISO date formats first
@@ -1009,7 +989,6 @@ public final class Convert {
                         }
                     }
                 }
-
 
                 // [#1448] [#6255] [#5720] To Enum conversion
                 else if (java.lang.Enum.class.isAssignableFrom(toClass) && (fromClass == String.class || from instanceof Enum || from instanceof EnumType)) {
@@ -1215,8 +1194,6 @@ public final class Convert {
                 calendar.setTimeInMillis(time);
                 return (X) calendar;
             }
-
-
             else if (toClass == LocalDate.class)
                 return (X) new Date(time).toLocalDate();
             else if (toClass == LocalTime.class)
@@ -1230,10 +1207,8 @@ public final class Convert {
             else if (toClass == Instant.class)
                 return (X) Instant.ofEpochMilli(time);
 
-
             throw fail(time, toClass);
         }
-
 
         private static final long millis(Temporal temporal) {
 
@@ -1255,7 +1230,6 @@ public final class Convert {
 
             throw fail(temporal, Long.class);
         }
-
 
         /**
          * Some databases do not implement the standard very well. Specifically,

@@ -233,11 +233,8 @@ public class XMLasDOMBinding extends AbstractXMLBinding<Node> {
                 }
             }
 
-            // This does not occur
-            catch (IOException ignore) {}
-
             // The XML content is invalid
-            catch (SAXException ignore) {}
+            catch (IOException | SAXException ignore) {}
         }
 
         // Plain text or invalid XML

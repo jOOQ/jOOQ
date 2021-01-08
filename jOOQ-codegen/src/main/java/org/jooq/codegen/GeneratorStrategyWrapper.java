@@ -297,11 +297,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         if (clazz == null)
             return Collections.emptySet();
 
-        Map<Integer, Set<String>> map = reservedColumns.get(clazz);
-        if (map == null) {
-            map = new HashMap<>();
-            reservedColumns.put(clazz, map);
-        }
+        Map<Integer, Set<String>> map = reservedColumns.computeIfAbsent(clazz, k -> new HashMap<>());
 
         Set<String> result = map.get(length);
         if (result == null) {

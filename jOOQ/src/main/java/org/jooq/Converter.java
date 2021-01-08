@@ -120,8 +120,6 @@ public interface Converter<T, U> extends Serializable {
     @NotNull
     Class<U> toType();
 
-
-
     /**
      * Inverse this converter.
      */
@@ -235,6 +233,4 @@ public interface Converter<T, U> extends Serializable {
 
         return of(fromType, toType, fromS, toS);
     }
-
-
 }

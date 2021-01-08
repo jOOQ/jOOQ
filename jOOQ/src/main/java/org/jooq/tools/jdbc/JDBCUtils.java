@@ -526,7 +526,6 @@ public class JDBCUtils {
         }
     }
 
-
     /**
      * Safely close a closeable.
      * <p>
@@ -541,7 +540,6 @@ public class JDBCUtils {
             catch (Exception ignore) {}
         }
     }
-
 
     /**
      * Safely free a blob.

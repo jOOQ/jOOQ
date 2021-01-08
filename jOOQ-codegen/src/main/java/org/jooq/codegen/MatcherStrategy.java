@@ -38,12 +38,16 @@
 package org.jooq.codegen;
 
 import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -215,13 +219,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     }
 
     private final List<String> split(String result) {
-        String[] split = result.split(",");
-        List<String> list = new ArrayList<>(split.length);
-
-        for (String string : split)
-            list.add(string.trim());
-
-        return list;
+        return Stream.of(result.split(",")).map(String::trim).collect(toList());
     }
 
     @Override

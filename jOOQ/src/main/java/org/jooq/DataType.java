@@ -176,8 +176,6 @@ public interface DataType<T> extends Named {
     @NotNull
     <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter);
 
-
-
     /**
      * Convenience method for converting this type using
      * {@link Converter#of(Class, Class, Function, Function)}.
@@ -190,8 +188,6 @@ public interface DataType<T> extends Named {
     ) {
         return asConvertedDataType(Converter.of(getType(), toType, from, to));
     }
-
-
 
     /**
      * Retrieve the data type for a given binding.

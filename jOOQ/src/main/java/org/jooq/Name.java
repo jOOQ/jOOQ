@@ -315,7 +315,6 @@ public interface Name extends QueryPart, Comparable<Name> {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(Name... fieldNames);
 
-
     /**
      * Add a list of fields to this name to make this name a
      * {@link DerivedColumnList}.
@@ -361,7 +360,6 @@ public interface Name extends QueryPart, Comparable<Name> {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
-
 
 
 

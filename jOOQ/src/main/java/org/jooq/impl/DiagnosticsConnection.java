@@ -190,12 +190,7 @@ final class DiagnosticsConnection extends DefaultConnection {
     }
 
     private Set<String> duplicates(Map<String, Set<String>> map, String sql, String normalised) {
-        Set<String> v = map.get(normalised);
-
-        if (v == null) {
-            v = new HashSet<>();
-            map.put(normalised, v);
-        }
+        Set<String> v = map.computeIfAbsent(normalised, k -> new HashSet<>());
 
         if (v.size() >= DUP_SIZE || (v.add(sql) && v.size() > 1))
             return v;
@@ -204,12 +199,7 @@ final class DiagnosticsConnection extends DefaultConnection {
     }
 
     private List<String> repetitions(Map<String, List<String>> map, String sql, String normalised) {
-        List<String> v = map.get(normalised);
-
-        if (v == null) {
-            v = new ArrayList<>();
-            map.put(normalised, v);
-        }
+        List<String> v = map.computeIfAbsent(normalised, k -> new ArrayList<>());
 
         if (v.size() >= DUP_SIZE || (v.add(sql) && v.size() > 1))
             return v;

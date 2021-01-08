@@ -137,14 +137,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         return fields;
     }
 
-
-
     @Override
     public final Stream<Field<?>> fieldStream() {
         return fields.fieldStream();
     }
-
-
 
     @Override
     public final <T> Field<T> field(Field<T> field) {

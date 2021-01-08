@@ -101,8 +101,6 @@ public interface LoaderSourceStep<R extends Record> {
     @Support
     LoaderRowsStep<R> loadArrays(Iterator<? extends Object[]> arrays);
 
-
-
     /**
      * Load in-memory data.
      * <p>
@@ -115,8 +113,6 @@ public interface LoaderSourceStep<R extends Record> {
     @NotNull
     @Support
     LoaderRowsStep<R> loadArrays(Stream<? extends Object[]> arrays);
-
-
 
     /**
      * Load in-memory data.
@@ -143,8 +139,6 @@ public interface LoaderSourceStep<R extends Record> {
     @Support
     LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records);
 
-
-
     /**
      * Load in-memory data.
      *
@@ -153,8 +147,6 @@ public interface LoaderSourceStep<R extends Record> {
     @NotNull
     @Support
     LoaderRowsStep<R> loadRecords(Stream<? extends Record> records);
-
-
 
     /**
      * Load CSV data.

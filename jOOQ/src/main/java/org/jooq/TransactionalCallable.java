@@ -74,8 +74,6 @@ public interface TransactionalCallable<T> {
      */
     T run(Configuration configuration) throws Throwable;
 
-
-
     /**
      * Wrap a set of nested {@link TransactionalCallable} objects in a single
      * global {@link TransactionalCallable}, returning the last callable's
@@ -117,6 +115,4 @@ public interface TransactionalCallable<T> {
     static <T, R> TransactionalCallable<R> of(Collection<? extends TransactionalCallable<T>> callables, Collector<T, ?, R> collector) {
         return configuration -> callables.stream().map(configuration.dsl()::transactionResult).collect(collector);
     }
-
-
 }

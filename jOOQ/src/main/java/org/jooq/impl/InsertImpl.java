@@ -817,7 +817,7 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         if (object instanceof Field)
             ((AbstractStoreQuery<R>) delegate).addValue(field, index, (Field<T>) object);
         else if (object instanceof FieldLike)
-            ((AbstractStoreQuery<R>) delegate).addValue(field, index, ((FieldLike) object).<T>asField());
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, ((FieldLike) object).asField());
         else if (field != null)
             ((AbstractStoreQuery<R>) delegate).addValue(field, index, field.getDataType().convert(object));
 
@@ -1197,7 +1197,7 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final <T> InsertImpl set(Field<T> field, Select<? extends Record1<T>> value) {
-        return set(field, value.<T>asField());
+        return set(field, value.asField());
     }
 
     @Override

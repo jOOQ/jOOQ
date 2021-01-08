@@ -178,13 +178,9 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, INSERT)
-        .operate(new RecordOperation<Record, RuntimeException>() {
-
-            @Override
-            public Record operate(Record record) throws RuntimeException {
-                result[0] = storeInsert0(storeFields);
-                return record;
-            }
+        .operate(record -> {
+            result[0] = storeInsert0(storeFields);
+            return record;
         });
 
         return result[0];
@@ -343,12 +339,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         if (timestamp != null && isUpdateRecordTimestamp()) {
 
             // Use Timestamp locally, to provide maximum precision
-
-
-
-
             result = new Timestamp(configuration().clock().millis());
-
 
             // [#9933] Truncate timestamp to column precision, if needed
             addValue(store, timestamp, result = truncate(result, timestamp.getDataType()), forUpdate);

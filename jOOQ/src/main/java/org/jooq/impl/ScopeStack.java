@@ -43,6 +43,10 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+
+import static java.util.Collections.nCopies;
 
 /**
  * A stack to register elements that are visible to a certain scope.
@@ -53,18 +57,13 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
     private int                  scopeLevel = -1;
     private Map<K, List<V>>      stack;
-    private final Constructor<V> constructor;
+    private final IntFunction<V> constructor;
 
-    ScopeStack(final V defaultValue) {
-        this(new Constructor<V>() {
-            @Override
-            public V create(int scopeLevel) {
-                return defaultValue;
-            }
-        });
+    ScopeStack(V defaultValue) {
+        this(scopeLevel -> defaultValue);
     }
 
-    ScopeStack(Constructor<V> constructor) {
+    ScopeStack(IntFunction<V> constructor) {
         this.constructor = constructor;
     }
 
@@ -95,27 +94,12 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     final Iterable<Value<V>> valueIterable() {
-        return new Iterable<Value<V>>() {
-            @Override
-            public Iterator<Value<V>> iterator() {
-                return new ScopeStackIterator<Value<V>>(new F.F1<List<V>, Value<V>>() {
-                    @Override
-                    public Value<V> apply(List<V> list) {
-                        return Value.lastOf(list);
-                    }
-                });
-            }
-        };
+        return () -> new ScopeStackIterator<Value<V>>(Value::lastOf);
     }
 
     @Override
     public final Iterator<V> iterator() {
-        return new ScopeStackIterator<>(new F.F1<List<V>, V>() {
-            @Override
-            public V apply(List<V> list) {
-                return list.get(list.size() - 1);
-            }
-        });
+        return new ScopeStackIterator<>(list -> list.get(list.size() - 1));
     }
 
     static final class Value<V> {
@@ -139,11 +123,11 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     private final class ScopeStackIterator<U> implements Iterator<U> {
-        final Iterator<List<V>> it = stack().values().iterator();
-        final F.F1<List<V>, U>  valueExtractor;
-        U                       next;
+        final Iterator<List<V>>    it = stack().values().iterator();
+        final Function<List<V>, U> valueExtractor;
+        U                          next;
 
-        ScopeStackIterator(F.F1<List<V>, U> valueExtractor) {
+        ScopeStackIterator(Function<List<V>, U> valueExtractor) {
             this.valueExtractor = valueExtractor;
         }
 
@@ -204,7 +188,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     private final V create0(List<V> list) {
-        V result = constructor.create(scopeLevel);
+        V result = constructor.apply(scopeLevel);
         set0(list, result);
         return result;
     }
@@ -213,17 +197,12 @@ final class ScopeStack<K, V> implements Iterable<V> {
         int l = scopeLevel + 1;
         int size = list.size();
         if (size < l)
-            list.addAll(Collections.<V> nCopies(l - size, null));
+            list.addAll(nCopies(l - size, null));
         list.set(scopeLevel, value);
     }
 
     private List<V> list(K key) {
-        List<V> list = stack().get(key);
-
-        if (list == null)
-            stack().put(key, list = new ArrayList<>());
-
-        return list;
+        return stack().computeIfAbsent(key, k -> new ArrayList<>());
     }
 
     final boolean inScope() {
@@ -237,14 +216,6 @@ final class ScopeStack<K, V> implements Iterable<V> {
     final void scopeEnd() {
         scopeLevel--;
         trim();
-    }
-
-    /**
-     * Create a new value
-     */
-    @FunctionalInterface
-    interface Constructor<V> {
-        V create(int scopeLevel);
     }
 
     @Override

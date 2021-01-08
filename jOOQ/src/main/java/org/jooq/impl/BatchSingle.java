@@ -90,16 +90,8 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         this.nameToIndexMapping = new LinkedHashMap<>();
         this.expectedBindValues = collector.resultList.size();
 
-        for (Entry<String, Param<?>> entry : collector.resultList) {
-            List<Integer> list = nameToIndexMapping.get(entry.getKey());
-
-            if (list == null) {
-                list = new ArrayList<>();
-                nameToIndexMapping.put(entry.getKey(), list);
-            }
-
-            list.add(i++);
-        }
+        for (Entry<String, Param<?>> entry : collector.resultList)
+            nameToIndexMapping.computeIfAbsent(entry.getKey(), e -> new ArrayList<>()).add(i++);
     }
 
     @Override
@@ -128,16 +120,16 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         List<Object> defaultValues = dsl.extractBindValues(query);
 
         Object[][] bindValues = new Object[namedBindValues.length][];
-        for (int row = 0; row < bindValues.length; row++) {
-            bindValues[row] = defaultValues.toArray();
+        for (int i = 0; i < bindValues.length; i++) {
+            Object[] row = bindValues[i] = defaultValues.toArray();
 
-            for (Entry<String, Object> entry : namedBindValues[row].entrySet()) {
-                List<Integer> indexes = nameToIndexMapping.get(entry.getKey());
+            namedBindValues[i].forEach((k, v) -> {
+                List<Integer> indexes = nameToIndexMapping.get(k);
 
                 if (indexes != null)
                     for (int index : indexes)
-                        bindValues[row][index] = entry.getValue();
-            }
+                        row[index] = v;
+            });
         }
 
         bind(bindValues);

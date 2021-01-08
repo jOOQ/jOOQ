@@ -120,11 +120,7 @@ public abstract class AbstractInterpretingDatabase extends H2Database {
 
         // [#5608] The H2-specific INFORMATION_SCHEMA is undesired in the output
         //         we're explicitly omitting it here for user convenience.
-        Iterator<SchemaDefinition> it = result.iterator();
-        while (it.hasNext())
-            if ("INFORMATION_SCHEMA".equals(it.next().getName()))
-                it.remove();
-
+        result.removeIf(s -> "INFORMATION_SCHEMA".equals(s.getName()));
         return result;
     }
 

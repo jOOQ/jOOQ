@@ -374,8 +374,6 @@ public class DefaultPreparedStatement extends DefaultStatement implements Prepar
         getDelegatePreparedStatement().setNClob(parameterIndex, reader);
     }
 
-
-
     // ------------------------------------------------------------------------
     // JDBC 4.2
     // ------------------------------------------------------------------------
@@ -394,6 +392,4 @@ public class DefaultPreparedStatement extends DefaultStatement implements Prepar
     public long executeLargeUpdate() throws SQLException {
         return getDelegatePreparedStatement().executeLargeUpdate();
     }
-
-
 }

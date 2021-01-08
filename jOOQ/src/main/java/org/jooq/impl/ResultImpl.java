@@ -641,15 +641,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     private final <K> Map<K, Result<R>> intoGroups0(int keyFieldIndex) {
         Map<K, Result<R>> map = new LinkedHashMap<>();
 
-        for (R record : this) {
-            K val = (K) record.get(keyFieldIndex);
-            Result<R> result = map.get(val);
-
-            if (result == null)
-                map.put(val, result = new ResultImpl<>(configuration, fields));
-
-            result.add(record);
-        }
+        for (R record : this)
+            map.computeIfAbsent((K) record.get(keyFieldIndex), v -> new ResultImpl<>(configuration, fields)).add(record);
 
         return map;
     }
@@ -680,16 +673,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     private final <K, V> Map<K, List<V>> intoGroups0(int kIndex, int vIndex) {
         Map<K, List<V>> map = new LinkedHashMap<>();
 
-        for (R record : this) {
-            K k = (K) record.get(kIndex);
-            V v = (V) record.get(vIndex);
-
-            List<V> result = map.get(k);
-            if (result == null)
-                map.put(k, result = new ArrayList<>());
-
-            result.add(v);
-        }
+        for (R record : this)
+            map.computeIfAbsent((K) record.get(kIndex), k -> new ArrayList<>()).add((V) record.get(vIndex));
 
         return map;
     }
@@ -737,15 +722,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     private final <K, E> Map<K, List<E>> intoGroups0(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
         Map<K, List<E>> map = new LinkedHashMap<>();
 
-        for (R record : this) {
-            K keyVal = (K) record.get(keyFieldIndex);
-
-            List<E> list = map.get(keyVal);
-            if (list == null)
-                map.put(keyVal, list = new ArrayList<>());
-
-            list.add(mapper.map(record));
-        }
+        for (R record : this)
+            map.computeIfAbsent((K) record.get(keyFieldIndex), k -> new ArrayList<>()).add(mapper.map(record));
 
         return map;
     }
@@ -776,11 +754,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
             for (Field<?> field : keysRow.fields.fields)
                 Tools.copyValue(key, field, record, field);
 
-            Result<R> result = map.get(key);
-            if (result == null)
-                map.put(key, result = new ResultImpl<>(configuration(), this.fields));
-
-            result.add(record);
+            map.computeIfAbsent(key, k -> new ResultImpl<>(configuration(), this.fields)).add(record);
         }
 
         return map;
@@ -817,11 +791,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
             for (Field<?> field : valuesRow.fields.fields)
                 Tools.copyValue(value, field, record, field);
 
-            Result<Record> result = map.get(key);
-            if (result == null)
-                map.put(key, result = new ResultImpl<>(configuration(), valuesRow));
-
-            result.add(value);
+            map.computeIfAbsent(key, k -> new ResultImpl<>(configuration(), valuesRow)).add(value);
         }
 
         return map;
@@ -873,11 +843,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
             for (Field<?> field : keysRow.fields.fields)
                 Tools.copyValue(key, field, record, field);
 
-            List<E> list = map.get(key);
-            if (list == null)
-                map.put(key, list = new ArrayList<>());
-
-            list.add(mapper.map(record));
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(mapper.map(record));
         }
 
         return map;
@@ -905,15 +871,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     public final <K> Map<K, Result<R>> intoGroups(RecordMapper<? super R, K> keyMapper) {
         Map<K, Result<R>> map = new LinkedHashMap<>();
 
-        for (R record : this) {
-            K key = keyMapper.map(record);
-
-            Result<R> result = map.get(key);
-            if (result == null)
-                map.put(key, result = new ResultImpl<>(configuration(), fields));
-
-            result.add(record);
-        }
+        for (R record : this)
+            map.computeIfAbsent(keyMapper.map(record), k -> new ResultImpl<>(configuration(), fields)).add(record);
 
         return map;
     }
@@ -927,15 +886,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     public final <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
         Map<K, List<V>> map = new LinkedHashMap<>();
 
-        for (R record : this) {
-            K key = keyMapper.map(record);
-
-            List<V> list = map.get(key);
-            if (list == null)
-                map.put(key, list = new ArrayList<>());
-
-            list.add(valueMapper.map(record));
-        }
+        for (R record : this)
+            map.computeIfAbsent(keyMapper.map(record), k -> new ArrayList<>()).add(valueMapper.map(record));
 
         return map;
     }
@@ -944,15 +896,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     public final <S extends Record> Map<S, Result<R>> intoGroups(Table<S> table) {
         Map<S, Result<R>> map = new LinkedHashMap<>();
 
-        for (R record : this) {
-            S key = record.into(table);
-
-            Result<R> result = map.get(key);
-            if (result == null)
-                map.put(key, result = new ResultImpl<>(configuration(), this.fields));
-
-            result.add(record);
-        }
+        for (R record : this)
+            map.computeIfAbsent(record.into(table), k -> new ResultImpl<>(configuration(), this.fields)).add(record);
 
         return map;
     }
@@ -961,16 +906,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     public final <S extends Record, T extends Record> Map<S, Result<T>> intoGroups(Table<S> keyTable, Table<T> valueTable) {
         Map<S, Result<T>> map = new LinkedHashMap<>();
 
-        for (R record : this) {
-            S key = record.into(keyTable);
-            T value = record.into(valueTable);
-
-            Result<T> result = map.get(key);
-            if (result == null)
-                map.put(key, result = DSL.using(configuration()).newResult(valueTable));
-
-            result.add(value);
-        }
+        for (R record : this)
+            map.computeIfAbsent(record.into(keyTable), k -> DSL.using(configuration()).newResult(valueTable)).add(record.into(valueTable));
 
         return map;
     }
@@ -984,17 +921,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, RecordMapper<? super R, E> mapper) {
         Map<S, List<E>> map = new LinkedHashMap<>();
 
-        for (R record : this) {
-            S key = record.into(table);
-
-            List<E> list = map.get(key);
-            if (list == null) {
-                list = new ArrayList<>();
-                map.put(key, list);
-            }
-
-            list.add(mapper.map(record));
-        }
+        for (R record : this)
+            map.computeIfAbsent(record.into(table), k -> new ArrayList<>()).add(mapper.map(record));
 
         return map;
     }
@@ -1357,7 +1285,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final Result<R> sortAsc(Comparator<? super R> comparator) {
-        Collections.sort(this, comparator);
+        sort(comparator);
         return this;
     }
 
@@ -1457,16 +1385,14 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
         @Override
         public final int compare(T o1, T o2) {
-            if (o1 == null && o2 == null) {
+            if (o1 == null && o2 == null)
                 return 0;
-            }
-            else if (o1 == null) {
+            else if (o1 == null)
                 return -1;
-            }
-            else if (o2 == null) {
+            else if (o2 == null)
                 return 1;
-            }
-            return o1.compareTo(o2);
+            else
+                return o1.compareTo(o2);
         }
     }
 

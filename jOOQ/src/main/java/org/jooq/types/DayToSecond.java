@@ -190,15 +190,12 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
 
                 if (result != null)
                     return result;
-
-
                 else {
                     try {
                         return DayToSecond.valueOf(Duration.parse(string));
                     }
                     catch (DateTimeParseException ignore) {}
                 }
-
             }
         }
 
@@ -437,7 +434,6 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
         return result;
     }
 
-
     /**
      * Transform a {@link Duration} into a {@link DayToSecond} interval by
      * taking its number of milliseconds.
@@ -461,7 +457,6 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     public final Duration toDuration() {
         return Duration.ofSeconds((long) getTotalSeconds(), getSign() * getNano());
     }
-
 
     // -------------------------------------------------------------------------
     // XXX Number API

@@ -38,10 +38,6 @@
 package org.jooq.impl;
 
 
-
-
-
-
 // ...
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.SQLDataType.DATE;
@@ -138,5 +134,3 @@ public class LocalDateAsLocalDateTimeBinding implements Binding<LocalDateTime, L
         delegate.get(ctx);
     }
 }
-
-

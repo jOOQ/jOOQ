@@ -53,7 +53,6 @@ import static org.jooq.impl.MigrationImpl.Status.STARTING;
 import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -68,7 +67,6 @@ import org.jooq.ContextTransactionalRunnable;
 import org.jooq.Field;
 import org.jooq.Files;
 import org.jooq.Meta;
-import org.jooq.Meta.Predicate;
 import org.jooq.Migration;
 import org.jooq.MigrationListener;
 import org.jooq.Name;
@@ -188,15 +186,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return result;
     }
 
-    private final Queries revertUntrackedQueries(final Set<Schema> includedSchemas) {
+    private final Queries revertUntrackedQueries(Set<Schema> includedSchemas) {
         Commit currentCommit = currentCommit();
         Meta currentMeta = currentCommit.meta();
-        Meta existingMeta = dsl().meta().filterSchemas(new Predicate<Schema>() {
-            @Override
-            public boolean test(Schema s) {
-                return includedSchemas.contains(s);
-            }
-        });
+        Meta existingMeta = dsl().meta().filterSchemas(includedSchemas::contains);
 
         Set<Schema> expectedSchemas = new HashSet<>();
         expectedSchemas.addAll(lookup(from().meta().getSchemas()));

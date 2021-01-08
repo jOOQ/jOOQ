@@ -13,8 +13,6 @@
  */
 package org.jooq.tools.reflect;
 
-
-
 // ...
 
 import java.io.ByteArrayOutputStream;
@@ -272,4 +270,3 @@ class Compile {
         }
     }
 }
-

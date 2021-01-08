@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.firebird;
 
+import static java.util.stream.Collectors.mapping;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.decode;
@@ -69,6 +70,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -461,21 +463,17 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
-        List<RoutineDefinition> result = new ArrayList<>();
-
-        for (String procedureName : create()
-                .select(RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim())
+        return
+        create().select(RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim())
                 .from(RDB$PROCEDURES)
 
                 // "executable" procedures
                 .where(RDB$PROCEDURES.RDB$PROCEDURE_TYPE.eq((short) 2))
                 .orderBy(1)
-                .fetch(0, String.class)) {
-
-            result.add(new FirebirdRoutineDefinition(getSchemata().get(0), procedureName));
-        }
-
-        return result;
+                .collect(mapping(
+                    r -> new FirebirdRoutineDefinition(getSchemata().get(0), r.get(0, String.class)),
+                    Collectors.<RoutineDefinition>toList()
+                ));
     }
 
     @Override

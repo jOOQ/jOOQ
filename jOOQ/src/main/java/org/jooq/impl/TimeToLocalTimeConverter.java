@@ -43,7 +43,6 @@ import java.time.LocalTime;
 /**
  * @author Lukas Eder
  */
-
 public final class TimeToLocalTimeConverter extends AbstractConverter<Time, LocalTime> {
 
     /**

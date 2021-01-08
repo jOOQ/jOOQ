@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.Tools.EMPTY_CHECK;
 
 import java.util.ArrayList;
@@ -116,7 +117,7 @@ final class Snapshot extends AbstractMeta {
 
         @Override
         public final List<Schema> getSchemas() {
-            return Collections.<Schema>unmodifiableList(schemas);
+            return unmodifiableList(schemas);
         }
     }
 
@@ -153,22 +154,22 @@ final class Snapshot extends AbstractMeta {
 
         @Override
         public final List<Domain<?>> getDomains() {
-            return Collections.<Domain<?>>unmodifiableList(domains);
+            return unmodifiableList(domains);
         }
 
         @Override
         public final List<Table<?>> getTables() {
-            return Collections.<Table<?>>unmodifiableList(tables);
+            return unmodifiableList(tables);
         }
 
         @Override
         public final List<Sequence<?>> getSequences() {
-            return Collections.<Sequence<?>>unmodifiableList(sequences);
+            return unmodifiableList(sequences);
         }
 
         @Override
         public final List<UDT<?>> getUDTs() {
-            return Collections.<UDT<?>>unmodifiableList(udts);
+            return unmodifiableList(udts);
         }
     }
 

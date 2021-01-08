@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import static java.util.Collections.emptyList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -222,7 +224,7 @@ public class DefaultRelations implements Relations {
         addForeignKey(foreignKeyName, foreignKeyTable, foreignKeyColumn, uniqueKeyName, uniqueKeyTable, getNextUkColumn(key, uk), enforced);
     }
 
-    private Map<Key, Integer> nextUkColumnIndex = new HashMap<>();
+    private final Map<Key, Integer> nextUkColumnIndex = new HashMap<>();
 
     private ColumnDefinition getNextUkColumn(Key key, UniqueKeyDefinition uk) {
         Integer index = nextUkColumnIndex.get(key);
@@ -319,22 +321,13 @@ public class DefaultRelations implements Relations {
 	    if (uniqueKeysByColumn == null) {
 	        uniqueKeysByColumn = new LinkedHashMap<>();
 
-	        for (UniqueKeyDefinition uniqueKey : uniqueKeys.values()) {
-                for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns()) {
-                    List<UniqueKeyDefinition> list = uniqueKeysByColumn.get(keyColumn);
-
-                    if (list == null) {
-                        list = new ArrayList<>();
-                        uniqueKeysByColumn.put(keyColumn, list);
-                    }
-
-                    list.add(uniqueKey);
-                }
-            }
+	        for (UniqueKeyDefinition uniqueKey : uniqueKeys.values())
+                for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns())
+                    uniqueKeysByColumn.computeIfAbsent(keyColumn, c -> new ArrayList<>()).add(uniqueKey);
         }
 
         List<UniqueKeyDefinition> list = uniqueKeysByColumn.get(column);
-        return list != null ? list : Collections.<UniqueKeyDefinition>emptyList();
+        return list != null ? list : emptyList();
     }
 
     @Override
@@ -367,22 +360,13 @@ public class DefaultRelations implements Relations {
         if (keysByColumn == null) {
             keysByColumn = new LinkedHashMap<>();
 
-            for (UniqueKeyDefinition uniqueKey : keys.values()) {
-                for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns()) {
-                    List<UniqueKeyDefinition> list = keysByColumn.get(keyColumn);
-
-                    if (list == null) {
-                        list = new ArrayList<>();
-                        keysByColumn.put(keyColumn, list);
-                    }
-
-                    list.add(uniqueKey);
-                }
-            }
+            for (UniqueKeyDefinition uniqueKey : keys.values())
+                for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns())
+                    keysByColumn.computeIfAbsent(keyColumn, c -> new ArrayList<>()).add(uniqueKey);
         }
 
         List<UniqueKeyDefinition> list = keysByColumn.get(column);
-        return list != null ? list : Collections.<UniqueKeyDefinition>emptyList();
+        return list != null ? list : emptyList();
     }
 
     @Override
@@ -415,23 +399,14 @@ public class DefaultRelations implements Relations {
         if (foreignKeysByColumn == null) {
             foreignKeysByColumn = new LinkedHashMap<>();
 
-            for (ForeignKeyDefinition foreignKey : foreignKeys.values()) {
-                for (ColumnDefinition keyColumn : foreignKey.getKeyColumns()) {
-                    List<ForeignKeyDefinition> list = foreignKeysByColumn.get(keyColumn);
-
-                    if (list == null) {
-                        list = new ArrayList<>();
-                        foreignKeysByColumn.put(keyColumn, list);
-                    }
-
-                    list.add(foreignKey);
-                }
-            }
+            for (ForeignKeyDefinition foreignKey : foreignKeys.values())
+                for (ColumnDefinition keyColumn : foreignKey.getKeyColumns())
+                    foreignKeysByColumn.computeIfAbsent(keyColumn, c -> new ArrayList<>()).add(foreignKey);
         }
 
 
         List<ForeignKeyDefinition> list = foreignKeysByColumn.get(column);
-        return list != null ? list : Collections.<ForeignKeyDefinition>emptyList();
+        return list != null ? list : emptyList();
 	}
 
     @Override
@@ -448,21 +423,11 @@ public class DefaultRelations implements Relations {
     public List<CheckConstraintDefinition> getCheckConstraints(TableDefinition table) {
         if (checkConstraintsByTable == null) {
             checkConstraintsByTable = new LinkedHashMap<>();
-
-            for (Map.Entry<Key, CheckConstraintDefinition> entry : checkConstraints.entrySet()) {
-                List<CheckConstraintDefinition> list = checkConstraintsByTable.get(entry.getKey().table);
-
-                if (list == null) {
-                    list = new ArrayList<>();
-                    checkConstraintsByTable.put(entry.getKey().table, list);
-                }
-
-                list.add(entry.getValue());
-            }
+            checkConstraints.forEach((k, v) -> checkConstraintsByTable.computeIfAbsent(k.table, t -> new ArrayList<>()).add(v));
         }
 
         List<CheckConstraintDefinition> list = checkConstraintsByTable.get(table);
-        return list != null ? list : Collections.<CheckConstraintDefinition>emptyList();
+        return list != null ? list : emptyList();
     }
 
     private static Key key(TableDefinition definition, String keyName) {

@@ -101,14 +101,7 @@ final class ParamCollector extends AbstractBindContext {
     }
 
     private final List<Param<?>> result(String key) {
-        List<Param<?>> list = result.get(key);
-
-        if (list == null) {
-            list = new ArrayList<>();
-            result.put(key, list);
-        }
-
-        return list;
+        return result.computeIfAbsent(key, k -> new ArrayList<>());
     }
 
     @Override

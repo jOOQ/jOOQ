@@ -466,26 +466,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return this.<T> asField().as(alias);
     }
 
-
     @Override
     public <T> Field<T> asField(Function<? super Field<T>, ? extends String> aliasFunction) {
         return this.<T> asField().as(aliasFunction);
     }
-
 
     @Override
     public final Row fieldsRow() {
         return asTable().fieldsRow();
     }
 
-
-
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
-
-
 
     @Override
     public final <T> Field<T> field(Field<T> field) {
@@ -678,7 +672,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return new DerivedTable<>(this).as(alias, fieldAliases);
     }
 
-
     @Override
     public final Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
         return new DerivedTable<>(this).as(alias, aliasFunction);
@@ -688,7 +681,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Table<R> asTable(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
         return new DerivedTable<>(this).as(alias, aliasFunction);
     }
-
 
     @Override
     protected final Field<?>[] getFields(ResultSetMetaData meta) {
@@ -723,12 +715,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
-
-
-
-
-
-
 
 
 
@@ -2705,12 +2691,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
-
-
     private final void toSQLOrderBy(
         final Context<?> ctx,
         final Field<?>[] originalFields,
@@ -2744,9 +2724,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
                 ctx.sql(' ').visit(K_BY).separatorRequired(true);
-
-
-
 
 
 
@@ -2932,7 +2909,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return s.orderBy.size() > 0 || s.limit.isApplicable() || s.with != null;
     }
 
-    private final boolean unionParenthesis(
+    private final void unionParenthesis(
         Context<?> ctx,
         char parenthesis,
         Field<?>[] fields,
@@ -3012,8 +2989,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (derivedTableRequired)
                 ctx.sql(" x");
         }
-
-        return parensRequired;
     }
 
     @Override

@@ -265,14 +265,10 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         return new RowImplN(fields);
     }
 
-
-
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields);
     }
-
-
 
     @Override
     public final Field<?>[] fields(Field<?>... f) {

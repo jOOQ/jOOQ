@@ -111,18 +111,13 @@ implements
 
     final Name                                                            name;
     final Name[]                                                          fieldNames;
-
     final BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction;
-
 
     DerivedColumnListImpl(Name name, Name[] fieldNames) {
         this.name = name;
         this.fieldNames = fieldNames;
-
         this.fieldNameFunction = null;
-
     }
-
 
     DerivedColumnListImpl(String name, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
         this.name = DSL.name(name);
@@ -130,10 +125,8 @@ implements
         this.fieldNameFunction = fieldNameFunction;
     }
 
-
     final CommonTableExpression as0(Select select, Boolean materialized) {
         Select<?> s = select;
-
 
         if (fieldNameFunction != null) {
             List<Field<?>> source = s.getSelect();
@@ -144,7 +137,6 @@ implements
 
             return new CommonTableExpressionImpl(new DerivedColumnListImpl(name, names), s, materialized);
         }
-
 
         return new CommonTableExpressionImpl(this, s, materialized);
     }

@@ -159,7 +159,7 @@ final class UpdateImpl<R extends Record>
         if (value == null)
             return set(field, (T) null);
         else
-            return set(field, value.<T>asField());
+            return set(field, value.asField());
     }
 
     @Override

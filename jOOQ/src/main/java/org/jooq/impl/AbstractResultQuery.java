@@ -325,8 +325,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
 
 
 
-
-
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super R> subscriber) {
         subscriber.onSubscribe(new org.reactivestreams.Subscription() {
@@ -377,8 +375,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
             }
         });
     }
-
-
 
     @Override
     public final Cursor<R> fetchLazy() {

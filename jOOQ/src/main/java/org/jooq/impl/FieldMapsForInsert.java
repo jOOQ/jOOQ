@@ -364,11 +364,11 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
     final void set(Map<?, ?> map) {
         addFields(map.keySet());
-        for (Entry<?, ?> entry : map.entrySet()) {
-            Field<?> field = Tools.tableField(table, entry.getKey());
-            values.get(field)
-                  .set(rows - 1, Tools.field(entry.getValue(), field));
-        }
+
+        map.forEach((k, v) -> {
+            Field<?> field = Tools.tableField(table, k);
+            values.get(field).set(rows - 1, Tools.field(v, field));
+        });
     }
 
     private final void initNextRow() {
@@ -474,7 +474,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
                 @Override
                 public final Iterator<Entry<Field<?>, Field<?>>> iterator() {
                     return new Iterator<Entry<Field<?>, Field<?>>>() {
-                        Iterator<Entry<Field<?>, List<Field<?>>>> delegate = values.entrySet().iterator();
+                        final Iterator<Entry<Field<?>, List<Field<?>>>> delegate = values.entrySet().iterator();
 
                         @Override
                         public boolean hasNext() {

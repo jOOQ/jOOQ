@@ -88,12 +88,6 @@ final class FetchServerOutputListener extends DefaultExecuteListener {
 
 
 
-
-
-
-
-
-
             default:
                 break;
         }
@@ -102,10 +96,6 @@ final class FetchServerOutputListener extends DefaultExecuteListener {
     @Override
     public final void executeEnd(ExecuteContext ctx) {
         switch (ctx.family()) {
-
-
-
-
 
 
 

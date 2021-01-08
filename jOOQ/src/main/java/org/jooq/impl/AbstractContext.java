@@ -192,12 +192,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             : m == ParamCastMode.NEVER
             ? CastMode.NEVER
             : CastMode.DEFAULT;
-        this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>(new ScopeStack.Constructor<ScopeStackElement>() {
-            @Override
-            public ScopeStackElement create(int scopeLevel) {
-                return new ScopeStackElement(scopeLevel);
-            }
-        });
+        this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>(ScopeStackElement::new);
     }
 
     // ------------------------------------------------------------------------

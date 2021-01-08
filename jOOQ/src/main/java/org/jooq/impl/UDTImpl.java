@@ -115,14 +115,10 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
         return Tools.row0(fields);
     }
 
-
-
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
-
-
 
     @Override
     public final <T> Field<T> field(Field<T> field) {

@@ -712,8 +712,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
-
     abstract void accept0(Context<?> ctx);
 
     /**
@@ -1265,15 +1263,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                                 AbstractRecord.class,
                                 fields,
                                 originalConfiguration)
-                             .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
+                             .operate(record -> {
+                                record.values[0] = id;
+                                record.originals[0] = id;
 
-                                @Override
-                                public AbstractRecord operate(AbstractRecord record) throws RuntimeException {
-                                    record.values[0] = id;
-                                    record.originals[0] = id;
-
-                                    return record;
-                                }
+                                return record;
                             }));
                     }
                 }

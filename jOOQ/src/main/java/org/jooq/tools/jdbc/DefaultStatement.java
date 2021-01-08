@@ -301,8 +301,6 @@ public class DefaultStatement extends JDBC41Statement implements Statement {
         return getDelegateStatement().isPoolable();
     }
 
-
-
     // ------------------------------------------------------------------------
     // JDBC 4.1
     // ------------------------------------------------------------------------
@@ -360,8 +358,6 @@ public class DefaultStatement extends JDBC41Statement implements Statement {
     public long executeLargeUpdate(String sql, String[] columnNames) throws SQLException {
         return getDelegate().executeLargeUpdate(sql, columnNames);
     }
-
-
 
 
 

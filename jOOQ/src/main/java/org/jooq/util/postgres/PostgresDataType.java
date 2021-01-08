@@ -110,17 +110,13 @@ public class PostgresDataType {
     public static final DataType<Date>           DATE                     = new DefaultDataType<>(FAMILY, SQLDataType.DATE, "date");
     public static final DataType<Time>           TIME                     = new DefaultDataType<>(FAMILY, SQLDataType.TIME, "time(p)");
     public static final DataType<Time>           TIMEWITHOUTTIMEZONE      = new DefaultDataType<>(FAMILY, SQLDataType.TIME, "time(p) without time zone");
-
     public static final DataType<OffsetTime>     TIMEWITHTIMEZONE         = new DefaultDataType<>(FAMILY, SQLDataType.TIMEWITHTIMEZONE, "time(p) with time zone");
     public static final DataType<OffsetTime>     TIMETZ                   = new DefaultDataType<>(FAMILY, SQLDataType.TIMEWITHTIMEZONE, "timetz(p)");
-
     public static final DataType<Timestamp>      TIMESTAMP                = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p)");
     public static final DataType<Timestamp>      TIMESTAMPWITHOUTTIMEZONE = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p) without time zone");
-
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE    = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp(p) with time zone");
     public static final DataType<OffsetDateTime> TIMESTAMPTZ              = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamptz(p)");
     public static final DataType<Instant>        INSTANT                  = new DefaultDataType<>(FAMILY, SQLDataType.INSTANT, "timestamp(p) with time zone");
-
     public static final DataType<byte[]>         BYTEA                    = new DefaultDataType<>(FAMILY, SQLDataType.BLOB, "bytea");
     public static final DataType<YearToSecond>   INTERVAL                 = new DefaultDataType<>(FAMILY, SQLDataType.INTERVAL, "interval");
     public static final DataType<YearToMonth>    INTERVALYEARTOMONTH      = new DefaultDataType<>(FAMILY, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");

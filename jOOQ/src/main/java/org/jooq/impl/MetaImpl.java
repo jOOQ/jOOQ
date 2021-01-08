@@ -66,7 +66,6 @@ import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultString;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,7 +83,6 @@ import java.util.regex.Pattern;
 import org.jooq.Catalog;
 import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.ConnectionCallable;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -155,31 +153,23 @@ final class MetaImpl extends AbstractMeta {
         Result<Record> run(DatabaseMetaData meta) throws SQLException;
     }
 
-    private final Result<Record> meta(final MetaFunction consumer) {
-        if (databaseMetaData == null)
-            return dsl().connectionResult(new ConnectionCallable<Result<Record>>() {
-                @Override
-                public Result<Record> run(Connection connection) throws SQLException {
-                    return consumer.run(connection.getMetaData());
-                }
-            });
-        else
+    private final Result<Record> meta(MetaFunction consumer) {
+        if (databaseMetaData == null) {
+            return dsl().connectionResult(connection -> consumer.run(connection.getMetaData()));
+        }
+        else {
             try {
                 return consumer.run(databaseMetaData);
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while running MetaFunction", e);
             }
+        }
     }
 
     @Override
     final List<Catalog> getCatalogs0() {
         List<Catalog> result = new ArrayList<>();
-
-
-
-
-
 
 
 
@@ -279,23 +269,18 @@ final class MetaImpl extends AbstractMeta {
 
 
             if (!inverseSchemaCatalog) {
-                Result<Record> schemas = meta(new MetaFunction() {
-                    @Override
-                    public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                        return dsl().fetch(
+                Result<Record> schemas = meta(meta -> dsl().fetch(
 
 
 
 
 
 
-                            meta.getSchemas(),
+                    meta.getSchemas(),
 
-                            // [#2681] Work around a flaw in the MySQL JDBC driver
-                            SQLDataType.VARCHAR // TABLE_SCHEM
-                        );
-                    }
-                });
+                    // [#2681] Work around a flaw in the MySQL JDBC driver
+                    SQLDataType.VARCHAR // TABLE_SCHEM
+                ));
 
                 for (String name : schemas.getValues(0, String.class))
                     result.add(new MetaSchema(name, MetaCatalog.this));
@@ -303,15 +288,10 @@ final class MetaImpl extends AbstractMeta {
 
             // [#2760] MySQL JDBC confuses "catalog" and "schema"
             else {
-                Result<Record> schemas = meta(new MetaFunction() {
-                    @Override
-                    public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                        return dsl().fetch(
-                            meta.getCatalogs(),
-                            SQLDataType.VARCHAR  // TABLE_CATALOG
-                        );
-                    }
-                });
+                Result<Record> schemas = meta(meta -> dsl().fetch(
+                    meta.getCatalogs(),
+                    SQLDataType.VARCHAR  // TABLE_CATALOG
+                ));
 
                 for (String name : schemas.getValues(0, String.class))
                     result.add(new MetaSchema(name, MetaCatalog.this));
@@ -341,27 +321,25 @@ final class MetaImpl extends AbstractMeta {
 
         @Override
         public final synchronized List<Table<?>> getTables() {
-            Result<Record> tables = meta(new MetaFunction() {
-                @Override
-                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    String[] types = null;
+            Result<Record> tables = meta(meta -> {
+                String[] types = null;
 
-                    switch (family()) {
+                switch (family()) {
 
-                        // [#3977] PostgreSQL returns other object types, too
+                    // [#3977] PostgreSQL returns other object types, too
 
 
 
 
-                        case POSTGRES:
-                            types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
-                            break;
+                    case POSTGRES:
+                        types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
+                        break;
 
-                        // [#2323] SQLite JDBC drivers have a bug. They return other
-                        // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
-                        case SQLITE:
-                            types = new String[] { "TABLE", "VIEW" };
-                            break;
+                    // [#2323] SQLite JDBC drivers have a bug. They return other
+                    // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
+                    case SQLITE:
+                        types = new String[] { "TABLE", "VIEW" };
+                        break;
 
 
 
@@ -371,40 +349,39 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-                    }
-
-                    ResultSet rs;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    if (inverseSchemaCatalog)
-                        rs = meta.getTables(getName(), null, "%", types);
-
-                    else
-                        rs = meta.getTables(null, getName(), "%", types);
-
-                    return dsl().fetch(
-                        rs,
-
-                        // [#2681] Work around a flaw in the MySQL JDBC driver
-                        SQLDataType.VARCHAR, // TABLE_CAT
-                        SQLDataType.VARCHAR, // TABLE_SCHEM
-                        SQLDataType.VARCHAR, // TABLE_NAME
-                        SQLDataType.VARCHAR  // TABLE_TYPE
-                    );
                 }
+
+                ResultSet rs;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                if (inverseSchemaCatalog)
+                    rs = meta.getTables(getName(), null, "%", types);
+
+                else
+                    rs = meta.getTables(null, getName(), "%", types);
+
+                return dsl().fetch(
+                    rs,
+
+                    // [#2681] Work around a flaw in the MySQL JDBC driver
+                    SQLDataType.VARCHAR, // TABLE_CAT
+                    SQLDataType.VARCHAR, // TABLE_SCHEM
+                    SQLDataType.VARCHAR, // TABLE_NAME
+                    SQLDataType.VARCHAR  // TABLE_TYPE
+                );
             });
 
             List<Table<?>> result = new ArrayList<>(tables.size());
@@ -448,33 +425,26 @@ final class MetaImpl extends AbstractMeta {
                 final String sql = M_UNIQUE_KEYS.get(family());
 
                 if (sql != null) {
-                    Result<Record> result = meta(new MetaFunction() {
-                        @Override
-                        public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                            return DSL.using(meta.getConnection(), family()).resultQuery(
-                                sql,
-                                NO_SUPPORT_SCHEMAS.contains(dialect())
-                                    ? EMPTY_OBJECT
-                                    : inverseSchemaCatalog
-                                    ? new Object[] { catalog }
-                                    : new Object[] { schema }
-                            ).fetch();
-                        }
-                    });
+                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(
+                        sql,
+                        NO_SUPPORT_SCHEMAS.contains(dialect())
+                            ? EMPTY_OBJECT
+                            : inverseSchemaCatalog
+                            ? new Object[] { catalog }
+                            : new Object[] { schema }
+                    ).fetch());
 
                     // TODO Support catalogs as well
                     Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
                     ukCache = new LinkedHashMap<>();
 
-                    for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                        Record key = entry.getKey();
-                        Result<Record> value = entry.getValue();
+                    groups.forEach((k, v) -> {
                         ukCache.put(name(
-                            catalog == null ? null : key.get(0, String.class),
-                            key.get(1, String.class),
-                            key.get(2, String.class)
-                        ), value);
-                    }
+                            catalog == null ? null : k.get(0, String.class),
+                            k.get(1, String.class),
+                            k.get(2, String.class)
+                        ), v);
+                    });
                 }
             }
 
@@ -499,11 +469,7 @@ final class MetaImpl extends AbstractMeta {
                 Map<Record, Result<Record>> groups = columns.intoGroups(new Field[] { tableCat, tableSchem, tableName });
                 columnCache = new LinkedHashMap<>();
 
-                for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                    Record key = entry.getKey();
-                    Result<Record> value = entry.getValue();
-                    columnCache.put(name(key.get(tableCat), key.get(tableSchem), key.get(tableName)), value);
-                }
+                groups.forEach((k, v) -> columnCache.put(name(k.get(tableCat), k.get(tableSchem), k.get(tableName)), v));
             }
 
             if (columnCache != null)
@@ -513,14 +479,12 @@ final class MetaImpl extends AbstractMeta {
         }
 
         private final Result<Record> getColumns0(final String catalog, final String schema, final String table) {
-            return meta(new MetaFunction() {
-                @Override
-                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    ResultSet rs;
+            return meta(meta -> {
+                ResultSet rs;
 
-                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    if (inverseSchemaCatalog)
-                        rs = meta.getColumns(catalog, null, table, "%");
+                // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                if (inverseSchemaCatalog)
+                    rs = meta.getColumns(catalog, null, table, "%");
 
 
 
@@ -528,22 +492,21 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-                    else
-                        rs = meta.getColumns(null, schema, table, "%");
+                else
+                    rs = meta.getColumns(null, schema, table, "%");
 
 
-                    // Work around a bug in the SQL Server JDBC driver by
-                    // coercing data types to the expected types
-                    // The bug was reported here:
-                    // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
+                // Work around a bug in the SQL Server JDBC driver by
+                // coercing data types to the expected types
+                // The bug was reported here:
+                // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
 
-                    // [#9740] TODO: Make this call lenient with respect to
-                    //         column count, filling unavailable columns with
-                    //         default values.
-                    return rs.getMetaData().getColumnCount() < GET_COLUMNS_EXTENDED.length
-                        ? dsl().fetch(rs, GET_COLUMNS_SHORT)
-                        : dsl().fetch(rs, GET_COLUMNS_EXTENDED);
-                }
+                // [#9740] TODO: Make this call lenient with respect to
+                //         column count, filling unavailable columns with
+                //         default values.
+                return rs.getMetaData().getColumnCount() < GET_COLUMNS_EXTENDED.length
+                    ? dsl().fetch(rs, GET_COLUMNS_SHORT)
+                    : dsl().fetch(rs, GET_COLUMNS_EXTENDED);
             });
         }
 
@@ -563,7 +526,7 @@ final class MetaImpl extends AbstractMeta {
                         record.get(7, Long.class),
                         record.get(8, Long.class),
                         record.get(9, Long.class),
-                        (boolean) record.get(10, boolean.class),
+                        record.get(10, boolean.class),
                         record.get(11, Long.class)
                     ));
                 }
@@ -579,25 +542,13 @@ final class MetaImpl extends AbstractMeta {
                     : M_SEQUENCES.get(family());
 
                 if (sql != null) {
-                    Result<Record> result = meta(new MetaFunction() {
-                        @Override
-                        public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                            return DSL.using(meta.getConnection(), family()).resultQuery(sql, MetaSchema.this.getName()).fetch();
-                        }
-                    });
+                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(sql, MetaSchema.this.getName()).fetch());
 
                     // TODO Support catalogs as well
                     Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
                     sequenceCache = new LinkedHashMap<>();
 
-                    for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                        Record key = entry.getKey();
-                        Result<Record> value = entry.getValue();
-                        sequenceCache.put(name(
-                            key.get(0, String.class),
-                            key.get(1, String.class)
-                        ), value);
-                    }
+                    groups.forEach((k, v) -> sequenceCache.put(name(k.get(0, String.class), k.get(1, String.class)), v));
                 }
             }
 
@@ -680,14 +631,12 @@ final class MetaImpl extends AbstractMeta {
         @Override
         public final List<Index> getIndexes() {
             final String schema = getSchema() == null ? null : getSchema().getName();
-            Result<Record> result = removeSystemIndexes(meta(new MetaFunction() {
-                @Override
-                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    ResultSet rs;
+            Result<Record> result = removeSystemIndexes(meta(meta -> {
+                ResultSet rs;
 
-                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    if (inverseSchemaCatalog)
-                        rs = meta.getIndexInfo(schema, null, getName(), false, true);
+                // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                if (inverseSchemaCatalog)
+                    rs = meta.getIndexInfo(schema, null, getName(), false, true);
 
 
 
@@ -695,26 +644,25 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-                    else
-                        rs = meta.getIndexInfo(null, schema, getName(), false, true);
+                else
+                    rs = meta.getIndexInfo(null, schema, getName(), false, true);
 
-                    return dsl().fetch(
-                        rs,
-                        String.class,  // TABLE_CAT
-                        String.class,  // TABLE_SCHEM
-                        String.class,  // TABLE_NAME
-                        boolean.class, // NON_UNIQUE
-                        String.class,  // INDEX_QUALIFIER
-                        String.class,  // INDEX_NAME
-                        int.class,     // TYPE
-                        int.class,     // ORDINAL_POSITION
-                        String.class,  // COLUMN_NAME
-                        String.class,  // ASC_OR_DESC
-                        long.class,    // CARDINALITY
-                        long.class,    // PAGES
-                        String.class   // FILTER_CONDITION
-                    );
-                }
+                return dsl().fetch(
+                    rs,
+                    String.class,  // TABLE_CAT
+                    String.class,  // TABLE_SCHEM
+                    String.class,  // TABLE_NAME
+                    boolean.class, // NON_UNIQUE
+                    String.class,  // INDEX_QUALIFIER
+                    String.class,  // INDEX_NAME
+                    int.class,     // TYPE
+                    int.class,     // ORDINAL_POSITION
+                    String.class,  // COLUMN_NAME
+                    String.class,  // ASC_OR_DESC
+                    long.class,    // CARDINALITY
+                    long.class,    // PAGES
+                    String.class   // FILTER_CONDITION
+                );
             }));
 
             // Sort by INDEX_NAME (5), ORDINAL_POSITION (7)
@@ -776,11 +724,10 @@ final class MetaImpl extends AbstractMeta {
             if (uks != null) {
                 Map<String, Result<Record>> groups = uks.intoGroups((Field<String>) uks.field(3));
 
-                for (Entry<String, Result<Record>> group : groups.entrySet()) {
-                    Result<Record> columns = group.getValue();
-                    columns.sortAsc(5);
-                    result.add(createUniqueKey(columns, 4, 3, false));
-                }
+                groups.forEach((k, v) -> {
+                    v.sortAsc(5);
+                    result.add(createUniqueKey(v, 4, 3, false));
+                });
             }
 
             return result;
@@ -795,14 +742,12 @@ final class MetaImpl extends AbstractMeta {
 
 
             final String schema = getSchema() == null ? null : getSchema().getName();
-            Result<Record> result = meta(new MetaFunction() {
-                @Override
-                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    ResultSet rs;
+            Result<Record> result = meta(meta -> {
+                ResultSet rs;
 
-                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    if (inverseSchemaCatalog)
-                        rs = meta.getPrimaryKeys(schema, null, getName());
+                // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                if (inverseSchemaCatalog)
+                    rs = meta.getPrimaryKeys(schema, null, getName());
 
 
 
@@ -810,19 +755,18 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-                    else
-                        rs = meta.getPrimaryKeys(null, schema, getName());
+                else
+                    rs = meta.getPrimaryKeys(null, schema, getName());
 
-                    return dsl().fetch(
-                        rs,
-                        String.class, // TABLE_CAT
-                        String.class, // TABLE_SCHEM
-                        String.class, // TABLE_NAME
-                        String.class, // COLUMN_NAME
-                        int.class,    // KEY_SEQ
-                        String.class  // PK_NAME
-                    );
-                }
+                return dsl().fetch(
+                    rs,
+                    String.class, // TABLE_CAT
+                    String.class, // TABLE_SCHEM
+                    String.class, // TABLE_NAME
+                    String.class, // COLUMN_NAME
+                    int.class,    // KEY_SEQ
+                    String.class  // PK_NAME
+                );
             });
 
             // Sort by KEY_SEQ
@@ -833,29 +777,26 @@ final class MetaImpl extends AbstractMeta {
         @Override
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<Record, ?>> getReferences() {
-            Result<Record> result = meta(new MetaFunction() {
-                @Override
-                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    ResultSet rs = meta.getImportedKeys(null, getSchema().getName(), getName());
-                    return dsl().fetch(
-                        rs,
-                        String.class,  // PKTABLE_CAT
-                        String.class,  // PKTABLE_SCHEM
-                        String.class,  // PKTABLE_NAME
-                        String.class,  // PKCOLUMN_NAME
-                        String.class,  // FKTABLE_CAT
+            Result<Record> result = meta(meta -> {
+                ResultSet rs = meta.getImportedKeys(null, getSchema().getName(), getName());
+                return dsl().fetch(
+                    rs,
+                    String.class,  // PKTABLE_CAT
+                    String.class,  // PKTABLE_SCHEM
+                    String.class,  // PKTABLE_NAME
+                    String.class,  // PKCOLUMN_NAME
+                    String.class,  // FKTABLE_CAT
 
-                        String.class,  // FKTABLE_SCHEM
-                        String.class,  // FKTABLE_NAME
-                        String.class,  // FKCOLUMN_NAME
-                        Short.class,   // KEY_SEQ
-                        Short.class,   // UPDATE_RULE
+                    String.class,  // FKTABLE_SCHEM
+                    String.class,  // FKTABLE_NAME
+                    String.class,  // FKCOLUMN_NAME
+                    Short.class,   // KEY_SEQ
+                    Short.class,   // UPDATE_RULE
 
-                        Short.class,   // DELETE_RULE
-                        String.class,  // FK_NAME
-                        String.class   // PK_NAME
-                    );
-                }
+                    Short.class,   // DELETE_RULE
+                    String.class,  // FK_NAME
+                    String.class   // PK_NAME
+                );
             });
 
             Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
@@ -871,19 +812,19 @@ final class MetaImpl extends AbstractMeta {
                 schemas.put(schema.getName(), schema);
 
             List<ForeignKey<Record, ?>> references = new ArrayList<>(groups.size());
-            for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
+            groups.forEach((k, v) -> {
 
                 // [#7377] The schema may be null instead of "" in some dialects
-                Schema schema = schemas.get(defaultString(entry.getKey().get(1, String.class)));
+                Schema schema = schemas.get(defaultString(k.get(1, String.class)));
 
-                String fkName = entry.getKey().get(3, String.class);
-                String pkName = entry.getKey().get(4, String.class);
-                Table<Record> pkTable = (Table<Record>) lookupTable(schema, entry.getKey().get(2, String.class));
-                TableField<Record, ?>[] pkFields = new TableField[entry.getValue().size()];
-                TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
+                String fkName = k.get(3, String.class);
+                String pkName = k.get(4, String.class);
+                Table<Record> pkTable = (Table<Record>) lookupTable(schema, k.get(2, String.class));
+                TableField<Record, ?>[] pkFields = new TableField[v.size()];
+                TableField<Record, ?>[] fkFields = new TableField[v.size()];
 
-                for (int i = 0; i < entry.getValue().size(); i++) {
-                    Record record = entry.getValue().get(i);
+                for (int i = 0; i < v.size(); i++) {
+                    Record record = v.get(i);
                     pkFields[i] = (TableField<Record, ?>) pkTable.field(record.get(3, String.class));
                     fkFields[i] = (TableField<Record, ?>)         field(record.get(7, String.class));
                 }
@@ -896,16 +837,10 @@ final class MetaImpl extends AbstractMeta {
                     pkFields,
                     true
                 ));
-            }
+            });
 
             return references;
         }
-
-
-
-
-
-
 
 
 
@@ -1155,30 +1090,27 @@ final class MetaImpl extends AbstractMeta {
         @Override
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<?, Record>> getReferences() {
-            Result<Record> result = meta(new MetaFunction() {
-                @Override
-                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    ResultSet rs = meta.getExportedKeys(null, getTable().getSchema().getName(), getTable().getName());
+            Result<Record> result = meta(meta -> {
+                ResultSet rs = meta.getExportedKeys(null, getTable().getSchema().getName(), getTable().getName());
 
-                    return dsl().fetch(
-                        rs,
-                        String.class,  // PKTABLE_CAT
-                        String.class,  // PKTABLE_SCHEM
-                        String.class,  // PKTABLE_NAME
-                        String.class,  // PKCOLUMN_NAME
-                        String.class,  // FKTABLE_CAT
+                return dsl().fetch(
+                    rs,
+                    String.class,  // PKTABLE_CAT
+                    String.class,  // PKTABLE_SCHEM
+                    String.class,  // PKTABLE_NAME
+                    String.class,  // PKCOLUMN_NAME
+                    String.class,  // FKTABLE_CAT
 
-                        String.class,  // FKTABLE_SCHEM
-                        String.class,  // FKTABLE_NAME
-                        String.class,  // FKCOLUMN_NAME
-                        Short.class,   // KEY_SEQ
-                        Short.class,   // UPDATE_RULE
+                    String.class,  // FKTABLE_SCHEM
+                    String.class,  // FKTABLE_NAME
+                    String.class,  // FKCOLUMN_NAME
+                    Short.class,   // KEY_SEQ
+                    Short.class,   // UPDATE_RULE
 
-                        Short.class,   // DELETE_RULE
-                        String.class,  // FK_NAME
-                        String.class   // PK_NAME
-                    );
-                }
+                    Short.class,   // DELETE_RULE
+                    String.class,  // FK_NAME
+                    String.class   // PK_NAME
+                );
             });
 
             Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
@@ -1194,21 +1126,19 @@ final class MetaImpl extends AbstractMeta {
                 schemas.put(schema.getName(), schema);
 
             List<ForeignKey<?, Record>> references = new ArrayList<>(groups.size());
-            for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                Record key = entry.getKey();
-                Result<Record> value = entry.getValue();
+            groups.forEach((k, v) -> {
 
                 // [#7377] The schema may be null instead of "" in some dialects
-                Schema schema = schemas.get(defaultString(key.get(1, String.class)));
+                Schema schema = schemas.get(defaultString(k.get(1, String.class)));
 
-                Table<Record> fkTable = (Table<Record>) lookupTable(schema, key.get(2, String.class));
-                String fkName = key.get(3, String.class);
-                TableField<Record, ?>[] fkFields = new TableField[value.size()];
-                TableField<Record, ?>[] pkFields = new TableField[value.size()];
+                Table<Record> fkTable = (Table<Record>) lookupTable(schema, k.get(2, String.class));
+                String fkName = k.get(3, String.class);
+                TableField<Record, ?>[] fkFields = new TableField[v.size()];
+                TableField<Record, ?>[] pkFields = new TableField[v.size()];
 
-                for (int i = 0; i < value.size(); i++) {
-                    pkFields[i] = (TableField<Record, ?>) getTable().field(value.get(i).get(3, String.class));
-                    fkFields[i] = (TableField<Record, ?>) fkTable.field(value.get(i).get(7, String.class));
+                for (int i = 0; i < v.size(); i++) {
+                    pkFields[i] = (TableField<Record, ?>) getTable().field(v.get(i).get(3, String.class));
+                    fkFields[i] = (TableField<Record, ?>) fkTable.field(v.get(i).get(7, String.class));
                 }
 
                 references.add(new ReferenceImpl<>(
@@ -1219,7 +1149,7 @@ final class MetaImpl extends AbstractMeta {
                     pkFields,
                     true
                 ));
-            }
+            });
 
             return references;
         }

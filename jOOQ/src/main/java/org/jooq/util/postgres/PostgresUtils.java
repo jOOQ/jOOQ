@@ -88,11 +88,10 @@ public class PostgresUtils {
     public static byte[] toBytes(final String string) {
 
         // Hex encoding is the default since Postgres 9.0
-        if (string.startsWith(POSTGRESQL_HEX_STRING_PREFIX)) {
+        if (string.startsWith(POSTGRESQL_HEX_STRING_PREFIX))
             return toBytesFromHexEncoding(string);
-        } else {
+        else
             return toBytesFromOctalEncoding(string);
-        }
     }
 
     private static byte[] toBytesFromOctalEncoding(final String string) {
@@ -102,7 +101,8 @@ public class PostgresUtils {
         try {
             convertOctalToBytes(reader, bytes);
             return bytes.toByteArray();
-        } catch (IOException x) {
+        }
+        catch (IOException x) {
             throw new DataTypeException("failed to parse octal hex string: " + x.getMessage(), x);
         }
     }
@@ -112,28 +112,32 @@ public class PostgresUtils {
         while ((ch = reader.read()) != -1) {
             if (ch == '\\') {
                 ch = reader.read();
-                if (ch == -1) {
+
+                if (ch == -1)
                     throw new DataTypeException("unexpected end of stream after initial backslash");
-                }
                 if (ch == '\\') {
                     bytes.write('\\');
                     continue;
                 }
+
                 int val = octalValue(ch);
                 ch = reader.read();
-                if (ch == -1) {
+
+                if (ch == -1)
                     throw new DataTypeException("unexpected end of octal value");
-                }
+
                 val <<= 3;
                 val += octalValue(ch);
                 ch = reader.read();
-                if (ch == -1) {
+
+                if (ch == -1)
                     throw new DataTypeException("unexpected end of octal value");
-                }
+
                 val <<= 3;
                 val += octalValue(ch);
                 bytes.write(val);
-            } else {
+            }
+            else {
                 bytes.write(ch);
             }
         }
@@ -150,9 +154,10 @@ public class PostgresUtils {
         try {
             while ((hexDigit = input.read()) != -1) {
                 byteValue = (hexValue(hexDigit) << 4);
-                if ((hexDigit = input.read()) == -1) {
+
+                if ((hexDigit = input.read()) == -1)
                     break;
-                }
+
                 byteValue += hexValue(hexDigit);
                 bytes.write(byteValue);
             }
@@ -171,15 +176,12 @@ public class PostgresUtils {
      * Get the hex value of a <code>char</code> digit
      */
     private static int hexValue(final int hexDigit) {
-        if (hexDigit >= '0' && hexDigit <= '9') {
+        if (hexDigit >= '0' && hexDigit <= '9')
             return hexDigit - '0';
-        }
-        else if (hexDigit >= 'a' && hexDigit <= 'f') {
+        else if (hexDigit >= 'a' && hexDigit <= 'f')
             return hexDigit - 'a' + 10;
-        }
-        else if (hexDigit >= 'A' && hexDigit <= 'F') {
+        else if (hexDigit >= 'A' && hexDigit <= 'F')
             return hexDigit - 'A' + 10;
-        }
 
         throw new DataTypeException("unknown postgresql character format for hexValue: " + hexDigit);
     }
@@ -188,9 +190,8 @@ public class PostgresUtils {
      * Get the octal value of a {@code char} digit
      */
     private static int octalValue(final int octalDigit) {
-        if (octalDigit < '0' || octalDigit > '7') {
+        if (octalDigit < '0' || octalDigit > '7')
             throw new DataTypeException("unknown postgresql character format for octalValue: " + octalDigit);
-        }
 
         return octalDigit - '0';
     }
@@ -243,17 +244,16 @@ public class PostgresUtils {
             i.call("scale", -1);
         }
 
-        Double seconds = i.call("getSeconds").<Double>get();
+        Double seconds = i.call("getSeconds").get();
         DayToSecond result = new DayToSecond(
-            i.call("getDays").<Integer>get(),
-            i.call("getHours").<Integer>get(),
-            i.call("getMinutes").<Integer>get(),
+            i.call("getDays").get(),
+            i.call("getHours").get(),
+            i.call("getMinutes").get(),
             seconds.intValue(),
             (int) (1000000000 * (seconds - seconds.intValue())));
 
-        if (negative) {
+        if (negative)
             result = result.neg();
-        }
 
         return result;
     }
@@ -270,12 +270,11 @@ public class PostgresUtils {
         }
 
         YearToMonth result = new YearToMonth(
-            i.call("getYears").<Integer>get(),
-            i.call("getMonths").<Integer>get());
+            i.call("getYears").get(),
+            i.call("getMonths").get());
 
-        if (negative) {
+        if (negative)
             result = result.neg();
-        }
 
         return result;
     }

@@ -86,7 +86,7 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
     /**
      * [#8517] Convert the bind values in this row to the types of columns of another row
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("rawtypes")
     final AbstractRow convertTo(Row row) {
         int size = fields.size();
 
@@ -147,14 +147,10 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
         return this;
     }
 
-
-
     @Override
     public final Stream<Field<?>> fieldStream() {
         return Stream.of(fields());
     }
-
-
 
     @Override
     public final <T> Field<T> field(Field<T> field) {

@@ -116,7 +116,6 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
         return result;
     }
 
-
     /**
      * Transform a {@link Duration} into a {@link YearToSecond} interval by
      * taking its number of milliseconds.
@@ -140,7 +139,6 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
         );
     }
 
-
     /**
      * Parse a string representation of a <code>INTERVAL YEAR TO SECOND</code>
      *
@@ -162,15 +160,12 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
                 if (matcher.find()) {
                     return new YearToSecond(parseYM(matcher, 0), parseDS(matcher, 3));
                 }
-
-
                 else {
                     try {
                         return YearToSecond.valueOf(Duration.parse(string));
                     }
                     catch (DateTimeParseException ignore) {}
                 }
-
             }
         }
 

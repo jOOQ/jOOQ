@@ -79,13 +79,8 @@ public final class Mock {
      * Create a new {@link MockDataProvider} that always returns the same mock
      * results for all queries.
      */
-    public static final MockDataProvider of(final MockResult... result) {
-        return new MockDataProvider() {
-            @Override
-            public MockResult[] execute(MockExecuteContext ctx) {
-                return result;
-            }
-        };
+    public static final MockDataProvider of(MockResult... result) {
+        return ctx -> result;
     }
 
     /**

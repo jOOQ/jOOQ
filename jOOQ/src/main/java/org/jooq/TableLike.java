@@ -116,7 +116,6 @@ public interface TableLike<R extends Record> extends Fields, QueryPart {
     @Support
     Table<R> asTable(Table<?> alias, Field<?>... fieldAliases);
 
-
     /**
      * The underlying aliased table representation of this object.
      *
@@ -146,5 +145,4 @@ public interface TableLike<R extends Record> extends Fields, QueryPart {
     @NotNull
     @Support
     Table<R> asTable(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
-
 }

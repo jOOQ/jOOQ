@@ -38,6 +38,8 @@
 
 package org.jooq.meta.derby;
 
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.condition;
@@ -341,17 +343,10 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<>();
-
-        for (String name : create()
-                .select(SYSSCHEMAS.SCHEMANAME)
+        return
+        create().select(SYSSCHEMAS.SCHEMANAME)
                 .from(SYSSCHEMAS)
-                .fetch(SYSSCHEMAS.SCHEMANAME)) {
-
-            result.add(new SchemaDefinition(this, name, ""));
-        }
-
-        return result;
+                .collect(mapping(r -> new SchemaDefinition(this, r.value1(), ""), toList()));
     }
 
     @Override

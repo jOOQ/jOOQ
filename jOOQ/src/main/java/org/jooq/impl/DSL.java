@@ -885,7 +885,6 @@ public class DSL {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
 
-
     /**
      * Create a <code>WITH</code> clause to supply subsequent
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
@@ -914,7 +913,6 @@ public class DSL {
     public static WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, false).with(alias, fieldNameFunction);
     }
-
 
 
 
@@ -1936,7 +1934,6 @@ public class DSL {
         return new WithImpl(null, true).with(alias, fieldAliases);
     }
 
-
     /**
      * Create a <code>WITH</code> clause to supply subsequent
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
@@ -1969,7 +1966,6 @@ public class DSL {
     public static WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, true).with(alias, fieldNameFunction);
     }
-
 
 
 
@@ -8259,7 +8255,6 @@ public class DSL {
         return dsl().createView(view, fields);
     }
 
-
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      * <p>
@@ -8323,7 +8318,6 @@ public class DSL {
         return dsl().createView(view, fieldNameFunction);
     }
 
-
     /**
      * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
      *
@@ -8356,7 +8350,6 @@ public class DSL {
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Field<?>... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
-
 
     /**
      * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
@@ -8421,7 +8414,6 @@ public class DSL {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
 
-
     /**
      * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
      *
@@ -8454,7 +8446,6 @@ public class DSL {
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Field<?>... fields) {
         return dsl().createViewIfNotExists(view, fields);
     }
-
 
     /**
      * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
@@ -8518,7 +8509,6 @@ public class DSL {
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
     }
-
 
     /**
      * Create a new DSL <code>CREATE TYPE</code> statement.
@@ -13862,7 +13852,7 @@ public class DSL {
         if (select == null)
             return (Field) NULL();
         else
-            return select.<T>asField();
+            return select.asField();
     }
 
     /**
@@ -17709,7 +17699,6 @@ public class DSL {
         return currentTimestamp(precision);
     }
 
-
     /**
      * Get the current_date() function returning a SQL standard
      * {@link SQLDataType#DATE} type.
@@ -17806,7 +17795,6 @@ public class DSL {
     public static Field<Instant> currentInstant() {
         return currentTimestamp().cast(SQLDataType.INSTANT.notNull());
     }
-
 
     /**
      * Get the date difference between <code>endDate - startDate</code> in
@@ -18248,8 +18236,6 @@ public class DSL {
         return new TimestampDiff(Tools.nullSafe(timestamp1), Tools.nullSafe(timestamp2));
     }
 
-
-
     /**
      * Get the date difference between <code>endDate - startDate</code> in
      * number of days.
@@ -18690,8 +18676,6 @@ public class DSL {
         return new TimestampDiff(Tools.nullSafe(timestamp1), Tools.nullSafe(timestamp2));
     }
 
-
-
     /**
      * Truncate a date to the beginning of the day.
      */
@@ -18709,8 +18693,6 @@ public class DSL {
     public static Field<Date> trunc(Date date, DatePart part) {
         return trunc(Tools.field(date), part);
     }
-
-
 
     /**
      * Truncate a date to the beginning of the day.
@@ -18730,8 +18712,6 @@ public class DSL {
         return trunc(Tools.field(date), part);
     }
 
-
-
     /**
      * Truncate a timestamp to the beginning of the day.
      */
@@ -18750,8 +18730,6 @@ public class DSL {
         return trunc(Tools.field(timestamp), part);
     }
 
-
-
     /**
      * Truncate a timestamp to the beginning of the day.
      */
@@ -18769,8 +18747,6 @@ public class DSL {
     public static Field<LocalDateTime> trunc(LocalDateTime timestamp, DatePart part) {
         return trunc(Tools.field(timestamp), part);
     }
-
-
 
     /**
      * Truncate a date or a timestamp to the beginning of the day.
@@ -18801,8 +18777,6 @@ public class DSL {
         return extract(Tools.field(Convert.convert(value, Timestamp.class)), datePart);
     }
 
-
-
     /**
      * Get the extract(field, datePart) function.
      * <p>
@@ -18813,8 +18787,6 @@ public class DSL {
     public static Field<Integer> extract(Temporal value, DatePart datePart) {
         return extract(Tools.field(value), datePart);
     }
-
-
 
     /**
      * Get the extract(field, datePart) function.
@@ -18839,8 +18811,6 @@ public class DSL {
         return extract(value, DatePart.EPOCH);
     }
 
-
-
     /**
      * Get the epoch of a date.
      * <p>
@@ -18852,8 +18822,6 @@ public class DSL {
     public static Field<Integer> epoch(Temporal value) {
         return extract(value, DatePart.EPOCH);
     }
-
-
 
     /**
      * Get the epoch of a date.
@@ -18879,8 +18847,6 @@ public class DSL {
         return extract(value, DatePart.MILLENNIUM);
     }
 
-
-
     /**
      * Get the millennium of a date.
      * <p>
@@ -18892,8 +18858,6 @@ public class DSL {
     public static Field<Integer> millennium(Temporal value) {
         return extract(value, DatePart.MILLENNIUM);
     }
-
-
 
     /**
      * Get the millennium of a date.
@@ -18919,8 +18883,6 @@ public class DSL {
         return extract(value, DatePart.CENTURY);
     }
 
-
-
     /**
      * Get the century of a date.
      * <p>
@@ -18932,8 +18894,6 @@ public class DSL {
     public static Field<Integer> century(Temporal value) {
         return extract(value, DatePart.CENTURY);
     }
-
-
 
     /**
      * Get the century of a date.
@@ -18959,8 +18919,6 @@ public class DSL {
         return extract(value, DatePart.DECADE);
     }
 
-
-
     /**
      * Get the decade of a date.
      * <p>
@@ -18972,8 +18930,6 @@ public class DSL {
     public static Field<Integer> decade(Temporal value) {
         return extract(value, DatePart.DECADE);
     }
-
-
 
     /**
      * Get the decade of a date.
@@ -18999,8 +18955,6 @@ public class DSL {
         return extract(value, DatePart.QUARTER);
     }
 
-
-
     /**
      * Get the quarter of a date.
      * <p>
@@ -19012,8 +18966,6 @@ public class DSL {
     public static Field<Integer> quarter(Temporal value) {
         return extract(value, DatePart.QUARTER);
     }
-
-
 
     /**
      * Get the quarter of a date.
@@ -19039,8 +18991,6 @@ public class DSL {
         return extract(value, DatePart.YEAR);
     }
 
-
-
     /**
      * Get the year part of a date.
      * <p>
@@ -19052,8 +19002,6 @@ public class DSL {
     public static Field<Integer> year(Temporal value) {
         return extract(value, DatePart.YEAR);
     }
-
-
 
     /**
      * Get the year part of a date.
@@ -19079,8 +19027,6 @@ public class DSL {
         return extract(value, DatePart.MONTH);
     }
 
-
-
     /**
      * Get the month part of a date.
      * <p>
@@ -19092,8 +19038,6 @@ public class DSL {
     public static Field<Integer> month(Temporal value) {
         return extract(value, DatePart.MONTH);
     }
-
-
 
     /**
      * Get the month part of a date.
@@ -19119,8 +19063,6 @@ public class DSL {
         return extract(value, DatePart.WEEK);
     }
 
-
-
     /**
      * Get the week part of a date.
      * <p>
@@ -19132,8 +19074,6 @@ public class DSL {
     public static Field<Integer> week(Temporal value) {
         return extract(value, DatePart.WEEK);
     }
-
-
 
     /**
      * Get the week part of a date.
@@ -19159,8 +19099,6 @@ public class DSL {
         return extract(value, DatePart.DAY);
     }
 
-
-
     /**
      * Get the day part of a date.
      * <p>
@@ -19172,8 +19110,6 @@ public class DSL {
     public static Field<Integer> day(Temporal value) {
         return extract(value, DatePart.DAY);
     }
-
-
 
     /**
      * Get the day part of a date.
@@ -19199,8 +19135,6 @@ public class DSL {
         return extract(value, DatePart.DAY_OF_WEEK);
     }
 
-
-
     /**
      * Get the day of week part of a date.
      * <p>
@@ -19212,8 +19146,6 @@ public class DSL {
     public static Field<Integer> dayOfWeek(Temporal value) {
         return extract(value, DatePart.DAY_OF_WEEK);
     }
-
-
 
     /**
      * Get the day of week part of a date.
@@ -19239,8 +19171,6 @@ public class DSL {
         return extract(value, DatePart.ISO_DAY_OF_WEEK);
     }
 
-
-
     /**
      * Get the ISO day of week part of a date.
      * <p>
@@ -19252,8 +19182,6 @@ public class DSL {
     public static Field<Integer> isoDayOfWeek(Temporal value) {
         return extract(value, DatePart.ISO_DAY_OF_WEEK);
     }
-
-
 
     /**
      * Get the ISO day of week part of a date.
@@ -19279,8 +19207,6 @@ public class DSL {
         return extract(value, DatePart.DAY_OF_YEAR);
     }
 
-
-
     /**
      * Get the day of week part of a date.
      * <p>
@@ -19292,8 +19218,6 @@ public class DSL {
     public static Field<Integer> dayOfYear(Temporal value) {
         return extract(value, DatePart.DAY_OF_YEAR);
     }
-
-
 
     /**
      * Get the day of week part of a date.
@@ -19319,8 +19243,6 @@ public class DSL {
         return extract(value, DatePart.HOUR);
     }
 
-
-
     /**
      * Get the hour part of a date.
      * <p>
@@ -19332,8 +19254,6 @@ public class DSL {
     public static Field<Integer> hour(Temporal value) {
         return extract(value, DatePart.HOUR);
     }
-
-
 
     /**
      * Get the hour part of a date.
@@ -19359,8 +19279,6 @@ public class DSL {
         return extract(value, DatePart.MINUTE);
     }
 
-
-
     /**
      * Get the minute part of a date.
      * <p>
@@ -19372,8 +19290,6 @@ public class DSL {
     public static Field<Integer> minute(Temporal value) {
         return extract(value, DatePart.MINUTE);
     }
-
-
 
     /**
      * Get the minute part of a date.
@@ -19399,8 +19315,6 @@ public class DSL {
         return extract(value, DatePart.SECOND);
     }
 
-
-
     /**
      * Get the second part of a date.
      * <p>
@@ -19412,8 +19326,6 @@ public class DSL {
     public static Field<Integer> second(Temporal value) {
         return extract(value, DatePart.SECOND);
     }
-
-
 
     /**
      * Get the second part of a date.
@@ -19439,8 +19351,6 @@ public class DSL {
         return extract(value, DatePart.MILLISECOND);
     }
 
-
-
     /**
      * Get the millisecond part of a date.
      * <p>
@@ -19452,8 +19362,6 @@ public class DSL {
     public static Field<Integer> millisecond(Temporal value) {
         return extract(value, DatePart.MILLISECOND);
     }
-
-
 
     /**
      * Get the millisecond part of a date.
@@ -19479,8 +19387,6 @@ public class DSL {
         return extract(value, DatePart.MICROSECOND);
     }
 
-
-
     /**
      * Get the microsecond part of a date.
      * <p>
@@ -19492,8 +19398,6 @@ public class DSL {
     public static Field<Integer> microsecond(Temporal value) {
         return extract(value, DatePart.MICROSECOND);
     }
-
-
 
     /**
      * Get the microsecond part of a date.
@@ -19519,8 +19423,6 @@ public class DSL {
         return extract(value, DatePart.TIMEZONE);
     }
 
-
-
     /**
      * Get the timezone part of a date.
      * <p>
@@ -19532,8 +19434,6 @@ public class DSL {
     public static Field<Integer> timezone(Temporal value) {
         return extract(value, DatePart.TIMEZONE);
     }
-
-
 
     /**
      * Get the timezone part of a date.
@@ -19559,8 +19459,6 @@ public class DSL {
         return extract(value, DatePart.TIMEZONE_HOUR);
     }
 
-
-
     /**
      * Get the timezoneHour part of a date.
      * <p>
@@ -19572,8 +19470,6 @@ public class DSL {
     public static Field<Integer> timezoneHour(Temporal value) {
         return extract(value, DatePart.TIMEZONE_HOUR);
     }
-
-
 
     /**
      * Get the timezoneHour part of a date.
@@ -19599,8 +19495,6 @@ public class DSL {
         return extract(value, DatePart.TIMEZONE_MINUTE);
     }
 
-
-
     /**
      * Get the timezoneMinute part of a date.
      * <p>
@@ -19612,8 +19506,6 @@ public class DSL {
     public static Field<Integer> timezoneMinute(Temporal value) {
         return extract(value, DatePart.TIMEZONE_MINUTE);
     }
-
-
 
     /**
      * Get the timezoneMinute part of a date.
@@ -19707,7 +19599,6 @@ public class DSL {
     public static Field<Timestamp> timestamp(Field<? extends java.util.Date> field) {
         return new DateOrTime<>(field, SQLDataType.TIMESTAMP);
     }
-
 
     /**
      * Convert a string value to a <code>DATE</code>.
@@ -20021,8 +19912,6 @@ public class DSL {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
     }
 
-
-
     // ------------------------------------------------------------------------
     // XXX Construction of GROUPING SET functions
     // ------------------------------------------------------------------------
@@ -20135,7 +20024,7 @@ public class DSL {
         List<Field<?>>[] array = new List[fields.length];
 
         for (int i = 0; i < fields.length; i++)
-            array[i] = Arrays.<Field<?>>asList(fields[i]);
+            array[i] = asList(fields[i]);
 
         return groupingSets(array);
     }
@@ -23354,7 +23243,6 @@ public class DSL {
         return value((Object) value, SQLDataType.TIMESTAMP);
     }
 
-
     /**
      * A synonym for {@link #val(LocalDate)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
@@ -23426,7 +23314,6 @@ public class DSL {
     public static Param<Instant> value(Instant value) {
         return value((Object) value, SQLDataType.INSTANT);
     }
-
 
     /**
      * A synonym for {@link #val(UUID)} to be used in Scala and Groovy, where
@@ -24086,7 +23973,6 @@ public class DSL {
         return inline((Object) value, SQLDataType.TIMESTAMP);
     }
 
-
     /**
      * Create a bind value that is always inlined.
      * <p>
@@ -24218,7 +24104,6 @@ public class DSL {
     public static Param<Instant> inline(Instant value) {
         return inline((Object) value, SQLDataType.INSTANT);
     }
-
 
     /**
      * Create a bind value that is always inlined.
@@ -24733,7 +24618,6 @@ public class DSL {
         return val((Object) value, SQLDataType.TIMESTAMP);
     }
 
-
     /**
      * Get a bind value.
      *
@@ -24799,7 +24683,6 @@ public class DSL {
     public static Param<Instant> val(Instant value) {
         return val((Object) value, SQLDataType.INSTANT);
     }
-
 
     /**
      * Get a bind value.

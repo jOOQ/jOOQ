@@ -37,6 +37,8 @@
  */
 package org.jooq.meta.h2;
 
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -71,6 +73,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -394,20 +397,18 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<>();
-
-        for (Record record : create().select(
+        return
+        create().select(
                     SCHEMATA.SCHEMA_NAME,
                     SCHEMATA.REMARKS)
                 .from(SCHEMATA)
-                .fetch()) {
-
-            result.add(new SchemaDefinition(this,
-                record.get(SCHEMATA.SCHEMA_NAME),
-                record.get(SCHEMATA.REMARKS)));
-        }
-
-        return result;
+                .collect(mapping(
+                    r -> new SchemaDefinition(this,
+                        r.get(SCHEMATA.SCHEMA_NAME),
+                        r.get(SCHEMATA.REMARKS)
+                    ),
+                    toList()
+                ));
     }
 
     @Override

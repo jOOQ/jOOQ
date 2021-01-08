@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
+import static java.util.Comparator.comparing;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_CHECK;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -44,12 +46,7 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
@@ -259,21 +256,18 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         // Columns
         // -------------------------------------------------------------------------------------------------------------
         List<Column> columns = new ArrayList<>(meta.getColumns());
-        Collections.sort(columns, new Comparator<Column>() {
-            @Override
-            public int compare(Column o1, Column o2) {
-                Integer p1 = o1.getOrdinalPosition();
-                Integer p2 = o2.getOrdinalPosition();
+        columns.sort((o1, o2) -> {
+            Integer p1 = o1.getOrdinalPosition();
+            Integer p2 = o2.getOrdinalPosition();
 
-                if (p1 == p2)
-                    return 0;
-                if (p1 == null)
-                    return -1;
-                if (p2 == null)
-                    return 1;
+            if (p1 == p2)
+                return 0;
+            if (p1 == null)
+                return -1;
+            if (p2 == null)
+                return 1;
 
-                return p1.compareTo(p2);
-            }
+            return p1.compareTo(p2);
         });
 
         columnLoop:
@@ -305,25 +299,17 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         // -------------------------------------------------------------------------------------------------------------
         Map<Name, List<SortField<?>>> columnsByIndex = new HashMap<>();
         List<IndexColumnUsage> indexColumnUsages = new ArrayList<>(meta.getIndexColumnUsages());
-        Collections.sort(indexColumnUsages, new Comparator<IndexColumnUsage>() {
-            @Override
-            public int compare(IndexColumnUsage o1, IndexColumnUsage o2) {
-                int p1 = o1.getOrdinalPosition();
-                int p2 = o2.getOrdinalPosition();
+        indexColumnUsages.sort((o1, o2) -> {
+            int p1 = o1.getOrdinalPosition();
+            int p2 = o2.getOrdinalPosition();
 
-                return (p1 < p2) ? -1 : ((p1 == p2) ? 0 : 1);
-            }
+            return (p1 < p2) ? -1 : ((p1 == p2) ? 0 : 1);
         });
 
         indexColumnLoop:
         for (IndexColumnUsage ic : indexColumnUsages) {
             Name indexName = name(ic.getIndexCatalog(), ic.getIndexSchema(), ic.getTableName(), ic.getIndexName());
-            List<SortField<?>> fields = columnsByIndex.get(indexName);
-
-            if (fields == null) {
-                fields = new ArrayList<>();
-                columnsByIndex.put(indexName, fields);
-            }
+            List<SortField<?>> fields = columnsByIndex.computeIfAbsent(indexName, k -> new ArrayList<>());
 
             Name tableName = name(ic.getTableCatalog(), ic.getTableSchema(), ic.getTableName());
             InformationSchemaTable table = tablesByName.get(tableName);
@@ -372,38 +358,25 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         // -------------------------------------------------------------------------------------------------------------
         Map<Name, List<TableField<Record, ?>>> columnsByConstraint = new HashMap<>();
         List<KeyColumnUsage> keyColumnUsages = new ArrayList<>(meta.getKeyColumnUsages());
-        Collections.sort(keyColumnUsages, new Comparator<KeyColumnUsage>() {
-            @Override
-            public int compare(KeyColumnUsage o1, KeyColumnUsage o2) {
-                int p1 = o1.getOrdinalPosition();
-                int p2 = o2.getOrdinalPosition();
-
-                return (p1 < p2) ? -1 : ((p1 == p2) ? 0 : 1);
-            }
-        });
+        keyColumnUsages.sort(comparing(KeyColumnUsage::getOrdinalPosition));
 
         keyColumnLoop:
         for (KeyColumnUsage xc : keyColumnUsages) {
             Name constraintName = name(xc.getConstraintCatalog(), xc.getConstraintSchema(), xc.getConstraintName());
-            List<TableField<Record, ?>> fields = columnsByConstraint.get(constraintName);
-
-            if (fields == null) {
-                fields = new ArrayList<>();
-                columnsByConstraint.put(constraintName, fields);
-            }
+            List<TableField<Record, ?>> fields = columnsByConstraint.computeIfAbsent(constraintName, k -> new ArrayList<>());
 
             Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
             InformationSchemaTable table = tablesByName.get(tableName);
 
             if (table == null) {
-                errors.add(String.format("Table " + tableName + " not defined for constraint " + constraintName));
+                errors.add("Table " + tableName + " not defined for constraint " + constraintName);
                 continue keyColumnLoop;
             }
 
             TableField<Record, ?> field = (TableField<Record, ?>) table.field(xc.getColumnName());
 
             if (field == null) {
-                errors.add(String.format("Column " + xc.getColumnName() + " not defined for table " + tableName));
+                errors.add("Column " + xc.getColumnName() + " not defined for table " + tableName);
                 continue keyColumnLoop;
             }
 
@@ -420,14 +393,14 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                     InformationSchemaTable table = tablesByName.get(tableName);
 
                     if (table == null) {
-                        errors.add(String.format("Table " + tableName + " not defined for constraint " + constraintName));
+                        errors.add("Table " + tableName + " not defined for constraint " + constraintName);
                         continue tableConstraintLoop;
                     }
 
                     List<TableField<Record, ?>> c = columnsByConstraint.get(constraintName);
 
                     if (c == null || c.isEmpty()) {
-                        errors.add(String.format("No columns defined for constraint " + constraintName));
+                        errors.add("No columns defined for constraint " + constraintName);
                         continue tableConstraintLoop;
                     }
 
@@ -462,21 +435,21 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                     InformationSchemaTable table = tablesByName.get(tableName);
 
                     if (table == null) {
-                        errors.add(String.format("Table " + tableName + " not defined for constraint " + constraintName));
+                        errors.add("Table " + tableName + " not defined for constraint " + constraintName);
                         continue tableConstraintLoop;
                     }
 
                     List<TableField<Record, ?>> c = columnsByConstraint.get(constraintName);
 
                     if (c == null || c.isEmpty()) {
-                        errors.add(String.format("No columns defined for constraint " + constraintName));
+                        errors.add("No columns defined for constraint " + constraintName);
                         continue tableConstraintLoop;
                     }
 
                     UniqueKeyImpl<Record> uniqueKey = keysByName.get(referentialKeys.get(constraintName));
 
                     if (uniqueKey == null) {
-                        errors.add(String.format("No unique key defined for foreign key " + constraintName));
+                        errors.add("No unique key defined for foreign key " + constraintName);
                         continue tableConstraintLoop;
                     }
 
@@ -496,7 +469,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                     InformationSchemaTable table = tablesByName.get(tableName);
 
                     if (table == null) {
-                        errors.add(String.format("Table " + tableName + " not defined for constraint " + constraintName));
+                        errors.add("Table " + tableName + " not defined for constraint " + constraintName);
                         continue tableConstraintLoop;
                     }
 
@@ -507,7 +480,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                         }
                     }
 
-                    errors.add(String.format("No check clause found for check constraint " + constraintName));
+                    errors.add("No check clause found for check constraint " + constraintName);
                     continue tableConstraintLoop;
                 }
             }
@@ -521,7 +494,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             Schema schema = schemasByName.get(schemaName);
 
             if (schema == null) {
-                errors.add(String.format("Schema " + schemaName + " not defined for sequence " + xs.getSequenceName()));
+                errors.add("Schema " + schemaName + " not defined for sequence " + xs.getSequenceName());
                 continue sequenceLoop;
             }
 
@@ -571,12 +544,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     }
 
     private final <K, V> void initLookup(Map<K, List<V>> lookup, K key, V value) {
-        List<V> list = lookup.get(key);
-
-        if (list == null)
-            lookup.put(key, list = new ArrayList<>());
-
-        list.add(value);
+        lookup.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
     }
 
     private final DataType<?> type(String typeName, int length, int precision, int scale, boolean nullable) {
@@ -656,17 +624,17 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         @Override
         public final List<Domain<?>> getDomains() {
-            return InformationSchemaMetaImpl.<Domain<?>>unmodifiableList(domainsPerSchema.get(this));
+            return InformationSchemaMetaImpl.unmodifiableList(domainsPerSchema.get(this));
         }
 
         @Override
         public final List<Table<?>> getTables() {
-            return InformationSchemaMetaImpl.<Table<?>>unmodifiableList(tablesPerSchema.get(this));
+            return InformationSchemaMetaImpl.unmodifiableList(tablesPerSchema.get(this));
         }
 
         @Override
         public final List<Sequence<?>> getSequences() {
-            return InformationSchemaMetaImpl.<Sequence<?>>unmodifiableList(sequencesPerSchema.get(this));
+            return InformationSchemaMetaImpl.unmodifiableList(sequencesPerSchema.get(this));
         }
     }
 
@@ -699,12 +667,12 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         @Override
         public List<UniqueKey<Record>> getUniqueKeys() {
-            return InformationSchemaMetaImpl.<UniqueKey<Record>>unmodifiableList(uniqueKeys);
+            return InformationSchemaMetaImpl.unmodifiableList(uniqueKeys);
         }
 
         @Override
         public List<ForeignKey<Record, ?>> getReferences() {
-            return InformationSchemaMetaImpl.<ForeignKey<Record, ?>>unmodifiableList(foreignKeys);
+            return InformationSchemaMetaImpl.unmodifiableList(foreignKeys);
         }
 
         @Override
@@ -748,6 +716,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     }
 
     private static final <T> List<T> unmodifiableList(List<? extends T> list) {
-        return list == null ? Collections.<T> emptyList() : Collections.<T> unmodifiableList(list);
+        return list == null ? emptyList() : Collections.unmodifiableList(list);
     }
 }

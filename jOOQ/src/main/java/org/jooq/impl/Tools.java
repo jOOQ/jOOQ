@@ -41,6 +41,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Character.isJavaIdentifierPart;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 // ...
 // ...
@@ -918,7 +919,7 @@ final class Tools {
     /**
      * Create a new record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, F.F0<R> factory, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Supplier<R> factory, Configuration configuration) {
         return new RecordDelegate<>(configuration, factory, fetched);
     }
 
@@ -1000,39 +1001,39 @@ final class Tools {
      * Create a new record factory.
      */
     @SuppressWarnings({ "unchecked" })
-    static final <R extends Record> F.F0<R> recordFactory(final Class<R> type, final AbstractRow row) {
+    static final <R extends Record> Supplier<R> recordFactory(final Class<R> type, final AbstractRow row) {
 
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
         if (type == AbstractRecord.class || type == Record.class || InternalRecord.class.isAssignableFrom(type)) {
             switch (row.size()) {
 
 
-                case 1: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl1<>(row); } };
-                case 2: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl2<>(row); } };
-                case 3: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl3<>(row); } };
-                case 4: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl4<>(row); } };
-                case 5: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl5<>(row); } };
-                case 6: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl6<>(row); } };
-                case 7: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl7<>(row); } };
-                case 8: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl8<>(row); } };
-                case 9: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl9<>(row); } };
-                case 10: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl10<>(row); } };
-                case 11: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl11<>(row); } };
-                case 12: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl12<>(row); } };
-                case 13: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl13<>(row); } };
-                case 14: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl14<>(row); } };
-                case 15: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl15<>(row); } };
-                case 16: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl16<>(row); } };
-                case 17: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl17<>(row); } };
-                case 18: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl18<>(row); } };
-                case 19: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl19<>(row); } };
-                case 20: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl20<>(row); } };
-                case 21: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl21<>(row); } };
-                case 22: return new F.F0<R>() { @Override public R get() { return (R) new RecordImpl22<>(row); } };
+                case 1: return () -> (R) new RecordImpl1<>(row);
+                case 2: return () -> (R) new RecordImpl2<>(row);
+                case 3: return () -> (R) new RecordImpl3<>(row);
+                case 4: return () -> (R) new RecordImpl4<>(row);
+                case 5: return () -> (R) new RecordImpl5<>(row);
+                case 6: return () -> (R) new RecordImpl6<>(row);
+                case 7: return () -> (R) new RecordImpl7<>(row);
+                case 8: return () -> (R) new RecordImpl8<>(row);
+                case 9: return () -> (R) new RecordImpl9<>(row);
+                case 10: return () -> (R) new RecordImpl10<>(row);
+                case 11: return () -> (R) new RecordImpl11<>(row);
+                case 12: return () -> (R) new RecordImpl12<>(row);
+                case 13: return () -> (R) new RecordImpl13<>(row);
+                case 14: return () -> (R) new RecordImpl14<>(row);
+                case 15: return () -> (R) new RecordImpl15<>(row);
+                case 16: return () -> (R) new RecordImpl16<>(row);
+                case 17: return () -> (R) new RecordImpl17<>(row);
+                case 18: return () -> (R) new RecordImpl18<>(row);
+                case 19: return () -> (R) new RecordImpl19<>(row);
+                case 20: return () -> (R) new RecordImpl20<>(row);
+                case 21: return () -> (R) new RecordImpl21<>(row);
+                case 22: return () -> (R) new RecordImpl22<>(row);
 
 
 
-                default: return new F.F0<R>() { @Override public R get() { return (R) new RecordImplN(row); } };
+                default: return () -> (R) new RecordImplN(row);
             }
         }
 
@@ -1043,15 +1044,12 @@ final class Tools {
                 // [#919] Allow for accessing non-public constructors
                 final Constructor<R> constructor = Reflect.accessible(type.getDeclaredConstructor());
 
-                return new F.F0<R>() {
-                    @Override
-                    public R get() {
-                        try {
-                            return constructor.newInstance();
-                        }
-                        catch (Exception e) {
-                            throw new IllegalStateException("Could not construct new record", e);
-                        }
+                return () -> {
+                    try {
+                        return constructor.newInstance();
+                    }
+                    catch (Exception e) {
+                        throw new IllegalStateException("Could not construct new record", e);
                     }
                 };
             }
@@ -1181,9 +1179,8 @@ final class Tools {
         if (configuration != null) {
             Settings settings = configuration.settings();
 
-            if (settings != null) {
+            if (settings != null)
                 return !FALSE.equals(settings.isAttachRecords());
-            }
         }
 
         return true;
@@ -1716,7 +1713,6 @@ final class Tools {
         return val((Object) value, SQLDataType.TIMESTAMP);
     }
 
-
     static final Param<LocalDate> field(LocalDate value) {
         return val((Object) value, SQLDataType.LOCALDATE);
     }
@@ -1740,7 +1736,6 @@ final class Tools {
     static final Param<Instant> field(Instant value) {
         return val((Object) value, SQLDataType.INSTANT);
     }
-
 
     static final Param<UUID> field(UUID value) {
         return val((Object) value, SQLDataType.UUID);
@@ -2066,28 +2061,23 @@ final class Tools {
      * Reverse iterate over an array.
      */
     @SafeVarargs
-    static final <T> Iterator<T> reverseIterator(final T... array) {
+    static final <T> Iterator<T> reverseIterator(T... array) {
         return reverseIterator(Arrays.asList(array));
     }
 
     /**
      * Reverse iterate over a list.
      */
-    static final <T> Iterable<T> reverseIterable(final List<T> list) {
-        return new Iterable<T>() {
-            @Override
-            public Iterator<T> iterator() {
-                return reverseIterator(list);
-            }
-        };
+    static final <T> Iterable<T> reverseIterable(List<T> list) {
+        return () -> reverseIterator(list);
     }
 
     /**
      * Reverse iterate over a list.
      */
-    static final <T> Iterator<T> reverseIterator(final List<T> list) {
+    static final <T> Iterator<T> reverseIterator(List<T> list) {
         return new Iterator<T>() {
-            ListIterator<T> li = list.listIterator(list.size());
+            final ListIterator<T> li = list.listIterator(list.size());
 
             @Override
             public boolean hasNext() {
@@ -2112,7 +2102,7 @@ final class Tools {
      */
     @SafeVarargs
     static final <T> List<T> list(T... array) {
-        return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
+        return array == null ? emptyList() : asList(array);
     }
 
     /**
@@ -2134,17 +2124,14 @@ final class Tools {
      * no such item, or if iterable itself is <code>null</code>
      */
     static final <T> T first(Iterable<? extends T> iterable) {
-        if (iterable == null) {
+        if (iterable == null)
             return null;
-        }
-        else {
-            Iterator<? extends T> iterator = iterable.iterator();
 
-            if (iterator.hasNext())
-                return iterator.next();
-            else
-                return null;
-        }
+        Iterator<? extends T> it = iterable.iterator();
+        if (it.hasNext())
+            return it.next();
+        else
+            return null;
     }
 
     /**
@@ -2409,11 +2396,10 @@ final class Tools {
             // I don't know ?'? */
             // from t_book where id = ?
             else if (peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_OPEN)) {
-
                 int nestedMultilineCommentLevel = 1;
 
                 // Consume the complete comment
-                for (;;) {
+                do {
                     render.sql(sqlChars[i++]);
 
                     if (peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_OPEN))
@@ -2421,9 +2407,8 @@ final class Tools {
                     else if (peek(sqlChars, i, TOKEN_MULTI_LINE_COMMENT_CLOSE))
                         nestedMultilineCommentLevel--;
 
-                    if (nestedMultilineCommentLevel == 0)
-                        break;
                 }
+                while (nestedMultilineCommentLevel != 0);
 
                 // Consume the comment delimiter
                 render.sql(sqlChars[i]);
@@ -2496,10 +2481,6 @@ final class Tools {
                 // Consume the terminal string literal delimiter
                 render.sql(sqlChars[i]);
             }
-
-
-
-
 
 
 
@@ -2714,8 +2695,8 @@ final class Tools {
 
                 // [#3430] In some cases, we don't care about the type of whitespace.
                 if (anyWhitespace && peek[i] == ' ')
-                    for (int j = 0; j < WHITESPACE_CHARACTERS.length; j++)
-                        if (sqlChars[index + i] == WHITESPACE_CHARACTERS[j])
+                    for (char c : WHITESPACE_CHARACTERS)
+                        if (sqlChars[index + i] == c)
                             continue peekArrayLoop;
 
                 return false;
@@ -2990,7 +2971,7 @@ final class Tools {
      */
     @SuppressWarnings("unchecked")
     static final String getMappedUDTName(Configuration configuration, Class<? extends UDTRecord<?>> type) {
-        return getMappedUDTName(configuration, Tools.newRecord(false, (Class<UDTRecord<?>>) type).<RuntimeException>operate(null));
+        return getMappedUDTName(configuration, Tools.newRecord(false, (Class<UDTRecord<?>>) type).operate(null));
     }
 
     /**
@@ -3201,8 +3182,6 @@ final class Tools {
 
 
 
-
-
         List<DataType<?>> result = new ArrayList<>();
         for (Field<?> f : select.getSelect())
             result.add(f.getDataType());
@@ -3282,16 +3261,6 @@ final class Tools {
         }
 
         /**
-         * A default implementation for {@link GuardedOperation#guarded()}.
-         */
-        abstract static class AbstractGuardedOperation<V> implements GuardedOperation<V> {
-            @Override
-            public V guarded() {
-                return null;
-            }
-        }
-
-        /**
          * Run an operation using a guard.
          */
         static final <V> V run(Guard guard, GuardedOperation<V> operation) {
@@ -3328,7 +3297,7 @@ final class Tools {
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, F.F0<V> operation, DataCacheKey type, Object key) {
+        static final <V> V run(Configuration configuration, Supplier<V> operation, DataCacheKey type, Object key) {
 
             // If no configuration is provided take the default configuration that loads the default Settings
             if (configuration == null)
@@ -3552,35 +3521,30 @@ final class Tools {
      * or methods
      */
     static final boolean hasColumnAnnotations(final Configuration configuration, final Class<?> type) {
-        return Cache.run(configuration, new F.F0<Boolean>() {
-
-            @Override
-            public Boolean get() {
-                if (!isJPAAvailable())
-                    return false;
-
-                // An @Entity or @Table usually has @Column annotations, too
-                if (type.getAnnotation(Entity.class) != null)
-                    return true;
-
-                if (type.getAnnotation(javax.persistence.Table.class) != null)
-                    return true;
-
-                for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-                    if (member.getAnnotation(Column.class) != null)
-                        return true;
-
-                    if (member.getAnnotation(Id.class) != null)
-                        return true;
-                }
-
-                for (Method method : getInstanceMethods(type))
-                    if (method.getAnnotation(Column.class) != null)
-                        return true;
-
+        return Cache.run(configuration, () -> {
+            if (!isJPAAvailable())
                 return false;
+
+            // An @Entity or @Table usually has @Column annotations, too
+            if (type.getAnnotation(Entity.class) != null)
+                return true;
+
+            if (type.getAnnotation(javax.persistence.Table.class) != null)
+                return true;
+
+            for (java.lang.reflect.Field member : getInstanceMembers(type)) {
+                if (member.getAnnotation(Column.class) != null)
+                    return true;
+
+                if (member.getAnnotation(Id.class) != null)
+                    return true;
             }
 
+            for (Method method : getInstanceMethods(type))
+                if (method.getAnnotation(Column.class) != null)
+                    return true;
+
+            return false;
         }, DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, type);
     }
 
@@ -3597,31 +3561,27 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F.F0<List<java.lang.reflect.Field>>() {
+        return Cache.run(configuration, () -> {
+            List<java.lang.reflect.Field> result = new ArrayList<>();
 
-            @Override
-            public List<java.lang.reflect.Field> get() {
-                List<java.lang.reflect.Field> result = new ArrayList<>();
+            for (java.lang.reflect.Field member : getInstanceMembers(type)) {
+                Column column = member.getAnnotation(Column.class);
 
-                for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-                    Column column = member.getAnnotation(Column.class);
-
-                    if (column != null) {
-                        if (namesMatch(name, column.name()))
-                            result.add(accessible(member, makeAccessible));
-                    }
-
-                    else {
-                        Id id = member.getAnnotation(Id.class);
-
-                        if (id != null)
-                            if (namesMatch(name, member.getName()))
-                                result.add(accessible(member, makeAccessible));
-                    }
+                if (column != null) {
+                    if (namesMatch(name, column.name()))
+                        result.add(accessible(member, makeAccessible));
                 }
 
-                return result;
+                else {
+                    Id id = member.getAnnotation(Id.class);
+
+                    if (id != null)
+                        if (namesMatch(name, member.getName()))
+                            result.add(accessible(member, makeAccessible));
+                }
             }
+
+            return result;
         }, DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, Cache.key(type, name));
     }
 
@@ -3643,25 +3603,20 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F.F0<List<java.lang.reflect.Field>>() {
+        return Cache.run(configuration, () -> {
+            List<java.lang.reflect.Field> result = new ArrayList<>();
 
-            @Override
-            public List<java.lang.reflect.Field> get() {
-                List<java.lang.reflect.Field> result = new ArrayList<>();
+            // [#1942] Caching these values before the field-loop significantly
+            // accerates POJO mapping
+            String camelCaseLC = StringUtils.toCamelCaseLC(name);
 
-                // [#1942] Caching these values before the field-loop significantly
-                // accerates POJO mapping
-                String camelCaseLC = StringUtils.toCamelCaseLC(name);
+            for (java.lang.reflect.Field member : getInstanceMembers(type))
+                if (name.equals(member.getName()))
+                    result.add(accessible(member, makeAccessible));
+                else if (camelCaseLC.equals(member.getName()))
+                    result.add(accessible(member, makeAccessible));
 
-                for (java.lang.reflect.Field member : getInstanceMembers(type))
-                    if (name.equals(member.getName()))
-                        result.add(accessible(member, makeAccessible));
-                    else if (camelCaseLC.equals(member.getName()))
-                        result.add(accessible(member, makeAccessible));
-
-                return result;
-            }
-
+            return result;
         }, DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS, Cache.key(type, name));
     }
 
@@ -3674,50 +3629,45 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F.F0<List<Method>>() {
+        return Cache.run(configuration, () -> {
+            Set<SourceMethod> set = new LinkedHashSet<>();
 
-            @Override
-            public List<Method> get() {
-                Set<SourceMethod> set = new LinkedHashSet<>();
+            for (Method method : getInstanceMethods(type)) {
+                Column column = method.getAnnotation(Column.class);
 
-                for (Method method : getInstanceMethods(type)) {
-                    Column column = method.getAnnotation(Column.class);
+                if (column != null && namesMatch(name, column.name())) {
 
-                    if (column != null && namesMatch(name, column.name())) {
+                    // Annotated setter
+                    if (method.getParameterTypes().length == 1) {
+                        set.add(new SourceMethod(accessible(method, makeAccessible)));
+                    }
 
-                        // Annotated setter
-                        if (method.getParameterTypes().length == 1) {
-                            set.add(new SourceMethod(accessible(method, makeAccessible)));
-                        }
+                    // Annotated getter with matching setter
+                    else if (method.getParameterTypes().length == 0) {
+                        String m = method.getName();
+                        String suffix = m.startsWith("get")
+                                      ? m.substring(3)
+                                      : m.startsWith("is")
+                                      ? m.substring(2)
+                                      : null;
 
-                        // Annotated getter with matching setter
-                        else if (method.getParameterTypes().length == 0) {
-                            String m = method.getName();
-                            String suffix = m.startsWith("get")
-                                          ? m.substring(3)
-                                          : m.startsWith("is")
-                                          ? m.substring(2)
-                                          : null;
+                        if (suffix != null) {
+                            try {
 
-                            if (suffix != null) {
-                                try {
+                                // [#7953] [#8496] Search the hierarchy for a matching setter
+                                Method setter = getInstanceMethod(type, "set" + suffix, new Class[] { method.getReturnType() });
 
-                                    // [#7953] [#8496] Search the hierarchy for a matching setter
-                                    Method setter = getInstanceMethod(type, "set" + suffix, new Class[] { method.getReturnType() });
-
-                                    // Setter annotation is more relevant
-                                    if (setter.getAnnotation(Column.class) == null)
-                                        set.add(new SourceMethod(accessible(setter, makeAccessible)));
-                                }
-                                catch (NoSuchMethodException ignore) {}
+                                // Setter annotation is more relevant
+                                if (setter.getAnnotation(Column.class) == null)
+                                    set.add(new SourceMethod(accessible(setter, makeAccessible)));
                             }
+                            catch (NoSuchMethodException ignore) {}
                         }
                     }
                 }
-
-                return SourceMethod.methods(set);
             }
 
+            return SourceMethod.methods(set);
         }, DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS, Cache.key(type, name));
     }
 
@@ -3730,50 +3680,45 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F.F0<Method>() {
+        return Cache.run(configuration, () -> {
+            for (Method method : getInstanceMethods(type)) {
+                Column column = method.getAnnotation(Column.class);
 
-            @Override
-            public Method get() {
-                for (Method method : getInstanceMethods(type)) {
-                    Column column = method.getAnnotation(Column.class);
+                if (column != null && namesMatch(name, column.name())) {
 
-                    if (column != null && namesMatch(name, column.name())) {
+                    // Annotated getter
+                    if (method.getParameterTypes().length == 0) {
+                        return accessible(method, makeAccessible);
+                    }
 
-                        // Annotated getter
-                        if (method.getParameterTypes().length == 0) {
-                            return accessible(method, makeAccessible);
-                        }
+                    // Annotated setter with matching getter
+                    else if (method.getParameterTypes().length == 1) {
+                        String m = method.getName();
 
-                        // Annotated setter with matching getter
-                        else if (method.getParameterTypes().length == 1) {
-                            String m = method.getName();
+                        if (m.startsWith("set")) {
+                            try {
+                                Method getter1 = type.getMethod("get" + m.substring(3));
 
-                            if (m.startsWith("set")) {
-                                try {
-                                    Method getter = type.getMethod("get" + m.substring(3));
-
-                                    // Getter annotation is more relevant
-                                    if (getter.getAnnotation(Column.class) == null)
-                                        return accessible(getter, makeAccessible);
-                                }
-                                catch (NoSuchMethodException ignore) {}
-
-                                try {
-                                    Method getter = type.getMethod("is" + m.substring(3));
-
-                                    // Getter annotation is more relevant
-                                    if (getter.getAnnotation(Column.class) == null)
-                                        return accessible(getter, makeAccessible);
-                                }
-                                catch (NoSuchMethodException ignore) {}
+                                // Getter annotation is more relevant
+                                if (getter1.getAnnotation(Column.class) == null)
+                                    return accessible(getter1, makeAccessible);
                             }
+                            catch (NoSuchMethodException ignore1) {}
+
+                            try {
+                                Method getter2 = type.getMethod("is" + m.substring(3));
+
+                                // Getter annotation is more relevant
+                                if (getter2.getAnnotation(Column.class) == null)
+                                    return accessible(getter2, makeAccessible);
+                            }
+                            catch (NoSuchMethodException ignore2) {}
                         }
                     }
                 }
-
-                return null;
             }
 
+            return null;
         }, DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER, Cache.key(type, name));
     }
 
@@ -3786,36 +3731,31 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F.F0<List<Method>>() {
+        return Cache.run(configuration, () -> {
 
-            @Override
-            public List<Method> get() {
+            // [#8460] Prevent duplicate methods in the call hierarchy
+            Set<SourceMethod> set = new LinkedHashSet<>();
 
-                // [#8460] Prevent duplicate methods in the call hierarchy
-                Set<SourceMethod> set = new LinkedHashSet<>();
+            // [#1942] Caching these values before the method-loop significantly
+            // accerates POJO mapping
+            String camelCase = StringUtils.toCamelCase(name);
+            String camelCaseLC = StringUtils.toLC(camelCase);
 
-                // [#1942] Caching these values before the method-loop significantly
-                // accerates POJO mapping
-                String camelCase = StringUtils.toCamelCase(name);
-                String camelCaseLC = StringUtils.toLC(camelCase);
+            for (Method method : getInstanceMethods(type)) {
+                Class<?>[] parameterTypes = method.getParameterTypes();
 
-                for (Method method : getInstanceMethods(type)) {
-                    Class<?>[] parameterTypes = method.getParameterTypes();
-
-                    if (parameterTypes.length == 1)
-                        if (name.equals(method.getName()))
-                            set.add(new SourceMethod(accessible(method, makeAccessible)));
-                        else if (camelCaseLC.equals(method.getName()))
-                            set.add(new SourceMethod(accessible(method, makeAccessible)));
-                        else if (("set" + name).equals(method.getName()))
-                            set.add(new SourceMethod(accessible(method, makeAccessible)));
-                        else if (("set" + camelCase).equals(method.getName()))
-                            set.add(new SourceMethod(accessible(method, makeAccessible)));
-                }
-
-                return SourceMethod.methods(set);
+                if (parameterTypes.length == 1)
+                    if (name.equals(method.getName()))
+                        set.add(new SourceMethod(accessible(method, makeAccessible)));
+                    else if (camelCaseLC.equals(method.getName()))
+                        set.add(new SourceMethod(accessible(method, makeAccessible)));
+                    else if (("set" + name).equals(method.getName()))
+                        set.add(new SourceMethod(accessible(method, makeAccessible)));
+                    else if (("set" + camelCase).equals(method.getName()))
+                        set.add(new SourceMethod(accessible(method, makeAccessible)));
             }
 
+            return SourceMethod.methods(set);
         }, DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS, Cache.key(type, name));
     }
 
@@ -3829,33 +3769,28 @@ final class Tools {
         final String name,
         final boolean makeAccessible
     ) {
-        return Cache.run(configuration, new F.F0<Method>() {
+        return Cache.run(configuration, () -> {
+            // [#1942] Caching these values before the method-loop significantly
+            // accerates POJO mapping
+            String camelCase = StringUtils.toCamelCase(name);
+            String camelCaseLC = StringUtils.toLC(camelCase);
 
-            @Override
-            public Method get() {
-                // [#1942] Caching these values before the method-loop significantly
-                // accerates POJO mapping
-                String camelCase = StringUtils.toCamelCase(name);
-                String camelCaseLC = StringUtils.toLC(camelCase);
+            for (Method method : getInstanceMethods(type))
+                if (method.getParameterTypes().length == 0)
+                    if (name.equals(method.getName()))
+                        return accessible(method, makeAccessible);
+                    else if (camelCaseLC.equals(method.getName()))
+                        return accessible(method, makeAccessible);
+                    else if (("get" + name).equals(method.getName()))
+                        return accessible(method, makeAccessible);
+                    else if (("get" + camelCase).equals(method.getName()))
+                        return accessible(method, makeAccessible);
+                    else if (("is" + name).equals(method.getName()))
+                        return accessible(method, makeAccessible);
+                    else if (("is" + camelCase).equals(method.getName()))
+                        return accessible(method, makeAccessible);
 
-                for (Method method : getInstanceMethods(type))
-                    if (method.getParameterTypes().length == 0)
-                        if (name.equals(method.getName()))
-                            return accessible(method, makeAccessible);
-                        else if (camelCaseLC.equals(method.getName()))
-                            return accessible(method, makeAccessible);
-                        else if (("get" + name).equals(method.getName()))
-                            return accessible(method, makeAccessible);
-                        else if (("get" + camelCase).equals(method.getName()))
-                            return accessible(method, makeAccessible);
-                        else if (("is" + name).equals(method.getName()))
-                            return accessible(method, makeAccessible);
-                        else if (("is" + camelCase).equals(method.getName()))
-                            return accessible(method, makeAccessible);
-
-                return null;
-            }
-
+            return null;
         }, DATA_REFLECTION_CACHE_GET_MATCHING_GETTER, Cache.key(type, name));
     }
 
@@ -5189,8 +5124,6 @@ final class Tools {
     // XXX: ForkJoinPool ManagedBlock implementation
     // -------------------------------------------------------------------------
 
-
-
     static final <T> Supplier<T> blocking(Supplier<T> supplier) {
         return blocking(supplier, false);
     }
@@ -5228,7 +5161,6 @@ final class Tools {
             }
         };
     }
-
 
     static final String[] enumLiterals(Class<? extends EnumType> type) {
         EnumType[] values = enums(type);
@@ -5500,9 +5432,7 @@ final class Tools {
     }
 
     static final boolean nonReplacingEmbeddable(Field<?> field) {
-        return field instanceof EmbeddableTableField
-             ? !((EmbeddableTableField<?, ?>) field).replacesFields
-             : false;
+        return field instanceof EmbeddableTableField && !((EmbeddableTableField<?, ?>) field).replacesFields;
     }
 
     @SuppressWarnings("unchecked")
@@ -5604,23 +5534,20 @@ final class Tools {
      * Flatten out an {@link EmbeddableTableField}.
      */
     @SuppressWarnings("unchecked")
-    static final <E extends Field<?>> Iterable<E> flatten(final E field) {
+    static final <E extends Field<?>> Iterable<E> flatten(E field) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-        return new Iterable<E>() {
-            @Override
-            public Iterator<E> iterator() {
-                Iterator<E> it = singletonList(field).iterator();
+        return () -> {
+            Iterator<E> it = singletonList(field).iterator();
 
-                if (field.getDataType().isEmbeddable())
-                    return new FlatteningIterator<E>(it) {
-                        @Override
-                        List<E> flatten(E e) {
-                            return (List<E>) Arrays.asList(embeddedFields(field));
-                        }
-                    };
-                else
-                    return it;
-            }
+            if (field.getDataType().isEmbeddable())
+                return new FlatteningIterator<E>(it) {
+                    @Override
+                    List<E> flatten(E e) {
+                        return (List<E>) Arrays.asList(embeddedFields(field));
+                    }
+                };
+            else
+                return it;
         };
     }
 
@@ -5633,17 +5560,14 @@ final class Tools {
         final boolean removeDuplicates
     ) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-        return new Iterable<E>() {
+        return () -> new FlatteningIterator<E>(iterable.iterator()) {
+
+
+
+
+            @SuppressWarnings("unchecked")
             @Override
-            public Iterator<E> iterator() {
-                return new FlatteningIterator<E>(iterable.iterator()) {
-
-
-
-
-                    @SuppressWarnings("unchecked")
-                    @Override
-                    Iterable<E> flatten(E e) {
+            Iterable<E> flatten(E e) {
 
 
 
@@ -5656,9 +5580,7 @@ final class Tools {
 
 
 
-                        return Tools.flatten(e);
-                    }
-                };
+                return Tools.flatten(e);
             }
         };
     }
@@ -5673,36 +5595,31 @@ final class Tools {
         final boolean removeDuplicates
     ) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-        return new Iterable<E>() {
+        return () -> new FlatteningIterator<E>(iterable.iterator()) {
+
+
+
+
+            @SuppressWarnings("unchecked")
             @Override
-            public Iterator<E> iterator() {
-                return new FlatteningIterator<E>(iterable.iterator()) {
+            List<E> flatten(E e) {
+                if (e.getKey() instanceof EmbeddableTableField) {
+                    List<E> result = new ArrayList<>();
+                    Field<?>[] keys = embeddedFields(e.getKey());
+                    Field<?>[] values = embeddedFields(e.getValue());
+
+                    for (int i = 0; i < keys.length; i++)
 
 
 
+                            result.add((E) new SimpleImmutableEntry<Field<?>, Field<?>>(
+                                keys[i], values[i]
+                            ));
 
-                    @SuppressWarnings("unchecked")
-                    @Override
-                    List<E> flatten(E e) {
-                        if (e.getKey() instanceof EmbeddableTableField) {
-                            List<E> result = new ArrayList<>();
-                            Field<?>[] keys = embeddedFields(e.getKey());
-                            Field<?>[] values = embeddedFields(e.getValue());
+                    return result;
+                }
 
-                            for (int i = 0; i < keys.length; i++)
-
-
-
-                                    result.add((E) new SimpleImmutableEntry<Field<?>, Field<?>>(
-                                        keys[i], values[i]
-                                    ));
-
-                            return result;
-                        }
-
-                        return null;
-                    }
-                };
+                return null;
             }
         };
     }

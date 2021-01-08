@@ -217,7 +217,6 @@ extends
     @Support
     Field<T> as(Field<?> otherField);
 
-
     /**
      * Create an alias for this field.
      * <p>
@@ -249,7 +248,6 @@ extends
     @NotNull
     @Support
     Field<T> as(Function<? super Field<T>, ? extends String> aliasFunction);
-
 
     /**
      * {@inheritDoc}

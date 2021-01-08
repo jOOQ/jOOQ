@@ -43,8 +43,9 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.*;
 // ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -52,6 +53,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -63,6 +65,7 @@ import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_UNIQUE_KEYS;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultString;
 
 import java.io.Serializable;
@@ -76,7 +79,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -149,21 +151,44 @@ final class MetaImpl extends AbstractMeta {
         this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(dialect());
     }
 
+    final <R> R catalogSchema(Catalog catalog, Schema schema, ThrowingBiFunction<String, String, R> function) throws SQLException {
+        return catalogSchema(
+            catalog != null ? catalog.getName() : null,
+            schema != null ? schema.getName() : null,
+            function
+        );
+    }
+
+    final <R> R catalogSchema(String catalog, String schema, ThrowingBiFunction<String, String, R> function) throws SQLException {
+        String c = defaultIfEmpty(catalog, null);
+        String s = defaultIfEmpty(schema, null);
+
+        // [#2760] MySQL JDBC confuses "catalog" and "schema"
+        if (inverseSchemaCatalog)
+            return function.apply(s, c);
+        else
+            return function.apply(c, s);
+    }
+
+    @FunctionalInterface
+    private interface ThrowingBiFunction<T1, T2, R> {
+        R apply(T1 t1, T2 t2) throws SQLException;
+    }
+
+    @FunctionalInterface
     private interface MetaFunction {
         Result<Record> run(DatabaseMetaData meta) throws SQLException;
     }
 
     private final Result<Record> meta(MetaFunction consumer) {
-        if (databaseMetaData == null) {
+        if (databaseMetaData == null)
             return dsl().connectionResult(connection -> consumer.run(connection.getMetaData()));
+
+        try {
+            return consumer.run(databaseMetaData);
         }
-        else {
-            try {
-                return consumer.run(databaseMetaData);
-            }
-            catch (SQLException e) {
-                throw new DataAccessException("Error while running MetaFunction", e);
-            }
+        catch (SQLException e) {
+            throw new DataAccessException("Error while running MetaFunction", e);
         }
     }
 
@@ -322,7 +347,7 @@ final class MetaImpl extends AbstractMeta {
         @Override
         public final synchronized List<Table<?>> getTables() {
             Result<Record> tables = meta(meta -> {
-                String[] types = null;
+                String[] types;
 
                 switch (family()) {
 
@@ -349,9 +374,13 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+                    default:
+                        types = null;
+                        break;
                 }
 
-                ResultSet rs;
+                try (ResultSet rs = catalogSchema(getCatalog(), this, (c, s) -> {
 
 
 
@@ -359,29 +388,18 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+                        return meta.getTables(c, s, "%", types);
+                })) {
+                    return dsl().fetch(
+                        rs,
 
-
-
-
-
-
-
-                // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                if (inverseSchemaCatalog)
-                    rs = meta.getTables(getName(), null, "%", types);
-
-                else
-                    rs = meta.getTables(null, getName(), "%", types);
-
-                return dsl().fetch(
-                    rs,
-
-                    // [#2681] Work around a flaw in the MySQL JDBC driver
-                    SQLDataType.VARCHAR, // TABLE_CAT
-                    SQLDataType.VARCHAR, // TABLE_SCHEM
-                    SQLDataType.VARCHAR, // TABLE_NAME
-                    SQLDataType.VARCHAR  // TABLE_TYPE
-                );
+                        // [#2681] Work around a flaw in the MySQL JDBC driver
+                        SQLDataType.VARCHAR, // TABLE_CAT
+                        SQLDataType.VARCHAR, // TABLE_SCHEM
+                        SQLDataType.VARCHAR, // TABLE_NAME
+                        SQLDataType.VARCHAR  // TABLE_TYPE
+                    );
+                }
             });
 
             List<Table<?>> result = new ArrayList<>(tables.size());
@@ -480,33 +498,19 @@ final class MetaImpl extends AbstractMeta {
 
         private final Result<Record> getColumns0(final String catalog, final String schema, final String table) {
             return meta(meta -> {
-                ResultSet rs;
+                try (ResultSet rs = catalogSchema(catalog, schema, (c, s) -> meta.getColumns(c, s, table, "%"))) {
+                    // Work around a bug in the SQL Server JDBC driver by
+                    // coercing data types to the expected types
+                    // The bug was reported here:
+                    // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
 
-                // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                if (inverseSchemaCatalog)
-                    rs = meta.getColumns(catalog, null, table, "%");
-
-
-
-
-
-
-
-                else
-                    rs = meta.getColumns(null, schema, table, "%");
-
-
-                // Work around a bug in the SQL Server JDBC driver by
-                // coercing data types to the expected types
-                // The bug was reported here:
-                // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
-
-                // [#9740] TODO: Make this call lenient with respect to
-                //         column count, filling unavailable columns with
-                //         default values.
-                return rs.getMetaData().getColumnCount() < GET_COLUMNS_EXTENDED.length
-                    ? dsl().fetch(rs, GET_COLUMNS_SHORT)
-                    : dsl().fetch(rs, GET_COLUMNS_EXTENDED);
+                    // [#9740] TODO: Make this call lenient with respect to
+                    //         column count, filling unavailable columns with
+                    //         default values.
+                    return rs.getMetaData().getColumnCount() < GET_COLUMNS_EXTENDED.length
+                        ? dsl().fetch(rs, GET_COLUMNS_SHORT)
+                        : dsl().fetch(rs, GET_COLUMNS_EXTENDED);
+                }
             });
         }
 
@@ -630,39 +634,25 @@ final class MetaImpl extends AbstractMeta {
 
         @Override
         public final List<Index> getIndexes() {
-            final String schema = getSchema() == null ? null : getSchema().getName();
             Result<Record> result = removeSystemIndexes(meta(meta -> {
-                ResultSet rs;
-
-                // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                if (inverseSchemaCatalog)
-                    rs = meta.getIndexInfo(schema, null, getName(), false, true);
-
-
-
-
-
-
-
-                else
-                    rs = meta.getIndexInfo(null, schema, getName(), false, true);
-
-                return dsl().fetch(
-                    rs,
-                    String.class,  // TABLE_CAT
-                    String.class,  // TABLE_SCHEM
-                    String.class,  // TABLE_NAME
-                    boolean.class, // NON_UNIQUE
-                    String.class,  // INDEX_QUALIFIER
-                    String.class,  // INDEX_NAME
-                    int.class,     // TYPE
-                    int.class,     // ORDINAL_POSITION
-                    String.class,  // COLUMN_NAME
-                    String.class,  // ASC_OR_DESC
-                    long.class,    // CARDINALITY
-                    long.class,    // PAGES
-                    String.class   // FILTER_CONDITION
-                );
+                try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getIndexInfo(c, s, getName(), false, true))) {
+                    return dsl().fetch(
+                        rs,
+                        String.class,  // TABLE_CAT
+                        String.class,  // TABLE_SCHEM
+                        String.class,  // TABLE_NAME
+                        boolean.class, // NON_UNIQUE
+                        String.class,  // INDEX_QUALIFIER
+                        String.class,  // INDEX_NAME
+                        int.class,     // TYPE
+                        int.class,     // ORDINAL_POSITION
+                        String.class,  // COLUMN_NAME
+                        String.class,  // ASC_OR_DESC
+                        long.class,    // CARDINALITY
+                        long.class,    // PAGES
+                        String.class   // FILTER_CONDITION
+                    );
+                }
             }));
 
             // Sort by INDEX_NAME (5), ORDINAL_POSITION (7)
@@ -741,32 +731,18 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-            final String schema = getSchema() == null ? null : getSchema().getName();
             Result<Record> result = meta(meta -> {
-                ResultSet rs;
-
-                // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                if (inverseSchemaCatalog)
-                    rs = meta.getPrimaryKeys(schema, null, getName());
-
-
-
-
-
-
-
-                else
-                    rs = meta.getPrimaryKeys(null, schema, getName());
-
-                return dsl().fetch(
-                    rs,
-                    String.class, // TABLE_CAT
-                    String.class, // TABLE_SCHEM
-                    String.class, // TABLE_NAME
-                    String.class, // COLUMN_NAME
-                    int.class,    // KEY_SEQ
-                    String.class  // PK_NAME
-                );
+                try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getPrimaryKeys(c, s, getName()))) {
+                    return dsl().fetch(
+                        rs,
+                        String.class, // TABLE_CAT
+                        String.class, // TABLE_SCHEM
+                        String.class, // TABLE_NAME
+                        String.class, // COLUMN_NAME
+                        int.class,    // KEY_SEQ
+                        String.class  // PK_NAME
+                    );
+                }
             });
 
             // Sort by KEY_SEQ
@@ -778,25 +754,26 @@ final class MetaImpl extends AbstractMeta {
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<Record, ?>> getReferences() {
             Result<Record> result = meta(meta -> {
-                ResultSet rs = meta.getImportedKeys(null, getSchema().getName(), getName());
-                return dsl().fetch(
-                    rs,
-                    String.class,  // PKTABLE_CAT
-                    String.class,  // PKTABLE_SCHEM
-                    String.class,  // PKTABLE_NAME
-                    String.class,  // PKCOLUMN_NAME
-                    String.class,  // FKTABLE_CAT
+                try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getImportedKeys(c, s, getName()))) {
+                    return dsl().fetch(
+                        rs,
+                        String.class,  // PKTABLE_CAT
+                        String.class,  // PKTABLE_SCHEM
+                        String.class,  // PKTABLE_NAME
+                        String.class,  // PKCOLUMN_NAME
+                        String.class,  // FKTABLE_CAT
 
-                    String.class,  // FKTABLE_SCHEM
-                    String.class,  // FKTABLE_NAME
-                    String.class,  // FKCOLUMN_NAME
-                    Short.class,   // KEY_SEQ
-                    Short.class,   // UPDATE_RULE
+                        String.class,  // FKTABLE_SCHEM
+                        String.class,  // FKTABLE_NAME
+                        String.class,  // FKCOLUMN_NAME
+                        Short.class,   // KEY_SEQ
+                        Short.class,   // UPDATE_RULE
 
-                    Short.class,   // DELETE_RULE
-                    String.class,  // FK_NAME
-                    String.class   // PK_NAME
-                );
+                        Short.class,   // DELETE_RULE
+                        String.class,  // FK_NAME
+                        String.class   // PK_NAME
+                    );
+                }
             });
 
             Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
@@ -1091,26 +1068,30 @@ final class MetaImpl extends AbstractMeta {
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<?, Record>> getReferences() {
             Result<Record> result = meta(meta -> {
-                ResultSet rs = meta.getExportedKeys(null, getTable().getSchema().getName(), getTable().getName());
+                try (ResultSet rs = catalogSchema(
+                    getTable().getCatalog(),
+                    getTable().getSchema(),
+                    (c, s) -> meta.getExportedKeys(c, s, getTable().getName())
+                )) {
+                    return dsl().fetch(
+                        rs,
+                        String.class,  // PKTABLE_CAT
+                        String.class,  // PKTABLE_SCHEM
+                        String.class,  // PKTABLE_NAME
+                        String.class,  // PKCOLUMN_NAME
+                        String.class,  // FKTABLE_CAT
 
-                return dsl().fetch(
-                    rs,
-                    String.class,  // PKTABLE_CAT
-                    String.class,  // PKTABLE_SCHEM
-                    String.class,  // PKTABLE_NAME
-                    String.class,  // PKCOLUMN_NAME
-                    String.class,  // FKTABLE_CAT
+                        String.class,  // FKTABLE_SCHEM
+                        String.class,  // FKTABLE_NAME
+                        String.class,  // FKCOLUMN_NAME
+                        Short.class,   // KEY_SEQ
+                        Short.class,   // UPDATE_RULE
 
-                    String.class,  // FKTABLE_SCHEM
-                    String.class,  // FKTABLE_NAME
-                    String.class,  // FKCOLUMN_NAME
-                    Short.class,   // KEY_SEQ
-                    Short.class,   // UPDATE_RULE
-
-                    Short.class,   // DELETE_RULE
-                    String.class,  // FK_NAME
-                    String.class   // PK_NAME
-                );
+                        Short.class,   // DELETE_RULE
+                        String.class,  // FK_NAME
+                        String.class   // PK_NAME
+                    );
+                }
             });
 
             Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {

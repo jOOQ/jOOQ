@@ -123,14 +123,6 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
         this(wrapped, wrapping, alias, null, false);
     }
 
-    Alias(Q wrapped, Q wrapping, Name alias, boolean wrapInParentheses) {
-        this(wrapped, wrapping, alias, null, wrapInParentheses);
-    }
-
-    Alias(Q wrapped, Q wrapping, Name alias, Name[] fieldAliases) {
-        this(wrapped, wrapping, alias, fieldAliases, false);
-    }
-
     Alias(Q wrapped, Q wrapping, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
         this.wrapped = wrapped;
         this.wrapping = wrapping;

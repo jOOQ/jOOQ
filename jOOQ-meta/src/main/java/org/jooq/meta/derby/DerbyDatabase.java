@@ -240,7 +240,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
             if (split != null)
                 for (String index : split)
-                    result.add(Integer.valueOf(index.trim()) - 1);
+                    result.add(Integer.parseInt(index.trim()) - 1);
         }
 
         return result;

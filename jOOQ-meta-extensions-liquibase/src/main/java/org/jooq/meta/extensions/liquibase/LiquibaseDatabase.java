@@ -101,7 +101,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
     @Override
     protected void export() throws Exception {
         String scripts = getProperties().getProperty("scripts");
-        includeLiquibaseTables = Boolean.valueOf(getProperties().getProperty("includeLiquibaseTables", "false"));
+        includeLiquibaseTables = Boolean.parseBoolean(getProperties().getProperty("includeLiquibaseTables", "false"));
 
         if (isBlank(scripts)) {
             scripts = "";

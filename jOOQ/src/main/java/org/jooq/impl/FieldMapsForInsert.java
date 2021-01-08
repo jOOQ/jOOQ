@@ -330,7 +330,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             Field<?> e = empty.get(f);
 
             if (e == null) {
-                e = new LazyVal<>(null, (Field<Object>) f);
+                e = new LazyVal<>((Field<Object>) f);
                 empty.put(f, e);
             }
 

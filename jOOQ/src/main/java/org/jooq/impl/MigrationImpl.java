@@ -241,8 +241,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         Set<Schema> set = new LinkedHashSet<>();
 
         for (MigrationSchema schema : configuration.settings().getMigrationSchemata())
-            for (Schema s : lookup(asList(schema(name(schema.getCatalog(), schema.getSchema())))))
-                set.add(s);
+            set.addAll(lookup(asList(schema(name(schema.getCatalog(), schema.getSchema())))));
 
         return set;
     }

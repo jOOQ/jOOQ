@@ -139,12 +139,8 @@ implements
         Field<T> outerField = outer.field(field);
         Field<T> innerField = inner.field(field);
 
-        if (outerField == null || innerField == null) {
-            return;
-        }
-        else {
+        if (outerField != null && innerField != null)
             selfJoin.addConditions(outerField.equal(innerField));
-        }
     }
 
     // ------------------------------------------------------------------------

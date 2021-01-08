@@ -360,20 +360,19 @@ final class MetaImpl extends AbstractMeta {
                         types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
                         break;
 
+
+
+
+
+
+
+
                     // [#2323] SQLite JDBC drivers have a bug. They return other
                     // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
                     case SQLITE:
                         types = new String[] { "TABLE", "VIEW" };
                         break;
-
-
-
-
-
-
-
-
-
+                    /* [/pro] */
 
                     default:
                         types = null;

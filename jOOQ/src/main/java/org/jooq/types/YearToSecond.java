@@ -152,7 +152,7 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
 
             // Accept also doubles as the number of milliseconds
             try {
-                return valueOf(Double.valueOf(string));
+                return valueOf(Double.parseDouble(string));
             }
             catch (NumberFormatException e) {
                 Matcher matcher = PATTERN.matcher(string);
@@ -314,14 +314,7 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
 
     @Override
     public final int compareTo(YearToSecond that) {
-        double i1 = doubleValue();
-        double i2 = that.doubleValue();
-
-        return i1 > i2
-             ? 1
-             : i1 < i2
-             ? -1
-             : 0;
+        return Double.compare(doubleValue(), that.doubleValue());
     }
 
     @Override

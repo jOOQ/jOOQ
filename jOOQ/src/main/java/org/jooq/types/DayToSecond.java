@@ -183,7 +183,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
 
             // Accept also doubles as the number of milliseconds
             try {
-                return valueOf(Double.valueOf(string));
+                return valueOf(Double.parseDouble(string));
             }
             catch (NumberFormatException e) {
                 DayToSecond result = dayToSecond(string);
@@ -640,42 +640,24 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
 
     @Override
     public final int compareTo(DayToSecond that) {
-        if (days < that.days) {
+        if (days < that.days)
             return -1;
-        }
-        if (days > that.days) {
+        else if (days > that.days)
             return 1;
-        }
-
-        if (hours < that.hours) {
+        else if (hours < that.hours)
             return -1;
-        }
-        if (hours > that.hours) {
+        else if (hours > that.hours)
             return 1;
-        }
-
-        if (minutes < that.minutes) {
+        else if (minutes < that.minutes)
             return -1;
-        }
-        if (minutes > that.minutes) {
+        else if (minutes > that.minutes)
             return 1;
-        }
-
-        if (seconds < that.seconds) {
+        else if (seconds < that.seconds)
             return -1;
-        }
-        if (seconds > that.seconds) {
+        else if (seconds > that.seconds)
             return 1;
-        }
-
-        if (nano < that.nano) {
-            return -1;
-        }
-        if (nano > that.nano) {
-            return 1;
-        }
-
-        return 0;
+        else
+            return Integer.compare(nano, that.nano);
     }
 
     @Override

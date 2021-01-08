@@ -116,7 +116,6 @@ import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.tools.StringUtils.leftPad;
-import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.on;
@@ -1711,17 +1710,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Boolean get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), Boolean.valueOf(ctx.resultSet().getBoolean(ctx.index())));
+            return wasNull(ctx.resultSet(), ctx.resultSet().getBoolean(ctx.index()));
         }
 
         @Override
         final Boolean get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), Boolean.valueOf(ctx.statement().getBoolean(ctx.index())));
+            return wasNull(ctx.statement(), ctx.statement().getBoolean(ctx.index()));
         }
 
         @Override
         final Boolean get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), Boolean.valueOf(ctx.input().readBoolean()));
+            return wasNull(ctx.input(), ctx.input().readBoolean());
         }
 
         @Override
@@ -1769,17 +1768,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Byte get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), Byte.valueOf(ctx.resultSet().getByte(ctx.index())));
+            return wasNull(ctx.resultSet(), ctx.resultSet().getByte(ctx.index()));
         }
 
         @Override
         final Byte get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), Byte.valueOf(ctx.statement().getByte(ctx.index())));
+            return wasNull(ctx.statement(), ctx.statement().getByte(ctx.index()));
         }
 
         @Override
         final Byte get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), Byte.valueOf(ctx.input().readByte()));
+            return wasNull(ctx.input(), ctx.input().readByte());
         }
 
         @Override
@@ -2325,17 +2324,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Double get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), Double.valueOf(ctx.resultSet().getDouble(ctx.index())));
+            return wasNull(ctx.resultSet(), ctx.resultSet().getDouble(ctx.index()));
         }
 
         @Override
         final Double get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), Double.valueOf(ctx.statement().getDouble(ctx.index())));
+            return wasNull(ctx.statement(), ctx.statement().getDouble(ctx.index()));
         }
 
         @Override
         final Double get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), Double.valueOf(ctx.input().readDouble()));
+            return wasNull(ctx.input(), ctx.input().readDouble());
         }
 
         @Override
@@ -2363,12 +2362,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, EnumType value) throws SQLException {
-            String literal = value.getLiteral();
-
-            if (literal == null)
-                binding(VARCHAR).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), literal));
-            else
-                binding(VARCHAR).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), literal));
+            binding(VARCHAR).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), value.getLiteral()));
         }
 
         @Override
@@ -2500,17 +2494,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Float get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), Float.valueOf(ctx.resultSet().getFloat(ctx.index())));
+            return wasNull(ctx.resultSet(), ctx.resultSet().getFloat(ctx.index()));
         }
 
         @Override
         final Float get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), Float.valueOf(ctx.statement().getFloat(ctx.index())));
+            return wasNull(ctx.statement(), ctx.statement().getFloat(ctx.index()));
         }
 
         @Override
         final Float get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), Float.valueOf(ctx.input().readFloat()));
+            return wasNull(ctx.input(), ctx.input().readFloat());
         }
 
         @Override
@@ -2552,17 +2546,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Integer get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), Integer.valueOf(ctx.resultSet().getInt(ctx.index())));
+            return wasNull(ctx.resultSet(), ctx.resultSet().getInt(ctx.index()));
         }
 
         @Override
         final Integer get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), Integer.valueOf(ctx.statement().getInt(ctx.index())));
+            return wasNull(ctx.statement(), ctx.statement().getInt(ctx.index()));
         }
 
         @Override
         final Integer get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), Integer.valueOf(ctx.input().readInt()));
+            return wasNull(ctx.input(), ctx.input().readInt());
         }
 
         @Override
@@ -2605,17 +2599,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Long get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), Long.valueOf(ctx.resultSet().getLong(ctx.index())));
+            return wasNull(ctx.resultSet(), ctx.resultSet().getLong(ctx.index()));
         }
 
         @Override
         final Long get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), Long.valueOf(ctx.statement().getLong(ctx.index())));
+            return wasNull(ctx.statement(), ctx.statement().getLong(ctx.index()));
         }
 
         @Override
         final Long get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), Long.valueOf(ctx.input().readLong()));
+            return wasNull(ctx.input(), ctx.input().readLong());
         }
 
         @Override
@@ -2810,6 +2804,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             SQLDialect family = ctx.family();
 
             switch (family) {
+
+
+
+
                 // [#5895] HSQLDB derives the specific data type from the literal
                 case HSQLDB:
                     ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
@@ -2819,10 +2817,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case SQLITE:
                     ctx.render().sql('\'').sql(escape(format(value, family), ctx.render())).sql('\'');
                     break;
-
-
-
-
 
 
 
@@ -3121,7 +3115,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long                               serialVersionUID = -1850495302106551527L;
 
-        @SuppressWarnings("unchecked")
         private static final Converter<OffsetDateTime, Instant> CONVERTER        = Converter.ofNullable(
             OffsetDateTime.class,
             Instant.class,
@@ -3694,17 +3687,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Short get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), Short.valueOf(ctx.resultSet().getShort(ctx.index())));
+            return wasNull(ctx.resultSet(), ctx.resultSet().getShort(ctx.index()));
         }
 
         @Override
         final Short get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), Short.valueOf(ctx.statement().getShort(ctx.index())));
+            return wasNull(ctx.statement(), ctx.statement().getShort(ctx.index()));
         }
 
         @Override
         final Short get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), Short.valueOf(ctx.input().readShort()));
+            return wasNull(ctx.input(), ctx.input().readShort());
         }
 
         @Override

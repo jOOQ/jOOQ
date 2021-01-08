@@ -107,13 +107,6 @@ final class ForLock extends AbstractQueryPart {
 
 
         switch (forLockMode) {
-            case UPDATE:
-                ctx.formatSeparator()
-                       .visit(K_FOR)
-                       .sql(' ')
-                       .visit(forLockMode.toKeyword());
-                break;
-
             case SHARE:
                 if (NO_SUPPORT_STANDARD_FOR_SHARE.contains(ctx.dialect()))
                     ctx.formatSeparator()
@@ -125,6 +118,7 @@ final class ForLock extends AbstractQueryPart {
                         .visit(forLockMode.toKeyword());
                 break;
 
+            case UPDATE:
             case KEY_SHARE:
             case NO_KEY_UPDATE:
             default:

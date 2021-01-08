@@ -107,7 +107,7 @@ import org.jooq.impl.ConstraintImpl.Action;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
-@SuppressWarnings({ "rawtypes", "serial", "unchecked" })
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class Interpreter {
 
     private static final JooqLogger                              log                    = JooqLogger.getLogger(Interpreter.class);
@@ -695,7 +695,7 @@ final class Interpreter {
 
     private final Iterable<Field<?>> assertFields(Query query, Iterable<FieldOrConstraint> fields) {
         return () -> new Iterator<Field<?>>() {
-            Iterator<FieldOrConstraint> it = fields.iterator();
+            final Iterator<FieldOrConstraint> it = fields.iterator();
 
             @Override
             public boolean hasNext() {
@@ -1190,8 +1190,7 @@ final class Interpreter {
 
         for (MutableCatalog catalog : catalogs.values())
             for (MutableSchema schema : catalog.schemas)
-                for (MutableTable table : schema.tables)
-                    result.add(table);
+                result.addAll(schema.tables);
 
         return result;
     }
@@ -1383,23 +1382,6 @@ final class Interpreter {
 
         if (result == InterpreterNameLookupCaseSensitivity.DEFAULT) {
             switch (defaultIfNull(configuration.settings().getInterpreterDialect(), configuration.family()).family()) {
-
-
-
-
-
-
-
-
-
-
-
-                case DERBY:
-                case FIREBIRD:
-                case H2:
-                case HSQLDB:
-                case POSTGRES:
-                    return InterpreterNameLookupCaseSensitivity.WHEN_QUOTED;
 
 
 

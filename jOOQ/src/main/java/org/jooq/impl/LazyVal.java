@@ -54,20 +54,18 @@ import org.jooq.conf.ParamType;
 final class LazyVal<T> extends AbstractParamX<T> {
 
     private static final long           serialVersionUID = 1258437916133900173L;
-    private final T                     value;
     private final Field<T>              field;
     private transient AbstractParamX<T> delegate;
 
-    LazyVal(T value, Field<T> field) {
-        super(AbstractParam.name(value, null), field.getDataType());
+    LazyVal(Field<T> field) {
+        super(Names.N_VALUE, field.getDataType());
 
-        this.value = value;
         this.field = field;
     }
 
     private final void init() {
         if (delegate == null)
-            delegate = (AbstractParamX<T>) DSL.val(value, field);
+            delegate = (AbstractParamX<T>) DSL.val(null, field);
     }
 
     // ------------------------------------------------------------------------
@@ -96,7 +94,7 @@ final class LazyVal<T> extends AbstractParamX<T> {
     @Override
     public final T getValue() {
         if (delegate == null)
-            return value;
+            return null;
 
         init();
         return delegate.getValue();

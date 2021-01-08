@@ -161,7 +161,6 @@ abstract class AbstractQuery<R extends Record> extends AbstractFetchable<R> impl
      * <p>
      * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation")
     @Override
     public Query bind(String param, Object value) {
         Integer index = Ints.tryParse(param);
@@ -188,7 +187,6 @@ abstract class AbstractQuery<R extends Record> extends AbstractFetchable<R> impl
      * <p>
      * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation")
     @Override
     public Query bind(int index, Object value) {
         Param<?>[] params = getParams().values().toArray(EMPTY_PARAM);

@@ -1621,9 +1621,8 @@ final class ParserContext {
             else if (parseKeywordIf("GROUPING SETS")) {
                 List<List<Field<?>>> fieldSets = new ArrayList<>();
                 parse('(');
-                do {
+                do
                     fieldSets.add(parseFieldsOrEmptyParenthesised());
-                }
                 while (parseIf(','));
                 parse(')');
                 result.addGroupBy(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION)));
@@ -1988,10 +1987,8 @@ final class ParserContext {
                         break valuesLoop;
 
                     List<Field<?>> values = new ArrayList<>();
-                    do {
-                        Field<?> value = parseKeywordIf("DEFAULT") ? default_() : parseField();
-                        values.add(value);
-                    }
+                    do
+                        values.add(parseKeywordIf("DEFAULT") ? default_() : parseField());
                     while (parseIf(','));
 
                     if (fields != null && fields.length != values.size())
@@ -2244,10 +2241,8 @@ final class ParserContext {
                 parseKeyword("VALUES");
                 parse('(');
                 insertValues = new ArrayList<>();
-                do {
-                    Field<?> value = parseKeywordIf("DEFAULT") ? default_() : parseField();
-                    insertValues.add(value);
-                }
+                do
+                    insertValues.add(parseKeywordIf("DEFAULT") ? default_() : parseField());
                 while (parseIf(','));
                 parse(')');
 
@@ -3416,7 +3411,6 @@ final class ParserContext {
 
 
 
-
     // -----------------------------------------------------------------------------------------------------------------
     // Statement clause parsing
     // -----------------------------------------------------------------------------------------------------------------
@@ -4251,9 +4245,8 @@ final class ParserContext {
         parse('(');
 
         if (!parseIf(')')) {
-            do {
+            do
                 values.add(parseStringLiteral());
-            }
             while (parseIf(','));
             parse(')');
         }
@@ -4613,9 +4606,8 @@ final class ParserContext {
         }
 
         if (parseIf('(')) {
-            do {
+            do
                 parseAlterTableAddFieldsOrConstraints(list);
-            }
             while (parseIf(','));
 
             parse(')');
@@ -4625,9 +4617,8 @@ final class ParserContext {
             return parseAlterTableAddFieldFirstBeforeLast(s1.addColumnIfNotExists(parseAlterTableAddField(null)));
         }
         else {
-            do {
+            do
                 parseAlterTableAddFieldsOrConstraints(list);
-            }
             while (parseIf(',') && (parseKeywordIf("ADD") || !peekKeyword("ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME")));
         }
 
@@ -5496,9 +5487,8 @@ final class ParserContext {
                         }
                         else {
                             fields = new ArrayList<>();
-                            do {
+                            do
                                 fields.add(toField(parseConcat(null)));
-                            }
                             while (parseIf(','));
                             parse(')');
                         }
@@ -5522,9 +5512,8 @@ final class ParserContext {
                         }
                         else {
                             fields = new ArrayList<>();
-                            do {
+                            do
                                 fields.add(toField(parseConcat(null)));
-                            }
                             while (parseIf(','));
                             parse(')');
                         }
@@ -5580,9 +5569,8 @@ final class ParserContext {
     private final List<Table<?>> parseTables() {
         List<Table<?>> result = new ArrayList<>();
 
-        do {
+        do
             result.add(parseTable());
-        }
         while (parseIf(','));
 
         return result;
@@ -5983,9 +5971,8 @@ final class ParserContext {
         parseKeyword("VALUES");
 
         List<Row> rows = new ArrayList<>();
-        do {
+        do
             rows.add(parseTuple());
-        }
         while (parseIf(','));
         return values0(rows.toArray(EMPTY_ROW));
     }
@@ -6185,9 +6172,8 @@ final class ParserContext {
     private final List<SortField<?>> parseSortSpecification() {
         List<SortField<?>> result = new ArrayList<>();
 
-        do {
+        do
             result.add(parseSortField());
-        }
         while (parseIf(','));
         return result;
     }
@@ -6226,18 +6212,16 @@ final class ParserContext {
 
     private final List<Field<?>> parseFields() {
         List<Field<?>> result = new ArrayList<>();
-        do {
+        do
             result.add(parseField());
-        }
         while (parseIf(','));
         return result;
     }
 
     private final List<FieldOrRow> parseFieldsOrRows() {
         List<FieldOrRow> result = new ArrayList<>();
-        do {
+        do
             result.add(parseFieldOrRow());
-        }
         while (parseIf(','));
         return result;
     }
@@ -6261,9 +6245,8 @@ final class ParserContext {
     private final List<Row> parseRows(Integer degree) {
         List<Row> result = new ArrayList<>();
 
-        do {
+        do
             result.add(parseRow(degree));
-        }
         while (parseIf(','));
 
         return result;
@@ -7836,9 +7819,8 @@ final class ParserContext {
             JSONNullType nullType = parseJSONNullTypeIf();
 
             if (nullType == null) {
-                do {
+                do
                     result.add(parseJSONEntry());
-                }
                 while (parseIf(','));
 
                 nullType = parseJSONNullTypeIf();
@@ -8290,7 +8272,6 @@ final class ParserContext {
             Number second = null;
 
             do {
-
                 boolean minus = parseIf('-');
                 if (!minus)
                     parseIf('+');
@@ -10192,9 +10173,8 @@ final class ParserContext {
 
             parse('(');
             if (!parseIf(')')) {
-                do {
+                do
                     arguments.add(parseField());
-                }
                 while (parseIf(','));
 
                 parse(')');
@@ -10223,9 +10203,8 @@ final class ParserContext {
     private final List<Field<?>> parseFieldNames() {
         List<Field<?>> result = new ArrayList<>();
 
-        do {
+        do
             result.add(parseFieldName());
-        }
         while (parseIf(','));
 
         return result;
@@ -10324,10 +10303,9 @@ final class ParserContext {
     private final List<Name> parseIdentifiers() {
         LinkedHashSet<Name> result = new LinkedHashSet<>();
 
-        do {
+        do
             if (!result.add(parseIdentifier()))
                 throw exception("Duplicate identifier encountered");
-        }
         while (parseIf(','));
         return new ArrayList<>(result);
     }

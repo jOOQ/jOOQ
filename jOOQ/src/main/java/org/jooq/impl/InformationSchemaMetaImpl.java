@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingInt;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_CHECK;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -160,7 +161,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             Catalog catalog = catalogsByName.get(catalogName);
 
             if (catalog == null) {
-                errors.add(String.format("Catalog " + catalogName + " not defined for schema " + xs.getSchemaName()));
+                errors.add("Catalog " + catalogName + " not defined for schema " + xs.getSchemaName());
                 continue schemaLoop;
             }
 
@@ -177,7 +178,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             Schema schema = schemasByName.get(schemaName);
 
             if (schema == null) {
-                errors.add(String.format("Schema " + schemaName + " not defined for domain " + d.getDomainName()));
+                errors.add("Schema " + schemaName + " not defined for domain " + d.getDomainName());
                 continue domainLoop;
             }
 
@@ -219,7 +220,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             Schema schema = schemasByName.get(schemaName);
 
             if (schema == null) {
-                errors.add(String.format("Schema " + schemaName + " not defined for table " + xt.getTableName()));
+                errors.add("Schema " + schemaName + " not defined for table " + xt.getTableName());
                 continue tableLoop;
             }
 
@@ -276,14 +277,14 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             int length = xc.getCharacterMaximumLength() == null ? 0 : xc.getCharacterMaximumLength();
             int precision = xc.getNumericPrecision() == null ? 0 : xc.getNumericPrecision();
             int scale = xc.getNumericScale() == null ? 0 : xc.getNumericScale();
-            boolean nullable = xc.isIsNullable() == null ? true : xc.isIsNullable();
+            boolean nullable = xc.isIsNullable() == null || xc.isIsNullable();
 
             // TODO: Exception handling should be moved inside SQLDataType
             Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
             InformationSchemaTable table = tablesByName.get(tableName);
 
             if (table == null) {
-                errors.add(String.format("Table " + tableName + " not defined for column " + xc.getColumnName()));
+                errors.add("Table " + tableName + " not defined for column " + xc.getColumnName());
                 continue columnLoop;
             }
 
@@ -299,12 +300,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         // -------------------------------------------------------------------------------------------------------------
         Map<Name, List<SortField<?>>> columnsByIndex = new HashMap<>();
         List<IndexColumnUsage> indexColumnUsages = new ArrayList<>(meta.getIndexColumnUsages());
-        indexColumnUsages.sort((o1, o2) -> {
-            int p1 = o1.getOrdinalPosition();
-            int p2 = o2.getOrdinalPosition();
-
-            return (p1 < p2) ? -1 : ((p1 == p2) ? 0 : 1);
-        });
+        indexColumnUsages.sort(comparingInt(IndexColumnUsage::getOrdinalPosition));
 
         indexColumnLoop:
         for (IndexColumnUsage ic : indexColumnUsages) {
@@ -315,14 +311,14 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaTable table = tablesByName.get(tableName);
 
             if (table == null) {
-                errors.add(String.format("Table " + tableName + " not defined for index " + indexName));
+                errors.add("Table " + tableName + " not defined for index " + indexName);
                 continue indexColumnLoop;
             }
 
             TableField<Record, ?> field = (TableField<Record, ?>) table.field(ic.getColumnName());
 
             if (field == null) {
-                errors.add(String.format("Column " + ic.getColumnName() + " not defined for table " + tableName));
+                errors.add("Column " + ic.getColumnName() + " not defined for table " + tableName);
                 continue indexColumnLoop;
             }
 
@@ -337,14 +333,14 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaTable table = tablesByName.get(tableName);
 
             if (table == null) {
-                errors.add(String.format("Table " + tableName + " not defined for index " + indexName));
+                errors.add("Table " + tableName + " not defined for index " + indexName);
                 continue indexLoop;
             }
 
             List<SortField<?>> c = columnsByIndex.get(indexName);
 
             if (c == null || c.isEmpty()) {
-                errors.add(String.format("No columns defined for index " + indexName));
+                errors.add("No columns defined for index " + indexName);
                 continue indexLoop;
             }
 
@@ -638,7 +634,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         }
     }
 
-    private final class InformationSchemaTable extends TableImpl<Record> {
+    private static final class InformationSchemaTable extends TableImpl<Record> {
 
         /**
          * Generated UID
@@ -681,7 +677,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         }
     }
 
-    private final class InformationSchemaDomain<T> extends DomainImpl<T> {
+    private static final class InformationSchemaDomain<T> extends DomainImpl<T> {
 
         /**
          * Generated UID
@@ -693,7 +689,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         }
     }
 
-    private final class InformationSchemaSequence<N extends Number> extends SequenceImpl<N> {
+    private static final class InformationSchemaSequence<N extends Number> extends SequenceImpl<N> {
 
         /**
          * Generated UID

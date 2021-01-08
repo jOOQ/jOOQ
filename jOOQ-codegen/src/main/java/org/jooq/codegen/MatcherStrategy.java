@@ -358,10 +358,10 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             String result = null;
 
             switch (mode) {
-                case DEFAULT:   result = match(definition, embeddables.getExpression(), embeddables.getRecordImplements());    break;
                 case INTERFACE: result = match(definition, embeddables.getExpression(), embeddables.getInterfaceImplements()); break;
                 case POJO:      result = match(definition, embeddables.getExpression(), embeddables.getPojoImplements());      break;
-                case RECORD:    result = match(definition, embeddables.getExpression(), embeddables.getRecordImplements());    break;
+                case RECORD:
+                case DEFAULT:   result = match(definition, embeddables.getExpression(), embeddables.getRecordImplements());    break;
             }
 
             if (result != null)
@@ -421,10 +421,10 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             String result = null;
 
             switch (mode) {
-                case DEFAULT:   result = match(definition, embeddables.getExpression(), embeddables.getRecordClass());    break;
                 case INTERFACE: result = match(definition, embeddables.getExpression(), embeddables.getInterfaceClass()); break;
                 case POJO:      result = match(definition, embeddables.getExpression(), embeddables.getPojoClass());      break;
-                case RECORD:    result = match(definition, embeddables.getExpression(), embeddables.getRecordClass());    break;
+                case RECORD:
+                case DEFAULT:   result = match(definition, embeddables.getExpression(), embeddables.getRecordClass());    break;
             }
 
             if (result != null)

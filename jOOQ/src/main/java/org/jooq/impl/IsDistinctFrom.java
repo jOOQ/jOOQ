@@ -126,8 +126,8 @@ final class IsDistinctFrom<T> extends AbstractCondition {
         // [#7222] [#7224] Make sure the columns are aliased
         else if (EMULATE_DISTINCT_PREDICATE.contains(ctx.dialect()))
             ctx.visit(comparator == IS_DISTINCT_FROM
-                ? (QueryPartInternal) notExists(select(lhs.as("x")).intersect(select(rhs.as("x"))))
-                : (QueryPartInternal) exists(select(lhs.as("x")).intersect(select(rhs.as("x")))));
+                ? notExists(select(lhs.as("x")).intersect(select(rhs.as("x"))))
+                : exists(select(lhs.as("x")).intersect(select(rhs.as("x")))));
 
         // MySQL knows the <=> operator
         else if (SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect()))

@@ -398,7 +398,6 @@ final class Tools {
          * {@link Clause#FIELD_REFERENCE} may contain a
          * {@link Clause#TABLE_REFERENCE}.
          */
-        @SuppressWarnings("javadoc")
         DATA_OMIT_CLAUSE_EVENT_EMISSION,
 
         /**
@@ -410,7 +409,6 @@ final class Tools {
          * practice should no longer be pursued, as such "sub-renderers" will emit /
          * divert {@link Clause} events.
          */
-        @SuppressWarnings("javadoc")
         DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES,
 
 
@@ -461,7 +459,6 @@ final class Tools {
         /**
          * [#3381] Omit the {@link Clause#SELECT_INTO}, as it is being emulated.
          */
-        @SuppressWarnings("javadoc")
         DATA_OMIT_INTO_CLAUSE,
 
         /**
@@ -559,14 +556,12 @@ final class Tools {
         /**
          * [#3381] The table to be used for the {@link Clause#SELECT_INTO} clause.
          */
-        @SuppressWarnings("javadoc")
         DATA_SELECT_INTO_TABLE,
 
         /**
          * [#1206] The collected Semi / Anti JOIN predicates.
          */
         DATA_COLLECTED_SEMI_ANTI_JOIN,
-
 
 
 
@@ -686,7 +681,7 @@ final class Tools {
 
         final String key;
 
-        private DataCacheKey(String key) {
+        DataCacheKey(String key) {
             this.key = key;
         }
     }
@@ -1120,22 +1115,6 @@ final class Tools {
      * Get a converter from a {@link ConverterProvider} or <code>null</code> if
      * no converter could be provided.
      */
-    static final <T, U> Converter<T, U> converter(Scope scope, Class<T> tType, Class<U> uType) {
-        return converter(configuration(scope), tType, uType);
-    }
-
-    /**
-     * Get a converter from a {@link ConverterProvider} or <code>null</code> if
-     * no converter could be provided.
-     */
-    static final <T, U> Converter<T, U> converter(Attachable attachable, Class<T> tType, Class<U> uType) {
-        return converter(configuration(attachable), tType, uType);
-    }
-
-    /**
-     * Get a converter from a {@link ConverterProvider} or <code>null</code> if
-     * no converter could be provided.
-     */
     static final <T, U> Converter<T, U> converterOrFail(Configuration configuration, Class<T> tType, Class<U> uType) {
         Converter<T, U> result = converter(configuration, tType, uType);
 
@@ -1377,18 +1356,6 @@ final class Tools {
 
         for (int i = 0; i < result.length; i++)
             result[i] = unqualified(fields[i]);
-
-        return result;
-    }
-
-    static final Name[] unqualifiedNames(Field<?>[] fields) {
-        if (fields == null)
-            return null;
-
-        Name[] result = new Name[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].getUnqualifiedName();
 
         return result;
     }
@@ -1929,7 +1896,6 @@ final class Tools {
         return result;
     }
 
-    @SuppressWarnings("serial")
     static final <T> Field<T> inlined(final Field<T> field) {
         return new CustomField<T>(field.getQualifiedName(), field.getDataType()) {
             @Override
@@ -2774,7 +2740,7 @@ final class Tools {
     }
 
     static final <T> T[] combine(T[] array, T value) {
-        T[] result = Arrays.copyOf(array, array.length + 1);;
+        T[] result = Arrays.copyOf(array, array.length + 1);
         result[array.length] = value;
         return result;
     }
@@ -3293,7 +3259,7 @@ final class Tools {
          *            the cached operation.
          * @param operation The expensive operation.
          * @param type The cache type to be used.
-         * @param keys The cache keys.
+         * @param key The cache keys.
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
@@ -3461,7 +3427,7 @@ final class Tools {
             synchronized (initLock) {
                 if (ktJvmClassMapping == null) {
                     try {
-                        ktJvmClassMapping = Reflect.on("kotlin.jvm.JvmClassMappingKt");
+                        ktJvmClassMapping = Reflect.onClass("kotlin.jvm.JvmClassMappingKt");
                     }
                     catch (ReflectException ignore) {}
                 }
@@ -3476,7 +3442,7 @@ final class Tools {
             synchronized (initLock) {
                 if (ktKClasses == null) {
                     try {
-                        ktKClasses = Reflect.on("kotlin.reflect.full.KClasses");
+                        ktKClasses = Reflect.onClass("kotlin.reflect.full.KClasses");
                     }
                     catch (ReflectException ignore) {}
                 }
@@ -3491,7 +3457,7 @@ final class Tools {
             synchronized (initLock) {
                 if (ktKClass == null) {
                     try {
-                        ktKClass = Reflect.on("kotlin.reflect.KClass");
+                        ktKClass = Reflect.onClass("kotlin.reflect.KClass");
                     }
                     catch (ReflectException ignore) {}
                 }
@@ -3506,7 +3472,7 @@ final class Tools {
             synchronized (initLock) {
                 if (ktKTypeParameter == null) {
                     try {
-                        ktKTypeParameter = Reflect.on("kotlin.reflect.KTypeParameter");
+                        ktKTypeParameter = Reflect.onClass("kotlin.reflect.KTypeParameter");
                     }
                     catch (ReflectException ignore) {}
                 }
@@ -3883,14 +3849,11 @@ final class Tools {
             if ((method.getModifiers() & Modifier.STATIC) == 0)
                 result.add(method);
 
-        do {
+        do
             for (Method method : type.getDeclaredMethods())
                 if ((method.getModifiers() & Modifier.STATIC) == 0)
                     result.add(method);
-
-            type = type.getSuperclass();
-        }
-        while (type != null);
+        while ((type = type.getSuperclass()) != null);
 
         return result;
     }
@@ -3902,14 +3865,11 @@ final class Tools {
             if ((field.getModifiers() & Modifier.STATIC) == 0)
                 result.add(field);
 
-        do {
+        do
             for (java.lang.reflect.Field field : type.getDeclaredFields())
                 if ((field.getModifiers() & Modifier.STATIC) == 0)
                     result.add(field);
-
-            type = type.getSuperclass();
-        }
-        while (type != null);
+        while ((type = type.getSuperclass()) != null);
 
         return result;
     }
@@ -3995,7 +3955,7 @@ final class Tools {
 
     /**
      * [#5666] Handle the complexity of each dialect's understanding of
-     * correctly calling {@link Statement#execute()}.
+     * correctly calling {@link PreparedStatement#execute()}}.
      */
     static final SQLException executeStatementAndGetFirstResultSet(ExecuteContext ctx, int skipUpdateCounts) throws SQLException {
         PreparedStatement stmt = ctx.statement();
@@ -4119,7 +4079,7 @@ final class Tools {
      */
     static final void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern, SQLException prev) throws SQLException {
         boolean anyResults = false;
-        int i = 0;
+        int i;
         int rows = (ctx.resultSet() == null) ? ctx.rows() : 0;
 
         for (i = 0; i < maxConsumedResults; i++) {
@@ -4557,16 +4517,6 @@ final class Tools {
 
 
 
-
-
-
-
-
-
-
-
-
-
             case FIREBIRD: {
                 begin(ctx);
                 beginExecuteImmediate(ctx);
@@ -4601,6 +4551,7 @@ final class Tools {
 
                 break;
             }
+
 
 
 
@@ -4892,10 +4843,14 @@ final class Tools {
 
 
 
-
-
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
+
+
+
                 case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+
+
+
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
                 case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
                 case POSTGRES:
@@ -5229,7 +5184,6 @@ final class Tools {
         return false;
     }
 
-    @SuppressWarnings("serial")
     static final QueryPartList<SelectFieldOrAsterisk> qualify(final Table<?> table, Iterable<SelectFieldOrAsterisk> fields) {
         QueryPartList<SelectFieldOrAsterisk> result = new QueryPartList<SelectFieldOrAsterisk>() {
             @Override
@@ -5283,7 +5237,7 @@ final class Tools {
         return ((SortFieldImpl<T>) sortField).getField();
     }
 
-    static final <T> Field<?>[] fields(SortField<?>[] sortFields) {
+    static final Field<?>[] fields(SortField<?>[] sortFields) {
         Field<?>[] result = new Field[sortFields.length];
 
         for (int i = 0; i < result.length; i++)
@@ -5800,19 +5754,6 @@ final class Tools {
 
                 case POSTGRES:
                     return ParseNameCase.LOWER_IF_UNQUOTED;
-
-
-
-
-
-
-
-
-                case DERBY:
-                case FIREBIRD:
-                case H2:
-                case HSQLDB:
-                    return ParseNameCase.UPPER_IF_UNQUOTED;
 
 
 

@@ -481,7 +481,7 @@ public final class JooqLogger implements Log {
             case DEBUG: debug(message, details); break;
             case INFO:  info (message, details); break;
             case WARN:  warn (message, details); break;
-            case ERROR: error(message, details); break;
+            case ERROR:
             case FATAL: error(message, details); break;
         }
     }
@@ -515,7 +515,7 @@ public final class JooqLogger implements Log {
             case DEBUG: debug(message, details, throwable); break;
             case INFO:  info (message, details, throwable); break;
             case WARN:  warn (message, details, throwable); break;
-            case ERROR: error(message, details, throwable); break;
+            case ERROR:
             case FATAL: error(message, details, throwable); break;
         }
     }

@@ -149,8 +149,8 @@ final class MetaDataFieldProvider implements Serializable {
                 // [#650, #667] All types should be known at this point, but in plain
                 // SQL environments, it is possible that user-defined types, or vendor-specific
                 // types (e.g. such as PostgreSQL's json type) will cause this exception.
-                catch (SQLDialectNotSupportedException ignore) {
-                    log.debug("Not supported by dialect", ignore.getMessage());
+                catch (SQLDialectNotSupportedException e) {
+                    log.debug("Not supported by dialect", e.getMessage());
                 }
 
                 fields[i - 1] = field(name, dataType);

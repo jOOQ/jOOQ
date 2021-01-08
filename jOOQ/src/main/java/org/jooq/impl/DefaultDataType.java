@@ -101,7 +101,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
      * A pattern to be used to replace all precision, scale, and length
      * information.
      */
-    private static final Pattern                                TYPE_NAME_PATTERN = Pattern.compile("\\([^\\)]*\\)");
+    private static final Pattern                                TYPE_NAME_PATTERN = Pattern.compile("\\([^)]*\\)");
 
     // -------------------------------------------------------------------------
     // Data type caches

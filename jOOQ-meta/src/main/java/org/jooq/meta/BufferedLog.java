@@ -82,7 +82,7 @@ public class BufferedLog implements Log {
                 case TRACE: delegate.trace(m.message, m.details, m.throwable); break;
                 case INFO:  delegate.info (m.message, m.details, m.throwable); break;
                 case WARN:  delegate.warn (m.message, m.details, m.throwable); break;
-                case ERROR: delegate.error(m.message, m.details, m.throwable); break;
+                case ERROR:
                 case FATAL: delegate.error(m.message, m.details, m.throwable); break;
             }
 

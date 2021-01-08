@@ -552,8 +552,8 @@ public class JDBCUtils {
             try {
                 blob.free();
             }
-            catch (Exception ignore) {
-                log.warn("Error while freeing resource", ignore);
+            catch (Exception e) {
+                log.warn("Error while freeing resource", e);
             }
 
             // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
@@ -572,8 +572,8 @@ public class JDBCUtils {
             try {
                 clob.free();
             }
-            catch (Exception ignore) {
-                log.warn("Error while freeing resource", ignore);
+            catch (Exception e) {
+                log.warn("Error while freeing resource", e);
             }
 
             // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
@@ -592,8 +592,8 @@ public class JDBCUtils {
             try {
                 xml.free();
             }
-            catch (Exception ignore) {
-                log.warn("Error while freeing resource", ignore);
+            catch (Exception e) {
+                log.warn("Error while freeing resource", e);
             }
 
             // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
@@ -612,8 +612,8 @@ public class JDBCUtils {
             try {
                 array.free();
             }
-            catch (Exception ignore) {
-                log.warn("Error while freeing resource", ignore);
+            catch (Exception e) {
+                log.warn("Error while freeing resource", e);
             }
 
             // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
@@ -663,7 +663,7 @@ public class JDBCUtils {
      *         {@link SQLInput#wasNull()} is <code>true</code>
      */
     public static final Boolean wasNull(SQLInput stream, Boolean value) throws SQLException {
-        return (value == null || (value.booleanValue() == false && stream.wasNull())) ? null : value;
+        return (value == null || (!value && stream.wasNull())) ? null : value;
     }
 
     /**
@@ -708,7 +708,7 @@ public class JDBCUtils {
      *         {@link ResultSet#wasNull()} is <code>true</code>
      */
     public static final Boolean wasNull(ResultSet rs, Boolean value) throws SQLException {
-        return (value == null || (value.booleanValue() == false && rs.wasNull())) ? null : value;
+        return (value == null || (!value && rs.wasNull())) ? null : value;
     }
 
     /**
@@ -753,7 +753,7 @@ public class JDBCUtils {
      *         {@link CallableStatement#wasNull()} is <code>true</code>
      */
     public static final Boolean wasNull(CallableStatement statement, Boolean value) throws SQLException {
-        return (value == null || (value.booleanValue() == false && statement.wasNull())) ? null : value;
+        return (value == null || (!value && statement.wasNull())) ? null : value;
     }
 
     /**

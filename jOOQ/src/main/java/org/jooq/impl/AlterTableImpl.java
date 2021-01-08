@@ -1742,11 +1742,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-
-
-
-
-
             default:
                 ctx.visit(K_DROP);
                 break;

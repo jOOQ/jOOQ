@@ -149,8 +149,7 @@ final class Diff {
                     // TODO: Can we reuse the logic from DROP_TABLE?
                     for (Table<?> t1 : s.getTables())
                         for (UniqueKey<?> uk : t1.getKeys())
-                            for (ForeignKey<?, ?> fk : uk.getReferences())
-                                r.droppedFks.add(fk);
+                            r.droppedFks.addAll(uk.getReferences());
 
                     if (!StringUtils.isEmpty(s.getName()))
                         r.queries.add(ctx.dropSchema(s).cascade());
@@ -428,10 +427,8 @@ final class Diff {
                         return false;
 
                     // [#10864] In most dialects, DECIMAL and NUMERIC are aliases and don't need to be changed into each other
-                    else if (type1.getType() == BigDecimal.class && type2.getType() == BigDecimal.class)
-                        return false;
                     else
-                        return true;
+                        return type1.getType() != BigDecimal.class || type2.getType() != BigDecimal.class;
                 }
 
                 private final boolean precisionDifference(DataType<?> type1, DataType<?> type2) {

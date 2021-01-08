@@ -105,7 +105,7 @@ public class JPADatabase extends AbstractInterpretingDatabase {
         }
 
         // [#9058] Properties use camelCase notation.
-        boolean useAttributeConverters = Boolean.valueOf(
+        boolean useAttributeConverters = Boolean.parseBoolean(
             getProperties().getProperty("useAttributeConverters",
                 getProperties().getProperty("use-attribute-converters", "true")
             )

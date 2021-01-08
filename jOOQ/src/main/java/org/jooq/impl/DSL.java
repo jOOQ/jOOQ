@@ -7800,6 +7800,72 @@ public class DSL {
     }
 
     /**
+     * The <code>DROP INDEX</code> statement.
+     *
+     * @see DSLContext#dropIndex(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropIndexOnStep dropIndex(String index) {
+        return dsl().dropIndex(index);
+    }
+
+    /**
+     * The <code>DROP INDEX</code> statement.
+     *
+     * @see DSLContext#dropIndex(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropIndexOnStep dropIndex(Name index) {
+        return dsl().dropIndex(index);
+    }
+
+    /**
+     * The <code>DROP INDEX</code> statement.
+     *
+     * @see DSLContext#dropIndex(Index)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.DropIndexOnStep dropIndex(Index index) {
+        return dsl().dropIndex(index);
+    }
+
+    /**
+     * The <code>DROP INDEX IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropIndexIfExists(String)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.DropIndexOnStep dropIndexIfExists(String index) {
+        return dsl().dropIndexIfExists(index);
+    }
+
+    /**
+     * The <code>DROP INDEX IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropIndexIfExists(Name)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.DropIndexOnStep dropIndexIfExists(Name index) {
+        return dsl().dropIndexIfExists(index);
+    }
+
+    /**
+     * The <code>DROP INDEX IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropIndexIfExists(Index)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.DropIndexOnStep dropIndexIfExists(Index index) {
+        return dsl().dropIndexIfExists(index);
+    }
+
+    /**
      * The <code>DROP SCHEMA</code> statement.
      *
      * @see DSLContext#dropSchema(String)
@@ -9230,81 +9296,6 @@ public class DSL {
     @Support
     public static DropTableStep dropTableIfExists(Table<?> table) {
         return dsl().dropTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>DROP INDEX</code> statement.
-     *
-     * @see DSLContext#dropIndex(String)
-     */
-    @NotNull
-    @Support
-    public static DropIndexOnStep dropIndex(String index) {
-        return dsl().dropIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>DROP INDEX</code> statement.
-     *
-     * @see DSLContext#dropIndex(Name)
-     */
-    @NotNull
-    @Support
-    public static DropIndexOnStep dropIndex(Name index) {
-        return dsl().dropIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>DROP INDEX</code> statement.
-     *
-     * @see DSLContext#dropIndex(Index)
-     */
-    @NotNull
-    @Support
-    public static DropIndexOnStep dropIndex(Index index) {
-        return dsl().dropIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropIndexIfExists(String)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static DropIndexOnStep dropIndexIfExists(String index) {
-        return dsl().dropIndexIfExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropIndexIfExists(Name)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static DropIndexOnStep dropIndexIfExists(Name index) {
-        return dsl().dropIndexIfExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropIndexIfExists(Index)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static DropIndexOnStep dropIndexIfExists(Index index) {
-        return dsl().dropIndexIfExists(index);
     }
 
     /**

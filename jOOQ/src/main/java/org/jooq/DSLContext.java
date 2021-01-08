@@ -9788,6 +9788,60 @@ public interface DSLContext extends Scope {
     DropDomainCascadeStep dropDomainIfExists(Domain<?> domain);
 
     /**
+     * The <code>DROP INDEX</code> statement.
+     *
+     * @see DSL#dropIndex(String)
+     */
+    @NotNull
+    @Support
+    DropIndexOnStep dropIndex(String index);
+
+    /**
+     * The <code>DROP INDEX</code> statement.
+     *
+     * @see DSL#dropIndex(Name)
+     */
+    @NotNull
+    @Support
+    DropIndexOnStep dropIndex(Name index);
+
+    /**
+     * The <code>DROP INDEX</code> statement.
+     *
+     * @see DSL#dropIndex(Index)
+     */
+    @NotNull
+    @Support
+    DropIndexOnStep dropIndex(Index index);
+
+    /**
+     * The <code>DROP INDEX IF EXISTS</code> statement.
+     *
+     * @see DSL#dropIndexIfExists(String)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    DropIndexOnStep dropIndexIfExists(String index);
+
+    /**
+     * The <code>DROP INDEX IF EXISTS</code> statement.
+     *
+     * @see DSL#dropIndexIfExists(Name)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    DropIndexOnStep dropIndexIfExists(Name index);
+
+    /**
+     * The <code>DROP INDEX IF EXISTS</code> statement.
+     *
+     * @see DSL#dropIndexIfExists(Index)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    DropIndexOnStep dropIndexIfExists(Index index);
+
+    /**
      * The <code>DROP SCHEMA</code> statement.
      *
      * @see DSL#dropSchema(String)
@@ -11152,69 +11206,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>DROP INDEX</code> statement.
-     *
-     * @see DSL#dropIndex(String)
-     */
-    @NotNull
-    @Support
-    DropIndexOnStep dropIndex(String index);
-
-    /**
-     * Create a new DSL <code>DROP INDEX</code> statement.
-     *
-     * @see DSL#dropIndex(Name)
-     */
-    @NotNull
-    @Support
-    DropIndexOnStep dropIndex(Name index);
-
-    /**
-     * Create a new DSL <code>DROP INDEX</code> statement.
-     *
-     * @see DSL#dropIndex(Name)
-     */
-    @NotNull
-    @Support
-    DropIndexOnStep dropIndex(Index index);
-
-    /**
-     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropIndexIfExists(String)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    DropIndexOnStep dropIndexIfExists(String index);
-
-    /**
-     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropIndexIfExists(Name)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    DropIndexOnStep dropIndexIfExists(Name index);
-
-    /**
-     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropIndexIfExists(Name)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    DropIndexOnStep dropIndexIfExists(Index index);
 
     /**
      * Create a new DSL truncate statement.

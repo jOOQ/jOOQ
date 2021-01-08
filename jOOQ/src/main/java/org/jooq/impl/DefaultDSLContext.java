@@ -3057,6 +3057,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.DropIndexOnStep dropIndex(String index) {
+        return new DropIndexImpl(configuration(), DSL.index(DSL.name(index)), false);
+    }
+
+    @Override
+    public org.jooq.DropIndexOnStep dropIndex(Name index) {
+        return new DropIndexImpl(configuration(), DSL.index(index), false);
+    }
+
+    @Override
+    public org.jooq.DropIndexOnStep dropIndex(Index index) {
+        return new DropIndexImpl(configuration(), index, false);
+    }
+
+    @Override
+    public org.jooq.DropIndexOnStep dropIndexIfExists(String index) {
+        return new DropIndexImpl(configuration(), DSL.index(DSL.name(index)), true);
+    }
+
+    @Override
+    public org.jooq.DropIndexOnStep dropIndexIfExists(Name index) {
+        return new DropIndexImpl(configuration(), DSL.index(index), true);
+    }
+
+    @Override
+    public org.jooq.DropIndexOnStep dropIndexIfExists(Index index) {
+        return new DropIndexImpl(configuration(), index, true);
+    }
+
+    @Override
     public org.jooq.DropSchemaStep dropSchema(String schema) {
         return new DropSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
@@ -3775,36 +3805,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public DropTableStep dropTableIfExists(Table<?> table) {
         return new DropTableImpl(configuration(), table, true);
-    }
-
-    @Override
-    public DropIndexOnStep dropIndex(String index) {
-        return dropIndex(name(index));
-    }
-
-    @Override
-    public DropIndexOnStep dropIndex(Name index) {
-        return dropIndex(index(index));
-    }
-
-    @Override
-    public DropIndexOnStep dropIndex(Index index) {
-        return new DropIndexImpl(configuration(), index);
-    }
-
-    @Override
-    public DropIndexOnStep dropIndexIfExists(String index) {
-        return dropIndexIfExists(name(index));
-    }
-
-    @Override
-    public DropIndexOnStep dropIndexIfExists(Name index) {
-        return dropIndexIfExists(index(index));
-    }
-
-    @Override
-    public DropIndexOnStep dropIndexIfExists(Index index) {
-        return new DropIndexImpl(configuration(), index, true);
     }
 
     @Override

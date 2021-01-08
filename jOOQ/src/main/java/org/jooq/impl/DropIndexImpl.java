@@ -37,115 +37,117 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DROP_INDEX;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_DROP_INDEX;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_ON;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Tools.beginTryCatch;
-import static org.jooq.impl.Tools.endTryCatch;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.DropIndexOnStep;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.SQLDialect;
-import org.jooq.Table;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>DROP INDEX</code> statement.
  */
-final class DropIndexImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
+final class DropIndexImpl
+extends
+    AbstractRowCountQuery
+implements
+    DropIndexOnStep,
+    DropIndexCascadeStep,
+    DropIndexFinalStep
+{
 
-    // Cascading interface implementations for DROP INDEX behaviour
-    DropIndexOnStep {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]        CLAUSES              = { DROP_INDEX };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> REQUIRES_ON          = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private final Index    index;
+    private final boolean  dropIndexIfExists;
+    private       Table<?> on;
+    private       Boolean  cascade;
 
-    private final Index                  index;
-    private final boolean                ifExists;
-    private Table<?>                     on;
-    private Boolean                      cascade;
-
-    DropIndexImpl(Configuration configuration, Index index) {
-        this(configuration, index, false);
+    DropIndexImpl(
+        Configuration configuration,
+        Index index,
+        boolean dropIndexIfExists
+    ) {
+        this(
+            configuration,
+            index,
+            dropIndexIfExists,
+            null,
+            null
+        );
     }
 
-    DropIndexImpl(Configuration configuration, Index index, boolean ifExists) {
+    DropIndexImpl(
+        Configuration configuration,
+        Index index,
+        boolean dropIndexIfExists,
+        Table<?> on,
+        Boolean cascade
+    ) {
         super(configuration);
 
         this.index = index;
-        this.ifExists = ifExists;
-        this.on = index.getTable();
+        this.dropIndexIfExists = dropIndexIfExists;
+        this.on = on;
+        this.cascade = cascade;
     }
 
-    final Index    $index()    { return index; }
-    final boolean  $ifExists() { return ifExists; }
-    final Table<?> $on()       { return on; }
+    final Index    $index()             { return index; }
+    final boolean  $dropIndexIfExists() { return dropIndexIfExists; }
+    final Table<?> $on()                { return on; }
+    final Boolean  $cascade()           { return cascade; }
 
-    // ------------------------------------------------------------------------
-    // XXX: DropIndex API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // XXX: DSL API
+    // -------------------------------------------------------------------------
 
     @Override
-    public final DropIndexImpl on(Table<?> table) {
-        this.on = table;
+    public final DropIndexImpl on(String on) {
+        return on(DSL.table(DSL.name(on)));
+    }
+
+    @Override
+    public final DropIndexImpl on(Name on) {
+        return on(DSL.table(on));
+    }
+
+    @Override
+    public final DropIndexImpl on(Table<?> on) {
+        this.on = on;
         return this;
     }
 
     @Override
-    public final DropIndexImpl on(String tableName) {
-        return on(name(tableName));
-    }
-
-    @Override
-    public final DropIndexImpl on(Name tableName) {
-        return on(table(tableName));
-    }
-
-    @Override
     public final DropIndexImpl cascade() {
-        cascade = true;
+        this.cascade = true;
         return this;
     }
 
     @Override
     public final DropIndexImpl restrict() {
-        cascade = false;
+        this.cascade = false;
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES              = { Clause.DROP_INDEX };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> REQUIRES_ON          = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
@@ -153,20 +155,19 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (dropIndexIfExists && !supportsIfExists(ctx)) {
             beginTryCatch(ctx, DDLStatementType.DROP_INDEX);
             accept0(ctx);
             endTryCatch(ctx, DDLStatementType.DROP_INDEX);
         }
-        else {
+        else
             accept0(ctx);
-        }
     }
 
     private void accept0(Context<?> ctx) {
         ctx.visit(K_DROP_INDEX).sql(' ');
 
-        if (ifExists && supportsIfExists(ctx))
+        if (dropIndexIfExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
 
@@ -187,4 +188,6 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

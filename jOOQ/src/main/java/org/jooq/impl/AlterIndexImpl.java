@@ -110,7 +110,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
+    
     @Override
     public final AlterIndexImpl on(String on) {
         return on(DSL.table(DSL.name(on)));

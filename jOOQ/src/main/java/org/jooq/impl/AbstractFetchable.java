@@ -1035,6 +1035,11 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final R[] fetchArray() {
+        Result<R> r = fetch();
+
+        if (r.isNotEmpty())
+            return r.toArray((R[]) Array.newInstance(r.get(0).getClass(), r.size()));
+
         Class<? extends R> recordType;
 
         // TODO [#3185] Pull up getRecordType()
@@ -1045,7 +1050,6 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
         else
             throw new DataAccessException("Attempt to call fetchArray() on " + getClass());
 
-        Result<R> r = fetch();
         return r.toArray((R[]) Array.newInstance(recordType, r.size()));
     }
 

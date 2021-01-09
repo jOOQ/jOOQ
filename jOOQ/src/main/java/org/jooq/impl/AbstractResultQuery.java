@@ -1397,11 +1397,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return fetch().intoArrays();
     }
 
+
     @SuppressWarnings("unchecked")
     @Override
     public final R[] fetchArray() {
         Result<R> r = fetch();
-        return r.toArray((R[]) Array.newInstance(getRecordType(), r.size()));
+
+        if (r.isNotEmpty())
+            return r.toArray((R[]) Array.newInstance(r.get(0).getClass(), r.size()));
+        else
+            return r.toArray((R[]) Array.newInstance(getRecordType(), r.size()));
     }
 
     @Override

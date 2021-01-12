@@ -2742,6 +2742,86 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.CreateIndexStep createIndex(String index) {
+        return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndex(Name index) {
+        return new CreateIndexImpl(configuration(), false, DSL.index(index), false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndex(Index index) {
+        return new CreateIndexImpl(configuration(), false, index, false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndex() {
+        return new CreateIndexImpl(configuration(), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndexIfNotExists(String index) {
+        return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
+        return new CreateIndexImpl(configuration(), false, DSL.index(index), true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
+        return new CreateIndexImpl(configuration(), false, index, true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndexIfNotExists() {
+        return new CreateIndexImpl(configuration(), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndex(String index) {
+        return new CreateIndexImpl(configuration(), true, DSL.index(DSL.name(index)), false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndex(Name index) {
+        return new CreateIndexImpl(configuration(), true, DSL.index(index), false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndex(Index index) {
+        return new CreateIndexImpl(configuration(), true, index, false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndex() {
+        return new CreateIndexImpl(configuration(), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(String index) {
+        return new CreateIndexImpl(configuration(), true, DSL.index(DSL.name(index)), true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
+        return new CreateIndexImpl(configuration(), true, DSL.index(index), true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
+        return new CreateIndexImpl(configuration(), true, index, true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
+        return new CreateIndexImpl(configuration(), true, true);
+    }
+
+    @Override
     public org.jooq.CreateSchemaFinalStep createSchema(String schema) {
         return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
@@ -3675,76 +3755,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public DropTypeStep dropTypeIfExists(Collection<?> type) {
         return new DropTypeImpl(configuration(), type, true);
-    }
-
-    @Override
-    public CreateIndexStep createIndex() {
-        return new CreateIndexImpl(configuration(), null, false, false);
-    }
-
-    @Override
-    public CreateIndexStep createIndex(String index) {
-        return createIndex(name(index));
-    }
-
-    @Override
-    public CreateIndexStep createIndex(Name index) {
-        return createIndex(index(index));
-    }
-
-    @Override
-    public CreateIndexStep createIndex(Index index) {
-        return new CreateIndexImpl(configuration(), index, index.getUnique(), false);
-    }
-
-    @Override
-    public CreateIndexStep createIndexIfNotExists(String index) {
-        return createIndexIfNotExists(name(index));
-    }
-
-    @Override
-    public CreateIndexStep createIndexIfNotExists(Name index) {
-        return createIndexIfNotExists(index(index));
-    }
-
-    @Override
-    public CreateIndexStep createIndexIfNotExists(Index index) {
-        return new CreateIndexImpl(configuration(), index, index.getUnique(), true);
-    }
-
-    @Override
-    public CreateIndexStep createUniqueIndex() {
-        return new CreateIndexImpl(configuration(), null, true, false);
-    }
-
-    @Override
-    public CreateIndexStep createUniqueIndex(String index) {
-        return createUniqueIndex(name(index));
-    }
-
-    @Override
-    public CreateIndexStep createUniqueIndex(Name index) {
-        return createUniqueIndex(index(index));
-    }
-
-    @Override
-    public CreateIndexStep createUniqueIndex(Index index) {
-        return new CreateIndexImpl(configuration(), index, true, false);
-    }
-
-    @Override
-    public CreateIndexStep createUniqueIndexIfNotExists(String index) {
-        return createUniqueIndexIfNotExists(name(index));
-    }
-
-    @Override
-    public CreateIndexStep createUniqueIndexIfNotExists(Name index) {
-        return createUniqueIndexIfNotExists(index(index));
-    }
-
-    @Override
-    public CreateIndexStep createUniqueIndexIfNotExists(Index index) {
-        return new CreateIndexImpl(configuration(), index, true, true);
     }
 
     @Override

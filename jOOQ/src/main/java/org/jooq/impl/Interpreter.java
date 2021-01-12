@@ -86,6 +86,7 @@ import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Nullability;
+import org.jooq.OrderField;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -326,7 +327,7 @@ final class Interpreter {
 
         for (Index index : query.$indexes()) {
             IndexImpl impl = (IndexImpl) index;
-            mt.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.sortFields(impl.$fields()), impl.$unique()));
+            mt.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.sortFields(asList(impl.$fields())), impl.$unique()));
         }
     }
 
@@ -954,10 +955,10 @@ final class Interpreter {
             throw notExists(table);
 
         MutableIndex existing = find(mt.indexes, index);
-        List<MutableSortField> mtf = mt.sortFields(query.$sortFields());
+        List<MutableSortField> mtf = mt.sortFields(Tools.sortFields(query.$on()));
 
         if (existing != null) {
-            if (!query.$ifNotExists())
+            if (!query.$createIndexIfNotExists())
                 throw alreadyExists(index);
 
             return;
@@ -1708,10 +1709,11 @@ final class Interpreter {
             return result;
         }
 
-        final List<MutableSortField> sortFields(SortField<?>[] sfs) {
+        final List<MutableSortField> sortFields(List<? extends OrderField<?>> ofs) {
             List<MutableSortField> result = new ArrayList<>();
 
-            for (SortField<?> sf : sfs) {
+            for (OrderField<?> of : ofs) {
+                SortField<?> sf = Tools.sortField(of);
                 Field<?> f = ((SortFieldImpl<?>) sf).getField();
                 MutableField mf = find(fields, f);
 

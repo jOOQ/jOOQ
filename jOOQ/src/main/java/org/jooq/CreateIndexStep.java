@@ -37,38 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-
-import java.util.Collection;
-
 /**
- * A {@link Query} that can create indexes.
+ * A step in the construction of the <code>CREATE INDEX</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -87,50 +63,49 @@ import java.util.Collection;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateIndexStep {
 
     /**
-     * Specify the table and column expressions on which to create an index.
+     * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support
-    CreateIndexIncludeStep on(Table<?> table, OrderField<?>... fields);
+    @NotNull
+    CreateIndexIncludeStep on(String table, String... on);
 
     /**
-     * Specify the table and column expressions on which to create an index.
+     * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support
-    CreateIndexIncludeStep on(Table<?> table, Collection<? extends OrderField<?>> fields);
+    @NotNull
+    CreateIndexIncludeStep on(Name table, Name... on);
 
     /**
-     * Specify the table and column expressions on which to create an index.
+     * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support
-    CreateIndexIncludeStep on(Name tableName, Name... fieldNames);
+    @NotNull
+    CreateIndexIncludeStep on(Table<?> table, OrderField<?>... on);
 
     /**
-     * Specify the table and column expressions on which to create an index.
+     * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support
-    CreateIndexIncludeStep on(Name tableName, Collection<? extends Name> fieldNames);
+    @NotNull
+    CreateIndexIncludeStep on(String table, Collection<? extends String> on);
 
     /**
-     * Specify the table and column expressions on which to create an index.
+     * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support
-    CreateIndexIncludeStep on(String tableName, String... fieldNames);
+    @NotNull
+    CreateIndexIncludeStep on(Name table, Collection<? extends Name> on);
 
     /**
-     * Specify the table and column expressions on which to create an index.
+     * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support
-    CreateIndexIncludeStep on(String tableName, Collection<? extends String> fieldNames);
+    @NotNull
+    CreateIndexIncludeStep on(Table<?> table, Collection<? extends OrderField<?>> on);
 }

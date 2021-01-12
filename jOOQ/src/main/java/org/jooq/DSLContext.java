@@ -9221,6 +9221,150 @@ public interface DSLContext extends Scope {
     CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
 
     /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(String)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createIndex(String index);
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(Name)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createIndex(Name index);
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(Index)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createIndex(Index index);
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex()
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createIndex();
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(String index);
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(Name index);
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(Index)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(Index index);
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists()
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists();
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex(String)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createUniqueIndex(String index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex(Name)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createUniqueIndex(Name index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex(Index)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createUniqueIndex(Index index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex()
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createUniqueIndex();
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createUniqueIndexIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(String index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createUniqueIndexIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(Name index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createUniqueIndexIfNotExists(Index)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(Index index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createUniqueIndexIfNotExists()
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists();
+
+    /**
      * The <code>CREATE SCHEMA</code> statement.
      *
      * @see DSL#createSchema(String)
@@ -10197,7 +10341,7 @@ public interface DSLContext extends Scope {
      * <p>
      * Set a vendor specific flag to a new value.
      *
-     * @see DSL#set(Name,Param)
+     * @see DSL#set(Name, Param)
      */
     @NotNull
     @Support({ MYSQL })
@@ -10956,131 +11100,6 @@ public interface DSLContext extends Scope {
     DropTypeStep dropTypeIfExists(Collection<?> type);
 
     /**
-     * Create a new DSL <code>CREATE INDEX</code> statement.
-     *
-     * @see DSL#createIndex()
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createIndex();
-
-    /**
-     * Create a new DSL <code>CREATE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(String)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createIndex(String index);
-
-    /**
-     * Create a new DSL <code>CREATE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(Name)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createIndex(Name index);
-
-    /**
-     * Create a new DSL <code>CREATE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(Index)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createIndex(Index index);
-
-    /**
-     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createIndexIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    CreateIndexStep createIndexIfNotExists(String index);
-
-    /**
-     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createIndexIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    CreateIndexStep createIndexIfNotExists(Name index);
-
-    /**
-     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createIndexIfNotExists(Index)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    CreateIndexStep createIndexIfNotExists(Index index);
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createUniqueIndex()
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createUniqueIndex();
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(String)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createUniqueIndex(String index);
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(Name)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createUniqueIndex(Name index);
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(Index)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createUniqueIndex(Index index);
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    CreateIndexStep createUniqueIndexIfNotExists(String index);
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    CreateIndexStep createUniqueIndexIfNotExists(Name index);
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(Index)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    CreateIndexStep createUniqueIndexIfNotExists(Index index);
-
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *

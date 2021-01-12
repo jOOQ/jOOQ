@@ -7107,6 +7107,182 @@ public class DSL {
     }
 
     /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createIndex(String index) {
+        return dsl().createIndex(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createIndex(Name index) {
+        return dsl().createIndex(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex(Index)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createIndex(Index index) {
+        return dsl().createIndex(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex()
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createIndex() {
+        return dsl().createIndex();
+    }
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createIndexIfNotExists(String index) {
+        return dsl().createIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
+        return dsl().createIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(Index)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
+        return dsl().createIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists()
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createIndexIfNotExists() {
+        return dsl().createIndexIfNotExists();
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createUniqueIndex(String index) {
+        return dsl().createUniqueIndex(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createUniqueIndex(Name index) {
+        return dsl().createUniqueIndex(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(Index)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createUniqueIndex(Index index) {
+        return dsl().createUniqueIndex(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex()
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createUniqueIndex() {
+        return dsl().createUniqueIndex();
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(String index) {
+        return dsl().createUniqueIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
+        return dsl().createUniqueIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(Index)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
+        return dsl().createUniqueIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists()
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
+        return dsl().createUniqueIndexIfNotExists();
+    }
+
+    /**
      * The <code>CREATE SCHEMA</code> statement.
      *
      * @see DSLContext#createSchema(String)
@@ -8299,7 +8475,7 @@ public class DSL {
      * <p>
      * Set a vendor specific flag to a new value.
      *
-     * @see DSLContext#set(Name,Param)
+     * @see DSLContext#set(Name, Param)
      */
     @NotNull
     @Support({ MYSQL })
@@ -8992,160 +9168,6 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropTypeIfExists(Collection<?> type) {
         return dsl().dropTypeIfExists(type);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE INDEX</code> statement.
-     *
-     * @see DSLContext#createIndex()
-     */
-    @NotNull
-    @Support
-    public static CreateIndexStep createIndex() {
-        return dsl().createIndex();
-    }
-
-    /**
-     * Create a new DSL <code>CREATE INDEX</code> statement.
-     *
-     * @see DSLContext#createIndex(String)
-     */
-    @NotNull
-    @Support
-    public static CreateIndexStep createIndex(String index) {
-        return dsl().createIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE INDEX</code> statement.
-     *
-     * @see DSLContext#createIndex(Name)
-     */
-    @NotNull
-    @Support
-    public static CreateIndexStep createIndex(Name index) {
-        return dsl().createIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE INDEX</code> statement.
-     *
-     * @see DSLContext#createIndex(Index)
-     */
-    @NotNull
-    @Support
-    public static CreateIndexStep createIndex(Index index) {
-        return dsl().createIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createIndexIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static CreateIndexStep createIndexIfNotExists(String index) {
-        return dsl().createIndexIfNotExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createIndexIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static CreateIndexStep createIndexIfNotExists(Name index) {
-        return dsl().createIndexIfNotExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createIndexIfNotExists(Index)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static CreateIndexStep createIndexIfNotExists(Index index) {
-        return dsl().createIndexIfNotExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSLContext#createUniqueIndex()
-     */
-    @NotNull
-    @Support
-    public static CreateIndexStep createUniqueIndex() {
-        return dsl().createUniqueIndex();
-    }
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSLContext#createUniqueIndex(String)
-     */
-    @NotNull
-    @Support
-    public static CreateIndexStep createUniqueIndex(String index) {
-        return dsl().createUniqueIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSLContext#createUniqueIndex(Name)
-     */
-    @NotNull
-    @Support
-    public static CreateIndexStep createUniqueIndex(Name index) {
-        return dsl().createUniqueIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSLContext#createUniqueIndex(Index)
-     */
-    @NotNull
-    @Support
-    public static CreateIndexStep createUniqueIndex(Index index) {
-        return dsl().createUniqueIndex(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createUniqueIndexIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static CreateIndexStep createUniqueIndexIfNotExists(String index) {
-        return dsl().createUniqueIndexIfNotExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createUniqueIndexIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static CreateIndexStep createUniqueIndexIfNotExists(Name index) {
-        return dsl().createUniqueIndexIfNotExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createUniqueIndexIfNotExists(Index)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static CreateIndexStep createUniqueIndexIfNotExists(Index index) {
-        return dsl().createUniqueIndexIfNotExists(index);
     }
 
     /**

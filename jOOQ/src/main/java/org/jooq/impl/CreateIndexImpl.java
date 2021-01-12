@@ -37,224 +37,225 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
-import static org.jooq.Clause.CREATE_INDEX;
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_EXCLUDE;
-import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
-import static org.jooq.impl.Keywords.K_INCLUDE;
-import static org.jooq.impl.Keywords.K_INDEX;
-import static org.jooq.impl.Keywords.K_KEYS;
-import static org.jooq.impl.Keywords.K_NULL;
-import static org.jooq.impl.Keywords.K_ON;
-import static org.jooq.impl.Keywords.K_STORING;
-import static org.jooq.impl.Keywords.K_UNIQUE;
-import static org.jooq.impl.Keywords.K_WHERE;
-import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.EMPTY_NAME;
-import static org.jooq.impl.Tools.EMPTY_ORDERFIELD;
-import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
-import static org.jooq.impl.Tools.EMPTY_STRING;
-import static org.jooq.impl.Tools.field;
-import static org.jooq.impl.Tools.fields;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Collection;
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Clause;
-import org.jooq.Condition;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.CreateIndexIncludeStep;
-import org.jooq.CreateIndexStep;
-import org.jooq.Field;
-import org.jooq.Index;
-import org.jooq.Keyword;
-import org.jooq.Name;
-import org.jooq.OrderField;
-import org.jooq.QueryPart;
-import org.jooq.SQL;
-import org.jooq.SQLDialect;
-import org.jooq.SortField;
-import org.jooq.Table;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>CREATE INDEX</code> statement.
  */
-final class CreateIndexImpl extends AbstractRowCountQuery implements
-
-    // Cascading interface implementations for CREATE INDEX behaviour
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
+final class CreateIndexImpl
+extends
+    AbstractRowCountQuery
+implements
     CreateIndexStep,
-    CreateIndexIncludeStep {
+    CreateIndexIncludeStep,
+    CreateIndexWhereStep,
+    CreateIndexFinalStep
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID         = 8904572826501186329L;
-    private static final Clause[]        CLAUSES                  = { CREATE_INDEX };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    private static final Set<SQLDialect> SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect> SUPPORT_INCLUDE          = SQLDialect.supportedBy(POSTGRES);
+    private static final long serialVersionUID = 1L;
 
-    private final Index                  index;
-    private final boolean                unique;
-    private final boolean                ifNotExists;
-    private Table<?>                     table;
-    private SortField<?>[]               sortFields;
-    private Field<?>[]                   include;
-    private Condition                    where;
-    private boolean                      excludeNullKeys;
+    private final Boolean                             unique;
+    private final Index                               index;
+    private final boolean                             createIndexIfNotExists;
+    private       Table<?>                            table;
+    private       Collection<? extends OrderField<?>> on;
+    private       Collection<? extends Field<?>>      include;
+    private       Condition                           where;
+    private       boolean                             excludeNullKeys;
 
-    CreateIndexImpl(Configuration configuration, Index index, boolean unique, boolean ifNotExists) {
+    CreateIndexImpl(
+        Configuration configuration,
+        Boolean unique,
+        Index index,
+        boolean createIndexIfNotExists
+    ) {
+        this(
+            configuration,
+            unique,
+            index,
+            createIndexIfNotExists,
+            null,
+            null,
+            null,
+            null,
+            false
+        );
+    }
+
+    CreateIndexImpl(
+        Configuration configuration,
+        Boolean unique,
+        boolean createIndexIfNotExists
+    ) {
+        this(
+            configuration,
+            unique,
+            null,
+            createIndexIfNotExists
+        );
+    }
+
+    CreateIndexImpl(
+        Configuration configuration,
+        Boolean unique,
+        Index index,
+        boolean createIndexIfNotExists,
+        Table<?> table,
+        Collection<? extends OrderField<?>> on,
+        Collection<? extends Field<?>> include,
+        Condition where,
+        boolean excludeNullKeys
+    ) {
         super(configuration);
 
-        this.index = index;
         this.unique = unique;
-        this.ifNotExists = ifNotExists;
-
-        if (index != null) {
-            this.table = index.getTable();
-            this.sortFields = index.getFields().toArray(EMPTY_SORTFIELD);
-            this.where = index.getWhere();
-        }
+        this.index = index;
+        this.createIndexIfNotExists = createIndexIfNotExists;
+        this.table = table;
+        this.on = on;
+        this.include = include;
+        this.where = where;
+        this.excludeNullKeys = excludeNullKeys;
     }
 
-    final Index          $index()       { return index; }
-    final boolean        $unique()      { return unique; }
-    final boolean        $ifNotExists() { return ifNotExists; }
-    final Table<?>       $table()       { return table; }
-    final SortField<?>[] $sortFields()  { return sortFields; }
-    final Field<?>[]     $include()     { return include; }
+    final Boolean                             $unique()                 { return unique; }
+    final Index                               $index()                  { return index; }
+    final boolean                             $createIndexIfNotExists() { return createIndexIfNotExists; }
+    final Table<?>                            $table()                  { return table; }
+    final Collection<? extends OrderField<?>> $on()                     { return on; }
+    final Collection<? extends Field<?>>      $include()                { return include; }
+    final Condition                           $where()                  { return where; }
+    final boolean                             $excludeNullKeys()        { return excludeNullKeys; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    
+    @Override
+    public final CreateIndexImpl on(String table, String... on) {
+        return on(DSL.table(DSL.name(table)), Tools.fieldsByName(on));
+    }
 
     @Override
-    public final CreateIndexImpl on(Table<?> t, OrderField<?>... f) {
-        this.table = t;
-        this.sortFields = Tools.sortFields(f);
+    public final CreateIndexImpl on(Name table, Name... on) {
+        return on(DSL.table(table), Tools.fieldsByName(on));
+    }
 
+    @Override
+    public final CreateIndexImpl on(Table<?> table, OrderField<?>... on) {
+        return on(table, Arrays.asList(on));
+    }
+
+    @Override
+    public final CreateIndexImpl on(String table, Collection<? extends String> on) {
+        return on(DSL.table(DSL.name(table)), Tools.fieldsByName(on.toArray(EMPTY_STRING)));
+    }
+
+    @Override
+    public final CreateIndexImpl on(Name table, Collection<? extends Name> on) {
+        return on(DSL.table(table), Tools.fieldsByName(on.toArray(EMPTY_NAME)));
+    }
+
+    @Override
+    public final CreateIndexImpl on(Table<?> table, Collection<? extends OrderField<?>> on) {
+        this.table = table;
+        this.on = on;
         return this;
     }
 
     @Override
-    public final CreateIndexImpl on(Table<?> t, Collection<? extends OrderField<?>> f) {
-        return on(t, f.toArray(EMPTY_ORDERFIELD));
+    public final CreateIndexImpl include(String... include) {
+        return include(Tools.fieldsByName(include));
     }
 
     @Override
-    public final CreateIndexImpl on(Name tableName, Name... fieldNames) {
-        return on(table(tableName), Tools.fieldsByName(fieldNames));
+    public final CreateIndexImpl include(Name... include) {
+        return include(Tools.fieldsByName(include));
     }
 
     @Override
-    public final CreateIndexImpl on(Name tableName, Collection<? extends Name> fieldNames) {
-        return on(tableName, fieldNames.toArray(EMPTY_NAME));
+    public final CreateIndexImpl include(Field<?>... include) {
+        return include(Arrays.asList(include));
     }
 
     @Override
-    public final CreateIndexImpl on(String tableName, String... fieldNames) {
-        return on(table(name(tableName)), Tools.fieldsByName(fieldNames));
-    }
-
-    @Override
-    public final CreateIndexImpl on(String tableName, Collection<? extends String> fieldNames) {
-        return on(tableName, fieldNames.toArray(EMPTY_STRING));
-    }
-
-    @Override
-    public final CreateIndexImpl include(Field<?>... f) {
-        this.include = f;
+    public final CreateIndexImpl include(Collection<? extends Field<?>> include) {
+        this.include = include;
         return this;
     }
 
     @Override
-    public final CreateIndexImpl include(Name... f) {
-        return include(Tools.fieldsByName(f));
+    public final CreateIndexImpl where(Field<Boolean> where) {
+        return where(DSL.condition(where));
     }
 
     @Override
-    public final CreateIndexImpl include(String... f) {
-        return include(Tools.fieldsByName(f));
+    public final CreateIndexImpl where(Condition... where) {
+        return where(DSL.condition(Operator.AND, where));
     }
 
     @Override
-    public final CreateIndexImpl include(Collection<? extends Field<?>> f) {
-        return include(f.toArray(EMPTY_FIELD));
+    public final CreateIndexImpl where(Collection<? extends Condition> where) {
+        return where(DSL.condition(Operator.AND, where));
     }
 
     @Override
-    public final CreateIndexImpl where(Condition condition) {
-        where = condition;
+    public final CreateIndexImpl where(Condition where) {
+        this.where = where;
         return this;
     }
 
     @Override
-    public final CreateIndexImpl where(Condition... conditions) {
-        where = DSL.and(conditions);
-        return this;
+    public final CreateIndexImpl where(String where, QueryPart... parts) {
+        return where(DSL.condition(where, parts));
     }
 
     @Override
-    public final CreateIndexImpl where(Collection<? extends Condition> conditions) {
-        where = DSL.and(conditions);
-        return this;
+    public final CreateIndexImpl where(String where, Object... bindings) {
+        return where(DSL.condition(where, bindings));
     }
 
     @Override
-    public final CreateIndexImpl where(Field<Boolean> field) {
-        return where(DSL.condition(field));
+    public final CreateIndexImpl where(String where) {
+        return where(DSL.condition(where));
     }
 
     @Override
-    public final CreateIndexImpl where(SQL sql) {
-        return where(DSL.condition(sql));
-    }
-
-    @Override
-    public final CreateIndexImpl where(String sql) {
-        return where(DSL.condition(sql));
-    }
-
-    @Override
-    public final CreateIndexImpl where(String sql, Object... bindings) {
-        return where(DSL.condition(sql, bindings));
-    }
-
-    @Override
-    public final CreateIndexImpl where(String sql, QueryPart... parts) {
-        return where(DSL.condition(sql, parts));
+    public final CreateIndexImpl where(SQL where) {
+        return where(DSL.condition(where));
     }
 
     @Override
     public final CreateIndexImpl excludeNullKeys() {
-        excludeNullKeys = true;
+        this.excludeNullKeys = true;
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES                  = { Clause.CREATE_INDEX };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_INCLUDE          = SQLDialect.supportedBy(POSTGRES);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
@@ -262,14 +263,13 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifNotExists && !supportsIfNotExists(ctx)) {
+        if (createIndexIfNotExists && !supportsIfNotExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.CREATE_INDEX);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.CREATE_INDEX);
         }
-        else {
+        else
             accept0(ctx);
-        }
     }
 
     private final void accept0(Context<?> ctx) {
@@ -283,7 +283,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
            .visit(K_INDEX)
            .sql(' ');
 
-        if (ifNotExists && supportsIfNotExists(ctx))
+        if (createIndexIfNotExists && supportsIfNotExists(ctx))
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
@@ -298,10 +298,10 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
         boolean supportsFieldsBeforeTable = false ;
 
         QueryPartList<QueryPart> list = new QueryPartList<>();
-        list.addAll(asList(sortFields));
+        list.addAll(on);
 
         if (!supportsInclude && include != null)
-            list.addAll(asList(include));
+            list.addAll(include);
 
 
 
@@ -336,9 +336,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
             ctx.formatSeparator()
                .visit(keyword)
                .sql(" (")
-               .qualify(false)
-               .visit(wrap(include))
-               .qualify(true)
+               .visit(QueryPartCollectionView.wrap(include).qualify(false))
                .sql(')');
         }
 
@@ -348,7 +346,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
 
 
 
-                c = sortFields.length == 1 ? field(sortFields[0]).isNotNull() : row(fields(sortFields)).isNotNull();
+                c = on.size() == 1 ? field(Tools.first(on)).isNotNull() : row(Tools.fields(on)).isNotNull();
 
         if (c != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
@@ -368,8 +366,8 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
         Name t = table.getQualifiedName();
 
         StringBuilder sb = new StringBuilder(table.getName());
-        for (SortField<?> f : sortFields)
-            sb.append('_').append(f.getName());
+        for (OrderField<?> f : on)
+            sb.append('_').append(Tools.field(f).getName());
         sb.append("_idx");
 
         if (t.qualified())
@@ -382,4 +380,6 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

@@ -37,38 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-
-import java.util.Collection;
-
 /**
- * A {@link Query} that can create indexes.
+ * A step in the construction of the <code>CREATE INDEX</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -87,53 +63,47 @@ import java.util.Collection;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
 
     /**
-     * Add an <code>INCLUDE</code> clause to include columns in an index.
+     * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.
      * <p>
-     * If this is not supported by any given database, then the included columns
-     * will simply be put in the index as ordinary columns, making the index a
-     * composite index.
+     * If this is not supported by any given database, then the included columns will simply
+     * be put in the index as ordinary columns, making the index a composite index.
      */
-    @NotNull
     @Support
-    CreateIndexWhereStep include(Field<?>... fields);
+    @NotNull
+    CreateIndexWhereStep include(String... include);
 
     /**
-     * Add an <code>INCLUDE</code> clause to include columns in an index.
+     * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.
      * <p>
-     * If this is not supported by any given database, then the included columns
-     * will simply be put in the index as ordinary columns, making the index a
-     * composite index.
+     * If this is not supported by any given database, then the included columns will simply
+     * be put in the index as ordinary columns, making the index a composite index.
      */
-    @NotNull
     @Support
-    CreateIndexWhereStep include(Name... fields);
+    @NotNull
+    CreateIndexWhereStep include(Name... include);
 
     /**
-     * Add an <code>INCLUDE</code> clause to include columns in an index.
+     * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.
      * <p>
-     * If this is not supported by any given database, then the included columns
-     * will simply be put in the index as ordinary columns, making the index a
-     * composite index.
+     * If this is not supported by any given database, then the included columns will simply
+     * be put in the index as ordinary columns, making the index a composite index.
      */
-    @NotNull
     @Support
-    CreateIndexWhereStep include(String... fields);
+    @NotNull
+    CreateIndexWhereStep include(Field<?>... include);
 
     /**
-     * Add an <code>INCLUDE</code> clause to include columns in an index.
+     * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.
      * <p>
-     * If this is not supported by any given database, then the included columns
-     * will simply be put in the index as ordinary columns, making the index a
-     * composite index.
+     * If this is not supported by any given database, then the included columns will simply
+     * be put in the index as ordinary columns, making the index a composite index.
      */
-    @NotNull
     @Support
-    CreateIndexWhereStep include(Collection<? extends Field<?>> fields);
-
+    @NotNull
+    CreateIndexWhereStep include(Collection<? extends Field<?>> include);
 }

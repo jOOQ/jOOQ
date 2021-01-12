@@ -90,6 +90,19 @@ implements
     CommentOnImpl(
         Configuration configuration,
         Table<?> table,
+        boolean isView
+    ) {
+        this(
+            configuration,
+            table,
+            isView,
+            null
+        );
+    }
+
+    CommentOnImpl(
+        Configuration configuration,
+        Table<?> table,
         boolean isView,
         Field<?> field,
         Comment comment

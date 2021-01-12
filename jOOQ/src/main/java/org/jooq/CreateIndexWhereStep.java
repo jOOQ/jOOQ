@@ -37,21 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-
-import java.util.Collection;
-
-import org.jooq.impl.DSL;
-
 /**
- * A {@link Query} that can create indexes.
+ * A step in the construction of the <code>CREATE INDEX</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -70,113 +63,82 @@ import org.jooq.impl.DSL;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateIndexWhereStep extends CreateIndexFinalStep {
 
     /**
-     * Add a <code>WHERE</code> clause to create a partial index, connecting
-     * them with each other with {@link Operator#AND}.
+     * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
-    CreateIndexFinalStep where(Condition condition);
+    @NotNull
+    CreateIndexFinalStep where(Field<Boolean> where);
 
     /**
-     * Add a <code>WHERE</code> clause to create a partial index, connecting
-     * them with each other with {@link Operator#AND}.
+     * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
-    CreateIndexFinalStep where(Condition... conditions);
+    @NotNull
+    CreateIndexFinalStep where(Condition... where);
 
     /**
-     * Add a <code>WHERE</code> clause to create a partial index, connecting
-     * them with each other with {@link Operator#AND}.
+     * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
-    CreateIndexFinalStep where(Collection<? extends Condition> conditions);
+    @NotNull
+    CreateIndexFinalStep where(Collection<? extends Condition> where);
 
     /**
-     * Add a <code>WHERE</code> clause to create a partial index.
+     * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
-    CreateIndexFinalStep where(Field<Boolean> field);
+    @NotNull
+    CreateIndexFinalStep where(Condition where);
 
     /**
-     * Add a <code>WHERE</code> clause to create a partial index.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      *
-     * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
-    CreateIndexFinalStep where(SQL sql);
+    @NotNull
+    CreateIndexFinalStep where(String where, QueryPart... parts);
 
     /**
-     * Add a <code>WHERE</code> clause to create a partial index.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      *
-     * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
-    CreateIndexFinalStep where(String sql);
+    @NotNull
+    CreateIndexFinalStep where(String where, Object... bindings);
 
     /**
-     * Add a <code>WHERE</code> clause to create a partial index.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      *
-     * @see DSL#condition(String, Object...)
-     * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
-    CreateIndexFinalStep where(String sql, Object... bindings);
+    @NotNull
+    CreateIndexFinalStep where(String where);
 
     /**
-     * Add a <code>WHERE</code> clause to create a partial index.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      *
-     * @see DSL#condition(String, QueryPart...)
-     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
-    CreateIndexFinalStep where(String sql, QueryPart... parts);
+    @NotNull
+    CreateIndexFinalStep where(SQL where);
 
     /**
-     * Add a DB2 style <code>EXCLUDE NULL KEYS</code> clause to create a partial
-     * index.
+     * Add the <code>EXCLUDE NULL KEYS</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES, SQLITE })
+    @NotNull
     CreateIndexFinalStep excludeNullKeys();
 }

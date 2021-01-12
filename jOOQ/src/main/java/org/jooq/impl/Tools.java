@@ -5233,15 +5233,27 @@ final class Tools {
         return DSL.field(DSL.name(name), field.getDataType());
     }
 
-    static final <T> Field<T> field(SortField<T> sortField) {
-        return ((SortFieldImpl<T>) sortField).getField();
+    static final <T> Field<T> field(OrderField<T> orderField) {
+        if (orderField instanceof Field)
+            return (Field<T>) orderField;
+        else
+            return ((SortFieldImpl<T>) orderField).getField();
     }
 
-    static final Field<?>[] fields(SortField<?>[] sortFields) {
-        Field<?>[] result = new Field[sortFields.length];
+    static final Field<?>[] fields(OrderField<?>[] orderFields) {
+        Field<?>[] result = new Field[orderFields.length];
 
         for (int i = 0; i < result.length; i++)
-            result[i] = field(sortFields[i]);
+            result[i] = field(orderFields[i]);
+
+        return result;
+    }
+
+    static final List<Field<?>> fields(Collection<? extends OrderField<?>> orderFields) {
+        List<Field<?>> result = new ArrayList<>(orderFields.size());
+
+        for (OrderField<?> f : orderFields)
+            result.add(field(f));
 
         return result;
     }

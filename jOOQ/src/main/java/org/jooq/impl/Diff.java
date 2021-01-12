@@ -602,7 +602,7 @@ final class Diff {
     }
 
     private final DiffResult appendIndexes(DiffResult result, Table<?> t1, List<? extends Index> l1, List<? extends Index> l2) {
-        final Create<Index> create = (r, i) -> r.queries.add(ctx.createIndex(i).on(t1, i.getFields()));
+        final Create<Index> create = (r, i) -> r.queries.add((i.getUnique() ? ctx.createUniqueIndex(i) : ctx.createIndex(i)).on(t1, i.getFields()));
         final Drop<Index> drop = (r, i) -> r.queries.add(ctx.dropIndex(i).on(t1));
 
         return append(result, l1, l2, INDEX_COMP,

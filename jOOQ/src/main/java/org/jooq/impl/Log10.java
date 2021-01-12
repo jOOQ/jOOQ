@@ -103,6 +103,16 @@ extends
 
 
 
+            case POSTGRES:
+
+
+
+
+
+
+                ctx.visit(N_LOG10).sql('(').visit(value).sql(')');
+                break;
+
             default:
                 ctx.visit(N_LOG10).sql('(').visit(value).sql(')');
                 break;

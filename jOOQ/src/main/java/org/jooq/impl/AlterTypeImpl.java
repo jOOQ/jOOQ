@@ -37,119 +37,155 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.schema;
-import static org.jooq.impl.Keywords.K_ADD;
-import static org.jooq.impl.Keywords.K_ALTER;
-import static org.jooq.impl.Keywords.K_RENAME;
-import static org.jooq.impl.Keywords.K_RENAME_TO;
-import static org.jooq.impl.Keywords.K_SCHEMA;
-import static org.jooq.impl.Keywords.K_SET;
-import static org.jooq.impl.Keywords.K_TO;
-import static org.jooq.impl.Keywords.K_TYPE;
-import static org.jooq.impl.Keywords.K_VALUE;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.AlterTypeFinalStep;
-import org.jooq.AlterTypeRenameValueToStep;
-import org.jooq.AlterTypeStep;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.conf.ParamType;
+import org.jooq.*;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>ALTER TYPE</code> statement.
  */
-final class AlterTypeImpl extends AbstractRowCountQuery implements
-
-    // Cascading interface implementations for CREATE TYPE behaviour
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class AlterTypeImpl
+extends
+    AbstractRowCountQuery
+implements
     AlterTypeStep,
     AlterTypeRenameValueToStep,
-    AlterTypeFinalStep {
+    AlterTypeFinalStep
+{
 
-    private static final long serialVersionUID = -5018375056147329888L;
-    private final Name        type;
-    private Name              renameTo;
-    private Schema            setSchema;
-    private Field<String>     addValue;
-    private Field<String>     renameValueFrom;
-    private Field<String>     renameValueTo;
+    private static final long serialVersionUID = 1L;
 
-    AlterTypeImpl(Configuration configuration, Name type) {
+    private final Name          type;
+    private       Name          renameTo;
+    private       Schema        setSchema;
+    private       Field<String> addValue;
+    private       Field<String> renameValue;
+    private       Field<String> renameValueTo;
+
+    AlterTypeImpl(
+        Configuration configuration,
+        Name type
+    ) {
+        this(
+            configuration,
+            type,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    AlterTypeImpl(
+        Configuration configuration,
+        Name type,
+        Name renameTo,
+        Schema setSchema,
+        Field<String> addValue,
+        Field<String> renameValue,
+        Field<String> renameValueTo
+    ) {
         super(configuration);
 
         this.type = type;
+        this.renameTo = renameTo;
+        this.setSchema = setSchema;
+        this.addValue = addValue;
+        this.renameValue = renameValue;
+        this.renameValueTo = renameValueTo;
     }
 
-    // ------------------------------------------------------------------------
+    final Name          $type()          { return type; }
+    final Name          $renameTo()      { return renameTo; }
+    final Schema        $setSchema()     { return setSchema; }
+    final Field<String> $addValue()      { return addValue; }
+    final Field<String> $renameValue()   { return renameValue; }
+    final Field<String> $renameValueTo() { return renameValueTo; }
+
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
-
+    // -------------------------------------------------------------------------
+    
     @Override
-    public final AlterTypeImpl renameTo(String newName) {
-        return renameTo(DSL.name(newName));
+    public final AlterTypeImpl renameTo(String renameTo) {
+        return renameTo(DSL.name(renameTo));
     }
 
     @Override
-    public final AlterTypeImpl renameTo(Name newName) {
-        this.renameTo = newName;
+    public final AlterTypeImpl renameTo(Name renameTo) {
+        this.renameTo = renameTo;
         return this;
     }
 
     @Override
-    public final AlterTypeImpl setSchema(String newSchema) {
-        return setSchema(name(newSchema));
+    public final AlterTypeImpl setSchema(String setSchema) {
+        return setSchema(DSL.schema(DSL.name(setSchema)));
     }
 
     @Override
-    public final AlterTypeImpl setSchema(Name newSchema) {
-        return setSchema(schema(newSchema));
+    public final AlterTypeImpl setSchema(Name setSchema) {
+        return setSchema(DSL.schema(setSchema));
     }
 
     @Override
-    public final AlterTypeImpl setSchema(Schema newSchema) {
-        this.setSchema = newSchema;
+    public final AlterTypeImpl setSchema(Schema setSchema) {
+        this.setSchema = setSchema;
         return this;
     }
 
     @Override
-    public final AlterTypeImpl addValue(String newEnumValue) {
-        return addValue(Tools.field(newEnumValue));
+    public final AlterTypeImpl addValue(String addValue) {
+        return addValue(Tools.field(addValue));
     }
 
     @Override
-    public final AlterTypeImpl addValue(Field<String> newEnumValue) {
-        this.addValue = newEnumValue;
+    public final AlterTypeImpl addValue(Field<String> addValue) {
+        this.addValue = addValue;
         return this;
     }
 
     @Override
-    public final AlterTypeImpl renameValue(String existingEnumValue) {
-        return renameValue(Tools.field(existingEnumValue));
+    public final AlterTypeImpl renameValue(String renameValue) {
+        return renameValue(Tools.field(renameValue));
     }
 
     @Override
-    public final AlterTypeImpl renameValue(Field<String> existingEnumValue) {
-        this.renameValueFrom = existingEnumValue;
+    public final AlterTypeImpl renameValue(Field<String> renameValue) {
+        this.renameValue = renameValue;
         return this;
     }
 
     @Override
-    public final AlterTypeImpl to(String newEnumValue) {
-        return to(Tools.field(newEnumValue));
+    public final AlterTypeImpl to(String renameValueTo) {
+        return to(Tools.field(renameValueTo));
     }
 
     @Override
-    public final AlterTypeImpl to(Field<String> newEnumValue) {
-        this.renameValueTo = newEnumValue;
+    public final AlterTypeImpl to(Field<String> renameValueTo) {
+        this.renameValueTo = renameValueTo;
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -165,9 +201,11 @@ final class AlterTypeImpl extends AbstractRowCountQuery implements
             ctx.visit(K_SET).sql(' ').visit(K_SCHEMA).sql(' ').visit(setSchema);
         else if (addValue != null)
             ctx.visit(K_ADD).sql(' ').visit(K_VALUE).sql(' ').visit(addValue);
-        else if (renameValueFrom != null)
-            ctx.visit(K_RENAME).sql(' ').visit(K_VALUE).sql(' ').visit(renameValueFrom).sql(' ').visit(K_TO).sql(' ').visit(renameValueTo);
+        else if (renameValue != null)
+            ctx.visit(K_RENAME).sql(' ').visit(K_VALUE).sql(' ').visit(renameValue).sql(' ').visit(K_TO).sql(' ').visit(renameValueTo);
 
         ctx.paramType(previous);
     }
+
+
 }

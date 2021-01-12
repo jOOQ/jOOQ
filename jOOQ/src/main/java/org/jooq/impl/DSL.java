@@ -7679,6 +7679,28 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER TYPE</code> statement.
+     *
+     * @see DSLContext#alterType(String)
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static org.jooq.AlterTypeStep alterType(String type) {
+        return dsl().alterType(type);
+    }
+
+    /**
+     * The <code>ALTER TYPE</code> statement.
+     *
+     * @see DSLContext#alterType(Name)
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static org.jooq.AlterTypeStep alterType(Name type) {
+        return dsl().alterType(type);
+    }
+
+    /**
      * The <code>ALTER VIEW</code> statement.
      *
      * @see DSLContext#alterView(String)
@@ -9036,28 +9058,6 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static CreateTypeStep createType(Name type) {
         return dsl().createType(type);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER TYPE</code> statement.
-     *
-     * @see DSLContext#alterType(String)
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AlterTypeStep alterType(String type) {
-        return dsl().alterType(type);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER TYPE</code> statement.
-     *
-     * @see DSLContext#alterType(Name)
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    public static AlterTypeStep alterType(Name type) {
-        return dsl().alterType(type);
     }
 
     /**

@@ -47,6 +47,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
+import org.jooq.conf.*;
 import org.jooq.impl.*;
 import org.jooq.tools.*;
 
@@ -177,8 +178,11 @@ implements
 
         ctx.visit(index);
 
-        if (on != null && REQUIRES_ON.contains(ctx.dialect()))
-            ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
+        if (REQUIRES_ON.contains(ctx.dialect()))
+            if (on != null)
+                ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
+            else if (index.getTable() != null)
+                ctx.sql(' ').visit(K_ON).sql(' ').visit(index.getTable());
 
         if (cascade != null)
             ctx.sql(' ').visit(cascade ? K_CASCADE : K_RESTRICT);

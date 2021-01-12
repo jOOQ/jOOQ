@@ -37,14 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-
 /**
- * A {@link Query} that can alter types.
+ * A step in the construction of the <code>ALTER TYPE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -63,73 +63,70 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface AlterTypeStep {
 
     /**
-     * Add the <code>ALTER TYPE .. RENAME TO ..</code> clause.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeFinalStep renameTo(String newName);
+    @NotNull
+    AlterTypeFinalStep renameTo(String renameTo);
 
     /**
-     * Add the <code>ALTER TYPE .. RENAME TO ..</code> clause.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeFinalStep renameTo(Name newName);
+    @NotNull
+    AlterTypeFinalStep renameTo(Name renameTo);
 
     /**
-     * Add the <code>ALTER TYPE .. SET SCHEMA ..</code> clause.
+     * Add the <code>SET SCHEMA</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeFinalStep setSchema(String newSchema);
+    @NotNull
+    AlterTypeFinalStep setSchema(String setSchema);
 
     /**
-     * Add the <code>ALTER TYPE .. SET SCHEMA ..</code> clause.
+     * Add the <code>SET SCHEMA</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeFinalStep setSchema(Name newSchema);
+    @NotNull
+    AlterTypeFinalStep setSchema(Name setSchema);
 
     /**
-     * Add the <code>ALTER TYPE .. SET SCHEMA ..</code> clause.
+     * Add the <code>SET SCHEMA</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeFinalStep setSchema(Schema newSchema);
+    @NotNull
+    AlterTypeFinalStep setSchema(Schema setSchema);
 
     /**
-     * Add the <code>ALTER TYPE .. ADD VALUE ..</code> clause.
+     * Add the <code>ADD VALUE</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeFinalStep addValue(String newEnumValue);
+    @NotNull
+    AlterTypeFinalStep addValue(String addValue);
 
     /**
-     * Add the <code>ALTER TYPE .. ADD VALUE ..</code> clause.
+     * Add the <code>ADD VALUE</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeFinalStep addValue(Field<String> newEnumValue);
+    @NotNull
+    AlterTypeFinalStep addValue(Field<String> addValue);
 
     /**
-     * Add the <code>ALTER TYPE .. RENAME VALUE ..</code> clause.
+     * Add the <code>RENAME VALUE</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeRenameValueToStep renameValue(String existingEnumValue);
+    @NotNull
+    AlterTypeRenameValueToStep renameValue(String renameValue);
 
     /**
-     * Add the <code>ALTER TYPE .. RENAME VALUE ..</code> clause.
+     * Add the <code>RENAME VALUE</code> clause to the <code>ALTER TYPE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
-    AlterTypeRenameValueToStep renameValue(Field<String> existingEnumValue);
-
-
+    @NotNull
+    AlterTypeRenameValueToStep renameValue(Field<String> renameValue);
 }

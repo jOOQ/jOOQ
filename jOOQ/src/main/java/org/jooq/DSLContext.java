@@ -9689,6 +9689,24 @@ public interface DSLContext extends Scope {
     AlterSchemaStep alterSchemaIfExists(Schema schema);
 
     /**
+     * The <code>ALTER TYPE</code> statement.
+     *
+     * @see DSL#alterType(String)
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    AlterTypeStep alterType(String type);
+
+    /**
+     * The <code>ALTER TYPE</code> statement.
+     *
+     * @see DSL#alterType(Name)
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    AlterTypeStep alterType(Name type);
+
+    /**
      * The <code>ALTER VIEW</code> statement.
      *
      * @see DSL#alterView(String)
@@ -10990,24 +11008,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ H2, POSTGRES })
     CreateTypeStep createType(Name type);
-
-    /**
-     * Create a new DSL <code>ALTER TYPE</code> statement.
-     *
-     * @see DSL#alterType(String)
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    AlterTypeStep alterType(String type);
-
-    /**
-     * Create a new DSL <code>ALTER TYPE</code> statement.
-     *
-     * @see DSL#alterType(Name)
-     */
-    @NotNull
-    @Support({ POSTGRES })
-    AlterTypeStep alterType(Name type);
 
     /**
      * Create a new DSL <code>DROP TYPE</code> statement.

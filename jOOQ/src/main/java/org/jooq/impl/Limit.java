@@ -167,9 +167,11 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
+            case DERBY:
             case FIREBIRD:
             case H2:
-            case DERBY: {
+            case POSTGRES: {
 
                 // [#8415] For backwards compatibility reasons, we generate standard
                 //         OFFSET .. FETCH syntax on H2 only when strictly needed
@@ -317,9 +319,7 @@ final class Limit extends AbstractQueryPart {
 
 
 
-
             case HSQLDB:
-            case POSTGRES:
                 // No break
 
             // A default implementation is necessary for hashCode() and toString()

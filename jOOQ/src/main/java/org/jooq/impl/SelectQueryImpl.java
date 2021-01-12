@@ -77,12 +77,16 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 // ...
 // ...
@@ -265,9 +269,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supportedBy(H2, MYSQL, POSTGRES, SQLITE);
-
-    // [#7421] [#9832] We can eventually stop generating the FROM clause in newer versions of MariaDB and MySQL
-    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
+    private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(H2, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
@@ -275,7 +277,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, POSTGRES);
     private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
 
 
@@ -1474,12 +1476,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
                 case CUBRID:
                 case FIREBIRD:
                 case MARIADB:
-                case MYSQL:
-                case POSTGRES: {
+                case MYSQL: {
                     if (getLimit().isApplicable() && getLimit().withTies())
                         toSQLReferenceLimitWithWindowFunctions(context);
                     else
@@ -2005,7 +2005,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#....] Some SQL dialects do not require a FROM clause. Others do and
         //         jOOQ generates a "DUAL" table or something equivalent.
         //         See also org.jooq.impl.Dual for details.
-        boolean hasFrom = !getFrom().isEmpty() || REQUIRES_FROM_CLAUSE.contains(context.dialect());
+        boolean hasFrom = !getFrom().isEmpty() || !OPTIONAL_FROM_CLAUSE.contains(context.dialect());
         List<Condition> semiAntiJoinPredicates = null;
         ConditionProviderImpl where = getWhere();
 

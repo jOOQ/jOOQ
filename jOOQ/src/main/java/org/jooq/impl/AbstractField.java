@@ -111,8 +111,6 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
      */
     private static final long                serialVersionUID = 2884811923648354905L;
     private static final Clause[]            CLAUSES          = { FIELD };
-    private static final List<Field<String>> TRUE_VALUES      = Tools.inline(Convert.TRUE_VALUES.toArray(EMPTY_STRING));
-    private static final List<Field<String>> FALSE_VALUES     = Tools.inline(Convert.FALSE_VALUES.toArray(EMPTY_STRING));
 
     AbstractField(Name name, DataType<T> type) {
         this(name, type, null);
@@ -629,19 +627,27 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return isNotDistinctFrom(DSL.field(select));
     }
 
+    /**
+     * [#11200] Nest these constants to prevent initialisation deadlocks.
+     */
+    private static class BooleanValues {
+        static final List<Field<String>> TRUE_VALUES  = Tools.inline(Convert.TRUE_VALUES.toArray(EMPTY_STRING));
+        static final List<Field<String>> FALSE_VALUES = Tools.inline(Convert.FALSE_VALUES.toArray(EMPTY_STRING));
+    }
+
     @SuppressWarnings({ "unchecked" })
     @Override
     public final Condition isTrue() {
         Class<?> type = getType();
 
         if (type == String.class)
-            return ((Field<String>) this).in(TRUE_VALUES);
+            return ((Field<String>) this).in(BooleanValues.TRUE_VALUES);
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
         else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(true, (DataType<Boolean>) getDataType()));
         else
-            return castIfNeeded(this, String.class).in(TRUE_VALUES);
+            return castIfNeeded(this, String.class).in(BooleanValues.TRUE_VALUES);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -650,13 +656,13 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         Class<?> type = getType();
 
         if (type == String.class)
-            return ((Field<String>) this).in(FALSE_VALUES);
+            return ((Field<String>) this).in(BooleanValues.FALSE_VALUES);
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
         else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(false, (DataType<Boolean>) getDataType()));
         else
-            return castIfNeeded(this, String.class).in(FALSE_VALUES);
+            return castIfNeeded(this, String.class).in(BooleanValues.FALSE_VALUES);
     }
 
     @Override

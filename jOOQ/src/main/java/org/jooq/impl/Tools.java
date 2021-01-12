@@ -4860,6 +4860,7 @@ final class Tools {
 
 
 
+
                         case POSTGRES:
                                 ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
                     }

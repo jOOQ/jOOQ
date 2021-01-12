@@ -4413,7 +4413,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public boolean fetchExists(Select<?> query) {
-        return selectOne().whereExists(query).fetchOne() != null;
+        return fetchValue(field(exists(query)));
     }
 
     @Override

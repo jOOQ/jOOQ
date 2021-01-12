@@ -62,7 +62,6 @@ import org.jooq.meta.DefaultSequenceDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.mysql.MySQLDatabase;
-import org.jooq.util.mariadb.MariaDBDataType;
 
 /**
  * @author Lukas Eder

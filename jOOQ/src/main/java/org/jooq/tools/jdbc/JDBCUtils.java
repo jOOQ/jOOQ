@@ -54,6 +54,12 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -187,12 +193,14 @@ public class JDBCUtils {
 
 
 
-            case POSTGRES:
-                return postgresDialect(majorVersion, minorVersion);
-            case MYSQL:
-                return mysqlDialect(majorVersion, minorVersion);
             case FIREBIRD:
                 return firebirdDialect(majorVersion);
+            case MARIADB:
+                return mariadbDialect(majorVersion, minorVersion);
+            case MYSQL:
+                return mysqlDialect(majorVersion, minorVersion);
+            case POSTGRES:
+                return postgresDialect(majorVersion, minorVersion);
         }
 
         return dialect;
@@ -270,6 +278,26 @@ public class JDBCUtils {
 
 
         return POSTGRES;
+    }
+
+    private static final SQLDialect mariadbDialect(int majorVersion, int minorVersion) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return MARIADB;
     }
 
     private static final SQLDialect mysqlDialect(int majorVersion, int minorVersion) {

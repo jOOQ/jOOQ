@@ -57,7 +57,7 @@ import java.util.*;
 /**
  * The <code>SPACE</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Space
 extends
     AbstractField<String>

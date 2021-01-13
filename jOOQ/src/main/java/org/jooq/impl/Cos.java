@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>COS</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Cos
 extends
     AbstractField<BigDecimal>

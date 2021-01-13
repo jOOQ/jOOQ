@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>POWER</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Power
 extends
     AbstractField<BigDecimal>

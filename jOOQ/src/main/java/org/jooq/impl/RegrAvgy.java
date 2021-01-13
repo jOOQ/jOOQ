@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>REGR AVG Y</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class RegrAvgy
 extends
     DefaultAggregateFunction<BigDecimal>

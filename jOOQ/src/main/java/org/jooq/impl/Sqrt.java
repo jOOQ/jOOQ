@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>SQRT</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Sqrt
 extends
     AbstractField<BigDecimal>

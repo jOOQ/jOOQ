@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>REGR SLOPE</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class RegrSlope
 extends
     DefaultAggregateFunction<BigDecimal>

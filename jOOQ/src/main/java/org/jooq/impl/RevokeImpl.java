@@ -57,7 +57,7 @@ import java.util.*;
 /**
  * The <code>REVOKE</code> statement.
  */
-@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class RevokeImpl
 extends
     AbstractRowCountQuery

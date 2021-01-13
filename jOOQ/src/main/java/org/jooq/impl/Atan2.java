@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>ATAN2</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Atan2
 extends
     AbstractField<BigDecimal>

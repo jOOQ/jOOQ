@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>REGR R2</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class RegrR2
 extends
     DefaultAggregateFunction<BigDecimal>

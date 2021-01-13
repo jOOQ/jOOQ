@@ -37,31 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-// ...
-
 /**
- * The step in the <code>ALTER SEQUENCE</code> statement where the flags of the
- * sequence are modified or cleared.
+ * A step in the construction of the <code>ALTER SEQUENCE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -80,149 +63,133 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Knut Wannheden
  */
-public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
+@SuppressWarnings({ "unused" })
+public interface AlterSequenceFlagsStep<T extends Number> extends AlterSequenceFinalStep {
 
     /**
-     * Restart the sequence at its initial value.
+     * Add the <code>RESTART</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep restart();
+    @NotNull
+    AlterSequenceFlagsStep<T> restart();
 
     /**
-     * Restart the sequence at a given value.
+     * Add the <code>RESTART WITH</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep restartWith(Number value);
+    @NotNull
+    AlterSequenceFlagsStep<T> restartWith(T restartWith);
 
     /**
-     * Restart the sequence at a given value.
+     * Add the <code>RESTART WITH</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep restartWith(Field<? extends Number> value);
+    @NotNull
+    AlterSequenceFlagsStep<T> restartWith(Field<T> restartWith);
 
     /**
-     * Add a <code>START WITH</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>START WITH</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ MARIADB, POSTGRES })
-    AlterSequenceFlagsStep startWith(Number value);
+    @NotNull
+    AlterSequenceFlagsStep<T> startWith(T startWith);
 
     /**
-     * Add a <code>START WITH</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>START WITH</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ MARIADB, POSTGRES })
-    AlterSequenceFlagsStep startWith(Field<? extends Number> value);
+    @NotNull
+    AlterSequenceFlagsStep<T> startWith(Field<T> startWith);
 
     /**
-     * Add a <code>INCREMENT BY</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>INCREMENT BY</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep incrementBy(Number value);
+    @NotNull
+    AlterSequenceFlagsStep<T> incrementBy(T incrementBy);
 
     /**
-     * Add a <code>INCREMENT BY</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>INCREMENT BY</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep incrementBy(Field<? extends Number> value);
+    @NotNull
+    AlterSequenceFlagsStep<T> incrementBy(Field<T> incrementBy);
 
     /**
-     * Add a <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep minvalue(Number value);
+    @NotNull
+    AlterSequenceFlagsStep<T> minvalue(T minvalue);
 
     /**
-     * Add a <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep minvalue(Field<? extends Number> value);
+    @NotNull
+    AlterSequenceFlagsStep<T> minvalue(Field<T> minvalue);
 
     /**
-     * Add a <code>NO MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>NO MINVALUE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep noMinvalue();
+    @NotNull
+    AlterSequenceFlagsStep<T> noMinvalue();
 
     /**
-     * Add a <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>MAXVALUE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep maxvalue(Number value);
+    @NotNull
+    AlterSequenceFlagsStep<T> maxvalue(T maxvalue);
 
     /**
-     * Add a <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>MAXVALUE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep maxvalue(Field<? extends Number> value);
+    @NotNull
+    AlterSequenceFlagsStep<T> maxvalue(Field<T> maxvalue);
 
     /**
-     * Add a <code>NO MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>NO MAXVALUE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep noMaxvalue();
+    @NotNull
+    AlterSequenceFlagsStep<T> noMaxvalue();
 
     /**
-     * Add a <code>CYCLE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>CYCLE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep cycle();
+    @NotNull
+    AlterSequenceFlagsStep<T> cycle();
 
     /**
-     * Add a <code>NO CYCLE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>NO CYCLE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep noCycle();
+    @NotNull
+    AlterSequenceFlagsStep<T> noCycle();
 
     /**
-     * Add a <code>CACHE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>CACHE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep cache(Number value);
+    @NotNull
+    AlterSequenceFlagsStep<T> cache(T cache);
 
     /**
-     * Add a <code>CACHE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>CACHE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep cache(Field<? extends Number> value);
+    @NotNull
+    AlterSequenceFlagsStep<T> cache(Field<T> cache);
 
     /**
-     * Add a <code>NO CACHE</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>NO CACHE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFlagsStep noCache();
+    @NotNull
+    AlterSequenceFlagsStep<T> noCache();
 }

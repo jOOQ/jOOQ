@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>MEDIAN</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Median
 extends
     DefaultAggregateFunction<BigDecimal>

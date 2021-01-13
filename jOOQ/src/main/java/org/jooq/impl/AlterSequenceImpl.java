@@ -37,257 +37,264 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.ALTER_SEQUENCE;
-import static org.jooq.Clause.ALTER_SEQUENCE_RENAME;
-import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
-import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_ALTER;
-import static org.jooq.impl.Keywords.K_ALTER_TABLE;
-import static org.jooq.impl.Keywords.K_CACHE;
-import static org.jooq.impl.Keywords.K_CYCLE;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_INCREMENT_BY;
-import static org.jooq.impl.Keywords.K_MAXVALUE;
-import static org.jooq.impl.Keywords.K_MINVALUE;
-import static org.jooq.impl.Keywords.K_NO;
-import static org.jooq.impl.Keywords.K_RENAME;
-import static org.jooq.impl.Keywords.K_RENAME_SEQUENCE;
-import static org.jooq.impl.Keywords.K_RENAME_TO;
-import static org.jooq.impl.Keywords.K_RESTART;
-import static org.jooq.impl.Keywords.K_RESTART_WITH;
-import static org.jooq.impl.Keywords.K_SEQUENCE;
-import static org.jooq.impl.Keywords.K_SERIAL;
-import static org.jooq.impl.Keywords.K_START_WITH;
-import static org.jooq.impl.Keywords.K_TO;
-import static org.jooq.impl.Tools.beginTryCatch;
-import static org.jooq.impl.Tools.endTryCatch;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.AlterSequenceFinalStep;
-import org.jooq.AlterSequenceFlagsStep;
-import org.jooq.AlterSequenceStep;
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Name;
-// ...
-import org.jooq.SQLDialect;
-import org.jooq.Sequence;
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>ALTER SEQUENCE</code> statement.
  */
-final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery implements
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class AlterSequenceImpl<T extends Number>
+extends
+    AbstractRowCountQuery
+implements
+    AlterSequenceStep<T>,
+    AlterSequenceFlagsStep<T>,
+    AlterSequenceFinalStep
+{
 
-    // Cascading interface implementations for AlterSequence behaviour
-    AlterSequenceStep<T> {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]        CLAUSES              = { ALTER_SEQUENCE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> NO_SEPARATOR         = SQLDialect.supportedBy(CUBRID, MARIADB);
-    private static final Set<SQLDialect> NO_SUPPORT_CACHE     = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> EMULATE_NO_CACHE  = SQLDialect.supportedBy(POSTGRES);
+    private final Sequence<T> sequence;
+    private final boolean     alterSequenceIfExists;
+    private       Sequence<?> renameTo;
+    private       boolean     restart;
+    private       Field<T>    restartWith;
+    private       Field<T>    startWith;
+    private       Field<T>    incrementBy;
+    private       Field<T>    minvalue;
+    private       boolean     noMinvalue;
+    private       Field<T>    maxvalue;
+    private       boolean     noMaxvalue;
+    private       Boolean     cycle;
+    private       Field<T>    cache;
+    private       boolean     noCache;
 
-
-
-
-
-    private final Sequence<T>            sequence;
-    private final boolean                ifExists;
-    private Sequence<?>                  renameTo;
-    private boolean                      restart;
-    private Field<?>                     restartWith;
-    private Field<? extends Number>      startWith;
-    private Field<? extends Number>      incrementBy;
-    private Field<? extends Number>      minvalue;
-    private boolean                      noMinvalue;
-    private Field<? extends Number>      maxvalue;
-    private boolean                      noMaxvalue;
-    private Boolean                      cycle;
-    private Field<? extends Number>      cache;
-    private boolean                      noCache;
-
-    AlterSequenceImpl(Configuration configuration, Sequence<T> sequence) {
-        this(configuration, sequence, false);
+    AlterSequenceImpl(
+        Configuration configuration,
+        Sequence<T> sequence,
+        boolean alterSequenceIfExists
+    ) {
+        this(
+            configuration,
+            sequence,
+            alterSequenceIfExists,
+            null,
+            false,
+            null,
+            null,
+            null,
+            null,
+            false,
+            null,
+            false,
+            null,
+            null,
+            false
+        );
     }
 
-    AlterSequenceImpl(Configuration configuration, Sequence<T> sequence, boolean ifExists) {
+    AlterSequenceImpl(
+        Configuration configuration,
+        Sequence<T> sequence,
+        boolean alterSequenceIfExists,
+        Sequence<?> renameTo,
+        boolean restart,
+        Field<T> restartWith,
+        Field<T> startWith,
+        Field<T> incrementBy,
+        Field<T> minvalue,
+        boolean noMinvalue,
+        Field<T> maxvalue,
+        boolean noMaxvalue,
+        Boolean cycle,
+        Field<T> cache,
+        boolean noCache
+    ) {
         super(configuration);
 
         this.sequence = sequence;
-        this.ifExists = ifExists;
+        this.alterSequenceIfExists = alterSequenceIfExists;
+        this.renameTo = renameTo;
+        this.restart = restart;
+        this.restartWith = restartWith;
+        this.startWith = startWith;
+        this.incrementBy = incrementBy;
+        this.minvalue = minvalue;
+        this.noMinvalue = noMinvalue;
+        this.maxvalue = maxvalue;
+        this.noMaxvalue = noMaxvalue;
+        this.cycle = cycle;
+        this.cache = cache;
+        this.noCache = noCache;
     }
 
-    final Sequence<?>             $sequence()    { return sequence; }
-    final boolean                 $ifExists()    { return ifExists; }
-    final Sequence<?>             $renameTo()    { return renameTo; }
-    final boolean                 $restart()     { return restart; }
-    final Field<?>                $restartWith() { return restartWith; }
-    final Field<? extends Number> $startWith()   { return startWith; }
-    final Field<? extends Number> $incrementBy() { return incrementBy; }
-    final Field<? extends Number> $minvalue()    { return minvalue; }
-    final boolean                 $noMinvalue()  { return noMinvalue; }
-    final Field<? extends Number> $maxvalue()    { return maxvalue; }
-    final boolean                 $noMaxvalue()  { return noMaxvalue; }
-    final Boolean                 $cycle()       { return cycle; }
-    final Field<? extends Number> $cache()       { return cache; }
-    final boolean                 $noCache()     { return noCache; }
+    final Sequence<T> $sequence()              { return sequence; }
+    final boolean     $alterSequenceIfExists() { return alterSequenceIfExists; }
+    final Sequence<?> $renameTo()              { return renameTo; }
+    final boolean     $restart()               { return restart; }
+    final Field<T>    $restartWith()           { return restartWith; }
+    final Field<T>    $startWith()             { return startWith; }
+    final Field<T>    $incrementBy()           { return incrementBy; }
+    final Field<T>    $minvalue()              { return minvalue; }
+    final boolean     $noMinvalue()            { return noMinvalue; }
+    final Field<T>    $maxvalue()              { return maxvalue; }
+    final boolean     $noMaxvalue()            { return noMaxvalue; }
+    final Boolean     $cycle()                 { return cycle; }
+    final Field<T>    $cache()                 { return cache; }
+    final boolean     $noCache()               { return noCache; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     @Override
-    public final AlterSequenceFlagsStep restart() {
-        restart = true;
-        restartWith = null;
+    public final AlterSequenceImpl<T> renameTo(String renameTo) {
+        return renameTo(DSL.sequence(DSL.name(renameTo)));
+    }
+
+    @Override
+    public final AlterSequenceImpl<T> renameTo(Name renameTo) {
+        return renameTo(DSL.sequence(renameTo));
+    }
+
+    @Override
+    public final AlterSequenceImpl<T> renameTo(Sequence<?> renameTo) {
+        this.renameTo = renameTo;
         return this;
     }
 
     @Override
-    public final AlterSequenceFlagsStep restartWith(Number value) {
-        return restartWith(Tools.field(value, sequence.getDataType()));
-    }
-
-    @Override
-    public final AlterSequenceFlagsStep restartWith(Field<? extends Number> value) {
-        restart = false;
-        restartWith = value;
+    public final AlterSequenceImpl<T> restart() {
+        this.restart = true;
         return this;
     }
 
     @Override
-    public final AlterSequenceFinalStep renameTo(Sequence<?> newName) {
-        renameTo = newName;
+    public final AlterSequenceImpl<T> restartWith(T restartWith) {
+        return restartWith(Tools.field(restartWith));
+    }
+
+    @Override
+    public final AlterSequenceImpl<T> restartWith(Field<T> restartWith) {
+        this.restartWith = restartWith;
         return this;
     }
 
     @Override
-    public final AlterSequenceFinalStep renameTo(Name newName) {
-        return renameTo(DSL.sequence(newName));
+    public final AlterSequenceImpl<T> startWith(T startWith) {
+        return startWith(Tools.field(startWith));
     }
 
     @Override
-    public final AlterSequenceFinalStep renameTo(String newName) {
-        return renameTo(DSL.name(newName));
-    }
-
-    @Override
-    public AlterSequenceFlagsStep startWith(Number value) {
-        return startWith(Tools.field(value, sequence.getDataType()));
-    }
-
-    @Override
-    public AlterSequenceFlagsStep startWith(Field<? extends Number> value) {
-        startWith = value;
+    public final AlterSequenceImpl<T> startWith(Field<T> startWith) {
+        this.startWith = startWith;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep incrementBy(Number value) {
-        return incrementBy(Tools.field(value, sequence.getDataType()));
+    public final AlterSequenceImpl<T> incrementBy(T incrementBy) {
+        return incrementBy(Tools.field(incrementBy));
     }
 
     @Override
-    public AlterSequenceFlagsStep incrementBy(Field<? extends Number> value) {
-        incrementBy = value;
+    public final AlterSequenceImpl<T> incrementBy(Field<T> incrementBy) {
+        this.incrementBy = incrementBy;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep minvalue(Number value) {
-        return minvalue(Tools.field(value, sequence.getDataType()));
+    public final AlterSequenceImpl<T> minvalue(T minvalue) {
+        return minvalue(Tools.field(minvalue));
     }
 
     @Override
-    public AlterSequenceFlagsStep minvalue(Field<? extends Number> value) {
-        minvalue = value;
-        noMinvalue = false;
+    public final AlterSequenceImpl<T> minvalue(Field<T> minvalue) {
+        this.minvalue = minvalue;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep noMinvalue() {
-        minvalue = null;
-        noMinvalue = true;
+    public final AlterSequenceImpl<T> noMinvalue() {
+        this.noMinvalue = true;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep maxvalue(Number value) {
-        return maxvalue(Tools.field(value, sequence.getDataType()));
+    public final AlterSequenceImpl<T> maxvalue(T maxvalue) {
+        return maxvalue(Tools.field(maxvalue));
     }
 
     @Override
-    public AlterSequenceFlagsStep maxvalue(Field<? extends Number> value) {
-        maxvalue = value;
-        noMaxvalue = false;
+    public final AlterSequenceImpl<T> maxvalue(Field<T> maxvalue) {
+        this.maxvalue = maxvalue;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep noMaxvalue() {
-        maxvalue = null;
-        noMaxvalue = true;
+    public final AlterSequenceImpl<T> noMaxvalue() {
+        this.noMaxvalue = true;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep cycle() {
-        cycle = true;
+    public final AlterSequenceImpl<T> cycle() {
+        this.cycle = true;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep noCycle() {
-        cycle = false;
+    public final AlterSequenceImpl<T> noCycle() {
+        this.cycle = false;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep cache(Number value) {
-        return cache(Tools.field(value, sequence.getDataType()));
+    public final AlterSequenceImpl<T> cache(T cache) {
+        return cache(Tools.field(cache));
     }
 
     @Override
-    public AlterSequenceFlagsStep cache(Field<? extends Number> value) {
-        cache = value;
-        noCache = false;
+    public final AlterSequenceImpl<T> cache(Field<T> cache) {
+        this.cache = cache;
         return this;
     }
 
     @Override
-    public AlterSequenceFlagsStep noCache() {
-        cache = null;
-        noCache = true;
+    public final AlterSequenceImpl<T> noCache() {
+        this.noCache = true;
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES              = { Clause.ALTER_SEQUENCE };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SEPARATOR         = SQLDialect.supportedBy(CUBRID, MARIADB);
+    private static final Set<SQLDialect> NO_SUPPORT_CACHE     = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> EMULATE_NO_CACHE     = SQLDialect.supportedBy(POSTGRES);
+
+
+
+
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
@@ -295,14 +302,13 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (alterSequenceIfExists && !supportsIfExists(ctx)) {
             beginTryCatch(ctx, DDLStatementType.ALTER_SEQUENCE);
             accept0(ctx);
             endTryCatch(ctx, DDLStatementType.ALTER_SEQUENCE);
         }
-        else {
+        else
             accept0(ctx);
-        }
     }
 
     private final void accept0(Context<?> ctx) {
@@ -335,8 +341,8 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     private final void acceptRenameTable(Context<?> ctx) {
         boolean qualify = ctx.qualify();
 
-        ctx.start(ALTER_SEQUENCE_SEQUENCE)
-           .start(ALTER_SEQUENCE_RENAME)
+        ctx.start(Clause.ALTER_SEQUENCE_SEQUENCE)
+           .start(Clause.ALTER_SEQUENCE_RENAME)
            .visit(K_ALTER_TABLE)
            .sql(' ')
            .visit(sequence)
@@ -346,8 +352,8 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
            .qualify(false)
            .visit(renameTo)
            .qualify(qualify)
-           .end(ALTER_SEQUENCE_RENAME)
-           .end(ALTER_SEQUENCE_SEQUENCE);
+           .end(Clause.ALTER_SEQUENCE_RENAME)
+           .end(Clause.ALTER_SEQUENCE_SEQUENCE);
     }
 
 
@@ -372,12 +378,12 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
 
 
     private final void accept1(Context<?> ctx) {
-        ctx.start(ALTER_SEQUENCE_SEQUENCE)
+        ctx.start(Clause.ALTER_SEQUENCE_SEQUENCE)
            .visit(K_ALTER)
            .sql(' ')
            .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE);
 
-        if (ifExists && supportsIfExists(ctx))
+        if (alterSequenceIfExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         switch (ctx.family()) {
@@ -399,21 +405,21 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
             }
         }
 
-        ctx.end(ALTER_SEQUENCE_SEQUENCE);
+        ctx.end(Clause.ALTER_SEQUENCE_SEQUENCE);
 
         if (renameTo != null) {
             boolean qualify = ctx.qualify();
 
-            ctx.start(ALTER_SEQUENCE_RENAME)
+            ctx.start(Clause.ALTER_SEQUENCE_RENAME)
                .sql(' ').visit(K_RENAME_TO)
                .sql(' ')
                .qualify(false)
                .visit(renameTo)
                .qualify(qualify)
-               .end(ALTER_SEQUENCE_RENAME);
+               .end(Clause.ALTER_SEQUENCE_RENAME);
         }
         else {
-            ctx.start(ALTER_SEQUENCE_RESTART);
+            ctx.start(Clause.ALTER_SEQUENCE_RESTART);
 
             String noSeparator = NO_SEPARATOR.contains(ctx.dialect()) ? "" : " ";
 
@@ -473,7 +479,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
             else if (Boolean.FALSE.equals(cycle))
                 ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
 
-            ctx.end(ALTER_SEQUENCE_RESTART);
+            ctx.end(Clause.ALTER_SEQUENCE_RESTART);
         }
     }
 
@@ -481,5 +487,6 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
 
 }

@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>VAR SAMP</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class VarSamp
 extends
     DefaultAggregateFunction<BigDecimal>

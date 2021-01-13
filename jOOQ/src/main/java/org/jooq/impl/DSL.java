@@ -7679,6 +7679,72 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequence(String)
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.AlterSequenceStep<Number> alterSequence(String sequence) {
+        return dsl().alterSequence(sequence);
+    }
+
+    /**
+     * The <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequence(Name)
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.AlterSequenceStep<Number> alterSequence(Name sequence) {
+        return dsl().alterSequence(sequence);
+    }
+
+    /**
+     * The <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequence(Sequence)
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static <T extends Number> org.jooq.AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
+        return dsl().alterSequence(sequence);
+    }
+
+    /**
+     * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterSequenceIfExists(String)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, POSTGRES })
+    public static org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(String sequence) {
+        return dsl().alterSequenceIfExists(sequence);
+    }
+
+    /**
+     * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterSequenceIfExists(Name)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, POSTGRES })
+    public static org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(Name sequence) {
+        return dsl().alterSequenceIfExists(sequence);
+    }
+
+    /**
+     * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterSequenceIfExists(Sequence)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, POSTGRES })
+    public static <T extends Number> org.jooq.AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
+        return dsl().alterSequenceIfExists(sequence);
+    }
+
+    /**
      * The <code>ALTER TYPE</code> statement.
      *
      * @see DSLContext#alterType(String)
@@ -9234,72 +9300,6 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropTypeIfExists(Collection<?> type) {
         return dsl().dropTypeIfExists(type);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSLContext#alterSequence(String)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static AlterSequenceStep<BigInteger> alterSequence(String sequence) {
-        return dsl().alterSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSLContext#alterSequence(Name)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static AlterSequenceStep<BigInteger> alterSequence(Name sequence) {
-        return dsl().alterSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSLContext#alterSequence(Sequence)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
-        return dsl().alterSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSLContext#alterSequenceIfExists(String)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
-    public static AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence) {
-        return dsl().alterSequenceIfExists(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSLContext#alterSequenceIfExists(Name)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
-    public static AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence) {
-        return dsl().alterSequenceIfExists(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSLContext#alterSequenceIfExists(Sequence)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
-    public static <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
-        return dsl().alterSequenceIfExists(sequence);
     }
 
     /**

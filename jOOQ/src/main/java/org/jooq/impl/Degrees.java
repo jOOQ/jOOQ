@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>DEG</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Degrees
 extends
     AbstractField<BigDecimal>

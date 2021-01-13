@@ -9689,6 +9689,60 @@ public interface DSLContext extends Scope {
     AlterSchemaStep alterSchemaIfExists(Schema schema);
 
     /**
+     * The <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSL#alterSequence(String)
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    AlterSequenceStep<Number> alterSequence(String sequence);
+
+    /**
+     * The <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSL#alterSequence(Name)
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    AlterSequenceStep<Number> alterSequence(Name sequence);
+
+    /**
+     * The <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSL#alterSequence(Sequence)
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence);
+
+    /**
+     * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSL#alterSequenceIfExists(String)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, POSTGRES })
+    AlterSequenceStep<Number> alterSequenceIfExists(String sequence);
+
+    /**
+     * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSL#alterSequenceIfExists(Name)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, POSTGRES })
+    AlterSequenceStep<Number> alterSequenceIfExists(Name sequence);
+
+    /**
+     * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSL#alterSequenceIfExists(Sequence)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, POSTGRES })
+    <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence);
+
+    /**
      * The <code>ALTER TYPE</code> statement.
      *
      * @see DSL#alterType(String)
@@ -11152,61 +11206,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ H2, POSTGRES })
     DropTypeStep dropTypeIfExists(Collection<?> type);
-
-    /**
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSL#alterSequence(String)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceStep<BigInteger> alterSequence(String sequence);
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSL#alterSequence(Name)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceStep<BigInteger> alterSequence(Name sequence);
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSL#alterSequence(Sequence)
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence);
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSL#alterSequenceIfExists(String)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
-    AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence);
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSL#alterSequenceIfExists(Name)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
-    AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence);
-
-    /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
-     *
-     * @see DSL#alterSequenceIfExists(Sequence)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
-    <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence);
 
     /**
      * Create a new DSL <code>ALTER TABLE</code> statement.

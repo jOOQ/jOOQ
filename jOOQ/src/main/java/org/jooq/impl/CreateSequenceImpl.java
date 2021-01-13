@@ -57,7 +57,7 @@ import java.util.*;
 /**
  * The <code>CREATE SEQUENCE</code> statement.
  */
-@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class CreateSequenceImpl
 extends
     AbstractRowCountQuery

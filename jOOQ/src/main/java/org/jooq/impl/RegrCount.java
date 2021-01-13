@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>REGR COUNT</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class RegrCount
 extends
     DefaultAggregateFunction<BigDecimal>

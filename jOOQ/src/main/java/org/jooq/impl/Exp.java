@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>EXP</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Exp
 extends
     AbstractField<BigDecimal>

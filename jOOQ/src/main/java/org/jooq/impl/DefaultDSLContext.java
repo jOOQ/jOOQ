@@ -3002,6 +3002,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.AlterSequenceStep<Number> alterSequence(String sequence) {
+        return new AlterSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
+    }
+
+    @Override
+    public org.jooq.AlterSequenceStep<Number> alterSequence(Name sequence) {
+        return new AlterSequenceImpl(configuration(), DSL.sequence(sequence), false);
+    }
+
+    @Override
+    public <T extends Number> org.jooq.AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
+        return new AlterSequenceImpl(configuration(), sequence, false);
+    }
+
+    @Override
+    public org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(String sequence) {
+        return new AlterSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
+    }
+
+    @Override
+    public org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(Name sequence) {
+        return new AlterSequenceImpl(configuration(), DSL.sequence(sequence), true);
+    }
+
+    @Override
+    public <T extends Number> org.jooq.AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
+        return new AlterSequenceImpl(configuration(), sequence, true);
+    }
+
+    @Override
     public org.jooq.AlterTypeStep alterType(String type) {
         return new AlterTypeImpl(configuration(), DSL.name(type));
     }
@@ -3785,36 +3815,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public DropTypeStep dropTypeIfExists(Collection<?> type) {
         return new DropTypeImpl(configuration(), type, true);
-    }
-
-    @Override
-    public AlterSequenceStep<BigInteger> alterSequence(String sequence) {
-        return alterSequence(name(sequence));
-    }
-
-    @Override
-    public AlterSequenceStep<BigInteger> alterSequence(Name sequence) {
-        return alterSequence(sequence(sequence));
-    }
-
-    @Override
-    public <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
-        return new AlterSequenceImpl<>(configuration(), sequence);
-    }
-
-    @Override
-    public AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence) {
-        return alterSequenceIfExists(name(sequence));
-    }
-
-    @Override
-    public AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence) {
-        return alterSequenceIfExists(sequence(sequence));
-    }
-
-    @Override
-    public <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
-        return new AlterSequenceImpl<>(configuration(), sequence, true);
     }
 
     @Override

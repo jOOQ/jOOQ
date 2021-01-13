@@ -3520,31 +3520,37 @@ final class ParserContext {
             ? dsl.createSequenceIfNotExists(schemaName)
             : dsl.createSequence(schemaName);
 
+        boolean restart = false;
+        boolean startWith = false;
+        boolean incrementBy = false;
+        boolean minvalue = false;
+        boolean maxvalue = false;
+        boolean cycle = false;
+        boolean cache = false;
+
         for (;;) {
             Field<Long> field;
 
-            if ((field = parseSequenceStartWithIf()) != null)
+            if (!startWith && (startWith |= (field = parseSequenceStartWithIf()) != null))
                 s = s.startWith(field);
-            else if ((field = parseSequenceIncrementByIf()) != null)
+            else if (!incrementBy && (incrementBy |= (field = parseSequenceIncrementByIf()) != null))
                 s = s.incrementBy(field);
-            else if ((field = parseSequenceMinvalueIf()) != null)
+            else if (!minvalue && (minvalue |= (field = parseSequenceMinvalueIf()) != null))
                 s = s.minvalue(field);
-            else if (parseSequenceNoMinvalueIf())
+            else if (!minvalue && (minvalue |= parseSequenceNoMinvalueIf()))
                 s = s.noMinvalue();
-            else if ((field = parseSequenceMaxvalueIf()) != null)
+            else if (!maxvalue && (maxvalue |= (field = parseSequenceMaxvalueIf()) != null))
                 s = s.maxvalue(field);
-            else if (parseSequenceNoMaxvalueIf())
+            else if (!maxvalue && (maxvalue |= parseSequenceNoMaxvalueIf()))
                 s = s.noMaxvalue();
-            else if (parseKeywordIf("CYCLE"))
+            else if (!cycle && (cycle |= parseKeywordIf("CYCLE")))
                 s = s.cycle();
-            else if (parseSequenceNoCycleIf())
+            else if (!cycle && (cycle |= parseSequenceNoCycleIf()))
                 s = s.noCycle();
-            else if ((field = parseSequenceCacheIf()) != null)
+            else if (!cache && (cache |= (field = parseSequenceCacheIf()) != null))
                 s = s.cache(field);
-            else if (parseSequenceNoCacheIf()) {
+            else if (!cache && (cache |= parseSequenceNoCacheIf()))
                 s = s.noCache();
-                continue;
-            }
             else
                 break;
         }
@@ -3570,31 +3576,39 @@ final class ParserContext {
         }
         else {
             boolean found = false;
+            boolean restart = false;
+            boolean startWith = false;
+            boolean incrementBy = false;
+            boolean minvalue = false;
+            boolean maxvalue = false;
+            boolean cycle = false;
+            boolean cache = false;
+
             AlterSequenceFlagsStep s1 = s;
             while (true) {
                 Field<Long> field;
 
-                if ((field = parseSequenceStartWithIf()) != null)
+                if (!startWith && (startWith |= (field = parseSequenceStartWithIf()) != null))
                     s1 = s1.startWith(field);
-                else if ((field = parseSequenceIncrementByIf()) != null)
+                else if (!incrementBy && (incrementBy |= (field = parseSequenceIncrementByIf()) != null))
                     s1 = s1.incrementBy(field);
-                else if ((field = parseSequenceMinvalueIf()) != null)
+                else if (!minvalue && (minvalue |= (field = parseSequenceMinvalueIf()) != null))
                     s1 = s1.minvalue(field);
-                else if (parseSequenceNoMinvalueIf())
+                else if (!minvalue && (minvalue |= parseSequenceNoMinvalueIf()))
                     s1 = s1.noMinvalue();
-                else if ((field = parseSequenceMaxvalueIf()) != null)
+                else if (!maxvalue && (maxvalue |= (field = parseSequenceMaxvalueIf()) != null))
                     s1 = s1.maxvalue(field);
-                else if (parseSequenceNoMaxvalueIf())
+                else if (!maxvalue && (maxvalue |= parseSequenceNoMaxvalueIf()))
                     s1 = s1.noMaxvalue();
-                else if (parseKeywordIf("CYCLE"))
+                else if (!cycle && (cycle |= parseKeywordIf("CYCLE")))
                     s1 = s1.cycle();
-                else if (parseSequenceNoCycleIf())
+                else if (!cycle && (cycle |= parseSequenceNoCycleIf()))
                     s1 = s1.noCycle();
-                else if ((field = parseSequenceCacheIf()) != null)
+                else if (!cache && (cache |= (field = parseSequenceCacheIf()) != null))
                     s1 = s1.cache(field);
-                else if (parseSequenceNoCacheIf())
+                else if (!cache && (cache |= parseSequenceNoCacheIf()))
                     s1 = s1.noCache();
-                else if (parseKeywordIf("RESTART")) {
+                else if (!restart && (restart |= parseKeywordIf("RESTART"))) {
                     if (parseKeywordIf("WITH"))
                         s1 = s1.restartWith(parseUnsignedIntegerOrBindVariable());
                     else
@@ -3602,6 +3616,7 @@ final class ParserContext {
                 }
                 else
                     break;
+
                 found = true;
             }
 

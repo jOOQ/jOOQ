@@ -37,19 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-
 /**
- * A {@link Query} that can alter sequences.
+ * A step in the construction of the <code>ALTER SEQUENCE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -68,33 +63,28 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
-public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsStep {
+@SuppressWarnings({ "unused" })
+public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsStep<T> {
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFinalStep renameTo(Sequence<?> newName);
+    @NotNull
+    AlterSequenceFinalStep renameTo(String renameTo);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFinalStep renameTo(Name newName);
+    @NotNull
+    AlterSequenceFinalStep renameTo(Name renameTo);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
-    @NotNull
     @Support({ HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFinalStep renameTo(String newName);
-
+    @NotNull
+    AlterSequenceFinalStep renameTo(Sequence<?> renameTo);
 }

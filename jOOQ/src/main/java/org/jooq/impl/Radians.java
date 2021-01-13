@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>RAD</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Radians
 extends
     AbstractField<BigDecimal>

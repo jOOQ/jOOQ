@@ -57,7 +57,7 @@ import java.util.*;
 /**
  * The <code>GRANT</code> statement.
  */
-@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class GrantImpl
 extends
     AbstractRowCountQuery

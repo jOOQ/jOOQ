@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>LOG10</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Log10
 extends
     AbstractField<BigDecimal>

@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>COVAR SAMP</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class CovarSamp
 extends
     DefaultAggregateFunction<BigDecimal>

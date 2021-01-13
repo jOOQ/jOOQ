@@ -876,7 +876,7 @@ final class Interpreter {
 
         MutableSequence existing = schema.sequence(sequence);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$alterSequenceIfExists())
                 throw notExists(sequence);
 
             return;

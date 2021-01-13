@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>STDDEV SAMP</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class StddevSamp
 extends
     DefaultAggregateFunction<BigDecimal>

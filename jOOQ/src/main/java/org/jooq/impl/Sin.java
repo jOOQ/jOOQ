@@ -58,7 +58,7 @@ import java.math.BigDecimal;
 /**
  * The <code>SIN</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Sin
 extends
     AbstractField<BigDecimal>

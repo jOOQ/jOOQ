@@ -57,7 +57,7 @@ import java.util.*;
 /**
  * The <code>SIGN</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class Sign
 extends
     AbstractField<Integer>

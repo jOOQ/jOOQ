@@ -106,7 +106,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final TruncateImpl<R> restartIdentity() {
         this.restartIdentity = true;

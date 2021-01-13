@@ -111,7 +111,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final DropIndexImpl on(String on) {
         return on(DSL.table(DSL.name(on)));

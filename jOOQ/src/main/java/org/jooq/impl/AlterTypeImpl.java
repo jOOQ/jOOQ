@@ -120,7 +120,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final AlterTypeImpl renameTo(String renameTo) {
         return renameTo(DSL.name(renameTo));

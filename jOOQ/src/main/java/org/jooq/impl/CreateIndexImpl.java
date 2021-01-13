@@ -146,7 +146,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final CreateIndexImpl on(String table, String... on) {
         return on(DSL.table(DSL.name(table)), Tools.fieldsByName(on));

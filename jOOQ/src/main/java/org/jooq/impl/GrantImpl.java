@@ -116,7 +116,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final GrantImpl on(String on) {
         return on(DSL.table(DSL.name(on)));

@@ -64,6 +64,7 @@ final class Names {
     static final Name N_ARRAY_LENGTH           = unquotedName("array_length");
     static final Name N_ASC                    = unquotedName("asc");
     static final Name N_ASCII                  = unquotedName("ascii");
+    static final Name N_ASCII_CHAR             = unquotedName("ascii_char");
     static final Name N_ASCII_VAL              = unquotedName("ascii_val");
     static final Name N_ASIN                   = unquotedName("asin");
     static final Name N_ATAN                   = unquotedName("atan");
@@ -81,8 +82,10 @@ final class Names {
     static final Name N_CAST                   = unquotedName("cast");
     static final Name N_CEIL                   = unquotedName("ceil");
     static final Name N_CEILING                = unquotedName("ceiling");
+    static final Name N_CHAR                   = unquotedName("char");
     static final Name N_CHARINDEX              = unquotedName("charindex");
     static final Name N_CHAR_LENGTH            = unquotedName("char_length");
+    static final Name N_CHR                    = unquotedName("chr");
     static final Name N_CHOOSE                 = unquotedName("choose");
     static final Name N_CLNG                   = unquotedName("clng");
     static final Name N_COALESCE               = unquotedName("coalesce");

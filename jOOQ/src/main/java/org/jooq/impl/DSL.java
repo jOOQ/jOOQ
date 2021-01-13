@@ -14907,6 +14907,24 @@ public class DSL {
     }
 
     /**
+     * The <code>CHR</code> function.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> chr(Number number) {
+        return new Chr(Tools.field(number));
+    }
+
+    /**
+     * The <code>CHR</code> function.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> chr(Field<? extends Number> number) {
+        return new Chr(number);
+    }
+
+    /**
      * The <code>COS</code> function.
      */
     @NotNull

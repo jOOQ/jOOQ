@@ -88,6 +88,7 @@ import static org.jooq.impl.DSL.charLength;
 import static org.jooq.impl.DSL.characterSet;
 import static org.jooq.impl.DSL.check;
 import static org.jooq.impl.DSL.choose;
+import static org.jooq.impl.DSL.chr;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.coerce;
 import static org.jooq.impl.DSL.collation;
@@ -361,7 +362,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -6685,6 +6685,8 @@ final class ParserContext {
                         return currentSchema();
                     else if ((parseKeywordIf("CURRENT_USER") || parseKeywordIf("CURRENT USER")) && (parseIf('(') && parse(')') || true))
                         return currentUser();
+                    else if (parseFunctionNameIf("CHR") || parseFunctionNameIf("CHAR"))
+                        return chr((Field) parseFieldParenthesised(N));
 
                 if (N.is(type))
                     if ((field = parseFieldCharIndexIf()) != null)

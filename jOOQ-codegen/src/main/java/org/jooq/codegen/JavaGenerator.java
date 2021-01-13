@@ -4067,6 +4067,10 @@ public class JavaGenerator extends AbstractGenerator {
 
             for (ColumnDefinition column : keyColumns) {
                 generics.append(separator).append(out.ref(getJavaType(column.getType(resolver(out)), out)));
+
+                if (kotlin)
+                    generics.append("?");
+
                 separator = ", ";
             }
 

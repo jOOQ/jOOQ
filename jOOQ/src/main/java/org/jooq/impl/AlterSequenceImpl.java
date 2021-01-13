@@ -161,7 +161,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
+    
     @Override
     public final AlterSequenceImpl<T> renameTo(String renameTo) {
         return renameTo(DSL.sequence(DSL.name(renameTo)));

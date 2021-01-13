@@ -46,6 +46,7 @@ import static org.jooq.Clause.DROP_TABLE_TABLE;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -84,7 +85,7 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     private static final long            serialVersionUID     = 8904572826501186329L;
     private static final Clause[]        CLAUSES              = { DROP_TABLE };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supportedBy(MYSQL);
+    private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final Table<?>               table;
     private final boolean                temporary;

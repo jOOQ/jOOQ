@@ -8583,6 +8583,72 @@ public class DSL {
         return dsl().setSchema(schema);
     }
 
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSLContext#truncate(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncate(String table) {
+        return dsl().truncate(table);
+    }
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSLContext#truncate(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncate(Name table) {
+        return dsl().truncate(table);
+    }
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSLContext#truncate(Table)
+     */
+    @NotNull
+    @Support
+    public static <R extends Record> org.jooq.TruncateIdentityStep<R> truncate(Table<R> table) {
+        return dsl().truncate(table);
+    }
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSLContext#truncateTable(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncateTable(String table) {
+        return dsl().truncateTable(table);
+    }
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSLContext#truncateTable(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncateTable(Name table) {
+        return dsl().truncateTable(table);
+    }
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSLContext#truncateTable(Table)
+     */
+    @NotNull
+    @Support
+    public static <R extends Record> org.jooq.TruncateIdentityStep<R> truncateTable(Table<R> table) {
+        return dsl().truncateTable(table);
+    }
+
 
 
     /**
@@ -9300,183 +9366,6 @@ public class DSL {
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Synonym for {@link #truncateTable(String)}
-     */
-    @NotNull
-    @Support
-    public static TruncateIdentityStep<Record> truncate(String table) {
-        return truncateTable(table);
-    }
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Synonym for {@link #truncateTable(Name)}
-     */
-    @NotNull
-    @Support
-    public static TruncateIdentityStep<Record> truncate(Name table) {
-        return truncateTable(table);
-    }
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Synonym for {@link #truncateTable(Table)}
-     */
-    @NotNull
-    @Support
-    public static <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
-        return truncateTable(table);
-    }
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>DELETE</code> statement.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * // [...]
-     *
-     * truncate(table);
-     * </pre></code>
-     * <h3>Simulation of <code>TRUNCATE</code></h3>
-     * <p>
-     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is emulated using an equivalent <code>DELETE</code>
-     * statement. This is particularly true for these dialects:
-     * <ul>
-     * <li> {@link SQLDialect#FIREBIRD}</li>
-     * <li> {@link SQLDialect#INGRES}</li>
-     * <li> {@link SQLDialect#SQLITE}</li>
-     * </ul>
-     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
-     * <p>
-     * Some statements also support extensions of the <code>TRUNCATE</code>
-     * statement, such as Postgres:
-     * <p>
-     * <code><pre>
-     * truncate(table)
-     *   .restartIdentity()
-     *   .cascade()
-     * </pre></code>
-     * <p>
-     * These vendor-specific extensions are currently not emulated for those
-     * dialects that do not support them natively.
-     *
-     * @see DSLContext#truncate(String)
-     */
-    @NotNull
-    @Support
-    public static TruncateIdentityStep<Record> truncateTable(String table) {
-        return dsl().truncateTable(table);
-    }
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>DELETE</code> statement.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * // [...]
-     *
-     * truncate(table);
-     * </pre></code>
-     * <h3>Simulation of <code>TRUNCATE</code></h3>
-     * <p>
-     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is emulated using an equivalent <code>DELETE</code>
-     * statement. This is particularly true for these dialects:
-     * <ul>
-     * <li> {@link SQLDialect#FIREBIRD}</li>
-     * <li> {@link SQLDialect#INGRES}</li>
-     * <li> {@link SQLDialect#SQLITE}</li>
-     * </ul>
-     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
-     * <p>
-     * Some statements also support extensions of the <code>TRUNCATE</code>
-     * statement, such as Postgres:
-     * <p>
-     * <code><pre>
-     * truncate(table)
-     *   .restartIdentity()
-     *   .cascade()
-     * </pre></code>
-     * <p>
-     * These vendor-specific extensions are currently not emulated for those
-     * dialects that do not support them natively.
-     *
-     * @see DSLContext#truncate(Name)
-     */
-    @NotNull
-    @Support
-    public static TruncateIdentityStep<Record> truncateTable(Name table) {
-        return dsl().truncateTable(table);
-    }
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>DELETE</code> statement.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * // [...]
-     *
-     * truncate(table);
-     * </pre></code>
-     * <h3>Simulation of <code>TRUNCATE</code></h3>
-     * <p>
-     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is emulated using an equivalent <code>DELETE</code>
-     * statement. This is particularly true for these dialects:
-     * <ul>
-     * <li> {@link SQLDialect#FIREBIRD}</li>
-     * <li> {@link SQLDialect#INGRES}</li>
-     * <li> {@link SQLDialect#SQLITE}</li>
-     * </ul>
-     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
-     * <p>
-     * Some statements also support extensions of the <code>TRUNCATE</code>
-     * statement, such as Postgres:
-     * <p>
-     * <code><pre>
-     * truncate(table)
-     *   .restartIdentity()
-     *   .cascade()
-     * </pre></code>
-     * <p>
-     * These vendor-specific extensions are currently not emulated for those
-     * dialects that do not support them natively.
-     *
-     * @see DSLContext#truncate(Table)
-     */
-    @NotNull
-    @Support
-    public static <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table) {
-        return dsl().truncateTable(table);
     }
 
     // -------------------------------------------------------------------------

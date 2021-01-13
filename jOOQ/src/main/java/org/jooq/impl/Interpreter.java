@@ -783,7 +783,7 @@ final class Interpreter {
             throw notExists(table);
         else if (!existing.options.type().isTable())
             throw objectNotTable(table);
-        else if (!query.$cascade() && existing.hasReferencingKeys())
+        else if (!TRUE.equals(query.$cascade()) && existing.hasReferencingKeys())
             throw new DataDefinitionException("Cannot truncate table referenced by other tables. Use CASCADE: " + table);
     }
 

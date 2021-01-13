@@ -37,24 +37,33 @@
  */
 package org.jooq;
 
-import org.jooq.impl.DSL;
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
- * A <code>TRUNCATE</code> statement.
+ * A step in the construction of the <code>TRUNCATE</code> statement.
  * <p>
- * <strong>Example:</strong>
+ * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
- * <code><pre>
- * // Assuming import static org.jooq.impl.DSL.*;
- *
- * using(configuration).truncate(ACTOR).execute();
- * </pre></code>
+ * It is usually not recommended to reference any <code>XYZ*Step</code> types
+ * directly from client code, or assign them to local variables. When writing
+ * dynamic SQL, creating a statement's components dynamically, and passing them
+ * to the DSL API statically is usually a better choice. See the manual's
+ * section about dynamic SQL for details: <a href=
+ * "https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql">https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql</a>.
  * <p>
- * Instances can be created using {@link DSL#truncate(Table)}, or
- * {@link DSLContext#truncate(Table)} and overloads.
- *
- * @author Lukas Eder
+ * Drawbacks of referencing the <code>XYZ*Step</code> types directly:
+ * <ul>
+ * <li>They're operating on mutable implementations (as of jOOQ 3.x)</li>
+ * <li>They're less composable and not easy to get right when dynamic SQL gets
+ * complex</li>
+ * <li>They're less readable</li>
+ * <li>They might have binary incompatible changes between minor releases</li>
+ * </ul>
  */
+@SuppressWarnings({ "unused" })
 public interface Truncate<R extends Record> extends DDLQuery {
-
 }

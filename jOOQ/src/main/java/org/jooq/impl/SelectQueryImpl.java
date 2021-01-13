@@ -68,6 +68,7 @@ import static org.jooq.Operator.OR;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
+import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -269,7 +270,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supportedBy(H2, MYSQL, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(H2, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(DEFAULT, H2, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);

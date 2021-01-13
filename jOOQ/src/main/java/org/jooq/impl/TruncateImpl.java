@@ -37,86 +37,107 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
-import static org.jooq.Clause.TRUNCATE;
-import static org.jooq.Clause.TRUNCATE_TRUNCATE;
-// ...
-import static org.jooq.impl.DSL.delete;
-import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_CONTINUE_IDENTITY;
-import static org.jooq.impl.Keywords.K_IMMEDIATE;
-import static org.jooq.impl.Keywords.K_RESTART_IDENTITY;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_TRUNCATE_TABLE;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Record;
-import org.jooq.SQLDialect;
-import org.jooq.Table;
-import org.jooq.TruncateCascadeStep;
-import org.jooq.TruncateFinalStep;
-import org.jooq.TruncateIdentityStep;
+import org.jooq.*;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>TRUNCATE</code> statement.
  */
-final class TruncateImpl<R extends Record> extends AbstractRowCountQuery implements
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class TruncateImpl<R extends Record>
+extends
+    AbstractRowCountQuery
+implements
+    TruncateIdentityStep<R>,
+    TruncateCascadeStep<R>,
+    TruncateFinalStep<R>,
+    Truncate<R>
+{
 
-    // Cascading interface implementations for Truncate behaviour
-    TruncateIdentityStep<R> {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { TRUNCATE };
+    private final Table<R> table;
+    private       Boolean  restartIdentity;
+    private       Boolean  cascade;
 
-    private final Table<R>        table;
-    private Boolean               cascade;
-    private Boolean               restartIdentity;
+    TruncateImpl(
+        Configuration configuration,
+        Table<R> table
+    ) {
+        this(
+            configuration,
+            table,
+            null,
+            null
+        );
+    }
 
-    public TruncateImpl(Configuration configuration, Table<R> table) {
+    TruncateImpl(
+        Configuration configuration,
+        Table<R> table,
+        Boolean restartIdentity,
+        Boolean cascade
+    ) {
         super(configuration);
 
         this.table = table;
+        this.restartIdentity = restartIdentity;
+        this.cascade = cascade;
     }
 
-    final Table<?> $table()   { return table; }
-    final boolean  $cascade() { return TRUE.equals(cascade); }
+    final Table<R> $table()           { return table; }
+    final Boolean  $restartIdentity() { return restartIdentity; }
+    final Boolean  $cascade()         { return cascade; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
-
+    // -------------------------------------------------------------------------
+    
     @Override
-    public final TruncateFinalStep<R> cascade() {
-        cascade = true;
+    public final TruncateImpl<R> restartIdentity() {
+        this.restartIdentity = true;
         return this;
     }
 
     @Override
-    public final TruncateFinalStep<R> restrict() {
-        cascade = false;
+    public final TruncateImpl<R> continueIdentity() {
+        this.restartIdentity = false;
         return this;
     }
 
     @Override
-    public final TruncateCascadeStep<R> restartIdentity() {
-        restartIdentity = true;
+    public final TruncateImpl<R> cascade() {
+        this.cascade = true;
         return this;
     }
 
     @Override
-    public final TruncateCascadeStep<R> continueIdentity() {
-        restartIdentity = false;
+    public final TruncateImpl<R> restrict() {
+        this.cascade = false;
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[] CLAUSES = { Clause.TRUNCATE };
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -136,7 +157,7 @@ final class TruncateImpl<R extends Record> extends AbstractRowCountQuery impleme
 
             // All other dialects do
             default: {
-                ctx.start(TRUNCATE_TRUNCATE)
+                ctx.start(Clause.TRUNCATE_TRUNCATE)
                    .visit(K_TRUNCATE_TABLE).sql(' ')
                    .visit(table);
 
@@ -162,7 +183,7 @@ final class TruncateImpl<R extends Record> extends AbstractRowCountQuery impleme
                         ctx.formatSeparator()
                            .visit(cascade ? K_CASCADE : K_RESTRICT);
 
-                ctx.end(TRUNCATE_TRUNCATE);
+                ctx.end(Clause.TRUNCATE_TRUNCATE);
                 break;
             }
         }
@@ -172,4 +193,6 @@ final class TruncateImpl<R extends Record> extends AbstractRowCountQuery impleme
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

@@ -10431,6 +10431,60 @@ public interface DSLContext extends Scope {
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RowCountQuery setSchema(Schema schema);
 
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSL#truncate(String)
+     */
+    @NotNull
+    @Support
+    TruncateIdentityStep<Record> truncate(String table);
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSL#truncate(Name)
+     */
+    @NotNull
+    @Support
+    TruncateIdentityStep<Record> truncate(Name table);
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSL#truncate(Table)
+     */
+    @NotNull
+    @Support
+    <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSL#truncateTable(String)
+     */
+    @NotNull
+    @Support
+    TruncateIdentityStep<Record> truncateTable(String table);
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSL#truncateTable(Name)
+     */
+    @NotNull
+    @Support
+    TruncateIdentityStep<Record> truncateTable(Name table);
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSL#truncateTable(Table)
+     */
+    @NotNull
+    @Support
+    <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table);
+
 
 
     /**
@@ -11207,157 +11261,6 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Synonym for {@link #truncateTable(String)}
-     */
-    @NotNull
-    @Support
-    TruncateIdentityStep<Record> truncate(String table);
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Synonym for {@link #truncateTable(Name)}
-     */
-    @NotNull
-    @Support
-    TruncateIdentityStep<Record> truncate(Name table);
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Synonym for {@link #truncateTable(Table)}
-     */
-    @NotNull
-    @Support
-    <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * DSLContext create = DSL.using(configuration);
-     *
-     * create.truncate(table)
-     *       .execute();
-     * </pre></code>
-     * <h3>Emulation of <code>TRUNCATE</code></h3>
-     * <p>
-     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is emulated using an equivalent <code>DELETE</code>
-     * statement. This is particularly true for these dialects:
-     * <ul>
-     * <li> {@link SQLDialect#FIREBIRD}</li>
-     * <li> {@link SQLDialect#INGRES}</li>
-     * <li> {@link SQLDialect#SQLITE}</li>
-     * </ul>
-     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
-     * <p>
-     * Some statements also support extensions of the <code>TRUNCATE</code>
-     * statement, such as Postgres:
-     * <p>
-     * <code><pre>
-     * create.truncate(table)
-     *       .restartIdentity()
-     *       .cascade()
-     *       .execute();
-     * </pre></code>
-     * <p>
-     * These vendor-specific extensions are currently not emulated for those
-     * dialects that do not support them natively.
-     *
-     * @see #truncate(Table)
-     */
-    @NotNull
-    @Support
-    TruncateIdentityStep<Record> truncateTable(String table);
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * DSLContext create = DSL.using(configuration);
-     *
-     * create.truncate(table)
-     *       .execute();
-     * </pre></code>
-     * <h3>Emulation of <code>TRUNCATE</code></h3>
-     * <p>
-     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is emulated using an equivalent <code>DELETE</code>
-     * statement. This is particularly true for these dialects:
-     * <ul>
-     * <li> {@link SQLDialect#FIREBIRD}</li>
-     * <li> {@link SQLDialect#INGRES}</li>
-     * <li> {@link SQLDialect#SQLITE}</li>
-     * </ul>
-     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
-     * <p>
-     * Some statements also support extensions of the <code>TRUNCATE</code>
-     * statement, such as Postgres:
-     * <p>
-     * <code><pre>
-     * create.truncate(table)
-     *       .restartIdentity()
-     *       .cascade()
-     *       .execute();
-     * </pre></code>
-     * <p>
-     * These vendor-specific extensions are currently not emulated for those
-     * dialects that do not support them natively.
-     *
-     * @see #truncate(Name)
-     */
-    @NotNull
-    @Support
-    TruncateIdentityStep<Record> truncateTable(Name table);
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * DSLContext create = DSL.using(configuration);
-     *
-     * create.truncate(table)
-     *       .execute();
-     * </pre></code>
-     * <h3>Emulation of <code>TRUNCATE</code></h3>
-     * <p>
-     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is emulated using an equivalent <code>DELETE</code>
-     * statement. This is particularly true for these dialects:
-     * <ul>
-     * <li> {@link SQLDialect#FIREBIRD}</li>
-     * <li> {@link SQLDialect#INGRES}</li>
-     * <li> {@link SQLDialect#SQLITE}</li>
-     * </ul>
-     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
-     * <p>
-     * Some statements also support extensions of the <code>TRUNCATE</code>
-     * statement, such as Postgres:
-     * <p>
-     * <code><pre>
-     * create.truncate(table)
-     *       .restartIdentity()
-     *       .cascade()
-     *       .execute();
-     * </pre></code>
-     * <p>
-     * These vendor-specific extensions are currently not emulated for those
-     * dialects that do not support them natively.
-     */
-    @NotNull
-    @Support
-    <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table);
 
     // -------------------------------------------------------------------------
     // XXX Other queries for identites and sequences

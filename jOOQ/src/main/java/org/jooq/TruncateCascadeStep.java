@@ -37,16 +37,14 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-
 /**
- * A {@link Query} that can truncate a table in the database.
+ * A step in the construction of the <code>TRUNCATE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -65,24 +63,21 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface TruncateCascadeStep<R extends Record> extends TruncateFinalStep<R> {
 
     /**
-     * Add the <code>CASCADE</code> clause to the <code>TRUNCATE</code>
-     * statement.
+     * Add the <code>CASCADE</code> clause to the <code>TRUNCATE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
+    @NotNull
     TruncateFinalStep<R> cascade();
 
     /**
-     * Add the <code>RESTRICT</code> clause to the <code>TRUNCATE</code>
-     * statement.
+     * Add the <code>RESTRICT</code> clause to the <code>TRUNCATE</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
+    @NotNull
     TruncateFinalStep<R> restrict();
 }

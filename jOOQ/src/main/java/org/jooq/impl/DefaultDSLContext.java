@@ -3406,6 +3406,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new SetSchema(configuration(), schema);
     }
 
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncate(String table) {
+        return new TruncateImpl(configuration(), DSL.table(DSL.name(table)));
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncate(Name table) {
+        return new TruncateImpl(configuration(), DSL.table(table));
+    }
+
+    @Override
+    public <R extends Record> org.jooq.TruncateIdentityStep<R> truncate(Table<R> table) {
+        return new TruncateImpl(configuration(), table);
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncateTable(String table) {
+        return truncate(DSL.table(DSL.name(table)));
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncateTable(Name table) {
+        return truncate(DSL.table(table));
+    }
+
+    @Override
+    public <R extends Record> org.jooq.TruncateIdentityStep<R> truncateTable(Table<R> table) {
+        return truncate(table);
+    }
+
 
 
     @Override
@@ -3815,36 +3845,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTableIfExists(Table<?> table) {
         return new AlterTableImpl(configuration(), table, true);
-    }
-
-    @Override
-    public final TruncateIdentityStep<Record> truncate(String table) {
-        return truncateTable(table);
-    }
-
-    @Override
-    public final TruncateIdentityStep<Record> truncate(Name table) {
-        return truncateTable(table);
-    }
-
-    @Override
-    public <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
-        return truncateTable(table);
-    }
-
-    @Override
-    public final TruncateIdentityStep<Record> truncateTable(String table) {
-        return truncateTable(name(table));
-    }
-
-    @Override
-    public final TruncateIdentityStep<Record> truncateTable(Name table) {
-        return truncateTable(table(table));
-    }
-
-    @Override
-    public <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table) {
-        return new TruncateImpl<>(configuration(), table);
     }
 
     // -------------------------------------------------------------------------

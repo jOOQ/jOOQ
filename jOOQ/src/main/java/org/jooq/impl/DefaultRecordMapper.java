@@ -463,7 +463,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         parameterNames.add(name);
                     }
 
-                    Constructor<E> javaConstructor = (Constructor<E>) this.type.getConstructor(parameterTypes);
+                    Constructor<E> javaConstructor = (Constructor<E>) accessible(this.type.getDeclaredConstructor(parameterTypes));
                     delegate = new ImmutablePOJOMapperWithParameterNames(javaConstructor, parameterNames, true);
                     return;
                 }

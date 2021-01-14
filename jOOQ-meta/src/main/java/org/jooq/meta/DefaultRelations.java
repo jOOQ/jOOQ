@@ -424,6 +424,7 @@ public class DefaultRelations implements Relations {
         if (checkConstraintsByTable == null) {
             checkConstraintsByTable = new LinkedHashMap<>();
             checkConstraints.forEach((k, v) -> checkConstraintsByTable.computeIfAbsent(k.table, t -> new ArrayList<>()).add(v));
+            checkConstraintsByTable.forEach((t, l) -> table.getDatabase().sort(l));
         }
 
         List<CheckConstraintDefinition> list = checkConstraintsByTable.get(table);

@@ -321,7 +321,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             }
         }
         else
-            sb.append(string);
+            sb.append(string.replace(newlineString, newlineString + indent));
     }
 
     private boolean peek(String string, int i, String peek) {

@@ -52,8 +52,8 @@ open class Public : SchemaImpl("PUBLIC", DefaultCatalog.DEFAULT_CATALOG) {
 
     override fun getTables(): List<Table<*>> = listOf(
         Author.AUTHOR,
-Book.BOOK,
-BookStore.BOOK_STORE,
-BookToBookStore.BOOK_TO_BOOK_STORE
+        Book.BOOK,
+        BookStore.BOOK_STORE,
+        BookToBookStore.BOOK_TO_BOOK_STORE
     )
 }

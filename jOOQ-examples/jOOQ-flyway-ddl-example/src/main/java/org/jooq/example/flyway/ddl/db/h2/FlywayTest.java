@@ -62,7 +62,7 @@ public class FlywayTest extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Author.AUTHOR,
-Book.BOOK
+            Book.BOOK
         );
     }
 }

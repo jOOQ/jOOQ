@@ -66,9 +66,9 @@ public class DefaultSchema extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Actor.ACTOR,
-Film.FILM,
-FilmActor.FILM_ACTOR,
-Language.LANGUAGE
+            Film.FILM,
+            FilmActor.FILM_ACTOR,
+            Language.LANGUAGE
         );
     }
 }

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_LEAST;
+import static org.jooq.impl.Names.N_MINVALUE;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -105,7 +106,7 @@ final class Least<T> extends AbstractField<T> {
             }
 
             case FIREBIRD:
-                ctx.visit(function("minvalue", getDataType(), args));
+                ctx.visit(function(N_MINVALUE, getDataType(), args));
                 return;
 
             case SQLITE:
@@ -113,7 +114,7 @@ final class Least<T> extends AbstractField<T> {
                 return;
 
             default:
-                ctx.visit(function("least", getDataType(), args));
+                ctx.visit(function(N_LEAST, getDataType(), args));
                 return;
         }
     }

@@ -89,7 +89,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
 import static org.jooq.impl.Names.N_IF;
@@ -144,12 +143,7 @@ import java.util.function.Function;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
-import org.jooq.AlterIndexOnStep;
-import org.jooq.AlterIndexStep;
-import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
-import org.jooq.AlterTypeStep;
-import org.jooq.AlterViewStep;
 import org.jooq.ArrayAggOrderByStep;
 // ...
 import org.jooq.Asterisk;
@@ -162,7 +156,6 @@ import org.jooq.CharacterSet;
 import org.jooq.CloseableDSLContext;
 import org.jooq.Collation;
 import org.jooq.Comment;
-import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -193,7 +186,6 @@ import org.jooq.ConstraintForeignKeyReferencesStep9;
 import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 // ...
-import org.jooq.CreateIndexStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
@@ -205,10 +197,7 @@ import org.jooq.Delete;
 import org.jooq.DeleteUsingStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.Domain;
-import org.jooq.DropIndexOnStep;
-import org.jooq.DropTableStep;
 import org.jooq.DropTypeStep;
-import org.jooq.DropViewFinalStep;
 // ...
 import org.jooq.False;
 import org.jooq.Field;
@@ -367,7 +356,6 @@ import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.True;
-import org.jooq.TruncateIdentityStep;
 import org.jooq.UDTRecord;
 import org.jooq.Update;
 import org.jooq.UpdateSetFirstStep;
@@ -20570,6 +20558,7 @@ public class DSL {
      */
     @NotNull
     @Support
+    @SafeVarargs
     public static <T> Field<T> greatest(T value, T... values) {
         return greatest(Tools.field(value), Tools.fieldsArray(values));
     }
@@ -20585,6 +20574,7 @@ public class DSL {
      */
     @NotNull
     @Support
+    @SafeVarargs
     public static <T> Field<T> greatest(Field<T> field, Field<?>... others) {
         return new Greatest<>(Tools.nullSafeDataType(field), Tools.nullSafe(combine(field, others)));
     }
@@ -20602,6 +20592,7 @@ public class DSL {
      */
     @NotNull
     @Support
+    @SafeVarargs
     public static <T> Field<T> least(T value, T... values) {
         return least(Tools.field(value), Tools.fieldsArray(values));
     }
@@ -20617,6 +20608,7 @@ public class DSL {
      */
     @NotNull
     @Support
+    @SafeVarargs
     public static <T> Field<T> least(Field<T> field, Field<?>... others) {
         return new Least<>(Tools.nullSafeDataType(field), Tools.nullSafe(combine(field, others)));
     }

@@ -186,9 +186,11 @@ final class Names {
     static final Name N_LOWER                  = unquotedName("lower");
     static final Name N_LPAD                   = unquotedName("lpad");
     static final Name N_LTRIM                  = unquotedName("ltrim");
+    static final Name N_MAXVALUE               = unquotedName("maxvalue");
     static final Name N_MD5                    = unquotedName("md5");
     static final Name N_MEDIAN                 = unquotedName("median");
     static final Name N_MID                    = unquotedName("mid");
+    static final Name N_MINVALUE               = unquotedName("minvalue");
     static final Name N_MOD                    = unquotedName("mod");
     static final Name N_MODE                   = unquotedName("mode");
     static final Name N_NANO100_BETWEEN        = unquotedName("nano100_between");

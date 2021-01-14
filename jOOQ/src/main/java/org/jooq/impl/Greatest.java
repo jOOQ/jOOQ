@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_GREATEST;
+import static org.jooq.impl.Names.N_MAXVALUE;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -106,7 +107,7 @@ final class Greatest<T> extends AbstractField<T> {
             }
 
             case FIREBIRD:
-                ctx.visit(function("maxvalue", getDataType(), args));
+                ctx.visit(function(N_MAXVALUE, getDataType(), args));
                 return;
 
             case SQLITE:
@@ -114,7 +115,7 @@ final class Greatest<T> extends AbstractField<T> {
                 return;
 
             default:
-                ctx.visit(function("greatest", getDataType(), args));
+                ctx.visit(function(N_GREATEST, getDataType(), args));
                 return;
         }
     }

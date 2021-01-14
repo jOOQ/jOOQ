@@ -6960,6 +6960,11 @@ final class ParserContext {
                     else if (parseFunctionNameIf("MD5"))
                         return md5((Field) parseFieldParenthesised(S));
 
+                if ((field = parseFieldGreatestIf()) != null)
+                    return field;
+                else if ((field = parseFieldLeastIf()) != null)
+                    return field;
+
                 break;
 
             case 'N':
@@ -8109,7 +8114,7 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldLeastIf() {
-        if (parseFunctionNameIf("LEAST")) {
+        if (parseFunctionNameIf("LEAST", "MINVALUE")) {
             parse('(');
             List<Field<?>> fields = parseFields();
             parse(')');
@@ -8121,7 +8126,7 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldGreatestIf() {
-        if (parseFunctionNameIf("GREATEST")) {
+        if (parseFunctionNameIf("GREATEST", "MAXVALUE")) {
             parse('(');
             List<Field<?>> fields = parseFields();
             parse(')');

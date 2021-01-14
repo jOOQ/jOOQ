@@ -7274,7 +7274,9 @@ final class ParserContext {
                 int p = position();
                 try {
                     if (peekSelect(true)) {
+                        parse('(');
                         SelectQueryImpl<Record> select = parseSelect();
+                        parse(')');
                         if (Tools.degree(select) != 1)
                             throw exception("Select list must contain exactly one column");
 

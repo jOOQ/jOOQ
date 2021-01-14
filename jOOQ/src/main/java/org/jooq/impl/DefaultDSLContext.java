@@ -2682,206 +2682,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
-    public org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
-        return new CreateDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
-    }
-
-    @Override
-    public org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
-        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), false);
-    }
-
-    @Override
-    public org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
-        return new CreateDatabaseImpl(configuration(), database, false);
-    }
-
-    @Override
-    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
-        return new CreateDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), true);
-    }
-
-    @Override
-    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
-        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), true);
-    }
-
-    @Override
-    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
-        return new CreateDatabaseImpl(configuration(), database, true);
-    }
-
-    @Override
-    public org.jooq.CreateDomainAsStep createDomain(String domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), false);
-    }
-
-    @Override
-    public org.jooq.CreateDomainAsStep createDomain(Name domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), false);
-    }
-
-    @Override
-    public org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
-        return new CreateDomainImpl<>(configuration(), domain, false);
-    }
-
-    @Override
-    public org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), true);
-    }
-
-    @Override
-    public org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), true);
-    }
-
-    @Override
-    public org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
-        return new CreateDomainImpl<>(configuration(), domain, true);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createIndex(String index) {
-        return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), false);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createIndex(Name index) {
-        return new CreateIndexImpl(configuration(), false, DSL.index(index), false);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createIndex(Index index) {
-        return new CreateIndexImpl(configuration(), false, index, false);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createIndex() {
-        return new CreateIndexImpl(configuration(), false, false);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createIndexIfNotExists(String index) {
-        return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), true);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
-        return new CreateIndexImpl(configuration(), false, DSL.index(index), true);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
-        return new CreateIndexImpl(configuration(), false, index, true);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createIndexIfNotExists() {
-        return new CreateIndexImpl(configuration(), false, true);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createUniqueIndex(String index) {
-        return new CreateIndexImpl(configuration(), true, DSL.index(DSL.name(index)), false);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createUniqueIndex(Name index) {
-        return new CreateIndexImpl(configuration(), true, DSL.index(index), false);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createUniqueIndex(Index index) {
-        return new CreateIndexImpl(configuration(), true, index, false);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createUniqueIndex() {
-        return new CreateIndexImpl(configuration(), true, false);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(String index) {
-        return new CreateIndexImpl(configuration(), true, DSL.index(DSL.name(index)), true);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
-        return new CreateIndexImpl(configuration(), true, DSL.index(index), true);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
-        return new CreateIndexImpl(configuration(), true, index, true);
-    }
-
-    @Override
-    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
-        return new CreateIndexImpl(configuration(), true, true);
-    }
-
-    @Override
-    public org.jooq.CreateSchemaFinalStep createSchema(String schema) {
-        return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
-    }
-
-    @Override
-    public org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
-        return new CreateSchemaImpl(configuration(), DSL.schema(schema), false);
-    }
-
-    @Override
-    public org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
-        return new CreateSchemaImpl(configuration(), schema, false);
-    }
-
-    @Override
-    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
-        return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), true);
-    }
-
-    @Override
-    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
-        return new CreateSchemaImpl(configuration(), DSL.schema(schema), true);
-    }
-
-    @Override
-    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
-        return new CreateSchemaImpl(configuration(), schema, true);
-    }
-
-    @Override
-    public org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
-        return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
-    }
-
-    @Override
-    public org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
-        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), false);
-    }
-
-    @Override
-    public org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
-        return new CreateSequenceImpl(configuration(), sequence, false);
-    }
-
-    @Override
-    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
-        return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
-    }
-
-    @Override
-    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
-        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), true);
-    }
-
-    @Override
-    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
-        return new CreateSequenceImpl(configuration(), sequence, true);
-    }
-
-    @Override
     public org.jooq.AlterDatabaseStep alterDatabase(String database) {
         return new AlterDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
     }
@@ -3114,6 +2914,206 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
         return new CommentOnImpl(configuration(), null, false, field);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), false);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
+        return new CreateDatabaseImpl(configuration(), database, false);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), true);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), true);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
+        return new CreateDatabaseImpl(configuration(), database, true);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomain(String domain) {
+        return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), false);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomain(Name domain) {
+        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), false);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
+        return new CreateDomainImpl<>(configuration(), domain, false);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
+        return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), true);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
+        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), true);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
+        return new CreateDomainImpl<>(configuration(), domain, true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndex(String index) {
+        return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndex(Name index) {
+        return new CreateIndexImpl(configuration(), false, DSL.index(index), false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndex(Index index) {
+        return new CreateIndexImpl(configuration(), false, index, false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndex() {
+        return new CreateIndexImpl(configuration(), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndexIfNotExists(String index) {
+        return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
+        return new CreateIndexImpl(configuration(), false, DSL.index(index), true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
+        return new CreateIndexImpl(configuration(), false, index, true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createIndexIfNotExists() {
+        return new CreateIndexImpl(configuration(), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndex(String index) {
+        return new CreateIndexImpl(configuration(), true, DSL.index(DSL.name(index)), false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndex(Name index) {
+        return new CreateIndexImpl(configuration(), true, DSL.index(index), false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndex(Index index) {
+        return new CreateIndexImpl(configuration(), true, index, false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndex() {
+        return new CreateIndexImpl(configuration(), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(String index) {
+        return new CreateIndexImpl(configuration(), true, DSL.index(DSL.name(index)), true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
+        return new CreateIndexImpl(configuration(), true, DSL.index(index), true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
+        return new CreateIndexImpl(configuration(), true, index, true);
+    }
+
+    @Override
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
+        return new CreateIndexImpl(configuration(), true, true);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchema(String schema) {
+        return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
+        return new CreateSchemaImpl(configuration(), DSL.schema(schema), false);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
+        return new CreateSchemaImpl(configuration(), schema, false);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
+        return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), true);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
+        return new CreateSchemaImpl(configuration(), DSL.schema(schema), true);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
+        return new CreateSchemaImpl(configuration(), schema, true);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
+        return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
+        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), false);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
+        return new CreateSequenceImpl(configuration(), sequence, false);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
+        return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
+        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), true);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
+        return new CreateSequenceImpl(configuration(), sequence, true);
     }
 
     @Override

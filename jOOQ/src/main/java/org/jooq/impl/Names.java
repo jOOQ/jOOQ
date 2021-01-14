@@ -261,6 +261,7 @@ final class Names {
     static final Name N_SQL_TSI_YEAR           = unquotedName("sql_tsi_year");
     static final Name N_SQR                    = unquotedName("sqr");
     static final Name N_SQRT                   = unquotedName("sqrt");
+    static final Name N_SQUARE                 = unquotedName("square");
     static final Name N_STANDARD_HASH          = unquotedName("standard_hash");
     static final Name N_STATS_MODE             = unquotedName("stats_mode");
     static final Name N_STDDEV                 = unquotedName("stddev");

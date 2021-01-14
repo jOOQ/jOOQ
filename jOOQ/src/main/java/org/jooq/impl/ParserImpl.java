@@ -278,6 +278,7 @@ import static org.jooq.impl.DSL.space;
 import static org.jooq.impl.DSL.splitPart;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.sqrt;
+import static org.jooq.impl.DSL.square;
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -7100,6 +7101,8 @@ final class ParserContext {
                         return sign((Field) parseFieldParenthesised(N));
                     else if (parseFunctionNameIf("SQRT", "SQR"))
                         return sqrt((Field) parseFieldNumericOpParenthesised());
+                    else if (parseFunctionNameIf("SQUARE"))
+                        return square((Field) parseFieldNumericOpParenthesised());
                     else if (parseFunctionNameIf("SINH"))
                         return sinh((Field) parseFieldNumericOpParenthesised());
                     else if (parseFunctionNameIf("SIN"))

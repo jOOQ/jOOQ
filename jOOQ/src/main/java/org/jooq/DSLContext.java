@@ -9113,366 +9113,6 @@ public interface DSLContext extends Scope {
 
 
     /**
-     * The <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabase(String)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateDatabaseFinalStep createDatabase(String database);
-
-    /**
-     * The <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabase(Name)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateDatabaseFinalStep createDatabase(Name database);
-
-    /**
-     * The <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabase(Catalog)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateDatabaseFinalStep createDatabase(Catalog database);
-
-    /**
-     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createDatabaseIfNotExists(String)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    CreateDatabaseFinalStep createDatabaseIfNotExists(String database);
-
-    /**
-     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createDatabaseIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    CreateDatabaseFinalStep createDatabaseIfNotExists(Name database);
-
-    /**
-     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createDatabaseIfNotExists(Catalog)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database);
-
-    /**
-     * The <code>CREATE DOMAIN</code> statement.
-     *
-     * @see DSL#createDomain(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateDomainAsStep createDomain(String domain);
-
-    /**
-     * The <code>CREATE DOMAIN</code> statement.
-     *
-     * @see DSL#createDomain(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateDomainAsStep createDomain(Name domain);
-
-    /**
-     * The <code>CREATE DOMAIN</code> statement.
-     *
-     * @see DSL#createDomain(Domain)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateDomainAsStep createDomain(Domain<?> domain);
-
-    /**
-     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createDomainIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, POSTGRES })
-    CreateDomainAsStep createDomainIfNotExists(String domain);
-
-    /**
-     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createDomainIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, POSTGRES })
-    CreateDomainAsStep createDomainIfNotExists(Name domain);
-
-    /**
-     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createDomainIfNotExists(Domain)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, POSTGRES })
-    CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(String)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createIndex(String index);
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(Name)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createIndex(Name index);
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     *
-     * @see DSL#createIndex(Index)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createIndex(Index index);
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     *
-     * @see DSL#createIndex()
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createIndex();
-
-    /**
-     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createIndexIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    CreateIndexStep createIndexIfNotExists(String index);
-
-    /**
-     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createIndexIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    CreateIndexStep createIndexIfNotExists(Name index);
-
-    /**
-     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createIndexIfNotExists(Index)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    CreateIndexStep createIndexIfNotExists(Index index);
-
-    /**
-     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createIndexIfNotExists()
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    CreateIndexStep createIndexIfNotExists();
-
-    /**
-     * The <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createUniqueIndex(String)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createUniqueIndex(String index);
-
-    /**
-     * The <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createUniqueIndex(Name)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createUniqueIndex(Name index);
-
-    /**
-     * The <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createUniqueIndex(Index)
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createUniqueIndex(Index index);
-
-    /**
-     * The <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSL#createUniqueIndex()
-     */
-    @NotNull
-    @Support
-    CreateIndexStep createUniqueIndex();
-
-    /**
-     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createUniqueIndexIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    CreateIndexStep createUniqueIndexIfNotExists(String index);
-
-    /**
-     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createUniqueIndexIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    CreateIndexStep createUniqueIndexIfNotExists(Name index);
-
-    /**
-     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createUniqueIndexIfNotExists(Index)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    CreateIndexStep createUniqueIndexIfNotExists(Index index);
-
-    /**
-     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createUniqueIndexIfNotExists()
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    CreateIndexStep createUniqueIndexIfNotExists();
-
-    /**
-     * The <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchema(String)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchema(String schema);
-
-    /**
-     * The <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchema(Name)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchema(Name schema);
-
-    /**
-     * The <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchema(Schema)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchema(Schema schema);
-
-    /**
-     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createSchemaIfNotExists(String)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchemaIfNotExists(String schema);
-
-    /**
-     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createSchemaIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
-
-    /**
-     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createSchemaIfNotExists(Schema)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
-
-    /**
-     * The <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequence(String)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequence(String sequence);
-
-    /**
-     * The <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequence(Name)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequence(Name sequence);
-
-    /**
-     * The <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequence(Sequence)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequence(Sequence<?> sequence);
-
-    /**
-     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createSequenceIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequenceIfNotExists(String sequence);
-
-    /**
-     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createSequenceIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence);
-
-    /**
-     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSL#createSequenceIfNotExists(Sequence)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);
-
-    /**
      * The <code>ALTER DATABASE</code> statement.
      *
      * @see DSL#alterDatabase(String)
@@ -9894,6 +9534,366 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CommentOnIsStep commentOnColumn(Field<?> field);
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSL#createDatabase(String)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateDatabaseFinalStep createDatabase(String database);
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSL#createDatabase(Name)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateDatabaseFinalStep createDatabase(Name database);
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSL#createDatabase(Catalog)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateDatabaseFinalStep createDatabase(Catalog database);
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDatabaseIfNotExists(String)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    CreateDatabaseFinalStep createDatabaseIfNotExists(String database);
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDatabaseIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    CreateDatabaseFinalStep createDatabaseIfNotExists(Name database);
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDatabaseIfNotExists(Catalog)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database);
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSL#createDomain(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CreateDomainAsStep createDomain(String domain);
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSL#createDomain(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CreateDomainAsStep createDomain(Name domain);
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSL#createDomain(Domain)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CreateDomainAsStep createDomain(Domain<?> domain);
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDomainIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, POSTGRES })
+    CreateDomainAsStep createDomainIfNotExists(String domain);
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDomainIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, POSTGRES })
+    CreateDomainAsStep createDomainIfNotExists(Name domain);
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDomainIfNotExists(Domain)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, POSTGRES })
+    CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(String)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createIndex(String index);
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(Name)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createIndex(Name index);
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(Index)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createIndex(Index index);
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex()
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createIndex();
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(String index);
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(Name index);
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(Index)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(Index index);
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists()
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists();
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex(String)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createUniqueIndex(String index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex(Name)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createUniqueIndex(Name index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex(Index)
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createUniqueIndex(Index index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createUniqueIndex()
+     */
+    @NotNull
+    @Support
+    CreateIndexStep createUniqueIndex();
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createUniqueIndexIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(String index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createUniqueIndexIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(Name index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createUniqueIndexIfNotExists(Index)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(Index index);
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createUniqueIndexIfNotExists()
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists();
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(String)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchema(String schema);
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(Name)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchema(Name schema);
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(Schema)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchema(Schema schema);
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(String)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(String schema);
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(Schema)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequence(String)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequence(String sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequence(Name)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequence(Name sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequence(Sequence)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequence(Sequence<?> sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequenceIfNotExists(String sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(Sequence)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);
 
     /**
      * The <code>DROP DATABASE</code> statement.

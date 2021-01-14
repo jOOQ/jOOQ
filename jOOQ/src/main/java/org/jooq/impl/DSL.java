@@ -6975,446 +6975,6 @@ public class DSL {
 
 
     /**
-     * The <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabase(String)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
-        return dsl().createDatabase(database);
-    }
-
-    /**
-     * The <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabase(Name)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
-        return dsl().createDatabase(database);
-    }
-
-    /**
-     * The <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabase(Catalog)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
-        return dsl().createDatabase(database);
-    }
-
-    /**
-     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createDatabaseIfNotExists(String)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
-        return dsl().createDatabaseIfNotExists(database);
-    }
-
-    /**
-     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createDatabaseIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
-        return dsl().createDatabaseIfNotExists(database);
-    }
-
-    /**
-     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createDatabaseIfNotExists(Catalog)
-     */
-    @NotNull
-    @Support({ MARIADB, MYSQL })
-    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
-        return dsl().createDatabaseIfNotExists(database);
-    }
-
-    /**
-     * The <code>CREATE DOMAIN</code> statement.
-     *
-     * @see DSLContext#createDomain(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static org.jooq.CreateDomainAsStep createDomain(String domain) {
-        return dsl().createDomain(domain);
-    }
-
-    /**
-     * The <code>CREATE DOMAIN</code> statement.
-     *
-     * @see DSLContext#createDomain(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static org.jooq.CreateDomainAsStep createDomain(Name domain) {
-        return dsl().createDomain(domain);
-    }
-
-    /**
-     * The <code>CREATE DOMAIN</code> statement.
-     *
-     * @see DSLContext#createDomain(Domain)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
-        return dsl().createDomain(domain);
-    }
-
-    /**
-     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createDomainIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, POSTGRES })
-    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
-        return dsl().createDomainIfNotExists(domain);
-    }
-
-    /**
-     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createDomainIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, POSTGRES })
-    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
-        return dsl().createDomainIfNotExists(domain);
-    }
-
-    /**
-     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createDomainIfNotExists(Domain)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, POSTGRES })
-    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
-        return dsl().createDomainIfNotExists(domain);
-    }
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     *
-     * @see DSLContext#createIndex(String)
-     */
-    @NotNull
-    @Support
-    public static org.jooq.CreateIndexStep createIndex(String index) {
-        return dsl().createIndex(index);
-    }
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     *
-     * @see DSLContext#createIndex(Name)
-     */
-    @NotNull
-    @Support
-    public static org.jooq.CreateIndexStep createIndex(Name index) {
-        return dsl().createIndex(index);
-    }
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     *
-     * @see DSLContext#createIndex(Index)
-     */
-    @NotNull
-    @Support
-    public static org.jooq.CreateIndexStep createIndex(Index index) {
-        return dsl().createIndex(index);
-    }
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     *
-     * @see DSLContext#createIndex()
-     */
-    @NotNull
-    @Support
-    public static org.jooq.CreateIndexStep createIndex() {
-        return dsl().createIndex();
-    }
-
-    /**
-     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createIndexIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createIndexIfNotExists(String index) {
-        return dsl().createIndexIfNotExists(index);
-    }
-
-    /**
-     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createIndexIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
-        return dsl().createIndexIfNotExists(index);
-    }
-
-    /**
-     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createIndexIfNotExists(Index)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
-        return dsl().createIndexIfNotExists(index);
-    }
-
-    /**
-     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createIndexIfNotExists()
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createIndexIfNotExists() {
-        return dsl().createIndexIfNotExists();
-    }
-
-    /**
-     * The <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSLContext#createUniqueIndex(String)
-     */
-    @NotNull
-    @Support
-    public static org.jooq.CreateIndexStep createUniqueIndex(String index) {
-        return dsl().createUniqueIndex(index);
-    }
-
-    /**
-     * The <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSLContext#createUniqueIndex(Name)
-     */
-    @NotNull
-    @Support
-    public static org.jooq.CreateIndexStep createUniqueIndex(Name index) {
-        return dsl().createUniqueIndex(index);
-    }
-
-    /**
-     * The <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSLContext#createUniqueIndex(Index)
-     */
-    @NotNull
-    @Support
-    public static org.jooq.CreateIndexStep createUniqueIndex(Index index) {
-        return dsl().createUniqueIndex(index);
-    }
-
-    /**
-     * The <code>CREATE UNIQUE INDEX</code> statement.
-     *
-     * @see DSLContext#createUniqueIndex()
-     */
-    @NotNull
-    @Support
-    public static org.jooq.CreateIndexStep createUniqueIndex() {
-        return dsl().createUniqueIndex();
-    }
-
-    /**
-     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createUniqueIndexIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(String index) {
-        return dsl().createUniqueIndexIfNotExists(index);
-    }
-
-    /**
-     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createUniqueIndexIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
-        return dsl().createUniqueIndexIfNotExists(index);
-    }
-
-    /**
-     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createUniqueIndexIfNotExists(Index)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
-        return dsl().createUniqueIndexIfNotExists(index);
-    }
-
-    /**
-     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createUniqueIndexIfNotExists()
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
-        return dsl().createUniqueIndexIfNotExists();
-    }
-
-    /**
-     * The <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchema(String)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateSchemaFinalStep createSchema(String schema) {
-        return dsl().createSchema(schema);
-    }
-
-    /**
-     * The <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchema(Name)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
-        return dsl().createSchema(schema);
-    }
-
-    /**
-     * The <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchema(Schema)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
-        return dsl().createSchema(schema);
-    }
-
-    /**
-     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSchemaIfNotExists(String)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
-        return dsl().createSchemaIfNotExists(schema);
-    }
-
-    /**
-     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSchemaIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
-        return dsl().createSchemaIfNotExists(schema);
-    }
-
-    /**
-     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSchemaIfNotExists(Schema)
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
-        return dsl().createSchemaIfNotExists(schema);
-    }
-
-    /**
-     * The <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSLContext#createSequence(String)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
-        return dsl().createSequence(sequence);
-    }
-
-    /**
-     * The <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSLContext#createSequence(Name)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
-        return dsl().createSequence(sequence);
-    }
-
-    /**
-     * The <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSLContext#createSequence(Sequence)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
-        return dsl().createSequence(sequence);
-    }
-
-    /**
-     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSequenceIfNotExists(String)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
-        return dsl().createSequenceIfNotExists(sequence);
-    }
-
-    /**
-     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSequenceIfNotExists(Name)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
-        return dsl().createSequenceIfNotExists(sequence);
-    }
-
-    /**
-     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSequenceIfNotExists(Sequence)
-     */
-    @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
-        return dsl().createSequenceIfNotExists(sequence);
-    }
-
-    /**
      * The <code>ALTER DATABASE</code> statement.
      *
      * @see DSLContext#alterDatabase(String)
@@ -7929,6 +7489,446 @@ public class DSL {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
         return dsl().commentOnColumn(field);
+    }
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(String)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(Name)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(Catalog)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(String)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(Catalog)
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSLContext#createDomain(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomain(String domain) {
+        return dsl().createDomain(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSLContext#createDomain(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomain(Name domain) {
+        return dsl().createDomain(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSLContext#createDomain(Domain)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
+        return dsl().createDomain(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDomainIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
+        return dsl().createDomainIfNotExists(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDomainIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
+        return dsl().createDomainIfNotExists(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDomainIfNotExists(Domain)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
+        return dsl().createDomainIfNotExists(domain);
+    }
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createIndex(String index) {
+        return dsl().createIndex(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createIndex(Name index) {
+        return dsl().createIndex(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex(Index)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createIndex(Index index) {
+        return dsl().createIndex(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex()
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createIndex() {
+        return dsl().createIndex();
+    }
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createIndexIfNotExists(String index) {
+        return dsl().createIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
+        return dsl().createIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(Index)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
+        return dsl().createIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists()
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createIndexIfNotExists() {
+        return dsl().createIndexIfNotExists();
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(String)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createUniqueIndex(String index) {
+        return dsl().createUniqueIndex(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(Name)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createUniqueIndex(Name index) {
+        return dsl().createUniqueIndex(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(Index)
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createUniqueIndex(Index index) {
+        return dsl().createUniqueIndex(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex()
+     */
+    @NotNull
+    @Support
+    public static org.jooq.CreateIndexStep createUniqueIndex() {
+        return dsl().createUniqueIndex();
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(String index) {
+        return dsl().createUniqueIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
+        return dsl().createUniqueIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(Index)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
+        return dsl().createUniqueIndexIfNotExists(index);
+    }
+
+    /**
+     * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists()
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
+        return dsl().createUniqueIndexIfNotExists();
+    }
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(String)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchema(String schema) {
+        return dsl().createSchema(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(Name)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
+        return dsl().createSchema(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(Schema)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
+        return dsl().createSchema(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(String)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
+        return dsl().createSchemaIfNotExists(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
+        return dsl().createSchemaIfNotExists(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(Schema)
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
+        return dsl().createSchemaIfNotExists(schema);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(String)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
+        return dsl().createSequence(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(Name)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
+        return dsl().createSequence(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(Sequence)
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
+        return dsl().createSequence(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(String)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
+        return dsl().createSequenceIfNotExists(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(Name)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
+        return dsl().createSequenceIfNotExists(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(Sequence)
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
+        return dsl().createSequenceIfNotExists(sequence);
     }
 
     /**
@@ -14863,28 +14863,6 @@ public class DSL {
     }
 
     /**
-     * The <code>CEIL</code> function.
-     * <p>
-     * Get the smallest integer value equal or greater to a value.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> ceil(T value) {
-        return new Ceil(Tools.field(value));
-    }
-
-    /**
-     * The <code>CEIL</code> function.
-     * <p>
-     * Get the smallest integer value equal or greater to a value.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> ceil(Field<T> value) {
-        return new Ceil(value);
-    }
-
-    /**
      * The <code>CHAR_LENGTH</code> function.
      * <p>
      * The length of a string in characters.
@@ -14922,6 +14900,28 @@ public class DSL {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> chr(Field<? extends Number> number) {
         return new Chr(number);
+    }
+
+    /**
+     * The <code>CEIL</code> function.
+     * <p>
+     * Get the smallest integer value equal or greater to a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> ceil(T value) {
+        return new Ceil(Tools.field(value));
+    }
+
+    /**
+     * The <code>CEIL</code> function.
+     * <p>
+     * Get the smallest integer value equal or greater to a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> ceil(Field<T> value) {
+        return new Ceil(value);
     }
 
     /**
@@ -16200,6 +16200,21 @@ public class DSL {
         return new Round(value);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>RPAD</code> function.
      * <p>
@@ -16370,21 +16385,6 @@ public class DSL {
         return new Rtrim(string);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * The <code>SIGN</code> function.
      * <p>
@@ -16470,24 +16470,6 @@ public class DSL {
     }
 
     /**
-     * The <code>SQRT</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sqrt(Number value) {
-        return new Sqrt(Tools.field(value));
-    }
-
-    /**
-     * The <code>SQRT</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sqrt(Field<? extends Number> value) {
-        return new Sqrt(value);
-    }
-
-    /**
      * The <code>SPLIT_PART</code> function.
      * <p>
      * Split a string into tokens, and retrieve the nth token.
@@ -16545,6 +16527,42 @@ public class DSL {
     @Support({ POSTGRES })
     public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Field<? extends Number> n) {
         return new SplitPart(string, delimiter, n);
+    }
+
+    /**
+     * The <code>SQRT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sqrt(Number value) {
+        return new Sqrt(Tools.field(value));
+    }
+
+    /**
+     * The <code>SQRT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sqrt(Field<? extends Number> value) {
+        return new Sqrt(value);
+    }
+
+    /**
+     * The <code>SQUARE</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> square(T value) {
+        return new Square(Tools.field(value));
+    }
+
+    /**
+     * The <code>SQUARE</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> square(Field<T> value) {
+        return new Square(value);
     }
 
     /**

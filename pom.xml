@@ -171,11 +171,6 @@
 
 
 
-
-
-
-
-
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-xtend</artifactId>
@@ -660,7 +655,6 @@
 
         <module>jOOQ-kotlin</module>
         <module>jOOQ-scala_2.13</module>
-
 
 
 

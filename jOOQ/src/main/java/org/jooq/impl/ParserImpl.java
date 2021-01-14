@@ -7096,7 +7096,7 @@ final class ParserContext {
                 if (N.is(type))
                     if (parseFunctionNameIf("SECOND"))
                         return second(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("SIGN"))
+                    else if (parseFunctionNameIf("SIGN", "SGN"))
                         return sign((Field) parseFieldParenthesised(N));
                     else if (parseFunctionNameIf("SQRT", "SQR"))
                         return sqrt((Field) parseFieldNumericOpParenthesised());
@@ -7987,14 +7987,16 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldTruncIf() {
-        if (parseFunctionNameIf("TRUNC")) {
+        boolean forceNumericPrecision = false;
+
+        if (parseFunctionNameIf("TRUNC") || (forceNumericPrecision |= parseFunctionNameIf("TRUNCATE", "TRUNCNUM"))) {
             parse('(');
             Field<?> arg1 = parseField();
 
-            if (parseIf(',')) {
+            if (forceNumericPrecision && parse(',') || parseIf(',')) {
 
                 String part;
-                if ((part = parseStringLiteralIf()) != null) {
+                if (!forceNumericPrecision && (part = parseStringLiteralIf()) != null) {
                     part = part.toUpperCase();
 
                     DatePart p;
@@ -8493,7 +8495,9 @@ final class ParserContext {
     private final Field<?> parseFieldDateTruncIf() {
         if (parseFunctionNameIf("DATE_TRUNC")) {
             parse('(');
-            DatePart part = DatePart.valueOf(parseStringLiteral().toUpperCase());
+            parse('\'');
+            DatePart part = parseDatePart();
+            parse('\'');
             parse(',');
             Field<?> field = parseField(D);
             parse(')');
@@ -11512,7 +11516,7 @@ final class ParserContext {
             return ComputationalOperation.ANY;
         else if (parseFunctionNameIf("STDDEV_POP", "STDEVP"))
             return ComputationalOperation.STDDEV_POP;
-        else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV"))
+        else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV", "STDEV_SAMP"))
             return ComputationalOperation.STDDEV_SAMP;
         else if (parseFunctionNameIf("VAR_POP", "VARIANCE", "VARP"))
             return ComputationalOperation.VAR_POP;

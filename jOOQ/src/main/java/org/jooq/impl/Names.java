@@ -86,7 +86,6 @@ final class Names {
     static final Name N_CHAR_LENGTH            = unquotedName("char_length");
     static final Name N_CHR                    = unquotedName("chr");
     static final Name N_CHOOSE                 = unquotedName("choose");
-    static final Name N_CLNG                   = unquotedName("clng");
     static final Name N_COALESCE               = unquotedName("coalesce");
     static final Name N_COLLECT                = unquotedName("collect");
     static final Name N_CONCAT                 = unquotedName("concat");

@@ -106,6 +106,8 @@ import static org.jooq.impl.DSL.cot;
 import static org.jooq.impl.DSL.coth;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
+import static org.jooq.impl.DSL.covarPop;
+import static org.jooq.impl.DSL.covarSamp;
 import static org.jooq.impl.DSL.cube;
 import static org.jooq.impl.DSL.cumeDist;
 import static org.jooq.impl.DSL.currentCatalog;
@@ -6644,10 +6646,14 @@ final class ParserContext {
                         return acos((Field) parseFieldNumericOpParenthesised());
                     else if (parseFunctionNameIf("ASIN"))
                         return asin((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("ATAN"))
+                    else if (parseFunctionNameIf("ATAN", "ATN"))
                         return atan((Field) parseFieldNumericOpParenthesised());
                     else if ((field = parseFieldAtan2If()) != null)
                         return field;
+
+                if (S.is(type))
+                    if (parseFunctionNameIf("ASCII_CHAR"))
+                        return chr((Field) parseFieldParenthesised(N));
 
                 if (A.is(type))
                     if ((field = parseArrayValueConstructorIf()) != null)
@@ -6907,11 +6913,13 @@ final class ParserContext {
                 if (N.is(type))
                     if (parseFunctionNameIf("LENGTH", "LEN"))
                         return length((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("LN"))
+                    else if (parseFunctionNameIf("LN", "LOGN"))
                         return ln((Field) parseFieldNumericOpParenthesised());
                     else if (parseFunctionNameIf("LOG10"))
                         return log10((Field) parseFieldNumericOpParenthesised());
                     else if ((field = parseFieldLogIf()) != null)
+                        return field;
+                    else if ((field = parseFieldLocateIf()) != null)
                         return field;
                     else if (parseKeywordIf("LEVEL") && requireProEdition()) {
 
@@ -7082,6 +7090,8 @@ final class ParserContext {
                         return field;
                     else if (parseFunctionNameIf("SCHEMA") && parseIf('(') && parse(')'))
                         return currentSchema();
+                    else if (parseFunctionNameIf("STRREVERSE"))
+                        return reverse((Field) parseFieldParenthesised(S));
 
                 if (N.is(type))
                     if (parseFunctionNameIf("SECOND"))
@@ -8929,8 +8939,31 @@ final class ParserContext {
         return null;
     }
 
+    private final Field<?> parseFieldLocateIf() {
+        if (parseFunctionNameIf("LOCATE")) {
+            parse('(');
+            Field<String> f1 = (Field) parseField(S);
+            parse(',');
+            Field<String> f2 = (Field) parseField(S);
+            parse(')');
+
+            switch (dialect()) {
+
+
+
+
+
+
+                default:
+                    return DSL.position(f2, f1);
+            }
+        }
+
+        return null;
+    }
+
     private final Field<?> parseFieldRepeatIf() {
-        if (parseFunctionNameIf("REPEAT")) {
+        if (parseFunctionNameIf("REPEAT", "REPLICATE")) {
             parse('(');
             Field<String> field = (Field) parseField(S);
             parse(',');
@@ -9869,6 +9902,10 @@ final class ParserContext {
         parse(')');
 
         switch (type) {
+            case COVAR_POP:
+                return covarPop(arg1, arg2);
+            case COVAR_SAMP:
+                return covarSamp(arg1, arg2);
             case REGR_AVGX:
                 return regrAvgX(arg1, arg2);
             case REGR_AVGY:
@@ -10041,6 +10078,7 @@ final class ParserContext {
     private final AggregateFunction<?> parseGeneralSetFunctionIf() {
         boolean distinct;
         Field arg;
+        Field arg2;
         ComputationalOperation operation = parseComputationalOperationIf();
 
         if (operation == null)
@@ -10062,6 +10100,7 @@ final class ParserContext {
         }
 
         arg = parseField();
+
         parse(')');
 
         switch (operation) {
@@ -11467,17 +11506,17 @@ final class ParserContext {
             return ComputationalOperation.PRODUCT;
         else if (parseFunctionNameIf("MEDIAN"))
             return ComputationalOperation.MEDIAN;
-        else if (parseFunctionNameIf("EVERY", "BOOL_AND"))
+        else if (parseFunctionNameIf("EVERY", "BOOL_AND", "BOOLAND_AGG"))
             return ComputationalOperation.EVERY;
-        else if (parseFunctionNameIf("ANY", "SOME", "BOOL_OR"))
+        else if (parseFunctionNameIf("ANY", "SOME", "BOOL_OR", "BOOLOR_AGG"))
             return ComputationalOperation.ANY;
         else if (parseFunctionNameIf("STDDEV_POP", "STDEVP"))
             return ComputationalOperation.STDDEV_POP;
         else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV"))
             return ComputationalOperation.STDDEV_SAMP;
-        else if (parseFunctionNameIf("VAR_POP"))
+        else if (parseFunctionNameIf("VAR_POP", "VARIANCE", "VARP"))
             return ComputationalOperation.VAR_POP;
-        else if (parseFunctionNameIf("VAR_SAMP"))
+        else if (parseFunctionNameIf("VAR_SAMP", "VARIANCE_SAMP", "VAR"))
             return ComputationalOperation.VAR_SAMP;
 
         return null;
@@ -11680,6 +11719,14 @@ final class ParserContext {
 
     private final boolean parseFunctionNameIf(String name1, String name2, String name3) {
         return parseFunctionNameIf(name1) || parseFunctionNameIf(name2) || parseFunctionNameIf(name3);
+    }
+
+    private final boolean parseFunctionNameIf(String... names) {
+        for (String name : names)
+            if (parseFunctionNameIf(name))
+                return true;
+
+        return false;
     }
 
     private final boolean parseOperator(String operator) {
@@ -12026,8 +12073,8 @@ final class ParserContext {
         COUNT,
         STDDEV_POP,
         STDDEV_SAMP,
-        VAR_SAMP,
         VAR_POP,
+        VAR_SAMP,
         MEDIAN,
 //        COLLECT,
 //        FUSION,
@@ -12035,8 +12082,8 @@ final class ParserContext {
     }
 
     private static enum BinarySetFunctionType {
-//        COVAR_POP,
-//        COVAR_SAMP,
+        COVAR_POP,
+        COVAR_SAMP,
 //        CORR,
         REGR_SLOPE,
         REGR_INTERCEPT,

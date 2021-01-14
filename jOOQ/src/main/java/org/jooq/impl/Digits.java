@@ -44,7 +44,6 @@ import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.Tools.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
-import static java.math.BigDecimal.TEN;
 import static org.jooq.SQLDialect.*;
 
 import org.jooq.*;
@@ -52,7 +51,6 @@ import org.jooq.conf.*;
 import org.jooq.impl.*;
 import org.jooq.tools.*;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 
@@ -102,7 +100,7 @@ extends
             else if (t.getType() == Long.class)
                 ctx.visit(DSL.lpad(DSL.abs(value).cast(VARCHAR(DefaultDataType.LONG_PRECISION)), inline(DefaultDataType.LONG_PRECISION), inline("0")));
             else if (t.scaleDefined())
-                ctx.visit(DSL.lpad(DSL.abs(value.mul(inline(BigDecimal.TEN.pow(t.scale())))).cast(VARCHAR(t.precision())), inline(t.precision()), inline("0")));
+                ctx.visit(DSL.lpad(DSL.abs(value.mul(inline(java.math.BigDecimal.TEN.pow(t.scale())))).cast(VARCHAR(t.precision())), inline(t.precision()), inline("0")));
             else
                 ctx.visit(DSL.lpad(DSL.abs(value).cast(VARCHAR(t.precision())), inline(t.precision()), inline("0")));
         }

@@ -400,6 +400,9 @@ public class DefaultRelations implements Relations {
 
                 list.add(entry.getValue());
             }
+
+            for (List<CheckConstraintDefinition> list : checkConstraintsByTable.values())
+                table.getDatabase().sort(list);
         }
 
         List<CheckConstraintDefinition> list = checkConstraintsByTable.get(table);

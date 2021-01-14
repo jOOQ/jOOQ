@@ -5630,7 +5630,7 @@ final class ParserContext {
 
         // TODO [#5306] Support FINAL TABLE (<data change statement>)
         // TOOD ONLY ( table primary )
-        if (parseFunctionNameIf("UNNEST") || parseFunctionNameIf("TABLE")) {
+        if (parseFunctionNameIf("UNNEST", "TABLE")) {
             parse('(');
             Field<?> f = parseField(Type.A);
 
@@ -6638,7 +6638,7 @@ final class ParserContext {
                 if (N.is(type))
                     if (parseFunctionNameIf("ABS"))
                         return abs((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("ASCII"))
+                    else if (parseFunctionNameIf("ASC", "ASCII", "ASCII_VAL"))
                         return ascii((Field) parseFieldParenthesised(S));
                     else if (parseFunctionNameIf("ACOS"))
                         return acos((Field) parseFieldNumericOpParenthesised());
@@ -6685,7 +6685,7 @@ final class ParserContext {
                         return currentSchema();
                     else if ((parseKeywordIf("CURRENT_USER") || parseKeywordIf("CURRENT USER")) && (parseIf('(') && parse(')') || true))
                         return currentUser();
-                    else if (parseFunctionNameIf("CHR") || parseFunctionNameIf("CHAR"))
+                    else if (parseFunctionNameIf("CHR", "CHAR"))
                         return chr((Field) parseFieldParenthesised(N));
 
                 if (N.is(type))
@@ -6695,7 +6695,7 @@ final class ParserContext {
                         return charLength((Field) parseFieldParenthesised(S));
                     else if (parseFunctionNameIf("CARDINALITY"))
                         return cardinality((Field) parseFieldParenthesised(A));
-                    else if (parseFunctionNameIf("CEILING") || parseFunctionNameIf("CEIL"))
+                    else if (parseFunctionNameIf("CEILING", "CEIL"))
                         return ceil((Field) parseFieldNumericOpParenthesised());
                     else if (parseFunctionNameIf("COSH"))
                         return cosh((Field) parseFieldNumericOpParenthesised());
@@ -6895,7 +6895,7 @@ final class ParserContext {
 
             case 'L':
                 if (S.is(type))
-                    if (parseFunctionNameIf("LOWER") || parseFunctionNameIf("LCASE"))
+                    if (parseFunctionNameIf("LOWER", "LCASE"))
                         return lower((Field) parseFieldParenthesised(S));
                     else if ((field = parseFieldLpadIf()) != null)
                         return field;
@@ -6905,7 +6905,7 @@ final class ParserContext {
                         return field;
 
                 if (N.is(type))
-                    if (parseFunctionNameIf("LENGTH") || parseFunctionNameIf("LEN"))
+                    if (parseFunctionNameIf("LENGTH", "LEN"))
                         return length((Field) parseFieldParenthesised(S));
                     else if (parseFunctionNameIf("LN"))
                         return ln((Field) parseFieldNumericOpParenthesised());
@@ -7088,7 +7088,7 @@ final class ParserContext {
                         return second(parseFieldParenthesised(D));
                     else if (parseFunctionNameIf("SIGN"))
                         return sign((Field) parseFieldParenthesised(N));
-                    else if (parseFunctionNameIf("SQRT") || parseFunctionNameIf("SQR"))
+                    else if (parseFunctionNameIf("SQRT", "SQR"))
                         return sqrt((Field) parseFieldNumericOpParenthesised());
                     else if (parseFunctionNameIf("SINH"))
                         return sinh((Field) parseFieldNumericOpParenthesised());
@@ -7932,7 +7932,7 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldAtan2If() {
-        if (parseFunctionNameIf("ATN2") || parseFunctionNameIf("ATAN2")) {
+        if (parseFunctionNameIf("ATN2", "ATAN2")) {
             parse('(');
             Field<?> x = toField(parseNumericOp(N));
             parse(',');
@@ -8049,7 +8049,7 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldPowerIf() {
-        if (parseFunctionNameIf("POWER") || parseFunctionNameIf("POW")) {
+        if (parseFunctionNameIf("POWER", "POW")) {
             parse('(');
             Field arg1 = toField(parseNumericOp(N));
             parse(',');
@@ -8943,10 +8943,7 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldReplaceIf() {
-        if (parseFunctionNameIf("REPLACE") ||
-            parseFunctionNameIf("OREPLACE") ||
-            parseFunctionNameIf("STR_REPLACE")) {
-
+        if (parseFunctionNameIf("REPLACE", "OREPLACE", "STR_REPLACE")) {
             parse('(');
             Field<String> f1 = (Field) parseField(S);
             parse(',');
@@ -9316,7 +9313,7 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldIfIf() {
-        if (parseFunctionNameIf("IF") || parseFunctionNameIf("IIF")) {
+        if (parseFunctionNameIf("IF", "IIF")) {
             parse('(');
             Condition c = parseCondition();
             parse(',');
@@ -9696,7 +9693,7 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldRandIf() {
-        if (parseFunctionNameIf("RAND") || parseFunctionNameIf("RANDOM")) {
+        if (parseFunctionNameIf("RAND", "RANDOM")) {
             parse('(');
             parse(')');
             return rand();
@@ -11470,13 +11467,13 @@ final class ParserContext {
             return ComputationalOperation.PRODUCT;
         else if (parseFunctionNameIf("MEDIAN"))
             return ComputationalOperation.MEDIAN;
-        else if (parseFunctionNameIf("EVERY") || parseFunctionNameIf("BOOL_AND"))
+        else if (parseFunctionNameIf("EVERY", "BOOL_AND"))
             return ComputationalOperation.EVERY;
-        else if (parseFunctionNameIf("ANY") || parseFunctionNameIf("SOME") || parseFunctionNameIf("BOOL_OR"))
+        else if (parseFunctionNameIf("ANY", "SOME", "BOOL_OR"))
             return ComputationalOperation.ANY;
-        else if (parseFunctionNameIf("STDDEV_POP") || parseFunctionNameIf("STDEVP"))
+        else if (parseFunctionNameIf("STDDEV_POP", "STDEVP"))
             return ComputationalOperation.STDDEV_POP;
-        else if (parseFunctionNameIf("STDDEV_SAMP") || parseFunctionNameIf("STDEV"))
+        else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV"))
             return ComputationalOperation.STDDEV_SAMP;
         else if (parseFunctionNameIf("VAR_POP"))
             return ComputationalOperation.VAR_POP;
@@ -11675,6 +11672,14 @@ final class ParserContext {
 
     private final boolean parseFunctionNameIf(String name) {
         return peekKeyword(name, true, false, true);
+    }
+
+    private final boolean parseFunctionNameIf(String name1, String name2) {
+        return parseFunctionNameIf(name1) || parseFunctionNameIf(name2);
+    }
+
+    private final boolean parseFunctionNameIf(String name1, String name2, String name3) {
+        return parseFunctionNameIf(name1) || parseFunctionNameIf(name2) || parseFunctionNameIf(name3);
     }
 
     private final boolean parseOperator(String operator) {

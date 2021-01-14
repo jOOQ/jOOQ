@@ -38,7 +38,8 @@ public class DefaultCatalog extends CatalogImpl {
 
     @Override
     public final List<Schema> getSchemas() {
-        return Arrays.<Schema>asList(
-            DefaultSchema.DEFAULT_SCHEMA);
+        return Arrays.asList(
+            DefaultSchema.DEFAULT_SCHEMA
+        );
     }
 }

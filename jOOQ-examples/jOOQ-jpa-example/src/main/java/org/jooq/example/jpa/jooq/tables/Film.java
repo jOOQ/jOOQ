@@ -113,7 +113,7 @@ public class Film extends TableImpl<FilmRecord> {
 
     @Override
     public Schema getSchema() {
-        return DefaultSchema.DEFAULT_SCHEMA;
+        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override
@@ -128,15 +128,24 @@ public class Film extends TableImpl<FilmRecord> {
 
     @Override
     public List<ForeignKey<FilmRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<FilmRecord, ?>>asList(Keys.FKD2YJC1RU34H1SMWLA3FX7B6NX, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT);
+        return Arrays.asList(Keys.FKD2YJC1RU34H1SMWLA3FX7B6NX, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT);
     }
 
+    private transient Language _fkd2yjc1ru34h1smwla3fx7b6nx;
+    private transient Language _fkn2ub730rpo5b5e9x6u2lwl9ft;
+
     public Language fkd2yjc1ru34h1smwla3fx7b6nx() {
-        return new Language(this, Keys.FKD2YJC1RU34H1SMWLA3FX7B6NX);
+        if (_fkd2yjc1ru34h1smwla3fx7b6nx == null)
+            _fkd2yjc1ru34h1smwla3fx7b6nx = new Language(this, Keys.FKD2YJC1RU34H1SMWLA3FX7B6NX);
+
+        return _fkd2yjc1ru34h1smwla3fx7b6nx;
     }
 
     public Language fkn2ub730rpo5b5e9x6u2lwl9ft() {
-        return new Language(this, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT);
+        if (_fkn2ub730rpo5b5e9x6u2lwl9ft == null)
+            _fkn2ub730rpo5b5e9x6u2lwl9ft = new Language(this, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT);
+
+        return _fkn2ub730rpo5b5e9x6u2lwl9ft;
     }
 
     @Override

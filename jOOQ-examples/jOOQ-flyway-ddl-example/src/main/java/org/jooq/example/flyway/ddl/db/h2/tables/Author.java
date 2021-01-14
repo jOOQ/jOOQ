@@ -110,7 +110,7 @@ public class Author extends TableImpl<AuthorRecord> {
 
     @Override
     public Schema getSchema() {
-        return FlywayTest.FLYWAY_TEST;
+        return aliased() ? null : FlywayTest.FLYWAY_TEST;
     }
 
     @Override

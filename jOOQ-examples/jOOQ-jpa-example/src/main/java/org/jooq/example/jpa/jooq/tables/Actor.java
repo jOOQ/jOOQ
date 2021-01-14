@@ -94,7 +94,7 @@ public class Actor extends TableImpl<ActorRecord> {
 
     @Override
     public Schema getSchema() {
-        return DefaultSchema.DEFAULT_SCHEMA;
+        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override

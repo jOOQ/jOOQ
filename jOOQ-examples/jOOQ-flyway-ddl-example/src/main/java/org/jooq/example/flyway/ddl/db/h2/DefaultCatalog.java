@@ -38,7 +38,8 @@ public class DefaultCatalog extends CatalogImpl {
 
     @Override
     public final List<Schema> getSchemas() {
-        return Arrays.<Schema>asList(
-            FlywayTest.FLYWAY_TEST);
+        return Arrays.asList(
+            FlywayTest.FLYWAY_TEST
+        );
     }
 }

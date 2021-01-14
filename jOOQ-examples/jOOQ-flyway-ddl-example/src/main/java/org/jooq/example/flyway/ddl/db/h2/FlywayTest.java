@@ -53,14 +53,16 @@ public class FlywayTest extends SchemaImpl {
 
     @Override
     public final List<Sequence<?>> getSequences() {
-        return Arrays.<Sequence<?>>asList(
-            Sequences.S_AUTHOR_ID);
+        return Arrays.asList(
+            Sequences.S_AUTHOR_ID
+        );
     }
 
     @Override
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
+        return Arrays.asList(
             Author.AUTHOR,
-            Book.BOOK);
+Book.BOOK
+        );
     }
 }

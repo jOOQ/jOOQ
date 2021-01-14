@@ -196,4 +196,21 @@ open class BookRecord() : UpdatableRecordImpl<BookRecord>(Book.BOOK), Record11<I
         this.recVersion = recVersion
         this.recTimestamp = recTimestamp
     }
+
+    /**
+     * Create a detached, initialised BookRecord
+     */
+    constructor(value: org.jooq.example.kotlin.db.h2.tables.pojos.Book): this() {
+        this.id = value.id
+        this.authorId = value.authorId
+        this.coAuthorId = value.coAuthorId
+        this.detailsId = value.detailsId
+        this.title = value.title
+        this.publishedIn = value.publishedIn
+        this.languageId = value.languageId
+        this.contentText = value.contentText
+        this.contentPdf = value.contentPdf
+        this.recVersion = value.recVersion
+        this.recTimestamp = value.recTimestamp
+    }
 }

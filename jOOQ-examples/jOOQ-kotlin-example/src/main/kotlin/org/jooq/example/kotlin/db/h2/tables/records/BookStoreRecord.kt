@@ -53,4 +53,11 @@ open class BookStoreRecord() : UpdatableRecordImpl<BookStoreRecord>(BookStore.BO
     constructor(name: String? = null): this() {
         this.name = name
     }
+
+    /**
+     * Create a detached, initialised BookStoreRecord
+     */
+    constructor(value: org.jooq.example.kotlin.db.h2.tables.pojos.BookStore): this() {
+        this.name = value.name
+    }
 }

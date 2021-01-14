@@ -126,4 +126,16 @@ open class AuthorRecord() : UpdatableRecordImpl<AuthorRecord>(Author.AUTHOR), Re
         this.yearOfBirth = yearOfBirth
         this.address = address
     }
+
+    /**
+     * Create a detached, initialised AuthorRecord
+     */
+    constructor(value: org.jooq.example.kotlin.db.h2.tables.pojos.Author): this() {
+        this.id = value.id
+        this.firstName = value.firstName
+        this.lastName = value.lastName
+        this.dateOfBirth = value.dateOfBirth
+        this.yearOfBirth = value.yearOfBirth
+        this.address = value.address
+    }
 }

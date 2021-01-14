@@ -89,7 +89,7 @@ public class Language extends TableImpl<LanguageRecord> {
 
     @Override
     public Schema getSchema() {
-        return DefaultSchema.DEFAULT_SCHEMA;
+        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override

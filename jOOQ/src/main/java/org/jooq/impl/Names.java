@@ -57,7 +57,6 @@ final class Names {
     static final Name N_ADD_DAYS               = unquotedName("add_days");
     static final Name N_ADD_MONTHS             = unquotedName("add_months");
     static final Name N_ADD_SECONDS            = unquotedName("add_seconds");
-    static final Name N_AGE                    = unquotedName("age");
     static final Name N_ARRAY                  = unquotedName("array");
     static final Name N_ARRAY_AGG              = unquotedName("array_agg");
     static final Name N_ARRAY_GET              = unquotedName("array_get");
@@ -132,7 +131,6 @@ final class Names {
     static final Name N_EULER                  = unquotedName("e");
     static final Name N_EXP                    = unquotedName("exp");
     static final Name N_EXTRACT                = unquotedName("extract");
-    static final Name N_EXTRACT_DURATION       = unquotedName("extract_duration");
     static final Name N_FIELD                  = unquotedName("field");
     static final Name N_FLASHBACK              = unquotedName("flashback");
     static final Name N_FLOOR                  = unquotedName("floor");
@@ -150,7 +148,6 @@ final class Names {
     static final Name N_INSERT                 = unquotedName("insert");
     static final Name N_INSTR                  = unquotedName("instr");
     static final Name N_ISJSON                 = unquotedName("isjson");
-    static final Name N_ISOWEEK                = unquotedName("isoweek");
     static final Name N_JOIN                   = unquotedName("join");
     static final Name N_JSONB_AGG              = unquotedName("jsonb_agg");
     static final Name N_JSONB_BUILD_ARRAY      = unquotedName("jsonb_build_array");
@@ -201,7 +198,6 @@ final class Names {
     static final Name N_NOW                    = unquotedName("now");
     static final Name N_NTILE                  = unquotedName("ntile");
     static final Name N_NULLIF                 = unquotedName("nullif");
-    static final Name N_NUMTODSINTERVAL        = unquotedName("numtodsinterval");
     static final Name N_NVL                    = unquotedName("nvl");
     static final Name N_NVL2                   = unquotedName("nvl2");
     static final Name N_OCTET_LENGTH           = unquotedName("octet_length");
@@ -279,7 +275,6 @@ final class Names {
     static final Name N_STRREVERSE             = unquotedName("strreverse");
     static final Name N_SUBSTR                 = unquotedName("substr");
     static final Name N_SUBSTRING              = unquotedName("substring");
-    static final Name N_SYSDATE                = unquotedName("sysdate");
     static final Name N_SYSTEM_RANGE           = unquotedName("system_range");
     static final Name N_SYSTEM_TIME            = unquotedName("system_time");
     static final Name N_SYS_CONNECT_BY_PATH    = unquotedName("sys_connect_by_path");

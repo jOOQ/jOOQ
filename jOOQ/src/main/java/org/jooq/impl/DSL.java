@@ -15038,6 +15038,24 @@ public class DSL {
     }
 
     /**
+     * The <code>DIGITS</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> digits(Number value) {
+        return new Digits(Tools.field(value));
+    }
+
+    /**
+     * The <code>DIGITS</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<String> digits(Field<? extends Number> value) {
+        return new Digits(value);
+    }
+
+    /**
      * The <code>E</code> function.
      * <p>
      * The E literal (Euler number).

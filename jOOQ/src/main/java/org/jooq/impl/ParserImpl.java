@@ -126,6 +126,7 @@ import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.default_;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
+import static org.jooq.impl.DSL.digits;
 import static org.jooq.impl.DSL.domain;
 import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.every;
@@ -6767,6 +6768,8 @@ final class ParserContext {
                         return currentCatalog();
                     else if ((parseFunctionNameIf("DBINFO") && parse('(') && parseStringLiteral("dbname") != null && parse(')')))
                         return currentCatalog();
+                    else if (parseFunctionNameIf("DIGITS"))
+                        return digits((Field) parseFieldParenthesised(N));
 
                 if (D.is(type))
                     if ((field = parseFieldDateLiteralIf()) != null)

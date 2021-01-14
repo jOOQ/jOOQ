@@ -135,25 +135,25 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
      * The minimum decimal precision needed to represent a Java {@link Long}
      * type.
      */
-    private static final int                                    LONG_PRECISION    = String.valueOf(Long.MAX_VALUE).length();
+    static final int                                            LONG_PRECISION    = String.valueOf(Long.MAX_VALUE).length();
 
     /**
      * The minimum decimal precision needed to represent a Java {@link Integer}
      * type.
      */
-    private static final int                                    INTEGER_PRECISION = String.valueOf(Integer.MAX_VALUE).length();
+    static final int                                            INTEGER_PRECISION = String.valueOf(Integer.MAX_VALUE).length();
 
     /**
      * The minimum decimal precision needed to represent a Java {@link Short}
      * type.
      */
-    private static final int                                    SHORT_PRECISION   = String.valueOf(Short.MAX_VALUE).length();
+    static final int                                            SHORT_PRECISION   = String.valueOf(Short.MAX_VALUE).length();
 
     /**
      * The minimum decimal precision needed to represent a Java {@link Byte}
      * type.
      */
-    private static final int                                    BYTE_PRECISION    = String.valueOf(Byte.MAX_VALUE).length();
+    static final int                                            BYTE_PRECISION    = String.valueOf(Byte.MAX_VALUE).length();
 
     // -------------------------------------------------------------------------
     // Data type attributes

@@ -77,7 +77,7 @@ public interface DropIndexOnStep extends DropIndexCascadeStep {
      */
     @Support
     @NotNull
-    DropIndexCascadeStep on(String on);
+    DropIndexCascadeStep on(@Stringly.Name String on);
 
     /**
      * Add the <code>ON</code> clause to the <code>DROP INDEX</code> statement.

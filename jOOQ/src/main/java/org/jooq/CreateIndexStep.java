@@ -72,7 +72,7 @@ public interface CreateIndexStep {
      */
     @Support
     @NotNull
-    CreateIndexIncludeStep on(String table, String... on);
+    CreateIndexIncludeStep on(@Stringly.Name String table, String... on);
 
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
@@ -93,7 +93,7 @@ public interface CreateIndexStep {
      */
     @Support
     @NotNull
-    CreateIndexIncludeStep on(String table, Collection<? extends String> on);
+    CreateIndexIncludeStep on(@Stringly.Name String table, Collection<? extends String> on);
 
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.

@@ -103,7 +103,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     @NotNull
-    CreateIndexFinalStep where(String where, QueryPart... parts);
+    CreateIndexFinalStep where(@Stringly.SQL String where, QueryPart... parts);
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
@@ -113,7 +113,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     @NotNull
-    CreateIndexFinalStep where(String where, Object... bindings);
+    CreateIndexFinalStep where(@Stringly.SQL String where, Object... bindings);
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
@@ -123,7 +123,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     @NotNull
-    CreateIndexFinalStep where(String where);
+    CreateIndexFinalStep where(@Stringly.SQL String where);
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.

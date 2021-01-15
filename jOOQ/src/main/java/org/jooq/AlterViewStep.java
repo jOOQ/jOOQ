@@ -72,7 +72,7 @@ public interface AlterViewStep {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     @NotNull
-    AlterViewFinalStep comment(String comment);
+    AlterViewFinalStep comment(@Stringly.Comment String comment);
 
     /**
      * Add the <code>COMMENT</code> clause to the <code>ALTER VIEW</code> statement.
@@ -86,7 +86,7 @@ public interface AlterViewStep {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     @NotNull
-    AlterViewFinalStep renameTo(String renameTo);
+    AlterViewFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.

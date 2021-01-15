@@ -72,7 +72,7 @@ public interface AlterDomainRenameConstraintStep {
      */
     @Support({ POSTGRES })
     @NotNull
-    AlterDomainFinalStep to(String renameConstraintTo);
+    AlterDomainFinalStep to(@Stringly.Name String renameConstraintTo);
 
     /**
      * Add the <code>TO</code> clause to the <code>ALTER DOMAIN</code> statement.

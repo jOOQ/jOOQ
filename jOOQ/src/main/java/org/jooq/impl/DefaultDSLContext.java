@@ -2682,7 +2682,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
-    public org.jooq.AlterDatabaseStep alterDatabase(String database) {
+    public org.jooq.AlterDatabaseStep alterDatabase(@Stringly.Name String database) {
         return new AlterDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
     }
 
@@ -2697,7 +2697,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterDatabaseStep alterDatabaseIfExists(String database) {
+    public org.jooq.AlterDatabaseStep alterDatabaseIfExists(@Stringly.Name String database) {
         return new AlterDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), true);
     }
 
@@ -2712,7 +2712,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
+    public <T> org.jooq.AlterDomainStep<T> alterDomain(@Stringly.Name String domain) {
         return new AlterDomainImpl(configuration(), DSL.domain(DSL.name(domain)), false);
     }
 
@@ -2727,7 +2727,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(String domain) {
+    public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(@Stringly.Name String domain) {
         return new AlterDomainImpl(configuration(), DSL.domain(DSL.name(domain)), true);
     }
 
@@ -2742,7 +2742,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterIndexOnStep alterIndex(String index) {
+    public org.jooq.AlterIndexOnStep alterIndex(@Stringly.Name String index) {
         return new AlterIndexImpl(configuration(), DSL.index(DSL.name(index)), false);
     }
 
@@ -2757,7 +2757,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterIndexOnStep alterIndexIfExists(String index) {
+    public org.jooq.AlterIndexOnStep alterIndexIfExists(@Stringly.Name String index) {
         return new AlterIndexImpl(configuration(), DSL.index(DSL.name(index)), true);
     }
 
@@ -2772,7 +2772,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterSchemaStep alterSchema(String schema) {
+    public org.jooq.AlterSchemaStep alterSchema(@Stringly.Name String schema) {
         return new AlterSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
 
@@ -2787,7 +2787,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterSchemaStep alterSchemaIfExists(String schema) {
+    public org.jooq.AlterSchemaStep alterSchemaIfExists(@Stringly.Name String schema) {
         return new AlterSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), true);
     }
 
@@ -2802,7 +2802,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterSequenceStep<Number> alterSequence(String sequence) {
+    public org.jooq.AlterSequenceStep<Number> alterSequence(@Stringly.Name String sequence) {
         return new AlterSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
     }
 
@@ -2817,7 +2817,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(String sequence) {
+    public org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(@Stringly.Name String sequence) {
         return new AlterSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
     }
 
@@ -2832,7 +2832,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterTypeStep alterType(String type) {
+    public org.jooq.AlterTypeStep alterType(@Stringly.Name String type) {
         return new AlterTypeImpl(configuration(), DSL.name(type));
     }
 
@@ -2842,7 +2842,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterViewStep alterView(String view) {
+    public org.jooq.AlterViewStep alterView(@Stringly.Name String view) {
         return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), false);
     }
 
@@ -2857,7 +2857,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterViewStep alterViewIfExists(String view) {
+    public org.jooq.AlterViewStep alterViewIfExists(@Stringly.Name String view) {
         return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), true);
     }
 
@@ -2872,7 +2872,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CommentOnIsStep commentOnTable(String table) {
+    public org.jooq.CommentOnIsStep commentOnTable(@Stringly.Name String table) {
         return new CommentOnImpl(configuration(), DSL.table(DSL.name(table)), false, null);
     }
 
@@ -2887,7 +2887,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CommentOnIsStep commentOnView(String view) {
+    public org.jooq.CommentOnIsStep commentOnView(@Stringly.Name String view) {
         return new CommentOnImpl(configuration(), DSL.table(DSL.name(view)), true, null);
     }
 
@@ -2902,7 +2902,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CommentOnIsStep commentOnColumn(String field) {
+    public org.jooq.CommentOnIsStep commentOnColumn(@Stringly.Name String field) {
         return new CommentOnImpl(configuration(), null, false, DSL.field(DSL.name(field)));
     }
 
@@ -2917,7 +2917,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
+    public org.jooq.CreateDatabaseFinalStep createDatabase(@Stringly.Name String database) {
         return new CreateDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
     }
 
@@ -2932,7 +2932,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
+    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(@Stringly.Name String database) {
         return new CreateDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), true);
     }
 
@@ -2947,7 +2947,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateDomainAsStep createDomain(String domain) {
+    public org.jooq.CreateDomainAsStep createDomain(@Stringly.Name String domain) {
         return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), false);
     }
 
@@ -2962,7 +2962,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
+    public org.jooq.CreateDomainAsStep createDomainIfNotExists(@Stringly.Name String domain) {
         return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), true);
     }
 
@@ -2977,7 +2977,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateIndexStep createIndex(String index) {
+    public org.jooq.CreateIndexStep createIndex(@Stringly.Name String index) {
         return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), false);
     }
 
@@ -2997,7 +2997,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateIndexStep createIndexIfNotExists(String index) {
+    public org.jooq.CreateIndexStep createIndexIfNotExists(@Stringly.Name String index) {
         return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), true);
     }
 
@@ -3017,7 +3017,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateIndexStep createUniqueIndex(String index) {
+    public org.jooq.CreateIndexStep createUniqueIndex(@Stringly.Name String index) {
         return new CreateIndexImpl(configuration(), true, DSL.index(DSL.name(index)), false);
     }
 
@@ -3037,7 +3037,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(String index) {
+    public org.jooq.CreateIndexStep createUniqueIndexIfNotExists(@Stringly.Name String index) {
         return new CreateIndexImpl(configuration(), true, DSL.index(DSL.name(index)), true);
     }
 
@@ -3057,7 +3057,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateSchemaFinalStep createSchema(String schema) {
+    public org.jooq.CreateSchemaFinalStep createSchema(@Stringly.Name String schema) {
         return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
 
@@ -3072,7 +3072,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
+    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(@Stringly.Name String schema) {
         return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), true);
     }
 
@@ -3087,7 +3087,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
+    public org.jooq.CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence) {
         return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
     }
 
@@ -3102,7 +3102,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
+    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence) {
         return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
     }
 
@@ -3117,7 +3117,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropDatabaseFinalStep dropDatabase(String database) {
+    public org.jooq.DropDatabaseFinalStep dropDatabase(@Stringly.Name String database) {
         return new DropDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
     }
 
@@ -3132,7 +3132,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(String database) {
+    public org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(@Stringly.Name String database) {
         return new DropDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), true);
     }
 
@@ -3147,7 +3147,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropDomainCascadeStep dropDomain(String domain) {
+    public org.jooq.DropDomainCascadeStep dropDomain(@Stringly.Name String domain) {
         return new DropDomainImpl(configuration(), DSL.domain(DSL.name(domain)), false);
     }
 
@@ -3162,7 +3162,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropDomainCascadeStep dropDomainIfExists(String domain) {
+    public org.jooq.DropDomainCascadeStep dropDomainIfExists(@Stringly.Name String domain) {
         return new DropDomainImpl(configuration(), DSL.domain(DSL.name(domain)), true);
     }
 
@@ -3177,7 +3177,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropIndexOnStep dropIndex(String index) {
+    public org.jooq.DropIndexOnStep dropIndex(@Stringly.Name String index) {
         return new DropIndexImpl(configuration(), DSL.index(DSL.name(index)), false);
     }
 
@@ -3192,7 +3192,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropIndexOnStep dropIndexIfExists(String index) {
+    public org.jooq.DropIndexOnStep dropIndexIfExists(@Stringly.Name String index) {
         return new DropIndexImpl(configuration(), DSL.index(DSL.name(index)), true);
     }
 
@@ -3207,7 +3207,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropSchemaStep dropSchema(String schema) {
+    public org.jooq.DropSchemaStep dropSchema(@Stringly.Name String schema) {
         return new DropSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
 
@@ -3222,7 +3222,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropSchemaStep dropSchemaIfExists(String schema) {
+    public org.jooq.DropSchemaStep dropSchemaIfExists(@Stringly.Name String schema) {
         return new DropSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), true);
     }
 
@@ -3237,7 +3237,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropSequenceFinalStep dropSequence(String sequence) {
+    public org.jooq.DropSequenceFinalStep dropSequence(@Stringly.Name String sequence) {
         return new DropSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
     }
 
@@ -3252,7 +3252,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropSequenceFinalStep dropSequenceIfExists(String sequence) {
+    public org.jooq.DropSequenceFinalStep dropSequenceIfExists(@Stringly.Name String sequence) {
         return new DropSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
     }
 
@@ -3267,7 +3267,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropTableStep dropTable(String table) {
+    public org.jooq.DropTableStep dropTable(@Stringly.Name String table) {
         return new DropTableImpl(configuration(), false, DSL.table(DSL.name(table)), false);
     }
 
@@ -3282,7 +3282,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropTableStep dropTableIfExists(String table) {
+    public org.jooq.DropTableStep dropTableIfExists(@Stringly.Name String table) {
         return new DropTableImpl(configuration(), false, DSL.table(DSL.name(table)), true);
     }
 
@@ -3297,7 +3297,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropTableStep dropTemporaryTable(String table) {
+    public org.jooq.DropTableStep dropTemporaryTable(@Stringly.Name String table) {
         return new DropTableImpl(configuration(), true, DSL.table(DSL.name(table)), false);
     }
 
@@ -3312,7 +3312,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropTableStep dropTemporaryTableIfExists(String table) {
+    public org.jooq.DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table) {
         return new DropTableImpl(configuration(), true, DSL.table(DSL.name(table)), true);
     }
 
@@ -3327,7 +3327,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropView(String view) {
+    public org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
         return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), false);
     }
 
@@ -3342,7 +3342,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropViewIfExists(String view) {
+    public org.jooq.DropViewFinalStep dropViewIfExists(@Stringly.Name String view) {
         return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), true);
     }
 
@@ -3407,7 +3407,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.RowCountQuery setCatalog(String catalog) {
+    public org.jooq.RowCountQuery setCatalog(@Stringly.Name String catalog) {
         return new SetCatalog(configuration(), DSL.catalog(DSL.name(catalog)));
     }
 
@@ -3422,7 +3422,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.RowCountQuery setSchema(String schema) {
+    public org.jooq.RowCountQuery setSchema(@Stringly.Name String schema) {
         return new SetSchema(configuration(), DSL.schema(DSL.name(schema)));
     }
 
@@ -3437,7 +3437,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.TruncateIdentityStep<Record> truncate(String table) {
+    public org.jooq.TruncateIdentityStep<Record> truncate(@Stringly.Name String table) {
         return new TruncateImpl(configuration(), DSL.table(DSL.name(table)));
     }
 
@@ -3452,7 +3452,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.TruncateIdentityStep<Record> truncateTable(String table) {
+    public org.jooq.TruncateIdentityStep<Record> truncateTable(@Stringly.Name String table) {
         return truncate(DSL.table(DSL.name(table)));
     }
 

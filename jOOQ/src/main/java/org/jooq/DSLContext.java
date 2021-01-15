@@ -9119,7 +9119,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ POSTGRES })
-    AlterDatabaseStep alterDatabase(String database);
+    AlterDatabaseStep alterDatabase(@Stringly.Name String database);
 
     /**
      * The <code>ALTER DATABASE</code> statement.
@@ -9146,7 +9146,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ POSTGRES })
-    AlterDatabaseStep alterDatabaseIfExists(String database);
+    AlterDatabaseStep alterDatabaseIfExists(@Stringly.Name String database);
 
     /**
      * The <code>ALTER DATABASE IF EXISTS</code> statement.
@@ -9173,7 +9173,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
-    <T> AlterDomainStep<T> alterDomain(String domain);
+    <T> AlterDomainStep<T> alterDomain(@Stringly.Name String domain);
 
     /**
      * The <code>ALTER DOMAIN</code> statement.
@@ -9200,7 +9200,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
-    <T> AlterDomainStep<T> alterDomainIfExists(String domain);
+    <T> AlterDomainStep<T> alterDomainIfExists(@Stringly.Name String domain);
 
     /**
      * The <code>ALTER DOMAIN IF EXISTS</code> statement.
@@ -9227,7 +9227,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterIndexOnStep alterIndex(String index);
+    AlterIndexOnStep alterIndex(@Stringly.Name String index);
 
     /**
      * The <code>ALTER INDEX</code> statement.
@@ -9254,7 +9254,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    AlterIndexOnStep alterIndexIfExists(String index);
+    AlterIndexOnStep alterIndexIfExists(@Stringly.Name String index);
 
     /**
      * The <code>ALTER INDEX IF EXISTS</code> statement.
@@ -9281,7 +9281,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    AlterSchemaStep alterSchema(String schema);
+    AlterSchemaStep alterSchema(@Stringly.Name String schema);
 
     /**
      * The <code>ALTER SCHEMA</code> statement.
@@ -9308,7 +9308,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ H2 })
-    AlterSchemaStep alterSchemaIfExists(String schema);
+    AlterSchemaStep alterSchemaIfExists(@Stringly.Name String schema);
 
     /**
      * The <code>ALTER SCHEMA IF EXISTS</code> statement.
@@ -9335,7 +9335,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceStep<Number> alterSequence(String sequence);
+    AlterSequenceStep<Number> alterSequence(@Stringly.Name String sequence);
 
     /**
      * The <code>ALTER SEQUENCE</code> statement.
@@ -9362,7 +9362,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ H2, MARIADB, POSTGRES })
-    AlterSequenceStep<Number> alterSequenceIfExists(String sequence);
+    AlterSequenceStep<Number> alterSequenceIfExists(@Stringly.Name String sequence);
 
     /**
      * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
@@ -9389,7 +9389,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ POSTGRES })
-    AlterTypeStep alterType(String type);
+    AlterTypeStep alterType(@Stringly.Name String type);
 
     /**
      * The <code>ALTER TYPE</code> statement.
@@ -9407,7 +9407,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    AlterViewStep alterView(String view);
+    AlterViewStep alterView(@Stringly.Name String view);
 
     /**
      * The <code>ALTER VIEW</code> statement.
@@ -9434,7 +9434,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    AlterViewStep alterViewIfExists(String view);
+    AlterViewStep alterViewIfExists(@Stringly.Name String view);
 
     /**
      * The <code>ALTER VIEW IF EXISTS</code> statement.
@@ -9461,7 +9461,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CommentOnIsStep commentOnTable(String table);
+    CommentOnIsStep commentOnTable(@Stringly.Name String table);
 
     /**
      * The <code>COMMENT ON TABLE</code> statement.
@@ -9488,7 +9488,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CommentOnIsStep commentOnView(String view);
+    CommentOnIsStep commentOnView(@Stringly.Name String view);
 
     /**
      * The <code>COMMENT ON VIEW</code> statement.
@@ -9515,7 +9515,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CommentOnIsStep commentOnColumn(String field);
+    CommentOnIsStep commentOnColumn(@Stringly.Name String field);
 
     /**
      * The <code>COMMENT ON COLUMN</code> statement.
@@ -9542,7 +9542,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateDatabaseFinalStep createDatabase(String database);
+    CreateDatabaseFinalStep createDatabase(@Stringly.Name String database);
 
     /**
      * The <code>CREATE DATABASE</code> statement.
@@ -9569,7 +9569,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ MARIADB, MYSQL })
-    CreateDatabaseFinalStep createDatabaseIfNotExists(String database);
+    CreateDatabaseFinalStep createDatabaseIfNotExists(@Stringly.Name String database);
 
     /**
      * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
@@ -9596,7 +9596,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    CreateDomainAsStep createDomain(String domain);
+    CreateDomainAsStep createDomain(@Stringly.Name String domain);
 
     /**
      * The <code>CREATE DOMAIN</code> statement.
@@ -9623,7 +9623,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, POSTGRES })
-    CreateDomainAsStep createDomainIfNotExists(String domain);
+    CreateDomainAsStep createDomainIfNotExists(@Stringly.Name String domain);
 
     /**
      * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
@@ -9650,7 +9650,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    CreateIndexStep createIndex(String index);
+    CreateIndexStep createIndex(@Stringly.Name String index);
 
     /**
      * The <code>CREATE INDEX</code> statement.
@@ -9686,7 +9686,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    CreateIndexStep createIndexIfNotExists(String index);
+    CreateIndexStep createIndexIfNotExists(@Stringly.Name String index);
 
     /**
      * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
@@ -9722,7 +9722,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    CreateIndexStep createUniqueIndex(String index);
+    CreateIndexStep createUniqueIndex(@Stringly.Name String index);
 
     /**
      * The <code>CREATE UNIQUE INDEX</code> statement.
@@ -9758,7 +9758,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    CreateIndexStep createUniqueIndexIfNotExists(String index);
+    CreateIndexStep createUniqueIndexIfNotExists(@Stringly.Name String index);
 
     /**
      * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
@@ -9794,7 +9794,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchema(String schema);
+    CreateSchemaFinalStep createSchema(@Stringly.Name String schema);
 
     /**
      * The <code>CREATE SCHEMA</code> statement.
@@ -9821,7 +9821,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchemaIfNotExists(String schema);
+    CreateSchemaFinalStep createSchemaIfNotExists(@Stringly.Name String schema);
 
     /**
      * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
@@ -9848,7 +9848,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequence(String sequence);
+    CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence);
 
     /**
      * The <code>CREATE SEQUENCE</code> statement.
@@ -9875,7 +9875,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequenceIfNotExists(String sequence);
+    CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence);
 
     /**
      * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
@@ -9902,7 +9902,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
-    DropDatabaseFinalStep dropDatabase(String database);
+    DropDatabaseFinalStep dropDatabase(@Stringly.Name String database);
 
     /**
      * The <code>DROP DATABASE</code> statement.
@@ -9929,7 +9929,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
-    DropDatabaseFinalStep dropDatabaseIfExists(String database);
+    DropDatabaseFinalStep dropDatabaseIfExists(@Stringly.Name String database);
 
     /**
      * The <code>DROP DATABASE IF EXISTS</code> statement.
@@ -9956,7 +9956,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    DropDomainCascadeStep dropDomain(String domain);
+    DropDomainCascadeStep dropDomain(@Stringly.Name String domain);
 
     /**
      * The <code>DROP DOMAIN</code> statement.
@@ -9983,7 +9983,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    DropDomainCascadeStep dropDomainIfExists(String domain);
+    DropDomainCascadeStep dropDomainIfExists(@Stringly.Name String domain);
 
     /**
      * The <code>DROP DOMAIN IF EXISTS</code> statement.
@@ -10010,7 +10010,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    DropIndexOnStep dropIndex(String index);
+    DropIndexOnStep dropIndex(@Stringly.Name String index);
 
     /**
      * The <code>DROP INDEX</code> statement.
@@ -10037,7 +10037,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    DropIndexOnStep dropIndexIfExists(String index);
+    DropIndexOnStep dropIndexIfExists(@Stringly.Name String index);
 
     /**
      * The <code>DROP INDEX IF EXISTS</code> statement.
@@ -10064,7 +10064,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    DropSchemaStep dropSchema(String schema);
+    DropSchemaStep dropSchema(@Stringly.Name String schema);
 
     /**
      * The <code>DROP SCHEMA</code> statement.
@@ -10091,7 +10091,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    DropSchemaStep dropSchemaIfExists(String schema);
+    DropSchemaStep dropSchemaIfExists(@Stringly.Name String schema);
 
     /**
      * The <code>DROP SCHEMA IF EXISTS</code> statement.
@@ -10118,7 +10118,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    DropSequenceFinalStep dropSequence(String sequence);
+    DropSequenceFinalStep dropSequence(@Stringly.Name String sequence);
 
     /**
      * The <code>DROP SEQUENCE</code> statement.
@@ -10145,7 +10145,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    DropSequenceFinalStep dropSequenceIfExists(String sequence);
+    DropSequenceFinalStep dropSequenceIfExists(@Stringly.Name String sequence);
 
     /**
      * The <code>DROP SEQUENCE IF EXISTS</code> statement.
@@ -10172,7 +10172,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    DropTableStep dropTable(String table);
+    DropTableStep dropTable(@Stringly.Name String table);
 
     /**
      * The <code>DROP TABLE</code> statement.
@@ -10199,7 +10199,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    DropTableStep dropTableIfExists(String table);
+    DropTableStep dropTableIfExists(@Stringly.Name String table);
 
     /**
      * The <code>DROP TABLE IF EXISTS</code> statement.
@@ -10226,7 +10226,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    DropTableStep dropTemporaryTable(String table);
+    DropTableStep dropTemporaryTable(@Stringly.Name String table);
 
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
@@ -10253,7 +10253,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    DropTableStep dropTemporaryTableIfExists(String table);
+    DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table);
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
@@ -10280,7 +10280,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    DropViewFinalStep dropView(String view);
+    DropViewFinalStep dropView(@Stringly.Name String view);
 
     /**
      * The <code>DROP VIEW</code> statement.
@@ -10307,7 +10307,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    DropViewFinalStep dropViewIfExists(String view);
+    DropViewFinalStep dropViewIfExists(@Stringly.Name String view);
 
     /**
      * The <code>DROP VIEW IF EXISTS</code> statement.
@@ -10428,7 +10428,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ MARIADB, MYSQL })
-    RowCountQuery setCatalog(String catalog);
+    RowCountQuery setCatalog(@Stringly.Name String catalog);
 
     /**
      * The <code>SET CATALOG</code> statement.
@@ -10461,7 +10461,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    RowCountQuery setSchema(String schema);
+    RowCountQuery setSchema(@Stringly.Name String schema);
 
     /**
      * The <code>SET SCHEMA</code> statement.
@@ -10492,7 +10492,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    TruncateIdentityStep<Record> truncate(String table);
+    TruncateIdentityStep<Record> truncate(@Stringly.Name String table);
 
     /**
      * The <code>TRUNCATE</code> statement.
@@ -10519,7 +10519,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     @Support
-    TruncateIdentityStep<Record> truncateTable(String table);
+    TruncateIdentityStep<Record> truncateTable(@Stringly.Name String table);
 
     /**
      * The <code>TRUNCATE TABLE</code> statement.

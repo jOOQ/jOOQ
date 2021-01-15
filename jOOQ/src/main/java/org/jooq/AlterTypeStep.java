@@ -72,7 +72,7 @@ public interface AlterTypeStep {
      */
     @Support({ POSTGRES })
     @NotNull
-    AlterTypeFinalStep renameTo(String renameTo);
+    AlterTypeFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER TYPE</code> statement.
@@ -86,7 +86,7 @@ public interface AlterTypeStep {
      */
     @Support({ POSTGRES })
     @NotNull
-    AlterTypeFinalStep setSchema(String setSchema);
+    AlterTypeFinalStep setSchema(@Stringly.Name String setSchema);
 
     /**
      * Add the <code>SET SCHEMA</code> clause to the <code>ALTER TYPE</code> statement.
@@ -107,7 +107,7 @@ public interface AlterTypeStep {
      */
     @Support({ POSTGRES })
     @NotNull
-    AlterTypeFinalStep addValue(String addValue);
+    AlterTypeFinalStep addValue(@Stringly.Param String addValue);
 
     /**
      * Add the <code>ADD VALUE</code> clause to the <code>ALTER TYPE</code> statement.
@@ -121,7 +121,7 @@ public interface AlterTypeStep {
      */
     @Support({ POSTGRES })
     @NotNull
-    AlterTypeRenameValueToStep renameValue(String renameValue);
+    AlterTypeRenameValueToStep renameValue(@Stringly.Param String renameValue);
 
     /**
      * Add the <code>RENAME VALUE</code> clause to the <code>ALTER TYPE</code> statement.

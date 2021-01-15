@@ -76,7 +76,7 @@ public interface AlterIndexStep {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @NotNull
-    AlterIndexFinalStep renameTo(String renameTo);
+    AlterIndexFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER INDEX</code> statement.

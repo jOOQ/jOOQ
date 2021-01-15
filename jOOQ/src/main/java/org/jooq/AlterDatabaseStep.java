@@ -72,7 +72,7 @@ public interface AlterDatabaseStep {
      */
     @Support({ POSTGRES })
     @NotNull
-    AlterDatabaseFinalStep renameTo(String renameTo);
+    AlterDatabaseFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.

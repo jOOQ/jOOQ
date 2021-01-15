@@ -78,7 +78,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @NotNull
-    AlterIndexStep on(String on);
+    AlterIndexStep on(@Stringly.Name String on);
 
     /**
      * Add the <code>ON</code> clause to the <code>ALTER INDEX</code> statement.

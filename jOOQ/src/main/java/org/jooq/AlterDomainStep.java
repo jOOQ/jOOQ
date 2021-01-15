@@ -79,7 +79,7 @@ public interface AlterDomainStep<T> {
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @NotNull
-    AlterDomainDropConstraintCascadeStep dropConstraint(String dropConstraint);
+    AlterDomainDropConstraintCascadeStep dropConstraint(@Stringly.Name String dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
@@ -100,7 +100,7 @@ public interface AlterDomainStep<T> {
      */
     @Support({ FIREBIRD, POSTGRES })
     @NotNull
-    AlterDomainDropConstraintCascadeStep dropConstraintIfExists(String dropConstraint);
+    AlterDomainDropConstraintCascadeStep dropConstraintIfExists(@Stringly.Name String dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
@@ -121,7 +121,7 @@ public interface AlterDomainStep<T> {
      */
     @Support({ FIREBIRD, POSTGRES })
     @NotNull
-    AlterDomainFinalStep renameTo(String renameTo);
+    AlterDomainFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
@@ -142,7 +142,7 @@ public interface AlterDomainStep<T> {
      */
     @Support({ POSTGRES })
     @NotNull
-    AlterDomainRenameConstraintStep renameConstraint(String renameConstraint);
+    AlterDomainRenameConstraintStep renameConstraint(@Stringly.Name String renameConstraint);
 
     /**
      * Add the <code>RENAME CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
@@ -163,7 +163,7 @@ public interface AlterDomainStep<T> {
      */
     @Support({ POSTGRES })
     @NotNull
-    AlterDomainRenameConstraintStep renameConstraintIfExists(String renameConstraint);
+    AlterDomainRenameConstraintStep renameConstraintIfExists(@Stringly.Name String renameConstraint);
 
     /**
      * Add the <code>RENAME CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.

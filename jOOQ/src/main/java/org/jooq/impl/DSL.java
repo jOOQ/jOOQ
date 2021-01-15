@@ -352,6 +352,7 @@ import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
 import org.jooq.Statement;
+import org.jooq.Stringly;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -6969,7 +6970,7 @@ public class DSL {
      */
     @NotNull
     @Support({ POSTGRES })
-    public static org.jooq.AlterDatabaseStep alterDatabase(String database) {
+    public static org.jooq.AlterDatabaseStep alterDatabase(@Stringly.Name String database) {
         return dsl().alterDatabase(database);
     }
 
@@ -7002,7 +7003,7 @@ public class DSL {
      */
     @NotNull
     @Support({ POSTGRES })
-    public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(String database) {
+    public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(@Stringly.Name String database) {
         return dsl().alterDatabaseIfExists(database);
     }
 
@@ -7035,7 +7036,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
-    public static <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
+    public static <T> org.jooq.AlterDomainStep<T> alterDomain(@Stringly.Name String domain) {
         return dsl().alterDomain(domain);
     }
 
@@ -7068,7 +7069,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
-    public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(String domain) {
+    public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(@Stringly.Name String domain) {
         return dsl().alterDomainIfExists(domain);
     }
 
@@ -7101,7 +7102,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.AlterIndexOnStep alterIndex(String index) {
+    public static org.jooq.AlterIndexOnStep alterIndex(@Stringly.Name String index) {
         return dsl().alterIndex(index);
     }
 
@@ -7134,7 +7135,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    public static org.jooq.AlterIndexOnStep alterIndexIfExists(String index) {
+    public static org.jooq.AlterIndexOnStep alterIndexIfExists(@Stringly.Name String index) {
         return dsl().alterIndexIfExists(index);
     }
 
@@ -7167,7 +7168,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static org.jooq.AlterSchemaStep alterSchema(String schema) {
+    public static org.jooq.AlterSchemaStep alterSchema(@Stringly.Name String schema) {
         return dsl().alterSchema(schema);
     }
 
@@ -7200,7 +7201,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2 })
-    public static org.jooq.AlterSchemaStep alterSchemaIfExists(String schema) {
+    public static org.jooq.AlterSchemaStep alterSchemaIfExists(@Stringly.Name String schema) {
         return dsl().alterSchemaIfExists(schema);
     }
 
@@ -7233,7 +7234,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.AlterSequenceStep<Number> alterSequence(String sequence) {
+    public static org.jooq.AlterSequenceStep<Number> alterSequence(@Stringly.Name String sequence) {
         return dsl().alterSequence(sequence);
     }
 
@@ -7266,7 +7267,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, POSTGRES })
-    public static org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(String sequence) {
+    public static org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(@Stringly.Name String sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
 
@@ -7299,7 +7300,7 @@ public class DSL {
      */
     @NotNull
     @Support({ POSTGRES })
-    public static org.jooq.AlterTypeStep alterType(String type) {
+    public static org.jooq.AlterTypeStep alterType(@Stringly.Name String type) {
         return dsl().alterType(type);
     }
 
@@ -7321,7 +7322,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static org.jooq.AlterViewStep alterView(String view) {
+    public static org.jooq.AlterViewStep alterView(@Stringly.Name String view) {
         return dsl().alterView(view);
     }
 
@@ -7354,7 +7355,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    public static org.jooq.AlterViewStep alterViewIfExists(String view) {
+    public static org.jooq.AlterViewStep alterViewIfExists(@Stringly.Name String view) {
         return dsl().alterViewIfExists(view);
     }
 
@@ -7387,7 +7388,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CommentOnIsStep commentOnTable(String table) {
+    public static org.jooq.CommentOnIsStep commentOnTable(@Stringly.Name String table) {
         return dsl().commentOnTable(table);
     }
 
@@ -7420,7 +7421,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static org.jooq.CommentOnIsStep commentOnView(String view) {
+    public static org.jooq.CommentOnIsStep commentOnView(@Stringly.Name String view) {
         return dsl().commentOnView(view);
     }
 
@@ -7453,7 +7454,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CommentOnIsStep commentOnColumn(String field) {
+    public static org.jooq.CommentOnIsStep commentOnColumn(@Stringly.Name String field) {
         return dsl().commentOnColumn(field);
     }
 
@@ -7486,7 +7487,7 @@ public class DSL {
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
+    public static org.jooq.CreateDatabaseFinalStep createDatabase(@Stringly.Name String database) {
         return dsl().createDatabase(database);
     }
 
@@ -7519,7 +7520,7 @@ public class DSL {
      */
     @NotNull
     @Support({ MARIADB, MYSQL })
-    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
+    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(@Stringly.Name String database) {
         return dsl().createDatabaseIfNotExists(database);
     }
 
@@ -7552,7 +7553,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static org.jooq.CreateDomainAsStep createDomain(String domain) {
+    public static org.jooq.CreateDomainAsStep createDomain(@Stringly.Name String domain) {
         return dsl().createDomain(domain);
     }
 
@@ -7585,7 +7586,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, POSTGRES })
-    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
+    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(@Stringly.Name String domain) {
         return dsl().createDomainIfNotExists(domain);
     }
 
@@ -7618,7 +7619,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.CreateIndexStep createIndex(String index) {
+    public static org.jooq.CreateIndexStep createIndex(@Stringly.Name String index) {
         return dsl().createIndex(index);
     }
 
@@ -7662,7 +7663,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createIndexIfNotExists(String index) {
+    public static org.jooq.CreateIndexStep createIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createIndexIfNotExists(index);
     }
 
@@ -7706,7 +7707,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.CreateIndexStep createUniqueIndex(String index) {
+    public static org.jooq.CreateIndexStep createUniqueIndex(@Stringly.Name String index) {
         return dsl().createUniqueIndex(index);
     }
 
@@ -7750,7 +7751,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(String index) {
+    public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createUniqueIndexIfNotExists(index);
     }
 
@@ -7794,7 +7795,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateSchemaFinalStep createSchema(String schema) {
+    public static org.jooq.CreateSchemaFinalStep createSchema(@Stringly.Name String schema) {
         return dsl().createSchema(schema);
     }
 
@@ -7827,7 +7828,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
+    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(@Stringly.Name String schema) {
         return dsl().createSchemaIfNotExists(schema);
     }
 
@@ -7860,7 +7861,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
+    public static org.jooq.CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence) {
         return dsl().createSequence(sequence);
     }
 
@@ -7893,7 +7894,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
+    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
 
@@ -7926,7 +7927,7 @@ public class DSL {
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.DropDatabaseFinalStep dropDatabase(String database) {
+    public static org.jooq.DropDatabaseFinalStep dropDatabase(@Stringly.Name String database) {
         return dsl().dropDatabase(database);
     }
 
@@ -7959,7 +7960,7 @@ public class DSL {
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(String database) {
+    public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(@Stringly.Name String database) {
         return dsl().dropDatabaseIfExists(database);
     }
 
@@ -7992,7 +7993,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static org.jooq.DropDomainCascadeStep dropDomain(String domain) {
+    public static org.jooq.DropDomainCascadeStep dropDomain(@Stringly.Name String domain) {
         return dsl().dropDomain(domain);
     }
 
@@ -8025,7 +8026,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static org.jooq.DropDomainCascadeStep dropDomainIfExists(String domain) {
+    public static org.jooq.DropDomainCascadeStep dropDomainIfExists(@Stringly.Name String domain) {
         return dsl().dropDomainIfExists(domain);
     }
 
@@ -8058,7 +8059,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.DropIndexOnStep dropIndex(String index) {
+    public static org.jooq.DropIndexOnStep dropIndex(@Stringly.Name String index) {
         return dsl().dropIndex(index);
     }
 
@@ -8091,7 +8092,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    public static org.jooq.DropIndexOnStep dropIndexIfExists(String index) {
+    public static org.jooq.DropIndexOnStep dropIndexIfExists(@Stringly.Name String index) {
         return dsl().dropIndexIfExists(index);
     }
 
@@ -8124,7 +8125,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.DropSchemaStep dropSchema(String schema) {
+    public static org.jooq.DropSchemaStep dropSchema(@Stringly.Name String schema) {
         return dsl().dropSchema(schema);
     }
 
@@ -8157,7 +8158,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.DropSchemaStep dropSchemaIfExists(String schema) {
+    public static org.jooq.DropSchemaStep dropSchemaIfExists(@Stringly.Name String schema) {
         return dsl().dropSchemaIfExists(schema);
     }
 
@@ -8190,7 +8191,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.DropSequenceFinalStep dropSequence(String sequence) {
+    public static org.jooq.DropSequenceFinalStep dropSequence(@Stringly.Name String sequence) {
         return dsl().dropSequence(sequence);
     }
 
@@ -8223,7 +8224,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(String sequence) {
+    public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(@Stringly.Name String sequence) {
         return dsl().dropSequenceIfExists(sequence);
     }
 
@@ -8256,7 +8257,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.DropTableStep dropTable(String table) {
+    public static org.jooq.DropTableStep dropTable(@Stringly.Name String table) {
         return dsl().dropTable(table);
     }
 
@@ -8289,7 +8290,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.DropTableStep dropTableIfExists(String table) {
+    public static org.jooq.DropTableStep dropTableIfExists(@Stringly.Name String table) {
         return dsl().dropTableIfExists(table);
     }
 
@@ -8322,7 +8323,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.DropTableStep dropTemporaryTable(String table) {
+    public static org.jooq.DropTableStep dropTemporaryTable(@Stringly.Name String table) {
         return dsl().dropTemporaryTable(table);
     }
 
@@ -8355,7 +8356,7 @@ public class DSL {
      */
     @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.DropTableStep dropTemporaryTableIfExists(String table) {
+    public static org.jooq.DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
 
@@ -8388,7 +8389,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.DropViewFinalStep dropView(String view) {
+    public static org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
         return dsl().dropView(view);
     }
 
@@ -8421,7 +8422,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.DropViewFinalStep dropViewIfExists(String view) {
+    public static org.jooq.DropViewFinalStep dropViewIfExists(@Stringly.Name String view) {
         return dsl().dropViewIfExists(view);
     }
 
@@ -8568,7 +8569,7 @@ public class DSL {
      */
     @NotNull
     @Support({ MARIADB, MYSQL })
-    public static org.jooq.RowCountQuery setCatalog(String catalog) {
+    public static org.jooq.RowCountQuery setCatalog(@Stringly.Name String catalog) {
         return dsl().setCatalog(catalog);
     }
 
@@ -8607,7 +8608,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static org.jooq.RowCountQuery setSchema(String schema) {
+    public static org.jooq.RowCountQuery setSchema(@Stringly.Name String schema) {
         return dsl().setSchema(schema);
     }
 
@@ -8644,7 +8645,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.TruncateIdentityStep<Record> truncate(String table) {
+    public static org.jooq.TruncateIdentityStep<Record> truncate(@Stringly.Name String table) {
         return dsl().truncate(table);
     }
 
@@ -8677,7 +8678,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static org.jooq.TruncateIdentityStep<Record> truncateTable(String table) {
+    public static org.jooq.TruncateIdentityStep<Record> truncateTable(@Stringly.Name String table) {
         return dsl().truncateTable(table);
     }
 
@@ -14756,7 +14757,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> ascii(String string) {
+    public static Field<Integer> ascii(@Stringly.Param String string) {
         return new Ascii(Tools.field(string));
     }
 
@@ -14814,7 +14815,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> bitLength(String string) {
+    public static Field<Integer> bitLength(@Stringly.Param String string) {
         return new BitLength(Tools.field(string));
     }
 
@@ -14836,7 +14837,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> charLength(String string) {
+    public static Field<Integer> charLength(@Stringly.Param String string) {
         return new CharLength(Tools.field(string));
     }
 
@@ -15095,7 +15096,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> left(String string, int length) {
+    public static Field<String> left(@Stringly.Param String string, int length) {
         return new Left(Tools.field(string), Tools.field(length));
     }
 
@@ -15109,7 +15110,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> left(String string, Field<? extends Number> length) {
+    public static Field<String> left(@Stringly.Param String string, Field<? extends Number> length) {
         return new Left(Tools.field(string), length);
     }
 
@@ -15148,7 +15149,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> length(String string) {
+    public static Field<Integer> length(@Stringly.Param String string) {
         return charLength(Tools.field(string));
     }
 
@@ -15242,7 +15243,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> lower(String string) {
+    public static Field<String> lower(@Stringly.Param String string) {
         return new Lower(Tools.field(string));
     }
 
@@ -15268,7 +15269,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(Field<String> string, int length, String character) {
+    public static Field<String> lpad(Field<String> string, int length, @Stringly.Param String character) {
         return new Lpad(string, Tools.field(length), Tools.field(character));
     }
 
@@ -15298,7 +15299,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> lpad(Field<String> string, Field<? extends Number> length, String character) {
+    public static Field<String> lpad(Field<String> string, Field<? extends Number> length, @Stringly.Param String character) {
         return new Lpad(string, length, Tools.field(character));
     }
 
@@ -15355,7 +15356,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> ltrim(String string, String characters) {
+    public static Field<String> ltrim(@Stringly.Param String string, @Stringly.Param String characters) {
         return new Ltrim(Tools.field(string), Tools.field(characters));
     }
 
@@ -15369,7 +15370,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> ltrim(String string, Field<String> characters) {
+    public static Field<String> ltrim(@Stringly.Param String string, Field<String> characters) {
         return new Ltrim(Tools.field(string), characters);
     }
 
@@ -15383,7 +15384,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> ltrim(Field<String> string, String characters) {
+    public static Field<String> ltrim(Field<String> string, @Stringly.Param String characters) {
         return new Ltrim(string, Tools.field(characters));
     }
 
@@ -15410,7 +15411,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> ltrim(String string) {
+    public static Field<String> ltrim(@Stringly.Param String string) {
         return new Ltrim(Tools.field(string));
     }
 
@@ -15434,7 +15435,7 @@ public class DSL {
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
-    public static Field<String> md5(String string) {
+    public static Field<String> md5(@Stringly.Param String string) {
         return new Md5(Tools.field(string));
     }
 
@@ -15544,7 +15545,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> octetLength(String string) {
+    public static Field<Integer> octetLength(@Stringly.Param String string) {
         return new OctetLength(Tools.field(string));
     }
 
@@ -15571,7 +15572,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> overlay(Field<String> in, String placing, Number startIndex, Number length) {
+    public static Field<String> overlay(Field<String> in, @Stringly.Param String placing, Number startIndex, Number length) {
         return new Overlay(in, Tools.field(placing), Tools.field(startIndex), Tools.field(length));
     }
 
@@ -15602,7 +15603,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> overlay(Field<String> in, String placing, Number startIndex) {
+    public static Field<String> overlay(Field<String> in, @Stringly.Param String placing, Number startIndex) {
         return new Overlay(in, Tools.field(placing), Tools.field(startIndex));
     }
 
@@ -15643,7 +15644,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(String in, String search, int startIndex) {
+    public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search, int startIndex) {
         return new Position(Tools.field(in), Tools.field(search), Tools.field(startIndex));
     }
 
@@ -15658,7 +15659,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(String in, String search, Field<? extends Number> startIndex) {
+    public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search, Field<? extends Number> startIndex) {
         return new Position(Tools.field(in), Tools.field(search), startIndex);
     }
 
@@ -15673,7 +15674,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(String in, Field<String> search, int startIndex) {
+    public static Field<Integer> position(@Stringly.Param String in, Field<String> search, int startIndex) {
         return new Position(Tools.field(in), search, Tools.field(startIndex));
     }
 
@@ -15688,7 +15689,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(String in, Field<String> search, Field<? extends Number> startIndex) {
+    public static Field<Integer> position(@Stringly.Param String in, Field<String> search, Field<? extends Number> startIndex) {
         return new Position(Tools.field(in), search, startIndex);
     }
 
@@ -15703,7 +15704,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(Field<String> in, String search, int startIndex) {
+    public static Field<Integer> position(Field<String> in, @Stringly.Param String search, int startIndex) {
         return new Position(in, Tools.field(search), Tools.field(startIndex));
     }
 
@@ -15718,7 +15719,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(Field<String> in, String search, Field<? extends Number> startIndex) {
+    public static Field<Integer> position(Field<String> in, @Stringly.Param String search, Field<? extends Number> startIndex) {
         return new Position(in, Tools.field(search), startIndex);
     }
 
@@ -15762,7 +15763,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(String in, String search) {
+    public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search) {
         return new Position(Tools.field(in), Tools.field(search));
     }
 
@@ -15776,7 +15777,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(String in, Field<String> search) {
+    public static Field<Integer> position(@Stringly.Param String in, Field<String> search) {
         return new Position(Tools.field(in), search);
     }
 
@@ -15790,7 +15791,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<Integer> position(Field<String> in, String search) {
+    public static Field<Integer> position(Field<String> in, @Stringly.Param String search) {
         return new Position(in, Tools.field(search));
     }
 
@@ -15891,7 +15892,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> repeat(String string, int count) {
+    public static Field<String> repeat(@Stringly.Param String string, int count) {
         return new Repeat(Tools.field(string), Tools.field(count));
     }
 
@@ -15905,7 +15906,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> repeat(String string, Field<? extends Number> count) {
+    public static Field<String> repeat(@Stringly.Param String string, Field<? extends Number> count) {
         return new Repeat(Tools.field(string), count);
     }
 
@@ -15948,7 +15949,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(Field<String> string, String search, String replace) {
+    public static Field<String> replace(Field<String> string, @Stringly.Param String search, @Stringly.Param String replace) {
         return new Replace(string, Tools.field(search), Tools.field(replace));
     }
 
@@ -15963,7 +15964,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(Field<String> string, String search, Field<String> replace) {
+    public static Field<String> replace(Field<String> string, @Stringly.Param String search, Field<String> replace) {
         return new Replace(string, Tools.field(search), replace);
     }
 
@@ -15978,7 +15979,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(Field<String> string, Field<String> search, String replace) {
+    public static Field<String> replace(Field<String> string, Field<String> search, @Stringly.Param String replace) {
         return new Replace(string, search, Tools.field(replace));
     }
 
@@ -16007,7 +16008,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> replace(Field<String> string, String search) {
+    public static Field<String> replace(Field<String> string, @Stringly.Param String search) {
         return new Replace(string, Tools.field(search));
     }
 
@@ -16032,7 +16033,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<String> reverse(String string) {
+    public static Field<String> reverse(@Stringly.Param String string) {
         return new Reverse(Tools.field(string));
     }
 
@@ -16057,7 +16058,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> right(String string, int length) {
+    public static Field<String> right(@Stringly.Param String string, int length) {
         return new Right(Tools.field(string), Tools.field(length));
     }
 
@@ -16071,7 +16072,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> right(String string, Field<? extends Number> length) {
+    public static Field<String> right(@Stringly.Param String string, Field<? extends Number> length) {
         return new Right(Tools.field(string), length);
     }
 
@@ -16211,7 +16212,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(Field<String> string, int length, String character) {
+    public static Field<String> rpad(Field<String> string, int length, @Stringly.Param String character) {
         return new Rpad(string, Tools.field(length), Tools.field(character));
     }
 
@@ -16241,7 +16242,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rpad(Field<String> string, Field<? extends Number> length, String character) {
+    public static Field<String> rpad(Field<String> string, Field<? extends Number> length, @Stringly.Param String character) {
         return new Rpad(string, length, Tools.field(character));
     }
 
@@ -16298,7 +16299,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rtrim(String string, String characters) {
+    public static Field<String> rtrim(@Stringly.Param String string, @Stringly.Param String characters) {
         return new Rtrim(Tools.field(string), Tools.field(characters));
     }
 
@@ -16312,7 +16313,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rtrim(String string, Field<String> characters) {
+    public static Field<String> rtrim(@Stringly.Param String string, Field<String> characters) {
         return new Rtrim(Tools.field(string), characters);
     }
 
@@ -16326,7 +16327,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> rtrim(Field<String> string, String characters) {
+    public static Field<String> rtrim(Field<String> string, @Stringly.Param String characters) {
         return new Rtrim(string, Tools.field(characters));
     }
 
@@ -16353,7 +16354,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> rtrim(String string) {
+    public static Field<String> rtrim(@Stringly.Param String string) {
         return new Rtrim(Tools.field(string));
     }
 
@@ -16465,7 +16466,7 @@ public class DSL {
      */
     @NotNull
     @Support({ POSTGRES })
-    public static Field<String> splitPart(Field<String> string, String delimiter, Number n) {
+    public static Field<String> splitPart(Field<String> string, @Stringly.Param String delimiter, Number n) {
         return new SplitPart(string, Tools.field(delimiter), Tools.field(n));
     }
 
@@ -16480,7 +16481,7 @@ public class DSL {
      */
     @NotNull
     @Support({ POSTGRES })
-    public static Field<String> splitPart(Field<String> string, String delimiter, Field<? extends Number> n) {
+    public static Field<String> splitPart(Field<String> string, @Stringly.Param String delimiter, Field<? extends Number> n) {
         return new SplitPart(string, Tools.field(delimiter), n);
     }
 
@@ -16659,7 +16660,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    public static Field<String> toChar(Object value, String formatMask) {
+    public static Field<String> toChar(Object value, @Stringly.Param String formatMask) {
         return new ToChar(Tools.field(value), Tools.field(formatMask));
     }
 
@@ -16687,7 +16688,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    public static Field<String> toChar(Field<?> value, String formatMask) {
+    public static Field<String> toChar(Field<?> value, @Stringly.Param String formatMask) {
         return new ToChar(value, Tools.field(formatMask));
     }
 
@@ -16741,7 +16742,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Date> toDate(String value, String formatMask) {
+    public static Field<Date> toDate(@Stringly.Param String value, @Stringly.Param String formatMask) {
         return new ToDate(Tools.field(value), Tools.field(formatMask));
     }
 
@@ -16755,7 +16756,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Date> toDate(String value, Field<String> formatMask) {
+    public static Field<Date> toDate(@Stringly.Param String value, Field<String> formatMask) {
         return new ToDate(Tools.field(value), formatMask);
     }
 
@@ -16769,7 +16770,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Date> toDate(Field<String> value, String formatMask) {
+    public static Field<Date> toDate(Field<String> value, @Stringly.Param String formatMask) {
         return new ToDate(value, Tools.field(formatMask));
     }
 
@@ -16797,7 +16798,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Timestamp> toTimestamp(String value, String formatMask) {
+    public static Field<Timestamp> toTimestamp(@Stringly.Param String value, @Stringly.Param String formatMask) {
         return new ToTimestamp(Tools.field(value), Tools.field(formatMask));
     }
 
@@ -16811,7 +16812,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Timestamp> toTimestamp(String value, Field<String> formatMask) {
+    public static Field<Timestamp> toTimestamp(@Stringly.Param String value, Field<String> formatMask) {
         return new ToTimestamp(Tools.field(value), formatMask);
     }
 
@@ -16825,7 +16826,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Timestamp> toTimestamp(Field<String> value, String formatMask) {
+    public static Field<Timestamp> toTimestamp(Field<String> value, @Stringly.Param String formatMask) {
         return new ToTimestamp(value, Tools.field(formatMask));
     }
 
@@ -16854,7 +16855,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(Field<String> string, String from, String to) {
+    public static Field<String> translate(Field<String> string, @Stringly.Param String from, @Stringly.Param String to) {
         return new Translate(string, Tools.field(from), Tools.field(to));
     }
 
@@ -16869,7 +16870,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(Field<String> string, String from, Field<String> to) {
+    public static Field<String> translate(Field<String> string, @Stringly.Param String from, Field<String> to) {
         return new Translate(string, Tools.field(from), to);
     }
 
@@ -16884,7 +16885,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<String> translate(Field<String> string, Field<String> from, String to) {
+    public static Field<String> translate(Field<String> string, Field<String> from, @Stringly.Param String to) {
         return new Translate(string, from, Tools.field(to));
     }
 
@@ -16913,7 +16914,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> trim(String string, String characters) {
+    public static Field<String> trim(@Stringly.Param String string, @Stringly.Param String characters) {
         return new Trim(Tools.field(string), Tools.field(characters));
     }
 
@@ -16927,7 +16928,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> trim(String string, Field<String> characters) {
+    public static Field<String> trim(@Stringly.Param String string, Field<String> characters) {
         return new Trim(Tools.field(string), characters);
     }
 
@@ -16941,7 +16942,7 @@ public class DSL {
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static Field<String> trim(Field<String> string, String characters) {
+    public static Field<String> trim(Field<String> string, @Stringly.Param String characters) {
         return new Trim(string, Tools.field(characters));
     }
 
@@ -16968,7 +16969,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> trim(String string) {
+    public static Field<String> trim(@Stringly.Param String string) {
         return new Trim(Tools.field(string));
     }
 
@@ -17048,7 +17049,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Field<String> upper(String string) {
+    public static Field<String> upper(@Stringly.Param String string) {
         return new Upper(Tools.field(string));
     }
 
@@ -17174,7 +17175,7 @@ public class DSL {
      */
     @NotNull
     @Support({ POSTGRES })
-    public static Field<XML> xmlcomment(String comment) {
+    public static Field<XML> xmlcomment(@Stringly.Param String comment) {
         return new Xmlcomment(Tools.field(comment));
     }
 

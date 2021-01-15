@@ -72,7 +72,7 @@ public interface RevokeOnStep {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @NotNull
-    RevokeFromStep on(String on);
+    RevokeFromStep on(@Stringly.Name String on);
 
     /**
      * Add the <code>ON</code> clause to the <code>REVOKE</code> statement.

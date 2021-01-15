@@ -72,7 +72,7 @@ public interface GrantOnStep {
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @NotNull
-    GrantToStep on(String on);
+    GrantToStep on(@Stringly.Name String on);
 
     /**
      * Add the <code>ON</code> clause to the <code>GRANT</code> statement.

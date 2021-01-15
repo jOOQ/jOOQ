@@ -142,6 +142,7 @@ final class Keywords {
     static final Keyword K_DROP_SCHEMA                      = keyword("drop schema");
     static final Keyword K_DROP_TABLE                       = keyword("drop table");
     static final Keyword K_DROP_VIEW                        = keyword("drop view");
+    static final Keyword K_EACH                             = keyword("each");
     static final Keyword K_ELEMENTS                         = keyword("elements");
     static final Keyword K_ELSE                             = keyword("else");
     static final Keyword K_ELSEIF                           = keyword("elseif");
@@ -171,7 +172,7 @@ final class Keywords {
     static final Keyword K_FETCH_FIRST                      = keyword("fetch first");
     static final Keyword K_FETCH_NEXT                       = keyword("fetch next");
     static final Keyword K_FILTER                           = keyword("filter");
-    static final Keyword K_FINAL_TABLE                      = keyword("final table");
+    static final Keyword K_FINAL                            = keyword("final");
     static final Keyword K_FIRST                            = keyword("first");
     static final Keyword K_FOLLOWING                        = keyword("following");
     static final Keyword K_FOR                              = keyword("for");
@@ -208,6 +209,7 @@ final class Keywords {
     static final Keyword K_INLINE                           = keyword("inline");
     static final Keyword K_INNER_JOIN                       = keyword("inner join");
     static final Keyword K_INSERT                           = keyword("insert");
+    static final Keyword K_INSTEAD                          = keyword("instead");
     static final Keyword K_INT                              = keyword("int");
     static final Keyword K_INTERVAL                         = keyword("interval");
     static final Keyword K_INTO                             = keyword("into");
@@ -252,7 +254,7 @@ final class Keywords {
     static final Keyword K_MONTH                            = keyword("month");
     static final Keyword K_MULTISET                         = keyword("multiset");
     static final Keyword K_NAME                             = keyword("name");
-    static final Keyword K_NEW_TABLE                        = keyword("new table");
+    static final Keyword K_NEW                              = keyword("new");
     static final Keyword K_NEXTVAL                          = keyword("nextval");
     static final Keyword K_NEXT_VALUE_FOR                   = keyword("next value for");
     static final Keyword K_NO                               = keyword("no");
@@ -271,7 +273,7 @@ final class Keywords {
     static final Keyword K_NVARCHAR                         = keyword("nvarchar");
     static final Keyword K_OF                               = keyword("of");
     static final Keyword K_OFFSET                           = keyword("offset");
-    static final Keyword K_OLD_TABLE                        = keyword("old table");
+    static final Keyword K_OLD                              = keyword("old");
     static final Keyword K_ON                               = keyword("on");
     static final Keyword K_ON_COMMIT_DELETE_ROWS            = keyword("on commit delete rows");
     static final Keyword K_ON_COMMIT_DROP                   = keyword("on commit drop");
@@ -312,6 +314,7 @@ final class Keywords {
     static final Keyword K_RECURSIVE                        = keyword("recursive");
     static final Keyword K_REF                              = keyword("ref");
     static final Keyword K_REFERENCES                       = keyword("references");
+    static final Keyword K_REFERENCING                      = keyword("referencing");
     static final Keyword K_REGEXP                           = keyword("regexp");
     static final Keyword K_RENAME                           = keyword("rename");
     static final Keyword K_RENAME_COLUMN                    = keyword("rename column");
@@ -376,6 +379,7 @@ final class Keywords {
     static final Keyword K_TOP                              = keyword("top");
     static final Keyword K_TRAILING                         = keyword("trailing");
     static final Keyword K_TRIM                             = keyword("trim");
+    static final Keyword K_TRIGGER                          = keyword("trigger");
     static final Keyword K_TRUE                             = keyword("true");
     static final Keyword K_TRUNCATE_TABLE                   = keyword("truncate table");
     static final Keyword K_TYPE                             = keyword("type");

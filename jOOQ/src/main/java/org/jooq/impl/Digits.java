@@ -100,7 +100,7 @@ extends
             else if (t.getType() == Long.class)
                 ctx.visit(DSL.lpad(DSL.abs(value).cast(VARCHAR(DefaultDataType.LONG_PRECISION)), inline(DefaultDataType.LONG_PRECISION), inline("0")));
             else if (t.scaleDefined())
-                ctx.visit(DSL.lpad(DSL.abs(value.mul(inline(java.math.BigDecimal.TEN.pow(t.scale())))).cast(VARCHAR(t.precision())), inline(t.precision()), inline("0")));
+                ctx.visit(DSL.lpad(DSL.abs(value.mul(inline(java.math.BigDecimal.TEN.pow(t.scale())))).cast(t.scale(0)).cast(VARCHAR(t.precision())), inline(t.precision()), inline("0")));
             else
                 ctx.visit(DSL.lpad(DSL.abs(value).cast(VARCHAR(t.precision())), inline(t.precision()), inline("0")));
         }

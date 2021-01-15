@@ -37,101 +37,105 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.*;
 
-import java.util.*;
 
-import org.jetbrains.annotations.*;
 
-/**
- * A step in the construction of the <code>CREATE TRIGGER</code> statement.
- * <p>
- * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
- * <p>
- * It is usually not recommended to reference any <code>XYZ*Step</code> types
- * directly from client code, or assign them to local variables. When writing
- * dynamic SQL, creating a statement's components dynamically, and passing them
- * to the DSL API statically is usually a better choice. See the manual's
- * section about dynamic SQL for details: <a href=
- * "https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql">https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql</a>.
- * <p>
- * Drawbacks of referencing the <code>XYZ*Step</code> types directly:
- * <ul>
- * <li>They're operating on mutable implementations (as of jOOQ 3.x)</li>
- * <li>They're less composable and not easy to get right when dynamic SQL gets
- * complex</li>
- * <li>They're less readable</li>
- * <li>They might have binary incompatible changes between minor releases</li>
- * </ul>
- */
-@SuppressWarnings({ "unused" })
-public interface CreateTriggerWhenStep extends CreateTriggerActionStep {
 
-    /**
-     * Add the <code>WHEN</code> clause to the <code>CREATE TRIGGER</code> statement.
-     */
-    @Support
-    @NotNull
-    CreateTriggerActionStep when(Field<Boolean> when);
 
-    /**
-     * Add the <code>WHEN</code> clause to the <code>CREATE TRIGGER</code> statement.
-     */
-    @Support
-    @NotNull
-    CreateTriggerActionStep when(Condition... when);
 
-    /**
-     * Add the <code>WHEN</code> clause to the <code>CREATE TRIGGER</code> statement.
-     */
-    @Support
-    @NotNull
-    CreateTriggerActionStep when(Collection<? extends Condition> when);
 
-    /**
-     * Add the <code>WHEN</code> clause to the <code>CREATE TRIGGER</code> statement.
-     */
-    @Support
-    @NotNull
-    CreateTriggerActionStep when(Condition when);
 
-    /**
-     * Add the <code>WHEN</code> clause to the <code>CREATE TRIGGER</code> statement.
-     *
-     * @see SQL
-     */
-    @Support
-    @PlainSQL
-    @NotNull
-    CreateTriggerActionStep when(@Stringly.SQL String when, QueryPart... parts);
 
-    /**
-     * Add the <code>WHEN</code> clause to the <code>CREATE TRIGGER</code> statement.
-     *
-     * @see SQL
-     */
-    @Support
-    @PlainSQL
-    @NotNull
-    CreateTriggerActionStep when(@Stringly.SQL String when, Object... bindings);
 
-    /**
-     * Add the <code>WHEN</code> clause to the <code>CREATE TRIGGER</code> statement.
-     *
-     * @see SQL
-     */
-    @Support
-    @PlainSQL
-    @NotNull
-    CreateTriggerActionStep when(@Stringly.SQL String when);
 
-    /**
-     * Add the <code>WHEN</code> clause to the <code>CREATE TRIGGER</code> statement.
-     *
-     * @see SQL
-     */
-    @Support
-    @PlainSQL
-    @NotNull
-    CreateTriggerActionStep when(SQL when);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

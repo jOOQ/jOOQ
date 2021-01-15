@@ -411,12 +411,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    @Deprecated
-    public final SelectImpl where(Boolean condition) {
-        return where(condition(condition));
-    }
-
-    @Override
     public final SelectImpl where(SQL sql) {
         return where(condition(sql));
     }
@@ -479,12 +473,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    @Deprecated
-    public final SelectImpl and(Boolean condition) {
-        return and(condition(condition));
-    }
-
-    @Override
     public final SelectImpl and(SQL sql) {
         return and(condition(sql));
     }
@@ -511,12 +499,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectImpl andNot(Field<Boolean> condition) {
-        return andNot(condition(condition));
-    }
-
-    @Override
-    @Deprecated
-    public final SelectImpl andNot(Boolean condition) {
         return andNot(condition(condition));
     }
 
@@ -560,12 +542,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    @Deprecated
-    public final SelectImpl or(Boolean condition) {
-        return or(condition(condition));
-    }
-
-    @Override
     public final SelectImpl or(SQL sql) {
         return or(condition(sql));
     }
@@ -596,12 +572,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    @Deprecated
-    public final SelectImpl orNot(Boolean condition) {
-        return orNot(condition(condition));
-    }
-
-    @Override
     public final SelectImpl orExists(Select<?> select) {
         return or(exists(select));
     }
@@ -610,27 +580,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     public final SelectImpl orNotExists(Select<?> select) {
         return or(notExists(select));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2069,12 +2018,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    @Deprecated
-    public final SelectImpl having(Boolean condition) {
-        return having(condition(condition));
-    }
-
-    @Override
     public final SelectImpl having(SQL sql) {
         return having(condition(sql));
     }
@@ -2192,12 +2135,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectImpl on(Field<Boolean> condition) {
-        return on(condition(condition));
-    }
-
-    @Override
-    @Deprecated
-    public final SelectImpl on(Boolean condition) {
         return on(condition(condition));
     }
 

@@ -113,24 +113,6 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #and(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #and(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    DivideByOnConditionStep and(Boolean condition);
-
-    /**
-     * Combine the currently assembled conditions with another one using the
-     * {@link Operator#AND} operator.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -215,24 +197,6 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     DivideByOnConditionStep andNot(Field<Boolean> condition);
 
     /**
-     * Combine the currently assembled conditions with a negated other one using
-     * the {@link Operator#AND} operator.
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #andNot(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #andNot(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    DivideByOnConditionStep andNot(Boolean condition);
-
-    /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
@@ -263,24 +227,6 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     @NotNull
     @Support
     DivideByOnConditionStep or(Field<Boolean> condition);
-
-    /**
-     * Combine the currently assembled conditions with another one using the
-     * {@link Operator#OR} operator.
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #or(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #or(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    DivideByOnConditionStep or(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -367,24 +313,6 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     @NotNull
     @Support
     DivideByOnConditionStep orNot(Field<Boolean> condition);
-
-    /**
-     * Combine the currently assembled conditions with a negated other one using
-     * the {@link Operator#OR} operator.
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #orNot(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #orNot(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    DivideByOnConditionStep orNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>

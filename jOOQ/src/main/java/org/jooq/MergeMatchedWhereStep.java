@@ -133,38 +133,4 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedDeleteStep<R> where(Field<Boolean> condition);
-
-    /**
-     * Add an additional <code>WHERE</code> clause to the preceding
-     * <code>WHEN MATCHED THEN UPDATE</code> clause.
-     * <p>
-     * <h3>In Oracle, this will produce:</h3>
-     * <p>
-     * <code><pre>
-     * WHEN MATCHED THEN UPDATE SET .. WHERE [ condition ]
-     * </pre></code>
-     * <p>
-     * <h3>In SQL Server, this will produce:</h3>
-     * <p>
-     * <code>
-     *
-     * <pre>
-     * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
-     * </pre>
-     *
-     * <code>
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #where(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #where(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
-    MergeMatchedDeleteStep<R> where(Boolean condition);
 }

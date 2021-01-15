@@ -109,26 +109,6 @@ public interface Condition extends QueryPart {
     /**
      * Combine this condition with another one using the {@link Operator#AND}
      * operator.
-     *
-     * @param other The other condition
-     * @return The combined condition
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #and(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #and(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    Condition and(Boolean other);
-
-    /**
-     * Combine this condition with another one using the {@link Operator#AND}
-     * operator.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -231,26 +211,6 @@ public interface Condition extends QueryPart {
     Condition andNot(Field<Boolean> other);
 
     /**
-     * Combine this condition with a negated other one using the
-     * {@link Operator#AND} operator.
-     *
-     * @param other The other condition
-     * @return The combined condition
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #andNot(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #andNot(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    Condition andNot(Boolean other);
-
-    /**
      * Combine this condition with an EXISTS clause using the
      * {@link Operator#AND} operator.
      *
@@ -293,26 +253,6 @@ public interface Condition extends QueryPart {
     @NotNull
     @Support
     Condition or(Field<Boolean> other);
-
-    /**
-     * Combine this condition with another one using the {@link Operator#OR}
-     * operator.
-     *
-     * @param other The other condition
-     * @return The combined condition
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #or(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #or(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    Condition or(Boolean other);
 
     /**
      * Combine this condition with another one using the {@link Operator#OR}
@@ -417,26 +357,6 @@ public interface Condition extends QueryPart {
     @NotNull
     @Support
     Condition orNot(Field<Boolean> other);
-
-    /**
-     * Combine this condition with a negated other one using the
-     * {@link Operator#OR} operator.
-     *
-     * @param other The other condition
-     * @return The combined condition
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #orNot(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #orNot(Boolean)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    Condition orNot(Boolean other);
 
     /**
      * Combine this condition with an EXISTS clause using the

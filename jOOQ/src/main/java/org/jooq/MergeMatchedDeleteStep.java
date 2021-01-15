@@ -117,27 +117,4 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeMatchedSt
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedStep<R> deleteWhere(Field<Boolean> condition);
-
-    /**
-     * Add an additional <code>DELETE WHERE</code> clause to the preceding
-     * <code>WHEN MATCHED THEN UPDATE</code> clause.
-     * <p>
-     * See <a href=
-     * "http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm"
-     * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
-     * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #deleteWhere(Condition)}
-     *             (typically with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #deleteWhere(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
-    MergeMatchedStep<R> deleteWhere(Boolean condition);
 }

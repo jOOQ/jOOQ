@@ -784,12 +784,6 @@ implements
     }
 
     @Override
-    @Deprecated
-    public final MergeOnConditionStep<R> on(Boolean condition) {
-        return on(condition(condition));
-    }
-
-    @Override
     public final MergeImpl on(SQL sql) {
         return on(condition(sql));
     }
@@ -817,12 +811,6 @@ implements
 
     @Override
     public final MergeImpl and(Field<Boolean> condition) {
-        return and(condition(condition));
-    }
-
-    @Override
-    @Deprecated
-    public final MergeImpl and(Boolean condition) {
         return and(condition(condition));
     }
 
@@ -857,12 +845,6 @@ implements
     }
 
     @Override
-    @Deprecated
-    public final MergeImpl andNot(Boolean condition) {
-        return andNot(condition(condition));
-    }
-
-    @Override
     public final MergeImpl andExists(Select<?> select) {
         return and(exists(select));
     }
@@ -880,12 +862,6 @@ implements
 
     @Override
     public final MergeImpl or(Field<Boolean> condition) {
-        return and(condition(condition));
-    }
-
-    @Override
-    @Deprecated
-    public final MergeImpl or(Boolean condition) {
         return and(condition(condition));
     }
 
@@ -916,12 +892,6 @@ implements
 
     @Override
     public final MergeImpl orNot(Field<Boolean> condition) {
-        return orNot(condition(condition));
-    }
-
-    @Override
-    @Deprecated
-    public final MergeImpl orNot(Boolean condition) {
         return orNot(condition(condition));
     }
 
@@ -1212,12 +1182,6 @@ implements
     }
 
     @Override
-    @Deprecated
-    public final MergeMatchedDeleteStep<R> where(Boolean condition) {
-        return where(condition(condition));
-    }
-
-    @Override
     public final MergeImpl deleteWhere(Condition condition) {
         // The ordering is to run deletions *before* updates in order to prevent
         // constraint violations that may occur from updates, otherwise.
@@ -1232,12 +1196,6 @@ implements
 
     @Override
     public final MergeImpl deleteWhere(Field<Boolean> condition) {
-        return deleteWhere(condition(condition));
-    }
-
-    @Override
-    @Deprecated
-    public final MergeImpl deleteWhere(Boolean condition) {
         return deleteWhere(condition(condition));
     }
 

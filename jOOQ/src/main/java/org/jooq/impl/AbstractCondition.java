@@ -92,22 +92,12 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     }
 
     @Override
-    public Condition and(Boolean other) {
-        return and(condition(other));
-    }
-
-    @Override
     public final Condition or(Condition other) {
         return DSL.or(this, other);
     }
 
     @Override
     public final Condition or(Field<Boolean> other) {
-        return or(condition(other));
-    }
-
-    @Override
-    public final Condition or(Boolean other) {
         return or(condition(other));
     }
 
@@ -162,22 +152,12 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     }
 
     @Override
-    public final Condition andNot(Boolean other) {
-        return andNot(condition(other));
-    }
-
-    @Override
     public final Condition orNot(Condition other) {
         return or(other.not());
     }
 
     @Override
     public final Condition orNot(Field<Boolean> other) {
-        return orNot(condition(other));
-    }
-
-    @Override
-    public final Condition orNot(Boolean other) {
         return orNot(condition(other));
     }
 

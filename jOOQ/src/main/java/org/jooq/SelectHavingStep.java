@@ -139,23 +139,6 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
 
     /**
      * Add a <code>HAVING</code> clause to the query.
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #having(Condition)} (typically
-     *             with {@link DSL#trueCondition()},
-     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
-     *             the parameter) or {@link #having(Field)} instead. Due to
-     *             ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    SelectHavingConditionStep<R> having(Boolean condition);
-
-    /**
-     * Add a <code>HAVING</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

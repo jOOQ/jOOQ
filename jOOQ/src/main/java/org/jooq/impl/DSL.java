@@ -13340,27 +13340,6 @@ public class DSL {
      * {@link #not(Condition)}, {@link #condition(Field)}, i.e. <code><pre>
      * field(not(condition(field)));
      * </pre></code>
-     *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #not(Condition)} instead. Due
-     *             to ambiguity between calling this method using
-     *             {@link Field#equals(Object)} argument, vs. calling the other
-     *             method via a {@link Field#equal(Object)} argument, this
-     *             method will be removed in the future.
-     */
-    @Deprecated
-    @NotNull
-    @Support
-    public static Field<Boolean> not(Boolean value) {
-        return not(Tools.field(value));
-    }
-
-    /**
-     * Invert a boolean value.
-     * <p>
-     * This is convenience for calling {@link #field(Condition)},
-     * {@link #not(Condition)}, {@link #condition(Field)}, i.e. <code><pre>
-     * field(not(condition(field)));
-     * </pre></code>
      */
     @NotNull
     @Support

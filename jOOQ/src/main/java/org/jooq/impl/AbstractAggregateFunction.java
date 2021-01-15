@@ -196,11 +196,6 @@ implements
     }
 
     @Override
-    public final WindowBeforeOverStep<T> filterWhere(Boolean field) {
-        return filterWhere(condition(field));
-    }
-
-    @Override
     public final WindowBeforeOverStep<T> filterWhere(SQL sql) {
         return filterWhere(condition(sql));
     }

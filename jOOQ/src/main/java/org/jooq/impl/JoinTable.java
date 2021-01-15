@@ -624,11 +624,6 @@ implements
     }
 
     @Override
-    public final JoinTable on(Boolean c) {
-        return on(condition(c));
-    }
-
-    @Override
     public final JoinTable on(SQL sql) {
         and(sql);
         return this;
@@ -796,11 +791,6 @@ implements
     }
 
     @Override
-    public final JoinTable and(Boolean c) {
-        return and(condition(c));
-    }
-
-    @Override
     public final JoinTable and(SQL sql) {
         return and(condition(sql));
     }
@@ -831,11 +821,6 @@ implements
     }
 
     @Override
-    public final JoinTable andNot(Boolean c) {
-        return andNot(condition(c));
-    }
-
-    @Override
     public final JoinTable andExists(Select<?> select) {
         return and(exists(select));
     }
@@ -853,11 +838,6 @@ implements
 
     @Override
     public final JoinTable or(Field<Boolean> c) {
-        return or(condition(c));
-    }
-
-    @Override
-    public final JoinTable or(Boolean c) {
         return or(condition(c));
     }
 
@@ -888,11 +868,6 @@ implements
 
     @Override
     public final JoinTable orNot(Field<Boolean> c) {
-        return orNot(condition(c));
-    }
-
-    @Override
-    public final JoinTable orNot(Boolean c) {
         return orNot(condition(c));
     }
 

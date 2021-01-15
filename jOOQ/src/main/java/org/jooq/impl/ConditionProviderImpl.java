@@ -144,11 +144,6 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     }
 
     @Override
-    public final Condition and(Boolean other) {
-        return getWhere().and(other);
-    }
-
-    @Override
     public final Condition and(SQL sql) {
         return getWhere().and(sql);
     }
@@ -179,11 +174,6 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
     }
 
     @Override
-    public final Condition andNot(Boolean other) {
-        return getWhere().andNot(other);
-    }
-
-    @Override
     public final Condition andExists(Select<?> select) {
         return getWhere().andExists(select);
     }
@@ -200,11 +190,6 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
 
     @Override
     public final Condition or(Field<Boolean> other) {
-        return getWhere().or(other);
-    }
-
-    @Override
-    public final Condition or(Boolean other) {
         return getWhere().or(other);
     }
 
@@ -235,11 +220,6 @@ final class ConditionProviderImpl extends AbstractQueryPart implements Condition
 
     @Override
     public final Condition orNot(Field<Boolean> other) {
-        return getWhere().orNot(other);
-    }
-
-    @Override
-    public final Condition orNot(Boolean other) {
         return getWhere().orNot(other);
     }
 

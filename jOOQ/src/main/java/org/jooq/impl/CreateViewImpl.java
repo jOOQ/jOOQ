@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -104,7 +105,7 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
      */
     private static final long                                                       serialVersionUID         = 8904572826501186329L;
     private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
-    private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, MYSQL, POSTGRES);
 
     private final boolean                                                           ifNotExists;
     private final boolean                                                           orReplace;

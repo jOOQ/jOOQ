@@ -5285,6 +5285,15 @@ final class Tools {
     }
 
     /**
+     * Increment a counter, run a runnable, and decrement the counter again.
+     */
+    static final void increment(Map<Object, Object> data, DataKey key, Runnable runnable) {
+        increment(data, key);
+        runnable.run();
+        decrement(data, key);
+    }
+
+    /**
      * Increment a counter and return true if the counter was zero prior to
      * incrementing.
      */

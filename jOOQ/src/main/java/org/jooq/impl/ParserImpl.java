@@ -375,6 +375,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -425,6 +426,11 @@ import org.jooq.CreateTableConstraintStep;
 import org.jooq.CreateTableOnCommitStep;
 import org.jooq.CreateTableStorageStep;
 import org.jooq.CreateTableWithDataStep;
+// ...
+// ...
+// ...
+// ...
+// ...
 import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -578,6 +584,8 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -2482,7 +2490,12 @@ final class ParserContext {
                 break;
 
             case 'O':
-                if (parseKeywordIf("OR REPLACE VIEW"))
+                if (parseKeywordIf("OR REPLACE TRIGGER") && requireProEdition())
+
+
+
+                    ;
+                else if (parseKeywordIf("OR REPLACE VIEW"))
                     return parseCreateView(true);
                 else if (parseKeywordIf("OR REPLACE FORCE VIEW"))
                     return parseCreateView(true);
@@ -2494,8 +2507,6 @@ final class ParserContext {
                     throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
                 else if (parseKeywordIf("OR REPLACE PROCEDURE"))
                     throw notImplemented("CREATE PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("OR REPLACE TRIGGER"))
-                    throw notImplemented("CREATE TRIGGER", "https://github.com/jOOQ/jOOQ/issues/6956");
 
                 break;
 
@@ -2532,12 +2543,15 @@ final class ParserContext {
                     return parseCreateTable(true);
                 else if (parseKeywordIf("TEMPORARY TABLE"))
                     return parseCreateTable(true);
+                else if (parseKeywordIf("TRIGGER") && requireProEdition())
+
+
+
+                    ;
                 else if (parseKeywordIf("TYPE"))
                     return parseCreateType();
                 else if (parseKeywordIf("TABLESPACE"))
                     throw notImplemented("CREATE TABLESPACE");
-                else if (parseKeywordIf("TRIGGER"))
-                    throw notImplemented("CREATE TRIGGER", "https://github.com/jOOQ/jOOQ/issues/6956");
 
                 break;
 
@@ -4908,6 +4922,108 @@ final class ParserContext {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final DDLQuery parseDropType() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         List<Name> typeNames = parseIdentifiers();
@@ -5807,11 +5923,6 @@ final class ParserContext {
             && !peekKeyword("FOR UPDATE")
             && !peekKeyword("FOR XML")
             && parseKeyword("FOR") && requireProEdition()) {
-
-
-
-
-
 
 
 
@@ -11401,6 +11512,13 @@ final class ParserContext {
             return (Param<T>) field;
         else
             throw expected("Bind parameter or constant");
+    }
+
+    private final <T> T parseParenthesised(Supplier<T> supplier) {
+        parse('(');
+        T result = supplier.get();
+        parse(')');
+        return result;
     }
 
     private final Field<Long> parseParenthesisedUnsignedIntegerOrBindVariable() {

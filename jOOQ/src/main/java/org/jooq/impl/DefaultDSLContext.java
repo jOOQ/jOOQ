@@ -3056,6 +3056,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new CreateIndexImpl(configuration(), true, true);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public org.jooq.CreateSchemaFinalStep createSchema(@Stringly.Name String schema) {
         return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
@@ -3325,6 +3351,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return new DropTableImpl(configuration(), true, table, true);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {

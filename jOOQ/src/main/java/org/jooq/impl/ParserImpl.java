@@ -2721,12 +2721,15 @@ final class ParserContext {
                     return parseDropTable(false);
                 else if (parseKeywordIf("TEMPORARY TABLE"))
                     return parseDropTable(true);
+                else if (parseKeywordIf("TRIGGER") && requireProEdition())
+
+
+
+                    ;
                 else if (parseKeywordIf("TYPE"))
                     return parseDropType();
                 else if (parseKeywordIf("TABLESPACE"))
                     throw notImplemented("DROP TABLESPACE");
-                else if (parseKeywordIf("TRIGGER"))
-                    throw notImplemented("DROP TRIGGER", "https://github.com/jOOQ/jOOQ/issues/6956");
 
                 break;
 
@@ -4890,6 +4893,20 @@ final class ParserContext {
 
         return s2;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final DDLQuery parseDropType() {
         boolean ifExists = parseKeywordIf("IF EXISTS");

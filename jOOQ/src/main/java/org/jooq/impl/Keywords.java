@@ -364,6 +364,7 @@ final class Keywords {
     static final Keyword K_SQLSTATE                         = keyword("sqlstate");
     static final Keyword K_START_AT                         = keyword("start at");
     static final Keyword K_START_WITH                       = keyword("start with");
+    static final Keyword K_STATEMENT                        = keyword("statement");
     static final Keyword K_STORING                          = keyword("storing");
     static final Keyword K_SWITCH                           = keyword("switch");
     static final Keyword K_SYMMETRIC                        = keyword("symmetric");

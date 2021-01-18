@@ -2476,9 +2476,7 @@ final class ParserContext {
             case 'G':
                 if (parseKeywordIf("GENERATOR"))
                     return parseCreateSequence();
-                else if (parseKeywordIf("GLOBAL TEMP TABLE"))
-                    return parseCreateTable(true);
-                else if (parseKeywordIf("GLOBAL TEMPORARY TABLE"))
+                else if (parseKeywordIf("GLOBAL TEMP TABLE", "GLOBAL TEMPORARY TABLE"))
                     return parseCreateTable(true);
 
                 break;
@@ -2490,16 +2488,12 @@ final class ParserContext {
                 break;
 
             case 'O':
-                if (parseKeywordIf("OR REPLACE TRIGGER") && requireProEdition())
+                if (parseKeywordIf("OR REPLACE TRIGGER", "OR ALTER TRIGGER") && requireProEdition())
 
 
 
                     ;
-                else if (parseKeywordIf("OR REPLACE VIEW"))
-                    return parseCreateView(true);
-                else if (parseKeywordIf("OR REPLACE FORCE VIEW"))
-                    return parseCreateView(true);
-                else if (parseKeywordIf("OR ALTER VIEW"))
+                else if (parseKeywordIf("OR REPLACE VIEW", "OR REPLACE FORCE VIEW", "OR ALTER VIEW"))
                     return parseCreateView(true);
                 else if (parseKeywordIf("OR REPLACE FUNCTION"))
                     throw notImplemented("CREATE FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
@@ -2539,9 +2533,7 @@ final class ParserContext {
             case 'T':
                 if (parseKeywordIf("TABLE"))
                     return parseCreateTable(false);
-                else if (parseKeywordIf("TEMP TABLE"))
-                    return parseCreateTable(true);
-                else if (parseKeywordIf("TEMPORARY TABLE"))
+                else if (parseKeywordIf("TEMP TABLE", "TEMPORARY TABLE"))
                     return parseCreateTable(true);
                 else if (parseKeywordIf("TRIGGER") && requireProEdition())
 

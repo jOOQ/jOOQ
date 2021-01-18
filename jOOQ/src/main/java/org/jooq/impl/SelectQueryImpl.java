@@ -3108,17 +3108,26 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void setForUpdate(boolean forUpdate) {
-        forLock().forLockMode = ForLockMode.UPDATE;
+        if (forUpdate)
+            forLock().forLockMode = ForLockMode.UPDATE;
+        else
+            forLock = null;
     }
 
     @Override
     public final void setForNoKeyUpdate(boolean forNoKeyUpdate) {
-        forLock().forLockMode = ForLockMode.NO_KEY_UPDATE;
+        if (forNoKeyUpdate)
+            forLock().forLockMode = ForLockMode.NO_KEY_UPDATE;
+        else
+            forLock = null;
     }
 
     @Override
     public final void setForKeyShare(boolean forKeyShare) {
-        forLock().forLockMode = ForLockMode.KEY_SHARE;
+        if (forKeyShare)
+            forLock().forLockMode = ForLockMode.KEY_SHARE;
+        else
+            forLock = null;
     }
 
     @Override
@@ -3153,7 +3162,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void setForShare(boolean forShare) {
-        forLock().forLockMode = ForLockMode.SHARE;
+        if (forShare)
+            forLock().forLockMode = ForLockMode.SHARE;
+        else
+            forLock = null;
     }
 
     @Override

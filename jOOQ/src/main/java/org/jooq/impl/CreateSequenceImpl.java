@@ -258,14 +258,10 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createSequenceIfNotExists && !supportsIfNotExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_SEQUENCE);
+        if (createSequenceIfNotExists && !supportsIfNotExists(ctx))
+            tryCatch(ctx, DDLStatementType.CREATE_SEQUENCE, () -> accept0(ctx));
+        else
             accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.CREATE_SEQUENCE);
-        }
-        else {
-            accept0(ctx);
-        }
     }
 
     private final void accept0(Context<?> ctx) {

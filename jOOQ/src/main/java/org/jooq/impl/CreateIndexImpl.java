@@ -264,11 +264,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createIndexIfNotExists && !supportsIfNotExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_INDEX);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.CREATE_INDEX);
-        }
+        if (createIndexIfNotExists && !supportsIfNotExists(ctx))
+            tryCatch(ctx, DDLStatementType.CREATE_INDEX, () -> accept0(ctx));
         else
             accept0(ctx);
     }

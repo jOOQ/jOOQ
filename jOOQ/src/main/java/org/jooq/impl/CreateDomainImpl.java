@@ -165,11 +165,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createDomainIfNotExists && !supportsIfNotExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_DOMAIN);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.CREATE_DOMAIN);
-        }
+        if (createDomainIfNotExists && !supportsIfNotExists(ctx))
+            tryCatch(ctx, DDLStatementType.CREATE_DOMAIN, () -> accept0(ctx));
         else
             accept0(ctx);
     }

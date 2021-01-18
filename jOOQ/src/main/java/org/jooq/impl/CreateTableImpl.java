@@ -96,10 +96,11 @@ import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
-import static org.jooq.impl.Tools.end;
 import static org.jooq.impl.Tools.endExecuteImmediate;
 import static org.jooq.impl.Tools.enumLiterals;
+import static org.jooq.impl.Tools.executeImmediate;
 import static org.jooq.impl.Tools.storedEnumType;
+import static org.jooq.impl.Tools.tryCatch;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_SELECT_NO_DATA;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 
@@ -358,13 +359,19 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_TABLE);
+        if (ifNotExists && !supportsIfNotExists(ctx))
+            tryCatch(ctx, DDLStatementType.CREATE_TABLE, () -> accept0(ctx));
+        else
             accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.CREATE_TABLE);
+    }
+
+    private static final void executeImmediateIf(boolean wrap, Context<?> ctx, Runnable runnable) {
+        if (wrap) {
+            executeImmediate(ctx, runnable);
         }
         else {
-            accept0(ctx);
+            runnable.run();
+            ctx.sql(';');
         }
     }
 
@@ -373,56 +380,33 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         boolean i = !indexes.isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect());
 
         if (c || i) {
-            begin(ctx);
+            begin(ctx, () -> {
+                executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), ctx, () -> accept1(ctx));
 
-            if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
-                beginExecuteImmediate(ctx);
-
-            accept1(ctx);
-
-            if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
-                endExecuteImmediate(ctx);
-            else
-                ctx.sql(';');
-
-            if (c) {
-                ctx.formatSeparator();
-
-                if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
-                    beginExecuteImmediate(ctx);
-
-                ctx.visit(commentOnTable(table).is(comment));
-
-                if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
-                    endExecuteImmediate(ctx);
-                else
-                    ctx.sql(';');
-            }
-
-            if (i) {
-                for (Index index : indexes) {
+                if (c) {
                     ctx.formatSeparator();
 
-                    if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
-                        beginExecuteImmediate(ctx);
-
-                    if ("".equals(index.getName()))
-                        ctx.visit(createIndex().on(index.getTable(), index.getFields()));
-                    else
-                        ctx.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
-
-                    if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
-                        endExecuteImmediate(ctx);
-                    else
-                        ctx.sql(';');
+                    executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), ctx,
+                        () -> ctx.visit(commentOnTable(table).is(comment))
+                    );
                 }
-            }
 
-            end(ctx);
-            return;
+                if (i) {
+                    for (Index index : indexes) {
+                        ctx.formatSeparator();
+
+                        executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), ctx, () -> {
+                            if ("".equals(index.getName()))
+                                ctx.visit(createIndex().on(index.getTable(), index.getFields()));
+                            else
+                                ctx.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
+                        });
+                    }
+                }
+            });
         }
-
-        accept1(ctx);
+        else
+            accept1(ctx);
     }
 
     private final void accept1(Context<?> ctx) {
@@ -622,9 +606,6 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
             ctx.formatSeparator()
                .visit(K_WITH_DATA);
     }
-
-
-
 
 
 

@@ -67,6 +67,7 @@ import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Keywords.K_VIEW;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.tryCatch;
 
 import java.util.List;
 import java.util.Set;
@@ -197,14 +198,10 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_VIEW);
+        if (ifNotExists && !supportsIfNotExists(ctx))
+            tryCatch(ctx, DDLStatementType.CREATE_VIEW, () -> accept0(ctx));
+        else
             accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.CREATE_VIEW);
-        }
-        else {
-            accept0(ctx);
-        }
     }
 
     private final void accept0(Context<?> ctx) {

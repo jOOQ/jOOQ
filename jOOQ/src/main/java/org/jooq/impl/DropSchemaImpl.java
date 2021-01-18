@@ -157,14 +157,10 @@ implements
     }
 
     private void accept0(Context<?> ctx) {
-        if (dropSchemaIfExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
+        if (dropSchemaIfExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.DROP_SCHEMA, () -> accept1(ctx));
+        else
             accept1(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
-        }
-        else {
-            accept1(ctx);
-        }
     }
 
     private void accept1(Context<?> ctx) {

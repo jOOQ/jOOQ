@@ -132,11 +132,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropDomainIfExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.DROP_DOMAIN);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.DROP_DOMAIN);
-        }
+        if (dropDomainIfExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.DROP_DOMAIN, () -> accept0(ctx));
         else
             accept0(ctx);
     }

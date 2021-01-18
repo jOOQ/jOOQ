@@ -160,14 +160,10 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (alterIndexIfExists && !supportsIfExists(ctx)) {
-            beginTryCatch(ctx, DDLStatementType.ALTER_INDEX);
+        if (alterIndexIfExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.ALTER_INDEX, () -> accept0(ctx));
+        else
             accept0(ctx);
-            endTryCatch(ctx, DDLStatementType.ALTER_INDEX);
-        }
-        else {
-            accept0(ctx);
-        }
     }
 
     private final void accept0(Context<?> ctx) {

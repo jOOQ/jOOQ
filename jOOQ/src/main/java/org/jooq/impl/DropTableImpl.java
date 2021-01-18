@@ -140,11 +140,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropTableIfExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.DROP_TABLE);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.DROP_TABLE);
-        }
+        if (dropTableIfExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.DROP_TABLE, () -> accept0(ctx));
         else
             accept0(ctx);
     }

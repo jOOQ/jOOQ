@@ -330,11 +330,8 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (renameConstraintIfExists && !supportsRenameConstraintIfExists(ctx) ||
-            dropConstraintIfExists && !supportsDropConstraintIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.ALTER_DOMAIN);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.ALTER_DOMAIN);
-        }
+            dropConstraintIfExists && !supportsDropConstraintIfExists(ctx))
+            Tools.tryCatch(ctx, DDLStatementType.ALTER_DOMAIN, () -> accept0(ctx));
         else
             accept0(ctx);
     }

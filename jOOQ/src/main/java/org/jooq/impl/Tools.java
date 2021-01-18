@@ -197,7 +197,6 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -4291,9 +4290,18 @@ final class Tools {
     }
 
     /**
+     * Wrap a runnable in a <code>BEGIN / END</code> anonymous block.
+     */
+    static final void begin(Context<?> ctx, Runnable runnable) {
+        begin(ctx);
+        runnable.run();
+        end(ctx);
+    }
+
+    /**
      * Generate the <code>BEGIN</code> part of an anonymous procedural block.
      */
-    static final void begin(Context<?> ctx) {
+    private static final void begin(Context<?> ctx) {
         switch (ctx.family()) {
 
 
@@ -4337,7 +4345,7 @@ final class Tools {
     /**
      * Generate the <code>END</code> part of an anonymous procedural block.
      */
-    static final void end(Context<?> ctx) {
+    private static final void end(Context<?> ctx) {
         switch (ctx.family()) {
 
 
@@ -4373,6 +4381,15 @@ final class Tools {
     /**
      * Wrap a statement in an <code>EXECUTE IMMEDIATE</code> statement.
      */
+    static final void executeImmediate(Context<?> ctx, Runnable runnable) {
+        beginExecuteImmediate(ctx);
+        runnable.run();
+        endExecuteImmediate(ctx);
+    }
+
+    /**
+     * Wrap a statement in an <code>EXECUTE IMMEDIATE</code> statement.
+     */
     static final void beginExecuteImmediate(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -4403,11 +4420,11 @@ final class Tools {
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
      * <code>IF EXISTS</code> is not supported.
      */
-    static final void beginTryCatch(Context<?> ctx, DDLStatementType type) {
-        beginTryCatch(ctx, type, null, null);
+    static final void tryCatch(Context<?> ctx, DDLStatementType type, Runnable runnable) {
+        tryCatch(ctx, type, null, null, runnable);
     }
 
-    static final void beginTryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element) {
+    static final void tryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element, Runnable runnable) {
         switch (ctx.family()) {
 
 
@@ -4517,9 +4534,145 @@ final class Tools {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case FIREBIRD: {
-                begin(ctx);
-                beginExecuteImmediate(ctx);
+                begin(ctx, () -> {
+                    executeImmediate(ctx, runnable);
+
+                    ctx.formatSeparator()
+                       .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()
+                       .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd();
+                });
                 break;
             }
 
@@ -4545,194 +4698,13 @@ final class Tools {
 //                else
                     sqlstates.add("42S02");
 
-                begin(ctx);
-                for (String sqlstate : sqlstates)
-                    ctx.visit(keyword("declare continue handler for sqlstate")).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_BEGIN).sql(' ').visit(K_END).sql(';').formatSeparator();
-
-                break;
-            }
-
-
-
-
-
-            case POSTGRES: {
-                begin(ctx);
-                break;
-            }
-
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Wrap a <code>DROP .. IF EXISTS</code> statement with
-     * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
-     * <code>IF EXISTS</code> is not supported.
-     */
-    static final void endTryCatch(Context<?> ctx, DDLStatementType type) {
-        endTryCatch(ctx, type, null, null);
-    }
-
-    static final void endTryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case FIREBIRD: {
-                endExecuteImmediate(ctx);
-                ctx.formatSeparator()
-                   .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()
-                   .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd();
-                end(ctx);
-                break;
-            }
-
-            case MARIADB: {
-                ctx.sql(';');
-                end(ctx);
+                begin(ctx, () -> {
+                    for (String sqlstate : sqlstates)
+                        ctx.visit(keyword("declare continue handler for sqlstate")).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_BEGIN).sql(' ').visit(K_END).sql(';').formatSeparator();
+
+                    runnable.run();
+                    ctx.sql(';');
+                });
                 break;
             }
 
@@ -4740,24 +4712,27 @@ final class Tools {
 
 
             case POSTGRES: {
-                String sqlstate;
+                begin(ctx, () -> {
+                    String sqlstate;
 
-                switch (type) {
-                    case ALTER_DATABASE: sqlstate = "3D000"; break;
-                    case ALTER_DOMAIN  : sqlstate = "42704"; break;
-                    case CREATE_DOMAIN : sqlstate = "42710"; break;
-                    default            : sqlstate = "42P07"; break;
-                }
+                    switch (type) {
+                        case ALTER_DATABASE: sqlstate = "3D000"; break;
+                        case ALTER_DOMAIN  : sqlstate = "42704"; break;
+                        case CREATE_DOMAIN : sqlstate = "42710"; break;
+                        default            : sqlstate = "42P07"; break;
+                    }
 
-                ctx.sql(';').formatIndentEnd().formatSeparator()
-                   .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
-                   .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
+                    runnable.run();
 
-                end(ctx);
+                    ctx.sql(';').formatIndentEnd().formatSeparator()
+                       .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
+                       .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
+                });
                 break;
             }
 
             default:
+                runnable.run();
                 break;
         }
     }

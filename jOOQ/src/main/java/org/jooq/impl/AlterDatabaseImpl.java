@@ -140,11 +140,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (alterDatabaseIfExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.ALTER_DATABASE);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.ALTER_DATABASE);
-        }
+        if (alterDatabaseIfExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.ALTER_DATABASE, () -> accept0(ctx));
         else
             accept0(ctx);
     }

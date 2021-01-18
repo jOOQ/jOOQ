@@ -48,6 +48,7 @@ enum DDLStatementType {
     ALTER_SCHEMA,
     ALTER_SEQUENCE,
     ALTER_TABLE,
+    ALTER_TRIGGER,
     ALTER_VIEW,
 
     CREATE_DATABASE,
@@ -56,6 +57,7 @@ enum DDLStatementType {
     CREATE_SCHEMA,
     CREATE_SEQUENCE,
     CREATE_TABLE,
+    CREATE_TRIGGER,
     CREATE_VIEW,
 
     DROP_DATABASE,
@@ -64,5 +66,6 @@ enum DDLStatementType {
     DROP_SCHEMA,
     DROP_SEQUENCE,
     DROP_TABLE,
+    DROP_TRIGGER,
     DROP_VIEW,
 }

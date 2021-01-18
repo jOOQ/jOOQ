@@ -147,15 +147,14 @@ import static org.jooq.impl.Keywords.K_WITH_NO_DATACOPY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
-import static org.jooq.impl.Tools.beginTryCatch;
-import static org.jooq.impl.Tools.end;
 import static org.jooq.impl.Tools.endExecuteImmediate;
-import static org.jooq.impl.Tools.endTryCatch;
+import static org.jooq.impl.Tools.executeImmediate;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityAfterNull;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityBeforeNull;
+import static org.jooq.impl.Tools.tryCatch;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
 import java.util.Arrays;
@@ -968,14 +967,16 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if ((ifExists && !supportsIfExists(ctx)) || ((ifExistsColumn || ifExistsConstraint || ifNotExistsColumn) && !supportsIfExistsColumn(ctx))) {
-            beginTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn || ifExistsConstraint ? TRUE : ifNotExistsColumn ? FALSE : null);
+        if ((ifExists && !supportsIfExists(ctx)) || ((ifExistsColumn || ifExistsConstraint || ifNotExistsColumn) && !supportsIfExistsColumn(ctx)))
+            tryCatch(
+                ctx,
+                DDLStatementType.ALTER_TABLE,
+                ifExists ? TRUE : null,
+                ifExistsColumn || ifExistsConstraint ? TRUE : ifNotExistsColumn ? FALSE : null,
+                () -> accept0(ctx)
+            );
+        else
             accept0(ctx);
-            endTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn || ifExistsConstraint ? TRUE : ifNotExistsColumn ? FALSE : null);
-        }
-        else {
-            accept0(ctx);
-        }
     }
 
     private final void accept0(Context<?> ctx) {
@@ -999,17 +1000,13 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
         if (family == FIREBIRD) {
             if (addFirst) {
-                begin(ctx);
-                beginExecuteImmediate(ctx);
-                accept1(ctx);
-                endExecuteImmediate(ctx);
-
-                ctx.formatSeparator();
-
-                beginExecuteImmediate(ctx);
-                ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_ALTER).sql(' ').visit(addColumn).sql(' ').visit(K_POSITION).sql(" 1");
-                endExecuteImmediate(ctx);
-                end(ctx);
+                begin(ctx, () -> {
+                    executeImmediate(ctx, () -> accept1(ctx));
+                    ctx.formatSeparator();
+                    executeImmediate(ctx, () -> {
+                        ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_ALTER).sql(' ').visit(addColumn).sql(' ').visit(K_POSITION).sql(" 1");
+                    });
+                });
                 return;
             }
         }
@@ -1840,14 +1837,14 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
     private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
-        begin(ctx);
+        begin(ctx, () -> {
 
 
 
 
 
 
-        accept1(ctx);
+            accept1(ctx);
 
 
 
@@ -1855,15 +1852,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-        ctx.sql(';').formatSeparator();
+            ctx.sql(';').formatSeparator();
 
-        switch (ctx.family()) {
-
-
-
-
-
-
+            switch (ctx.family()) {
 
 
 
@@ -1893,15 +1884,18 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-            case POSTGRES: {
-                AlterTableAlterStep<?> step = ctx.dsl().alterTable(table).alterColumn(alterColumn);
-                ctx.visit(alterColumnType.nullable() ? step.dropNotNull() : step.setNotNull())
-                   .sql(';');
-                break;
+
+
+
+
+                case POSTGRES: {
+                    AlterTableAlterStep<?> step = ctx.dsl().alterTable(table).alterColumn(alterColumn);
+                    ctx.visit(alterColumnType.nullable() ? step.dropNotNull() : step.setNotNull())
+                       .sql(';');
+                    break;
+                }
             }
-        }
-
-        end(ctx);
+        });
     }
 
     @Override

@@ -122,14 +122,10 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        if (createSchemaIfNotExists && !supportsIfNotExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
+        if (createSchemaIfNotExists && !supportsIfNotExists(ctx))
+            tryCatch(ctx, DDLStatementType.CREATE_SCHEMA, () -> accept1(ctx));
+        else
             accept1(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
-        }
-        else {
-            accept1(ctx);
-        }
     }
 
     private final void accept1(Context<?> ctx) {

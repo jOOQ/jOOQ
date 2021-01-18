@@ -98,14 +98,10 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropDatabaseIfExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.DROP_DATABASE);
+        if (dropDatabaseIfExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.DROP_DATABASE, () -> accept0(ctx));
+        else
             accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.DROP_DATABASE);
-        }
-        else {
-            accept0(ctx);
-        }
     }
 
     private void accept0(Context<?> ctx) {

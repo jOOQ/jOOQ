@@ -156,11 +156,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropIndexIfExists && !supportsIfExists(ctx)) {
-            beginTryCatch(ctx, DDLStatementType.DROP_INDEX);
-            accept0(ctx);
-            endTryCatch(ctx, DDLStatementType.DROP_INDEX);
-        }
+        if (dropIndexIfExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.DROP_INDEX, () -> accept0(ctx));
         else
             accept0(ctx);
     }

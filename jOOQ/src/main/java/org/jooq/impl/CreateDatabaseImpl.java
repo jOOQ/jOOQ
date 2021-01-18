@@ -98,14 +98,10 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createDatabaseIfNotExists && !supportsIfNotExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_DATABASE);
+        if (createDatabaseIfNotExists && !supportsIfNotExists(ctx))
+            tryCatch(ctx, DDLStatementType.CREATE_DATABASE, () -> accept0(ctx));
+        else
             accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.CREATE_DATABASE);
-        }
-        else {
-            accept0(ctx);
-        }
     }
 
     private final void accept0(Context<?> ctx) {

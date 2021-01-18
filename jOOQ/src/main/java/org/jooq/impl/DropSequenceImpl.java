@@ -99,14 +99,10 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropSequenceIfExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.DROP_SEQUENCE);
+        if (dropSequenceIfExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.DROP_SEQUENCE, () -> accept0(ctx));
+        else
             accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.DROP_SEQUENCE);
-        }
-        else {
-            accept0(ctx);
-        }
     }
 
     private void accept0(Context<?> ctx) {

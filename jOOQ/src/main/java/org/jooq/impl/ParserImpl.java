@@ -5470,6 +5470,15 @@ final class ParserContext {
             else
                 return xmlexists(xpath).passing(xml);
         }
+
+
+
+
+
+
+
+
+
         else {
             FieldOrRow left;
             Comparator comp;

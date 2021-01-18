@@ -7240,7 +7240,9 @@ final class ParserImpl implements Parser {
                 int position = ctx.position();
                 try {
                     if (peekSelect(ctx, true)) {
+                        parse(ctx, '(');
                         SelectQueryImpl<Record> select = parseSelect(ctx);
+                        parse(ctx, ')');
                         if (Tools.degree(select) != 1)
                             throw ctx.exception("Select list must contain exactly one column");
 
@@ -8445,7 +8447,9 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldDateTruncIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "DATE_TRUNC")) {
             parse(ctx, '(');
-            DatePart part = DatePart.valueOf(parseStringLiteral(ctx).toUpperCase());
+            parse(ctx, '\'');
+            DatePart part = parseDatePart(ctx);
+            parse(ctx, '\'');
             parse(ctx, ',');
             Field<?> field = parseField(ctx, D);
             parse(ctx, ')');

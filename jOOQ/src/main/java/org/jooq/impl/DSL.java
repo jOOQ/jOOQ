@@ -17306,6 +17306,38 @@ public class DSL {
         return new Xmlforest(fields);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>COVAR_SAMP</code> function.
      */

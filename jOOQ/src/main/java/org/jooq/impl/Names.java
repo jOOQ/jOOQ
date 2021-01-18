@@ -125,6 +125,7 @@ final class Names {
     static final Name N_DB_NAME                = unquotedName("db_name");
     static final Name N_DECODE                 = unquotedName("decode");
     static final Name N_DEGREES                = unquotedName("degrees");
+    static final Name N_DELETING               = unquotedName("deleting");
     static final Name N_DIGITS                 = unquotedName("digits");
     static final Name N_DUAL                   = unquotedName("dual");
     static final Name N_E                      = unquotedName("e");
@@ -146,6 +147,7 @@ final class Names {
     static final Name N_IFNULL                 = unquotedName("ifnull");
     static final Name N_IIF                    = unquotedName("iif");
     static final Name N_INSERT                 = unquotedName("insert");
+    static final Name N_INSERTING              = unquotedName("inserting");
     static final Name N_INSTR                  = unquotedName("instr");
     static final Name N_ISJSON                 = unquotedName("isjson");
     static final Name N_JOIN                   = unquotedName("join");
@@ -298,6 +300,7 @@ final class Names {
     static final Name N_TRUNCATE               = unquotedName("truncate");
     static final Name N_TRUNCNUM               = unquotedName("truncnum");
     static final Name N_UCASE                  = unquotedName("ucase");
+    static final Name N_UPDATING               = unquotedName("updating");
     static final Name N_UPPER                  = unquotedName("upper");
     static final Name N_USER                   = unquotedName("user");
     static final Name N_VALUE                  = unquotedName("value");

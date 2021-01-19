@@ -119,7 +119,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      * @see SelectQuery#setForLockModeWait(int)
      */
     @NotNull
-    @Support({ MARIADB })
+    @Support({ MARIADB, POSTGRES })
     SelectForStep<R> wait(int seconds);
 
     /**

@@ -79,7 +79,6 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -1274,12 +1273,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
     }
 
-    public final void accept0(Context<?> context) {
+    final void accept0(Context<?> context) {
         if (context.subqueryLevel() == 0)
             context.scopeStart().data(DATA_TOP_LEVEL_CTE, new TopLevelCte());
 
         SQLDialect dialect = context.dialect();
-        SQLDialect family = context.family();
 
         // [#2791] TODO: Instead of explicitly manipulating these data() objects, future versions
         // of jOOQ should implement a push / pop semantics to clearly delimit such scope.

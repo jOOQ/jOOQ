@@ -519,23 +519,23 @@ abstract class AbstractQuery<R extends Record> extends AbstractFetchable<R> impl
                 if (ctx.type() == DDL) {
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
                     render = render(c);
-                    result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
+                    result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
                 }
                 else if (executePreparedStatements(configuration().settings())) {
                     try {
                         render = render(c);
                         render.data(DATA_COUNT_BIND_VALUES, true);
-                        result = new Rendered(render.visit(this).render(), render.bindValues(), render.peekSkipUpdateCounts());
+                        result = new Rendered(render.visit(this).render(), render.bindValues(), render.skipUpdateCounts());
                     }
                     catch (DefaultRenderContext.ForceInlineSignal e) {
                         ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
                         render = render(c);
-                        result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
+                        result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
                     }
                 }
                 else {
                     render = render(c);
-                    result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.peekSkipUpdateCounts());
+                    result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
                 }
 
                 break forceSettingsLoop;

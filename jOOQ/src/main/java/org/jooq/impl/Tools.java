@@ -562,23 +562,22 @@ final class Tools {
          */
         DATA_COLLECTED_SEMI_ANTI_JOIN,
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /**
+         * [#5764] Sometimes, it is necessary to prepend some SQL to the generated SQL.
+         * <p>
+         * This needs to be done e.g. to emulate inline table valued parameters in SQL Server:
+         * <p>
+         * <code><pre>
+         * -- With TVP bind variable:
+         * SELECT * FROM func (?)
+         *
+         * -- Inlining TVP bind variable:
+         * DECLARE @t TABLE_TYPE;
+         * INSERT INTO @t VALUES (?),(?),...,(?);
+         * SELECT * FROM func (@t)
+         * </pre></code>
+         */
+        DATA_PREPEND_SQL,
 
 
 
@@ -4005,41 +4004,44 @@ final class Tools {
 
 
 
+            // [#5764] [#11243]
+            // Statement batches (or triggers) may produce unexpected update
+            // counts, which we have to fetch first, prior to accessing the
+            // first ResultSet. Unexpected result sets could be produced as
+            // well, but it's much harder to skip them.
+            if (skipUpdateCounts > 0) {
 
+                fetchLoop:
+                for (int i = 0; i < maxConsumedResults; i++) {
+                    boolean result = (i == 0)
+                        ? stmt.execute()
+                        : stmt.getMoreResults();
 
+                    // The first ResultSet
+                    if (result) {
+                        ctx.resultSet(stmt.getResultSet());
+                        break fetchLoop;
+                    }
 
+                    // Some DML statement whose results we want to skip
+                    else {
+                        int updateCount = stmt.getUpdateCount();
 
+                        // Store the first update count, in case
+                        if (i == 0) {
+                            ctx.resultSet(null);
+                            ctx.rows(updateCount);
+                        }
 
+                        if (updateCount == -1 || skipUpdateCounts-- == 0)
+                            break fetchLoop;
+                    }
+                }
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- if (stmt.execute()) {
+            // [#1232] Avoid executeQuery() in order to handle queries that may
+            // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
+            else if (stmt.execute()) {
                 ctx.resultSet(stmt.getResultSet());
             }
 

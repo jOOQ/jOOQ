@@ -113,6 +113,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     int                                            index;
     int                                            scopeMarking;
     final ScopeStack<QueryPart, ScopeStackElement> scopeStack;
+    int                                            skipUpdateCounts;
 
     // [#2665] VisitListener API
     private final VisitListener[]                  visitListenersStart;
@@ -632,6 +633,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final int peekIndex() {
         return index + 1;
+    }
+
+    @Override
+    public final int skipUpdateCounts() {
+        return skipUpdateCounts;
+    }
+
+    @Override
+    public final C skipUpdateCount() {
+        skipUpdateCounts++;
+        return (C) this;
     }
 
     // ------------------------------------------------------------------------

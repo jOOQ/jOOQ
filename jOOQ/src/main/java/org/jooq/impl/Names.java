@@ -182,6 +182,7 @@ final class Names {
     static final Name N_LIST                   = unquotedName("list");
     static final Name N_LISTAGG                = unquotedName("listagg");
     static final Name N_LN                     = unquotedName("ln");
+    static final Name N_LOCK_TIMEOUT           = unquotedName("lock_timeout");
     static final Name N_LOCATE                 = unquotedName("locate");
     static final Name N_LOG                    = unquotedName("log");
     static final Name N_LOG10                  = unquotedName("log10");

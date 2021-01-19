@@ -238,6 +238,7 @@ final class Keywords {
     static final Keyword K_LIKE                             = keyword("like");
     static final Keyword K_LIKE_REGEX                       = keyword("like_regex");
     static final Keyword K_LIMIT                            = keyword("limit");
+    static final Keyword K_LOCAL                            = keyword("local");
     static final Keyword K_LOCK_IN_SHARE_MODE               = keyword("lock in share mode");
     static final Keyword K_LOOP                             = keyword("loop");
     static final Keyword K_MATCHED                          = keyword("matched");

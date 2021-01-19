@@ -51,6 +51,7 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
 import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 
 import java.util.ArrayDeque;
@@ -311,14 +312,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         }
     }
 
-    final int peekSkipUpdateCounts() {
-        return skipUpdateCounts;
-    }
-
-    final void incrementSkipUpdateCounts() {
-        skipUpdateCounts++;
-    }
-
     @Override
     public final String peekAlias() {
         return "alias_" + (alias + 1);
@@ -331,9 +324,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final String render() {
-        String prepend = null; 
+        String prepend = (String) data(DATA_PREPEND_SQL);
         String result = sql.toString();
-        return prepend == null ? result : prepend + result;
+        return prepend == null
+             ? result
+             : format()
+             ? prepend + (prepend.endsWith(cachedNewline) ? "" : cachedNewline) + result
+             : prepend + (prepend.endsWith(" ") ? "" : " ") + result;
     }
 
     @Override

@@ -243,6 +243,7 @@ public interface Context<C extends Context<C>> extends Scope {
     /**
      * Skip an update count produced by this query.
      */
+    @NotNull
     C skipUpdateCount();
 
     /**

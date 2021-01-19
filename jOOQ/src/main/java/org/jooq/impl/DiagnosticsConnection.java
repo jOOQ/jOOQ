@@ -76,7 +76,6 @@ final class DiagnosticsConnection extends DefaultConnection {
     final Parser                          parser;
     final DiagnosticsListeners            listeners;
 
-    @SuppressWarnings("deprecation")
     DiagnosticsConnection(Configuration configuration) {
         super(configuration.connectionProvider().acquire());
 

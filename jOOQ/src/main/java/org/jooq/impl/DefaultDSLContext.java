@@ -557,9 +557,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public void attach(Collection<? extends Attachable> attachables) {
-        for (Attachable attachable : attachables) {
+        for (Attachable attachable : attachables)
             attachable.attach(configuration());
-        }
     }
 
     // -------------------------------------------------------------------------
@@ -4279,28 +4278,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Result<R> fetch(ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.fetch();
-        }
-        finally {
-            query.attach(previous);
-        }
+        return Tools.attach(query, configuration(), query::fetch);
     }
 
     @Override
     public <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.fetchLazy();
-        }
-        finally {
-            query.attach(previous);
-        }
+        return Tools.attach(query, configuration(), query::fetchLazy);
     }
 
     @Override
@@ -4318,54 +4301,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.stream();
-        }
-        finally {
-            query.attach(previous);
-        }
+        return Tools.attach(query, configuration(), query::stream);
     }
 
     @Override
     public <R extends Record> Results fetchMany(ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.fetchMany();
-        }
-        finally {
-            query.attach(previous);
-        }
+        return Tools.attach(query, configuration(), query::fetchMany);
     }
 
     @Override
     public <R extends Record> R fetchOne(ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.fetchOne();
-        }
-        finally {
-            query.attach(previous);
-        }
+        return Tools.attach(query, configuration(), query::fetchOne);
     }
 
     @Override
     public <R extends Record> R fetchSingle(ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.fetchSingle();
-        }
-        finally {
-            query.attach(previous);
-        }
+        return Tools.attach(query, configuration(), query::fetchSingle);
     }
 
     @Override
@@ -4380,15 +4331,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return value1(fetchOne(query));
-        }
-        finally {
-            query.attach(previous);
-        }
+        return Tools.attach(query, configuration(), () -> value1(fetchOne(query)));
     }
 
     @Override
@@ -4495,15 +4438,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public int execute(Query query) {
-        final Configuration previous = Tools.getConfiguration(query);
-
-        try {
-            query.attach(configuration());
-            return query.execute();
-        }
-        finally {
-            query.attach(previous);
-        }
+        return Tools.attach(query, configuration(), query::execute);
     }
 
     // -------------------------------------------------------------------------

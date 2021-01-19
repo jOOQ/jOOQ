@@ -340,14 +340,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     public final int execute(Configuration c) {
 
         // Ensure that all depending Attachables are attached
-        Configuration previous = configuration();
-        try {
-            attach(c);
-            return execute();
-        }
-        finally {
-            attach(previous);
-        }
+        return Tools.attach(this, c, this::execute);
     }
 
     @Override

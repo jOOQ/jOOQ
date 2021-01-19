@@ -782,7 +782,7 @@ final class LoaderImpl<R extends Record> implements
         });
     }
 
-    private final void executeSQL(Iterator<? extends Object[]> iterator, DSLContext ctx) throws SQLException {
+    private final void executeSQL(Iterator<? extends Object[]> iterator, DSLContext ctx) {
         Object[] row = null;
         BatchBindStep bind = null;
         InsertQuery<R> insert = null;
@@ -974,26 +974,12 @@ final class LoaderImpl<R extends Record> implements
         }
     }
 
-    private final void commit() throws SQLException {
-        Connection connection = configuration.connectionProvider().acquire();
-
-        try {
-            connection.commit();
-        }
-        finally {
-            configuration.connectionProvider().release(connection);
-        }
+    private final void commit() {
+        configuration.dsl().connection(Connection::commit);
     }
 
-    private final void rollback() throws SQLException {
-        Connection connection = configuration.connectionProvider().acquire();
-
-        try {
-            connection.rollback();
-        }
-        finally {
-            configuration.connectionProvider().release(connection);
-        }
+    private final void rollback() {
+        configuration.dsl().connection(Connection::rollback);
     }
 
     /**

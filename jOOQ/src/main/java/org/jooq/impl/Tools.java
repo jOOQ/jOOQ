@@ -1150,6 +1150,18 @@ final class Tools {
         return configuration(configuration).settings();
     }
 
+    static final <T> T attach(Attachable attachable, Configuration configuration, Supplier<T> supplier) {
+        Configuration previous = attachable.configuration();
+
+        try {
+            attachable.attach(configuration);
+            return supplier.get();
+        }
+        finally {
+            attachable.attach(previous);
+        }
+    }
+
     static final boolean attachRecords(Configuration configuration) {
         if (configuration != null) {
             Settings settings = configuration.settings();
@@ -3216,16 +3228,16 @@ final class Tools {
         /**
          * Run an operation using a guard.
          */
-        static final <V> V run(Guard guard, GuardedOperation<V> operation) {
+        static final <V> V run(Guard guard, Supplier<V> unguardedOperation, Supplier<V> guardedOperation) {
             boolean unguarded = (guard.tl.get() == null);
             if (unguarded)
                 guard.tl.set(Guard.class);
 
             try {
                 if (unguarded)
-                    return operation.unguarded();
+                    return unguardedOperation.get();
                 else
-                    return operation.guarded();
+                    return guardedOperation.get();
             }
             finally {
                 if (unguarded)

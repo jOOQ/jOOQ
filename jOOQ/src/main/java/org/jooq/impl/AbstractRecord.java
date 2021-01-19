@@ -1132,17 +1132,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public String toString() {
         // [#3900] Nested records should generate different toString() behaviour
-        return ThreadGuard.run(RECORD_TOSTRING, new GuardedOperation<String>() {
-            @Override
-            public String unguarded() {
-                return asResult().toString();
-            }
-
-            @Override
-            public String guarded() {
-                return valuesRow().toString();
-            }
-        });
+        return ThreadGuard.run(RECORD_TOSTRING, () -> asResult().toString(), () -> valuesRow().toString());
     }
 
     @Override

@@ -51,8 +51,6 @@ import org.jooq.conf.*;
 import org.jooq.impl.*;
 import org.jooq.tools.*;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 
 

@@ -130,11 +130,7 @@ final class Val<T> extends AbstractParam<T> {
     @Override
     public void accept(Context<?> ctx) {
         if (getDataType().isEmbeddable()) {
-            Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
-
-            ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-            ctx.visit(wrap(embeddedFields(this)));
-            ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(embeddedFields(this))));
         }
         else if (ctx instanceof RenderContext) {
             ParamType paramType = ctx.paramType();

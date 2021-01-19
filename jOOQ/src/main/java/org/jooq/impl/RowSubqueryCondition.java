@@ -232,33 +232,14 @@ final class RowSubqueryCondition extends AbstractCondition {
                 // Some databases need extra parentheses around the RHS
                 boolean extraParentheses = false ;
 
-                ctx.sql(extraParentheses ? "((" : "(");
-
-
-
-
-                visitSubquery(ctx, right);
-
-
-
-
-                ctx.sql(extraParentheses ? "))" : ")");
+                ctx.sql(extraParentheses ? "((" : "(")
+                   .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right))
+                   .sql(extraParentheses ? "))" : ")");
             }
 
             // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL
-            else {
-
-
-
-
-                ctx.subquery(true)
-                   .visit(rightQuantified)
-                   .subquery(false);
-
-
-
-
-            }
+            else
+                ctx.data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> c.subquery(true).visit(rightQuantified).subquery(false));
         }
 
         @Override

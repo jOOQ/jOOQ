@@ -319,6 +319,21 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         void accept(boolean b);
     }
 
+    @Override
+    public final C data(Object key, Object value, Consumer<? super C> consumer) {
+        return toggle(
+            value,
+            () -> data(key),
+            v -> {
+                if (v == null)
+                    data().remove(key);
+                else
+                    data(key, v);
+            },
+            consumer
+        );
+    }
+
     /**
      * Emit a clause from a query part being visited.
      * <p>

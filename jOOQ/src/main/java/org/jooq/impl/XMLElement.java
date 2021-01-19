@@ -76,35 +76,34 @@ final class XMLElement extends AbstractField<XML> {
         boolean hasAttributes = attributes != null && !((XMLAttributesImpl) attributes).attributes.isEmpty();
         boolean hasContent = !content.isEmpty();
         boolean format = hasAttributes || hasContent;
-        Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
+
+        Runnable accept0 = () -> {
+            ctx.visit(K_NAME).sql(' ').visit(elementName);
+
+            if (hasAttributes)
+                if (format)
+                    ctx.sql(',').formatSeparator().visit(attributes);
+                else
+                    ctx.sql(", ").visit(attributes);
+
+            if (hasContent)
+                if (format)
+                    ctx.sql(',').formatSeparator().visit(content);
+                else
+                    ctx.sql(", ").visit(content);
+        };
 
         ctx.visit(N_XMLELEMENT).sql('(');
 
         if (format) {
             ctx.formatIndentStart()
+               .formatNewLine()
+               .data(DATA_LIST_ALREADY_INDENTED, true, c -> accept0.run())
+               .formatIndentEnd()
                .formatNewLine();
-            ctx.data(DATA_LIST_ALREADY_INDENTED, true);
         }
-
-        ctx.visit(K_NAME).sql(' ').visit(elementName);
-
-        if (hasAttributes)
-            if (format)
-                ctx.sql(',').formatSeparator().visit(attributes);
-            else
-                ctx.sql(", ").visit(attributes);
-
-        if (hasContent)
-            if (format)
-                ctx.sql(',').formatSeparator().visit(content);
-            else
-                ctx.sql(", ").visit(content);
-
-        if (format) {
-            ctx.formatIndentEnd()
-               .formatNewLine();
-            ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
-        }
+        else
+            accept0.run();
 
         ctx.sql(')');
     }

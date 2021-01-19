@@ -388,8 +388,6 @@ final class Limit extends AbstractQueryPart {
 
 
 
-
-
     /**
      * Whether this limit has a limit of zero
      */

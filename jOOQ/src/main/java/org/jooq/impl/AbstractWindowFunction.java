@@ -189,20 +189,12 @@ implements
 
 
         ;
-        Boolean previousOrdered = null;
 
         ctx.sql(' ')
            .visit(K_OVER)
            .sql(' ');
 
-        previousOrdered = (Boolean) ctx.data(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY, ordered);
-
-        ctx.visit(window);
-
-        if (TRUE.equals(previousOrdered))
-            ctx.data(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY, previousOrdered);
-        else
-            ctx.data().remove(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY);
+        ctx.data(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY, ordered, c -> c.visit(window));
     }
 
 

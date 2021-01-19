@@ -90,6 +90,12 @@ public interface Context<C extends Context<C>> extends Scope {
     C end(Clause clause);
 
     /**
+     * Set a data value for a key for the scope of a {@link Consumer}.
+     */
+    @NotNull
+    C data(Object key, Object value, Consumer<? super C> consumer);
+
+    /**
      * Whether the current context is rendering a SQL field declaration (e.g. a
      * {@link Field} in the <code>SELECT</code> clause of the query).
      */

@@ -1247,22 +1247,21 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         }
         else if (renameConstraint != null) {
             ctx.start(ALTER_TABLE_RENAME_CONSTRAINT);
-            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
+            ctx.data(DATA_CONSTRAINT_REFERENCE, true, c1 -> {
+                if (family == HSQLDB)
+                    c1.visit(K_ALTER_CONSTRAINT).sql(' ')
+                      .qualify(false, c2 -> c2.visit(renameConstraint))
+                      .formatSeparator()
+                      .visit(K_RENAME_TO).sql(' ')
+                      .qualify(false, c2 -> c2.visit(renameConstraintTo));
+                else
+                    c1.visit( K_RENAME_CONSTRAINT).sql(' ')
+                      .qualify(false, c2 -> c2.visit(renameConstraint))
+                      .formatSeparator()
+                      .visit(K_TO).sql(' ')
+                      .qualify(false, c2 -> c2.visit(renameConstraintTo));
+            });
 
-            if (family == HSQLDB)
-                ctx.visit(K_ALTER_CONSTRAINT).sql(' ')
-                   .qualify(false, c -> c.visit(renameConstraint))
-                   .formatSeparator()
-                   .visit(K_RENAME_TO).sql(' ')
-                   .qualify(false, c -> c.visit(renameConstraintTo));
-            else
-                ctx.visit( K_RENAME_CONSTRAINT).sql(' ')
-                   .qualify(false, c -> c.visit(renameConstraint))
-                   .formatSeparator()
-                   .visit(K_TO).sql(' ')
-                   .qualify(false, c -> c.visit(renameConstraintTo));
-
-            ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
         }
         else if (add != null) {
@@ -1359,24 +1358,23 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
         else if (alterConstraint != null) {
             ctx.start(ALTER_TABLE_ALTER);
-            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-
-            switch (family) {
-
+            ctx.data(DATA_CONSTRAINT_REFERENCE, true, c -> {
+                switch (family) {
 
 
 
 
 
-                default:
-                    ctx.visit(K_ALTER);
-                    break;
-            }
 
-            ctx.sql(' ').visit(K_CONSTRAINT).sql(' ').visit(alterConstraint);
-            ConstraintImpl.acceptEnforced(ctx, alterConstraintEnforced);
+                    default:
+                        ctx.visit(K_ALTER);
+                        break;
+                }
 
-            ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
+                ctx.sql(' ').visit(K_CONSTRAINT).sql(' ').visit(alterConstraint);
+                ConstraintImpl.acceptEnforced(ctx, alterConstraintEnforced);
+            });
+
             ctx.end(ALTER_TABLE_ALTER);
         }
 
@@ -1606,31 +1604,30 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         }
         else if (dropConstraint != null) {
             ctx.start(ALTER_TABLE_DROP);
-            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
+            ctx.data(DATA_CONSTRAINT_REFERENCE, true, c -> {
+                if (dropConstraintType == FOREIGN_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(c.dialect())) {
+                    c.visit(K_DROP).sql(' ').visit(K_FOREIGN_KEY)
+                     .sql(' ')
+                     .visit(dropConstraint);
+                }
+                else if (dropConstraintType == PRIMARY_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(c.dialect())) {
+                    c.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
+                }
+                else {
 
-            if (dropConstraintType == FOREIGN_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(ctx.dialect())) {
-                ctx.visit(K_DROP).sql(' ').visit(K_FOREIGN_KEY)
-                   .sql(' ')
-                   .visit(dropConstraint);
-            }
-            else if (dropConstraintType == PRIMARY_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(ctx.dialect())) {
-                ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
-            }
-            else {
+                    // [#9382] In some dialects, unnamed UNIQUE constraints can be
+                    //         dropped by dropping their declarations.
+                    c.visit(dropConstraint.getUnqualifiedName().empty() ? K_DROP : K_DROP_CONSTRAINT).sql(' ');
 
-                // [#9382] In some dialects, unnamed UNIQUE constraints can be
-                //         dropped by dropping their declarations.
-                ctx.visit(dropConstraint.getUnqualifiedName().empty() ? K_DROP : K_DROP_CONSTRAINT).sql(' ');
+                    if (ifExistsConstraint && !NO_SUPPORT_IF_EXISTS_CONSTRAINT.contains(c.dialect()))
+                        c.visit(K_IF_EXISTS).sql(' ');
 
-                if (ifExistsConstraint && !NO_SUPPORT_IF_EXISTS_CONSTRAINT.contains(ctx.dialect()))
-                    ctx.visit(K_IF_EXISTS).sql(' ');
+                    c.visit(dropConstraint);
+                }
 
-                ctx.visit(dropConstraint);
-            }
+                acceptCascade(c);
+            });
 
-            acceptCascade(ctx);
-
-            ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_DROP);
         }
         else if (dropConstraintType == PRIMARY_KEY) {

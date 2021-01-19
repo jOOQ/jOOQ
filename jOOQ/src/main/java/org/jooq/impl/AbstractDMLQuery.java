@@ -600,7 +600,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
         {
             accept0(ctx);
         }

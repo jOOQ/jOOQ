@@ -410,13 +410,12 @@ final class Tools {
          */
         DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES,
 
-
-
-
-
-
-
-
+        /**
+         * [#1905] This constant is used internally by jOOQ to indicate to
+         * subqueries that they're being rendered in the context of a row value
+         * expression predicate.
+         */
+        DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY,
 
 
 
@@ -653,11 +652,10 @@ final class Tools {
 
 
 
-
-
-
-
-
+        /**
+         * [#9017] We've already transformed ROWNUM expressions to LIMIT.
+         */
+        DATA_TRANSFORM_ROWNUM_TO_LIMIT
     }
 
     /**

@@ -337,8 +337,6 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        Object previous = ctx.data(DATA_CONSTRAINT_REFERENCE);
-
         ctx.visit(K_ALTER).sql(' ').visit(K_DOMAIN).sql(' ');
 
         if (alterDomainIfExists)
@@ -359,9 +357,7 @@ implements
                 ctx.sql(' ').visit(K_IF_EXISTS);
 
             if (ctx.family() != FIREBIRD) {
-                ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-                ctx.sql(' ').visit(dropConstraint);
-                ctx.data(DATA_CONSTRAINT_REFERENCE, previous);
+                ctx.sql(' ').data(DATA_CONSTRAINT_REFERENCE, true, c -> c.visit(dropConstraint));
 
                 if (cascade != null)
                     if (cascade)
@@ -371,19 +367,15 @@ implements
             }
         }
         else if (renameTo != null) {
-            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-            ctx.visit(ctx.family() == FIREBIRD ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo);
-            ctx.data(DATA_CONSTRAINT_REFERENCE, previous);
+            ctx.visit(ctx.family() == FIREBIRD ? K_TO : K_RENAME_TO).sql(' ').data(DATA_CONSTRAINT_REFERENCE, true, c -> c.visit(renameTo));
         }
         else if (renameConstraint != null) {
-            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-            ctx.visit(K_RENAME_CONSTRAINT).sql(' ');
+            ctx.visit(K_RENAME_CONSTRAINT).sql(' ').data(DATA_CONSTRAINT_REFERENCE, true, c -> {
+                if (renameConstraintIfExists && supportsRenameConstraintIfExists(c))
+                    c.visit(K_IF_EXISTS).sql(' ');
 
-            if (renameConstraintIfExists && supportsRenameConstraintIfExists(ctx))
-                ctx.visit(K_IF_EXISTS).sql(' ');
-
-            ctx.visit(renameConstraint).sql(' ').visit(K_TO).sql(' ').visit(renameConstraintTo);
-            ctx.data(DATA_CONSTRAINT_REFERENCE, previous);
+                c.visit(renameConstraint).sql(' ').visit(K_TO).sql(' ').visit(renameConstraintTo);
+            });
         }
         else if (setDefault != null) {
             ctx.visit(K_SET_DEFAULT).sql(' ').visit(setDefault);

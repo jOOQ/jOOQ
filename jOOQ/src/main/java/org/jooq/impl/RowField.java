@@ -97,16 +97,10 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ctx.declareFields()) {
-            Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
-
-            ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-            ctx.visit(new SelectFieldList<>(emulatedFields.fields.fields));
-            ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
-        }
-        else {
+        if (ctx.declareFields())
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields.fields.fields)));
+        else
             ctx.visit(row);
-        }
     }
 
     @Override

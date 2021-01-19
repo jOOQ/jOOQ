@@ -327,8 +327,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
                     }
                     else {
-                        boolean qualify = ctx.qualify();
-
                         ctx.sql('(');
 
                         if (onConflict != null && onConflict.size() > 0)
@@ -383,8 +381,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
-
-
 
 
 
@@ -496,17 +492,14 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(K_ON_CONFLICT);
 
                     if (onConstraint != null ) {
-                        ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-                        ctx.sql(' ')
-                           .visit(K_ON_CONSTRAINT)
-                           .sql(' ')
-                           .visit(onConstraint);
-
-                        ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
+                        ctx.data(DATA_CONSTRAINT_REFERENCE, true, c -> c
+                            .sql(' ')
+                            .visit(K_ON_CONSTRAINT)
+                            .sql(' ')
+                            .visit(onConstraint)
+                        );
                     }
                     else {
-                        boolean qualify = ctx.qualify();
-
                         if (onConflict != null && onConflict.size() > 0) {
                             ctx.sql(" (").visit(onConflict).sql(')');
 
@@ -621,8 +614,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     private final void toSQLInsert(Context<?> ctx) {
-        boolean declareTables = ctx.declareTables();
-
         ctx.start(INSERT_INSERT_INTO)
            .visit(K_INSERT)
            .sql(' ');
@@ -711,14 +702,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-
-
-
-
-
-        else {
+        else
             ctx.visit(insertMaps);
-        }
     }
 
     private final void acceptDefaultValuesEmulation(Context<?> ctx, int length) {

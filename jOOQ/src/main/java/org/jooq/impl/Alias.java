@@ -137,7 +137,6 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     @Override
     public final void accept(Context<?> context) {
-        boolean qualify = context.qualify();
 
 
 
@@ -185,9 +184,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 emulatedDerivedColumnList = true;
 
                 if (wrapped instanceof Values && NO_SUPPORT_VALUES.contains(dialect)) {
-                    Object previous = context.data(DATA_SELECT_ALIASES, fieldAliases);
-                    toSQLWrapped(context);
-                    context.data(DATA_SELECT_ALIASES, previous);
+                    context.data(DATA_SELECT_ALIASES, fieldAliases, this::toSQLWrapped);
                 }
                 else {
 

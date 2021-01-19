@@ -96,15 +96,12 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true);
+        ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
+            if (c.qualify() && getTable() != null)
+                c.visit(getTable()).sql('.');
 
-        if (ctx.qualify() && getTable() != null) {
-            ctx.visit(getTable());
-            ctx.sql('.');
-        }
-
-        ctx.visit(getUnqualifiedName());
-        ctx.data().remove(DATA_OMIT_CLAUSE_EVENT_EMISSION);
+            c.visit(getUnqualifiedName());
+        });
     }
 
     // ------------------------------------------------------------------------

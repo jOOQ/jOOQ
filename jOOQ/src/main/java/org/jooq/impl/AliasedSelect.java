@@ -114,16 +114,10 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
         //                  Derby projects column indexes 1, 2, 3 as names, but
         //                  they cannot be referenced. In that case, revert to
         //                  actual derived table usage.
-        if (ctx.family() == DERBY && q != null && q.hasUnions()) {
+        if (ctx.family() == DERBY && q != null && q.hasUnions())
             visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)));
-        }
-        else {
-            Object previous = ctx.data(DATA_SELECT_ALIASES);
-
-             ctx.data(DATA_SELECT_ALIASES, aliases);
-             visitSubquery(ctx, query);
-             ctx.data(DATA_SELECT_ALIASES, previous);
-        }
+        else
+            ctx.data(DATA_SELECT_ALIASES, aliases, c -> visitSubquery(c, query));
     }
 
     @Override // Avoid AbstractTable implementation

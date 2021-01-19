@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.jooq.conf.Settings;
 

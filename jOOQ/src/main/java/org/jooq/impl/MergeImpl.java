@@ -1470,28 +1470,25 @@ implements
            .end(MERGE_MERGE_INTO)
            .formatSeparator()
            .start(MERGE_USING)
-           .declareTables(true)
            .visit(K_USING).sql(' ');
 
-        ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
+        ctx.declareTables(true, c1 -> c1.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true, c2 -> {
 
-        // [#5110] As of version 10.14, Derby only supports direct table references
-        //         in its MERGE statement.
-        if (usingDual) {
-            switch (ctx.family()) {
-                case DERBY:
-                    ctx.visit(new Dual());
-                    break;
-                default:
-                    ctx.visit(DSL.selectOne());
-                    break;
+            // [#5110] As of version 10.14, Derby only supports direct table references
+            //         in its MERGE statement.
+            if (usingDual) {
+                switch (c2.family()) {
+                    case DERBY:
+                        c2.visit(new Dual());
+                        break;
+                    default:
+                        c2.visit(DSL.selectOne());
+                        break;
+                }
             }
-        }
-        else
-            ctx.visit(using);
-
-        ctx.data().remove(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
-        ctx.declareTables(false);
+            else
+                c2.visit(using);
+        }));
 
 
 

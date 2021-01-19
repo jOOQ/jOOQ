@@ -107,6 +107,7 @@ import static org.jooq.impl.CombineOperator.INTERSECT_ALL;
 import static org.jooq.impl.CombineOperator.UNION;
 import static org.jooq.impl.CombineOperator.UNION_ALL;
 import static org.jooq.impl.DSL.asterisk;
+import static org.jooq.impl.DSL.createTable;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.inline;
@@ -174,6 +175,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Tools.DataExtendedKey.DATA_TRANSFORM_ROWNUM_TO_LIMIT;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
@@ -1256,21 +1258,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-        else {
-
-
-
-
-
-
-            accept0(ctx);
-
-
-
-
-        }
+        else
+            ctx.data(DATA_TRANSFORM_ROWNUM_TO_LIMIT, null, c -> accept0(c));
     }
 
     final void accept0(Context<?> context) {
@@ -1313,10 +1302,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
                     && EMULATE_SELECT_INTO_AS_CTAS.contains(dialect)) {
 
-                context.data(DATA_OMIT_INTO_CLAUSE, true);
-                context.visit(DSL.createTable(into).as(this));
-                context.data().remove(DATA_OMIT_INTO_CLAUSE);
-
+                context.data(DATA_OMIT_INTO_CLAUSE, true, c -> c.visit(createTable(into).as(this)));
                 return;
             }
 
@@ -1586,15 +1572,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * The default LIMIT / OFFSET clause in most dialects
      */
     private final void toSQLReferenceLimitDefault(Context<?> context, Field<?>[] originalFields, Field<?>[] alternativeFields) {
-        Object data = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
-
-        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true);
-        toSQLReference0(context, originalFields, alternativeFields);
-
-        if (data == null)
-            context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
-        else
-            context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, data);
+        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true, c -> toSQLReference0(context, originalFields, alternativeFields));
     }
 
     /**
@@ -2727,10 +2705,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
                 {
                     ctx.visit(actualOrderBy);
                 }
@@ -2774,11 +2748,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         ;
     }
-
-
-
-
-
 
 
 

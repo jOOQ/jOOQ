@@ -91,11 +91,7 @@ implements TableField<R, E> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
-
-        ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-        ctx.visit(wrap(fieldsRow.fields.fields));
-        ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
+        ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(fieldsRow.fields.fields)));
     }
 
     @Override

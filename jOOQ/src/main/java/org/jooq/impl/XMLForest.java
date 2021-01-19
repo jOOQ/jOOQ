@@ -86,13 +86,11 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        Object previous = ctx.data(DATA_AS_REQUIRED, true);
-
-        ctx.visit(N_XMLFOREST).sql('(')
-           .declareFields(true, c -> c.visit(new SelectFieldList<>(fields)))
-           .sql(')');
-
-        ctx.data(DATA_AS_REQUIRED, previous);
+        ctx.data(DATA_AS_REQUIRED, true,
+            c -> c.visit(N_XMLFOREST).sql('(')
+                  .declareFields(true, x -> x.visit(new SelectFieldList<>(fields)))
+                  .sql(')')
+        );
     }
 
 

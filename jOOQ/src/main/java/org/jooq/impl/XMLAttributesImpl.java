@@ -66,20 +66,18 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
     public final void accept(Context<?> ctx) {
         boolean format = attributes.size() > 1;
 
-        Object previous = ctx.data(DATA_AS_REQUIRED, true);
-        ctx.visit(N_XMLATTRIBUTES).sql('(');
+        ctx.data(DATA_AS_REQUIRED, true, c -> {
+            c.visit(N_XMLATTRIBUTES).sql('(');
 
-        if (format)
-            ctx.formatIndentStart()
-               .formatNewLine();
+            if (format)
+                c.formatIndentStart().formatNewLine();
 
-        ctx.declareFields(true, c -> c.visit(attributes));
+            c.declareFields(true, x -> x.visit(attributes));
 
-        if (format)
-            ctx.formatIndentEnd()
-               .formatNewLine();
+            if (format)
+                c.formatIndentEnd().formatNewLine();
 
-        ctx.sql(')');
-        ctx.data(DATA_AS_REQUIRED, previous);
+            c.sql(')');
+        });
     }
 }

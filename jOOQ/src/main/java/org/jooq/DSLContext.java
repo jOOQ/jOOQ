@@ -10495,13 +10495,24 @@ public interface DSLContext extends Scope {
     /**
      * The <code>SET</code> statement.
      * <p>
-     * Set a vendor specific flag to a new value.
+     * Set a vendor specific session configuration to a new value.
      *
      * @see DSL#set(Name, Param)
      */
     @NotNull
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     RowCountQuery set(Name name, Param<?> value);
+
+    /**
+     * The <code>SET LOCAL</code> statement.
+     * <p>
+     * Set a vendor specific transaction-local configuration to a new value.
+     *
+     * @see DSL#setLocal(Name, Param)
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    RowCountQuery setLocal(Name name, Param<?> value);
 
     /**
      * The <code>SET CATALOG</code> statement.

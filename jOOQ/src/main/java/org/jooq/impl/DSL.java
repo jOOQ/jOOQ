@@ -8650,14 +8650,27 @@ public class DSL {
     /**
      * The <code>SET</code> statement.
      * <p>
-     * Set a vendor specific flag to a new value.
+     * Set a vendor specific session configuration to a new value.
      *
      * @see DSLContext#set(Name, Param)
      */
     @NotNull
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     public static org.jooq.RowCountQuery set(Name name, Param<?> value) {
         return dsl().set(name, value);
+    }
+
+    /**
+     * The <code>SET LOCAL</code> statement.
+     * <p>
+     * Set a vendor specific transaction-local configuration to a new value.
+     *
+     * @see DSLContext#setLocal(Name, Param)
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static org.jooq.RowCountQuery setLocal(Name name, Param<?> value) {
+        return dsl().setLocal(name, value);
     }
 
     /**

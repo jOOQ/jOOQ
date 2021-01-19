@@ -190,7 +190,7 @@ final class ForLock extends AbstractQueryPart {
             // [#11243] PostgreSQL FOR UPDATE WAIT <n> emulation
             if (forLockWaitMode == ForLockWaitMode.WAIT && EMULATE_FOR_UPDATE_WAIT.contains(ctx.dialect())) {
                 ctx.skipUpdateCount().data(DATA_PREPEND_SQL, ctx.dsl().renderInlined(
-                    ctx.dsl().queries(ctx.dsl().query("{0} {1} {2} = {3}", K_SET, K_LOCAL, N_LOCK_TIMEOUT, inline(forLockWait * 1000)))
+                    ctx.dsl().queries(ctx.dsl().setLocal(N_LOCK_TIMEOUT, inline(forLockWait * 1000)))
                 ));
             }
             else {

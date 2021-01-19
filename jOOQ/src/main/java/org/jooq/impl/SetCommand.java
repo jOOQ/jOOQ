@@ -51,6 +51,8 @@ import org.jooq.conf.*;
 import org.jooq.impl.*;
 import org.jooq.tools.*;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 
@@ -67,20 +69,24 @@ extends
 
     private final Name     name;
     private final Param<?> value;
+    private final boolean  setLocal;
 
     SetCommand(
         Configuration configuration,
         Name name,
-        Param<?> value
+        Param<?> value,
+        boolean setLocal
     ) {
         super(configuration);
 
         this.name = name;
         this.value = value;
+        this.setLocal = setLocal;
     }
 
-    final Name     $name()  { return name; }
-    final Param<?> $value() { return value; }
+    final Name     $name()     { return name; }
+    final Param<?> $value()    { return value; }
+    final boolean  $setLocal() { return setLocal; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -88,9 +94,24 @@ extends
 
 
 
+    private static final Set<SQLDialect> NO_SUPPORT_BIND_VALUES = SQLDialect.supportedBy(POSTGRES);
+
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_SET).sql(' ').visit(name).sql(" = ").visit(value);
+        ctx.visit(K_SET);
+
+        if (setLocal)
+            ctx.sql(' ').visit(K_LOCAL);
+
+        ParamType previous = ctx.paramType();
+
+        if (NO_SUPPORT_BIND_VALUES.contains(ctx.dialect()))
+            ctx.paramType(ParamType.INLINED);
+
+        ctx.sql(' ').visit(name).sql(" = ").visit(value);
+
+        if (NO_SUPPORT_BIND_VALUES.contains(ctx.dialect()))
+            ctx.paramType(previous);
     }
 
 

@@ -3455,7 +3455,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.RowCountQuery set(Name name, Param<?> value) {
-        return new SetCommand(configuration(), name, value);
+        return new SetCommand(configuration(), name, value, false);
+    }
+
+    @Override
+    public org.jooq.RowCountQuery setLocal(Name name, Param<?> value) {
+        return new SetCommand(configuration(), name, value, true);
     }
 
     @Override

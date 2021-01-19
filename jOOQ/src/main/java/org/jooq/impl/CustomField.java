@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CUSTOM;
 
+import java.util.function.Consumer;
+
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -73,6 +75,26 @@ public abstract class CustomField<T> extends AbstractField<T> {
 
     protected CustomField(Name name, DataType<T> type) {
         super(name, type);
+    }
+
+    /**
+     * Create a {@link CustomField} from a lambda expression.
+     */
+    public static final <T> CustomField<T> of(String name, DataType<T> type, Consumer<? super Context<?>> consumer) {
+        return of(DSL.name(name), type, consumer);
+    }
+
+    /**
+     * Create a {@link CustomField} from a lambda expression.
+     */
+    @SuppressWarnings("serial")
+    public static final <T> CustomField<T> of(Name name, DataType<T> type, Consumer<? super Context<?>> consumer) {
+        return new CustomField<T>(name, type) {
+            @Override
+            public void accept(Context<?> ctx) {
+                consumer.accept(ctx);
+            }
+        };
     }
 
     // -------------------------------------------------------------------------

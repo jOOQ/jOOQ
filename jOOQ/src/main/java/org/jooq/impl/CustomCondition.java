@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CUSTOM;
 
+import java.util.function.Consumer;
+
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -65,6 +67,19 @@ public abstract class CustomCondition extends AbstractCondition {
     private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomCondition() {}
+
+    /**
+     * Create a {@link CustomCondition} from a lambda expression.
+     */
+    @SuppressWarnings("serial")
+    public static final CustomCondition of(Consumer<? super Context<?>> consumer) {
+        return new CustomCondition() {
+            @Override
+            public void accept(Context<?> ctx) {
+                consumer.accept(ctx);
+            }
+        };
+    }
 
     // -------------------------------------------------------------------------
     // Implementation required

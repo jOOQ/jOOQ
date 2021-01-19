@@ -157,18 +157,15 @@ implements JSONObjectAggNullStep<J> {
         }
 
         final Field<?> value1 = value;
-        final Field<String> listagg = DSL.field("{0}", String.class, new CustomQueryPart() {
-            @Override
-            public void accept(Context<?> c) {
-                c.visit(groupConcat(DSL.concat(
-                    inline('"'),
-                    DSL.replace(entry.key(), inline('"'), inline("\\\"")),
-                    inline("\":"),
-                    nullType == ABSENT_ON_NULL ? value1 : DSL.coalesce(value1, inline("null"))
-                )));
-                acceptOverClause(c);
-            }
-        });
+        final Field<String> listagg = DSL.field("{0}", String.class, CustomQueryPart.of(c -> {
+            c.visit(groupConcat(DSL.concat(
+                inline('"'),
+                DSL.replace(entry.key(), inline('"'), inline("\\\"")),
+                inline("\":"),
+                nullType == ABSENT_ON_NULL ? value1 : DSL.coalesce(value1, inline("null"))
+            )));
+            acceptOverClause(c);
+        }));
 
         ctx.sql('(').visit(DSL.concat(inline('{'), listagg, inline('}'))).sql(')');
     }

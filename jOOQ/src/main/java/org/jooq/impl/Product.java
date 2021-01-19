@@ -73,51 +73,39 @@ final class Product extends AbstractAggregateFunction<BigDecimal> {
         final Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0).getDataType(), arguments.get(0));
         final Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
 
-        @SuppressWarnings("serial")
-        Field<BigDecimal> negativesSum = new CustomField<BigDecimal>("sum", NUMERIC) {
-            @Override
-            public void accept(Context<?> c) {
-                c.visit(distinct
-                    ? DSL.sumDistinct(negatives)
-                    : DSL.sum(negatives));
+        Field<BigDecimal> negativesSum = CustomField.of("sum", NUMERIC, c -> {
+            c.visit(distinct
+                ? DSL.sumDistinct(negatives)
+                : DSL.sum(negatives));
 
-                acceptFilterClause(c);
-                acceptOverClause(c);
-            }
-        };
+            acceptFilterClause(c);
+            acceptOverClause(c);
+        });
 
-        @SuppressWarnings("serial")
-        Field<BigDecimal> zerosSum = new CustomField<BigDecimal>("sum", NUMERIC) {
-            @Override
-            public void accept(Context<?> c) {
-                c.visit(DSL.sum(choose(f).when(zero(), one())));
+        Field<BigDecimal> zerosSum = CustomField.of("sum", NUMERIC, c -> {
+            c.visit(DSL.sum(choose(f).when(zero(), one())));
 
-                acceptFilterClause(c);
-                acceptOverClause(c);
-            }
-        };
+            acceptFilterClause(c);
+            acceptOverClause(c);
+        });
 
-        @SuppressWarnings("serial")
-        Field<BigDecimal> logarithmsSum = new CustomField<BigDecimal>("sum", NUMERIC) {
-            @Override
-            public void accept(Context<?> c) {
-                Field<Integer> abs = DSL.abs(DSL.nullif(f, zero()));
-                Field<BigDecimal> ln =
+        Field<BigDecimal> logarithmsSum = CustomField.of("sum", NUMERIC, c -> {
+            Field<Integer> abs = DSL.abs(DSL.nullif(f, zero()));
+            Field<BigDecimal> ln =
 
 
 
 
 
-                    DSL.ln(abs);
+                DSL.ln(abs);
 
-                c.visit(distinct
-                    ? DSL.sumDistinct(ln)
-                    : DSL.sum(ln));
+            c.visit(distinct
+                ? DSL.sumDistinct(ln)
+                : DSL.sum(ln));
 
-                acceptFilterClause(c);
-                acceptOverClause(c);
-            }
-        };
+            acceptFilterClause(c);
+            acceptOverClause(c);
+        });
 
         ctx.visit(imul(
              when(zerosSum.gt(inline(BigDecimal.ZERO)), zero())

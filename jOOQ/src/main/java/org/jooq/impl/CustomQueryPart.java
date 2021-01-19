@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CUSTOM;
 
+import java.util.function.Consumer;
+
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -77,6 +79,19 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
     private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomQueryPart() {
+    }
+
+    /**
+     * Create a {@link CustomQueryPart} from a lambda expression.
+     */
+    @SuppressWarnings("serial")
+    public static final CustomQueryPart of(Consumer<? super Context<?>> consumer) {
+        return new CustomQueryPart() {
+            @Override
+            public void accept(Context<?> ctx) {
+                consumer.accept(ctx);
+            }
+        };
     }
 
     // -------------------------------------------------------------------------

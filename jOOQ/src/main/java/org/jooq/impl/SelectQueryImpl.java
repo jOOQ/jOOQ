@@ -1595,46 +1595,42 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             (Field<?>) null
         );
 
-        alternativeFields[alternativeFields.length - 1] =
-            new CustomField<Integer>("rn", SQLDataType.INTEGER) {
-                @Override
-                public void accept(Context<?> c) {
-                    boolean wrapQueryExpressionBodyInDerivedTable = wrapQueryExpressionBodyInDerivedTable(c);
+        alternativeFields[alternativeFields.length - 1] = CustomField.of("rn", SQLDataType.INTEGER, c -> {
+            boolean wrapQueryExpressionBodyInDerivedTable = wrapQueryExpressionBodyInDerivedTable(c);
 
-                    // [#3575] Ensure that no column aliases from the surrounding SELECT clause
-                    // are referenced from the below ranking functions' ORDER BY clause.
-                    c.data(DATA_UNALIAS_ALIASED_EXPRESSIONS, !wrapQueryExpressionBodyInDerivedTable);
+            // [#3575] Ensure that no column aliases from the surrounding SELECT clause
+            // are referenced from the below ranking functions' ORDER BY clause.
+            c.data(DATA_UNALIAS_ALIASED_EXPRESSIONS, !wrapQueryExpressionBodyInDerivedTable);
 
-                    boolean q = c.qualify();
+            boolean q = c.qualify();
 
-                    c.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, new Object[] { originalFields, alternativeFields });
-                    if (wrapQueryExpressionBodyInDerivedTable)
-                        c.qualify(false);
+            c.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, new Object[] { originalFields, alternativeFields });
+            if (wrapQueryExpressionBodyInDerivedTable)
+                c.qualify(false);
 
-                    // [#2580] FETCH NEXT n ROWS ONLY emulation:
-                    // -----------------------------------------
-                    // When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
-                    // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
-                    // ordering by the SELECT's ORDER BY clause AND all the expressions from
-                    // the projection
-                    //
-                    // [#6197] FETCH NEXT n ROWS WITH TIES emulation:
-                    // ----------------------------------------------
-                    // DISTINCT seems irrelevant here (to be proven)
+            // [#2580] FETCH NEXT n ROWS ONLY emulation:
+            // -----------------------------------------
+            // When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
+            // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
+            // ordering by the SELECT's ORDER BY clause AND all the expressions from
+            // the projection
+            //
+            // [#6197] FETCH NEXT n ROWS WITH TIES emulation:
+            // ----------------------------------------------
+            // DISTINCT seems irrelevant here (to be proven)
 
-                    c.visit(getLimit().withTies()
-                        ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
-                        : distinct
-                        ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
-                        : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())))
-                    );
+            c.visit(getLimit().withTies()
+                ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
+                : distinct
+                ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
+                : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())))
+            );
 
-                    c.data().remove(DATA_UNALIAS_ALIASED_EXPRESSIONS);
-                    c.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
-                    if (wrapQueryExpressionBodyInDerivedTable)
-                        c.qualify(q);
-                }
-            }.as("rn");
+            c.data().remove(DATA_UNALIAS_ALIASED_EXPRESSIONS);
+            c.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
+            if (wrapQueryExpressionBodyInDerivedTable)
+                c.qualify(q);
+        }).as("rn");
 
         // v1 as ID, v2 as ID, v3 as TITLE
         final Field<?>[] unaliasedFields = Tools.unaliasedFields(originalFields);

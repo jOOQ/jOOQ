@@ -1892,13 +1892,8 @@ final class Tools {
         return result;
     }
 
-    static final <T> Field<T> inlined(final Field<T> field) {
-        return new CustomField<T>(field.getQualifiedName(), field.getDataType()) {
-            @Override
-            public void accept(Context<?> ctx) {
-                ctx.visit(field, INLINED);
-            }
-        };
+    static final <T> Field<T> inlined(Field<T> field) {
+        return CustomField.of(field.getQualifiedName(), field.getDataType(), c -> c.visit(field, INLINED));
     }
 
     static final IllegalArgumentException indexFail(Row row, Field<?> field) {

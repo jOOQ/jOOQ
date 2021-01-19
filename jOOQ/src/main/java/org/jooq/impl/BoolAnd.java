@@ -78,7 +78,6 @@ final class BoolAnd extends DefaultAggregateFunction<Boolean> {
         }
     }
 
-    @SuppressWarnings("serial")
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -93,13 +92,10 @@ final class BoolAnd extends DefaultAggregateFunction<Boolean> {
                 break;
 
             default:
-                final Field<Integer> max = DSL.field("{0}", Integer.class, new CustomQueryPart() {
-                    @Override
-                    public void accept(Context<?> c) {
-                        c.visit(DSL.min(DSL.when(condition, one()).otherwise(zero())));
-                        acceptOverClause(c);
-                    }
-                });
+                final Field<Integer> max = DSL.field("{0}", Integer.class, CustomQueryPart.of(c -> {
+                    c.visit(DSL.min(DSL.when(condition, one()).otherwise(zero())));
+                    acceptOverClause(c);
+                }));
 
                 ctx.visit(DSL.field(max.eq(one())));
                 break;

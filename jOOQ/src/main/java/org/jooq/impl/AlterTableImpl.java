@@ -1169,7 +1169,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.end(ALTER_TABLE_RENAME);
         }
         else if (renameColumn != null) {
-            boolean qualify = ctx.qualify();
             ctx.start(ALTER_TABLE_RENAME_COLUMN);
 
             switch (ctx.family()) {
@@ -1182,33 +1181,28 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                        .visit(renameColumn)
                        .formatSeparator()
                        .visit(K_TO).sql(' ')
-                       .qualify(false)
-                       .visit(renameColumnTo)
-                       .qualify(qualify);
+                       .qualify(false, c -> c.visit(renameColumnTo));
+
                     break;
 
                 case H2:
                 case HSQLDB:
-                    ctx.qualify(false)
-                       .visit(K_ALTER_COLUMN).sql(' ')
-                       .visit(renameColumn)
+                    ctx.visit(K_ALTER_COLUMN).sql(' ')
+                       .qualify(false, c -> c.visit(renameColumn))
                        .formatSeparator()
                        .visit(K_RENAME_TO).sql(' ')
-                       .visit(renameColumnTo)
-                       .qualify(qualify);
+                       .qualify(false, c -> c.visit(renameColumnTo));
+
                     break;
 
                 case FIREBIRD:
-                    ctx.qualify(false)
-                       .visit(K_ALTER_COLUMN).sql(' ')
-                       .visit(renameColumn)
+                    ctx.visit(K_ALTER_COLUMN).sql(' ')
+                       .qualify(false, c -> c.visit(renameColumn))
                        .formatSeparator()
                        .visit(K_TO).sql(' ')
-                       .visit(renameColumnTo)
-                       .qualify(qualify);
+                       .qualify(false, c -> c.visit(renameColumnTo));
+
                     break;
-
-
 
 
 
@@ -1231,59 +1225,47 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
                 default:
-                    ctx.qualify(false)
-                       .visit(K_RENAME_COLUMN).sql(' ')
-                       .visit(renameColumn)
+                    ctx.visit(K_RENAME_COLUMN).sql(' ')
+                       .qualify(false, c -> c.visit(renameColumn))
                        .formatSeparator()
                        .visit(K_TO).sql(' ')
-                       .visit(renameColumnTo)
-                       .qualify(qualify);
+                       .qualify(false, c -> c.visit(renameColumnTo));
+
                     break;
             }
 
             ctx.end(ALTER_TABLE_RENAME_COLUMN);
         }
         else if (renameIndex != null) {
-            boolean qualify = ctx.qualify();
-
             ctx.start(ALTER_TABLE_RENAME_INDEX)
-               .qualify(false)
                .visit(K_RENAME_INDEX).sql(' ')
-               .visit(renameIndex)
+               .qualify(false, c -> c.visit(renameIndex))
                .formatSeparator()
                .visit(K_TO).sql(' ')
-               .visit(renameIndexTo)
-               .qualify(qualify)
+               .qualify(false, c -> c.visit(renameIndexTo))
                .end(ALTER_TABLE_RENAME_INDEX);
         }
         else if (renameConstraint != null) {
-            boolean qualify = ctx.qualify();
-
             ctx.start(ALTER_TABLE_RENAME_CONSTRAINT);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
 
             if (family == HSQLDB)
-                ctx.qualify(false)
-                   .visit(K_ALTER_CONSTRAINT).sql(' ')
-                   .visit(renameConstraint)
+                ctx.visit(K_ALTER_CONSTRAINT).sql(' ')
+                   .qualify(false, c -> c.visit(renameConstraint))
                    .formatSeparator()
                    .visit(K_RENAME_TO).sql(' ')
-                   .visit(renameConstraintTo)
-                   .qualify(qualify);
+                   .qualify(false, c -> c.visit(renameConstraintTo));
             else
-                ctx.qualify(false)
-                   .visit( K_RENAME_CONSTRAINT).sql(' ')
-                   .visit(renameConstraint)
+                ctx.visit( K_RENAME_CONSTRAINT).sql(' ')
+                   .qualify(false, c -> c.visit(renameConstraint))
                    .formatSeparator()
                    .visit(K_TO).sql(' ')
-                   .visit(renameConstraintTo)
-                   .qualify(qualify);
+                   .qualify(false, c -> c.visit(renameConstraintTo));
 
             ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
         }
         else if (add != null) {
-            boolean qualify = ctx.qualify();
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.dialect());
             boolean parens = !multiAdd ;
             boolean comma = true ;
@@ -1309,9 +1291,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                         ctx.sql(comma ? "," : "").formatSeparator();
 
                 FieldOrConstraint part = add.get(i);
-                ctx.qualify(false)
-                   .visit(part)
-                   .qualify(qualify);
+                ctx.qualify(false, c -> c.visit(part));
 
                 if (part instanceof Field) {
                     ctx.sql(' ');
@@ -1330,8 +1310,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.end(ALTER_TABLE_ADD);
         }
         else if (addColumn != null) {
-            boolean qualify = ctx.qualify();
-
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD).sql(' ');
 
@@ -1343,10 +1321,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-            ctx.qualify(false)
-               .visit(addColumn).sql(' ')
-               .qualify(qualify);
-
+            ctx.qualify(false, c -> c.visit(addColumn)).sql(' ');
             toSQLDDLTypeDeclarationForAddition(ctx, addColumnType);
 
 
@@ -1439,8 +1414,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
                     // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
                     if (alterColumnDefault == null && !alterColumnDropDefault)
-                        ctx.visit(K_CHANGE_COLUMN)
-                           .sql(' ').qualify(false).visit(alterColumn).qualify(true);
+                        ctx.visit(K_CHANGE_COLUMN).sql(' ').qualify(false, c -> c.visit(alterColumn));
                     else
                         ctx.visit(K_ALTER_COLUMN);
 
@@ -1458,10 +1432,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
             ctx.sql(' ');
-
-            ctx.qualify(false)
-               .visit(alterColumn)
-               .qualify(true);
+            ctx.qualify(false, c -> c.visit(alterColumn));
 
             if (alterColumnType != null) {
                 switch (family) {
@@ -1585,16 +1556,13 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 String separator = "";
 
                 for (Field<?> dropColumn : dropColumns) {
-                    ctx.sql(separator)
-                       .qualify(false);
+                    ctx.sql(separator);
 
                     acceptDropColumn(ctx);
                     if (ifExistsColumn && supportsIfExistsColumn(ctx))
                         ctx.sql(' ').visit(K_IF_EXISTS);
 
-                    ctx.sql(' ')
-                       .visit(dropColumn)
-                       .qualify(true);
+                    ctx.sql(' ').qualify(false, c -> c.visit(dropColumn));
 
 
 
@@ -1619,10 +1587,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
                 ctx.sql(' ');
-
-                ctx.qualify(false)
-                   .visit(dropColumns)
-                   .qualify(true);
+                ctx.qualify(false, c -> c.visit(dropColumns));
 
 
 
@@ -1712,14 +1677,12 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     }
 
     private final void acceptFirstBeforeAfter(Context<?> ctx) {
-        boolean previous = ctx.qualify();
-
         if (addFirst && ctx.family() != FIREBIRD)
             ctx.sql(' ').visit(K_FIRST);
         else if (addBefore != null)
-            ctx.sql(' ').visit(K_BEFORE).sql(' ').qualify(false).visit(addBefore).qualify(previous);
+            ctx.sql(' ').visit(K_BEFORE).sql(' ').qualify(false, c -> c.visit(addBefore));
         else if (addAfter != null)
-            ctx.sql(' ').visit(K_AFTER).sql(' ').qualify(false).visit(addAfter).qualify(previous);
+            ctx.sql(' ').visit(K_AFTER).sql(' ').qualify(false, c -> c.visit(addAfter));
     }
 
     private final void acceptDropColumn(Context<?> ctx) {
@@ -1744,17 +1707,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 break;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

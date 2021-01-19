@@ -178,9 +178,7 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
                      ctx.visit(op.toKeyword()).sql(' ');
         if (castRhs) ctx.visit(K_CAST).sql('(');
-                     ctx.paramType(forcedParamType)
-                        .visit(rhs)
-                        .paramType(previousParamType);
+                     ctx.visit(rhs, forcedParamType);
         if (castRhs) ctx.sql(' ').visit(K_AS).sql(' ').visit(K_VARCHAR).sql("(4000))");
 
         if (escape != null) {

@@ -1627,7 +1627,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     // are referenced from the below ranking functions' ORDER BY clause.
                     c.data(DATA_UNALIAS_ALIASED_EXPRESSIONS, !wrapQueryExpressionBodyInDerivedTable);
 
-                    boolean qualify = c.qualify();
+                    boolean q = c.qualify();
 
                     c.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, new Object[] { originalFields, alternativeFields });
                     if (wrapQueryExpressionBodyInDerivedTable)
@@ -1654,8 +1654,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     c.data().remove(DATA_UNALIAS_ALIASED_EXPRESSIONS);
                     c.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
                     if (wrapQueryExpressionBodyInDerivedTable)
-                        c.qualify(qualify);
-
+                        c.qualify(q);
                 }
             }.as("rn");
 
@@ -1663,9 +1662,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         final Field<?>[] unaliasedFields = Tools.unaliasedFields(originalFields);
 
         ctx.visit(K_SELECT).separatorRequired(true)
-           .declareFields(true)
-           .visit(new SelectFieldList<>(unaliasedFields))
-           .declareFields(false)
+           .declareFields(true, c -> c.visit(new SelectFieldList<>(unaliasedFields)))
            .formatSeparator()
            .visit(K_FROM).sql(" (")
            .formatIndentStart()
@@ -1782,10 +1779,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
     /**
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
@@ -1808,7 +1801,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // Depending on the dialect and on various syntax elements, parts of the above must be wrapped in
         // synthetic parentheses
         boolean wrapQueryExpressionInDerivedTable;
-        boolean wrapQueryExpressionBodyInDerivedTable = false;
+        boolean wrapQueryExpressionBodyInDerivedTable;
         boolean applySeekOnDerivedTable = applySeekOnDerivedTable();
 
 
@@ -1833,6 +1826,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                    .formatIndentStart()
                    .formatNewLine();
 
+        wrapQueryExpressionBodyInDerivedTable = false
 
 
 
@@ -1846,7 +1840,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // [#7459] In the presence of UNIONs and other set operations, the SEEK
         //         predicate must be applied on a derived table, not on the individual subqueries
-        wrapQueryExpressionBodyInDerivedTable |= applySeekOnDerivedTable;
+            || applySeekOnDerivedTable;
 
         if (wrapQueryExpressionBodyInDerivedTable) {
             context.visit(K_SELECT).sql(' ');
@@ -1862,9 +1856,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (alternativeFields != null && originalFields.length < alternativeFields.length)
                 context.sql(", ")
                        .formatSeparator()
-                       .declareFields(true)
-                       .visit(alternativeFields[alternativeFields.length - 1])
-                       .declareFields(false);
+                       .declareFields(true, c -> c.visit(alternativeFields[alternativeFields.length - 1]));
 
             context.formatIndentEnd()
                    .formatSeparator()
@@ -2191,9 +2183,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context.formatSeparator()
                    .visit(K_WINDOW)
                    .separatorRequired(true)
-                   .declareWindows(true)
-                   .visit(window)
-                   .declareWindows(false);
+                   .declareWindows(true, c -> c.visit(window));
 
         context.end(SELECT_WINDOW);
 
@@ -2257,26 +2247,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.formatSeparator()
                        .visit(K_WHERE)
                        .sql(' ')
-                       .qualify(false)
-                       .visit(getSeekCondition())
-                       .qualify(qualify);
+                       .qualify(false, c -> c.visit(getSeekCondition()));
             }
         }
 
         // ORDER BY clause for UNION
         // -------------------------
-        try {
-            context.qualify(false);
-            toSQLOrderBy(
-                context,
-                originalFields, alternativeFields,
-                wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
-                unionOrderBy, unionLimit
-            );
-        }
-        finally {
-            context.qualify(qualify);
-        }
+        context.qualify(false, c -> toSQLOrderBy(
+            context,
+            originalFields, alternativeFields,
+            wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
+            unionOrderBy, unionLimit
+        ));
     }
 
     private final boolean hasOuterJoins(TableList tablelist) {

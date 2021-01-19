@@ -221,9 +221,6 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
 
 
-        // [#4806] CREATE VIEW doesn't accept parameters in most databases
-        ParamType paramType = ctx.paramType();
-
         ctx.start(CREATE_VIEW_NAME)
            .visit(replaceSupported && orReplace ? K_REPLACE : K_CREATE);
 
@@ -257,34 +254,23 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
 
 
-
-
-
-
-
         ctx.visit(view);
 
-        if (rename && renameSupported) {
-            boolean qualify = ctx.qualify();
-
-            ctx.sql('(')
-               .qualify(false)
-               .visit(wrap(f))
-               .qualify(qualify)
-               .sql(')');
-        }
+        if (rename && renameSupported)
+            ctx.sql('(').visit(wrap(f).qualify(false)).sql(')');
 
         ctx.end(CREATE_VIEW_NAME)
            .formatSeparator()
            .visit(K_AS)
            .formatSeparator()
            .start(CREATE_VIEW_AS)
-           .paramType(INLINED)
+           // [#4806] CREATE VIEW doesn't accept parameters in most databases
            .visit(
                rename && !renameSupported
              ? selectFrom(parsed().asTable(name("t"), Tools.fieldNames(f)))
-             : select)
-           .paramType(paramType)
+             : select,
+               INLINED
+           )
            .end(CREATE_VIEW_AS);
     }
 

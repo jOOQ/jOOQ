@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.sql.PreparedStatement;
+import java.util.function.Consumer;
 
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
@@ -101,6 +102,13 @@ public interface Context<C extends Context<C>> extends Scope {
     C declareFields(boolean declareFields);
 
     /**
+     * Set the new context value for {@link #declareFields()} for the scope of a
+     * {@link Consumer}.
+     */
+    @NotNull
+    C declareFields(boolean declareFields, Consumer<? super C> consumer);
+
+    /**
      * Whether the current context is rendering a SQL table declaration (e.g. a
      * {@link Table} in the <code>FROM</code> or <code>JOIN</code> clause of the
      * query).
@@ -112,6 +120,13 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C declareTables(boolean declareTables);
+
+    /**
+     * Set the new context value for {@link #declareTables()} for the scope of a
+     * {@link Consumer}.
+     */
+    @NotNull
+    C declareTables(boolean declareTables, Consumer<? super C> consumer);
 
     /**
      * Whether the current context is rendering a SQL alias declarations in
@@ -127,6 +142,14 @@ public interface Context<C extends Context<C>> extends Scope {
     C declareAliases(boolean declareTables);
 
     /**
+     * Whether the current context is rendering a SQL alias declarations in
+     * {@link #declareTables()} or {@link #declareFields()} sections for the
+     * scope of a {@link Consumer}.
+     */
+    @NotNull
+    C declareAliases(boolean declareTables, Consumer<? super C> consumer);
+
+    /**
      * Whether the current context is rendering a SQL window declaration (e.g. a
      * {@link WindowDefinition} in the <code>WINDOW</code> clause of the query).
      */
@@ -137,6 +160,13 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C declareWindows(boolean declareWindows);
+
+    /**
+     * Set the new context value for {@link #declareWindows()} for the scope of
+     * a {@link Consumer}.
+     */
+    @NotNull
+    C declareWindows(boolean declareWindows, Consumer<? super C> consumer);
 
     /**
      * Whether the current context is rendering a common table expression (e.g.
@@ -150,6 +180,13 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C declareCTE(boolean declareCTE);
+
+    /**
+     * Set the new context value for {@link #declareCTE()} for the scope of a
+     * {@link Consumer}.
+     */
+    @NotNull
+    C declareCTE(boolean declareCTE, Consumer<? super C> consumer);
 
     /**
      * Whether the current context is rendering a sub-query (nested query).
@@ -502,6 +539,13 @@ public interface Context<C extends Context<C>> extends Scope {
     C quote(boolean quote);
 
     /**
+     * Set the new context value for {@link #quote()} for the scope of a
+     * {@link Consumer}.
+     */
+    @NotNull
+    C quote(boolean quote, Consumer<? super C> consumer);
+
+    /**
      * Whether query parts should render qualified names or not.
      */
     boolean qualify();
@@ -515,6 +559,13 @@ public interface Context<C extends Context<C>> extends Scope {
     C qualify(boolean qualify);
 
     /**
+     * Set the new context value for {@link #qualify()} for the scope of a
+     * {@link Consumer}.
+     */
+    @NotNull
+    C qualify(boolean qualify, Consumer<? super C> consumer);
+
+    /**
      * Whether query parts should render qualified names or not.
      * <p>
      * This is the same as {@link #qualifySchema()}.
@@ -526,6 +577,13 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C qualifySchema(boolean qualifySchema);
+
+    /**
+     * Set the new context value for {@link #qualifySchema()} for the scope of a
+     * {@link Consumer}.
+     */
+    @NotNull
+    C qualifySchema(boolean qualifySchema, Consumer<? super C> consumer);
 
     /**
      * Whether query parts should render qualified names or not.
@@ -543,6 +601,16 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C qualifyCatalog(boolean qualifyCatalog);
+
+    /**
+     * Set the new context value for {@link #qualifyCatalog()} for the scope of
+     * a {@link Consumer}.
+     * <p>
+     * The catalog can only be qualified when {@link #qualifySchema()} is
+     * <code>true</code> as well.
+     */
+    @NotNull
+    C qualifyCatalog(boolean qualifyCatalog, Consumer<? super C> consumer);
 
     /**
      * Specify, how bind values should be rendered.
@@ -566,10 +634,32 @@ public interface Context<C extends Context<C>> extends Scope {
     C paramType(ParamType paramType);
 
     /**
-     * Set the new context value for {@link #paramType()}, if a condition is true.
+     * Visit a query part with a given value for {@link #paramType()}.
+     */
+    @NotNull
+    C visit(QueryPart part, ParamType paramType);
+
+    /**
+     * Set the new context value for {@link #paramType()}, if a condition is
+     * true.
      */
     @NotNull
     C paramTypeIf(ParamType paramType, boolean condition);
+
+    /**
+     * Set the new context value for {@link #paramType()} for the scope of a
+     * {@link Consumer}.
+     */
+    @NotNull
+    C paramType(ParamType paramType, Consumer<? super C> runnable);
+
+    /**
+     * Set the new context value for {@link #paramType()} for the scope of a
+     * {@link Consumer}, if a condition is
+     * true.
+     */
+    @NotNull
+    C paramTypeIf(ParamType paramType, boolean condition, Consumer<? super C> runnable);
 
     /**
      * The currently applied cast mode for bind values.

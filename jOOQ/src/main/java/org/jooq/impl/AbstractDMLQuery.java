@@ -775,9 +775,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
-
-
     final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {
             // Other dialects don't render a RETURNING clause, but
@@ -794,17 +791,14 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 ctx.formatSeparator()
                    .visit(K_RETURNING)
                    .sql(' ')
-                   .declareFields(true)
-
-                   .visit(
+                   .declareFields(true, c -> c.visit(
 
                        // Firebird doesn't support asterisks at all here
                        // MariaDB doesn't support qualified asterisks: https://jira.mariadb.org/browse/MDEV-23178
-                       ctx.family() == FIREBIRD || ctx.family() == MARIADB
+                       c.family() == FIREBIRD || c.family() == MARIADB
                      ? new SelectFieldList<>(returningResolvedAsterisks)
                      : returning
-                   )
-                   .declareFields(declareFields);
+                   ));
 
                 if (unqualify)
                     ctx.qualify(qualify);

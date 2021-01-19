@@ -174,15 +174,11 @@ implements
            .formatIndentStart()
            .formatSeparator();
 
-        if (renameTo != null) {
-            boolean qualify = ctx.qualify();
-
+        if (renameTo != null)
             ctx.start(Clause.ALTER_SCHEMA_RENAME)
-               .qualify(false)
-               .visit(supportRename ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo)
-               .qualify(qualify)
+               .visit(supportRename ? K_TO : K_RENAME_TO).sql(' ')
+               .qualify(false, c -> c.visit(renameTo))
                .end(Clause.ALTER_SCHEMA_RENAME);
-        }
 
         ctx.formatIndentEnd();
     }

@@ -123,11 +123,6 @@ implements
 
 
 
-
-
-
-
-
             default: {
                 ctx.visit(sequence);
                 break;

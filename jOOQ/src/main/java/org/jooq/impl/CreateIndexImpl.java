@@ -295,15 +295,11 @@ implements
         boolean supportsInclude = SUPPORT_INCLUDE.contains(ctx.dialect());
         boolean supportsFieldsBeforeTable = false ;
 
-        QueryPartList<QueryPart> list = new QueryPartList<>();
+        QueryPartList<QueryPart> list = new QueryPartList<>().qualify(false);
         list.addAll(on);
 
         if (!supportsInclude && include != null)
             list.addAll(include);
-
-
-
-
 
 
 
@@ -317,11 +313,7 @@ implements
 
 
 
-            ctx.sql('(')
-               .qualify(false)
-               .visit(list)
-               .qualify(true)
-               .sql(')');
+            ctx.sql('(').visit(list).sql(')');
 
         if (supportsInclude && include != null) {
             Keyword keyword = K_INCLUDE;
@@ -338,21 +330,20 @@ implements
                .sql(')');
         }
 
-        Condition c = where;
+        Condition condition;
 
-        if (excludeNullKeys && c == null)
+        if (excludeNullKeys && where == null)
+            condition = on.size() == 1
+                ? field(Tools.first(on)).isNotNull()
+                : row(Tools.fields(on)).isNotNull();
+        else
+            condition = where;
 
-
-
-                c = on.size() == 1 ? field(Tools.first(on)).isNotNull() : row(Tools.fields(on)).isNotNull();
-
-        if (c != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
+        if (condition != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
                .visit(K_WHERE)
                .sql(' ')
-               .qualify(false)
-               .visit(c)
-               .qualify(true);
+               .qualify(false, c -> c.visit(condition));
 
 
 

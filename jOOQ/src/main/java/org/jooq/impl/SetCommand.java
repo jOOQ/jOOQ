@@ -103,15 +103,7 @@ extends
         if (setLocal)
             ctx.sql(' ').visit(K_LOCAL);
 
-        ParamType previous = ctx.paramType();
-
-        if (NO_SUPPORT_BIND_VALUES.contains(ctx.dialect()))
-            ctx.paramType(ParamType.INLINED);
-
-        ctx.sql(' ').visit(name).sql(" = ").visit(value);
-
-        if (NO_SUPPORT_BIND_VALUES.contains(ctx.dialect()))
-            ctx.paramType(previous);
+        ctx.sql(' ').visit(name).sql(" = ").paramTypeIf(ParamType.INLINED, NO_SUPPORT_BIND_VALUES.contains(ctx.dialect()), c -> c.visit(value));
     }
 
 

@@ -468,7 +468,6 @@ implements
 
     private final void toSQLJoinCondition(Context<?> ctx) {
         if (!using.isEmpty()) {
-            boolean qualify = ctx.qualify();
 
 
 
@@ -482,11 +481,7 @@ implements
             ctx.formatSeparator()
                .start(TABLE_JOIN_USING)
                .visit(K_USING)
-               .sql(" (")
-               .qualify(false)
-               .visit(wrap(using).indentSize(0))
-               .qualify(qualify)
-               .sql(')')
+               .sql(" (").visit(wrap(using).indentSize(0).qualify(false)).sql(')')
                .end(TABLE_JOIN_USING);
         }
 

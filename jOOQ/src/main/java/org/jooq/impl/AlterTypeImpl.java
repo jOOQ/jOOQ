@@ -189,22 +189,17 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ParamType previous = ctx.paramType();
-        boolean qualified = ctx.qualify();
-
         ctx.visit(K_ALTER).sql(' ').visit(K_TYPE).sql(' ')
            .visit(type).sql(' ');
 
         if (renameTo != null)
-            ctx.visit(K_RENAME_TO).sql(' ').qualify(false).visit(renameTo).qualify(qualified);
+            ctx.visit(K_RENAME_TO).sql(' ').qualify(false, c -> c.visit(renameTo));
         else if (setSchema != null)
             ctx.visit(K_SET).sql(' ').visit(K_SCHEMA).sql(' ').visit(setSchema);
         else if (addValue != null)
             ctx.visit(K_ADD).sql(' ').visit(K_VALUE).sql(' ').visit(addValue);
         else if (renameValue != null)
             ctx.visit(K_RENAME).sql(' ').visit(K_VALUE).sql(' ').visit(renameValue).sql(' ').visit(K_TO).sql(' ').visit(renameValueTo);
-
-        ctx.paramType(previous);
     }
 
 

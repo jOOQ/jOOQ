@@ -199,8 +199,6 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final void accept0(Context<?> ctx) {
-        boolean declare = ctx.declareTables();
-
         ctx.start(DELETE_DELETE)
            .visit(K_DELETE).sql(' ');
 
@@ -214,18 +212,15 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
                    .sql(' ');
         }
 
-        ctx.visit(K_FROM).sql(' ')
-           .declareTables(true)
-           .visit(table(ctx));
+        ctx.visit(K_FROM).sql(' ').declareTables(true, c -> c.visit(table(c)));
 
         if (!using.isEmpty())
             ctx.formatSeparator()
                .visit(K_USING)
                .sql(' ')
-               .visit(using);
+               .declareTables(true, c -> c.visit(using));
 
-        ctx.declareTables(declare)
-           .end(DELETE_DELETE);
+        ctx.end(DELETE_DELETE);
 
 
 

@@ -148,8 +148,6 @@ final class JSONExists extends AbstractCondition implements JSONExistsOnStep {
 
 
 
-
-
                 ctx.visit(path);
 
 

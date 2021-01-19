@@ -213,11 +213,7 @@ implements
 
             if (unique != null) {
                 ctx.visit(K_UNIQUE)
-                   .sql(" (")
-                   .qualify(false)
-                   .visit(wrap(unique))
-                   .qualify(qualify)
-                   .sql(')');
+                   .sql(" (").visit(wrap(unique).qualify(false)).sql(')');
 
 
 
@@ -232,11 +228,7 @@ implements
 
 
 
-                ctx.sql(" (")
-                   .qualify(false)
-                   .visit(wrap(primaryKey))
-                   .qualify(qualify)
-                   .sql(')');
+                ctx.sql(" (").visit(wrap(primaryKey).qualify(false)).sql(')');
 
 
 
@@ -245,22 +237,14 @@ implements
             }
             else if (foreignKey != null) {
                 ctx.visit(K_FOREIGN_KEY)
-                   .sql(" (")
-                   .qualify(false)
-                   .visit(wrap(foreignKey))
-                   .qualify(qualify)
-                   .sql(')')
+                   .sql(" (").visit(wrap(foreignKey).qualify(false)).sql(')')
                    .formatSeparator()
                    .visit(K_REFERENCES)
                    .sql(' ')
                    .visit(referencesTable);
 
                 if (references.length > 0)
-                    ctx.sql(" (")
-                       .qualify(false)
-                       .visit(wrap(references))
-                       .qualify(qualify)
-                       .sql(')');
+                    ctx.sql(" (").visit(wrap(references).qualify(false)).sql(')');
 
                 if (onDelete != null)
 
@@ -278,11 +262,7 @@ implements
             }
             else if (check != null) {
                 ctx.visit(K_CHECK)
-                   .sql(" (")
-                   .qualify(false)
-                   .visit(check)
-                   .qualify(qualify)
-                   .sql(')');
+                   .sql(" (").qualify(false, c -> c.visit(check)).sql(')');
             }
 
             if (!enforced)

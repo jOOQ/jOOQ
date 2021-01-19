@@ -207,7 +207,7 @@ implements
             ctx.visit(K_RECURSIVE)
                .separatorRequired(true);
 
-        CommonTableExpressionList c = ctes;
+        CommonTableExpressionList list;
 
 
 
@@ -220,9 +220,9 @@ implements
 
 
 
-        ctx.declareCTE(true)
-           .visit(c)
-           .declareCTE(false);
+        list = ctes;
+
+        ctx.declareCTE(true, c -> c.visit(list));
     }
 
     @Override

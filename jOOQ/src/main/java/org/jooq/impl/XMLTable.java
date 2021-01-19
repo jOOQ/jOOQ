@@ -302,11 +302,6 @@ implements
 
 
 
-
-
-
-
-
         ctx.visit(xpath);
     }
 
@@ -318,11 +313,6 @@ implements
             ctx.sql(' ').visit(K_BY).sql(' ').visit(K_REF);
         else if (passingMechanism == BY_VALUE)
             ctx.sql(' ').visit(K_BY).sql(' ').visit(K_VALUE);
-
-
-
-
-
 
 
 
@@ -354,12 +344,7 @@ implements
 
         @Override
         public final void accept(Context<?> ctx) {
-            boolean previous = ctx.qualify();
-
-            ctx.qualify(false)
-               .visit(field)
-               .qualify(previous)
-               .sql(' ');
+            ctx.qualify(false, c -> c.visit(field)).sql(' ');
 
             if (forOrdinality)
                 ctx.visit(K_FOR).sql(' ').visit(K_ORDINALITY);

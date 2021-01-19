@@ -94,26 +94,20 @@ final class TableList extends QueryPartList<Table<?>> {
      * list.
      */
     final void toSQLFields(Context<?> ctx) {
-        String separator = "";
 
         // [#4151] [#6117] Some databases don't allow for qualifying column
         // names here. Copy also to SelectQueryImpl
-        boolean unqualified = UNQUALIFY_FIELDS.contains(ctx.dialect());
-        boolean qualify = ctx.qualify();
+        ctx.qualify(!UNQUALIFY_FIELDS.contains(ctx.dialect()) && ctx.qualify(), c -> {
+            String sep = "";
 
-        if (unqualified)
-            ctx.qualify(false);
+            for (Table<?> table : this) {
+                for (Field<?> field : table.fieldsRow().fields()) {
+                    ctx.sql(sep);
+                    ctx.visit(field);
 
-        for (Table<?> table : this) {
-            for (Field<?> field : table.fieldsRow().fields()) {
-                ctx.sql(separator);
-                ctx.visit(field);
-
-                separator = ", ";
+                    sep = ", ";
+                }
             }
-        }
-
-        if (unqualified)
-            ctx.qualify(qualify);
+        });
     }
 }

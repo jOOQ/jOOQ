@@ -255,9 +255,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             toSQLAs(context);
 
             context.sql(' ')
-                   .qualify(false)
-                   .visit(alias)
-                   .qualify(qualify);
+                   .qualify(false, c -> c.visit(alias));
 
             // [#1801] Add field aliases to the table alias, if applicable
             if (fieldAliases != null && !emulatedDerivedColumnList) {
@@ -297,11 +295,8 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
             context.declareAliases(true);
         }
-        else {
-            context.qualify(false)
-                   .visit(alias)
-                   .qualify(qualify);
-        }
+        else
+            context.qualify(false, c -> c.visit(alias));
     }
 
     final void toSQLAs(Context<?> ctx) {

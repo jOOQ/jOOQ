@@ -180,7 +180,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final void onConflict(Collection<? extends Field<?>> fields) {
-        this.onConflict = new QueryPartList<>(fields);
+        this.onConflict = new QueryPartList<Field<?>>(fields).qualify(false);
     }
 
     @Override
@@ -332,11 +332,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         ctx.sql('(');
 
                         if (onConflict != null && onConflict.size() > 0)
-                            ctx.qualify(false)
-                               .visit(onConflict)
-                               .qualify(qualify);
-
-
+                            ctx.visit(onConflict);
 
 
 
@@ -355,9 +351,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         else if (table().getPrimaryKey() == null)
                             ctx.sql("[unknown primary key]");
                         else
-                            ctx.qualify(false)
-                               .visit(new FieldsImpl<>(table().getPrimaryKey().getFields()))
-                               .qualify(qualify);
+                            ctx.qualify(false, c -> c.visit(new FieldsImpl<>(table().getPrimaryKey().getFields())));
 
                         ctx.sql(')');
                     }
@@ -514,11 +508,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         boolean qualify = ctx.qualify();
 
                         if (onConflict != null && onConflict.size() > 0) {
-                            ctx.sql(" (")
-                               .qualify(false)
-                               .visit(onConflict)
-                               .qualify(qualify)
-                               .sql(')');
+                            ctx.sql(" (").visit(onConflict).sql(')');
 
                             if (onConflictWhere.hasWhere())
                                 ctx.formatSeparator()
@@ -526,10 +516,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                                    .sql(' ')
                                    .visit(onConflictWhere.getWhere());
                         }
-
-
-
-
 
 
 
@@ -650,9 +636,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         ctx.visit(K_INTO)
            .sql(' ')
-           .declareTables(true)
-           .visit(table(ctx))
-           .declareTables(declareTables);
+           .declareTables(true, c -> c.visit(table(c)));
 
         insertMaps.toSQLReferenceKeys(ctx);
         ctx.end(INSERT_INSERT_INTO);

@@ -61,6 +61,9 @@ import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.Set;
 
 import org.jooq.BindContext;
@@ -87,6 +90,8 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -281,6 +286,39 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     protected abstract void visit0(QueryPartInternal internal);
 
+    private final C toggle(boolean b, BooleanSupplier get, BooleanConsumer set, Consumer<? super C> consumer) {
+        boolean previous = get.getAsBoolean();
+
+        try {
+            set.accept(b);
+            consumer.accept((C) this);
+        }
+        finally {
+            set.accept(previous);
+        }
+
+        return (C) this;
+    }
+
+    private final <T> C toggle(T t, Supplier<T> get, Consumer<T> set, Consumer<? super C> consumer) {
+        T previous = get.get();
+
+        try {
+            set.accept(t);
+            consumer.accept((C) this);
+        }
+        finally {
+            set.accept(previous);
+        }
+
+        return (C) this;
+    }
+
+    @FunctionalInterface
+    private interface BooleanConsumer {
+        void accept(boolean b);
+    }
+
     /**
      * Emit a clause from a query part being visited.
      * <p>
@@ -464,6 +502,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public C declareFields(boolean f, Consumer<? super C> consumer) {
+        return toggle(f, this::declareFields, this::declareFields, consumer);
+    }
+
+    @Override
     public final boolean declareTables() {
         return declareTables;
     }
@@ -473,6 +516,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         this.declareTables = d;
         declareAliases(d);
         return (C) this;
+    }
+
+    @Override
+    public C declareTables(boolean f, Consumer<? super C> consumer) {
+        return toggle(f, this::declareTables, this::declareTables, consumer);
     }
 
     @Override
@@ -487,6 +535,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public C declareAliases(boolean f, Consumer<? super C> consumer) {
+        return toggle(f, this::declareAliases, this::declareAliases, consumer);
+    }
+
+    @Override
     public final boolean declareWindows() {
         return declareWindows;
     }
@@ -498,6 +551,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public C declareWindows(boolean f, Consumer<? super C> consumer) {
+        return toggle(f, this::declareWindows, this::declareWindows, consumer);
+    }
+
+    @Override
     public final boolean declareCTE() {
         return declareCTE;
     }
@@ -506,6 +564,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     public final C declareCTE(boolean d) {
         this.declareCTE = d;
         return (C) this;
+    }
+
+    @Override
+    public C declareCTE(boolean f, Consumer<? super C> consumer) {
+        return toggle(f, this::declareCTE, this::declareCTE, consumer);
     }
 
     @Override
@@ -662,9 +725,29 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final C visit(QueryPart part, ParamType p) {
+        return paramType(p, c -> c.visit(part));
+    }
+
+    @Override
     public final C paramTypeIf(ParamType p, boolean condition) {
         if (condition)
             paramType(p);
+
+        return (C) this;
+    }
+
+    @Override
+    public final C paramType(ParamType p, Consumer<? super C> runnable) {
+        return toggle(p, this::paramType, this::paramType, runnable);
+    }
+
+    @Override
+    public final C paramTypeIf(ParamType p, boolean condition, Consumer<? super C> runnable) {
+        if (condition)
+            paramType(p, runnable);
+        else
+            runnable.accept((C) this);
 
         return (C) this;
     }
@@ -681,6 +764,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final C quote(boolean q, Consumer<? super C> consumer) {
+        return toggle(q, this::quote, this::quote, consumer);
+    }
+
+    @Override
     public final boolean qualify() {
         return qualifySchema();
     }
@@ -688,6 +776,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C qualify(boolean q) {
         return qualifySchema(q);
+    }
+
+    @Override
+    public final C qualify(boolean q, Consumer<? super C> consumer) {
+        return toggle(q, this::qualify, this::qualify, consumer);
     }
 
     @Override
@@ -702,6 +795,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final C qualifySchema(boolean q, Consumer<? super C> consumer) {
+        return toggle(q, this::qualifySchema, this::qualifySchema, consumer);
+    }
+
+    @Override
     public final boolean qualifyCatalog() {
         return qualifyCatalog;
     }
@@ -710,6 +808,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     public final C qualifyCatalog(boolean q) {
         this.qualifyCatalog = q;
         return (C) this;
+    }
+
+    @Override
+    public final C qualifyCatalog(boolean q, Consumer<? super C> consumer) {
+        return toggle(q, this::qualifyCatalog, this::qualifyCatalog, consumer);
     }
 
     @Override

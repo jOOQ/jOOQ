@@ -64,7 +64,6 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
 
     @Override
     public final void accept(Context<?> ctx) {
-        boolean declareFields = ctx.declareFields();
         boolean format = attributes.size() > 1;
 
         Object previous = ctx.data(DATA_AS_REQUIRED, true);
@@ -74,9 +73,7 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
             ctx.formatIndentStart()
                .formatNewLine();
 
-        ctx.declareFields(true)
-           .visit(attributes)
-           .declareFields(declareFields);
+        ctx.declareFields(true, c -> c.visit(attributes));
 
         if (format)
             ctx.formatIndentEnd()

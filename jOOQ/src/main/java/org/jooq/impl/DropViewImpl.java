@@ -117,11 +117,6 @@ implements
 
 
 
-
-
-
-
-
         ctx.visit(view);
 
         ctx.end(Clause.DROP_VIEW_TABLE);

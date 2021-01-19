@@ -306,11 +306,6 @@ implements
 
 
 
-
-
-
-
-
         ctx.visit(path);
     }
 
@@ -340,12 +335,7 @@ implements
 
         @Override
         public final void accept(Context<?> ctx) {
-            boolean previous = ctx.qualify();
-
-            ctx.qualify(false)
-               .visit(field)
-               .qualify(previous)
-               .sql(' ');
+            ctx.qualify(false, c -> c.visit(field)).sql(' ');
 
             if (forOrdinality)
                 ctx.visit(K_FOR).sql(' ').visit(K_ORDINALITY);

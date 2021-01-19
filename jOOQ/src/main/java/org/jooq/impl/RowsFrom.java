@@ -87,13 +87,6 @@ final class RowsFrom extends AbstractTable<Record> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        boolean declareTables = ctx.declareTables();
-
-        ctx.visit(K_ROWS_FROM)
-           .sql(" (")
-           .declareTables(true)
-           .visit(tables)
-           .declareTables(declareTables)
-           .sql(')');
+        ctx.visit(K_ROWS_FROM).sql(" (").declareTables(true, c -> c.visit(tables)).sql(')');
     }
 }

@@ -106,14 +106,10 @@ final class CreateTypeImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ParamType previous = ctx.paramType();
-
         ctx.visit(K_CREATE).sql(' ').visit(K_TYPE).sql(' ')
            .visit(type).sql(' ')
            .visit(K_AS).sql(' ').visit(K_ENUM).sql(" (")
-           .paramType(ParamType.INLINED)
-           .visit(values)
-           .sql(')')
-           .paramType(previous);
+           .visit(values, ParamType.INLINED)
+           .sql(')');
     }
 }

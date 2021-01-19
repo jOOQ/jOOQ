@@ -234,12 +234,6 @@ implements
 
 
 
-
-
-
-
-
-
     private final void accept1(Context<?> ctx) {
         ctx.start(Clause.ALTER_VIEW_VIEW)
            .visit(K_ALTER).sql(' ')
@@ -253,15 +247,11 @@ implements
            .formatIndentStart()
            .formatSeparator();
 
-        if (renameTo != null) {
-            boolean qualify = ctx.qualify();
-
+        if (renameTo != null)
             ctx.start(Clause.ALTER_VIEW_RENAME)
-               .qualify(false)
-               .visit(K_RENAME_TO).sql(' ').visit(renameTo)
-               .qualify(qualify)
+               .visit(K_RENAME_TO).sql(' ')
+               .qualify(false, c -> c.visit(renameTo))
                .end(Clause.ALTER_VIEW_RENAME);
-        }
 
         ctx.formatIndentEnd();
     }

@@ -346,16 +346,10 @@ implements
            .sql(' ')
            .visit(K_RENAME_TO)
            .sql(' ')
-           .qualify(false)
-           .visit(renameTo)
-           .qualify(qualify)
+           .qualify(false, c -> c.visit(renameTo))
            .end(Clause.ALTER_SEQUENCE_RENAME)
            .end(Clause.ALTER_SEQUENCE_SEQUENCE);
     }
-
-
-
-
 
 
 
@@ -391,11 +385,6 @@ implements
 
 
 
-
-
-
-
-
             default: {
                 ctx.sql(' ').visit(sequence);
                 break;
@@ -405,14 +394,10 @@ implements
         ctx.end(Clause.ALTER_SEQUENCE_SEQUENCE);
 
         if (renameTo != null) {
-            boolean qualify = ctx.qualify();
-
             ctx.start(Clause.ALTER_SEQUENCE_RENAME)
                .sql(' ').visit(K_RENAME_TO)
                .sql(' ')
-               .qualify(false)
-               .visit(renameTo)
-               .qualify(qualify)
+               .qualify(false, c -> c.visit(renameTo))
                .end(Clause.ALTER_SEQUENCE_RENAME);
         }
         else {

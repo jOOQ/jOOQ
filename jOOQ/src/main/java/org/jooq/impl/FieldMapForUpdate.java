@@ -93,8 +93,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             // [#2055] Other dialects require qualified column references to
             // disambiguated columns in queries like
             // UPDATE t1 JOIN t2 .. SET t1.val = ..., t2.val = ...
-            boolean restoreQualify = ctx.qualify();
-            boolean supportsQualify = !NO_SUPPORT_QUALIFY.contains(ctx.dialect()) && restoreQualify;
+            boolean supportsQualify = !NO_SUPPORT_QUALIFY.contains(ctx.dialect()) && ctx.qualify();
 
             // [#2823] [#10034] Few dialects need bind value casts for UPDATE .. SET
             //                  Some regressions have been observed e.g. in PostgreSQL with JSON types, so let's be careful.
@@ -108,9 +107,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
                        .formatSeparator();
 
                 ctx.start(assignmentClause)
-                   .qualify(supportsQualify)
-                   .visit(entry.getKey())
-                   .qualify(restoreQualify)
+                   .qualify(supportsQualify, c -> c.visit(entry.getKey()))
                    .sql(" = ");
 
                 // [#8479] Emulate WHERE clause using CASE

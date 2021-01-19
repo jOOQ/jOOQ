@@ -545,8 +545,6 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-
-
         ctx.formatSeparator()
            .start(UPDATE_SET)
            .visit(K_SET)
@@ -572,12 +570,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                    .formatIndentEnd();
             }
             else {
-                boolean qualify = ctx.qualify();
-
                 ctx.start(UPDATE_SET_ASSIGNMENT)
-                   .qualify(false)
-                   .visit(multiRow)
-                   .qualify(qualify)
+                   .qualify(false, c -> c.visit(multiRow))
                    .sql(" = ");
 
                 // Some dialects don't really support row value expressions on the
@@ -639,9 +633,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 if (!from.isEmpty())
                     ctx.formatSeparator()
                        .visit(K_FROM).sql(' ')
-                       .declareTables(true)
-                       .visit(from)
-                       .declareTables(false);
+                       .declareTables(true, c -> c.visit(from));
 
                 ctx.end(UPDATE_FROM);
                 break;

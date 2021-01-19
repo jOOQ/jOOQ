@@ -1398,33 +1398,28 @@ implements
     private final void toSQLH2Merge(Context<?> ctx) {
         ctx.visit(K_MERGE_INTO)
            .sql(' ')
-           .declareTables(true)
-           .visit(table)
+           .declareTables(true, c -> c.visit(table))
            .formatSeparator();
 
         ctx.sql('(')
            .visit(wrap(getUpsertFields()).qualify(false))
            .sql(')');
 
-        if (!getUpsertKeys().isEmpty()) {
+        if (!getUpsertKeys().isEmpty())
             ctx.formatSeparator()
                .visit(K_KEY).sql(" (")
                .visit(wrap(getUpsertKeys()).qualify(false))
                .sql(')');
-        }
 
-        if (upsertSelect != null) {
+        if (upsertSelect != null)
             ctx.formatSeparator()
                .visit(upsertSelect);
-        }
-        else {
+        else
             ctx.formatSeparator()
                .visit(K_VALUES).sql(" (")
                .visit(getUpsertValues())
                .sql(')');
-        }
     }
-
 
 
 
@@ -1471,9 +1466,7 @@ implements
     private final void toSQLStandard(Context<?> ctx) {
         ctx.start(MERGE_MERGE_INTO)
            .visit(K_MERGE_INTO).sql(' ')
-           .declareTables(true)
-           .visit(table)
-           .declareTables(false)
+           .declareTables(true, c -> c.visit(table))
            .end(MERGE_MERGE_INTO)
            .formatSeparator()
            .start(MERGE_USING)
@@ -1494,9 +1487,8 @@ implements
                     break;
             }
         }
-        else {
+        else
             ctx.visit(using);
-        }
 
         ctx.data().remove(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
         ctx.declareTables(false);

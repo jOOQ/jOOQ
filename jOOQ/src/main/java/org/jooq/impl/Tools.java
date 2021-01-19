@@ -1898,11 +1898,7 @@ final class Tools {
         return new CustomField<T>(field.getQualifiedName(), field.getDataType()) {
             @Override
             public void accept(Context<?> ctx) {
-                ParamType previous = ctx.paramType();
-
-                ctx.paramType(INLINED);
-                ctx.visit(field);
-                ctx.paramType(previous);
+                ctx.visit(field, INLINED);
             }
         };
     }

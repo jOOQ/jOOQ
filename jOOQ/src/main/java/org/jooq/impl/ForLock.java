@@ -142,17 +142,7 @@ final class ForLock extends AbstractQueryPart {
 
             // [#4151] [#6117] Some databases don't allow for qualifying column
             // names here. Copy also to TableList
-            boolean unqualified = NO_SUPPORT_FOR_UPDATE_QUALIFIED.contains(ctx.dialect());
-            boolean qualify = ctx.qualify();
-
-            if (unqualified)
-                ctx.qualify(false);
-
-            ctx.sql(' ').visit(K_OF)
-                   .sql(' ').visit(forLockOf);
-
-            if (unqualified)
-                ctx.qualify(qualify);
+            ctx.qualify(!NO_SUPPORT_FOR_UPDATE_QUALIFIED.contains(ctx.dialect()) && ctx.qualify(), c -> c.sql(' ').visit(K_OF).sql(' ').visit(forLockOf));
         }
         else if (Tools.isNotEmpty(forLockOfTables)) {
             ctx.sql(' ').visit(K_OF).sql(' ');

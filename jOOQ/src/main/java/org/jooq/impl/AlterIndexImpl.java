@@ -168,7 +168,6 @@ implements
 
     private final void accept0(Context<?> ctx) {
         boolean renameIndex = SUPPORT_RENAME_INDEX.contains(ctx.dialect());
-        boolean qualify = ctx.qualify();
 
         switch (ctx.family()) {
 
@@ -180,16 +179,12 @@ implements
                 ctx.visit(K_ALTER_TABLE).sql(' ')
                    .visit(on).sql(' ')
                    .visit(K_RENAME_INDEX).sql(' ')
-                   .qualify(false)
-                   .visit(index).sql(' ')
+                   .qualify(false, c -> c.visit(index)).sql(' ')
                    .visit(K_TO).sql(' ')
-                   .visit(renameTo)
-                   .qualify(qualify);
+                   .qualify(false, c -> c.visit(renameTo));
 
                 break;
             }
-
-
 
 
 
@@ -238,9 +233,8 @@ implements
 
                 if (renameTo != null)
                     ctx.start(Clause.ALTER_INDEX_RENAME)
-                       .qualify(false)
-                       .visit(renameIndex ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo)
-                       .qualify(qualify)
+                       .visit(renameIndex ? K_TO : K_RENAME_TO).sql(' ')
+                       .qualify(false, c -> c.visit(renameTo))
                        .end(Clause.ALTER_INDEX_RENAME);
 
                 ctx.formatIndentEnd();

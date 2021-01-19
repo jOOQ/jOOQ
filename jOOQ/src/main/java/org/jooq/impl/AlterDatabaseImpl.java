@@ -161,14 +161,9 @@ implements
 
         ctx.sql(' ').visit(database);
 
-        if (renameTo != null) {
-            boolean qualify = ctx.qualify();
-
-            ctx.sql(' ')
-               .qualify(false)
-               .visit(supportRename ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo)
-               .qualify(qualify);
-        }
+        if (renameTo != null)
+            ctx.sql(' ').visit(supportRename ? K_TO : K_RENAME_TO).sql(' ')
+               .qualify(false, c -> c.visit(renameTo));
     }
 
 

@@ -173,13 +173,8 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             ctx.formatIndentStart()
                .formatNewLine();
 
-        if (windowDefinition != null) {
-            boolean declareWindows = ctx.declareWindows();
-
-            ctx.declareWindows(false)
-               .visit(windowDefinition)
-               .declareWindows(declareWindows);
-        }
+        if (windowDefinition != null)
+            ctx.declareWindows(false, c -> c.visit(windowDefinition));
 
         if (hasPartitionBy) {
 

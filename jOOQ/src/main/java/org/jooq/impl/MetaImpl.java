@@ -351,13 +351,13 @@ final class MetaImpl extends AbstractMeta {
 
                 switch (family()) {
 
-                    // [#3977] PostgreSQL returns other object types, too
+                    // [#3977] [#11255] PostgreSQL returns other object types, too
 
 
 
 
                     case POSTGRES:
-                        types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
+                        types = new String[] { "FOREIGN TABLE", "MATERIALIZED VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "TABLE", "VIEW" };
                         break;
 
 

@@ -43,9 +43,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.jooq.Catalog;
@@ -632,13 +634,16 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     final <R extends Record> UniqueKey<R> lookupKey(Table<R> in, UniqueKey<?> uk) {
+        Set<?> ukFields = new HashSet<>(uk.getFields());
+
         for (UniqueKey<R> k : in.getKeys())
 
             // [#10279] [#10281] Cannot use Key::equals here, because that is
             // name-based. 1) The name is irrelevant for this lookup, 2) some
             // key implementations (e.g. MetaPrimaryKey for H2) don't produce
             // the correct key name, but the index name.
-            if (k.getFields().equals(uk.getFields()))
+            // [#11258] Also, we need position agnostic comparison, using sets
+            if (ukFields.equals(new HashSet<>(k.getFields())))
                 return k;
 
         return null;

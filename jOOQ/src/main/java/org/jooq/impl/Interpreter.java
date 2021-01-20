@@ -61,11 +61,13 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
@@ -1770,12 +1772,14 @@ final class Interpreter {
         }
 
         final MutableUniqueKey uniqueKey(List<MutableField> mrfs) {
+            Set<MutableField> set = new HashSet<>(mrfs);
+
             if (primaryKey != null)
-                if (primaryKey.fields.equals(mrfs))
+                if (set.equals(new HashSet<>(primaryKey.fields)))
                     return primaryKey;
 
             for (MutableUniqueKey mu : uniqueKeys)
-                if (mu.fields.equals(mrfs))
+                if (set.equals(new HashSet<>(mu.fields)))
                     return mu;
 
             return null;

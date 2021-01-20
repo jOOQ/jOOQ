@@ -839,13 +839,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
-        for (TableDefinition table : database.getTables(schema)) {
-            if (table.isTableValuedFunction()) {
-                return true;
-            }
-        }
-
-        return false;
+        return database.getTables(schema).stream().anyMatch(TableDefinition::isTableValuedFunction);
     }
 
     protected void generateRelations(SchemaDefinition schema) {
@@ -5384,17 +5378,43 @@ public class JavaGenerator extends AbstractGenerator {
         // [#10191] This constructor must be generated first in Scala to prevent
         // "called constructor's definition must precede calling constructor's definition"
         if (scala) {
-            if (table.isTableValuedFunction())
-                out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, aliased, new %s[ %s[_] ](%s))",
-                    Name.class, Table.class, recordType, out.ref("scala.Array"), Field.class, parameters.size());
+            if (table.isTableValuedFunction()) {
+                out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, aliased, %s(",
+                    Name.class, Table.class, recordType, out.ref("scala.Array"));
+
+                String separator = "  ";
+                for (ParameterDefinition parameter : parameters) {
+                    final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver(out)), out);
+                    final List<String> converter = out.ref(list(parameter.getType(resolver(out)).getConverter()));
+                    final List<String> binding = out.ref(list(parameter.getType(resolver(out)).getBinding()));
+
+                    out.println("%s%s.value(null, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", separator, DSL.class, paramTypeRef, converter, binding);
+                    separator = ", ";
+                }
+
+                out.println("))");
+            }
             else
                 out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, aliased, null)",
                     Name.class, Table.class, recordType);
         }
         else if (kotlin) {
-            if (table.isTableValuedFunction())
-                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, arrayOf())",
+            if (table.isTableValuedFunction()) {
+                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, arrayOf(",
                     Name.class, Table.class, recordType, Field.class, parameters.size());
+
+                String separator = "  ";
+                for (ParameterDefinition parameter : parameters) {
+                    final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver(out)), out);
+                    final List<String> converter = out.ref(list(parameter.getType(resolver(out)).getConverter()));
+                    final List<String> binding = out.ref(list(parameter.getType(resolver(out)).getBinding()));
+
+                    out.println("%s%s.value(null, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", separator, DSL.class, paramTypeRef, converter, binding);
+                    separator = ", ";
+                }
+
+                out.println("))");
+            }
             else
                 out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, null)",
                     Name.class, Table.class, recordType);
@@ -5404,8 +5424,22 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.println("private %s(%s alias, %s<%s> aliased) {", className, Name.class, Table.class, recordType);
-            if (table.isTableValuedFunction())
-                out.println("this(alias, aliased, new %s[%s]);", Field.class, parameters.size());
+            if (table.isTableValuedFunction()) {
+                out.println("this(alias, aliased, new %s[] {", Field.class);
+
+                String separator = "  ";
+
+                for (ParameterDefinition parameter : parameters) {
+                    final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver(out)), out);
+                    final List<String> converter = out.ref(list(parameter.getType(resolver(out)).getConverter()));
+                    final List<String> binding = out.ref(list(parameter.getType(resolver(out)).getBinding()));
+
+                    out.println("%s%s.val(null, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", separator, DSL.class, paramTypeRef, converter, binding);
+                    separator = ", ";
+                }
+
+                out.println("});");
+            }
             else
                 out.println("this(alias, aliased, null);");
 
@@ -6096,12 +6130,10 @@ public class JavaGenerator extends AbstractGenerator {
                         final List<String> converter = out.ref(list(parameter.getType(resolver(out)).getConverter()));
                         final List<String> binding = out.ref(list(parameter.getType(resolver(out)).getBinding()));
 
-                        out.print(separator);
-
                         if (parametersAsField)
-                            out.println("%s", paramArgName);
+                            out.println("%s%s", separator, paramArgName);
                         else
-                            out.println("%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", DSL.class, paramArgName, paramTypeRef, converter, binding);
+                            out.println("%s%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", separator, DSL.class, paramArgName, paramTypeRef, converter, binding);
 
                         separator = ", ";
                     }
@@ -6143,12 +6175,10 @@ public class JavaGenerator extends AbstractGenerator {
                         final List<String> converter = out.ref(list(parameter.getType(resolver(out)).getConverter()));
                         final List<String> binding = out.ref(list(parameter.getType(resolver(out)).getBinding()));
 
-                        out.print(separator);
-
                         if (parametersAsField)
-                            out.println("%s", paramArgName);
+                            out.println("%s%s", separator, paramArgName);
                         else
-                            out.println("%s.val(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", DSL.class, paramArgName, paramTypeRef, converter, binding);
+                            out.println("%s%s.val(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", separator, DSL.class, paramArgName, paramTypeRef, converter, binding);
 
                         separator = ", ";
                     }

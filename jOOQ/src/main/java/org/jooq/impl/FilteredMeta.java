@@ -48,6 +48,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
+import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -393,12 +394,12 @@ final class FilteredMeta extends AbstractMeta {
                         continue fkLoop;
 
                     TableField<R, ?>[] fields1 = fk.getFieldsArray();
-                    TableField<R, ?>[] fields2 = new TableField[fields1.length];
+                    TableField<?, ?>[] fields2 = new TableField[fields1.length];
 
                     for (int i = 0; i < fields2.length; i++)
-                        fields2[i] = (TableField<R, ?>) field(fields1[i]);
+                        fields2[i] = (TableField<?, ?>) uk.getTable().field(fields1[i]);
 
-                    references.add(Internal.createForeignKey(uk, this, fk.getName(), fields2, fk.enforced()));
+                    references.add(Internal.createForeignKey(this, fk.getQualifiedName(), fields1, uk, (TableField[]) fields2, fk.enforced()));
                 }
             }
 

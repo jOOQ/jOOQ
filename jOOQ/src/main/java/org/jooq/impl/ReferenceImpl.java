@@ -226,6 +226,6 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     final ConstraintEnforcementStep constraint0() {
         return DSL.constraint(getName())
                   .foreignKey(getFieldsArray())
-                  .references(uk.getTable(), uk.getFieldsArray());
+                  .references(uk.getTable(), getKeyFieldsArray());
     }
 }

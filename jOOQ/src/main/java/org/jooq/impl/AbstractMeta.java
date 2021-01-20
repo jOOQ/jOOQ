@@ -65,6 +65,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
@@ -555,6 +556,22 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             return null;
 
         return lookupKey(table, fk.getKey());
+    }
+
+    @SuppressWarnings("unchecked")
+    final <R extends Record> ForeignKey<R, ?> copyFK(Table<R> fkTable, UniqueKey<?> uk, ForeignKey<R, ?> oldFk) {
+        Table<?> ukTable = uk.getTable();
+
+        TableField<R, ?>[] oldFkFields = oldFk.getFieldsArray();
+        TableField<R, ?>[] fkFields = new TableField[oldFkFields.length];
+        TableField<?, ?>[] ukfields = new TableField[oldFkFields.length];
+
+        for (int i = 0; i < oldFkFields.length; i++) {
+            fkFields[i] = (TableField<R, ?>) fkTable.field(oldFkFields[i]);
+            ukfields[i] = (TableField<?, ?>) ukTable.field(oldFkFields[i]);
+        }
+
+        return Internal.createForeignKey(fkTable, oldFk.getQualifiedName(), fkFields, uk, (TableField[]) ukfields, oldFk.enforced());
     }
 
     @Override

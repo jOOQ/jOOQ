@@ -244,23 +244,13 @@ final class Snapshot extends AbstractMeta {
             return result;
         }
 
-        @SuppressWarnings({ "rawtypes", "unchecked" })
         final void resolveReferences() {
 
             // TODO: Is there a better way than temporarily keeping the wrong
             //       ReferenceImpl in this list until we "know better"?
             for (int i = 0; i < foreignKeys.size(); i++) {
                 ForeignKey<R, ?> fk = foreignKeys.get(i);
-
-                UniqueKey uk = lookupUniqueKey(fk);
-                foreignKeys.set(i, org.jooq.impl.Internal.createForeignKey(
-                    this,
-                    fk.getQualifiedName(),
-                    fields(fk.getFieldsArray()),
-                    uk,
-                    fields(uk.getFieldsArray()),
-                    fk.enforced()
-                ));
+                foreignKeys.set(i, copyFK(this, lookupUniqueKey(fk), fk));
             }
         }
 

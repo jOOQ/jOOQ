@@ -455,13 +455,7 @@ final class FilteredMeta extends AbstractMeta {
                     else if (!uk.isPrimary() && uniqueKeyFilter != null && !uniqueKeyFilter.test(uk))
                         continue fkLoop;
 
-                    TableField<R, ?>[] fields1 = fk.getFieldsArray();
-                    TableField<?, ?>[] fields2 = new TableField[fields1.length];
-
-                    for (int i = 0; i < fields2.length; i++)
-                        fields2[i] = (TableField<?, ?>) uk.getTable().field(fields1[i]);
-
-                    references.add(Internal.createForeignKey(this, fk.getQualifiedName(), fields1, uk, (TableField[]) fields2, fk.enforced()));
+                    references.add(copyFK(this, uk, fk));
                 }
             }
 

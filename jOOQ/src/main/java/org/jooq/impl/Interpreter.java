@@ -382,13 +382,13 @@ final class Interpreter {
         if (!mrfs.isEmpty())
             mu = mrf.uniqueKey(mrfs);
         else if (mrf.primaryKey != null && mrf.primaryKey.fields.size() == mfs.size())
-            mu = mrf.primaryKey;
+            mrfs = (mu = mrf.primaryKey).fields;
 
         if (mu == null)
             throw primaryKeyNotExists(impl.$referencesTable());
 
         mt.foreignKeys.add(new MutableForeignKey(
-            (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate(), impl.$enforced()
+            (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, mrfs, impl.$onDelete(), impl.$onUpdate(), impl.$enforced()
         ));
     }
 
@@ -2003,7 +2003,8 @@ final class Interpreter {
     }
 
     private final class MutableForeignKey extends MutableKey {
-        MutableUniqueKey referencedKey;
+        MutableUniqueKey   referencedKey;
+        List<MutableField> referencedFields;
 
         // TODO: Support these
         Action           onDelete;
@@ -2014,6 +2015,7 @@ final class Interpreter {
             MutableTable table,
             List<MutableField> fields,
             MutableUniqueKey referencedKey,
+            List<MutableField> referencedFields,
             Action onDelete,
             Action onUpdate,
             boolean enforced
@@ -2022,6 +2024,7 @@ final class Interpreter {
 
             this.referencedKey = referencedKey;
             this.referencedKey.referencingKeys.add(this);
+            this.referencedFields = referencedFields;
             this.onDelete = onDelete;
             this.onUpdate = onUpdate;
         }
@@ -2041,7 +2044,7 @@ final class Interpreter {
                 return super.qualifiedName();
         }
 
-        final ReferenceImpl<Record, ?> interpretedKey() {
+        final ForeignKey<Record, ?> interpretedKey() {
             Name qualifiedName = qualifiedName();
             ReferenceImpl<Record, ?> result = interpretedForeignKeys.get(qualifiedName);
 
@@ -2053,8 +2056,8 @@ final class Interpreter {
                 TableField<Record, ?>[] fkFields = new TableField[fields.size()];
 
                 for (int i = 0; i < fkFields.length; i++) {
-                    ukFields[i] = (TableField<Record, ?>) uk.getTable().field(fields.get(i).name());
                     fkFields[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
+                    ukFields[i] = (TableField<Record, ?>) uk.getTable().field(referencedFields.get(i).name());
                 }
 
                 interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(

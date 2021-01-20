@@ -299,7 +299,7 @@ final class DDL {
 
         if (configuration.flags().contains(FOREIGN_KEY) && (table.getType() != VIEW || configuration.includeConstraintsOnViews()))
             for (ForeignKey<?, ?> key : sortKeysIf(table.getReferences(), !configuration.respectConstraintOrder()))
-                result.add(enforced(constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()), key.enforced()));
+                result.add(enforced(constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKeyFieldsArray()), key.enforced()));
 
         return result;
     }

@@ -559,16 +559,17 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @SuppressWarnings("unchecked")
-    final <R extends Record> ForeignKey<R, ?> copyFK(Table<R> fkTable, UniqueKey<?> uk, ForeignKey<R, ?> oldFk) {
+    static final <R extends Record> ForeignKey<R, ?> copyFK(Table<R> fkTable, UniqueKey<?> uk, ForeignKey<R, ?> oldFk) {
         Table<?> ukTable = uk.getTable();
 
         TableField<R, ?>[] oldFkFields = oldFk.getFieldsArray();
+        TableField<?, ?>[] oldUkFields = oldFk.getKeyFieldsArray();
         TableField<R, ?>[] fkFields = new TableField[oldFkFields.length];
         TableField<?, ?>[] ukfields = new TableField[oldFkFields.length];
 
         for (int i = 0; i < oldFkFields.length; i++) {
             fkFields[i] = (TableField<R, ?>) fkTable.field(oldFkFields[i]);
-            ukfields[i] = (TableField<?, ?>) ukTable.field(oldFkFields[i]);
+            ukfields[i] = (TableField<?, ?>) ukTable.field(oldUkFields[i]);
         }
 
         return Internal.createForeignKey(fkTable, oldFk.getQualifiedName(), fkFields, uk, (TableField[]) ukfields, oldFk.enforced());

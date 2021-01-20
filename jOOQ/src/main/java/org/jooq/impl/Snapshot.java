@@ -206,7 +206,12 @@ final class Snapshot extends AbstractMeta {
 
                 for (int i = 0; i < indexFields.size(); i++) {
                     SortField<?> field = indexFields.get(i);
-                    copiedFields[i] = field(field.getName()).sort(field.getOrder());
+
+                    // [#10804] Use this table's field reference if possible.
+                    //          Otherwise (e.g. for function based indexes), use the actual field expression
+                    Field<?> f = field(field.getName());
+                    copiedFields[i] = f != null ? f.sort(field.getOrder()) : field;
+
                     // [#9009] TODO NULLS FIRST / NULLS LAST
                 }
 

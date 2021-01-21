@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -123,7 +124,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep renameTo(Table<?> newName);
 
     /**
@@ -131,7 +132,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep renameTo(Name newName);
 
     /**
@@ -139,7 +140,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep renameTo(String newName);
 
     /**

@@ -735,7 +735,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
     public final Condition notIn(Select<? extends Record2<T1, T2>> select) {
         return compare(Comparator.NOT_IN, select);
     }
-    
+
     // ------------------------------------------------------------------------
     // XXX: Row2 API
     // ------------------------------------------------------------------------

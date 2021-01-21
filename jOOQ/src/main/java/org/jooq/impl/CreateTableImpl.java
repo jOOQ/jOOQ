@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -93,6 +94,7 @@ import static org.jooq.impl.Keywords.K_TEMPORARY;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Keywords.K_WITH_DATA;
 import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
@@ -470,6 +472,9 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                     ctx.sql(',').formatSeparator();
             }
 
+            // [#10551] Ignite requires at least one non-PK column.
+            toSQLDummyColumns(ctx);
+
             ctx.qualify(qualify);
             ctx.end(CREATE_TABLE_COLUMNS)
                .start(CREATE_TABLE_CONSTRAINTS);
@@ -479,7 +484,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
 
                     // [#6841] SQLite has a weird requirement of the PRIMARY KEY keyword being on the column directly,
                     //         when there is an identity. Thus, we must not repeat the primary key specification here.
-                    if (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity))
+                    if (((ConstraintImpl) constraint).supported(ctx) && (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity)))
                         ctx.sql(',')
                            .formatSeparator()
                            .visit(constraint);
@@ -535,6 +540,24 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         }
     }
 
+    private final void toSQLDummyColumns(Context<?> ctx) {
+
+        // [#10551] [#11268] TODO: Make this behaviour configurable
+        if (ctx.family() == IGNITE) {
+            Field<?>[] primaryKeyColumns = primaryKeyColumns();
+
+            if (primaryKeyColumns != null && primaryKeyColumns.length == columnFields.size()) {
+                ctx.sql(',').formatSeparator();
+                ctx.visit(field(name("dummy")));
+
+                if (select == null) {
+                    ctx.sql(' ');
+                    Tools.toSQLDDLTypeDeclarationForAddition(ctx, INTEGER);
+                }
+            }
+        }
+    }
+
     private final DataType<?> columnType(Context<?> ctx, int i) {
         DataType<?> type = columnTypes.get(i);
 
@@ -544,13 +567,22 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         return type;
     }
 
-    private final boolean isPrimaryKey(int i) {
+    private final Field<?>[] primaryKeyColumns() {
         for (Constraint constraint : constraints)
             if (constraint instanceof ConstraintImpl)
                 if (((ConstraintImpl) constraint).$primaryKey() != null)
-                    for (Field<?> field : ((ConstraintImpl) constraint).$primaryKey())
-                        if (field.equals(columnFields.get(i)))
-                            return true;
+                    return ((ConstraintImpl) constraint).$primaryKey();
+
+        return null;
+    }
+
+    private final boolean isPrimaryKey(int i) {
+        Field<?>[] primaryKeyColumns = primaryKeyColumns();
+
+        if (primaryKeyColumns != null)
+            for (Field<?> field : primaryKeyColumns)
+                if (field.equals(columnFields.get(i)))
+                    return true;
 
         return false;
     }

@@ -37,13 +37,40 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
 
+import java.util.Set;
+
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -53,9 +80,10 @@ final class BoolOr extends DefaultAggregateFunction<Boolean> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 7292087943334025737L;
+    private static final long            serialVersionUID = 7292087943334025737L;
+    private static final Set<SQLDialect> EMULATE          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
-    private final Condition   condition;
+    private final Condition              condition;
 
     BoolOr(Condition condition) {
         super(N_BOOL_OR, BOOLEAN, DSL.field(condition));
@@ -80,25 +108,11 @@ final class BoolOr extends DefaultAggregateFunction<Boolean> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-            case POSTGRES:
-                super.accept(ctx);
-                break;
-
-            default:
-                final Field<Integer> max = DSL.field("{0}", Integer.class, CustomQueryPart.of(c -> {
-                    c.visit(DSL.max(DSL.when(condition, one()).otherwise(zero())));
-                    acceptOverClause(c);
-                }));
-
-                ctx.visit(DSL.field(max.eq(one())));
-                break;
+        if (EMULATE.contains(ctx.dialect())) {
+            ctx.visit(DSL.field(DSL.field("{0}", Integer.class, CustomQueryPart.of(c -> {
+                c.visit(DSL.max(DSL.when(condition, one()).otherwise(zero())));
+                acceptOverClause(c);
+            })).eq(one())));
         }
     }
 }

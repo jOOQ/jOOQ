@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -147,7 +148,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     SelectOrderByStep<R> except(Select<? extends R> select);
 
     /**
@@ -163,7 +164,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
 
     /**

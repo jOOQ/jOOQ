@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -1290,7 +1291,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see #rightOuterJoin(TableLike)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     TablePartitionByStep<Record> rightJoin(TableLike<?> table);
 
     /**
@@ -1310,7 +1311,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(SQL sql);
 
@@ -1331,7 +1332,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql);
 
@@ -1353,7 +1354,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql, Object... bindings);
 
@@ -1375,7 +1376,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql, QueryPart... parts);
 
@@ -1390,7 +1391,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see #rightOuterJoin(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     TablePartitionByStep<Record> rightJoin(Name name);
 
     /**
@@ -1399,7 +1400,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * This is only possible where the underlying RDBMS supports it
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table);
 
     /**
@@ -1416,7 +1417,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(SQL sql);
 
@@ -1434,7 +1435,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql);
 
@@ -1453,7 +1454,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql, Object... bindings);
 
@@ -1472,7 +1473,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql, QueryPart... parts);
 
@@ -1484,7 +1485,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     TablePartitionByStep<Record> rightOuterJoin(Name name);
 
     /**
@@ -2979,7 +2980,7 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      * This has been observed to work with all dialects
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DivideByOnStep divideBy(Table<?> divisor);
 
     /**

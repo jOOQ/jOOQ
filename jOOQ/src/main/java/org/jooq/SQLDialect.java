@@ -150,6 +150,11 @@ public enum SQLDialect {
     HSQLDB("HSQLDB", false, true),
 
     /**
+     * The Apache Ignite dialect family.
+     */
+    IGNITE("Ignite", false, true),
+
+    /**
      * The MariaDB dialect family.
      * <p>
      * This family behaves like the versioned dialect {@link #MARIADB_10_5}.

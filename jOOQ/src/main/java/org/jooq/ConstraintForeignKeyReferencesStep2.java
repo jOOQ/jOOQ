@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -53,7 +55,7 @@ public interface ConstraintForeignKeyReferencesStep2<T1, T2> {
      * implicitly referencing the primary key.
      */
     @NotNull
-    @Support
+    @Support 
     ConstraintForeignKeyOnStep references(String table);
 
     /**
@@ -61,7 +63,7 @@ public interface ConstraintForeignKeyReferencesStep2<T1, T2> {
      * referencing a key by column names.
      */
     @NotNull
-    @Support
+    @Support 
     ConstraintForeignKeyOnStep references(String table, String field1, String field2);
 
     /**
@@ -69,7 +71,7 @@ public interface ConstraintForeignKeyReferencesStep2<T1, T2> {
      * implicitly referencing the primary key.
      */
     @NotNull
-    @Support
+    @Support 
     ConstraintForeignKeyOnStep references(Name table);
 
     /**
@@ -77,7 +79,7 @@ public interface ConstraintForeignKeyReferencesStep2<T1, T2> {
      * referencing a key by column names.
      */
     @NotNull
-    @Support
+    @Support 
     ConstraintForeignKeyOnStep references(Name table, Name field1, Name field2);
 
     /**
@@ -85,7 +87,7 @@ public interface ConstraintForeignKeyReferencesStep2<T1, T2> {
      * implicitly referencing the primary key.
      */
     @NotNull
-    @Support
+    @Support 
     ConstraintForeignKeyOnStep references(Table<?> table);
 
     /**
@@ -93,6 +95,6 @@ public interface ConstraintForeignKeyReferencesStep2<T1, T2> {
      * referencing a key by column names.
      */
     @NotNull
-    @Support
+    @Support 
     ConstraintForeignKeyOnStep references(Table<?> table, Field<T1> field1, Field<T2> field2);
 }

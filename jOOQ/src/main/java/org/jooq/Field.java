@@ -1632,7 +1632,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition like(Field<String> value, char escape);
 
     /**
@@ -1652,7 +1652,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition like(String value, char escape);
 
     /**
@@ -1698,7 +1698,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition likeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -1724,7 +1724,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition likeIgnoreCase(String value, char escape);
 
     /**
@@ -1744,7 +1744,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLike(Field<String> field, char escape);
 
     /**
@@ -1764,7 +1764,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLike(String value, char escape);
 
     /**
@@ -1810,7 +1810,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLikeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -1836,7 +1836,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLikeIgnoreCase(String value, char escape);
 
     /**

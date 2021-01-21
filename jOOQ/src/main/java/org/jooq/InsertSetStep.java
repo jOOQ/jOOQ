@@ -362,7 +362,7 @@ public interface InsertSetStep<R extends Record> {
      * Add an empty record with default values.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     InsertOnDuplicateStep<R> defaultValues();
 
     /**

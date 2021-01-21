@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -365,6 +366,8 @@ public class JDBCUtils {
             return H2;
         else if (url.contains(":hsqldb:"))
             return HSQLDB;
+        else if (url.contains(":ignite:"))
+            return IGNITE;
         else if (url.contains(":mariadb:"))
             return MARIADB;
         else if (url.contains(":mysql:")
@@ -428,6 +431,8 @@ public class JDBCUtils {
                 return "org.h2.Driver";
             case HSQLDB:
                 return "org.hsqldb.jdbcDriver";
+            case IGNITE:
+                return "org.apache.ignite.IgniteJdbcThinDriver";
             case MARIADB:
                 return "org.mariadb.jdbc.Driver";
             case MYSQL:

@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -737,7 +738,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #rightOuterJoin(TableLike)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     SelectJoinPartitionByStep<R> rightJoin(TableLike<?> table);
 
     /**
@@ -760,7 +761,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightJoin(SQL sql);
 
@@ -784,7 +785,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightJoin(String sql);
 
@@ -809,7 +810,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightJoin(String sql, Object... bindings);
 
@@ -834,7 +835,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightJoin(String sql, QueryPart... parts);
 
@@ -852,7 +853,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #rightOuterJoin(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     SelectJoinPartitionByStep<R> rightJoin(Name name);
 
     /**
@@ -865,7 +866,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(TableLike)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     SelectJoinPartitionByStep<R> rightOuterJoin(TableLike<?> table);
 
     /**
@@ -885,7 +886,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(SQL sql);
 
@@ -906,7 +907,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql);
 
@@ -928,7 +929,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, Object... bindings);
 
@@ -950,7 +951,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, QueryPart... parts);
 
@@ -965,7 +966,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     SelectJoinPartitionByStep<R> rightOuterJoin(Name name);
 
     /**

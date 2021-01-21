@@ -37,13 +37,17 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.*;
 import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
 
+import java.util.Set;
+
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -53,9 +57,10 @@ final class BoolAnd extends DefaultAggregateFunction<Boolean> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 7292087943334025737L;
+    private static final long            serialVersionUID = 7292087943334025737L;
+    private static final Set<SQLDialect> EMULATE          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
-    private final Condition   condition;
+    private final Condition              condition;
 
     BoolAnd(Condition condition) {
         super(N_BOOL_AND, BOOLEAN, DSL.field(condition));
@@ -80,25 +85,13 @@ final class BoolAnd extends DefaultAggregateFunction<Boolean> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-            case POSTGRES:
-                super.accept(ctx);
-                break;
-
-            default:
-                final Field<Integer> max = DSL.field("{0}", Integer.class, CustomQueryPart.of(c -> {
-                    c.visit(DSL.min(DSL.when(condition, one()).otherwise(zero())));
-                    acceptOverClause(c);
-                }));
-
-                ctx.visit(DSL.field(max.eq(one())));
-                break;
+        if (EMULATE.contains(ctx.dialect())) {
+            ctx.visit(DSL.field(DSL.field("{0}", Integer.class, CustomQueryPart.of(c -> {
+                c.visit(DSL.min(DSL.when(condition, one()).otherwise(zero())));
+                acceptOverClause(c);
+            })).eq(one())));
         }
+        else
+            super.accept(ctx);
     }
 }

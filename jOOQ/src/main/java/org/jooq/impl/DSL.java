@@ -40,62 +40,9 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Operator.AND;
 import static org.jooq.Operator.OR;
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-// ...
-import static org.jooq.SQLDialect.DEFAULT;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_CUBE;
-import static org.jooq.impl.Keywords.K_GROUPING_SETS;
-import static org.jooq.impl.Names.N_IF;
-import static org.jooq.impl.Names.N_IIF;
-import static org.jooq.impl.Names.N_SYSTEM_TIME;
-import static org.jooq.impl.Names.N_TAN;
-import static org.jooq.impl.Names.N_VALUE;
+import static org.jooq.SQLDialect.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.FIRST_VALUE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAG;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAST_VALUE;
@@ -105,13 +52,7 @@ import static org.jooq.impl.RankingFunction.RankingType.CUME_DIST;
 import static org.jooq.impl.RankingFunction.RankingType.DENSE_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.RANK;
-import static org.jooq.impl.SQLDataType.DATE;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.JSON;
-import static org.jooq.impl.SQLDataType.JSONB;
-import static org.jooq.impl.SQLDataType.NUMERIC;
-import static org.jooq.impl.SQLDataType.TIME;
-import static org.jooq.impl.SQLDataType.TIMESTAMP;
+import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
@@ -6329,7 +6270,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1> ConstraintForeignKeyReferencesStep1<T1> foreignKey(Field<T1> field1) {
         return constraint().foreignKey(field1);
     }
@@ -6338,7 +6279,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2> ConstraintForeignKeyReferencesStep2<T1, T2> foreignKey(Field<T1> field1, Field<T2> field2) {
         return constraint().foreignKey(field1, field2);
     }
@@ -6347,7 +6288,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3> ConstraintForeignKeyReferencesStep3<T1, T2, T3> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return constraint().foreignKey(field1, field2, field3);
     }
@@ -6356,7 +6297,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4> ConstraintForeignKeyReferencesStep4<T1, T2, T3, T4> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return constraint().foreignKey(field1, field2, field3, field4);
     }
@@ -6365,7 +6306,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5> ConstraintForeignKeyReferencesStep5<T1, T2, T3, T4, T5> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return constraint().foreignKey(field1, field2, field3, field4, field5);
     }
@@ -6374,7 +6315,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6> ConstraintForeignKeyReferencesStep6<T1, T2, T3, T4, T5, T6> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6);
     }
@@ -6383,7 +6324,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7> ConstraintForeignKeyReferencesStep7<T1, T2, T3, T4, T5, T6, T7> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7);
     }
@@ -6392,7 +6333,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8> ConstraintForeignKeyReferencesStep8<T1, T2, T3, T4, T5, T6, T7, T8> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8);
     }
@@ -6401,7 +6342,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> ConstraintForeignKeyReferencesStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
@@ -6410,7 +6351,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> ConstraintForeignKeyReferencesStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
@@ -6419,7 +6360,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> ConstraintForeignKeyReferencesStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
@@ -6428,7 +6369,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ConstraintForeignKeyReferencesStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
@@ -6437,7 +6378,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ConstraintForeignKeyReferencesStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
@@ -6446,7 +6387,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> ConstraintForeignKeyReferencesStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
@@ -6455,7 +6396,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> ConstraintForeignKeyReferencesStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
@@ -6464,7 +6405,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> ConstraintForeignKeyReferencesStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
@@ -6473,7 +6414,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> ConstraintForeignKeyReferencesStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
@@ -6482,7 +6423,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> ConstraintForeignKeyReferencesStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
@@ -6491,7 +6432,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> ConstraintForeignKeyReferencesStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
@@ -6500,7 +6441,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> ConstraintForeignKeyReferencesStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
@@ -6509,7 +6450,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> ConstraintForeignKeyReferencesStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
@@ -6518,7 +6459,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ConstraintForeignKeyReferencesStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
@@ -6527,7 +6468,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep1<?> foreignKey(Name field1) {
         return constraint().foreignKey(field1);
     }
@@ -6536,7 +6477,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep2<?, ?> foreignKey(Name field1, Name field2) {
         return constraint().foreignKey(field1, field2);
     }
@@ -6545,7 +6486,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep3<?, ?, ?> foreignKey(Name field1, Name field2, Name field3) {
         return constraint().foreignKey(field1, field2, field3);
     }
@@ -6554,7 +6495,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep4<?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4) {
         return constraint().foreignKey(field1, field2, field3, field4);
     }
@@ -6563,7 +6504,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep5<?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5) {
         return constraint().foreignKey(field1, field2, field3, field4, field5);
     }
@@ -6572,7 +6513,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep6<?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6);
     }
@@ -6581,7 +6522,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep7<?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7);
     }
@@ -6590,7 +6531,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep8<?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8);
     }
@@ -6599,7 +6540,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep9<?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
@@ -6608,7 +6549,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
@@ -6617,7 +6558,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
@@ -6626,7 +6567,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
@@ -6635,7 +6576,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep13<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
@@ -6644,7 +6585,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep14<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
@@ -6653,7 +6594,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep15<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
@@ -6662,7 +6603,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep16<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
@@ -6671,7 +6612,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep17<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
@@ -6680,7 +6621,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep18<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
@@ -6689,7 +6630,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep19<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
@@ -6698,7 +6639,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep20<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
@@ -6707,7 +6648,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep21<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
@@ -6716,7 +6657,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21, Name field22) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
@@ -6725,7 +6666,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep1<?> foreignKey(String field1) {
         return constraint().foreignKey(field1);
     }
@@ -6734,7 +6675,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep2<?, ?> foreignKey(String field1, String field2) {
         return constraint().foreignKey(field1, field2);
     }
@@ -6743,7 +6684,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep3<?, ?, ?> foreignKey(String field1, String field2, String field3) {
         return constraint().foreignKey(field1, field2, field3);
     }
@@ -6752,7 +6693,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep4<?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4) {
         return constraint().foreignKey(field1, field2, field3, field4);
     }
@@ -6761,7 +6702,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep5<?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5) {
         return constraint().foreignKey(field1, field2, field3, field4, field5);
     }
@@ -6770,7 +6711,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep6<?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6);
     }
@@ -6779,7 +6720,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep7<?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7);
     }
@@ -6788,7 +6729,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep8<?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8);
     }
@@ -6797,7 +6738,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep9<?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
@@ -6806,7 +6747,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
@@ -6815,7 +6756,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
@@ -6824,7 +6765,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
@@ -6833,7 +6774,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep13<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
@@ -6842,7 +6783,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep14<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
@@ -6851,7 +6792,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep15<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
@@ -6860,7 +6801,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep16<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
@@ -6869,7 +6810,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep17<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
@@ -6878,7 +6819,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep18<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
@@ -6887,7 +6828,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep19<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
@@ -6896,7 +6837,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep20<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
@@ -6905,7 +6846,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep21<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
@@ -6914,7 +6855,7 @@ public class DSL {
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
-    @Support
+    @Support 
     public static ConstraintForeignKeyReferencesStep22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21, String field22) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
@@ -6952,7 +6893,7 @@ public class DSL {
      * Create an unnamed (system named) <code>CHECK</code> constraint.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static ConstraintEnforcementStep check(Condition condition) {
         return constraint().check(condition);
     }
@@ -7662,7 +7603,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(String)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -7673,7 +7614,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -7684,7 +7625,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(Index)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -7695,7 +7636,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists()
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists() {
         return dsl().createIndexIfNotExists();
     }
@@ -7706,7 +7647,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndex(String)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndex(@Stringly.Name String index) {
         return dsl().createUniqueIndex(index);
     }
@@ -7717,7 +7658,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndex(Name)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndex(Name index) {
         return dsl().createUniqueIndex(index);
     }
@@ -7728,7 +7669,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndex(Index)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndex(Index index) {
         return dsl().createUniqueIndex(index);
     }
@@ -7739,7 +7680,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndex()
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndex() {
         return dsl().createUniqueIndex();
     }
@@ -7787,6 +7728,8 @@ public class DSL {
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
         return dsl().createUniqueIndexIfNotExists();
     }
+
+
 
 
 
@@ -8141,7 +8084,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(String)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(@Stringly.Name String index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -8152,7 +8095,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(Name index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -8163,7 +8106,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(Index)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(Index index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -8431,6 +8374,8 @@ public class DSL {
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
+
+
 
 
 
@@ -8990,7 +8935,7 @@ public class DSL {
      * @see DSLContext#createView(String, String...)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(String view, String... fields) {
         return dsl().createView(view, fields);
     }
@@ -9001,7 +8946,7 @@ public class DSL {
      * @see DSLContext#createView(Name, Name...)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(Name view, Name... fields) {
         return dsl().createView(view, fields);
     }
@@ -9012,7 +8957,7 @@ public class DSL {
      * @see DSLContext#createView(Table, Field...)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(Table<?> view, Field<?>... fields) {
         return dsl().createView(view, fields);
     }
@@ -9033,7 +8978,7 @@ public class DSL {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
@@ -9054,7 +8999,7 @@ public class DSL {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
@@ -9075,7 +9020,7 @@ public class DSL {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
     }
@@ -9443,7 +9388,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(String)
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(String table) {
         return dsl().alterTableIfExists(table);
     }
@@ -9454,7 +9399,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(Name)
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Name table) {
         return dsl().alterTableIfExists(table);
     }
@@ -9465,7 +9410,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(Table)
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
     }
@@ -14839,11 +14784,11 @@ public class DSL {
         return new Iif<>(name, condition, Tools.nullSafe(ifTrue), Tools.nullSafe(ifFalse));
     }
 
-    // -------------------------------------------------------------------------
-    // XXX String function factory
-    // -------------------------------------------------------------------------
 
 
+    // -------------------------------------------------------------------------
+    // Numeric functions
+    // -------------------------------------------------------------------------
 
     /**
      * The <code>ABS</code> function.
@@ -14862,6 +14807,738 @@ public class DSL {
     public static <T extends Number> Field<T> abs(Field<T> number) {
         return new Abs(number);
     }
+
+    /**
+     * The <code>ACOS</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> acos(Number number) {
+        return new Acos(Tools.field(number));
+    }
+
+    /**
+     * The <code>ACOS</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> acos(Field<? extends Number> number) {
+        return new Acos(number);
+    }
+
+    /**
+     * The <code>ASIN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> asin(Number number) {
+        return new Asin(Tools.field(number));
+    }
+
+    /**
+     * The <code>ASIN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> asin(Field<? extends Number> number) {
+        return new Asin(number);
+    }
+
+    /**
+     * The <code>ATAN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan(Number number) {
+        return new Atan(Tools.field(number));
+    }
+
+    /**
+     * The <code>ATAN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan(Field<? extends Number> number) {
+        return new Atan(number);
+    }
+
+    /**
+     * The <code>ATAN2</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan2(Number x, Number y) {
+        return new Atan2(Tools.field(x), Tools.field(y));
+    }
+
+    /**
+     * The <code>ATAN2</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
+        return new Atan2(Tools.field(x), y);
+    }
+
+    /**
+     * The <code>ATAN2</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
+        return new Atan2(x, Tools.field(y));
+    }
+
+    /**
+     * The <code>ATAN2</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
+        return new Atan2(x, y);
+    }
+
+    /**
+     * The <code>CEIL</code> function.
+     * <p>
+     * Get the smallest integer value equal or greater to a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> ceil(T value) {
+        return new Ceil(Tools.field(value));
+    }
+
+    /**
+     * The <code>CEIL</code> function.
+     * <p>
+     * Get the smallest integer value equal or greater to a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> ceil(Field<T> value) {
+        return new Ceil(value);
+    }
+
+    /**
+     * The <code>COS</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cos(Number number) {
+        return new Cos(Tools.field(number));
+    }
+
+    /**
+     * The <code>COS</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cos(Field<? extends Number> number) {
+        return new Cos(number);
+    }
+
+    /**
+     * The <code>COSH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cosh(Number number) {
+        return new Cosh(Tools.field(number));
+    }
+
+    /**
+     * The <code>COSH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cosh(Field<? extends Number> number) {
+        return new Cosh(number);
+    }
+
+    /**
+     * The <code>COT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cot(Number number) {
+        return new Cot(Tools.field(number));
+    }
+
+    /**
+     * The <code>COT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> cot(Field<? extends Number> number) {
+        return new Cot(number);
+    }
+
+    /**
+     * The <code>COTH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> coth(Number number) {
+        return new Coth(Tools.field(number));
+    }
+
+    /**
+     * The <code>COTH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> coth(Field<? extends Number> number) {
+        return new Coth(number);
+    }
+
+    /**
+     * The <code>DEG</code> function.
+     * <p>
+     * Turn a value in radians to degrees.
+     *
+     * @param radians The value in radians.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> deg(Number radians) {
+        return new Degrees(Tools.field(radians));
+    }
+
+    /**
+     * The <code>DEG</code> function.
+     * <p>
+     * Turn a value in radians to degrees.
+     *
+     * @param radians The value in radians.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> deg(Field<? extends Number> radians) {
+        return new Degrees(radians);
+    }
+
+    /**
+     * The <code>E</code> function.
+     * <p>
+     * The E literal (Euler number).
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> e() {
+        return new Euler();
+    }
+
+    /**
+     * The <code>EXP</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> exp(Number value) {
+        return new Exp(Tools.field(value));
+    }
+
+    /**
+     * The <code>EXP</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> exp(Field<? extends Number> value) {
+        return new Exp(value);
+    }
+
+    /**
+     * The <code>FLOOR</code> function.
+     * <p>
+     * Get the biggest integer value equal or less than a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> floor(T value) {
+        return new Floor(Tools.field(value));
+    }
+
+    /**
+     * The <code>FLOOR</code> function.
+     * <p>
+     * Get the biggest integer value equal or less than a value.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> floor(Field<T> value) {
+        return new Floor(value);
+    }
+
+    /**
+     * The <code>LN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> ln(Number value) {
+        return new Log(Tools.field(value));
+    }
+
+    /**
+     * The <code>LN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> ln(Field<? extends Number> value) {
+        return new Log(value);
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Number value, int base) {
+        return new Log(Tools.field(value), Tools.field(base));
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Number value, Field<? extends Number> base) {
+        return new Log(Tools.field(value), base);
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Field<? extends Number> value, int base) {
+        return new Log(value, Tools.field(base));
+    }
+
+    /**
+     * The <code>LOG</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Field<? extends Number> value, Field<? extends Number> base) {
+        return new Log(value, base);
+    }
+
+    /**
+     * The <code>LOG10</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log10(Number value) {
+        return new Log10(Tools.field(value));
+    }
+
+    /**
+     * The <code>LOG10</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log10(Field<? extends Number> value) {
+        return new Log10(value);
+    }
+
+    /**
+     * The <code>PI</code> function.
+     * <p>
+     * The π literal.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> pi() {
+        return new Pi();
+    }
+
+    /**
+     * The <code>POWER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> power(Number value, Number exponent) {
+        return new Power(Tools.field(value), Tools.field(exponent));
+    }
+
+    /**
+     * The <code>POWER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
+        return new Power(Tools.field(value), exponent);
+    }
+
+    /**
+     * The <code>POWER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> power(Field<? extends Number> value, Number exponent) {
+        return new Power(value, Tools.field(exponent));
+    }
+
+    /**
+     * The <code>POWER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> power(Field<? extends Number> value, Field<? extends Number> exponent) {
+        return new Power(value, exponent);
+    }
+
+    /**
+     * The <code>RAD</code> function.
+     * <p>
+     * Turn a value in degrees to radians.
+     *
+     * @param degrees The value in degrees.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> rad(Number degrees) {
+        return new Radians(Tools.field(degrees));
+    }
+
+    /**
+     * The <code>RAD</code> function.
+     * <p>
+     * Turn a value in degrees to radians.
+     *
+     * @param degrees The value in degrees.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> rad(Field<? extends Number> degrees) {
+        return new Radians(degrees);
+    }
+
+    /**
+     * The <code>RAND</code> function.
+     * <p>
+     * Get a random numeric value.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<BigDecimal> rand() {
+        return new Rand();
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     * @param decimals The decimals to round to.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(T value, int decimals) {
+        return new Round(Tools.field(value), Tools.field(decimals));
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     * @param decimals The decimals to round to.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(T value, Field<Integer> decimals) {
+        return new Round(Tools.field(value), decimals);
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     * @param decimals The decimals to round to.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(Field<T> value, int decimals) {
+        return new Round(value, Tools.field(decimals));
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     * @param decimals The decimals to round to.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(Field<T> value, Field<Integer> decimals) {
+        return new Round(value, decimals);
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(T value) {
+        return new Round(Tools.field(value));
+    }
+
+    /**
+     * The <code>ROUND</code> function.
+     * <p>
+     * Round a numeric value to the nearest decimal precision.
+     *
+     * @param value The number to be rounded.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> round(Field<T> value) {
+        return new Round(value);
+    }
+
+    /**
+     * The <code>SIGN</code> function.
+     * <p>
+     * Get the sign of a number and return it as any of +1, 0, -1.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> sign(Number number) {
+        return new Sign(Tools.field(number));
+    }
+
+    /**
+     * The <code>SIGN</code> function.
+     * <p>
+     * Get the sign of a number and return it as any of +1, 0, -1.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> sign(Field<? extends Number> number) {
+        return new Sign(number);
+    }
+
+    /**
+     * The <code>SIN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sin(Number number) {
+        return new Sin(Tools.field(number));
+    }
+
+    /**
+     * The <code>SIN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sin(Field<? extends Number> number) {
+        return new Sin(number);
+    }
+
+    /**
+     * The <code>SINH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sinh(Number number) {
+        return new Sinh(Tools.field(number));
+    }
+
+    /**
+     * The <code>SINH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sinh(Field<? extends Number> number) {
+        return new Sinh(number);
+    }
+
+    /**
+     * The <code>SQRT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sqrt(Number value) {
+        return new Sqrt(Tools.field(value));
+    }
+
+    /**
+     * The <code>SQRT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> sqrt(Field<? extends Number> value) {
+        return new Sqrt(value);
+    }
+
+    /**
+     * The <code>SQUARE</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> square(T value) {
+        return new Square(Tools.field(value));
+    }
+
+    /**
+     * The <code>SQUARE</code> function.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> square(Field<T> value) {
+        return new Square(value);
+    }
+
+    /**
+     * The <code>TAN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> tan(Number number) {
+        return new Tan(Tools.field(number));
+    }
+
+    /**
+     * The <code>TAN</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> tan(Field<? extends Number> number) {
+        return new Tan(number);
+    }
+
+    /**
+     * The <code>TANH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> tanh(Number number) {
+        return new Tanh(Tools.field(number));
+    }
+
+    /**
+     * The <code>TANH</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> tanh(Field<? extends Number> number) {
+        return new Tanh(number);
+    }
+
+    /**
+     * The <code>TAU</code> function.
+     * <p>
+     * The τ literal, or π, in a better world.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> tau() {
+        return new Tau();
+    }
+
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     *
+     * @param value The number to be truncated
+     * @param decimals The decimals to truncate to.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T extends Number> Field<T> trunc(T value, int decimals) {
+        return new Trunc(Tools.field(value), Tools.field(decimals));
+    }
+
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     *
+     * @param value The number to be truncated
+     * @param decimals The decimals to truncate to.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T extends Number> Field<T> trunc(T value, Field<Integer> decimals) {
+        return new Trunc(Tools.field(value), decimals);
+    }
+
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     *
+     * @param value The number to be truncated
+     * @param decimals The decimals to truncate to.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T extends Number> Field<T> trunc(Field<T> value, int decimals) {
+        return new Trunc(value, Tools.field(decimals));
+    }
+
+    /**
+     * The <code>TRUNC</code> function.
+     * <p>
+     * Truncate a number to a given number of decimals.
+     *
+     * @param value The number to be truncated
+     * @param decimals The decimals to truncate to.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T extends Number> Field<T> trunc(Field<T> value, Field<Integer> decimals) {
+        return new Trunc(value, decimals);
+    }
+
+    /**
+     * The <code>WIDTH_BUCKET</code> function.
+     * <p>
+     * Divide a range into buckets of equal size.
+     *
+     * @param field The value to divide into the range.
+     * @param low The lower bound of the range.
+     * @param high The upper bound of the range.
+     * @param buckets The number of buckets to produce.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
+        return new WidthBucket(field, Tools.field(low), Tools.field(high), Tools.field(buckets));
+    }
+
+    /**
+     * The <code>WIDTH_BUCKET</code> function.
+     * <p>
+     * Divide a range into buckets of equal size.
+     *
+     * @param field The value to divide into the range.
+     * @param low The lower bound of the range.
+     * @param high The upper bound of the range.
+     * @param buckets The number of buckets to produce.
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
+        return new WidthBucket(field, low, high, buckets);
+    }
+
+    // -------------------------------------------------------------------------
+    // String functions
+    // -------------------------------------------------------------------------
 
     /**
      * The <code>ASCII</code> function.
@@ -14883,42 +15560,6 @@ public class DSL {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> ascii(Field<String> string) {
         return new Ascii(string);
-    }
-
-    /**
-     * The <code>ATAN2</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan2(Number x, Number y) {
-        return new Atan2(Tools.field(x), Tools.field(y));
-    }
-
-    /**
-     * The <code>ATAN2</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
-        return new Atan2(Tools.field(x), y);
-    }
-
-    /**
-     * The <code>ATAN2</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
-        return new Atan2(x, Tools.field(y));
-    }
-
-    /**
-     * The <code>ATAN2</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
-        return new Atan2(x, y);
     }
 
     /**
@@ -14984,153 +15625,6 @@ public class DSL {
     }
 
     /**
-     * The <code>CEIL</code> function.
-     * <p>
-     * Get the smallest integer value equal or greater to a value.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> ceil(T value) {
-        return new Ceil(Tools.field(value));
-    }
-
-    /**
-     * The <code>CEIL</code> function.
-     * <p>
-     * Get the smallest integer value equal or greater to a value.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> ceil(Field<T> value) {
-        return new Ceil(value);
-    }
-
-    /**
-     * The <code>COS</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cos(Number number) {
-        return new Cos(Tools.field(number));
-    }
-
-    /**
-     * The <code>COS</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cos(Field<? extends Number> number) {
-        return new Cos(number);
-    }
-
-    /**
-     * The <code>COSH</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cosh(Number number) {
-        return new Cosh(Tools.field(number));
-    }
-
-    /**
-     * The <code>COSH</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cosh(Field<? extends Number> number) {
-        return new Cosh(number);
-    }
-
-    /**
-     * The <code>COT</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cot(Number number) {
-        return new Cot(Tools.field(number));
-    }
-
-    /**
-     * The <code>COT</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> cot(Field<? extends Number> number) {
-        return new Cot(number);
-    }
-
-    /**
-     * The <code>COTH</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> coth(Number number) {
-        return new Coth(Tools.field(number));
-    }
-
-    /**
-     * The <code>COTH</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> coth(Field<? extends Number> number) {
-        return new Coth(number);
-    }
-
-    /**
-     * The <code>CURRENT_CATALOG</code> function.
-     */
-    @NotNull
-    @Support({ FIREBIRD, POSTGRES, SQLITE })
-    public static Field<String> currentCatalog() {
-        return new CurrentCatalog();
-    }
-
-    /**
-     * The <code>CURRENT_SCHEMA</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> currentSchema() {
-        return new CurrentSchema();
-    }
-
-    /**
-     * The <code>CURRENT_USER</code> function.
-     */
-    @NotNull
-    @Support
-    public static Field<String> currentUser() {
-        return new CurrentUser();
-    }
-
-    /**
-     * The <code>DEG</code> function.
-     * <p>
-     * Turn a value in radians to degrees.
-     *
-     * @param radians The value in radians.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> deg(Number radians) {
-        return new Degrees(Tools.field(radians));
-    }
-
-    /**
-     * The <code>DEG</code> function.
-     * <p>
-     * Turn a value in radians to degrees.
-     *
-     * @param radians The value in radians.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> deg(Field<? extends Number> radians) {
-        return new Degrees(radians);
-    }
-
-    /**
      * The <code>DIGITS</code> function.
      */
     @NotNull
@@ -15146,57 +15640,6 @@ public class DSL {
     @Support
     public static Field<String> digits(Field<? extends Number> value) {
         return new Digits(value);
-    }
-
-    /**
-     * The <code>E</code> function.
-     * <p>
-     * The E literal (Euler number).
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> e() {
-        return new Euler();
-    }
-
-    /**
-     * The <code>EXP</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> exp(Number value) {
-        return new Exp(Tools.field(value));
-    }
-
-    /**
-     * The <code>EXP</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> exp(Field<? extends Number> value) {
-        return new Exp(value);
-    }
-
-    /**
-     * The <code>FLOOR</code> function.
-     * <p>
-     * Get the biggest integer value equal or less than a value.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> floor(T value) {
-        return new Floor(Tools.field(value));
-    }
-
-    /**
-     * The <code>FLOOR</code> function.
-     * <p>
-     * Get the biggest integer value equal or less than a value.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> floor(Field<T> value) {
-        return new Floor(value);
     }
 
     /**
@@ -15275,78 +15718,6 @@ public class DSL {
     @Support
     public static Field<Integer> length(Field<String> string) {
         return charLength(string);
-    }
-
-    /**
-     * The <code>LN</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> ln(Number value) {
-        return new Log(Tools.field(value));
-    }
-
-    /**
-     * The <code>LN</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> ln(Field<? extends Number> value) {
-        return new Log(value);
-    }
-
-    /**
-     * The <code>LOG</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log(Number value, int base) {
-        return new Log(Tools.field(value), Tools.field(base));
-    }
-
-    /**
-     * The <code>LOG</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log(Number value, Field<? extends Number> base) {
-        return new Log(Tools.field(value), base);
-    }
-
-    /**
-     * The <code>LOG</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log(Field<? extends Number> value, int base) {
-        return new Log(value, Tools.field(base));
-    }
-
-    /**
-     * The <code>LOG</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log(Field<? extends Number> value, Field<? extends Number> base) {
-        return new Log(value, base);
-    }
-
-    /**
-     * The <code>LOG10</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log10(Number value) {
-        return new Log10(Tools.field(value));
-    }
-
-    /**
-     * The <code>LOG10</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> log10(Field<? extends Number> value) {
-        return new Log10(value);
     }
 
     /**
@@ -15736,17 +16107,6 @@ public class DSL {
     }
 
     /**
-     * The <code>PI</code> function.
-     * <p>
-     * The π literal.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> pi() {
-        return new Pi();
-    }
-
-    /**
      * The <code>POSITION</code> function.
      * <p>
      * Search the position (1-based) of a substring in another string.
@@ -15756,7 +16116,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search, int startIndex) {
         return new Position(Tools.field(in), Tools.field(search), Tools.field(startIndex));
     }
@@ -15771,7 +16131,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search, Field<? extends Number> startIndex) {
         return new Position(Tools.field(in), Tools.field(search), startIndex);
     }
@@ -15786,7 +16146,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(@Stringly.Param String in, Field<String> search, int startIndex) {
         return new Position(Tools.field(in), search, Tools.field(startIndex));
     }
@@ -15801,7 +16161,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(@Stringly.Param String in, Field<String> search, Field<? extends Number> startIndex) {
         return new Position(Tools.field(in), search, startIndex);
     }
@@ -15816,7 +16176,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, @Stringly.Param String search, int startIndex) {
         return new Position(in, Tools.field(search), Tools.field(startIndex));
     }
@@ -15831,7 +16191,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, @Stringly.Param String search, Field<? extends Number> startIndex) {
         return new Position(in, Tools.field(search), startIndex);
     }
@@ -15846,7 +16206,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, Field<String> search, int startIndex) {
         return new Position(in, search, Tools.field(startIndex));
     }
@@ -15861,7 +16221,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, Field<String> search, Field<? extends Number> startIndex) {
         return new Position(in, search, startIndex);
     }
@@ -15875,7 +16235,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search) {
         return new Position(Tools.field(in), Tools.field(search));
     }
@@ -15889,7 +16249,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(@Stringly.Param String in, Field<String> search) {
         return new Position(Tools.field(in), search);
     }
@@ -15903,7 +16263,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, @Stringly.Param String search) {
         return new Position(in, Tools.field(search));
     }
@@ -15917,82 +16277,9 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, Field<String> search) {
         return new Position(in, search);
-    }
-
-    /**
-     * The <code>POWER</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> power(Number value, Number exponent) {
-        return new Power(Tools.field(value), Tools.field(exponent));
-    }
-
-    /**
-     * The <code>POWER</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
-        return new Power(Tools.field(value), exponent);
-    }
-
-    /**
-     * The <code>POWER</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> power(Field<? extends Number> value, Number exponent) {
-        return new Power(value, Tools.field(exponent));
-    }
-
-    /**
-     * The <code>POWER</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> power(Field<? extends Number> value, Field<? extends Number> exponent) {
-        return new Power(value, exponent);
-    }
-
-    /**
-     * The <code>RAD</code> function.
-     * <p>
-     * Turn a value in degrees to radians.
-     *
-     * @param degrees The value in degrees.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> rad(Number degrees) {
-        return new Radians(Tools.field(degrees));
-    }
-
-    /**
-     * The <code>RAD</code> function.
-     * <p>
-     * Turn a value in degrees to radians.
-     *
-     * @param degrees The value in degrees.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> rad(Field<? extends Number> degrees) {
-        return new Radians(degrees);
-    }
-
-    /**
-     * The <code>RAND</code> function.
-     * <p>
-     * Get a random numeric value.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> rand() {
-        return new Rand();
     }
 
     /**
@@ -16218,103 +16505,6 @@ public class DSL {
     }
 
     /**
-     * The <code>ROUND</code> function.
-     * <p>
-     * Round a numeric value to the nearest decimal precision.
-     *
-     * @param value The number to be rounded.
-     * @param decimals The decimals to round to.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(T value, int decimals) {
-        return new Round(Tools.field(value), Tools.field(decimals));
-    }
-
-    /**
-     * The <code>ROUND</code> function.
-     * <p>
-     * Round a numeric value to the nearest decimal precision.
-     *
-     * @param value The number to be rounded.
-     * @param decimals The decimals to round to.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(T value, Field<Integer> decimals) {
-        return new Round(Tools.field(value), decimals);
-    }
-
-    /**
-     * The <code>ROUND</code> function.
-     * <p>
-     * Round a numeric value to the nearest decimal precision.
-     *
-     * @param value The number to be rounded.
-     * @param decimals The decimals to round to.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(Field<T> value, int decimals) {
-        return new Round(value, Tools.field(decimals));
-    }
-
-    /**
-     * The <code>ROUND</code> function.
-     * <p>
-     * Round a numeric value to the nearest decimal precision.
-     *
-     * @param value The number to be rounded.
-     * @param decimals The decimals to round to.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(Field<T> value, Field<Integer> decimals) {
-        return new Round(value, decimals);
-    }
-
-    /**
-     * The <code>ROUND</code> function.
-     * <p>
-     * Round a numeric value to the nearest decimal precision.
-     *
-     * @param value The number to be rounded.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(T value) {
-        return new Round(Tools.field(value));
-    }
-
-    /**
-     * The <code>ROUND</code> function.
-     * <p>
-     * Round a numeric value to the nearest decimal precision.
-     *
-     * @param value The number to be rounded.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> round(Field<T> value) {
-        return new Round(value);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
      * The <code>RPAD</code> function.
      * <p>
      * Right-pad a string with a character (whitespace as default) for a number of times.
@@ -16485,64 +16675,6 @@ public class DSL {
     }
 
     /**
-     * The <code>SIGN</code> function.
-     * <p>
-     * Get the sign of a number and return it as any of +1, 0, -1.
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> sign(Number number) {
-        return new Sign(Tools.field(number));
-    }
-
-    /**
-     * The <code>SIGN</code> function.
-     * <p>
-     * Get the sign of a number and return it as any of +1, 0, -1.
-     */
-    @NotNull
-    @Support
-    public static Field<Integer> sign(Field<? extends Number> number) {
-        return new Sign(number);
-    }
-
-    /**
-     * The <code>SIN</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sin(Number number) {
-        return new Sin(Tools.field(number));
-    }
-
-    /**
-     * The <code>SIN</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sin(Field<? extends Number> number) {
-        return new Sin(number);
-    }
-
-    /**
-     * The <code>SINH</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sinh(Number number) {
-        return new Sinh(Tools.field(number));
-    }
-
-    /**
-     * The <code>SINH</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sinh(Field<? extends Number> number) {
-        return new Sinh(number);
-    }
-
-    /**
      * The <code>SPACE</code> function.
      * <p>
      * Get a string of spaces of a given length.
@@ -16626,42 +16758,6 @@ public class DSL {
     @Support({ POSTGRES })
     public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Field<? extends Number> n) {
         return new SplitPart(string, delimiter, n);
-    }
-
-    /**
-     * The <code>SQRT</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sqrt(Number value) {
-        return new Sqrt(Tools.field(value));
-    }
-
-    /**
-     * The <code>SQRT</code> function.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> sqrt(Field<? extends Number> value) {
-        return new Sqrt(value);
-    }
-
-    /**
-     * The <code>SQUARE</code> function.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> square(T value) {
-        return new Square(Tools.field(value));
-    }
-
-    /**
-     * The <code>SQUARE</code> function.
-     */
-    @NotNull
-    @Support
-    public static <T extends Number> Field<T> square(Field<T> value) {
-        return new Square(value);
     }
 
     /**
@@ -16750,17 +16846,6 @@ public class DSL {
     @Support
     public static Field<String> substring(Field<String> string, Field<? extends Number> startingPosition) {
         return new Substring(string, startingPosition);
-    }
-
-    /**
-     * The <code>TAU</code> function.
-     * <p>
-     * The τ literal, or π, in a better world.
-     */
-    @NotNull
-    @Support
-    public static Field<BigDecimal> tau() {
-        return new Tau();
     }
 
     /**
@@ -17100,62 +17185,6 @@ public class DSL {
     }
 
     /**
-     * The <code>TRUNC</code> function.
-     * <p>
-     * Truncate a number to a given number of decimals.
-     *
-     * @param value The number to be truncated
-     * @param decimals The decimals to truncate to.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T extends Number> Field<T> trunc(T value, int decimals) {
-        return new Trunc(Tools.field(value), Tools.field(decimals));
-    }
-
-    /**
-     * The <code>TRUNC</code> function.
-     * <p>
-     * Truncate a number to a given number of decimals.
-     *
-     * @param value The number to be truncated
-     * @param decimals The decimals to truncate to.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T extends Number> Field<T> trunc(T value, Field<Integer> decimals) {
-        return new Trunc(Tools.field(value), decimals);
-    }
-
-    /**
-     * The <code>TRUNC</code> function.
-     * <p>
-     * Truncate a number to a given number of decimals.
-     *
-     * @param value The number to be truncated
-     * @param decimals The decimals to truncate to.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T extends Number> Field<T> trunc(Field<T> value, int decimals) {
-        return new Trunc(value, Tools.field(decimals));
-    }
-
-    /**
-     * The <code>TRUNC</code> function.
-     * <p>
-     * Truncate a number to a given number of decimals.
-     *
-     * @param value The number to be truncated
-     * @param decimals The decimals to truncate to.
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static <T extends Number> Field<T> trunc(Field<T> value, Field<Integer> decimals) {
-        return new Trunc(value, decimals);
-    }
-
-    /**
      * The <code>UPPER</code> function.
      * <p>
      * Turn a string into upper case.
@@ -17177,36 +17206,35 @@ public class DSL {
         return new Upper(string);
     }
 
+    // -------------------------------------------------------------------------
+    // System functions
+    // -------------------------------------------------------------------------
+
     /**
-     * The <code>WIDTH_BUCKET</code> function.
-     * <p>
-     * Divide a range into buckets of equal size.
-     *
-     * @param field The value to divide into the range.
-     * @param low The lower bound of the range.
-     * @param high The upper bound of the range.
-     * @param buckets The number of buckets to produce.
+     * The <code>CURRENT_CATALOG</code> function.
      */
     @NotNull
-    @Support
-    public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
-        return new WidthBucket(field, Tools.field(low), Tools.field(high), Tools.field(buckets));
+    @Support({ FIREBIRD, POSTGRES, SQLITE })
+    public static Field<String> currentCatalog() {
+        return new CurrentCatalog();
     }
 
     /**
-     * The <code>WIDTH_BUCKET</code> function.
-     * <p>
-     * Divide a range into buckets of equal size.
-     *
-     * @param field The value to divide into the range.
-     * @param low The lower bound of the range.
-     * @param high The upper bound of the range.
-     * @param buckets The number of buckets to produce.
+     * The <code>CURRENT_SCHEMA</code> function.
      */
     @NotNull
-    @Support
-    public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
-        return new WidthBucket(field, low, high, buckets);
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> currentSchema() {
+        return new CurrentSchema();
+    }
+
+    /**
+     * The <code>CURRENT_USER</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> currentUser() {
+        return new CurrentUser();
     }
 
 
@@ -17282,6 +17310,33 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // XML functions
+    // -------------------------------------------------------------------------
 
     /**
      * The <code>XMLCOMMENT</code> function.
@@ -17350,6 +17405,16 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // Aggregate functions
+    // -------------------------------------------------------------------------
 
     /**
      * The <code>COVAR_SAMP</code> function.
@@ -17529,7 +17594,7 @@ public class DSL {
      * @see Field#like(Field, char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static String escape(String value, char escape) {
         String esc = "" + escape;
         return StringUtils.replace(
@@ -17549,7 +17614,7 @@ public class DSL {
      * @see Field#like(Field, char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> escape(Field<String> field, char escape) {
         Field<String> replace = field;
 
@@ -20789,123 +20854,6 @@ public class DSL {
         return trunc(Tools.field(number), inline(0));
     }
 
-    /**
-     * Get the arc cosine(field) function.
-     *
-     * @see #acos(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> acos(Number value) {
-        return acos(Tools.field(value));
-    }
-
-    /**
-     * Get the arc cosine(field) function.
-     * <p>
-     * This renders the acos function where available:
-     * <code><pre>acos([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> acos(Field<? extends Number> field) {
-        return new Acos(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the arc sine(field) function.
-     *
-     * @see #asin(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> asin(Number value) {
-        return asin(Tools.field(value));
-    }
-
-    /**
-     * Get the arc sine(field) function.
-     * <p>
-     * This renders the asin function where available:
-     * <code><pre>asin([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> asin(Field<? extends Number> field) {
-        return new Asin(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the arc tangent(field) function.
-     *
-     * @see #atan(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan(Number value) {
-        return atan(Tools.field(value));
-    }
-
-    /**
-     * Get the arc tangent(field) function.
-     * <p>
-     * This renders the atan function where available:
-     * <code><pre>atan([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> atan(Field<? extends Number> field) {
-        return new Atan(Tools.nullSafe(field));
-    }
-
-    /**
-     * Get the tangent(field) function.
-     *
-     * @see #tan(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> tan(Number value) {
-        return tan(Tools.field(value));
-    }
-
-    /**
-     * Get the tangent(field) function.
-     * <p>
-     * This renders the tan function where available:
-     * <code><pre>tan([field])</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> tan(Field<? extends Number> field) {
-        return function(N_TAN, SQLDataType.NUMERIC, field);
-    }
-
-    /**
-     * Get the hyperbolic tangent function: tanh(field).
-     *
-     * @see #tanh(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> tanh(Number value) {
-        return tanh(Tools.field(value));
-    }
-
-    /**
-     * Get the hyperbolic tangent function: tanh(field).
-     * <p>
-     * This renders the tanh function where available:
-     * <code><pre>tanh([field])</pre></code> ... or emulates it elsewhere using
-     * exp:
-     * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<BigDecimal> tanh(Field<? extends Number> field) {
-        return new Tanh(Tools.nullSafe(field));
-    }
-
     // -------------------------------------------------------------------------
     // XXX XML functions
     // -------------------------------------------------------------------------
@@ -21620,7 +21568,7 @@ public class DSL {
      * Get the count(distinct field) function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
         return new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, field("{0}", field));
     }
@@ -21633,7 +21581,7 @@ public class DSL {
      * {@link #count(Field)}, instead.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(Table<?> table) {
         return new CountTable(table, true);
     }
@@ -22657,7 +22605,7 @@ public class DSL {
      * <code>ROWNUM()</code>
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> rowNumber() {
         return new RowNumber();
     }

@@ -119,7 +119,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onDeleteCascade();
 
     /**
@@ -127,7 +127,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * <code>FOREIGN KEY</code> constraint.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onDeleteSetNull();
 
     /**

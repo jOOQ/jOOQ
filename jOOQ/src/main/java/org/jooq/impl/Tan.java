@@ -56,42 +56,27 @@ import java.math.BigDecimal;
 
 
 /**
- * The <code>LN</code> statement.
+ * The <code>TAN</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
-final class Log
+final class Tan
 extends
     AbstractField<BigDecimal>
 {
 
     private static final long serialVersionUID = 1L;
 
-    private final Field<? extends Number> value;
-    private final Field<? extends Number> base;
+    private final Field<? extends Number> number;
 
-    Log(
-        Field<? extends Number> value
+    Tan(
+        Field<? extends Number> number
     ) {
         super(
-            N_LOG,
-            allNotNull(NUMERIC, value)
+            N_TAN,
+            allNotNull(NUMERIC, number)
         );
 
-        this.value = nullSafeNotNull(value, INTEGER);
-        this.base = null;
-    }
-
-    Log(
-        Field<? extends Number> value,
-        Field<? extends Number> base
-    ) {
-        super(
-            N_LOG,
-            allNotNull(NUMERIC, value, base)
-        );
-
-        this.value = nullSafeNotNull(value, INTEGER);
-        this.base = nullSafeNotNull(base, INTEGER);
+        this.number = nullSafeNotNull(number, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -102,69 +87,7 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (base == null) {
-            switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                default:
-                    ctx.visit(function(N_LN, NUMERIC, value));
-                    return;
-            }
-        }
-        else {
-            switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case DERBY:
-                case HSQLDB:
-                case IGNITE:
-                    ctx.visit(idiv(DSL.ln(value), DSL.ln(base)));
-                    return;
-
-                default:
-                    ctx.visit(function(N_LOG, NUMERIC, base, value));
-                    return;
-            }
-        }
+        ctx.visit(function(N_TAN, getDataType(), number));
     }
 
 
@@ -175,10 +98,9 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof Log) {
+        if (that instanceof Tan) {
             return
-                StringUtils.equals(value, ((Log) that).value) &&
-                StringUtils.equals(base, ((Log) that).base)
+                StringUtils.equals(number, ((Tan) that).number)
             ;
         }
         else

@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -9685,7 +9686,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(String)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(@Stringly.Name String index);
 
     /**
@@ -9694,7 +9695,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Name index);
 
     /**
@@ -9703,7 +9704,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(Index)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Index index);
 
     /**
@@ -9712,7 +9713,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists()
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists();
 
     /**
@@ -9721,7 +9722,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createUniqueIndex(String)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex(@Stringly.Name String index);
 
     /**
@@ -9730,7 +9731,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createUniqueIndex(Name)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex(Name index);
 
     /**
@@ -9739,7 +9740,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createUniqueIndex(Index)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex(Index index);
 
     /**
@@ -9748,7 +9749,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createUniqueIndex()
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex();
 
     /**
@@ -9786,6 +9787,8 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists();
+
+
 
 
 
@@ -10078,7 +10081,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(String)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(@Stringly.Name String index);
 
     /**
@@ -10087,7 +10090,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Name index);
 
     /**
@@ -10096,7 +10099,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Index)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Index index);
 
     /**
@@ -10314,6 +10317,8 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
+
+
 
 
 
@@ -10777,7 +10782,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(String, String...)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(String view, String... fields);
 
     /**
@@ -10786,7 +10791,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(Name, Name...)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Name view, Name... fields);
 
     /**
@@ -10795,7 +10800,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(Table, Field...)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
 
     /**
@@ -10814,7 +10819,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -10833,7 +10838,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -10852,7 +10857,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -10871,7 +10876,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -10890,7 +10895,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -10909,7 +10914,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -11335,7 +11340,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(String)
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(String table);
 
     /**
@@ -11344,7 +11349,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(Name)
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Name table);
 
     /**
@@ -11353,7 +11358,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(Table)
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
 
     // -------------------------------------------------------------------------

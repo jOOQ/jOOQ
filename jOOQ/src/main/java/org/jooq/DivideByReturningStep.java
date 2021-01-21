@@ -97,13 +97,13 @@ public interface DivideByReturningStep {
      * Specify the fields that you want the division to return from the dividend
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Table<Record> returning(Field<?>... fields);
 
     /**
      * Specify the fields that you want the division to return from the dividend
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Table<Record> returning(Collection<? extends Field<?>> fields);
 }

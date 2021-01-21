@@ -37,35 +37,53 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.idiv;
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Internal.ineg;
-import static org.jooq.impl.Names.N_ACOS;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
 import java.math.BigDecimal;
 
-import org.jooq.Context;
-import org.jooq.Field;
 
 /**
- * @author Lukas Eder
+ * The <code>ACOS</code> statement.
  */
-final class Acos extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unused" })
+final class Acos
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = 3117002829857089691L;
-    private final Field<? extends Number> arg;
+    private static final long serialVersionUID = 1L;
 
-    Acos(Field<? extends Number> arg) {
-        super(N_ACOS, SQLDataType.NUMERIC);
+    private final Field<? extends Number> number;
 
-        this.arg = arg;
+    Acos(
+        Field<? extends Number> number
+    ) {
+        super(
+            N_ACOS,
+            allNotNull(NUMERIC, number)
+        );
+
+        this.number = nullSafeNotNull(number, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -86,8 +104,25 @@ final class Acos extends AbstractField<BigDecimal> {
 
 
             default:
-                ctx.visit(N_ACOS).sql('(').visit(arg).sql(')');
+                ctx.visit(N_ACOS).sql('(').visit(number).sql(')');
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Acos) {
+            return
+                StringUtils.equals(number, ((Acos) that).number)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

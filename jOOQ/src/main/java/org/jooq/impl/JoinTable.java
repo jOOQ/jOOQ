@@ -80,6 +80,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -157,7 +158,7 @@ implements
 
 
     private static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supportedBy(CUBRID);
-    private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CUBRID, H2);
+    private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CUBRID, H2, IGNITE);
 
 
 

@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -151,7 +152,6 @@ public @interface Allow {
      * A list of jOOQ {@link SQLDialect} which are required on any jOOQ API
      * method that is annotated with {@link Support}.
      */
-    @SuppressWarnings("deprecation")
     SQLDialect[] value() default {
 
 
@@ -181,6 +181,7 @@ public @interface Allow {
         FIREBIRD,
         H2,
         HSQLDB,
+        IGNITE,
         MARIADB,
         MYSQL,
         POSTGRES,

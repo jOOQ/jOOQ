@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -61,6 +62,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -125,7 +127,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep renameTo(Table<?> newName);
 
     /**
@@ -133,7 +135,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep renameTo(Name newName);
 
     /**
@@ -141,7 +143,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep renameTo(String newName);
 
     /**
@@ -149,7 +151,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableRenameColumnToStep renameColumn(Field<?> oldName);
 
     /**
@@ -157,7 +159,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableRenameColumnToStep renameColumn(Name oldName);
 
     /**
@@ -165,7 +167,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableRenameColumnToStep renameColumn(String oldName);
 
     /**
@@ -319,7 +321,7 @@ public interface AlterTableStep {
      * the <code>ALTER TABLE</code> statement.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableAddStep add(FieldOrConstraint... fields);
 
     /**
@@ -327,7 +329,7 @@ public interface AlterTableStep {
      * the <code>ALTER TABLE</code> statement.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableAddStep add(Collection<? extends FieldOrConstraint> fields);
 
     /**
@@ -367,7 +369,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Field)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableAddStep addIfNotExists(Field<?> field);
 
     /**
@@ -377,7 +379,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Field, DataType)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     <T> AlterTableAddStep addIfNotExists(Field<T> field, DataType<T> type);
 
     /**
@@ -387,7 +389,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Name, DataType)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableAddStep addIfNotExists(Name field, DataType<?> type);
 
     /**
@@ -397,7 +399,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(String, DataType)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableAddStep addIfNotExists(String field, DataType<?> type);
 
     /**
@@ -437,7 +439,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableAddStep addColumnIfNotExists(Field<?> field);
 
     /**
@@ -445,7 +447,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     <T> AlterTableAddStep addColumnIfNotExists(Field<T> field, DataType<T> type);
 
     /**
@@ -453,7 +455,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableAddStep addColumnIfNotExists(Name field, DataType<?> type);
 
     /**
@@ -461,7 +463,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableAddStep addColumnIfNotExists(String field, DataType<?> type);
 
     /**
@@ -479,7 +481,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumn(Field)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Field<?> field);
 
     /**
@@ -489,7 +491,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumn(Name)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Name field);
 
     /**
@@ -499,7 +501,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumn(String)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(String field);
 
     /**
@@ -509,7 +511,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumnIfExists(Field)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(Field<?> field);
 
     /**
@@ -519,7 +521,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumnIfExists(Name)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(Name field);
 
     /**
@@ -529,7 +531,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumnIfExists(String)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(String field);
 
     /**
@@ -537,7 +539,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumn(Field<?> field);
 
     /**
@@ -545,7 +547,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumn(Name field);
 
     /**
@@ -553,7 +555,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumn(String field);
 
     /**
@@ -561,7 +563,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(Field<?> field);
 
     /**
@@ -569,7 +571,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(Name field);
 
     /**
@@ -577,7 +579,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(String field);
 
     /**
@@ -587,7 +589,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumns(Collection)}.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Field<?>... fields);
 
     /**
@@ -597,7 +599,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumns(Collection)}.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Name... fields);
 
     /**
@@ -607,7 +609,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumns(Collection)}.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(String... fields);
 
     /**
@@ -615,7 +617,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Field<?>... fields);
 
     /**
@@ -623,7 +625,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Name... fields);
 
     /**
@@ -631,7 +633,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(String... fields);
 
     /**
@@ -641,7 +643,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumns(Collection)}.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Collection<? extends Field<?>> fields);
 
     /**
@@ -649,7 +651,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Collection<? extends Field<?>> fields);
 
     /**

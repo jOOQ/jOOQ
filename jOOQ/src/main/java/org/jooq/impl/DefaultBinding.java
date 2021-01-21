@@ -605,6 +605,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         // These dialects have some trouble, when they mostly get it right.
                         case H2:
                         case HSQLDB:
+                        case IGNITE:
 
                         // [#1261] There are only a few corner-cases, where this is
                         // really needed. Check back on related CUBRID bugs

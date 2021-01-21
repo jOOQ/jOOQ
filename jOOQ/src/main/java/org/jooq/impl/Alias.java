@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -110,7 +111,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     private static final Clause[]        CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
     private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedBy(MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedBy(IGNITE, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3 = SQLDialect.supportedBy(H2);
 
     final Q                              wrapped;

@@ -37,37 +37,53 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.Internal.iadd;
-import static org.jooq.impl.Internal.idiv;
-import static org.jooq.impl.Internal.imul;
-import static org.jooq.impl.Internal.isub;
-import static org.jooq.impl.Names.N_TANH;
-import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
 import java.math.BigDecimal;
 
-import org.jooq.Context;
-import org.jooq.Field;
 
 /**
- * @author Lukas Eder
+ * The <code>TANH</code> statement.
  */
-final class Tanh extends AbstractField<BigDecimal> {
+@SuppressWarnings({ "rawtypes", "unused" })
+final class Tanh
+extends
+    AbstractField<BigDecimal>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 1L;
 
-    private final Field<? extends Number> argument;
+    private final Field<? extends Number> number;
 
-    Tanh(Field<? extends Number> argument) {
-        super(N_TANH, NUMERIC);
+    Tanh(
+        Field<? extends Number> number
+    ) {
+        super(
+            N_TANH,
+            allNotNull(NUMERIC, number)
+        );
 
-        this.argument = argument;
+        this.number = nullSafeNotNull(number, INTEGER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -92,14 +108,31 @@ final class Tanh extends AbstractField<BigDecimal> {
             case MYSQL:
             case POSTGRES:
                 ctx.visit(idiv(
-                    isub(DSL.exp(imul(argument, two())), one()),
-                    iadd(DSL.exp(imul(argument, two())), one())
+                    isub(DSL.exp(imul(number, two())), one()),
+                    iadd(DSL.exp(imul(number, two())), one())
                 ));
                 break;
 
             default:
-                ctx.visit(N_TANH).sql('(').visit(argument).sql(')');
+                ctx.visit(N_TANH).sql('(').visit(number).sql(')');
                 break;
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Tanh) {
+            return
+                StringUtils.equals(number, ((Tanh) that).number)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

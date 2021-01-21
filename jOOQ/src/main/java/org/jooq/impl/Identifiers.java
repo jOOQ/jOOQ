@@ -116,6 +116,7 @@ final class Identifiers {
                 case FIREBIRD:
                 case H2:
                 case HSQLDB:
+                case IGNITE:
                 case POSTGRES:
                 case SQLITE:
                 default:

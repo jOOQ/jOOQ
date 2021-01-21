@@ -37,6 +37,34 @@
  */
 package org.jooq;
 
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
+
 import org.jetbrains.annotations.*;
 
 
@@ -69,7 +97,7 @@ public interface CreateViewAsStep<R extends Record> {
      * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewFinalStep as(Select<? extends R> select);
 
     /**
@@ -84,7 +112,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @see SQL
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     CreateViewFinalStep as(SQL sql);
 
@@ -100,7 +128,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @see SQL
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     CreateViewFinalStep as(String sql);
 
@@ -116,7 +144,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @see SQL
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     CreateViewFinalStep as(String sql, Object... bindings);
 
@@ -132,7 +160,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @see SQL
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     CreateViewFinalStep as(String sql, QueryPart... parts);
 }

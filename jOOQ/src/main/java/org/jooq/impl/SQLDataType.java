@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -109,6 +110,7 @@ import org.jooq.util.firebird.FirebirdDataType;
 import org.jooq.util.h2.H2DataType;
 // ...
 import org.jooq.util.hsqldb.HSQLDBDataType;
+import org.jooq.util.ignite.IgniteDataType;
 // ...
 // ...
 import org.jooq.util.mariadb.MariaDBDataType;
@@ -779,6 +781,9 @@ public final class SQLDataType {
 
             Class.forName(HSQLDBDataType.class.getName());
             initJSR310Types(HSQLDB);
+
+            Class.forName(IgniteDataType.class.getName());
+            initJSR310Types(IGNITE);
 
             Class.forName(MariaDBDataType.class.getName());
             initJSR310Types(MARIADB);

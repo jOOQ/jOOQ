@@ -48,6 +48,7 @@ import org.jooq.meta.firebird.FirebirdDatabase;
 import org.jooq.meta.h2.H2Database;
 // ...
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
+import org.jooq.meta.ignite.IgniteDatabase;
 // ...
 // ...
 import org.jooq.meta.jdbc.JDBCDatabase;
@@ -106,6 +107,7 @@ public class Databases {
             case FIREBIRD:         result = FirebirdDatabase.class;         break;
             case H2:               result = H2Database.class;               break;
             case HSQLDB:           result = HSQLDBDatabase.class;           break;
+            case IGNITE:           result = IgniteDatabase.class;           break;
             case MARIADB:          result = MariaDBDatabase.class;          break;
             case MYSQL:            result = MySQLDatabase.class;            break;
             case POSTGRES:         result = PostgresDatabase.class;         break;

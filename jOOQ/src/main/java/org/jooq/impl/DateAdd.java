@@ -113,11 +113,6 @@ final class DateAdd<T> extends AbstractField<T> {
                 break;
             }
 
-            case FIREBIRD: {
-                ctx.visit(N_DATEADD).sql('(').visit(standardKeyword()).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
-                break;
-            }
-
             case H2: {
                 switch (datePart) {
                     case YEAR:   string = "year";   break;
@@ -288,6 +283,12 @@ final class DateAdd<T> extends AbstractField<T> {
 
 
 
+
+            case FIREBIRD:
+            default: {
+                ctx.visit(N_DATEADD).sql('(').visit(standardKeyword()).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
+                break;
+            }
         }
     }
 

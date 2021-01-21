@@ -114,5 +114,7 @@ final class BoolOr extends DefaultAggregateFunction<Boolean> {
                 acceptOverClause(c);
             })).eq(one())));
         }
+        else
+            super.accept(ctx);
     }
 }

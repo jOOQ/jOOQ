@@ -360,8 +360,10 @@ final class Keywords {
     static final Keyword K_SET_DEFAULT                      = keyword("set default");
     static final Keyword K_SET_NOT_NULL                     = keyword("set not null");
     static final Keyword K_SIBLINGS                         = keyword("siblings");
+    static final Keyword K_SIGNAL                           = keyword("signal");
     static final Keyword K_SKIP                             = keyword("skip");
     static final Keyword K_SQL                              = keyword("sql");
+    static final Keyword K_SQLCODE                          = keyword("sqlcode");
     static final Keyword K_SQLSTATE                         = keyword("sqlstate");
     static final Keyword K_START_AT                         = keyword("start at");
     static final Keyword K_START_WITH                       = keyword("start with");

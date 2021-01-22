@@ -123,7 +123,10 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     // -------------------------------------------------------------------------
 
     static final Name qualify(Named qualifier, Name name) {
-        return qualifier == null || name.qualified() ? name : qualifier.getQualifiedName().append(name);
+        // [#9820] [#11292] name == null || name.empty() are special cases that
+        //                  may appear when using unnamed constraint declarations.
+        //                  Their unnamedness must not be changed, nor qualified!
+        return qualifier == null || name == null || name.empty() || name.qualified() ? name : qualifier.getQualifiedName().append(name);
     }
 
     static final <N extends Named> List<N> findAll(String name, Iterable<? extends N> in) {

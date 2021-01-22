@@ -73,7 +73,7 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
     }
 
     AbstractKey(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
-        super(name, null);
+        super(qualify(table, name), null);
 
         this.table = table;
         this.fields = fields;

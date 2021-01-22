@@ -347,8 +347,6 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public void close() throws SQLException {
-        checkNotClosed();
-
         result = null;
         index = 0;
     }

@@ -165,7 +165,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private static final Set<SQLDialect>         NATIVE_SUPPORT_INSERT_RETURNING  = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_UPDATE_RETURNING  = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING  = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES);
-    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS         = SQLDialect.supportedBy(HANA, IGNITE, SNOWFLAKE, REDSHIFT, VERTICA);
+    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS         = SQLDialect.supportedBy(IGNITE);
 
 
 

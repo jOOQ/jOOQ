@@ -8987,8 +8987,10 @@ final class ParserContext {
             Field<String> f1 = (Field) parseField(S);
             parse(',');
             Field<String> f2 = (Field) parseField(S);
+            Field<Integer> f3 = parseIf(',') ? (Field) parseField(N) : null;
             parse(')');
-            return DSL.position(f2, f1);
+
+            return f3 == null ? DSL.position(f2, f1) : DSL.position(f2, f1, f3);
         }
 
         return null;
@@ -9000,13 +9002,10 @@ final class ParserContext {
             Field<String> f1 = (Field) parseField(S);
             parse(',');
             Field<Integer> f2 = (Field) parseField(N);
-            Field<String> f3 = parseIf(',')
-                ? (Field) parseField(S)
-                : null;
+            Field<String> f3 = parseIf(',') ? (Field) parseField(S) : null;
             parse(')');
-            return f3 == null
-                ? lpad(f1, f2)
-                : lpad(f1, f2, f3);
+
+            return f3 == null ? lpad(f1, f2) : lpad(f1, f2, f3);
         }
 
         return null;
@@ -9018,13 +9017,10 @@ final class ParserContext {
             Field<String> f1 = (Field) parseField(S);
             parse(',');
             Field<Integer> f2 = (Field) parseField(N);
-            Field<String> f3 = parseIf(',')
-                ? (Field) parseField(S)
-                : null;
+            Field<String> f3 = parseIf(',') ? (Field) parseField(S) : null;
             parse(')');
-            return f3 == null
-                ? rpad(f1, f2)
-                : rpad(f1, f2, f3);
+
+            return f3 == null ? rpad(f1, f2) : rpad(f1, f2, f3);
         }
 
         return null;

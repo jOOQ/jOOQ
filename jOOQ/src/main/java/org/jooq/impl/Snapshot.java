@@ -250,7 +250,15 @@ final class Snapshot extends AbstractMeta {
             //       ReferenceImpl in this list until we "know better"?
             for (int i = 0; i < foreignKeys.size(); i++) {
                 ForeignKey<R, ?> fk = foreignKeys.get(i);
-                foreignKeys.set(i, copyFK(this, lookupUniqueKey(fk), fk));
+                UniqueKey<?> uk = lookupUniqueKey(fk);
+
+                // [#10823] [#11287] There are numerous reasons why a UNIQUE
+                // constraint may not be known to our meta model. Let's just
+                // prevent exceptions here
+                if (uk == null)
+                    foreignKeys.remove(i);
+                else
+                    foreignKeys.set(i, copyFK(this, uk, fk));
             }
         }
 

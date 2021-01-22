@@ -59,10 +59,13 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_UNIQUE_KEYS;
+import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
@@ -94,11 +97,13 @@ import org.jooq.Meta;
 import org.jooq.Name;
 // ...
 import org.jooq.Record;
+import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
+import org.jooq.Source;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -107,6 +112,7 @@ import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
@@ -437,38 +443,92 @@ final class MetaImpl extends AbstractMeta {
             return result;
         }
 
-        private final Result<Record> getUks(final String catalog, final String schema, final String table) {
-            if (ukCache == null) {
-                final String sql = M_UNIQUE_KEYS.get(family());
-
-                if (sql != null) {
-                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(
-                        sql,
-                        NO_SUPPORT_SCHEMAS.contains(dialect())
-                            ? EMPTY_OBJECT
-                            : inverseSchemaCatalog
-                            ? new Object[] { catalog }
-                            : new Object[] { schema }
-                    ).fetch());
-
-                    // TODO Support catalogs as well
-                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
-                    ukCache = new LinkedHashMap<>();
-
-                    groups.forEach((k, v) -> {
-                        ukCache.put(name(
-                            catalog == null ? null : k.get(0, String.class),
-                            k.get(1, String.class),
-                            k.get(2, String.class)
-                        ), v);
-                    });
-                }
-            }
+        private final Result<Record> getUks(String catalog, String schema, String table) {
+            if (ukCache == null)
+                if (family() == SQLITE)
+                    initUksSQLite(catalog, schema);
+                else
+                    initUks(catalog, schema);
 
             if (ukCache != null)
                 return ukCache.get(name(catalog, schema, table));
             else
                 return null;
+        }
+
+        private final void initUks(String catalog, String schema) {
+            String sql = M_UNIQUE_KEYS.get(family());
+
+            if (sql != null) {
+                Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(
+                    sql,
+                    NO_SUPPORT_SCHEMAS.contains(dialect())
+                        ? EMPTY_OBJECT
+                        : inverseSchemaCatalog
+                        ? new Object[] { catalog }
+                        : new Object[] { schema }
+                ).fetch());
+
+                // TODO Support catalogs as well
+                Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
+                ukCache = new LinkedHashMap<>();
+
+                groups.forEach((k, v) -> {
+                    ukCache.put(name(
+                        catalog == null ? null : k.get(0, String.class),
+                        k.get(1, String.class),
+                        k.get(2, String.class)
+                    ), v);
+                });
+            }
+        }
+
+        private void initUksSQLite(String catalog, String schema) {
+            ukCache = new LinkedHashMap<>();
+
+            dsl().resultQuery(
+                    "select m.tbl_name, m.sql\n"
+                  + "from sqlite_master as m\n"
+                  + "where m.type = 'table'\n"
+                  + "and exists (\n"
+                  + "  select 1\n"
+                  + "  from pragma_index_list(m.name) as il\n"
+                  + "  where il.origin = 'u'\n"
+                  + ")\n"
+                  + "order by m.tbl_name"
+                  )
+                 .fetchMap(field("tbl_name", VARCHAR), field("sql", VARCHAR))
+                 .forEach((table, sql) -> {
+                     try {
+                         Field<String> fCatalogName = field("catalog_name", VARCHAR);
+                         Field<String> fSchemaName = field("schema_name", VARCHAR);
+                         Field<String> fTableName = field("table_name", VARCHAR);
+                         Field<String> fConstraintName = field("constraint_name", VARCHAR);
+                         Field<String> fColumnName = field("column_name", VARCHAR);
+                         Field<Integer> fSequenceNo = field("sequence_no", INTEGER);
+
+                         Field<?>[] fields = {
+                             fCatalogName, fSchemaName, fTableName, fConstraintName, fColumnName, fSequenceNo
+                         };
+
+                         for (Table<?> t : dsl().meta(Source.of(sql)).getTables(table)) {
+                             Result<Record> result = dsl().newResult(fields);
+
+                             int i = 0;
+                             for (UniqueKey<?> uk : t.getUniqueKeys())
+                                 for (Field<?> ukField : uk.getFields())
+                                     result.add(dsl()
+                                         .newRecord(fCatalogName, fSchemaName, fTableName, fConstraintName, fColumnName, fSequenceNo)
+                                         .values(catalog, schema, table, uk.getName(), ukField.getName(), i++)
+                                     );
+
+                             ukCache.put(name(catalog, schema, table), result);
+                         }
+                     }
+                     catch (ParserException | DataDefinitionException e) {
+                         log.info("Cannot parse or interpret sql for table " + table + ": " + sql, e);
+                     }
+                 });
         }
 
         @SuppressWarnings("unchecked")

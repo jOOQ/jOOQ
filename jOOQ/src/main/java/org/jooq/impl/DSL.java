@@ -9192,7 +9192,7 @@ public class DSL {
      * @see DSLContext#dropTableIfExists(String)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(String table) {
         return dsl().dropTableIfExists(table);
     }
@@ -9206,7 +9206,7 @@ public class DSL {
      * @see DSLContext#dropTableIfExists(Name)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(Name table) {
         return dsl().dropTableIfExists(table);
     }
@@ -9220,7 +9220,7 @@ public class DSL {
      * @see DSLContext#dropTableIfExists(Table)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(Table<?> table) {
         return dsl().dropTableIfExists(table);
     }
@@ -9267,7 +9267,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(String)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(String index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -9281,7 +9281,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(Name index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -9295,7 +9295,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(Index)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(Index index) {
         return dsl().dropIndexIfExists(index);
     }

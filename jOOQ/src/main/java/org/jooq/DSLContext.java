@@ -11056,7 +11056,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTableIfExists(String)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropTableStep dropTableIfExists(String table);
 
     /**
@@ -11068,7 +11068,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTableIfExists(Name)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropTableStep dropTableIfExists(Name table);
 
     /**
@@ -11080,7 +11080,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTableIfExists(Table)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropTableStep dropTableIfExists(Table<?> table);
 
     /**
@@ -11173,7 +11173,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(String)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(String index);
 
     /**
@@ -11185,7 +11185,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Name index);
 
     /**
@@ -11197,7 +11197,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Index index);
 
     /**

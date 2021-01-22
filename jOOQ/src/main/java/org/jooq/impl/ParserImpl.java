@@ -6669,9 +6669,9 @@ final class ParserImpl implements Parser {
                 if (S.is(type))
                     if ((field = parseFieldConcatIf(ctx)) != null)
                         return field;
-                    else if ((parseKeywordIf(ctx, "CURRENT_SCHEMA") || parseKeywordIf(ctx, "CURRENT SCHEMA")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    else if ((parseKeywordIf(ctx, "CURRENT_SCHEMA", "CURRENT SCHEMA")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentSchema();
-                    else if ((parseKeywordIf(ctx, "CURRENT_USER") || parseKeywordIf(ctx, "CURRENT USER")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
+                    else if ((parseKeywordIf(ctx, "CURRENT_USER", "CURRENT USER", "CURRENTUSER")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentUser();
 
                 if (N.is(type))
@@ -11783,6 +11783,9 @@ final class ParserImpl implements Parser {
 
             switch (c) {
                 case ' ':
+                    if (!Character.isWhitespace(ctx.sql[p]))
+                        return false;
+
                     skip = skip + (afterWhitespace(ctx, p) - p - 1);
                     break;
 

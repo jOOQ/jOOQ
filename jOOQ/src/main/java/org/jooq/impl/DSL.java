@@ -16116,7 +16116,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search, int startIndex) {
         return new Position(Tools.field(in), Tools.field(search), Tools.field(startIndex));
     }
@@ -16131,7 +16131,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search, Field<? extends Number> startIndex) {
         return new Position(Tools.field(in), Tools.field(search), startIndex);
     }
@@ -16146,7 +16146,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(@Stringly.Param String in, Field<String> search, int startIndex) {
         return new Position(Tools.field(in), search, Tools.field(startIndex));
     }
@@ -16161,7 +16161,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(@Stringly.Param String in, Field<String> search, Field<? extends Number> startIndex) {
         return new Position(Tools.field(in), search, startIndex);
     }
@@ -16176,7 +16176,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, @Stringly.Param String search, int startIndex) {
         return new Position(in, Tools.field(search), Tools.field(startIndex));
     }
@@ -16191,7 +16191,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, @Stringly.Param String search, Field<? extends Number> startIndex) {
         return new Position(in, Tools.field(search), startIndex);
     }
@@ -16206,7 +16206,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, Field<String> search, int startIndex) {
         return new Position(in, search, Tools.field(startIndex));
     }
@@ -16221,7 +16221,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, Field<String> search, Field<? extends Number> startIndex) {
         return new Position(in, search, startIndex);
     }
@@ -16235,7 +16235,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(@Stringly.Param String in, @Stringly.Param String search) {
         return new Position(Tools.field(in), Tools.field(search));
     }
@@ -16249,7 +16249,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(@Stringly.Param String in, Field<String> search) {
         return new Position(Tools.field(in), search);
     }
@@ -16263,7 +16263,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, @Stringly.Param String search) {
         return new Position(in, Tools.field(search));
     }
@@ -16277,7 +16277,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, Field<String> search) {
         return new Position(in, search);
     }

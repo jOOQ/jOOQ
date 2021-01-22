@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -164,8 +165,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private static final Set<SQLDialect>         NATIVE_SUPPORT_INSERT_RETURNING  = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_UPDATE_RETURNING  = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING  = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES);
-
-
+    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS         = SQLDialect.supportedBy(HANA, IGNITE, SNOWFLAKE, REDSHIFT, VERTICA);
 
 
 
@@ -820,29 +820,26 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private final void prepare0(ExecuteContext ctx) throws SQLException {
         Connection connection = ctx.connection();
 
-
-
-
-
-
-
-
-
-
- if (returning.isEmpty()) {
+        // Normal statement preparing if no values should be returned
+        if (returning.isEmpty())
             super.prepare(ctx);
-        }
 
-
-
-
-
-
-
-
-        else if (nativeSupportReturning(ctx)) {
+        // Column stores and other NoSQL/NewSQL DBMS don't seem support fetching generated keys
+        else if (NO_SUPPORT_FETCHING_KEYS.contains(ctx.dialect()))
             super.prepare(ctx);
-        }
+
+        else if (nativeSupportReturning(ctx))
+            super.prepare(ctx);
+
+
+
+
+
+
+
+
+
+
         else {
             switch (ctx.family()) {
 

@@ -84,7 +84,7 @@ extends
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_SQUARE = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_SQUARE = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
 
     @Override
     public final void accept(Context<?> ctx) {

@@ -257,6 +257,7 @@ implements
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES);
     private static final Set<SQLDialect> SUPPORT_INCLUDE          = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_UNIQUE_INCLUDE   = SQLDialect.supportedBy(POSTGRES);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
@@ -292,13 +293,16 @@ implements
             ctx.visit(generatedName())
                .sql(' ');
 
-        boolean supportsInclude = SUPPORT_INCLUDE.contains(ctx.dialect());
+        boolean supportsInclude = unique
+            ? SUPPORT_UNIQUE_INCLUDE.contains(ctx.dialect())
+            : SUPPORT_INCLUDE.contains(ctx.dialect());
         boolean supportsFieldsBeforeTable = false ;
 
         QueryPartList<QueryPart> list = new QueryPartList<>().qualify(false);
         list.addAll(on);
 
-        if (!supportsInclude && include != null)
+        // [#11284] Don't emulate the clause for UNIQUE indexes
+        if (!supportsInclude && !unique && include != null)
             list.addAll(include);
 
 

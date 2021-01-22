@@ -6818,9 +6818,9 @@ final class ParserContext {
                         return currentCatalog();
                     else if ((parseFunctionNameIf("CURRENT_DATABASE") && parse('(') && parse(')')))
                         return currentCatalog();
-                    else if ((parseKeywordIf("CURRENT_SCHEMA") || parseKeywordIf("CURRENT SCHEMA")) && (parseIf('(') && parse(')') || true))
+                    else if ((parseKeywordIf("CURRENT_SCHEMA", "CURRENT SCHEMA")) && (parseIf('(') && parse(')') || true))
                         return currentSchema();
-                    else if ((parseKeywordIf("CURRENT_USER") || parseKeywordIf("CURRENT USER")) && (parseIf('(') && parse(')') || true))
+                    else if ((parseKeywordIf("CURRENT_USER", "CURRENT USER", "CURRENTUSER")) && (parseIf('(') && parse(')') || true))
                         return currentUser();
                     else if (parseFunctionNameIf("CHR", "CHAR"))
                         return chr((Field) parseFieldParenthesised(N));
@@ -12023,6 +12023,9 @@ final class ParserContext {
 
             switch (c) {
                 case ' ':
+                    if (!Character.isWhitespace(sql[pos]))
+                        return false;
+
                     skip = skip + (afterWhitespace(pos) - pos - 1);
                     break;
 
@@ -12544,10 +12547,6 @@ final class ParserContext {
         return character(position);
     }
 
-    private final char characterUpper(int pos) {
-        return Character.toUpperCase(character(pos));
-    }
-
     private final char character(int pos) {
         return pos >= 0 && pos < sql.length ? sql[pos] : ' ';
     }
@@ -12590,18 +12589,6 @@ final class ParserContext {
 
     private final void ignoreHints(boolean newIgnoreHints) {
         ignoreHints = newIgnoreHints;
-    }
-
-    private final boolean isWhitespace() {
-        return Character.isWhitespace(character());
-    }
-
-    private final boolean isWhitespace(int pos) {
-        return Character.isWhitespace(character(pos));
-    }
-
-    private final boolean isOperatorPart() {
-        return isOperatorPart(character());
     }
 
     private final boolean isOperatorPart(int pos) {

@@ -121,7 +121,11 @@ extends
 
 
                 default:
-                    ctx.visit(iadd(DSL.position(DSL.substring(in, startIndex), search), isub(startIndex, one())));
+                    ctx.visit(
+                        DSL.case_(DSL.position(DSL.substring(in, startIndex), search))
+                           .when(inline(0), inline(0))
+                           .else_(iadd(DSL.position(DSL.substring(in, startIndex), search), isub(startIndex, one())))
+                    );
                     break;
             }
         }

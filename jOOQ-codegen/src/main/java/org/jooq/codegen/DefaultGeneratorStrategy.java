@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
 
@@ -189,7 +190,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
 
         // [#9758] And then also for foreign keys
-        else if (definition instanceof ForeignKeyDefinition && asList(POSTGRES).contains(definition.getDatabase().getDialect().family()))
+        else if (definition instanceof ForeignKeyDefinition && asList(AURORA_POSTGRES, COCKROACHDB, DB2, SQLITE, POSTGRES).contains(definition.getDatabase().getDialect().family()))
             return ((ForeignKeyDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "__" + definition.getOutputName().toUpperCase(targetLocale);
 
         // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name, member name).

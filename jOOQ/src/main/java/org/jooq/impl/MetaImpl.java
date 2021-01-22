@@ -861,8 +861,20 @@ final class MetaImpl extends AbstractMeta {
 
                 for (int i = 0; i < v.size(); i++) {
                     Record record = v.get(i);
-                    pkFields[i] = (TableField<Record, ?>) pkTable.field(record.get(3, String.class));
-                    fkFields[i] = (TableField<Record, ?>)         field(record.get(7, String.class));
+                    String pkFieldName = record.get(3, String.class);
+                    String fkFieldName = record.get(7, String.class);
+
+                    pkFields[i] = (TableField<Record, ?>) pkTable.field(pkFieldName);
+                    fkFields[i] = (TableField<Record, ?>)         field(fkFieldName);
+
+                    // [#2656] TODO: Find a more generally reusable way to perform case insensitive lookups
+                    if (pkFields[i] == null)
+                        if ((pkFields[i] = lookup(pkTable, pkFieldName)) == null)
+                            return;
+
+                    if (fkFields[i] == null)
+                        if ((fkFields[i] = lookup(this, fkFieldName)) == null)
+                            return;
                 }
 
                 references.add(new ReferenceImpl<>(
@@ -876,6 +888,16 @@ final class MetaImpl extends AbstractMeta {
             });
 
             return references;
+        }
+
+        @SuppressWarnings("unchecked")
+        private final TableField<Record, ?> lookup(Table<?> table, String fieldName) {
+            for (Field<?> field : table.fields())
+                if (field.getName().equalsIgnoreCase(fieldName))
+                    return (TableField<Record, ?>) field;
+
+            log.info("Could not look up key field : " + fieldName + " in table : " + table);
+            return null;
         }
 
 

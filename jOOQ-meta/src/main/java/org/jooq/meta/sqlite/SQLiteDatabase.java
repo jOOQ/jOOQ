@@ -64,6 +64,8 @@ import org.jooq.Check;
 import org.jooq.CommonTableExpression;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Meta;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -73,7 +75,9 @@ import org.jooq.Select;
 import org.jooq.SelectConditionStep;
 import org.jooq.SortOrder;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+import org.jooq.UniqueKey;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DSL;
@@ -98,6 +102,7 @@ import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 /**
  * SQLite implementation of {@link AbstractDatabase}
@@ -210,103 +215,81 @@ public class SQLiteDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (String tableName : create()
-                .select(SQLiteMaster.NAME)
-                .from(SQLITE_MASTER)
-                .where(SQLiteMaster.TYPE.in("table"))
-                .orderBy(SQLiteMaster.NAME)
-                .fetch(SQLiteMaster.NAME)) {
 
-            for (Record record : create().fetch("pragma table_info({0})", inline(tableName))) {
-                if (record.get("pk", int.class) > 0) {
-                    String columnName = record.get("name", String.class);
+        // [#11294] Cannot use Meta.getPrimaryKeys() here, yet
+        for (Table<?> t : snapshot().getTables()) {
+            UniqueKey<?> pk = t.getPrimaryKey();
 
-                    // Generate a primary key name
-                    String key = "pk_" + tableName;
-                    TableDefinition table = getTable(getSchemata().get(0), tableName);
+            if (pk != null) {
+                TableDefinition table = getTable(getSchemata().get(0), pk.getTable().getName());
 
-                    if (table != null)
-                        relations.addPrimaryKey(key, table, table.getColumn(columnName));
-                }
+                if (table != null)
+                    for (Field<?> f : pk.getFields())
+                        relations.addPrimaryKey(pk.getName(), table, table.getColumn(f.getName()));
             }
         }
     }
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : create().fetch(
-            "SELECT "
-          + "  m.tbl_name AS table_name, "
-          + "  il.name AS key_name, "
-          + "  ii.name AS column_name "
-          + "FROM "
-          + "  sqlite_master AS m, "
-          + "  pragma_index_list(m.name) AS il, "
-          + "  pragma_index_info(il.name) AS ii "
-          + "WHERE "
-          + "  m.type = 'table' AND "
-          + "  il.origin = 'u' "
-          + "ORDER BY table_name, key_name, ii.seqno"
-        )) {
-            String tableName = record.get("table_name", String.class);
-            String keyName = record.get("key_name", String.class);
-            String columnName = record.get("column_name", String.class);
 
-            TableDefinition table = getTable(getSchemata().get(0), tableName);
-            if (table != null)
-                relations.addUniqueKey(keyName, table, table.getColumn(columnName));
+        // [#11294] Cannot use Meta.getUniqueKeys() here, yet
+        for (Table<?> t : snapshot().getTables()) {
+            for (UniqueKey<?> uk : t.getUniqueKeys()) {
+                TableDefinition table = getTable(getSchemata().get(0), uk.getTable().getName());
+
+                if (table != null)
+                    for (Field<?> f : uk.getFields())
+                        relations.addUniqueKey(uk.getName(), table, table.getColumn(f.getName()));
+            }
         }
     }
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        for (TableDefinition table : getTables(getSchemata().get(0))) {
-            Map<String, Integer> map = new HashMap<>();
 
-            for (Record record : create().fetch("pragma foreign_key_list(" + table.getName() + ")")) {
-                String foreignKeyPrefix =
-                    "fk_" + table.getName() +
-                    "_" + record.get("table");
 
-                Integer sequence = map.get(foreignKeyPrefix);
-                if (sequence == null)
-                    sequence = 0;
+        // [#11294] Cannot use Meta.getUniqueKeys() here, yet
+        for (Table<?> t : snapshot().getTables()) {
 
-                if (0 == record.get("seq", Integer.class))
-                    sequence = sequence + 1;
+            fkLoop:
+            for (ForeignKey<?, ?> fk : t.getReferences()) {
+                UniqueKey<?> uk = fk.getKey();
 
-                map.put(foreignKeyPrefix, sequence);
-
-                String foreignKey =
-                    "fk_" + table.getName() +
-                    "_" + record.get("table") +
-                    "_" + sequence;
-
-                String foreignKeyTableName = table.getName();
-                String foreignKeyColumn = record.get("from", String.class);
-                String uniqueKeyColumn = record.get("to", String.class);
+                if (uk == null)
+                    continue fkLoop;
 
                 // SQLite mixes up cases from the actual declaration and the
                 // reference definition! It's possible that a table is declared
                 // in lower case, and the foreign key in upper case. Hence,
                 // correct the foreign key
-                TableDefinition foreignKeyTable = getTable(getSchemata().get(0), foreignKeyTableName);
-                TableDefinition uniqueKeyTable = getTable(getSchemata().get(0), record.get("table", String.class), true);
+                TableDefinition fkTable = getTable(getSchemata().get(0), fk.getTable().getName(), true);
+                TableDefinition ukTable = getTable(getSchemata().get(0), uk.getTable().getName(), true);
 
-                if (uniqueKeyTable != null) {
-                    String uniqueKey =
-                        "pk_" + uniqueKeyTable.getName();
+                if (fkTable == null || ukTable == null)
+                    continue fkLoop;
 
-                    if (foreignKeyTable != null)
-                        relations.addForeignKey(
-                            foreignKey,
-                            foreignKeyTable,
-                            foreignKeyTable.getColumn(foreignKeyColumn, true),
-                            uniqueKey,
-                            uniqueKeyTable,
-                            uniqueKeyTable.getColumn(uniqueKeyColumn, true),
-                            true
-                        );
+                String ukName = StringUtils.isBlank(uk.getName())
+                    ? "pk_" + ukTable.getName()
+                    : uk.getName();
+                String fkName = StringUtils.isBlank(fk.getName())
+                    ? "fk_" + fkTable.getName() +
+                      "_" + ukName
+                    : fk.getName();
+
+                TableField<?, ?>[] fkFields = fk.getFieldsArray();
+                TableField<?, ?>[] ukFields = fk.getKeyFieldsArray();
+
+                for (int i = 0; i < fkFields.length; i++) {
+                    relations.addForeignKey(
+                        fkName,
+                        fkTable,
+                        fkTable.getColumn(fkFields[i].getName(), true),
+                        ukName,
+                        ukTable,
+                        ukTable.getColumn(ukFields[i].getName(), true),
+                        true
+                    );
                 }
             }
         }
@@ -457,5 +440,14 @@ public class SQLiteDatabase extends AbstractDatabase {
     protected List<ArrayDefinition> getArrays0() throws SQLException {
         List<ArrayDefinition> result = new ArrayList<>();
         return result;
+    }
+
+    private Meta snapshot;
+
+    Meta snapshot() {
+        if (snapshot == null)
+            snapshot = create().meta().snapshot();
+
+        return snapshot;
     }
 }

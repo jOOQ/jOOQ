@@ -8974,8 +8974,10 @@ final class ParserContext {
             Field<String> f1 = (Field) parseField(S);
             parse(',');
             Field<String> f2 = (Field) parseField(S);
+            Field<Integer> f3 = parseIf(',') ? (Field) parseField(N) : null;
             parse(')');
-            return DSL.position(f1, f2);
+
+            return f3 == null ? DSL.position(f1, f2) : DSL.position(f1, f2, f3);
         }
 
         return null;

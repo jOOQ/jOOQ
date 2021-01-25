@@ -5424,13 +5424,22 @@ final class Tools {
         return result;
     }
 
-    static Field<?> tableField(Table<?> table, Object field) {
+    /**
+     * Look up a field in a table, or create a new qualified field from the table.
+     */
+    static final Field<?> tableField(Table<?> table, Object field) {
         if (field instanceof Field<?>)
             return (Field<?>) field;
         else if (field instanceof Name)
-            return table.field((Name) field);
+            if (table.fieldsRow().size() == 0)
+                return DSL.field(table.getQualifiedName().append(((Name) field).unqualifiedName())) ;
+            else
+                return table.field((Name) field);
         else if (field instanceof String)
-            return table.field((String) field);
+            if (table.fieldsRow().size() == 0)
+                return DSL.field(table.getQualifiedName().append((String) field));
+            else
+                return table.field((String) field);
         else
             throw new IllegalArgumentException("Field type not supported: " + field);
     }

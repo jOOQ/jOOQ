@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -1632,7 +1633,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition like(Field<String> value, char escape);
 
     /**
@@ -1652,7 +1653,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition like(String value, char escape);
 
     /**
@@ -1698,7 +1699,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition likeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -1724,7 +1725,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition likeIgnoreCase(String value, char escape);
 
     /**
@@ -1744,7 +1745,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition notLike(Field<String> field, char escape);
 
     /**
@@ -1764,7 +1765,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition notLike(String value, char escape);
 
     /**
@@ -1810,7 +1811,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition notLikeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -1836,7 +1837,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition notLikeIgnoreCase(String value, char escape);
 
     /**
@@ -1892,7 +1893,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition contains(Field<T> value);
 
     /**
@@ -1906,7 +1907,7 @@ extends
      * Inverse of {@link #contains(Field)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notContains(Field<T> value);
 
     /**
@@ -1925,7 +1926,7 @@ extends
      * @see #contains(Object)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition containsIgnoreCase(T value);
 
     /**
@@ -1944,21 +1945,21 @@ extends
      * @see #contains(Field)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition containsIgnoreCase(Field<T> value);
 
     /**
      * Inverse of {@link #containsIgnoreCase(Object)}
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notContainsIgnoreCase(T value);
 
     /**
      * Inverse of {@link #containsIgnoreCase(Field)}
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notContainsIgnoreCase(Field<T> value);
 
     /**
@@ -1990,7 +1991,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition startsWith(Field<T> value);
 
     /**
@@ -2022,7 +2023,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition startsWithIgnoreCase(Field<T> value);
 
     /**
@@ -2054,7 +2055,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition endsWith(Field<T> value);
 
     /**
@@ -2086,7 +2087,7 @@ extends
      * @see #like(Field, char)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition endsWithIgnoreCase(Field<T> value);
 
     // ------------------------------------------------------------------------
@@ -2556,7 +2557,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2597,7 +2598,7 @@ extends
      * @see DSL#any(Object...)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**

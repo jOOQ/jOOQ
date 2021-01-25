@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -105,7 +106,7 @@ final class RowSubqueryCondition extends AbstractCondition {
      */
     private static final long            serialVersionUID             = -1806139685201770706L;
     private static final Clause[]        CLAUSES                      = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect> SUPPORT_NATIVE               = SQLDialect.supportedBy(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_NATIVE               = SQLDialect.supportedBy(H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_NATIVE_QUANTIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
 
 

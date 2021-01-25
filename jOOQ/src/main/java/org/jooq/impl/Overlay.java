@@ -109,7 +109,7 @@ extends
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT     = SQLDialect.supportedBy(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT     = SQLDialect.supportedBy(DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> SUPPORT_INSERT = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     @Override

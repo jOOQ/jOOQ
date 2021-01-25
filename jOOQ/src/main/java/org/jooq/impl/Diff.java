@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
 // ...
+import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -60,7 +61,6 @@ import static org.jooq.tools.StringUtils.isEmpty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -101,7 +101,7 @@ import org.jooq.tools.StringUtils;
  */
 final class Diff {
 
-    private static final Set<SQLDialect> NO_SUPPORT_PK_NAMES = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_PK_NAMES = SQLDialect.supportedBy(IGNITE, MARIADB, MYSQL);
 
     private final MigrationConfiguration migrateConf;
     private final DDLExportConfiguration exportConf;

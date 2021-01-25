@@ -150,6 +150,7 @@ implements
 
 
             case FIREBIRD:
+            case IGNITE:
             case SQLITE: {
                 ctx.visit(delete(table));
                 break;

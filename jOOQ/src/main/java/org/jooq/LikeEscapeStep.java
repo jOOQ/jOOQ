@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -101,6 +102,6 @@ public interface LikeEscapeStep extends Condition {
      * </pre></code>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition escape(char c);
 }

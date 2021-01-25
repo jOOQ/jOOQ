@@ -83,6 +83,7 @@ final class Decode<T, Z> extends AbstractField<Z> {
 
 
             case H2:
+            case IGNITE:
                 ctx.visit(function("decode", getDataType(), Tools.combine(field, search, result, more)));
                 return;
 

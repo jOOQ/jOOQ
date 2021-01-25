@@ -10674,7 +10674,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTableIfNotExists(String)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableColumnStep createTableIfNotExists(String table);
 
     /**
@@ -10683,7 +10683,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTableIfNotExists(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableColumnStep createTableIfNotExists(Name table);
 
     /**
@@ -10692,7 +10692,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTableIfNotExists(Table)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableColumnStep createTableIfNotExists(Table<?> table);
 
     /**

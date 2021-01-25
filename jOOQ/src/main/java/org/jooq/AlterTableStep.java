@@ -199,7 +199,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(Constraint oldName);
 
     /**
@@ -207,7 +207,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(Name oldName);
 
     /**
@@ -215,7 +215,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(String oldName);
 
     /**

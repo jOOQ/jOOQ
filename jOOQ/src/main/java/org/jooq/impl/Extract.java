@@ -101,36 +101,36 @@ final class Extract extends AbstractField<Integer> {
             case SQLITE:
                 switch (datePart) {
                     case YEAR:
-                        ctx.visit(N_STRFTIME).sql("('%Y', ").visit(field).sql(')');
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%Y"), field).cast(INTEGER));
                         return;
                     case MONTH:
-                        ctx.visit(N_STRFTIME).sql("('%m', ").visit(field).sql(')');
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%m"), field).cast(INTEGER));
                         return;
                     case DAY:
-                        ctx.visit(N_STRFTIME).sql("('%d', ").visit(field).sql(')');
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%d"), field).cast(INTEGER));
                         return;
                     case HOUR:
-                        ctx.visit(N_STRFTIME).sql("('%H', ").visit(field).sql(')');
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%H"), field).cast(INTEGER));
                         return;
                     case MINUTE:
-                        ctx.visit(N_STRFTIME).sql("('%M', ").visit(field).sql(')');
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%M"), field).cast(INTEGER));
                         return;
                     case SECOND:
-                        ctx.visit(N_STRFTIME).sql("('%S', ").visit(field).sql(')');
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%S"), field).cast(INTEGER));
                         return;
 
                     // See: https://www.sqlite.org/lang_datefunc.html
                     case EPOCH:
-                        ctx.visit(N_STRFTIME).sql("('%s', ").visit(field).sql(')');
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%s"), field).cast(INTEGER));
                         return;
                     case ISO_DAY_OF_WEEK:
-                        ctx.visit(dowSun0ToISO(function("strftime", INTEGER, inline("%w"), field)));
+                        ctx.visit(dowSun0ToISO(function("strftime", INTEGER, inline("%w"), field).cast(INTEGER)));
                         return;
                     case DAY_OF_WEEK:
-                        ctx.visit(N_STRFTIME).sql("('%w', ").visit(field).sql(") + ").visit(one());
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%w"), field).cast(INTEGER).plus(one()));
                         return;
                     case DAY_OF_YEAR:
-                        ctx.visit(N_STRFTIME).sql("('%j', ").visit(field).sql(')');
+                        ctx.visit(function(N_STRFTIME, VARCHAR, inline("%j"), field).cast(INTEGER));
                         return;
                 }
                 break;

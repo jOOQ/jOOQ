@@ -75,7 +75,7 @@ public class DefaultMetaTableDefinition extends AbstractTableDefinition {
                 dataType.precisionDefined() ? dataType.precision() : null,
                 dataType.scaleDefined() ? dataType.scale() : null,
                 dataType.nullable(),
-                create().renderInlined(dataType.defaultValue()),
+                dataType.defaulted() ? create().renderInlined(dataType.defaultValue()) : null,
                 (Name) null
             );
 

@@ -2803,6 +2803,16 @@ final class Tools {
     }
 
     /**
+     * Translate a {@link RuntimeException} to a {@link DataAccessException}
+     */
+    static final RuntimeException translate(String sql, RuntimeException e) {
+        if (e != null)
+            return e;
+        else
+            return new DataAccessException("SQL [" + sql + "]; Unspecified RuntimeException");
+    }
+
+    /**
      * Safely close a statement
      */
     static final void safeClose(ExecuteListener listener, ExecuteContext ctx) {

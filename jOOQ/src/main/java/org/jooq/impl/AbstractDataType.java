@@ -707,7 +707,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public String toString() {
-        return getCastTypeName() + " /* " + getType().getName() + " */";
+        return getCastTypeName() + (isArray() ? " array" : "") + " /* " + getType().getName() + " */";
     }
 
     @Override

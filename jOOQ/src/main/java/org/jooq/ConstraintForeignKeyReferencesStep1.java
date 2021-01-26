@@ -55,7 +55,7 @@ public interface ConstraintForeignKeyReferencesStep1<T1> {
      * implicitly referencing the primary key.
      */
     @NotNull
-    @Support 
+    @Support
     ConstraintForeignKeyOnStep references(String table);
 
     /**
@@ -63,7 +63,7 @@ public interface ConstraintForeignKeyReferencesStep1<T1> {
      * referencing a key by column names.
      */
     @NotNull
-    @Support 
+    @Support
     ConstraintForeignKeyOnStep references(String table, String field1);
 
     /**
@@ -71,7 +71,7 @@ public interface ConstraintForeignKeyReferencesStep1<T1> {
      * implicitly referencing the primary key.
      */
     @NotNull
-    @Support 
+    @Support
     ConstraintForeignKeyOnStep references(Name table);
 
     /**
@@ -79,7 +79,7 @@ public interface ConstraintForeignKeyReferencesStep1<T1> {
      * referencing a key by column names.
      */
     @NotNull
-    @Support 
+    @Support
     ConstraintForeignKeyOnStep references(Name table, Name field1);
 
     /**
@@ -87,7 +87,7 @@ public interface ConstraintForeignKeyReferencesStep1<T1> {
      * implicitly referencing the primary key.
      */
     @NotNull
-    @Support 
+    @Support
     ConstraintForeignKeyOnStep references(Table<?> table);
 
     /**
@@ -95,6 +95,6 @@ public interface ConstraintForeignKeyReferencesStep1<T1> {
      * referencing a key by column names.
      */
     @NotNull
-    @Support 
+    @Support
     ConstraintForeignKeyOnStep references(Table<?> table, Field<T1> field1);
 }

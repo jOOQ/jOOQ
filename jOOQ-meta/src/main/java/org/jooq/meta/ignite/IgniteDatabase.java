@@ -37,6 +37,9 @@
  */
 package org.jooq.meta.ignite;
 
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.jdbc.JDBCDatabase;
 
@@ -47,4 +50,9 @@ import org.jooq.meta.jdbc.JDBCDatabase;
  * @author Lukas Eder
  */
 public class IgniteDatabase extends JDBCDatabase {
+
+    @Override
+    protected DSLContext create0() {
+        return DSL.using(getConnection(), SQLDialect.IGNITE);
+    }
 }

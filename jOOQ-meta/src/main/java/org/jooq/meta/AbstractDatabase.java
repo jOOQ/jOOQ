@@ -642,7 +642,6 @@ public abstract class AbstractDatabase implements Database {
             schemata = new ArrayList<>();
 
             onError(ERROR, "Could not load schemata", () -> schemata = sort(getSchemata0()));
-            Iterator<SchemaDefinition> it = schemata.iterator();
             schemata.removeIf(schema -> !getInputSchemata().contains(schema.getName()));
 
             if (schemata.isEmpty()) {

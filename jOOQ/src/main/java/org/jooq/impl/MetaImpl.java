@@ -41,8 +41,6 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -113,8 +111,6 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(H2);
-    private static final Set<SQLDialect> ENCODED_TIMESTAMP_PRECISION      = SQLDialect.supportedBy(HSQLDB, MARIADB);
-    private static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION   = SQLDialect.supportedBy(MYSQL, SQLITE);
 
 
 
@@ -883,23 +879,6 @@ final class MetaImpl extends AbstractMeta {
                 try {
                     type = DefaultDataType.getDataType(family(), typeName, precision, scale);
 
-                    // JDBC doesn't distinguish between precision and length
-                    if (type.hasPrecision() && type.hasScale())
-                        type = type.precision(precision, scale);
-
-                    // [#9590] Timestamp precision is in the scale column in some dialects
-                    else if (type.hasPrecision() && type.isDateTime()) {
-                        if (ENCODED_TIMESTAMP_PRECISION.contains(dialect()))
-                            type = type.precision(decodeTimestampPrecision(precision));
-                        else if (!NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect()))
-                            type = type.precision(scale);
-                    }
-                    else if (type.hasPrecision())
-                        type = type.precision(precision);
-
-                    else if (type.hasLength())
-                        type = type.length(precision);
-
                     // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
                     if (isAutoIncrement)
                         if (!hasAutoIncrement)
@@ -938,12 +917,6 @@ final class MetaImpl extends AbstractMeta {
 
                 createField(name(columnName), type, this, remarks);
             }
-        }
-
-        private final int decodeTimestampPrecision(int precision) {
-
-            // [#9590] Discovered empirically from COLUMN_SIZE
-            return Math.max(0, precision - 20);
         }
     }
 

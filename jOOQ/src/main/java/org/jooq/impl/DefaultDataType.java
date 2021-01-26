@@ -39,8 +39,13 @@ package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableCollection;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DefaultBinding.binding;
@@ -51,6 +56,7 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 // ...
@@ -91,6 +97,9 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
      * Generated UID
      */
     private static final long                                   serialVersionUID  = 4155588654449505119L;
+
+    private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION    = SQLDialect.supportedBy(HSQLDB, MARIADB);
+    private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
 
     /**
      * A pattern for data type name normalisation.
@@ -662,11 +671,41 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
      */
     public static final DataType<?> getDataType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
         DataType<?> result = DefaultDataType.getDataType(dialect, t);
+        boolean array = result.isArray();
+
+        // [#11307] Apply length, precision, scale on the component type, not the array type
+        if (array)
+            result = result.getArrayComponentDataType();
 
         if (result.getType() == BigDecimal.class)
             result = DefaultDataType.getDataType(dialect, getNumericClass(p, s));
 
+        if (result.hasPrecision() && result.hasScale())
+            result = result.precision(p, s);
+
+        // [#9590] Timestamp precision is in the scale column in some dialects
+        else if (result.hasPrecision() && result.isDateTime()) {
+            if (ENCODED_TIMESTAMP_PRECISION.contains(dialect))
+                result = result.precision(decodeTimestampPrecision(p));
+            else if (!NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
+                result = result.precision(s);
+        }
+        else if (result.hasPrecision())
+            result = result.precision(p);
+
+        else if (result.hasLength())
+            result = result.length(p);
+
+        if (array)
+            result = result.getArrayDataType();
+
         return result;
+    }
+
+    private static final int decodeTimestampPrecision(int precision) {
+
+        // [#9590] Discovered empirically from COLUMN_SIZE
+        return Math.max(0, precision - 20);
     }
 
     /**

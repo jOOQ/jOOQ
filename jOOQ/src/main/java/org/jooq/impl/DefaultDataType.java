@@ -680,6 +680,10 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
         if (result.getType() == BigDecimal.class)
             result = DefaultDataType.getDataType(dialect, getNumericClass(p, s));
 
+        // [#10809] Use dialect only for lookup, don't report the dialect-specific type
+        if (result.getSQLDataType() != null)
+            result = result.getSQLDataType();
+
         if (result.hasPrecision() && result.hasScale())
             result = result.precision(p, s);
 

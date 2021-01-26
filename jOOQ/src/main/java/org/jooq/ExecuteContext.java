@@ -291,6 +291,9 @@ public interface ExecuteContext extends Scope {
      * Override the {@link RuntimeException} being thrown.
      * <p>
      * This may have no effect, if called at the wrong moment.
+     * <p>
+     * If <code>null</code> is being passed, jOOQ will internally translate the
+     * "unavailable" exception to an unspecified {@link DataAccessException}.
      */
     void exception(RuntimeException e);
 

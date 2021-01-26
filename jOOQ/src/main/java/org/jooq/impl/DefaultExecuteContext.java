@@ -727,21 +727,21 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final void exception(RuntimeException e) {
-        this.exception = e;
+        this.exception = Tools.translate(sql(), e);
 
         if (Boolean.TRUE.equals(settings().isDebugInfoOnStackTrace())) {
 
             // [#5570] Add jOOQ version and SQL Dialect info on the stack trace
             //         to help users write better bug reports.
             //         See http://stackoverflow.com/q/39712695/521799
-            StackTraceElement[] oldStack = e.getStackTrace();
+            StackTraceElement[] oldStack = exception.getStackTrace();
             if (oldStack != null) {
                 StackTraceElement[] newStack = new StackTraceElement[oldStack.length + 1];
                 System.arraycopy(oldStack, 0, newStack, 1, oldStack.length);
                 newStack[0] = new StackTraceElement(
                     "org.jooq_" + Constants.VERSION + "." + dialect(),
                     "debug", null, -1);
-                e.setStackTrace(newStack);
+                exception.setStackTrace(newStack);
             }
         }
     }

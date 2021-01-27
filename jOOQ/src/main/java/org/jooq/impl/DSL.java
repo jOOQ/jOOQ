@@ -6907,6 +6907,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDatabase(String)
      */
@@ -6918,6 +6922,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDatabase(Name)
      */
@@ -6929,6 +6937,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDatabase(Catalog)
      */
@@ -6940,6 +6952,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDatabaseIfExists(String)
      */
@@ -6951,6 +6967,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDatabaseIfExists(Name)
      */
@@ -6962,6 +6982,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDatabaseIfExists(Catalog)
      */
@@ -6973,6 +6997,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDomain(String)
      */
@@ -6984,6 +7012,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDomain(Name)
      */
@@ -6995,6 +7027,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDomain(Domain)
      */
@@ -7006,6 +7042,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDomainIfExists(String)
      */
@@ -7017,6 +7057,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDomainIfExists(Name)
      */
@@ -7028,6 +7072,10 @@ public class DSL {
 
     /**
      * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterDomainIfExists(Domain)
      */
@@ -7039,6 +7087,10 @@ public class DSL {
 
     /**
      * The <code>ALTER INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterIndex(String)
      */
@@ -7050,6 +7102,10 @@ public class DSL {
 
     /**
      * The <code>ALTER INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterIndex(Name)
      */
@@ -7061,6 +7117,10 @@ public class DSL {
 
     /**
      * The <code>ALTER INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterIndex(Index)
      */
@@ -7072,6 +7132,10 @@ public class DSL {
 
     /**
      * The <code>ALTER INDEX IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterIndexIfExists(String)
      */
@@ -7083,6 +7147,10 @@ public class DSL {
 
     /**
      * The <code>ALTER INDEX IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterIndexIfExists(Name)
      */
@@ -7094,6 +7162,10 @@ public class DSL {
 
     /**
      * The <code>ALTER INDEX IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterIndexIfExists(Index)
      */
@@ -7105,6 +7177,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSchema(String)
      */
@@ -7116,6 +7192,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSchema(Name)
      */
@@ -7127,6 +7207,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSchema(Schema)
      */
@@ -7138,6 +7222,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSchemaIfExists(String)
      */
@@ -7149,6 +7237,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSchemaIfExists(Name)
      */
@@ -7160,6 +7252,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSchemaIfExists(Schema)
      */
@@ -7171,6 +7267,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSequence(String)
      */
@@ -7182,6 +7282,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSequence(Name)
      */
@@ -7193,6 +7297,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSequence(Sequence)
      */
@@ -7204,6 +7312,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSequenceIfExists(String)
      */
@@ -7215,6 +7327,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSequenceIfExists(Name)
      */
@@ -7226,6 +7342,10 @@ public class DSL {
 
     /**
      * The <code>ALTER SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterSequenceIfExists(Sequence)
      */
@@ -7237,6 +7357,10 @@ public class DSL {
 
     /**
      * The <code>ALTER TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterType(String)
      */
@@ -7248,6 +7372,10 @@ public class DSL {
 
     /**
      * The <code>ALTER TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterType(Name)
      */
@@ -7259,6 +7387,10 @@ public class DSL {
 
     /**
      * The <code>ALTER VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterView(String)
      */
@@ -7270,6 +7402,10 @@ public class DSL {
 
     /**
      * The <code>ALTER VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterView(Name)
      */
@@ -7281,6 +7417,10 @@ public class DSL {
 
     /**
      * The <code>ALTER VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterView(Table)
      */
@@ -7292,6 +7432,10 @@ public class DSL {
 
     /**
      * The <code>ALTER VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterViewIfExists(String)
      */
@@ -7303,6 +7447,10 @@ public class DSL {
 
     /**
      * The <code>ALTER VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterViewIfExists(Name)
      */
@@ -7314,6 +7462,10 @@ public class DSL {
 
     /**
      * The <code>ALTER VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#alterViewIfExists(Table)
      */
@@ -7325,6 +7477,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnTable(String)
      */
@@ -7336,6 +7492,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnTable(Name)
      */
@@ -7347,6 +7507,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnTable(Table)
      */
@@ -7358,6 +7522,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnView(String)
      */
@@ -7369,6 +7537,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnView(Name)
      */
@@ -7380,6 +7552,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnView(Table)
      */
@@ -7391,6 +7567,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON COLUMN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnColumn(String)
      */
@@ -7402,6 +7582,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON COLUMN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnColumn(Name)
      */
@@ -7413,6 +7597,10 @@ public class DSL {
 
     /**
      * The <code>COMMENT ON COLUMN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#commentOnColumn(Field)
      */
@@ -7424,6 +7612,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDatabase(String)
      */
@@ -7435,6 +7627,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDatabase(Name)
      */
@@ -7446,6 +7642,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDatabase(Catalog)
      */
@@ -7457,6 +7657,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDatabaseIfNotExists(String)
      */
@@ -7468,6 +7672,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDatabaseIfNotExists(Name)
      */
@@ -7479,6 +7687,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDatabaseIfNotExists(Catalog)
      */
@@ -7490,6 +7702,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDomain(String)
      */
@@ -7501,6 +7717,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDomain(Name)
      */
@@ -7512,6 +7732,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDomain(Domain)
      */
@@ -7523,6 +7747,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDomainIfNotExists(String)
      */
@@ -7534,6 +7762,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDomainIfNotExists(Name)
      */
@@ -7545,6 +7777,10 @@ public class DSL {
 
     /**
      * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createDomainIfNotExists(Domain)
      */
@@ -7556,6 +7792,10 @@ public class DSL {
 
     /**
      * The <code>CREATE INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createIndex(String)
      */
@@ -7567,6 +7807,10 @@ public class DSL {
 
     /**
      * The <code>CREATE INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createIndex(Name)
      */
@@ -7578,6 +7822,10 @@ public class DSL {
 
     /**
      * The <code>CREATE INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createIndex(Index)
      */
@@ -7589,6 +7837,10 @@ public class DSL {
 
     /**
      * The <code>CREATE INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createIndex()
      */
@@ -7600,6 +7852,10 @@ public class DSL {
 
     /**
      * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createIndexIfNotExists(String)
      */
@@ -7611,6 +7867,10 @@ public class DSL {
 
     /**
      * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createIndexIfNotExists(Name)
      */
@@ -7622,6 +7882,10 @@ public class DSL {
 
     /**
      * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createIndexIfNotExists(Index)
      */
@@ -7633,6 +7897,10 @@ public class DSL {
 
     /**
      * The <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createIndexIfNotExists()
      */
@@ -7644,6 +7912,10 @@ public class DSL {
 
     /**
      * The <code>CREATE UNIQUE INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createUniqueIndex(String)
      */
@@ -7655,6 +7927,10 @@ public class DSL {
 
     /**
      * The <code>CREATE UNIQUE INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createUniqueIndex(Name)
      */
@@ -7666,6 +7942,10 @@ public class DSL {
 
     /**
      * The <code>CREATE UNIQUE INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createUniqueIndex(Index)
      */
@@ -7677,6 +7957,10 @@ public class DSL {
 
     /**
      * The <code>CREATE UNIQUE INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createUniqueIndex()
      */
@@ -7688,6 +7972,10 @@ public class DSL {
 
     /**
      * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createUniqueIndexIfNotExists(String)
      */
@@ -7699,6 +7987,10 @@ public class DSL {
 
     /**
      * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createUniqueIndexIfNotExists(Name)
      */
@@ -7710,6 +8002,10 @@ public class DSL {
 
     /**
      * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createUniqueIndexIfNotExists(Index)
      */
@@ -7721,6 +8017,10 @@ public class DSL {
 
     /**
      * The <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createUniqueIndexIfNotExists()
      */
@@ -7782,8 +8082,28 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>CREATE SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSchema(String)
      */
@@ -7795,6 +8115,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSchema(Name)
      */
@@ -7806,6 +8130,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSchema(Schema)
      */
@@ -7817,6 +8145,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSchemaIfNotExists(String)
      */
@@ -7828,6 +8160,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSchemaIfNotExists(Name)
      */
@@ -7839,6 +8175,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSchemaIfNotExists(Schema)
      */
@@ -7850,6 +8190,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSequence(String)
      */
@@ -7861,6 +8205,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSequence(Name)
      */
@@ -7872,6 +8220,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSequence(Sequence)
      */
@@ -7883,6 +8235,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSequenceIfNotExists(String)
      */
@@ -7894,6 +8250,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSequenceIfNotExists(Name)
      */
@@ -7905,6 +8265,10 @@ public class DSL {
 
     /**
      * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#createSequenceIfNotExists(Sequence)
      */
@@ -7916,6 +8280,10 @@ public class DSL {
 
     /**
      * The <code>DROP DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDatabase(String)
      */
@@ -7927,6 +8295,10 @@ public class DSL {
 
     /**
      * The <code>DROP DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDatabase(Name)
      */
@@ -7938,6 +8310,10 @@ public class DSL {
 
     /**
      * The <code>DROP DATABASE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDatabase(Catalog)
      */
@@ -7949,6 +8325,10 @@ public class DSL {
 
     /**
      * The <code>DROP DATABASE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDatabaseIfExists(String)
      */
@@ -7960,6 +8340,10 @@ public class DSL {
 
     /**
      * The <code>DROP DATABASE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDatabaseIfExists(Name)
      */
@@ -7971,6 +8355,10 @@ public class DSL {
 
     /**
      * The <code>DROP DATABASE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDatabaseIfExists(Catalog)
      */
@@ -7982,6 +8370,10 @@ public class DSL {
 
     /**
      * The <code>DROP DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDomain(String)
      */
@@ -7993,6 +8385,10 @@ public class DSL {
 
     /**
      * The <code>DROP DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDomain(Name)
      */
@@ -8004,6 +8400,10 @@ public class DSL {
 
     /**
      * The <code>DROP DOMAIN</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDomain(Domain)
      */
@@ -8015,6 +8415,10 @@ public class DSL {
 
     /**
      * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDomainIfExists(String)
      */
@@ -8026,6 +8430,10 @@ public class DSL {
 
     /**
      * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDomainIfExists(Name)
      */
@@ -8037,6 +8445,10 @@ public class DSL {
 
     /**
      * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropDomainIfExists(Domain)
      */
@@ -8048,6 +8460,10 @@ public class DSL {
 
     /**
      * The <code>DROP INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropIndex(String)
      */
@@ -8059,6 +8475,10 @@ public class DSL {
 
     /**
      * The <code>DROP INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropIndex(Name)
      */
@@ -8070,6 +8490,10 @@ public class DSL {
 
     /**
      * The <code>DROP INDEX</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropIndex(Index)
      */
@@ -8081,6 +8505,10 @@ public class DSL {
 
     /**
      * The <code>DROP INDEX IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropIndexIfExists(String)
      */
@@ -8092,6 +8520,10 @@ public class DSL {
 
     /**
      * The <code>DROP INDEX IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropIndexIfExists(Name)
      */
@@ -8103,6 +8535,10 @@ public class DSL {
 
     /**
      * The <code>DROP INDEX IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropIndexIfExists(Index)
      */
@@ -8114,6 +8550,10 @@ public class DSL {
 
     /**
      * The <code>DROP SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSchema(String)
      */
@@ -8125,6 +8565,10 @@ public class DSL {
 
     /**
      * The <code>DROP SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSchema(Name)
      */
@@ -8136,6 +8580,10 @@ public class DSL {
 
     /**
      * The <code>DROP SCHEMA</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSchema(Schema)
      */
@@ -8147,6 +8595,10 @@ public class DSL {
 
     /**
      * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSchemaIfExists(String)
      */
@@ -8158,6 +8610,10 @@ public class DSL {
 
     /**
      * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSchemaIfExists(Name)
      */
@@ -8169,6 +8625,10 @@ public class DSL {
 
     /**
      * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSchemaIfExists(Schema)
      */
@@ -8180,6 +8640,10 @@ public class DSL {
 
     /**
      * The <code>DROP SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSequence(String)
      */
@@ -8191,6 +8655,10 @@ public class DSL {
 
     /**
      * The <code>DROP SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSequence(Name)
      */
@@ -8202,6 +8670,10 @@ public class DSL {
 
     /**
      * The <code>DROP SEQUENCE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSequence(Sequence)
      */
@@ -8213,6 +8685,10 @@ public class DSL {
 
     /**
      * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSequenceIfExists(String)
      */
@@ -8224,6 +8700,10 @@ public class DSL {
 
     /**
      * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSequenceIfExists(Name)
      */
@@ -8235,6 +8715,10 @@ public class DSL {
 
     /**
      * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropSequenceIfExists(Sequence)
      */
@@ -8246,6 +8730,10 @@ public class DSL {
 
     /**
      * The <code>DROP TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTable(String)
      */
@@ -8257,6 +8745,10 @@ public class DSL {
 
     /**
      * The <code>DROP TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTable(Name)
      */
@@ -8268,6 +8760,10 @@ public class DSL {
 
     /**
      * The <code>DROP TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTable(Table)
      */
@@ -8279,6 +8775,10 @@ public class DSL {
 
     /**
      * The <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTableIfExists(String)
      */
@@ -8290,6 +8790,10 @@ public class DSL {
 
     /**
      * The <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTableIfExists(Name)
      */
@@ -8301,6 +8805,10 @@ public class DSL {
 
     /**
      * The <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTableIfExists(Table)
      */
@@ -8312,6 +8820,10 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTemporaryTable(String)
      */
@@ -8323,6 +8835,10 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTemporaryTable(Name)
      */
@@ -8334,6 +8850,10 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTemporaryTable(Table)
      */
@@ -8345,6 +8865,10 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTemporaryTableIfExists(String)
      */
@@ -8356,6 +8880,10 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTemporaryTableIfExists(Name)
      */
@@ -8367,6 +8895,10 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropTemporaryTableIfExists(Table)
      */
@@ -8428,8 +8960,28 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>DROP VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropView(String)
      */
@@ -8441,6 +8993,10 @@ public class DSL {
 
     /**
      * The <code>DROP VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropView(Name)
      */
@@ -8452,6 +9008,10 @@ public class DSL {
 
     /**
      * The <code>DROP VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropView(Table)
      */
@@ -8463,6 +9023,10 @@ public class DSL {
 
     /**
      * The <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropViewIfExists(String)
      */
@@ -8474,6 +9038,10 @@ public class DSL {
 
     /**
      * The <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropViewIfExists(Name)
      */
@@ -8485,6 +9053,10 @@ public class DSL {
 
     /**
      * The <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#dropViewIfExists(Table)
      */
@@ -8496,6 +9068,10 @@ public class DSL {
 
     /**
      * The <code>GRANT</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#grant(Privilege)
      */
@@ -8507,6 +9083,10 @@ public class DSL {
 
     /**
      * The <code>GRANT</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#grant(Privilege...)
      */
@@ -8518,6 +9098,10 @@ public class DSL {
 
     /**
      * The <code>GRANT</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#grant(Collection)
      */
@@ -8529,6 +9113,10 @@ public class DSL {
 
     /**
      * The <code>REVOKE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#revoke(Privilege)
      */
@@ -8540,6 +9128,10 @@ public class DSL {
 
     /**
      * The <code>REVOKE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#revoke(Privilege...)
      */
@@ -8551,6 +9143,10 @@ public class DSL {
 
     /**
      * The <code>REVOKE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#revoke(Collection)
      */
@@ -8562,6 +9158,10 @@ public class DSL {
 
     /**
      * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#revokeGrantOptionFor(Privilege)
      */
@@ -8573,6 +9173,10 @@ public class DSL {
 
     /**
      * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#revokeGrantOptionFor(Privilege...)
      */
@@ -8584,6 +9188,10 @@ public class DSL {
 
     /**
      * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#revokeGrantOptionFor(Collection)
      */
@@ -8597,6 +9205,10 @@ public class DSL {
      * The <code>SET</code> statement.
      * <p>
      * Set a vendor specific session configuration to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#set(Name, Param)
      */
@@ -8610,6 +9222,10 @@ public class DSL {
      * The <code>SET LOCAL</code> statement.
      * <p>
      * Set a vendor specific transaction-local configuration to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#setLocal(Name, Param)
      */
@@ -8623,6 +9239,10 @@ public class DSL {
      * The <code>SET CATALOG</code> statement.
      * <p>
      * Set the current catalog to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#setCatalog(String)
      */
@@ -8636,6 +9256,10 @@ public class DSL {
      * The <code>SET CATALOG</code> statement.
      * <p>
      * Set the current catalog to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#setCatalog(Name)
      */
@@ -8649,6 +9273,10 @@ public class DSL {
      * The <code>SET CATALOG</code> statement.
      * <p>
      * Set the current catalog to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#setCatalog(Catalog)
      */
@@ -8662,6 +9290,10 @@ public class DSL {
      * The <code>SET SCHEMA</code> statement.
      * <p>
      * Set the current schema to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#setSchema(String)
      */
@@ -8675,6 +9307,10 @@ public class DSL {
      * The <code>SET SCHEMA</code> statement.
      * <p>
      * Set the current schema to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#setSchema(Name)
      */
@@ -8688,6 +9324,10 @@ public class DSL {
      * The <code>SET SCHEMA</code> statement.
      * <p>
      * Set the current schema to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#setSchema(Schema)
      */
@@ -8699,6 +9339,10 @@ public class DSL {
 
     /**
      * The <code>TRUNCATE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#truncate(String)
      */
@@ -8710,6 +9354,10 @@ public class DSL {
 
     /**
      * The <code>TRUNCATE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#truncate(Name)
      */
@@ -8721,6 +9369,10 @@ public class DSL {
 
     /**
      * The <code>TRUNCATE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#truncate(Table)
      */
@@ -8732,6 +9384,10 @@ public class DSL {
 
     /**
      * The <code>TRUNCATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#truncateTable(String)
      */
@@ -8743,6 +9399,10 @@ public class DSL {
 
     /**
      * The <code>TRUNCATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#truncateTable(Name)
      */
@@ -8754,6 +9414,10 @@ public class DSL {
 
     /**
      * The <code>TRUNCATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
      *
      * @see DSLContext#truncateTable(Table)
      */

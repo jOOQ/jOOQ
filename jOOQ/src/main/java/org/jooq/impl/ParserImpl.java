@@ -273,6 +273,7 @@ import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.shl;
 import static org.jooq.impl.DSL.shr;
 import static org.jooq.impl.DSL.sign;
+// ...
 import static org.jooq.impl.DSL.sin;
 import static org.jooq.impl.DSL.sinh;
 import static org.jooq.impl.DSL.space;
@@ -3112,6 +3113,11 @@ final class ParserContext {
 
 
                 ;
+                else if (peekKeyword("SIGNAL") && requireProEdition())
+
+
+
+                ;
 
                 break;
 
@@ -3142,6 +3148,42 @@ final class ParserContext {
         parseKeyword("NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6697,7 +6739,9 @@ final class ParserContext {
 
             ;
 
-        if (parseIf('('))
+        // [#7171] Only identifier based field expressions could have been functions
+        //         E.g. 'abc' ('xyz') may be some other type of syntax, e.g. from Db2 SIGNAL statements
+        if (r instanceof TableField && parseIf('('))
             throw exception("Unknown function");
 
         while (parseIf("::"))

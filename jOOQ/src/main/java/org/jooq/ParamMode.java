@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
 
 /**
  * The mode of a {@link Param}.

@@ -12047,6 +12047,15 @@ public class DSL {
      */
     @NotNull
     @Support
+    public static <T> Parameter<T> in(String name, DataType<T> type) {
+        return in(name(name), type);
+    }
+
+    /**
+     * Create an <code>IN</code> parameter.
+     */
+    @NotNull
+    @Support
     public static <T> Parameter<T> in(Name name, DataType<T> type) {
         return new ParameterImpl<>(ParamMode.IN, name, type);
     }
@@ -12056,8 +12065,26 @@ public class DSL {
      */
     @NotNull
     @Support
+    public static <T> Parameter<T> inOut(String name, DataType<T> type) {
+        return inOut(name(name), type);
+    }
+
+    /**
+     * Create an <code>IN OUT</code> parameter.
+     */
+    @NotNull
+    @Support
     public static <T> Parameter<T> inOut(Name name, DataType<T> type) {
         return new ParameterImpl<>(ParamMode.INOUT, name, type);
+    }
+
+    /**
+     * Create an <code>OUT</code> parameter.
+     */
+    @NotNull
+    @Support
+    public static <T> Parameter<T> out(String name, DataType<T> type) {
+        return out(name(name), type);
     }
 
     /**

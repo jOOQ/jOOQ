@@ -5016,6 +5016,8 @@ final class ParserContext {
 
 
 
+
+
     private final DDLQuery parseDropType() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         List<Name> typeNames = parseIdentifiers();

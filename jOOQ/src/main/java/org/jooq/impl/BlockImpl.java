@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -472,6 +473,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
         if (ctx.family() == MARIADB && toplevel(ctx.data(), DATA_BLOCK_NESTING))
             ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC);
+        else if (ctx.family() == HSQLDB && toplevel(ctx.data(), DATA_BLOCK_NESTING))
+            ctx.sql(' ').visit(K_ATOMIC);
 
         ctx.formatIndentStart();
     }

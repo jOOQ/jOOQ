@@ -292,6 +292,7 @@ import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
+// ...
 import org.jooq.Statement;
 import org.jooq.Stringly;
 import org.jooq.Support;
@@ -11231,7 +11232,7 @@ public class DSL {
      * @see DSLContext#begin(Statement...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Block begin(Statement... statements) {
         return begin(Arrays.asList(statements));
     }
@@ -11242,7 +11243,7 @@ public class DSL {
      * @see DSLContext#begin(Collection)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
@@ -17498,7 +17499,7 @@ public class DSL {
     }
 
     /**
-     * The <code>REGR_S_X_X</code> function.
+     * The <code>REGR_SXX</code> function.
      */
     @NotNull
     @Support({ POSTGRES })
@@ -17507,7 +17508,7 @@ public class DSL {
     }
 
     /**
-     * The <code>REGR_S_X_Y</code> function.
+     * The <code>REGR_SXY</code> function.
      */
     @NotNull
     @Support({ POSTGRES })
@@ -17516,7 +17517,7 @@ public class DSL {
     }
 
     /**
-     * The <code>REGR_S_Y_Y</code> function.
+     * The <code>REGR_SYY</code> function.
      */
     @NotNull
     @Support({ POSTGRES })
@@ -17559,6 +17560,34 @@ public class DSL {
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new VarSamp(field);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

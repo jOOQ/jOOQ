@@ -56,7 +56,7 @@ import java.math.BigDecimal;
 
 
 /**
- * The <code>REGR S X Y</code> statement.
+ * The <code>REGR SXY</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrSxy

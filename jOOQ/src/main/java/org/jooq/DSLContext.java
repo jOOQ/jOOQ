@@ -874,7 +874,7 @@ public interface DSLContext extends Scope {
      * @see DSL#begin(Statement...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Block begin(Statement... statements);
 
     /**
@@ -883,7 +883,7 @@ public interface DSLContext extends Scope {
      * @see DSL#begin(Collection)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Block begin(Collection<? extends Statement> statements);
 
 

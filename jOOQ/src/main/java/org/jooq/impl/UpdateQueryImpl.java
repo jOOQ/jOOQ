@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 // ...
@@ -154,15 +155,20 @@ import org.jooq.UpdateQuery;
  */
 final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R> {
 
-    private static final long            serialVersionUID       = -660460731970074719L;
-    private static final Clause[]        CLAUSES                = { UPDATE };
+    private static final long            serialVersionUID          = -660460731970074719L;
+    private static final Clause[]        CLAUSES                   = { UPDATE };
 
 
 
 
-    private static final Set<SQLDialect> SUPPORT_RVE_SET        = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES);
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_RVE_SET           = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES);
+    private static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE    = SQLDialect.supportedBy(POSTGRES);
+
+    // LIMIT is not supported at all
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+
+    // LIMIT is supported but not ORDER BY
+    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT = SQLDialect.supportedBy(IGNITE);
 
     private final FieldMapForUpdate      updateMap;
     private final TableList              from;
@@ -639,8 +645,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 break;
         }
 
-        // [#2059] MemSQL does not support UPDATE ... ORDER BY
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) ) {
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
             Field<?>[] keyFields =
                 table().getKeys().isEmpty()
               ? new Field[] { table().rowid() }

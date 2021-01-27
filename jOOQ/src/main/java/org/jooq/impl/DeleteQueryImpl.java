@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -103,10 +104,15 @@ import org.jooq.TableLike;
  */
 final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R> {
 
-    private static final long            serialVersionUID         = -1943687511774150929L;
-    private static final Clause[]        CLAUSES                  = { DELETE };
-    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT         = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final long            serialVersionUID          = -1943687511774150929L;
+    private static final Clause[]        CLAUSES                   = { DELETE };
+    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX  = SQLDialect.supportedBy(MARIADB, MYSQL);
+
+    // LIMIT is not supported at all
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+
+    // LIMIT is supported but not ORDER BY
+    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT = SQLDialect.supportedBy(IGNITE);
 
     private final TableList              using;
     private final ConditionProviderImpl  condition;
@@ -226,8 +232,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
 
 
-        // [#2059] MemSQL does not support DELETE ... ORDER BY
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) ) {
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
             Field<?>[] keyFields =
                   table().getKeys().isEmpty()
                 ? new Field[] { table().rowid() }

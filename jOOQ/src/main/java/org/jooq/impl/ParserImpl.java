@@ -3104,6 +3104,11 @@ final class ParserContext {
 
 
                 ;
+                else if (peekKeyword("RAISE") && requireProEdition())
+
+
+
+                ;
 
                 break;
 
@@ -3148,6 +3153,34 @@ final class ParserContext {
         parseKeyword("NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

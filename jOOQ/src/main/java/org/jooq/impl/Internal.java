@@ -55,6 +55,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.OrderField;
+import org.jooq.ParamMode;
 import org.jooq.Parameter;
 // ...
 import org.jooq.Record;
@@ -289,7 +290,8 @@ public final class Internal {
             ? (DataType<U>) type
             : type.asConvertedDataType(actualBinding);
 
-        return new ParameterImpl<>(name, actualType, actualBinding, isDefaulted, isUnnamed);
+        // TODO: [#11327] Get the ParamMode right
+        return new ParameterImpl<>(ParamMode.IN, DSL.name(name), actualType, isDefaulted, isUnnamed);
     }
 
 

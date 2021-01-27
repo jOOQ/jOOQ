@@ -2975,6 +2975,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new CreateDomainImpl<>(configuration(), domain, true);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public org.jooq.CreateIndexStep createIndex(@Stringly.Name String index) {
         return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), false);

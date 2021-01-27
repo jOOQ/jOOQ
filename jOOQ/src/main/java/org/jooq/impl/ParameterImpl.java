@@ -38,9 +38,10 @@
 
 package org.jooq.impl;
 
-import org.jooq.Binding;
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Name;
+import org.jooq.ParamMode;
 import org.jooq.Parameter;
 
 /**
@@ -52,13 +53,22 @@ final class ParameterImpl<T> extends AbstractTypedNamed<T> implements Parameter<
 
     private static final long serialVersionUID = -5277225593751085577L;
 
+    private final ParamMode   paramMode;
     private final boolean     isDefaulted;
     private final boolean     isUnnamed;
 
-    @SuppressWarnings("unchecked")
-    ParameterImpl(String name, DataType<T> type, Binding<?, T> binding, boolean isDefaulted, boolean isUnnamed) {
-        super(DSL.name(name), CommentImpl.NO_COMMENT, type.asConvertedDataType((Binding<T, T>) binding));
+    ParameterImpl(ParamMode paramMode, Name name, DataType<T> type) {
+        this(paramMode, name, type, type.defaulted(), name == null || name.empty());
+    }
 
+    /**
+     * @deprecated - [#11327] - 3.15.0 - Do not reuse this constructor
+     */
+    @Deprecated
+    ParameterImpl(ParamMode paramMode, Name name, DataType<T> type, boolean isDefaulted, boolean isUnnamed) {
+        super(name, CommentImpl.NO_COMMENT, type);
+
+        this.paramMode = paramMode;
         this.isDefaulted = isDefaulted;
         this.isUnnamed = isUnnamed;
     }
@@ -66,6 +76,11 @@ final class ParameterImpl<T> extends AbstractTypedNamed<T> implements Parameter<
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(getUnqualifiedName());
+    }
+
+    @Override
+    public final ParamMode getParamMode() {
+        return paramMode;
     }
 
     @Override

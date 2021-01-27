@@ -1694,14 +1694,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
      * @deprecated - Please, re-generate your routine code.
      */
     @Deprecated
-    @SuppressWarnings("unchecked")
     protected static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
-        final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
-        final DataType<U> actualType = converter == null && binding == null
-            ? (DataType<U>) type
-            : type.asConvertedDataType(actualBinding);
-
-        return new ParameterImpl<>(name, actualType, actualBinding, isDefaulted, isUnnamed);
+        return Internal.createParameter(name, type, isDefaulted, isUnnamed, converter, binding);
     }
 
     /**

@@ -9644,6 +9644,30 @@ public interface DSLContext extends Scope {
     @Support({ FIREBIRD, H2, POSTGRES })
     CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>CREATE INDEX</code> statement.
      *

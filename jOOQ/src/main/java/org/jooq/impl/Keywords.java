@@ -336,6 +336,7 @@ final class Keywords {
     static final Keyword K_RESTRICT                         = keyword("restrict");
     static final Keyword K_RETURN                           = keyword("return");
     static final Keyword K_RETURNING                        = keyword("returning");
+    static final Keyword K_RETURNS                          = keyword("returns");
     static final Keyword K_REVERSE                          = keyword("reverse");
     static final Keyword K_REVOKE                           = keyword("revoke");
     static final Keyword K_ROOT                             = keyword("root");

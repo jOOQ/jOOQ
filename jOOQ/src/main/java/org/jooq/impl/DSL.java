@@ -221,6 +221,8 @@ import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
+import org.jooq.ParamMode;
+import org.jooq.Parameter;
 // ...
 import org.jooq.PlainSQL;
 import org.jooq.Privilege;
@@ -7790,6 +7792,42 @@ public class DSL {
         return dsl().createDomainIfNotExists(domain);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>CREATE INDEX</code> statement.
      * <p>
@@ -11999,6 +12037,37 @@ public class DSL {
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Routine parameter constructors
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create an <code>IN</code> parameter.
+     */
+    @NotNull
+    @Support
+    public static <T> Parameter<T> in(Name name, DataType<T> type) {
+        return new ParameterImpl<>(ParamMode.IN, name, type);
+    }
+
+    /**
+     * Create an <code>IN OUT</code> parameter.
+     */
+    @NotNull
+    @Support
+    public static <T> Parameter<T> inOut(Name name, DataType<T> type) {
+        return new ParameterImpl<>(ParamMode.INOUT, name, type);
+    }
+
+    /**
+     * Create an <code>OUT</code> parameter.
+     */
+    @NotNull
+    @Support
+    public static <T> Parameter<T> out(Name name, DataType<T> type) {
+        return new ParameterImpl<>(ParamMode.OUT, name, type);
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Queries

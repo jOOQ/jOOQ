@@ -90,4 +90,9 @@ public interface Parameter<T> extends Named, Typed<T> {
      * created from the parameter index.
      */
     boolean isUnnamed();
+
+    /**
+     * Get the parameter mode for this parameter.
+     */
+    ParamMode getParamMode();
 }

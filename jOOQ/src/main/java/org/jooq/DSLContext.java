@@ -10048,6 +10048,50 @@ public interface DSLContext extends Scope {
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomainIfExists(Domain<?> domain);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>DROP INDEX</code> statement.
      *
@@ -10101,6 +10145,50 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Index index);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The <code>DROP SCHEMA</code> statement.

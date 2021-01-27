@@ -3203,6 +3203,34 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new DropDomainImpl(configuration(), domain, true);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public org.jooq.DropIndexOnStep dropIndex(@Stringly.Name String index) {
         return new DropIndexImpl(configuration(), DSL.index(DSL.name(index)), false);
@@ -3232,6 +3260,34 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public org.jooq.DropIndexOnStep dropIndexIfExists(Index index) {
         return new DropIndexImpl(configuration(), index, true);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public org.jooq.DropSchemaStep dropSchema(@Stringly.Name String schema) {

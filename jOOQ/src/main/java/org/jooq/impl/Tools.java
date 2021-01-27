@@ -5297,7 +5297,7 @@ final class Tools {
         if (updateCounts == null)
             throw new IllegalStateException();
         else
-            return updateCounts == 1;
+            return updateCounts.intValue() == 1;
     }
 
     /**

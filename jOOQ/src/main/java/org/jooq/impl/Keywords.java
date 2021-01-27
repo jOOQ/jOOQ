@@ -246,6 +246,7 @@ final class Keywords {
     static final Keyword K_MATERIALIZED                     = keyword("materialized");
     static final Keyword K_MAXVALUE                         = keyword("maxvalue");
     static final Keyword K_MERGE_INTO                       = keyword("merge into");
+    static final Keyword K_MESSAGE                          = keyword("message");
     static final Keyword K_MESSAGE_TEXT                     = keyword("message_text");
     static final Keyword K_MILLISECOND                      = keyword("millisecond");
     static final Keyword K_MINUS                            = keyword("minus");

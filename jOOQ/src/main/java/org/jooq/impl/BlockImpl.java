@@ -223,13 +223,14 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                 break;
             }
 
+
+
+
+
+
+
+            case HSQLDB:
             case MARIADB:
-
-
-
-
-
-
             default: {
                 increment(ctx.data(), DATA_BLOCK_NESTING);
                 accept0(ctx);
@@ -473,7 +474,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
         if (ctx.family() == MARIADB && toplevel(ctx.data(), DATA_BLOCK_NESTING))
             ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC);
-        else if (ctx.family() == HSQLDB && toplevel(ctx.data(), DATA_BLOCK_NESTING))
+        else if (ctx.family() == HSQLDB)
             ctx.sql(' ').visit(K_ATOMIC);
 
         ctx.formatIndentStart();

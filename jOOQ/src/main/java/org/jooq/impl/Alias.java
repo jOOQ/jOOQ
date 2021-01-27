@@ -185,7 +185,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 emulatedDerivedColumnList = true;
 
                 if (wrapped instanceof Values && NO_SUPPORT_VALUES.contains(dialect)) {
-                    context.data(DATA_SELECT_ALIASES, fieldAliases, this::toSQLWrapped);
+                    context.data(DATA_SELECT_ALIASES, fieldAliases, t -> toSQLWrapped(t));
                 }
                 else {
 

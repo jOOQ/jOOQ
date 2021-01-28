@@ -159,7 +159,7 @@ implements
             // All other dialects do
             default: {
                 ctx.start(Clause.TRUNCATE_TRUNCATE)
-                   .visit(K_TRUNCATE_TABLE).sql(' ')
+                   .visit(K_TRUNCATE).sql(' ').visit(K_TABLE).sql(' ')
                    .visit(table);
 
 

@@ -35,53 +35,7 @@
  *
  *
  */
-package org.jooq;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+package org.jooq.impl;
 
 
 

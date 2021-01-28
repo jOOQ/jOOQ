@@ -3099,6 +3099,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public org.jooq.CreateSchemaFinalStep createSchema(@Stringly.Name String schema) {
         return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);

@@ -86,17 +86,3 @@ package org.jooq;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-

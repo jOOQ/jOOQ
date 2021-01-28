@@ -160,6 +160,8 @@ import static org.jooq.impl.DSL.hour;
 // ...
 import static org.jooq.impl.DSL.ifnull;
 import static org.jooq.impl.DSL.iif;
+import static org.jooq.impl.DSL.in;
+import static org.jooq.impl.DSL.inOut;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.insert;
 import static org.jooq.impl.DSL.isnull;
@@ -209,6 +211,7 @@ import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.octetLength;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
+import static org.jooq.impl.DSL.out;
 import static org.jooq.impl.DSL.overlay;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
@@ -416,10 +419,17 @@ import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
+// ...
+// ...
+// ...
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableCommentStep;
@@ -504,6 +514,7 @@ import org.jooq.Name.Quoted;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
+import org.jooq.ParamMode;
 import org.jooq.Parameter;
 import org.jooq.Parser;
 // ...
@@ -2469,8 +2480,11 @@ final class ParserContext {
                     return parseCreateView(false);
                 else if (parseKeywordIf("FULLTEXT INDEX") && requireUnsupportedSyntax())
                     return parseCreateIndex(false);
-                else if (parseKeywordIf("FUNCTION"))
-                    throw notImplemented("CREATE FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf("FUNCTION") && requireProEdition())
+
+
+
+                    ;
 
                 break;
 
@@ -2508,8 +2522,11 @@ final class ParserContext {
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("PROCEDURE"))
-                    throw notImplemented("CREATE PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf("PROCEDURE") && requireProEdition())
+
+
+
+                    ;
 
                 break;
 
@@ -2566,15 +2583,18 @@ final class ParserContext {
         }
 
         throw expected(
+            "FUNCTION",
             "GENERATOR",
             "GLOBAL TEMPORARY TABLE",
             "INDEX",
-            "OR ALTER VIEW",
-            "OR REPLACE VIEW",
+            "OR ALTER",
+            "OR REPLACE",
+            "PROCEDURE",
             "SCHEMA",
             "SEQUENCE",
             "TABLE",
             "TEMPORARY TABLE",
+            "TRIGGER",
             "TYPE",
             "UNIQUE INDEX",
             "VIEW"
@@ -2684,8 +2704,11 @@ final class ParserContext {
                 break;
 
             case 'F':
-                if (parseKeywordIf("FUNCTION"))
-                    throw notImplemented("DROP FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
+                if (parseKeywordIf("FUNCTION") && requireProEdition())
+
+
+
+                    ;
 
                 break;
 
@@ -2704,8 +2727,11 @@ final class ParserContext {
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("DROP PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("PROCEDURE"))
-                    throw notImplemented("DROP PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf("PROCEDURE") && requireProEdition())
+
+
+
+                    ;
 
                 break;
 
@@ -2753,7 +2779,19 @@ final class ParserContext {
                 break;
         }
 
-        throw expected("GENERATOR", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "TYPE", "VIEW");
+        throw expected(
+            "GENERATOR",
+            "FUNCTION",
+            "INDEX",
+            "PROCEDURE",
+            "SCHEMA",
+            "SEQUENCE",
+            "TABLE",
+            "TEMPORARY TABLE",
+            "TRIGGER",
+            "TYPE",
+            "VIEW"
+        );
     }
 
     private final Truncate<?> parseTruncate() {
@@ -4974,6 +5012,122 @@ final class ParserContext {
 
         return s2;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

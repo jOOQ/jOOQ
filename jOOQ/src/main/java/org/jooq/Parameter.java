@@ -49,7 +49,12 @@ package org.jooq;
  * @param <T> The parameter type
  * @author Lukas Eder
  */
-public interface Parameter<T> extends Named, Typed<T> {
+public interface Parameter<T>
+extends
+    
+    Named,
+    Typed<T>
+{
 
     /**
      * Whether this parameter has a default value

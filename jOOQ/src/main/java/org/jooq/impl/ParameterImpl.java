@@ -40,22 +40,35 @@ package org.jooq.impl;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
+// ...
+import org.jooq.Record1;
+import org.jooq.Select;
+import org.jooq.Statement;
+// ...
 
 /**
  * A common base class for stored procedure parameters
  *
  * @author Lukas Eder
  */
-final class ParameterImpl<T> extends AbstractTypedNamed<T> implements Parameter<T> {
+final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T> {
 
     private static final long serialVersionUID = -5277225593751085577L;
 
     private final ParamMode   paramMode;
     private final boolean     isDefaulted;
     private final boolean     isUnnamed;
+
+
+
+
+
+
+
 
     ParameterImpl(ParamMode paramMode, Name name, DataType<T> type) {
         this(paramMode, name, type, type.defaulted(), name == null || name.empty());
@@ -66,17 +79,34 @@ final class ParameterImpl<T> extends AbstractTypedNamed<T> implements Parameter<
      */
     @Deprecated
     ParameterImpl(ParamMode paramMode, Name name, DataType<T> type, boolean isDefaulted, boolean isUnnamed) {
-        super(name, CommentImpl.NO_COMMENT, type);
+        super(name, type);
 
         this.paramMode = paramMode;
         this.isDefaulted = isDefaulted;
         this.isUnnamed = isUnnamed;
+
+
+
+
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
         ctx.visit(getUnqualifiedName());
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Parameter API
+    // -------------------------------------------------------------------------
 
     @Override
     public final ParamMode getParamMode() {
@@ -92,4 +122,32 @@ final class ParameterImpl<T> extends AbstractTypedNamed<T> implements Parameter<
     public final boolean isUnnamed() {
         return isUnnamed;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

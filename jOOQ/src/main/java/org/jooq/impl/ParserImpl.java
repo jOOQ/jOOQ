@@ -2503,19 +2503,31 @@ final class ParserContext {
                 break;
 
             case 'O':
-                if (parseKeywordIf("OR REPLACE TRIGGER", "OR ALTER TRIGGER") && requireProEdition())
+                if (parseKeywordIf("OR")) {
+                    parseKeyword("REPLACE", "ALTER");
+
+                    if (parseKeywordIf("TRIGGER") && requireProEdition())
 
 
 
-                    ;
-                else if (parseKeywordIf("OR REPLACE VIEW", "OR REPLACE FORCE VIEW", "OR ALTER VIEW"))
-                    return parseCreateView(true);
-                else if (parseKeywordIf("OR REPLACE FUNCTION"))
-                    throw notImplemented("CREATE FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("OR REPLACE PACKAGE"))
-                    throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("OR REPLACE PROCEDURE"))
-                    throw notImplemented("CREATE PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                        ;
+                    else if (parseKeywordIf("VIEW", "FORCE VIEW"))
+                        return parseCreateView(true);
+                    else if (parseKeywordIf("FUNCTION") && requireProEdition())
+
+
+
+                        ;
+                    else if (parseKeywordIf("PACKAGE"))
+                        throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                    else if (parseKeywordIf("PROCEDURE") && requireProEdition())
+
+
+
+                        ;
+                    else
+                        throw expected("FUNCTION", "PACKAGE", "PROCEDURE", "TRIGGER", "VIEW");
+                }
 
                 break;
 

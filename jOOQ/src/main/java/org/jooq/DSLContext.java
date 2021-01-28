@@ -9668,6 +9668,26 @@ public interface DSLContext extends Scope {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>CREATE INDEX</code> statement.
      *
@@ -9811,6 +9831,26 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

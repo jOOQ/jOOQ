@@ -2991,6 +2991,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public org.jooq.CreateIndexStep createIndex(@Stringly.Name String index) {
         return new CreateIndexImpl(configuration(), false, DSL.index(DSL.name(index)), false);
@@ -3070,6 +3082,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
         return new CreateIndexImpl(configuration(), true, true);
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -469,7 +469,7 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
         // If this is a SQLDataType find the most suited dialect-specific
         // data type
         if (getDialect() == null) {
-            DefaultDataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.family().ordinal()]
+            DefaultDataType<T> dataType = (DefaultDataType<T>) TYPES_BY_SQL_DATATYPE[configuration.family().ordinal()]
 
                 // Be sure to reset length, precision, and scale, as those
                 // values were not registered in the below cache
@@ -479,7 +479,7 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
 
                 // ... and then, set them back to the original value
                 // [#2710] TODO: Remove this logic along with cached data types
-                return (DataType<T>) dataType.length0(length).precision0(precision, scale);
+                return dataType.construct(precision, scale, length, nullability, collation, characterSet, identity, defaultValue);
         }
 
         // If this is already the dialect's specific data type, return this

@@ -46,6 +46,8 @@ import org.jetbrains.annotations.*;
 /**
  * A step in the construction of the <code>TRUNCATE</code> statement.
  * <p>
+ * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
+ * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
  * It is usually not recommended to reference any <code>XYZ*Step</code> types
@@ -63,10 +65,8 @@ import org.jetbrains.annotations.*;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
  */
-@Deprecated
 @SuppressWarnings({ "unused" })
+@Deprecated
 public interface TruncateFinalStep<R extends Record> extends Truncate<R> {
 }

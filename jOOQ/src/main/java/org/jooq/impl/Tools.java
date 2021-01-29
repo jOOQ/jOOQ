@@ -5070,9 +5070,9 @@ final class Tools {
         return VARCHAR(length).nullability(type.nullability()).defaultValue((Field) type.defaultValue());
     }
 
-    static <C extends Context<? extends C>> C prependSQL(C ctx, Queries queries) {
+    static <C extends Context<? extends C>> C prependSQL(C ctx, Query... queries) {
         ctx.data().compute(DataKey.DATA_PREPEND_SQL, (k, v) -> {
-            String sql = ctx.dsl().renderInlined(queries);
+            String sql = ctx.dsl().renderInlined(ctx.dsl().queries(queries));
 
             if (v == null)
                 return sql;

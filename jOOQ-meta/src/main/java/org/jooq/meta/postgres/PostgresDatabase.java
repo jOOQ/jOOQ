@@ -897,7 +897,7 @@ public class PostgresDatabase extends AbstractDatabase {
             // [#3375] Exclude table-valued functions as they're already generated as tables
             .join(PG_NAMESPACE).on(PG_NAMESPACE.NSPNAME.eq(r1.SPECIFIC_SCHEMA))
             .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
-                          .and(PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(r1.SPECIFIC_NAME))
+                          .and("nameconcatoid({0}, {1}) = {2}", PG_PROC.PRONAME, oid(PG_PROC), r1.SPECIFIC_NAME)
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
             .and(tableValuedFunctions()
                     ? condition(not(PG_PROC.PRORETSET))

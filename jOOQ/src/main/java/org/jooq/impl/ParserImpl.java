@@ -48,6 +48,10 @@ import static org.jooq.JoinType.JOIN;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
 // ...
 // ...
 // ...
@@ -748,6 +752,7 @@ final class ParserContext {
 
 
 
+    static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX  = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     final Queries parse() {
         List<Query> result = new ArrayList<>();
@@ -12397,8 +12402,14 @@ final class ParserContext {
                     break loop;
 
                 case '-':
-                    if (i + 1 < sql.length && sql[i + 1] == '-') {
-                        i = i + 2;
+                case '#':
+                    if (sql[i] == '-' && i + 1 < sql.length && sql[i + 1] == '-' ||
+                        sql[i] == '#' && SUPPORTS_HASH_COMMENT_SYNTAX.contains(dialect())) {
+
+                        if (sql[i] == '-')
+                            i = i + 2;
+                        else
+                            i++;
 
                         while (i < sql.length) {
                             if (!(ignoreComment = peekIgnoreComment(ignoreComment, ignoreCommentStart, ignoreCommentStop, checkIgnoreComment, i))) {

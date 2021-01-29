@@ -152,6 +152,7 @@ import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.ParserContext.SUPPORTS_HASH_COMMENT_SYNTAX;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.JSON;
@@ -818,7 +819,6 @@ final class Tools {
     private static final Set<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES);
     private static final Set<SQLDialect> DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX               = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect> DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
 
@@ -2325,7 +2325,7 @@ final class Tools {
         if (render == null) render = new DefaultRenderContext(bind.configuration());
 
         SQLDialect family = render.family();
-        boolean mysql = SUPPORT_MYSQL_SYNTAX.contains(render.dialect());
+        boolean mysql = SUPPORTS_HASH_COMMENT_SYNTAX.contains(render.dialect());
         char[][][] quotes = QUOTES.get(family);
 
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.

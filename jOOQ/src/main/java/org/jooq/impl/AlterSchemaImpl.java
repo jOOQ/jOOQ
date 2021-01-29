@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "unused" })
 final class AlterSchemaImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     AlterSchemaStep,
     AlterSchemaFinalStep

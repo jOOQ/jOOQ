@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
 final class AlterDomainImpl<T>
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     AlterDomainStep<T>,
     AlterDomainDropConstraintCascadeStep,

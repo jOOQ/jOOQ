@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class RevokeImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     RevokeOnStep,
     RevokeFromStep,

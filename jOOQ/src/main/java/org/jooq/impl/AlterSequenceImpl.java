@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
 final class AlterSequenceImpl<T extends Number>
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     AlterSequenceStep<T>,
     AlterSequenceFlagsStep<T>,

@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class DropIndexImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     DropIndexOnStep,
     DropIndexCascadeStep,

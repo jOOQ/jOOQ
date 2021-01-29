@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class DropSequenceImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     DropSequenceFinalStep
 {

@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
 final class AlterTypeImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     AlterTypeStep,
     AlterTypeRenameValueToStep,

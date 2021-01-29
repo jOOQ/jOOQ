@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class DropDomainImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     DropDomainCascadeStep,
     DropDomainFinalStep

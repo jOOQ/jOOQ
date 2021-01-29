@@ -35,40 +35,22 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.impl;
 
+import org.jooq.Configuration;
+import org.jooq.DDLQuery;
 
+/**
+ * @author Lukas Eder
+ */
+abstract class AbstractDDLQuery extends AbstractRowCountQuery implements DDLQuery {
 
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -5166285519537392193L;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    AbstractDDLQuery(Configuration configuration) {
+        super(configuration);
+    }
+}

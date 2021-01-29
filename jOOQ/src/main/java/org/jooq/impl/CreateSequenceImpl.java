@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class CreateSequenceImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     CreateSequenceFlagsStep,
     CreateSequenceFinalStep

@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class AlterViewImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     AlterViewStep,
     AlterViewFinalStep

@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class AlterIndexImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     AlterIndexOnStep,
     AlterIndexStep,

@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "unused" })
 final class DropDatabaseImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     DropDatabaseFinalStep
 {

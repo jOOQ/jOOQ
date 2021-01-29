@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
 final class CreateDomainImpl<T>
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     CreateDomainAsStep,
     CreateDomainDefaultStep<T>,

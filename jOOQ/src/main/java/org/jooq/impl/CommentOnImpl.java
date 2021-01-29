@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class CommentOnImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     CommentOnIsStep,
     CommentOnFinalStep

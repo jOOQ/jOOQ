@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class DropViewImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     DropViewFinalStep
 {

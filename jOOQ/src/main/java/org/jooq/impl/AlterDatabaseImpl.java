@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "unused" })
 final class AlterDatabaseImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     AlterDatabaseStep,
     AlterDatabaseFinalStep

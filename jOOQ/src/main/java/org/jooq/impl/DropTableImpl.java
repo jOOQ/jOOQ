@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class DropTableImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     DropTableStep,
     DropTableFinalStep

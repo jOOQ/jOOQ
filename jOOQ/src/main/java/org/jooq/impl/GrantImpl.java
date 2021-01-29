@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class GrantImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     GrantOnStep,
     GrantToStep,

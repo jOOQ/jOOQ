@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class TruncateImpl<R extends Record>
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     TruncateIdentityStep<R>,
     TruncateCascadeStep<R>,

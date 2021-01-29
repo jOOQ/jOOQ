@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "unused" })
 final class CreateSchemaImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     CreateSchemaFinalStep
 {

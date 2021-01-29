@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "unused" })
 final class DropSchemaImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     DropSchemaStep,
     DropSchemaFinalStep

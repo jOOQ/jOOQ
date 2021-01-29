@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "unused" })
 final class CreateDatabaseImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     CreateDatabaseFinalStep
 {

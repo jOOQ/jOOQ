@@ -61,7 +61,7 @@ import java.util.*;
 @SuppressWarnings({ "hiding", "rawtypes", "unused" })
 final class CreateIndexImpl
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 implements
     CreateIndexStep,
     CreateIndexIncludeStep,

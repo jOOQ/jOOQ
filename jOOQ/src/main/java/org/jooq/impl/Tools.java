@@ -253,6 +253,7 @@ import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
 import org.jooq.QualifiedAsterisk;
+import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -301,6 +302,8 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * General internal jOOQ utilities
@@ -5065,6 +5068,19 @@ final class Tools {
                 length = Math.max(length, e.getLiteral().length());
 
         return VARCHAR(length).nullability(type.nullability()).defaultValue((Field) type.defaultValue());
+    }
+
+    static <C extends Context<? extends C>> C prependSQL(C ctx, Queries queries) {
+        ctx.data().compute(DataKey.DATA_PREPEND_SQL, (k, v) -> {
+            String sql = ctx.dsl().renderInlined(queries);
+
+            if (v == null)
+                return sql;
+            else
+                return v + sql;
+        });
+
+        return ctx;
     }
 
     // -------------------------------------------------------------------------

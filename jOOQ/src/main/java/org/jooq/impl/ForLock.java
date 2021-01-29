@@ -55,19 +55,17 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Keywords.K_FOR;
-import static org.jooq.impl.Keywords.K_LOCAL;
 import static org.jooq.impl.Keywords.K_LOCK_IN_SHARE_MODE;
 import static org.jooq.impl.Keywords.K_NOWAIT;
 import static org.jooq.impl.Keywords.K_OF;
 import static org.jooq.impl.Keywords.K_READPAST;
 import static org.jooq.impl.Keywords.K_ROWLOCK;
-import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDLOCK;
 import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Keywords.K_WITH_LOCK;
 import static org.jooq.impl.Names.N_LOCK_TIMEOUT;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
-import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
+import static org.jooq.impl.Tools.prependSQL;
 
 import java.util.Set;
 
@@ -79,7 +77,6 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.Tools.DataExtendedKey;
 
 /**
@@ -179,18 +176,13 @@ final class ForLock extends AbstractQueryPart {
 
             // [#11243] PostgreSQL FOR UPDATE WAIT <n> emulation
             if (forLockWaitMode == ForLockWaitMode.WAIT && EMULATE_FOR_UPDATE_WAIT.contains(ctx.dialect())) {
-                ctx.skipUpdateCount().data(DATA_PREPEND_SQL, ctx.dsl().renderInlined(
-                    ctx.dsl().queries(ctx.dsl().setLocal(N_LOCK_TIMEOUT, inline(forLockWait * 1000)))
-                ));
+                prependSQL(ctx.skipUpdateCount(), ctx.dsl().queries(ctx.dsl().setLocal(N_LOCK_TIMEOUT, inline(forLockWait * 1000))));
             }
             else {
-                ctx.sql(' ');
-                ctx.visit(forLockWaitMode.toKeyword());
+                ctx.sql(' ').visit(forLockWaitMode.toKeyword());
 
-                if (forLockWaitMode == ForLockWaitMode.WAIT) {
-                    ctx.sql(' ');
-                    ctx.sql(forLockWait);
-                }
+                if (forLockWaitMode == ForLockWaitMode.WAIT)
+                    ctx.sql(' ').sql(forLockWait);
             }
         }
     }

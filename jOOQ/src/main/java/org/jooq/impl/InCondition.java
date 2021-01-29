@@ -158,9 +158,7 @@ final class InCondition<T> extends AbstractCondition {
 
 
                 case FIREBIRD: {
-                    ctx.sql('(')
-                       .formatIndentStart()
-                       .formatNewLine();
+                    ctx.sqlIndentStart('(');
 
                     for (int i = 0; i < values.size(); i += IN_LIMIT) {
                         if (i > 0) {
@@ -182,9 +180,7 @@ final class InCondition<T> extends AbstractCondition {
                         toSQLSubValues(ctx, padded(ctx, values.subList(i, Math.min(i + IN_LIMIT, values.size()))));
                     }
 
-                    ctx.formatIndentEnd()
-                       .formatNewLine()
-                       .sql(')');
+                    ctx.sqlIndentEnd(')');
                     break;
                 }
 

@@ -390,16 +390,12 @@ implements
             );
 
         if (wrap)
-            ctx.sql('(')
-               .formatIndentStart()
-               .formatNewLine();
+            ctx.sqlIndentStart('(');
 
         ctx.visit(table);
 
         if (wrap)
-            ctx.formatIndentEnd()
-               .formatNewLine()
-               .sql(')');
+            ctx.sqlIndentEnd(')');
     }
 
     /**

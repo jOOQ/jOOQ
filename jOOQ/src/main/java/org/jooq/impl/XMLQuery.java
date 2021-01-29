@@ -137,10 +137,7 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
                 break;
 
             default:
-                ctx.visit(N_XMLQUERY).sql('(')
-                   .formatIndentStart()
-                   .formatNewLine();
-
+                ctx.visit(N_XMLQUERY).sqlIndentStart('(');
                 acceptXPath(ctx, xpath);
                 acceptPassing(ctx, passing, passingMechanism);
 
@@ -149,11 +146,8 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
 
 
 
-                ctx.formatIndentEnd()
-                   .formatNewLine()
-                   .sql(')');
-
-               break;
+                ctx.sqlIndentEnd(')');
+                break;
         }
     }
 }

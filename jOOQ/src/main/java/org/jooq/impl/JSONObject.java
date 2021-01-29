@@ -170,10 +170,6 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
 
 
 
-
-
-
-
             case MARIADB:
 
                 // Workaround for https://jira.mariadb.org/browse/MDEV-13701

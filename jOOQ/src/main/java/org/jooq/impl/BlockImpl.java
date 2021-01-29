@@ -447,10 +447,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
-
-
-
-
                     ctx.visit(s);
 
 

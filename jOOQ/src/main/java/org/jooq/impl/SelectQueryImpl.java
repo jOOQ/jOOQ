@@ -1319,9 +1319,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
             if (TRUE.equals(wrapDerivedTables)) {
-                context.sql('(')
-                       .formatIndentStart()
-                       .formatNewLine()
+                context.sqlIndentStart('(')
                        .data().remove(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
             }
 
@@ -1511,9 +1509,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                        .sql(option);
 
             if (TRUE.equals(wrapDerivedTables))
-                context.formatIndentEnd()
-                       .formatNewLine()
-                       .sql(')')
+                context.sqlIndentEnd(')')
                        .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
 
 
@@ -1639,17 +1635,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         ctx.visit(K_SELECT).separatorRequired(true)
            .declareFields(true, c -> c.visit(new SelectFieldList<>(unaliasedFields)))
            .formatSeparator()
-           .visit(K_FROM).sql(" (")
-           .formatIndentStart()
-           .formatNewLine()
+           .visit(K_FROM).sqlIndentStart(" (")
            .subquery(true);
 
         toSQLReference0(ctx, originalFields, alternativeFields);
 
         ctx.subquery(false)
-           .formatIndentEnd()
-           .formatNewLine()
-           .sql(") ")
+           .sqlIndentEnd(") ")
            .visit(name("x"))
            .formatSeparator()
            .visit(K_WHERE).sql(' ')
@@ -1676,14 +1668,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .sql(' ')
                .visit(name("rn"));
     }
-
-
-
-
-
-
-
-
 
 
 

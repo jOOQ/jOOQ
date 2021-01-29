@@ -111,15 +111,9 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep 
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_XMLEXISTS).sql('(')
-           .formatIndentStart()
-           .formatNewLine();
-
+        ctx.visit(K_XMLEXISTS).sqlIndentStart('(');
         acceptXPath(ctx, xpath);
         acceptPassing(ctx, passing, passingMechanism);
-
-        ctx.formatIndentEnd()
-           .formatNewLine()
-           .sql(')');
+        ctx.sqlIndentEnd(')');
     }
 }

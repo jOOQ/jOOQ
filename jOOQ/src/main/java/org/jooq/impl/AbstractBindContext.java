@@ -50,6 +50,8 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A base class for {@link BindContext} implementations
  *
@@ -168,7 +170,27 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     }
 
     @Override
+    public final BindContext sqlIndentStart(String sql) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sqlIndentEnd(String sql) {
+        return this;
+    }
+
+    @Override
     public final BindContext sql(char sql) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sqlIndentStart(char sql) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sqlIndentEnd(char sql) {
         return this;
     }
 

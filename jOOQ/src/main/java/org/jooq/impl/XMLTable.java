@@ -279,10 +279,7 @@ implements
 
 
     private final void acceptStandard(Context<?> ctx) {
-        ctx.visit(K_XMLTABLE).sql('(')
-           .formatIndentStart()
-           .formatNewLine();
-
+        ctx.visit(K_XMLTABLE).sqlIndentStart('(');
         acceptXPath(ctx, xpath);
         if (passing != null)
             acceptPassing(ctx, passing, passingMechanism);
@@ -290,9 +287,7 @@ implements
         ctx.formatSeparator()
            .visit(K_COLUMNS).separatorRequired(true).visit(columns);
 
-        ctx.formatIndentEnd()
-           .formatNewLine()
-           .sql(')');
+        ctx.sqlIndentEnd(')');
     }
 
     static final void acceptXPath(Context<?> ctx, Field<String> xpath) {

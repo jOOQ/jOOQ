@@ -447,10 +447,8 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
 
         if (!columnFields.isEmpty()
                 && (select == null || !NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))) {
-            ctx.sql(" (")
-               .start(CREATE_TABLE_COLUMNS)
-               .formatIndentStart()
-               .formatNewLine();
+            ctx.sqlIndentStart(" (")
+               .start(CREATE_TABLE_COLUMNS);
 
             Field<?> identity = null;
             boolean qualify = ctx.qualify();
@@ -534,9 +532,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                 ctx.qualify(qualify);
             }
 
-            ctx.formatIndentEnd()
-               .formatNewLine()
-               .sql(')');
+            ctx.sqlIndentEnd(')');
         }
     }
 
@@ -601,9 +597,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
            .visit(K_AS);
 
         if (WRAP_SELECT_IN_PARENS.contains(ctx.dialect()))
-            ctx.sql(" (")
-               .formatIndentStart()
-               .formatNewLine();
+            ctx.sqlIndentStart(" (");
         else
             ctx.formatSeparator();
 
@@ -623,9 +617,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
             ctx.data().remove(DATA_SELECT_NO_DATA);
 
         if (WRAP_SELECT_IN_PARENS.contains(ctx.dialect())) {
-            ctx.formatIndentEnd()
-               .formatNewLine()
-               .sql(')');
+            ctx.sqlIndentEnd(')');
         }
 
         if (FALSE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
@@ -638,11 +630,6 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
             ctx.formatSeparator()
                .visit(K_WITH_DATA);
     }
-
-
-
-
-
 
 
 

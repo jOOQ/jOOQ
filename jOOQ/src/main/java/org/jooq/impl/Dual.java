@@ -144,11 +144,11 @@ final class Dual extends AbstractTable<Record> {
                     break;
 
                 case HSQLDB:
-                    ctx.sql('(').formatIndentStart().formatNewLine()
+                    ctx.sqlIndentStart('(')
                        .visit(K_SELECT).sql(" 1 ").visit(K_AS).sql(' ').visit(N_DUAL).formatSeparator()
                        .visit(K_FROM).sql(' ').visit(DUAL_HSQLDB).formatSeparator()
-                       .visit(K_LIMIT).sql(" 1").formatIndentEnd().formatNewLine()
-                       .sql(") ").visit(K_AS).sql(' ').visit(N_DUAL);
+                       .visit(K_LIMIT).sql(" 1")
+                       .sqlIndentEnd(") ").visit(K_AS).sql(' ').visit(N_DUAL);
 
                     break;
 

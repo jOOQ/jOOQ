@@ -280,9 +280,7 @@ implements
 
 
     private final void acceptStandard(Context<?> ctx) {
-        ctx.visit(K_JSON_TABLE).sql('(')
-           .formatIndentStart()
-           .formatNewLine();
+        ctx.visit(K_JSON_TABLE).sqlIndentStart('(');
 
         ctx.visit(json).sql(',').formatSeparator();
         acceptJSONPath(ctx);
@@ -294,9 +292,7 @@ implements
 
 
 
-        ctx.formatIndentEnd()
-           .formatNewLine()
-           .sql(')');
+        ctx.sqlIndentEnd(')');
     }
 
     private final void acceptJSONPath(Context<?> ctx) {

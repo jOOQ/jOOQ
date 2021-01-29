@@ -86,6 +86,8 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -363,6 +365,16 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
+    public final RenderContext sqlIndentStart(String c) {
+        return sql(c).formatIndentStart().formatNewLine();
+    }
+
+    @Override
+    public final RenderContext sqlIndentEnd(String c) {
+        return formatIndentEnd().formatNewLine().sql(c);
+    }
+
+    @Override
     public final RenderContext sql(char c) {
         applyNewLine();
         sql.append(c);
@@ -372,6 +384,16 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         resetSeparatorFlags();
         return this;
+    }
+
+    @Override
+    public final RenderContext sqlIndentStart(char c) {
+        return sql(c).formatIndentStart().formatNewLine();
+    }
+
+    @Override
+    public final RenderContext sqlIndentEnd(char c) {
+        return formatIndentEnd().formatNewLine().sql(c);
     }
 
     @Override

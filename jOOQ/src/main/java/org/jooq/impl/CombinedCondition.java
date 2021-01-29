@@ -199,9 +199,7 @@ final class CombinedCondition extends AbstractCondition {
             ctx.visit(conditions.get(0));
         }
         else {
-            ctx.sql('(')
-               .formatIndentStart()
-               .formatNewLine();
+            ctx.sqlIndentStart('(');
 
             Keyword op = operator == AND ? K_AND : K_OR;
             Keyword separator = null;
@@ -216,9 +214,7 @@ final class CombinedCondition extends AbstractCondition {
                 separator = op;
             }
 
-            ctx.formatIndentEnd()
-               .formatNewLine()
-               .sql(')');
+            ctx.sqlIndentEnd(')');
         }
     }
 }

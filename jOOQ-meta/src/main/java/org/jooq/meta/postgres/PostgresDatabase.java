@@ -60,6 +60,7 @@ import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
@@ -171,6 +172,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     private static Boolean is94;
     private static Boolean is10;
     private static Boolean is11;
+    private static Boolean is12;
     private static Boolean canUseRoutines;
     private static Boolean canCastToEnumType;
     private static Boolean canCombineArrays;
@@ -926,7 +928,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             // [#3375] Exclude table-valued functions as they're already generated as tables
             .join(PG_NAMESPACE).on(PG_NAMESPACE.NSPNAME.eq(r1.SPECIFIC_SCHEMA))
             .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
-                          .and("nameconcatoid({0}, {1}) = {2}", PG_PROC.PRONAME, oid(PG_PROC), r1.SPECIFIC_NAME)
+                          .and(is12()
+                              ? condition("nameconcatoid({0}, {1}) = {2}", PG_PROC.PRONAME, oid(PG_PROC), r1.SPECIFIC_NAME)
+                              : PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(r1.SPECIFIC_NAME))
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
             .and(tableValuedFunctions()
                     ? condition(not(PG_PROC.PRORETSET))
@@ -998,6 +1002,15 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             is11 = exists(PG_PROC.PROKIND);
 
         return is11;
+    }
+
+    boolean is12() {
+
+        // [#11325] nameconcatoid was added in PostgreSQL 12 only
+        if (is12 == null)
+            is12 = exists(table(select(field("nameconcatoid({0}, {1})", PG_PROC.PRONAME, oid(PG_PROC))).from(PG_PROC)));
+
+        return is12;
     }
 
     @Override

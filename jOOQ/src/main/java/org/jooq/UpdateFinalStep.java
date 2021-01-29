@@ -70,8 +70,10 @@ package org.jooq;
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
  *
+ * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
  * @author Lukas Eder
  */
+@Deprecated
 public interface UpdateFinalStep<R extends Record> extends Update<R> {
 
 }

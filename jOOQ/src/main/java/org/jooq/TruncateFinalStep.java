@@ -63,7 +63,10 @@ import org.jetbrains.annotations.*;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
+ *
+ * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
  */
+@Deprecated
 @SuppressWarnings({ "unused" })
 public interface TruncateFinalStep<R extends Record> extends Truncate<R> {
 }

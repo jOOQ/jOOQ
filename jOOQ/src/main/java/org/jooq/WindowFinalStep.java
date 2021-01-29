@@ -55,9 +55,11 @@ package org.jooq;
  * Note, that the functionality provided by this interface is not supported in
  * {@link SQLDialect#SQLSERVER}
  *
+ * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
  * @param <T> The function return type
  * @author Lukas Eder
  */
+@Deprecated
 public interface WindowFinalStep<T> extends Field<T> {
 
 }

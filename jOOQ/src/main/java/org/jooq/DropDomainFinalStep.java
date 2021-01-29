@@ -46,6 +46,8 @@ import org.jetbrains.annotations.*;
 /**
  * A step in the construction of the <code>DROP DOMAIN</code> statement.
  * <p>
+ * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
+ * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
  * It is usually not recommended to reference any <code>XYZ*Step</code> types
@@ -65,5 +67,6 @@ import org.jetbrains.annotations.*;
  * </ul>
  */
 @SuppressWarnings({ "unused" })
+@Deprecated
 public interface DropDomainFinalStep extends DDLQuery {
 }

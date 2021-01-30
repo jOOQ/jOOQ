@@ -81,11 +81,13 @@ import org.jooq.Context;
 import org.jooq.DDLQuery;
 // ...
 import org.jooq.Field;
+import org.jooq.Keyword;
 // ...
 import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Statement;
 // ...
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -137,20 +139,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
             case POSTGRES: {
-                if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
-                    ctx.paramType(INLINED)
-                       .visit(K_DO).sql(" $$")
-                       .formatSeparator();
-
-                    ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                }
-
-                accept0(ctx);
-
-                if (decrement(ctx.data(), DATA_BLOCK_NESTING))
-                    ctx.formatSeparator()
-                       .sql("$$");
-
+                bodyAsString(ctx, K_DO, () -> accept0(ctx));
                 break;
             }
 
@@ -238,6 +227,28 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                 break;
             }
         }
+    }
+
+    static final void bodyAsString(Context<?> ctx, Keyword keyword, Runnable runnable) {
+        ParamType previous = ctx.paramType();
+
+        if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
+            ctx.paramType(INLINED);
+
+            if (keyword != null)
+                ctx.visit(keyword).sql(' ');
+
+            ctx.sql("$$")
+               .formatSeparator()
+               .data(DATA_FORCE_STATIC_STATEMENT, true);
+        }
+
+        runnable.run();
+
+        if (decrement(ctx.data(), DATA_BLOCK_NESTING))
+            ctx.formatSeparator()
+               .sql("$$")
+               .paramType(previous);
     }
 
     private static final String randomName() {

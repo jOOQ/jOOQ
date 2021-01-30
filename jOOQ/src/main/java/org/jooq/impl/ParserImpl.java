@@ -2525,7 +2525,7 @@ final class ParserContext {
                         ;
                     else if (parseKeywordIf("PACKAGE"))
                         throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                    else if (parseKeywordIf("PROCEDURE") && requireProEdition())
+                    else if (parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
 
 
 
@@ -2539,7 +2539,7 @@ final class ParserContext {
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("PROCEDURE") && requireProEdition())
+                else if (parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
 
 
 
@@ -2744,7 +2744,7 @@ final class ParserContext {
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("DROP PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("PROCEDURE") && requireProEdition())
+                else if (parseKeywordIf("PROC", "PROCEDURE") && requireProEdition())
 
 
 
@@ -5029,6 +5029,8 @@ final class ParserContext {
 
         return s2;
     }
+
+
 
 
 

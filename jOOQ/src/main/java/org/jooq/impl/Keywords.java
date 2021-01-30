@@ -80,6 +80,7 @@ final class Keywords {
     static final Keyword K_BY                               = keyword("by");
     static final Keyword K_CACHE                            = keyword("cache");
     static final Keyword K_CALL                             = keyword("call");
+    static final Keyword K_CALLED                           = keyword("called");
     static final Keyword K_CASCADE                          = keyword("cascade");
     static final Keyword K_CASE                             = keyword("case");
     static final Keyword K_CAST                             = keyword("cast");
@@ -211,6 +212,7 @@ final class Keywords {
     static final Keyword K_INLINE                           = keyword("inline");
     static final Keyword K_INNER_JOIN                       = keyword("inner join");
     static final Keyword K_INOUT                            = keyword("inout");
+    static final Keyword K_INPUT                            = keyword("input");
     static final Keyword K_INSERT                           = keyword("insert");
     static final Keyword K_INSTEAD                          = keyword("instead");
     static final Keyword K_INT                              = keyword("int");

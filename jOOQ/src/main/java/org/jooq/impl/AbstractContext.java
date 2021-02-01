@@ -111,6 +111,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     boolean                                        declareAliases;
     boolean                                        declareWindows;
     boolean                                        declareCTE;
+
+
+
+
     int                                            subquery;
     BitSet                                         subqueryScopedNestedSetOperations;
     int                                            stringLiteral;
@@ -257,6 +261,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                     visit0(internal);
                     declareCTE(true);
                 }
+
+
+
+
+
+
+
+
+
+
+
 
                 else if (!castModeOverride && castMode() != CastMode.DEFAULT && !internal.generatesCast()) {
                     CastMode previous = castMode();
@@ -569,6 +584,29 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     public C declareWindows(boolean f, Consumer<? super C> consumer) {
         return toggle(f, this::declareWindows, this::declareWindows, consumer);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final boolean declareCTE() {

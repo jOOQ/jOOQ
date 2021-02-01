@@ -38,6 +38,15 @@
 
 package org.jooq.impl;
 
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+import static org.jooq.impl.Keywords.K_INOUT;
+import static org.jooq.impl.Keywords.K_OUT;
+
+import java.util.Set;
+
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -46,6 +55,7 @@ import org.jooq.ParamMode;
 import org.jooq.Parameter;
 // ...
 import org.jooq.Record1;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Statement;
 // ...
@@ -94,8 +104,36 @@ final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T> {
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+
+
+
+
+
+
+
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -122,6 +160,12 @@ final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T> {
     public final boolean isUnnamed() {
         return isUnnamed;
     }
+
+
+
+
+
+
 
 
 

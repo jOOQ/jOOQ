@@ -40,6 +40,7 @@ package org.jooq.impl;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
+// ...
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 
@@ -89,6 +90,16 @@ enum ScopeMarkers implements QueryPartInternal {
     public final boolean declaresCTE() {
         return false;
     }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final boolean generatesCast() {

@@ -35,43 +35,38 @@
  *
  *
  */
+
 package org.jooq.impl;
 
 
-/**
- * @author Lukas Eder
- */
-enum DDLStatementType {
-    ALTER_DATABASE,
-    ALTER_DOMAIN,
-    ALTER_FUNCTION,
-    ALTER_INDEX,
-    ALTER_PROCEDURE,
-    ALTER_SCHEMA,
-    ALTER_SEQUENCE,
-    ALTER_TABLE,
-    ALTER_TRIGGER,
-    ALTER_VIEW,
 
-    CREATE_DATABASE,
-    CREATE_DOMAIN,
-    CREATE_FUNCTION,
-    CREATE_INDEX,
-    CREATE_PROCEDURE,
-    CREATE_SCHEMA,
-    CREATE_SEQUENCE,
-    CREATE_TABLE,
-    CREATE_TRIGGER,
-    CREATE_VIEW,
 
-    DROP_DATABASE,
-    DROP_DOMAIN,
-    DROP_FUNCTION,
-    DROP_INDEX,
-    DROP_PROCEDURE,
-    DROP_SCHEMA,
-    DROP_SEQUENCE,
-    DROP_TABLE,
-    DROP_TRIGGER,
-    DROP_VIEW,
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

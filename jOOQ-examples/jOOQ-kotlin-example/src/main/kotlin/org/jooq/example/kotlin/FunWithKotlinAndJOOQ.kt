@@ -45,12 +45,14 @@ import org.jooq.impl.DSL.*
 
 import org.jooq.example.kotlin.db.h2.tables.references.*
 
-fun main(args: Array<String>) {
+class FunWithKotlinAndJOOQ {
+  companion object {
+    @JvmStatic fun main(args: Array<String>) {
 
     // This example project simply uses a standalone JDBC connection, but you're free to use any other
     // means to connect to your database, including standard DataSources
     val properties = Properties();
-    properties.load(properties::class.java.getResourceAsStream("/config.properties"));
+    properties.load(FunWithKotlinAndJOOQ::class.java.getResourceAsStream("/config.properties"));
 
     DSL.using(
         properties.getProperty("db.url"),
@@ -193,22 +195,24 @@ fun main(args: Array<String>) {
                 println("${it.intoMap()}")
             }
 
-        // If you parse a SQL (multiline) string with jOOQ, jOOQ will try to translate the syntax to
-        header("Using multiline strings with the parser")
-        val colX = field("x")
-        val colY = field("y")
-        ctx.parser()
-           .parseResultQuery("""
-            SELECT *
-            FROM (
-              VALUES (1, 'a'),
-                     (2, 'b')
-            ) AS t(${colX.name}, ${colY.name}) -- This feature (derived column lists) isn't really available in H2!
-            """)!!
-           .fetch()
-           .forEach {
-               println("${it[colX]}, ${it[colY]}")
-           }
+              // If you parse a SQL (multiline) string with jOOQ, jOOQ will try to translate the syntax to
+              // header("Using multiline strings with the parser")
+              // val colX = field("x")
+              // val colY = field("y")
+              // ctx.parser()
+              //    .parseResultQuery("""
+              //       SELECT *
+              //       FROM (
+              //         VALUES (1, 'a'),
+              //                (2, 'b')
+              //       ) AS t(${colX.name}, ${colY.name}) -- This feature (derived column lists) isn't really available in H2!
+              //     """)
+              //    .fetch()
+              //    .forEach {
+              //        println("${it[colX]}, ${it[colY]}")
+              //    }
+         }
+       }
     }
 }
 

@@ -2167,7 +2167,7 @@ public interface WithStep extends QueryPart {
      * @see DSL#selectZero()
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record1<Integer>> selectZero();
 
     /**
@@ -2193,7 +2193,7 @@ public interface WithStep extends QueryPart {
      * @see DSL#selectOne()
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record1<Integer>> selectOne();
 
     /**
@@ -2218,7 +2218,7 @@ public interface WithStep extends QueryPart {
      * @see DSL#selectCount()
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record1<Integer>> selectCount();
 
     /**

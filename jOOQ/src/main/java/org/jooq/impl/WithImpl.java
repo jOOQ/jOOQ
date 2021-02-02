@@ -196,17 +196,6 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_WITH)
-           .separatorRequired(true);
-
-        if (recursive
-
-
-
-        )
-            ctx.visit(K_RECURSIVE)
-               .separatorRequired(true);
-
         CommonTableExpressionList list;
 
 
@@ -222,7 +211,20 @@ implements
 
         list = ctes;
 
-        ctx.declareCTE(true, c -> c.visit(list));
+        if (!list.isEmpty()) {
+            ctx.visit(K_WITH)
+               .separatorRequired(true);
+
+            if (recursive
+
+
+
+            )
+                ctx.visit(K_RECURSIVE)
+                   .separatorRequired(true);
+
+            ctx.declareCTE(true, c -> c.visit(list));
+        }
     }
 
     @Override

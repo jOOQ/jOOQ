@@ -39,9 +39,11 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_INOUT;
 import static org.jooq.impl.Keywords.K_OUT;
 
@@ -111,8 +113,19 @@ final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T> {
 
 
 
+
+
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
 
 
 

@@ -605,7 +605,7 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     private final SettingsEnabledConnection wrapConnection(ConnectionProvider provider, Connection c) {
-        return new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), derivedConfiguration.settings());
+        return new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), derivedConfiguration.settings(), this);
     }
 
     final void incrementStatementExecutionCount() {

@@ -82,11 +82,8 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -108,7 +105,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private boolean                       separatorRequired;
     private boolean                       separator;
     private boolean                       newline;
-    private int                           skipUpdateCounts;
 
     // [#1632] Cached values from Settings
     RenderKeywordCase                     cachedRenderKeywordCase;

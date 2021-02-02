@@ -128,6 +128,7 @@ final class Keywords {
     static final Keyword K_DEFAULT_VALUES                   = keyword("default values");
     static final Keyword K_DELETE                           = keyword("delete");
     static final Keyword K_DENSE_RANK                       = keyword("dense_rank");
+    static final Keyword K_DETERMINISTIC                    = keyword("deterministic");
     static final Keyword K_DISABLE                          = keyword("disable");
     static final Keyword K_DISTINCT                         = keyword("distinct");
     static final Keyword K_DISTINCT_ON                      = keyword("distinct on");
@@ -204,6 +205,7 @@ final class Keywords {
     static final Keyword K_IGNORE                           = keyword("ignore");
     static final Keyword K_IGNORE_NULLS                     = keyword("ignore nulls");
     static final Keyword K_IMMEDIATE                        = keyword("immediate");
+    static final Keyword K_IMMUTABLE                        = keyword("immutable");
     static final Keyword K_IN                               = keyword("in");
     static final Keyword K_INCLUDE                          = keyword("include");
     static final Keyword K_INCLUDE_NULL_VALUES              = keyword("include_null_values");
@@ -415,6 +417,7 @@ final class Keywords {
     static final Keyword K_VARCHAR                          = keyword("varchar");
     static final Keyword K_VERSIONS                         = keyword("versions");
     static final Keyword K_VIEW                             = keyword("view");
+    static final Keyword K_VOLATILE                         = keyword("volatile");
     static final Keyword K_WHEN                             = keyword("when");
     static final Keyword K_WHERE                            = keyword("where");
     static final Keyword K_WHILE                            = keyword("while");

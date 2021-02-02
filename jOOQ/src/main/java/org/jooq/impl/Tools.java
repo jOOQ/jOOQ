@@ -83,15 +83,20 @@ import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
 import static org.jooq.impl.DDLStatementType.CREATE_DATABASE;
 import static org.jooq.impl.DDLStatementType.CREATE_DOMAIN;
+import static org.jooq.impl.DDLStatementType.CREATE_FUNCTION;
 import static org.jooq.impl.DDLStatementType.CREATE_INDEX;
+import static org.jooq.impl.DDLStatementType.CREATE_PROCEDURE;
 import static org.jooq.impl.DDLStatementType.CREATE_SCHEMA;
 import static org.jooq.impl.DDLStatementType.CREATE_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.CREATE_TABLE;
 import static org.jooq.impl.DDLStatementType.CREATE_VIEW;
+import static org.jooq.impl.DDLStatementType.DROP_FUNCTION;
 import static org.jooq.impl.DDLStatementType.DROP_INDEX;
+import static org.jooq.impl.DDLStatementType.DROP_PROCEDURE;
 import static org.jooq.impl.DDLStatementType.DROP_SCHEMA;
 import static org.jooq.impl.DDLStatementType.DROP_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.DROP_TABLE;
+import static org.jooq.impl.DDLStatementType.DROP_TRIGGER;
 import static org.jooq.impl.DDLStatementType.DROP_VIEW;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.concat;
@@ -253,7 +258,6 @@ import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
 import org.jooq.QualifiedAsterisk;
-import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -302,8 +306,6 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * General internal jOOQ utilities
@@ -4446,6 +4448,11 @@ final class Tools {
 
     static final void tryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element, Runnable runnable) {
         switch (ctx.family()) {
+
+
+
+
+
 
 
 

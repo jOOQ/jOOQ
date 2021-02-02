@@ -236,9 +236,8 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
             }
 
             // Regular behaviour
-            else {
+            else
                 ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
-            }
         }
 
         Tools.setFetchSize(ctx, fetchSize);

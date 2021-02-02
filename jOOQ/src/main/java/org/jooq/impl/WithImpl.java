@@ -224,7 +224,8 @@ implements
 
             ctx.declareCTE(true)
                .visit(c)
-               .declareCTE(false);
+               .declareCTE(false)
+               .formatSeparator();
         }
     }
 

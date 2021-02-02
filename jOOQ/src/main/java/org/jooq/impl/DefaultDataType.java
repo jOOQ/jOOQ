@@ -334,8 +334,9 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
         if (TYPES_BY_TYPE[ordinal].get(type) == null)
             TYPES_BY_TYPE[ordinal].put(type, this);
 
-        if (TYPES_BY_SQL_DATATYPE[ordinal].get(this.sqlDataType) == null)
-            TYPES_BY_SQL_DATATYPE[ordinal].put(this.sqlDataType, this);
+        if (sqlDataType != null)
+            if (TYPES_BY_SQL_DATATYPE[ordinal].get(sqlDataType) == null)
+                TYPES_BY_SQL_DATATYPE[ordinal].put(sqlDataType, this);
 
         // Global data types
         if (dialect == null)

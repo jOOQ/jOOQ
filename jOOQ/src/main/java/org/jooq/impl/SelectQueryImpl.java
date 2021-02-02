@@ -1308,7 +1308,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             if (with != null)
-                context.visit(with).formatSeparator();
+                context.visit(with);
             else if (context.subqueryLevel() == 0)
                 context.scopeMarkStart(BEFORE_FIRST_TOP_LEVEL_CTE)
                        .scopeMarkEnd(BEFORE_FIRST_TOP_LEVEL_CTE)

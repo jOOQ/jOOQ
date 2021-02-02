@@ -1310,7 +1310,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (with != null)
-            ctx.visit(with).formatSeparator();
+            ctx.visit(with);
 
         if (upsertStyle) {
             switch (ctx.family()) {

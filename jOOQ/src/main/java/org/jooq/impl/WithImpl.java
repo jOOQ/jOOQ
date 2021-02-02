@@ -223,7 +223,7 @@ implements
                 ctx.visit(K_RECURSIVE)
                    .separatorRequired(true);
 
-            ctx.declareCTE(true, c -> c.visit(list));
+            ctx.declareCTE(true, c -> c.visit(list)).formatSeparator();
         }
     }
 

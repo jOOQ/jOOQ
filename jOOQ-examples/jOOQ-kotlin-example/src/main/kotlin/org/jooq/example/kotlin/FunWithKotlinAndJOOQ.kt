@@ -50,7 +50,7 @@ fun main(args: Array<String>) {
     // This example project simply uses a standalone JDBC connection, but you're free to use any other
     // means to connect to your database, including standard DataSources
     val properties = Properties();
-    properties.load(properties::class.java.getResourceAsStream("/config.properties"));
+    properties.load(object {}.javaClass.getResourceAsStream("/config.properties"));
 
     DSL.using(
         properties.getProperty("db.url"),
@@ -195,8 +195,8 @@ fun main(args: Array<String>) {
 
         // If you parse a SQL (multiline) string with jOOQ, jOOQ will try to translate the syntax to
         header("Using multiline strings with the parser")
-        val colX = field("x")
-        val colY = field("y")
+        val colX = field(name("X"))
+        val colY = field(name("Y"))
         ctx.parser()
            .parseResultQuery("""
             SELECT *

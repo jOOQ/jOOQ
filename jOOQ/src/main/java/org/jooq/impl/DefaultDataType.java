@@ -328,7 +328,8 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             TYPES_BY_NAME[ordinal].putIfAbsent(DefaultDataType.normalise(typeName), this);
 
         TYPES_BY_TYPE[ordinal].putIfAbsent(type, this);
-        TYPES_BY_SQL_DATATYPE[ordinal].putIfAbsent(this.sqlDataType, this);
+        if (sqlDataType != null)
+            TYPES_BY_SQL_DATATYPE[ordinal].putIfAbsent(sqlDataType, this);
 
         // Global data types
         if (dialect == null)

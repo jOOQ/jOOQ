@@ -126,6 +126,7 @@ final class Keywords {
     static final Keyword K_DECLARE                          = keyword("declare");
     static final Keyword K_DEFAULT                          = keyword("default");
     static final Keyword K_DEFAULT_VALUES                   = keyword("default values");
+    static final Keyword K_DEFINE                           = keyword("define");
     static final Keyword K_DELETE                           = keyword("delete");
     static final Keyword K_DENSE_RANK                       = keyword("dense_rank");
     static final Keyword K_DETERMINISTIC                    = keyword("deterministic");
@@ -243,6 +244,7 @@ final class Keywords {
     static final Keyword K_LEAVE                            = keyword("leave");
     static final Keyword K_LEFT_JOIN_LATERAL                = keyword("left join lateral");
     static final Keyword K_LEFT_OUTER_JOIN_LATERAL          = keyword("left outer join lateral");
+    static final Keyword K_LET                              = keyword("let");
     static final Keyword K_LIKE                             = keyword("like");
     static final Keyword K_LIKE_REGEX                       = keyword("like_regex");
     static final Keyword K_LIMIT                            = keyword("limit");
@@ -382,6 +384,7 @@ final class Keywords {
     static final Keyword K_START_AT                         = keyword("start at");
     static final Keyword K_START_WITH                       = keyword("start with");
     static final Keyword K_STATEMENT                        = keyword("statement");
+    static final Keyword K_STEP                             = keyword("step");
     static final Keyword K_STORING                          = keyword("storing");
     static final Keyword K_SWITCH                           = keyword("switch");
     static final Keyword K_SYMMETRIC                        = keyword("symmetric");

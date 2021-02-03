@@ -3139,6 +3139,11 @@ final class ParserContext {
 
 
                 ;
+                else if (peekKeyword("LET") && requireProEdition())
+
+
+
+                ;
                 else if (peekKeyword("LOOP") && requireProEdition())
 
 

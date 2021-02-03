@@ -3084,7 +3084,7 @@ final class ParserContext {
                 break;
 
             case 'D':
-                if (peekKeyword("DECLARE") && requireProEdition())
+                if (peekKeyword("DECLARE", "DEFINE") && requireProEdition())
 
 
 

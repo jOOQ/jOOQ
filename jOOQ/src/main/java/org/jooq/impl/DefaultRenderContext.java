@@ -50,9 +50,11 @@ import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
 import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
+import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
+import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_DECLARATIONS;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -73,7 +76,9 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.Statement;
 import org.jooq.Table;
+// ...
 import org.jooq.conf.RenderFormatting;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
@@ -82,6 +87,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -226,21 +232,33 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     void scopeEnd0() {
 
         // TODO: Think about a more appropriate location for this logic, rather
         // than the generic DefaultRenderContext, which shouldn't know anything
         // about the individual query parts that it is rendering.
+
+
+
+
         TopLevelCte cte = null;
         ScopeStackElement beforeFirstCte = null;
         ScopeStackElement afterLastCte = null;
 
-        if (subqueryLevel() == 0
-                && (cte = (TopLevelCte) data(DATA_TOP_LEVEL_CTE)) != null
-                && !cte.isEmpty()) {
-            beforeFirstCte = scopeStack.get(BEFORE_FIRST_TOP_LEVEL_CTE);
-            afterLastCte = scopeStack.get(AFTER_LAST_TOP_LEVEL_CTE);
+        if (subqueryLevel() == 0) {
+
+
+
+
+
+
+
+            if ((cte = (TopLevelCte) data(DATA_TOP_LEVEL_CTE)) != null && !cte.isEmpty()) {
+                beforeFirstCte = scopeStack.get(BEFORE_FIRST_TOP_LEVEL_CTE);
+                afterLastCte = scopeStack.get(AFTER_LAST_TOP_LEVEL_CTE);
+            }
         }
 
         outer:
@@ -253,8 +271,25 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             else if (e1.positions == null) {
                 continue outer;
             }
-            else if (e1 == beforeFirstCte) {
-                boolean single = cte != null && cte.size() == 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            else if (e1 == beforeFirstCte && cte != null) {
+                boolean single = cte.size() == 1;
                 RenderContext render = configuration.dsl().renderContext();
 
                 // There is no WITH clause

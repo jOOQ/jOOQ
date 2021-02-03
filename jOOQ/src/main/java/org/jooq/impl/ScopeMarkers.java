@@ -49,6 +49,7 @@ import org.jooq.RenderContext;
  */
 enum ScopeMarkers implements QueryPartInternal {
 
+    BEFORE_FIRST_TOP_LEVEL_DECLARATION,
     BEFORE_FIRST_TOP_LEVEL_CTE,
     AFTER_LAST_TOP_LEVEL_CTE;
 

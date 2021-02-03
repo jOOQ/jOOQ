@@ -64,14 +64,17 @@ import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_PROCEDURE;
+import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_DECLARATION;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.toplevel;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
+import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_DECLARATIONS;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -125,12 +128,13 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             case FIREBIRD: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
                     ctx.paramType(INLINED)
-                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).sql(' ');
+                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).formatSeparator();
 
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                    topLevelDeclarations(ctx, () -> accept0(ctx));
                 }
-
-                accept0(ctx);
+                else
+                    accept0(ctx);
 
                 decrement(ctx.data(), DATA_BLOCK_NESTING);
                 break;
@@ -228,6 +232,21 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             }
         }
     }
+
+    static final void topLevelDeclarations(Context<?> ctx, Runnable runnable) {
+
+
+
+
+
+
+        runnable.run();
+
+
+
+
+    }
+
 
     static final void bodyAsString(Context<?> ctx, Keyword keyword, Runnable runnable) {
         ParamType previous = ctx.paramType();
@@ -331,6 +350,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
     private static final void semicolonAfterStatement(Context<?> ctx, Statement s) {
         if (s instanceof Block)
             return;
+
 
 
 

@@ -529,3 +529,12 @@ package org.jooq.impl;
 
 
 
+
+
+
+
+
+
+
+
+

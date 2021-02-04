@@ -719,8 +719,7 @@ public interface Context<C extends Context<C>> extends Scope {
 
     /**
      * Set the new context value for {@link #paramType()} for the scope of a
-     * {@link Consumer}, if a condition is
-     * true.
+     * {@link Consumer}, if a condition is true.
      */
     @NotNull
     C paramTypeIf(ParamType paramType, boolean condition, Consumer<? super C> runnable);
@@ -736,6 +735,13 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C castMode(CastMode mode);
+
+    /**
+     * Set the new cast mode for {@link #castMode()} for the scope of a
+     * {@link Consumer}.
+     */
+    @NotNull
+    C castMode(CastMode mode, Consumer<? super C> runnable);
 
     /**
      * Set the new cast mode for {@link #castMode()}, if a condition is true.

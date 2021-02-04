@@ -880,6 +880,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final C castMode(CastMode mode, Consumer<? super C> consumer) {
+        return toggle(mode, this::castMode, this::castMode, consumer);
+    }
+
+    @Override
     public final C castModeIf(CastMode mode, boolean condition) {
         if (condition)
             castMode(mode);

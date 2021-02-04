@@ -83,6 +83,7 @@ import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.bitXNor;
 import static org.jooq.impl.DSL.bitXor;
 import static org.jooq.impl.DSL.boolOr;
+// ...
 import static org.jooq.impl.DSL.cardinality;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.catalog;
@@ -374,6 +375,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -423,7 +425,6 @@ import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
-// ...
 // ...
 // ...
 // ...
@@ -600,8 +601,6 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -3075,7 +3074,12 @@ final class ParserContext {
     private final Statement parseStatement() {
         switch (characterUpper()) {
             case 'C':
-                if (peekKeyword("CONTINUE") && requireProEdition())
+                if (peekKeyword("CALL") && requireProEdition())
+
+
+
+                ;
+                else if (peekKeyword("CONTINUE") && requireProEdition())
 
 
 
@@ -3093,7 +3097,12 @@ final class ParserContext {
                 break;
 
             case 'E':
-                if (peekKeyword("EXIT") && requireProEdition())
+                if (peekKeyword("EXECUTE PROCEDURE", "EXEC") && requireProEdition())
+
+
+
+                ;
+                else if (peekKeyword("EXIT") && requireProEdition())
 
 
 
@@ -3202,6 +3211,10 @@ final class ParserContext {
 
 
 
+
+
+
+
         return parseQuery(false, false);
     }
 
@@ -3213,6 +3226,47 @@ final class ParserContext {
         parseKeyword("NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

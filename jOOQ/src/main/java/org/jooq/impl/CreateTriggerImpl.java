@@ -526,15 +526,3 @@ package org.jooq.impl;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-

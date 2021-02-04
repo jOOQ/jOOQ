@@ -54,7 +54,6 @@ import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_DECLARATIONS;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

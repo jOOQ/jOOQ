@@ -70,7 +70,6 @@ import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.toplevel;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_DECLARATIONS;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,6 +90,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Statement;
 // ...
 import org.jooq.conf.ParamType;
+import org.jooq.impl.Tools.DataKey;
 
 /**
  * @author Lukas Eder

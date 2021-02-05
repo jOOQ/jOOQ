@@ -155,7 +155,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (alterViewIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.ALTER_VIEW, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.ALTER_VIEW, c -> accept0(c));
         else
             accept0(ctx);
     }

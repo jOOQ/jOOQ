@@ -111,6 +111,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.jooq.Comment;
 import org.jooq.Configuration;
@@ -362,46 +363,46 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx))
-            tryCatch(ctx, DDLStatementType.CREATE_TABLE, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.CREATE_TABLE, c -> accept0(c));
         else
             accept0(ctx);
     }
 
-    private static final void executeImmediateIf(boolean wrap, Context<?> ctx, Runnable runnable) {
+    private static final void executeImmediateIf(boolean wrap, Context<?> ctx, Consumer<? super Context<?>> runnable) {
         if (wrap) {
             executeImmediate(ctx, runnable);
         }
         else {
-            runnable.run();
+            runnable.accept(ctx);
             ctx.sql(';');
         }
     }
 
     private final void accept0(Context<?> ctx) {
-        boolean c = comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect());
-        boolean i = !indexes.isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect());
+        boolean bc = comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect());
+        boolean bi = !indexes.isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect());
 
-        if (c || i) {
-            begin(ctx, () -> {
-                executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), ctx, () -> accept1(ctx));
+        if (bc || bi) {
+            begin(ctx, c1 -> {
+                executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(c1.dialect()), c1, c2 -> accept1(c2));
 
-                if (c) {
-                    ctx.formatSeparator();
+                if (bc) {
+                    c1.formatSeparator();
 
-                    executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), ctx,
-                        () -> ctx.visit(commentOnTable(table).is(comment))
+                    executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), c1,
+                        c2 -> c2.visit(commentOnTable(table).is(comment))
                     );
                 }
 
-                if (i) {
+                if (bi) {
                     for (Index index : indexes) {
-                        ctx.formatSeparator();
+                        c1.formatSeparator();
 
-                        executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), ctx, () -> {
+                        executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(c1.dialect()), c1, c2 -> {
                             if ("".equals(index.getName()))
-                                ctx.visit(createIndex().on(index.getTable(), index.getFields()));
+                                c2.visit(createIndex().on(index.getTable(), index.getFields()));
                             else
-                                ctx.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
+                                c2.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
                         });
                     }
                 }

@@ -43,6 +43,7 @@ import static org.jooq.impl.Names.N_XMLELEMENT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Collection;
+import java.util.function.Consumer;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -77,20 +78,20 @@ final class XMLElement extends AbstractField<XML> {
         boolean hasContent = !content.isEmpty();
         boolean format = hasAttributes || hasContent;
 
-        Runnable accept0 = () -> {
-            ctx.visit(K_NAME).sql(' ').visit(elementName);
+        Consumer<Context<?>> accept0 = c -> {
+            c.visit(K_NAME).sql(' ').visit(elementName);
 
             if (hasAttributes)
                 if (format)
-                    ctx.sql(',').formatSeparator().visit(attributes);
+                    c.sql(',').formatSeparator().visit(attributes);
                 else
-                    ctx.sql(", ").visit(attributes);
+                    c.sql(", ").visit(attributes);
 
             if (hasContent)
                 if (format)
-                    ctx.sql(',').formatSeparator().visit(content);
+                    c.sql(',').formatSeparator().visit(content);
                 else
-                    ctx.sql(", ").visit(content);
+                    c.sql(", ").visit(content);
         };
 
         ctx.visit(N_XMLELEMENT).sql('(');
@@ -98,12 +99,12 @@ final class XMLElement extends AbstractField<XML> {
         if (format) {
             ctx.formatIndentStart()
                .formatNewLine()
-               .data(DATA_LIST_ALREADY_INDENTED, true, c -> accept0.run())
+               .data(DATA_LIST_ALREADY_INDENTED, true, c -> accept0.accept(c))
                .formatIndentEnd()
                .formatNewLine();
         }
         else
-            accept0.run();
+            accept0.accept(ctx);
 
         ctx.sql(')');
     }

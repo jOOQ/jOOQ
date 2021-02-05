@@ -304,7 +304,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (alterSequenceIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.ALTER_SEQUENCE, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.ALTER_SEQUENCE, c -> accept0(c));
         else
             accept0(ctx);
     }

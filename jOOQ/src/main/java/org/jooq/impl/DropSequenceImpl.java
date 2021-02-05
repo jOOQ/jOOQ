@@ -101,7 +101,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (dropSequenceIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.DROP_SEQUENCE, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.DROP_SEQUENCE, c -> accept0(c));
         else
             accept0(ctx);
     }

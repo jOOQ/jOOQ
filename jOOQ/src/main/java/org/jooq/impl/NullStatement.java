@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+
 // ...
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.one;
@@ -45,6 +46,7 @@ import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NULL;
 
 import org.jooq.Context;
+// ...
 
 /**
  * @author Lukas Eder

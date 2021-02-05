@@ -220,6 +220,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinPool.ManagedBlocker;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -4321,9 +4322,9 @@ final class Tools {
     /**
      * Wrap a runnable in a <code>BEGIN / END</code> anonymous block.
      */
-    static final void begin(Context<?> ctx, Runnable runnable) {
+    static final void begin(Context<?> ctx, Consumer<? super Context<?>> runnable) {
         begin(ctx);
-        runnable.run();
+        runnable.accept(ctx);
         end(ctx);
     }
 
@@ -4410,9 +4411,9 @@ final class Tools {
     /**
      * Wrap a statement in an <code>EXECUTE IMMEDIATE</code> statement.
      */
-    static final void executeImmediate(Context<?> ctx, Runnable runnable) {
+    static final void executeImmediate(Context<?> ctx, Consumer<? super Context<?>> runnable) {
         beginExecuteImmediate(ctx);
-        runnable.run();
+        runnable.accept(ctx);
         endExecuteImmediate(ctx);
     }
 
@@ -4449,11 +4450,11 @@ final class Tools {
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
      * <code>IF EXISTS</code> is not supported.
      */
-    static final void tryCatch(Context<?> ctx, DDLStatementType type, Runnable runnable) {
+    static final void tryCatch(Context<?> ctx, DDLStatementType type, Consumer<? super Context<?>> runnable) {
         tryCatch(ctx, type, null, null, runnable);
     }
 
-    static final void tryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element, Runnable runnable) {
+    static final void tryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element, Consumer<? super Context<?>> runnable) {
         switch (ctx.family()) {
 
 
@@ -4705,12 +4706,12 @@ final class Tools {
 
 
             case FIREBIRD: {
-                begin(ctx, () -> {
-                    executeImmediate(ctx, runnable);
+                begin(ctx, c -> {
+                    executeImmediate(c, runnable);
 
-                    ctx.formatSeparator()
-                       .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()
-                       .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd();
+                    c.formatSeparator()
+                     .visit(K_WHEN).sql(" sqlcode -607 ").visit(K_DO).formatIndentStart().formatSeparator()
+                     .visit(K_BEGIN).sql(' ').visit(K_END).formatIndentEnd();
                 });
                 break;
             }
@@ -4737,12 +4738,12 @@ final class Tools {
 //                else
                     sqlstates.add("42S02");
 
-                begin(ctx, () -> {
+                begin(ctx, c -> {
                     for (String sqlstate : sqlstates)
-                        ctx.visit(keyword("declare continue handler for sqlstate")).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_BEGIN).sql(' ').visit(K_END).sql(';').formatSeparator();
+                        c.visit(keyword("declare continue handler for sqlstate")).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_BEGIN).sql(' ').visit(K_END).sql(';').formatSeparator();
 
-                    runnable.run();
-                    ctx.sql(';');
+                    runnable.accept(c);
+                    c.sql(';');
                 });
                 break;
             }
@@ -4751,7 +4752,7 @@ final class Tools {
 
 
             case POSTGRES: {
-                begin(ctx, () -> {
+                begin(ctx, c -> {
                     String sqlstate;
 
                     switch (type) {
@@ -4761,17 +4762,17 @@ final class Tools {
                         default            : sqlstate = "42P07"; break;
                     }
 
-                    runnable.run();
+                    runnable.accept(c);
 
-                    ctx.sql(';').formatIndentEnd().formatSeparator()
-                       .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
-                       .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
+                    c.sql(';').formatIndentEnd().formatSeparator()
+                     .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
+                     .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
                 });
                 break;
             }
 
             default:
-                runnable.run();
+                runnable.accept(ctx);
                 break;
         }
     }

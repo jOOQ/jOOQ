@@ -200,7 +200,7 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx))
-            tryCatch(ctx, DDLStatementType.CREATE_VIEW, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.CREATE_VIEW, c -> accept0(c));
         else
             accept0(ctx);
     }

@@ -134,7 +134,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (dropDomainIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.DROP_DOMAIN, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.DROP_DOMAIN, c -> accept0(c));
         else
             accept0(ctx);
     }

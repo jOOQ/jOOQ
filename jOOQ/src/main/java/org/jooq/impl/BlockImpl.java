@@ -55,7 +55,6 @@ import static org.jooq.impl.Keywords.K_ATOMIC;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_CALL;
 import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_DO;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_END;
@@ -64,7 +63,6 @@ import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_PROCEDURE;
-import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_DECLARATION;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.toplevel;
@@ -74,15 +72,13 @@ import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.jooq.Block;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
-// ...
-import org.jooq.Field;
 import org.jooq.Keyword;
 // ...
 import org.jooq.Query;
@@ -90,6 +86,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Statement;
 // ...
 import org.jooq.conf.ParamType;
+import org.jooq.impl.ScopeMarker.Marker;
 import org.jooq.impl.Tools.DataKey;
 
 /**
@@ -102,7 +99,10 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
      */
     private static final long                     serialVersionUID                  = 6881305779639901498L;
     private static final Set<SQLDialect>          REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>          SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES);
+
+
+
+
 
 
 
@@ -131,7 +131,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                        .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).formatSeparator();
 
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                    topLevelDeclarations(ctx, () -> accept0(ctx));
+                    scopeDeclarations(ctx, c -> accept0(c));
                 }
                 else
                     accept0(ctx);
@@ -143,7 +143,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
             case POSTGRES: {
-                bodyAsString(ctx, K_DO, () -> accept0(ctx));
+                bodyAsString(ctx, K_DO, c -> accept0(c));
                 break;
             }
 
@@ -233,14 +233,20 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
         }
     }
 
-    static final void topLevelDeclarations(Context<?> ctx, Runnable runnable) {
+    static final void scopeDeclarations(Context<?> ctx, Consumer<? super Context<?>> runnable) {
 
 
 
 
 
 
-        runnable.run();
+
+
+
+
+
+            runnable.accept(ctx);
+
 
 
 
@@ -248,7 +254,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
     }
 
 
-    static final void bodyAsString(Context<?> ctx, Keyword keyword, Runnable runnable) {
+    static final void bodyAsString(Context<?> ctx, Keyword keyword, Consumer<? super Context<?>> runnable) {
         ParamType previous = ctx.paramType();
 
         if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
@@ -262,7 +268,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                .data(DATA_FORCE_STATIC_STATEMENT, true);
         }
 
-        runnable.run();
+        runnable.accept(ctx);
 
         if (decrement(ctx.data(), DATA_BLOCK_NESTING))
             ctx.formatSeparator()
@@ -282,12 +288,32 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
         ;
 
-        acceptDeclarations(ctx, new ArrayList<>(statements), wrapInBeginEnd);
+        if (wrapInBeginEnd) {
+
+
+
+
+
+
+
+
+
+
+            {
+                begin(ctx);
+                scopeDeclarations(ctx, c -> accept1(c));
+                end(ctx);
+            }
+        }
+        else
+            accept1(ctx);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    private static final void acceptDeclarations(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
+    private final void accept1(Context<?> ctx) {
+        if (statements.isEmpty()) {
 
+            // TODO: Replace this switch by SUPPORTS_NULL_STATEMENT usage
+            switch (ctx.family()) {
 
 
 
@@ -297,7 +323,18 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+                default:
+                    break;
+            }
+        }
+        else {
+            DefaultRenderContext r = ctx instanceof DefaultRenderContext
+                ? (DefaultRenderContext) ctx
+                : null;
 
+            for (Statement s : statements) {
+                ctx.formatSeparator();
+                int position = r != null ? r.sql.length() : 0;
 
 
 
@@ -335,23 +372,18 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+                    ctx.visit(s);
 
 
 
 
 
 
-
-
-
-
-
-        acceptNonDeclarations(ctx, statements, wrapInBeginEnd);
-
-
-
-
-
+                // [#11374] [#11367] TODO Improve this clunky semi colon decision logic
+                if (position < (r != null ? r.sql.length() : 0))
+                    semicolonAfterStatement(ctx, s);
+            }
+        }
     }
 
     private static final void semicolonAfterStatement(Context<?> ctx, Statement s) {
@@ -399,106 +431,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
-
-
-
-
-
-
-
-    private static final void acceptNonDeclarations(Context<?> ctx, List<Statement> statements, boolean wrapInBeginEnd) {
-        if (wrapInBeginEnd)
-            begin(ctx);
-
-        if (statements.isEmpty()) {
-            switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-                case H2:
-                case FIREBIRD:
-                case MARIADB:
-                default:
-                    break;
-            }
-        }
-        else {
-            statementLoop:
-            for (int i = 0; i < statements.size(); i++) {
-                Statement s = statements.get(i);
-
-
-
-
-
-
-
-
-
-
-                if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.dialect()))
-                    continue statementLoop;
-
-                ctx.formatSeparator();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    ctx.visit(s);
-
-
-
-
-
-
-                semicolonAfterStatement(ctx, s);
-            }
-        }
-
-        if (wrapInBeginEnd)
-            end(ctx);
-    }
 
     private static final void begin(Context<?> ctx) {
         if (ctx.family() == H2)

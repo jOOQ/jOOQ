@@ -142,7 +142,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (alterDatabaseIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.ALTER_DATABASE, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.ALTER_DATABASE, c -> accept0(c));
         else
             accept0(ctx);
     }

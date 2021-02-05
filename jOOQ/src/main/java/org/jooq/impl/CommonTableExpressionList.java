@@ -37,8 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
-import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
+import static org.jooq.impl.ScopeMarker.TOP_LEVEL_CTE;
 
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
@@ -58,14 +57,14 @@ final class CommonTableExpressionList extends QueryPartList<CommonTableExpressio
     @Override
     public void accept(Context<?> ctx) {
         if (ctx.subqueryLevel() == 0)
-            ctx.scopeMarkStart(BEFORE_FIRST_TOP_LEVEL_CTE)
-               .scopeMarkEnd(BEFORE_FIRST_TOP_LEVEL_CTE);
+            ctx.scopeMarkStart(TOP_LEVEL_CTE.beforeFirst)
+               .scopeMarkEnd(TOP_LEVEL_CTE.beforeFirst);
 
         super.accept(ctx);
 
         if (ctx.subqueryLevel() == 0)
-            ctx.scopeMarkStart(AFTER_LAST_TOP_LEVEL_CTE)
-               .scopeMarkEnd(AFTER_LAST_TOP_LEVEL_CTE);
+            ctx.scopeMarkStart(TOP_LEVEL_CTE.afterLast)
+               .scopeMarkEnd(TOP_LEVEL_CTE.afterLast);
     }
 
     @Override

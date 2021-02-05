@@ -101,7 +101,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (dropViewIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.DROP_VIEW, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.DROP_VIEW, c -> accept0(c));
         else
             accept0(ctx);
     }

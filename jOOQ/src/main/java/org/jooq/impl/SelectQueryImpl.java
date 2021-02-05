@@ -159,8 +159,7 @@ import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
-import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
-import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
+import static org.jooq.impl.ScopeMarker.TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.fieldArray;
@@ -1310,10 +1309,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (with != null)
                 context.visit(with);
             else if (context.subqueryLevel() == 0)
-                context.scopeMarkStart(BEFORE_FIRST_TOP_LEVEL_CTE)
-                       .scopeMarkEnd(BEFORE_FIRST_TOP_LEVEL_CTE)
-                       .scopeMarkStart(AFTER_LAST_TOP_LEVEL_CTE)
-                       .scopeMarkEnd(AFTER_LAST_TOP_LEVEL_CTE);
+                context.scopeMarkStart(TOP_LEVEL_CTE.beforeFirst)
+                       .scopeMarkEnd(TOP_LEVEL_CTE.beforeFirst)
+                       .scopeMarkStart(TOP_LEVEL_CTE.afterLast)
+                       .scopeMarkEnd(TOP_LEVEL_CTE.afterLast);
 
             pushWindow(context);
 

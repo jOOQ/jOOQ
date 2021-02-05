@@ -100,7 +100,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (createDatabaseIfNotExists && !supportsIfNotExists(ctx))
-            tryCatch(ctx, DDLStatementType.CREATE_DATABASE, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.CREATE_DATABASE, c -> accept0(c));
         else
             accept0(ctx);
     }

@@ -973,7 +973,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 DDLStatementType.ALTER_TABLE,
                 ifExists ? TRUE : null,
                 ifExistsColumn || ifExistsConstraint ? TRUE : ifNotExistsColumn ? FALSE : null,
-                () -> accept0(ctx)
+                c -> accept0(c)
             );
         else
             accept0(ctx);
@@ -1000,11 +1000,11 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
         if (family == FIREBIRD) {
             if (addFirst) {
-                begin(ctx, () -> {
-                    executeImmediate(ctx, () -> accept1(ctx));
-                    ctx.formatSeparator();
-                    executeImmediate(ctx, () -> {
-                        ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_ALTER).sql(' ').visit(addColumn).sql(' ').visit(K_POSITION).sql(" 1");
+                begin(ctx, c1 -> {
+                    executeImmediate(c1, c2 -> accept1(c2));
+                    c1.formatSeparator();
+                    executeImmediate(c1, c2 -> {
+                        c2.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_ALTER).sql(' ').visit(addColumn).sql(' ').visit(K_POSITION).sql(" 1");
                     });
                 });
                 return;
@@ -1786,14 +1786,14 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
     private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
-        begin(ctx, () -> {
+        begin(ctx, c1 -> {
 
 
 
 
 
 
-            accept1(ctx);
+            accept1(c1);
 
 
 
@@ -1801,9 +1801,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-            ctx.sql(';').formatSeparator();
+            c1.sql(';').formatSeparator();
 
-            switch (ctx.family()) {
+            switch (c1.family()) {
 
 
 
@@ -1838,8 +1838,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
                 case POSTGRES: {
-                    AlterTableAlterStep<?> step = ctx.dsl().alterTable(table).alterColumn(alterColumn);
-                    ctx.visit(alterColumnType.nullable() ? step.dropNotNull() : step.setNotNull())
+                    AlterTableAlterStep<?> step = c1.dsl().alterTable(table).alterColumn(alterColumn);
+                    c1.visit(alterColumnType.nullable() ? step.dropNotNull() : step.setNotNull())
                        .sql(';');
                     break;
                 }

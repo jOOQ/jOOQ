@@ -159,7 +159,7 @@ implements
 
     private void accept0(Context<?> ctx) {
         if (dropSchemaIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.DROP_SCHEMA, () -> accept1(ctx));
+            tryCatch(ctx, DDLStatementType.DROP_SCHEMA, c -> accept0(c));
         else
             accept1(ctx);
     }

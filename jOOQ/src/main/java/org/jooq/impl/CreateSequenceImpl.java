@@ -260,7 +260,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (createSequenceIfNotExists && !supportsIfNotExists(ctx))
-            tryCatch(ctx, DDLStatementType.CREATE_SEQUENCE, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.CREATE_SEQUENCE, c -> accept0(c));
         else
             accept0(ctx);
     }

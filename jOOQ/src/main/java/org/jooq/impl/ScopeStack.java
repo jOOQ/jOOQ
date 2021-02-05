@@ -45,6 +45,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.function.Predicate;
+
+import org.jooq.impl.AbstractContext.ScopeStackElement;
 
 import static java.util.Collections.nCopies;
 
@@ -94,12 +97,16 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     final Iterable<Value<V>> valueIterable() {
-        return () -> new ScopeStackIterator<Value<V>>(Value::lastOf);
+        return () -> new ScopeStackIterator<Value<V>>(Value::lastOf, e -> true);
     }
 
     @Override
     public final Iterator<V> iterator() {
-        return new ScopeStackIterator<>(list -> list.get(list.size() - 1));
+        return iterable(e -> true).iterator();
+    }
+
+    final Iterable<V> iterable(Predicate<? super V> filter) {
+        return () -> new ScopeStackIterator<>(list -> list.get(list.size() - 1), filter);
     }
 
     static final class Value<V> {
@@ -125,10 +132,12 @@ final class ScopeStack<K, V> implements Iterable<V> {
     private final class ScopeStackIterator<U> implements Iterator<U> {
         final Iterator<List<V>>    it = stack().values().iterator();
         final Function<List<V>, U> valueExtractor;
+        final Predicate<? super U> filter;
         U                          next;
 
-        ScopeStackIterator(Function<List<V>, U> valueExtractor) {
+        ScopeStackIterator(Function<List<V>, U> valueExtractor, Predicate<? super U> filter) {
             this.valueExtractor = valueExtractor;
+            this.filter = filter;
         }
 
         @Override
@@ -149,7 +158,12 @@ final class ScopeStack<K, V> implements Iterable<V> {
         }
 
         private U move() {
-            for (List<V> list; it.hasNext() && ((list = it.next()).isEmpty() || ((next = valueExtractor.apply(list)) == null)););
+            for (
+                List<V> list;
+                it.hasNext() && ((list = it.next()).isEmpty() || ((next = valueExtractor.apply(list)) == null) || !filter.test(next));
+                next = null
+            );
+
             return next;
         }
 
@@ -207,6 +221,10 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
     final boolean inScope() {
         return scopeLevel > -1;
+    }
+
+    final int scopeLevel() {
+        return scopeLevel;
     }
 
     final void scopeStart() {

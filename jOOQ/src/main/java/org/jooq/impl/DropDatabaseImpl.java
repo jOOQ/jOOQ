@@ -100,7 +100,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (dropDatabaseIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.DROP_DATABASE, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.DROP_DATABASE, c -> accept0(c));
         else
             accept0(ctx);
     }

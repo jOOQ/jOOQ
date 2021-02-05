@@ -50,6 +50,7 @@ import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
+import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
@@ -960,11 +961,13 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         sb.append("]");
     }
 
-    class JoinNode {
+    static class JoinNode {
+        final Configuration                   configuration;
         final Table<?>                        table;
         final Map<ForeignKey<?, ?>, JoinNode> children;
 
-        JoinNode(Table<?> table) {
+        JoinNode(Configuration configuration, Table<?> table) {
+            this.configuration = configuration;
             this.table = table;
             this.children = new LinkedHashMap<>();
         }
@@ -975,7 +978,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             for (Entry<ForeignKey<?, ?>, JoinNode> e : children.entrySet()) {
                 JoinType type;
 
-                switch (StringUtils.defaultIfNull(settings().getRenderImplicitJoinType(),
+                switch (StringUtils.defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(),
                     RenderImplicitJoinType.DEFAULT)) {
                     case INNER_JOIN:
                         type = JOIN;
@@ -1001,7 +1004,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
     }
 
-    class ScopeStackElement {
+    static class ScopeStackElement {
         final int scopeLevel;
         int[]     positions;
         int       indent;

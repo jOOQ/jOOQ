@@ -142,7 +142,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (dropTableIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.DROP_TABLE, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.DROP_TABLE, c -> accept0(c));
         else
             accept0(ctx);
     }

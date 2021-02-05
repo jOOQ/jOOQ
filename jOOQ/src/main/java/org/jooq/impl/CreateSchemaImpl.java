@@ -124,7 +124,7 @@ implements
 
     private final void accept0(Context<?> ctx) {
         if (createSchemaIfNotExists && !supportsIfNotExists(ctx))
-            tryCatch(ctx, DDLStatementType.CREATE_SCHEMA, () -> accept1(ctx));
+            tryCatch(ctx, DDLStatementType.CREATE_SCHEMA, c -> accept0(c));
         else
             accept1(ctx);
     }

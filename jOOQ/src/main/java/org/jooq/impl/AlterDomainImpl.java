@@ -332,7 +332,7 @@ implements
     public final void accept(Context<?> ctx) {
         if (renameConstraintIfExists && !supportsRenameConstraintIfExists(ctx) ||
             dropConstraintIfExists && !supportsDropConstraintIfExists(ctx))
-            Tools.tryCatch(ctx, DDLStatementType.ALTER_DOMAIN, () -> accept0(ctx));
+            Tools.tryCatch(ctx, DDLStatementType.ALTER_DOMAIN, c -> accept0(c));
         else
             accept0(ctx);
     }

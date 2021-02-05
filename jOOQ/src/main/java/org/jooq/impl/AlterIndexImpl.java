@@ -162,7 +162,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (alterIndexIfExists && !supportsIfExists(ctx))
-            tryCatch(ctx, DDLStatementType.ALTER_INDEX, () -> accept0(ctx));
+            tryCatch(ctx, DDLStatementType.ALTER_INDEX, c -> accept0(c));
         else
             accept0(ctx);
     }

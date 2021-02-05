@@ -47,13 +47,8 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
-import static org.jooq.impl.Keywords.K_WITH;
-import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
-import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
-import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -75,9 +70,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
-import org.jooq.Statement;
 import org.jooq.Table;
-// ...
 import org.jooq.conf.RenderFormatting;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
@@ -86,7 +79,6 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -210,7 +202,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     : scopeStack.getOrCreate(root);
 
                 if (e.joinNode == null)
-                    e.joinNode = new JoinNode(root);
+                    e.joinNode = new JoinNode(configuration(), root);
 
                 JoinNode childNode = e.joinNode;
                 for (int i = tables.size() - 1; i >= 0; i--) {
@@ -219,99 +211,53 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
                     JoinNode next = childNode.children.get(k);
                     if (next == null) {
-                        next = new JoinNode(t);
+                        next = new JoinNode(configuration(), t);
                         childNode.children.put(k, next);
                     }
 
                     childNode = next;
                 }
             }
+            else if (forceNew)
+                scopeStack.create(part);
+            else
+                scopeStack.getOrCreate(part);
+
         }
 
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     void scopeEnd0() {
+        ScopeMarker[] markers = ScopeMarker.values();
+        ScopeStackElement[] beforeFirst = new ScopeStackElement[markers.length];
+        ScopeStackElement[] afterLast = new ScopeStackElement[markers.length];
+        Object[] objects = new Object[markers.length];
 
-        // TODO: Think about a more appropriate location for this logic, rather
-        // than the generic DefaultRenderContext, which shouldn't know anything
-        // about the individual query parts that it is rendering.
+        for (ScopeMarker marker : markers) {
+            if (!marker.topLevelOnly || subqueryLevel() == 0) {
+                int i = marker.ordinal();
+                Object o = objects[i] = data(marker.key);
 
-
-
-
-        TopLevelCte cte = null;
-        ScopeStackElement beforeFirstCte = null;
-        ScopeStackElement afterLastCte = null;
-
-        if (subqueryLevel() == 0) {
-
-
-
-
-
-
-
-            if ((cte = (TopLevelCte) data(DATA_TOP_LEVEL_CTE)) != null && !cte.isEmpty()) {
-                beforeFirstCte = scopeStack.get(BEFORE_FIRST_TOP_LEVEL_CTE);
-                afterLastCte = scopeStack.get(AFTER_LAST_TOP_LEVEL_CTE);
+                if (o != null && (o instanceof List && !((List<?>) o).isEmpty() || o instanceof Map && !((Map<?, ?>) o).isEmpty())) {
+                    beforeFirst[i] = scopeStack.get(marker.beforeFirst);
+                    afterLast[i] = scopeStack.get(marker.afterLast);
+                }
             }
         }
 
         outer:
-        for (ScopeStackElement e1 : scopeStack) {
+        for (ScopeStackElement e1 : scopeStack.iterable(e -> e.scopeLevel == scopeStack.scopeLevel())) {
             String replaced = null;
 
-            if (subqueryLevel() != e1.scopeLevel) {
-                continue outer;
-            }
-            else if (e1.positions == null) {
+            if (e1.positions == null) {
                 continue outer;
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            else if (e1 == beforeFirstCte && cte != null) {
-                boolean single = cte.size() == 1;
-                RenderContext render = configuration.dsl().renderContext();
-
-                // There is no WITH clause
-                if (afterLastCte != null && e1.positions[0] == afterLastCte.positions[0])
-                    render.visit(K_WITH);
-
-                if (single)
-                    render.formatIndentStart()
-                          .formatSeparator();
-                else
-                    render.sql(' ');
-
-                render.declareCTE(true).visit(cte).declareCTE(false);
-
-                if (single)
-                    render.formatIndentEnd();
-
-                replaced = render.render();
-            }
-            else if (e1.joinNode == null) {
-                continue outer;
-            }
-            else if (!e1.joinNode.children.isEmpty()) {
+            // [#11367] TODO: Move this logic into a ScopeMarker as well
+            //          TODO: subqueryLevel() is lower than scopeLevel if we use implicit join in procedural logic
+            else if (e1.joinNode != null && !e1.joinNode.children.isEmpty()) {
                 replaced = configuration
                     .dsl()
                     .renderContext()
@@ -324,6 +270,25 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     .formatNewLine()
                     .sql(')')
                     .render();
+            }
+            else {
+
+                elementLoop:
+                for (int i = 0; i < beforeFirst.length; i++) {
+                    ScopeStackElement e = beforeFirst[i];
+                    Object o = objects[i];
+
+                    if (e1 == e && o != null) {
+                        replaced = markers[i].renderer.render(
+                            configuration.dsl().renderContext().formatIndentStart(e.indent),
+                            e,
+                            afterLast[i],
+                            o
+                        );
+
+                        break elementLoop;
+                    }
+                }
             }
 
             if (replaced != null) {

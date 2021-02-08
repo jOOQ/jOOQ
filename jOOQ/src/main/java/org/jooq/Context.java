@@ -244,7 +244,7 @@ public interface Context<C extends Context<C>> extends Scope {
     int scopeLevel();
 
     /**
-     * Start a new SELECT scope.
+     * Start a new scope.
      */
     @NotNull
     C scopeStart();

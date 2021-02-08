@@ -117,9 +117,6 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
 
     @Override
     public final DerivedColumnListImpl fields(Name... fieldNames) {
-        if (getName().length != 1)
-            throw new IllegalStateException("Cannot create a DerivedColumnList from a qualified name : " + Arrays.asList(getName()));
-
         return new DerivedColumnListImpl(unqualifiedName(), fieldNames);
     }
 

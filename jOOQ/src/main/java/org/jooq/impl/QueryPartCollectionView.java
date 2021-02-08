@@ -122,7 +122,11 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         int size = rendersContent.cardinality();
         boolean format = ctx.format() && size >= indentSize;
         boolean previousQualify = ctx.qualify();
-        boolean indent = format && !TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
+        boolean previousAlreadyIndented = TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
+        boolean indent = format && !previousAlreadyIndented;
+
+        if (previousAlreadyIndented)
+            ctx.data(DATA_LIST_ALREADY_INDENTED, false);
 
         if (qualify != null)
             ctx.qualify(qualify);
@@ -184,6 +188,9 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
         if (qualify != null)
             ctx.qualify(previousQualify);
+
+        if (previousAlreadyIndented)
+            ctx.data(DATA_LIST_ALREADY_INDENTED, previousAlreadyIndented);
     }
 
     /**

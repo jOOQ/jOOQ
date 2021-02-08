@@ -238,6 +238,12 @@ public interface Context<C extends Context<C>> extends Scope {
     int subqueryLevel();
 
     /**
+     * Which level of scopes we're currently in, starting with 0 for the top
+     * scope.
+     */
+    int scopeLevel();
+
+    /**
      * Start a new SELECT scope.
      */
     @NotNull
@@ -255,6 +261,13 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C scopeRegister(QueryPart part);
+
+    /**
+     * Combine {@link #scopeRegister(QueryPart, boolean)},
+     * {@link #scopeMarkStart(QueryPart)} and {@link #scopeMarkEnd(QueryPart)}.
+     */
+    @NotNull
+    C scopeRegisterAndMark(QueryPart part, boolean forceNew);
 
     /**
      * Register a "special" query part in the scope, allowing to force

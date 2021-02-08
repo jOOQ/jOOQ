@@ -38,11 +38,12 @@
 package org.jooq.impl;
 
 import org.jooq.QueryPart;
+import org.jooq.impl.ScopeMarker.ScopeContent;
 
 /**
  * [#3607] [#8522] CTEs that need to be added to the top level CTE section.
  */
-final class TopLevelCte extends QueryPartList<QueryPart> {
+final class TopLevelCte extends QueryPartList<QueryPart> implements ScopeContent {
 
     /**
      * Generated UID

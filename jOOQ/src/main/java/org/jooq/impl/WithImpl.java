@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_RECURSIVE;
 import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -123,6 +124,7 @@ import org.jooq.WithAsStep7;
 import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * This type models an intermediary DSL construction step, which leads towards
@@ -212,18 +214,22 @@ implements
         list = ctes;
 
         if (!list.isEmpty()) {
-            ctx.visit(K_WITH)
-               .separatorRequired(true);
+            ctx.visit(K_WITH);
 
             if (recursive
 
 
 
             )
-                ctx.visit(K_RECURSIVE)
-                   .separatorRequired(true);
+                ctx.sql(' ').visit(K_RECURSIVE);
 
-            ctx.declareCTE(true, c -> c.visit(list)).formatSeparator();
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c1 ->
+                c1.formatIndentStart()
+                  .formatSeparator()
+                  .declareCTE(true, c2 -> c2.visit(list))
+                  .formatIndentEnd()
+                  .formatSeparator()
+            );
         }
     }
 

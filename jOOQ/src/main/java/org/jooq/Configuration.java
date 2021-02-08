@@ -1345,4 +1345,11 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(Settings newSettings);
+
+    /**
+     * Whether this is a commercial edition of jOOQ.
+     */
+    default boolean commercial() {
+        return false ;
+    }
 }

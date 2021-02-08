@@ -79,6 +79,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -173,13 +174,16 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     void scopeMarkStart0(QueryPart part) {
+        applyNewLine();
         ScopeStackElement e = scopeStack.getOrCreate(part);
         e.positions = new int[] { sql.length(), -1 };
         e.indent = indent;
+        resetSeparatorFlags();
     }
 
     @Override
     void scopeMarkEnd0(QueryPart part) {
+        applyNewLine();
         ScopeStackElement e = scopeStack.getOrCreate(part);
         e.positions[1] = sql.length();
     }
@@ -233,14 +237,14 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         ScopeMarker[] markers = ScopeMarker.values();
         ScopeStackElement[] beforeFirst = new ScopeStackElement[markers.length];
         ScopeStackElement[] afterLast = new ScopeStackElement[markers.length];
-        Object[] objects = new Object[markers.length];
+        ScopeContent[] content = new ScopeContent[markers.length];
 
         for (ScopeMarker marker : markers) {
             if (!marker.topLevelOnly || subqueryLevel() == 0) {
                 int i = marker.ordinal();
-                Object o = objects[i] = data(marker.key);
+                ScopeContent o = content[i] = (ScopeContent) data(marker.key);
 
-                if (o != null && (o instanceof List && !((List<?>) o).isEmpty() || o instanceof Map && !((Map<?, ?>) o).isEmpty())) {
+                if (o != null && !o.isEmpty()) {
                     beforeFirst[i] = scopeStack.get(marker.beforeFirst);
                     afterLast[i] = scopeStack.get(marker.afterLast);
                 }
@@ -276,14 +280,14 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 elementLoop:
                 for (int i = 0; i < beforeFirst.length; i++) {
                     ScopeStackElement e = beforeFirst[i];
-                    Object o = objects[i];
+                    ScopeContent c = content[i];
 
-                    if (e1 == e && o != null) {
+                    if (e1 == e && c != null) {
                         replaced = markers[i].renderer.render(
                             configuration.dsl().renderContext().formatIndentStart(e.indent),
                             e,
                             afterLast[i],
-                            o
+                            c
                         );
 
                         break elementLoop;

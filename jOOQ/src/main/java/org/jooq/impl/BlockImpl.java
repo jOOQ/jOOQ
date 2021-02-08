@@ -72,6 +72,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -80,14 +81,15 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
 import org.jooq.Keyword;
+import org.jooq.Name;
 // ...
 import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Statement;
 // ...
 import org.jooq.conf.ParamType;
-import org.jooq.impl.ScopeMarker.Marker;
-import org.jooq.impl.Tools.DataKey;
+import org.jooq.impl.ScopeMarker.ScopeContent;
+import org.jooq.impl.Tools.DataExtendedKey;
 
 /**
  * @author Lukas Eder
@@ -99,6 +101,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
      */
     private static final long                     serialVersionUID                  = 6881305779639901498L;
     private static final Set<SQLDialect>          REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect>          SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES);
 
 
 
@@ -233,26 +236,68 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     static final void scopeDeclarations(Context<?> ctx, Consumer<? super Context<?>> runnable) {
-
-
-
-
-
-
-
-
-
-
-
+        if (!ctx.configuration().commercial()) {
             runnable.accept(ctx);
+            return;
+        }
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
     }
-
 
     static final void bodyAsString(Context<?> ctx, Keyword keyword, Consumer<? super Context<?>> runnable) {
         ParamType previous = ctx.paramType();
@@ -286,9 +331,18 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
-        ;
 
-        if (wrapInBeginEnd) {
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -332,7 +386,11 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                 ? (DefaultRenderContext) ctx
                 : null;
 
+            statementLoop:
             for (Statement s : statements) {
+                if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.dialect()))
+                    continue statementLoop;
+
                 ctx.formatSeparator();
                 int position = r != null ? r.sql.length() : 0;
 

@@ -37,12 +37,12 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
-
-import java.util.Map;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -51,15 +51,37 @@ import org.jooq.Context;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.Statement;
-// ...
 import org.jooq.impl.AbstractContext.ScopeStackElement;
+import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
 
 /**
  * A set of markers for use with the {@link ScopeStack}.
  */
-@SuppressWarnings("unchecked")
 enum ScopeMarker {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -113,11 +135,11 @@ enum ScopeMarker {
 
     final ReplacementRenderer renderer;
     final boolean             topLevelOnly;
-    final DataKey             key;
+    final Object              key;
     final Marker              beforeFirst;
     final Marker              afterLast;
 
-    private ScopeMarker(boolean topLevelOnly, DataKey key, ReplacementRenderer renderer) {
+    private ScopeMarker(boolean topLevelOnly, Object key, ReplacementRenderer renderer) {
         this.renderer = renderer;
         this.topLevelOnly = topLevelOnly;
         this.key = key;
@@ -131,8 +153,12 @@ enum ScopeMarker {
             Context<?> ctx,
             ScopeStackElement beforeFirst,
             ScopeStackElement afterLast,
-            Object object
+            ScopeContent content
         );
+    }
+
+    interface ScopeContent {
+        boolean isEmpty();
     }
 
     static class Marker implements QueryPartInternal {

@@ -12731,7 +12731,6 @@ final class ParserContext {
 
     private static final DDLQuery                 IGNORE                 = Reflect.on(DSL.query("/* ignored */")).as(DDLQuery.class, QueryPartInternal.class);
     private static final Query                    IGNORE_NO_DELIMITER    = Reflect.on(DSL.query("/* ignored */")).as(Query.class, QueryPartInternal.class);
-    private static final boolean                  PRO_EDITION            = false ;
 
     private final DSLContext                      dsl;
     private final Locale                          locale;
@@ -12806,7 +12805,7 @@ final class ParserContext {
     }
 
     private final boolean requireProEdition() {
-        if (!PRO_EDITION)
+        if (!configuration().commercial())
             throw exception("Feature only supported in pro edition");
 
         return true;

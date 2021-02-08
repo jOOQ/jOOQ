@@ -626,6 +626,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final int scopeLevel() {
+        return scopeStack.scopeLevel();
+    }
+
+    @Override
     public final int subqueryLevel() {
         return subquery;
     }
@@ -692,6 +697,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public /* non-final */ C scopeRegister(QueryPart part, boolean forceNew) {
         return (C) this;
+    }
+
+    @Override
+    public final C scopeRegisterAndMark(QueryPart part, boolean forceNew) {
+        return scopeRegister(part, forceNew).scopeMarkStart(part).scopeMarkEnd(part);
     }
 
     @Override

@@ -256,6 +256,7 @@ import static org.jooq.impl.DSL.regrSYY;
 import static org.jooq.impl.DSL.regrSlope;
 // ...
 import static org.jooq.impl.DSL.replace;
+// ...
 import static org.jooq.impl.DSL.reverse;
 import static org.jooq.impl.DSL.right;
 import static org.jooq.impl.DSL.rollup;
@@ -3177,6 +3178,11 @@ final class ParserContext {
 
 
                 ;
+                else if (peekKeyword("RETURN") && requireProEdition())
+
+
+
+                ;
                 else if (peekKeyword("RAISE") && requireProEdition())
 
 
@@ -3230,6 +3236,12 @@ final class ParserContext {
         parseKeyword("NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
 
 
 

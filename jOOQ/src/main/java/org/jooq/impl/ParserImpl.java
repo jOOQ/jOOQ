@@ -73,6 +73,7 @@ import static org.jooq.impl.DSL.atan;
 import static org.jooq.impl.DSL.atan2;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
+import static org.jooq.impl.DSL.begin;
 import static org.jooq.impl.DSL.bitAnd;
 import static org.jooq.impl.DSL.bitCount;
 import static org.jooq.impl.DSL.bitLength;
@@ -290,6 +291,7 @@ import static org.jooq.impl.DSL.splitPart;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.square;
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -954,7 +956,7 @@ final class ParserContext {
 
                 case 'B':
                     if (!parseResultQuery && peekKeyword("BEGIN"))
-                        return parseBlock();
+                        return parseBlock(false);
 
                     break;
 
@@ -974,7 +976,7 @@ final class ParserContext {
 
                 case 'D':
                     if (!parseResultQuery && peekKeyword("DECLARE") && requireProEdition())
-                        return parseBlock();
+                        return parseBlock(true);
                     else if (!parseResultQuery && (peekKeyword("DELETE") || peekKeyword("DEL")))
                         return parseDelete(null);
                     else if (!parseResultQuery && peekKeyword("DROP"))
@@ -986,7 +988,7 @@ final class ParserContext {
 
                 case 'E':
                     if (!parseResultQuery && peekKeyword("EXECUTE BLOCK AS BEGIN"))
-                        return parseBlock();
+                        return parseBlock(false);
                     else if (!parseResultQuery && peekKeyword("EXEC"))
                         return parseExec();
 
@@ -2942,14 +2944,14 @@ final class ParserContext {
         }
     }
 
-    private final Block parseBlock() {
+    private final Block parseBlock(boolean allowDeclare) {
         List<Statement> statements = new ArrayList<>();
 
 
 
 
 
-        if (parseKeywordIf("DECLARE") && requireProEdition())
+        if (allowDeclare && parseKeywordIf("DECLARE") && requireProEdition())
 
 
 
@@ -3013,6 +3015,16 @@ final class ParserContext {
 
         return statements;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5111,6 +5123,18 @@ final class ParserContext {
 
         return s2;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

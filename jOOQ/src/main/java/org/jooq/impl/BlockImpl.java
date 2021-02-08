@@ -99,9 +99,9 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
     /**
      * Generated UID
      */
-    private static final long                     serialVersionUID                  = 6881305779639901498L;
-    private static final Set<SQLDialect>          REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>          SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES);
+    private static final long             serialVersionUID                  = 6881305779639901498L;
+    private static final Set<SQLDialect>  REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES);
 
 
 
@@ -115,8 +115,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
-    private final Collection<? extends Statement> statements;
-    final boolean                                 alwaysWrapInBeginEnd;
+    final Collection<? extends Statement> statements;
+    final boolean                         alwaysWrapInBeginEnd;
 
     BlockImpl(Configuration configuration, Collection<? extends Statement> statements, boolean alwaysWrapInBeginEnd) {
         super(configuration);

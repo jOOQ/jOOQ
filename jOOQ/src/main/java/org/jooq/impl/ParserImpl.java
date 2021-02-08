@@ -1038,7 +1038,9 @@ final class ParserContext {
                     break;
 
                 case 'T':
-                    if (!parseResultQuery && peekKeyword("TRUNCATE"))
+                    if (!parseSelect && peekKeyword("TABLE"))
+                        return parseSelect();
+                    else if (!parseResultQuery && peekKeyword("TRUNCATE"))
                         return parseTruncate();
 
                     break;
@@ -1480,6 +1482,8 @@ final class ParserContext {
 
         if (peekKeyword("VALUES"))
             return (SelectQueryImpl<Record>) dsl.selectQuery(parseTableValueConstructor());
+        else if (peekKeyword("TABLE"))
+            return (SelectQueryImpl<Record>) dsl.selectQuery(parseExplicitTable());
 
         ignoreHints(false);
         if (!parseKeywordIf("SEL"))
@@ -6480,6 +6484,11 @@ final class ParserContext {
             rows.add(parseTuple());
         while (parseIf(','));
         return values0(rows.toArray(EMPTY_ROW));
+    }
+
+    private final Table<?> parseExplicitTable() {
+        parseKeyword("TABLE");
+        return parseTableName();
     }
 
     private final Row parseTuple() {

@@ -53,6 +53,14 @@ import java.util.EventListener;
  * <li>{@link UpdatableRecord#delete()}</li>
  * <li>{@link UpdatableRecord#refresh()}</li>
  * </ul>
+ * <p>
+ * A <code>RecordListener</code> does not act as a client-side trigger. As such,
+ * it does not affect any bulk DML statements (e.g. a
+ * {@link DSLContext#update(Table)}), whose affected records are not available
+ * to clients. For those purposes, use a server-side trigger
+ * {@link DSLContext#createTrigger(Name)} if records should be changed, or a
+ * {@link VisitListener} if the SQL query should be changed, independently of
+ * data.
  *
  * @author Lukas Eder
  */

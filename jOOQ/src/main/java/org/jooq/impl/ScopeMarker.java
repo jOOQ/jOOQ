@@ -107,6 +107,17 @@ enum ScopeMarker {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     TOP_LEVEL_CTE(
         true,
         DATA_TOP_LEVEL_CTE,

@@ -7756,6 +7756,13 @@ final class ParserContext {
 
                 break;
 
+            case 'Z':
+                if (N.is(type))
+                    if (parseFunctionNameIf("ZEROIFNULL"))
+                        return coalesce(parseFieldParenthesised(type), zero());
+
+                break;
+
             case '0':
             case '1':
             case '2':

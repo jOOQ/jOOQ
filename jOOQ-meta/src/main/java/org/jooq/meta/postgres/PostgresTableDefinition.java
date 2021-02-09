@@ -90,8 +90,10 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
             .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
             .else_(COLUMNS.DATA_TYPE);
+        Field<String> udtSchema = COLUMNS.UDT_SCHEMA;
         Field<Integer> precision = nvl(COLUMNS.DATETIME_PRECISION, COLUMNS.NUMERIC_PRECISION);
         Field<String> serialColumnDefault = inline("nextval('%_seq'::regclass)");
+
 
 
 
@@ -112,7 +114,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
-                dataType,
+                dataType.as(COLUMNS.DATA_TYPE),
 
                 // [#8067] A more robust / sophisticated decoding might be available
                 nvl(
@@ -123,7 +125,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 (when(isIdentity, inline("YES"))).as(COLUMNS.IS_IDENTITY),
                 COLUMNS.IS_NULLABLE,
                 (when(isIdentity, inline(null, String.class)).else_(COLUMNS.COLUMN_DEFAULT)).as(COLUMNS.COLUMN_DEFAULT),
-                coalesce(COLUMNS.DOMAIN_SCHEMA, COLUMNS.UDT_SCHEMA).as(COLUMNS.UDT_SCHEMA),
+                coalesce(COLUMNS.DOMAIN_SCHEMA, udtSchema).as(COLUMNS.UDT_SCHEMA),
                 coalesce(COLUMNS.DOMAIN_NAME, COLUMNS.UDT_NAME).as(COLUMNS.UDT_NAME),
                 PG_DESCRIPTION.DESCRIPTION)
             .from(COLUMNS)
@@ -154,7 +156,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema,
-                record.get(dataType),
+                record.get(COLUMNS.DATA_TYPE),
                 record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.get(COLUMNS.NUMERIC_PRECISION),
                 record.get(COLUMNS.NUMERIC_SCALE),

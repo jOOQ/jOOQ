@@ -1053,6 +1053,13 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
 
 
+
+
+
+
+
+
+
     boolean canCombineArrays() {
         if (canCombineArrays == null) {
 

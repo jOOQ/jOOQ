@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonValue;
+import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
@@ -49,6 +50,7 @@ import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
 import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -56,6 +58,9 @@ import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
+import org.jooq.JSONObjectNullStep;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -130,39 +135,15 @@ implements JSONObjectAggNullStep<J> {
         acceptOverClause(ctx);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes", "serial" })
     private final void acceptGroupConcat(Context<?> ctx) {
-        Field<?> value;
-
-        if (entry.value().getDataType().isJSON()) {
-            value = entry.value();
-        }
-        else {
-            Field<JSON> x = jsonObject(inline("x"), entry.value());
-
-            switch (ctx.family()) {
-
-
-
-
-
-
-                default:
-                    value = jsonValue(x, inline("$.x"));
-                    break;
-            }
+        final Field<String> listagg = DSL.field("{0}", String.class, CustomQueryPart.of(c -> {
+            Field<JSON> o = jsonObject(entry.key(), entry.value());
 
             if (onNull == ABSENT_ON_NULL)
-                value = when(entry.value().isNull(), inline((String) null)).else_((Field) value);
-        }
+                o = when(entry.value().isNull(), inline((JSON) null)).else_(o);
 
-        final Field<?> value1 = value;
-        final Field<String> listagg = DSL.field("{0}", String.class, CustomQueryPart.of(c -> {
             c.visit(groupConcat(DSL.concat(
-                inline('"'),
-                DSL.replace(entry.key(), inline('"'), inline("\\\"")),
-                inline("\":"),
-                onNull == ABSENT_ON_NULL ? value1 : DSL.coalesce(value1, inline("null"))
+                DSL.regexpReplaceAll(o.cast(VARCHAR), inline("^\\{(.*)\\}$"), inline(RegexpReplace.replacement(ctx, 1)))
             )));
             acceptOverClause(c);
         }));

@@ -62,7 +62,6 @@ import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
 // ...
 import org.jooq.SQLDialect;
-import org.jooq.conf.ParamType;
 
 
 /**
@@ -87,25 +86,22 @@ implements
 
     private final Field<?>       json;
     private final Field<String>  path;
+    private final DataType<?>    returning;
+    private final Behaviour      onError;
+    private final Field<?>       onErrorDefault;
+    private final Behaviour      onEmpty;
+    private final Field<?>       onEmptyDefault;
+    private final Field<?>       default_;
 
-
-
-
-
-
-
-
-
-
-
-    JSONValue(DataType<J> type, Field<?> json, Field<String> path) {
-        this(type, json, path, null, null, null, null, null);
+    JSONValue(DataType<J> type, Field<?> json, Field<String> path, DataType<?> returning) {
+        this(type, json, path, returning, null, null, null, null, null);
     }
 
     private JSONValue(
         DataType<J> type,
         Field<?> json,
         Field<String> path,
+        DataType<?> returning,
         Behaviour onError,
         Field<?> onErrorDefault,
         Behaviour onEmpty,
@@ -116,13 +112,12 @@ implements
 
         this.json = json;
         this.path = path;
-
-
-
-
-
-
-
+        this.returning = returning;
+        this.onError = onError;
+        this.onErrorDefault = onErrorDefault;
+        this.onEmpty = onEmpty;
+        this.onEmptyDefault = onEmptyDefault;
+        this.default_ = default_;
 
     }
 
@@ -169,6 +164,11 @@ implements
 
 
 
+    @Override
+    public final JSONValue<J> returning(DataType<?> r) {
+        return new JSONValue<>(getDataType(), json, path, r, onError, onErrorDefault, onEmpty, onEmptyDefault, null);
+    }
+
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
@@ -209,6 +209,9 @@ implements
 
 
 
+
+                if (returning != null)
+                    ctx.separatorRequired(true).visit(new JSONReturning(returning));
 
                 ctx.sql(')');
                 break;

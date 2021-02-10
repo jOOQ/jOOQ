@@ -37,41 +37,51 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-
-import org.jooq.impl.DSL;
-
 /**
- * A step in the construction of {@link DSL#jsonObject(JSONEntry...)} or
- * {@link DSL#jsonbObject(JSONEntry...)} functions where the <code>NULL</code>
- * clause can be defined.
- *
- * @author Lukas Eder
+ * A step in the construction of the <code>JSON OBJECT</code> function.
+ * <p>
+ * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
+ * <p>
+ * It is usually not recommended to reference any <code>XYZ*Step</code> types
+ * directly from client code, or assign them to local variables. When writing
+ * dynamic SQL, creating a statement's components dynamically, and passing them
+ * to the DSL API statically is usually a better choice. See the manual's
+ * section about dynamic SQL for details: <a href=
+ * "https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql">https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql</a>.
+ * <p>
+ * Drawbacks of referencing the <code>XYZ*Step</code> types directly:
+ * <ul>
+ * <li>They're operating on mutable implementations (as of jOOQ 3.x)</li>
+ * <li>They're less composable and not easy to get right when dynamic SQL gets
+ * complex</li>
+ * <li>They're less readable</li>
+ * <li>They might have binary incompatible changes between minor releases</li>
+ * </ul>
  */
-public interface JSONObjectNullStep<T> extends Field<T> {
+@SuppressWarnings({ "unused" })
+public interface JSONObjectNullStep<T> extends JSONObjectReturningStep<T> {
 
     /**
+     * Add the <code>NULL ON NULL</code> clause to the <code>JSON OBJECT</code> function.
+     * <p>
      * Include <code>NULL</code> values in output JSON.
      */
-    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    Field<T> nullOnNull();
+    @NotNull
+    JSONObjectReturningStep<T> nullOnNull();
 
     /**
+     * Add the <code>ABSENT ON NULL</code> clause to the <code>JSON OBJECT</code> function.
+     * <p>
      * Exclude <code>NULL</code> values in output JSON.
      */
-    @NotNull
     @Support({ H2, POSTGRES })
-    Field<T> absentOnNull();
+    @NotNull
+    JSONObjectReturningStep<T> absentOnNull();
 }

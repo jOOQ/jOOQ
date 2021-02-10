@@ -37,56 +37,71 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.impl.DSL.jsonArrayAgg;
-import static org.jooq.impl.DSL.jsonbArrayAgg;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.values;
-import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
-import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
-import static org.jooq.impl.Keywords.K_JSON_ARRAY;
-import static org.jooq.impl.Names.N_JSONB_BUILD_ARRAY;
-import static org.jooq.impl.Names.N_JSON_ARRAY;
-import static org.jooq.impl.Names.N_JSON_BUILD_ARRAY;
-import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Collection;
+import org.jooq.*;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.JSONArrayNullStep;
-import org.jooq.Row1;
-import org.jooq.Table;
-import org.jooq.impl.JSONNull.JSONNullType;
+import java.util.*;
 
 
 /**
- * The JSON array constructor.
- *
- * @author Lukas Eder
+ * The <code>JSON ARRAY</code> statement.
  */
-final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J> {
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class JSONArray<T>
+extends
+    AbstractField<T>
+implements
+    JSONArrayNullStep<T>,
+    JSONArrayReturningStep<T>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = 1772007627336725780L;
-    private final QueryPartList<Field<?>> args;
-    private final JSONNullType            nullType;
+    private static final long serialVersionUID = 1L;
 
-    JSONArray(DataType<J> type, Collection<? extends Field<?>> args) {
-        this(type, args, null);
+    private final DataType<T>                    type;
+    private final Collection<? extends Field<?>> fields;
+    private       JSONOnNull                     onNull;
+    private       DataType<?>                    returning;
+
+    JSONArray(
+        DataType<T> type,
+        Collection<? extends Field<?>> fields
+    ) {
+        this(
+            type,
+            fields,
+            null,
+            null
+        );
     }
 
-    JSONArray(DataType<J> type, Collection<? extends Field<?>> args, JSONNullType nullType) {
-        super(N_JSON_ARRAY, type);
+    JSONArray(
+        DataType<T> type,
+        Collection<? extends Field<?>> fields,
+        JSONOnNull onNull,
+        DataType<?> returning
+    ) {
+        super(
+            N_JSON_ARRAY,
+            type
+        );
 
-        this.args = new QueryPartList<>(args);
-        this.nullType = nullType;
+        this.type = type;
+        this.fields = fields;
+        this.onNull = onNull;
+        this.returning = returning;
     }
 
     // -------------------------------------------------------------------------
@@ -94,20 +109,29 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
     // -------------------------------------------------------------------------
 
     @Override
-    public final JSONArray<J> nullOnNull() {
-        return new JSONArray<>(getDataType(), args, NULL_ON_NULL);
+    public final JSONArray<T> nullOnNull() {
+        this.onNull = JSONOnNull.NULL_ON_NULL;
+        return this;
     }
 
     @Override
-    public final JSONArray<J> absentOnNull() {
-        return new JSONArray<>(getDataType(), args, ABSENT_ON_NULL);
+    public final JSONArray<T> absentOnNull() {
+        this.onNull = JSONOnNull.ABSENT_ON_NULL;
+        return this;
+    }
+
+    @Override
+    public final JSONArray<T> returning(DataType<?> returning) {
+        this.returning = returning;
+        return this;
     }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+
+
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -117,11 +141,12 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
 
 
             case POSTGRES:
-                if (nullType == ABSENT_ON_NULL) {
-                    Row1[] rows = new Row1[args.size()];
+                if (onNull == JSONOnNull.ABSENT_ON_NULL) {
+                    Row1[] rows = new Row1[fields.size()];
 
-                    for (int i = 0; i < rows.length; i++)
-                        rows[i] = row(args.get(i));
+                    int i = 0;
+                    for (Field<?> field : fields)
+                        rows[i++] = row(field);
 
                     Table<?> t = values(rows).as("t", "a");
                     Field<?> a = t.field("a");
@@ -132,23 +157,51 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
                     ));
                 }
                 else {
-                    ctx.visit(getDataType() == JSON ? N_JSON_BUILD_ARRAY : N_JSONB_BUILD_ARRAY).sql('(').visit(args).sql(')');
+                    ctx.visit(getDataType() == JSON ? N_JSON_BUILD_ARRAY : N_JSONB_BUILD_ARRAY).sql('(').visit(QueryPartCollectionView.wrap(fields)).sql(')');
                 }
 
                 break;
 
             default: {
                 JSONNull jsonNull;
+                JSONReturning jsonReturning = new JSONReturning(returning);
 
                 // Workaround for https://github.com/h2database/h2database/issues/2496
-                if (ctx.family() == H2 && args.isEmpty())
-                    jsonNull = new JSONNull(NULL_ON_NULL);
+                if (ctx.family() == H2 && fields.isEmpty())
+                    jsonNull = new JSONNull(JSONOnNull.NULL_ON_NULL);
                 else
-                    jsonNull = new JSONNull(nullType);
+                    jsonNull = new JSONNull(onNull);
 
-                ctx.visit(K_JSON_ARRAY).sql('(').visit(wrap(wrap(args).map(jsonCastMapper(ctx)), jsonNull).separator("")).sql(')');
+                ctx.visit(K_JSON_ARRAY).sql('(').visit(
+                    QueryPartListView.wrap(
+                        QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(JSONEntryImpl.jsonCastMapper(ctx)),
+                        jsonNull,
+                        jsonReturning
+                    ).separator("")
+                ).sql(')');
+
                 break;
             }
         }
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof JSONArray) {
+            return
+                StringUtils.equals(type, ((JSONArray) that).type) &&
+                StringUtils.equals(fields, ((JSONArray) that).fields) &&
+                StringUtils.equals(onNull, ((JSONArray) that).onNull) &&
+                StringUtils.equals(returning, ((JSONArray) that).returning)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

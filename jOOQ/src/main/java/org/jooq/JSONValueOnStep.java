@@ -52,7 +52,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface JSONValueOnStep<J> extends Field<J> {
+public interface JSONValueOnStep<J> extends JSONValueReturningStep<J> {
 
 
 

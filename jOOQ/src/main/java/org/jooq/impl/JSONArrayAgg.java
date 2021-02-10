@@ -44,8 +44,8 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
-import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
+import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
@@ -57,13 +57,15 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import java.util.Collection;
 import java.util.Set;
 
+import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
 import org.jooq.SQLDialect;
-import org.jooq.impl.JSONNull.JSONNullType;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -81,7 +83,8 @@ implements JSONArrayAggOrderByStep<J> {
     private static final long    serialVersionUID          = 1772007627336725780L;
     static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT = SQLDialect.supportedBy(MARIADB, MYSQL);
 
-    private JSONNullType         nullType;
+    private JSONOnNull           onNull;
+    private DataType<?>          returning;
 
     JSONArrayAgg(DataType<J> type, Field<?> arg) {
         super(false, N_JSON_ARRAYAGG, type, arg);
@@ -117,7 +120,7 @@ implements JSONArrayAggOrderByStep<J> {
                 ctx.sql(')');
 
                 // TODO: What about a user-defined filter clause?
-                if (nullType == ABSENT_ON_NULL)
+                if (onNull == ABSENT_ON_NULL)
                     acceptFilterClause(ctx, arguments.get(0).isNotNull());
 
                 break;
@@ -161,22 +164,32 @@ implements JSONArrayAggOrderByStep<J> {
         ctx.visit(jsonCast(ctx, arguments.get(0)));
         acceptOrderBy(ctx);
 
-        JSONNull jsonNull = new JSONNull(nullType);
+        JSONNull jsonNull = new JSONNull(onNull);
         if (jsonNull.rendersContent(ctx))
             ctx.sql(' ').visit(jsonNull);
+
+        JSONReturning jsonReturning = new JSONReturning(returning);
+        if (jsonReturning.rendersContent(ctx))
+            ctx.sql(' ').visit(jsonReturning);
 
         ctx.sql(')');
     }
 
     @Override
     public final JSONArrayAgg<J> nullOnNull() {
-        nullType = NULL_ON_NULL;
+        onNull = NULL_ON_NULL;
         return this;
     }
 
     @Override
     public final JSONArrayAgg<J> absentOnNull() {
-        nullType = ABSENT_ON_NULL;
+        onNull = ABSENT_ON_NULL;
+        return this;
+    }
+
+    @Override
+    public final JSONArrayAgg<J> returning(DataType<?> r) {
+        this.returning = r;
         return this;
     }
 

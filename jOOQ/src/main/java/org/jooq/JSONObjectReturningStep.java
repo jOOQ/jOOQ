@@ -44,7 +44,7 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 /**
- * A step in the construction of the <code>JSON ARRAY</code> function.
+ * A step in the construction of the <code>JSON OBJECT</code> function.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -65,23 +65,12 @@ import org.jetbrains.annotations.*;
  * </ul>
  */
 @SuppressWarnings({ "unused" })
-public interface JSONArrayNullStep<T> extends JSONArrayReturningStep<T> {
+public interface JSONObjectReturningStep<T> extends Field<T> {
 
     /**
-     * Add the <code>NULL ON NULL</code> clause to the <code>JSON ARRAY</code> function.
-     * <p>
-     * Include <code>NULL</code> values in output JSON.
+     * Add the <code>RETURNING</code> clause to the <code>JSON OBJECT</code> function.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     @NotNull
-    JSONArrayReturningStep<T> nullOnNull();
-
-    /**
-     * Add the <code>ABSENT ON NULL</code> clause to the <code>JSON ARRAY</code> function.
-     * <p>
-     * Exclude <code>NULL</code> values in output JSON.
-     */
-    @Support({ H2, POSTGRES })
-    @NotNull
-    JSONArrayReturningStep<T> absentOnNull();
+    Field<T> returning(DataType<?> returning);
 }

@@ -50,24 +50,18 @@ import org.jooq.impl.DSL;
 
 /**
  * A step in the construction of {@link DSL#jsonArrayAgg(Field)} or
- * {@link DSL#jsonbArrayAgg(Field)} functions where the <code>NULL</code> clause
- * can be defined.
+ * {@link DSL#jsonbArrayAgg(Field)} functions where the <code>RETURNING</code>
+ * clause can be defined.
  *
  * @author Lukas Eder
  */
-public interface JSONArrayAggNullStep<T> extends JSONArrayAggReturningStep<T> {
+public interface JSONArrayAggReturningStep<T> extends AggregateFilterStep<T> {
 
     /**
-     * Include <code>NULL</code> values in output JSON.
+     * Add a <code>RETURNING</code> clause to the <code>JSON_ARRAYAGG</code>
+     * function.
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    JSONArrayAggReturningStep<T> nullOnNull();
-
-    /**
-     * Exclude <code>NULL</code> values in output JSON.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    JSONArrayAggReturningStep<T> absentOnNull();
+    AggregateFilterStep<T> returning(DataType<?> returning);
 }

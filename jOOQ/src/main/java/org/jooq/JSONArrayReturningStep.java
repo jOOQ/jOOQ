@@ -65,23 +65,12 @@ import org.jetbrains.annotations.*;
  * </ul>
  */
 @SuppressWarnings({ "unused" })
-public interface JSONArrayNullStep<T> extends JSONArrayReturningStep<T> {
+public interface JSONArrayReturningStep<T> extends Field<T> {
 
     /**
-     * Add the <code>NULL ON NULL</code> clause to the <code>JSON ARRAY</code> function.
-     * <p>
-     * Include <code>NULL</code> values in output JSON.
+     * Add the <code>RETURNING</code> clause to the <code>JSON ARRAY</code> function.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     @NotNull
-    JSONArrayReturningStep<T> nullOnNull();
-
-    /**
-     * Add the <code>ABSENT ON NULL</code> clause to the <code>JSON ARRAY</code> function.
-     * <p>
-     * Exclude <code>NULL</code> values in output JSON.
-     */
-    @Support({ H2, POSTGRES })
-    @NotNull
-    JSONArrayReturningStep<T> absentOnNull();
+    Field<T> returning(DataType<?> returning);
 }

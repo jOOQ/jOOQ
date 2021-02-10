@@ -2017,13 +2017,13 @@ final class Tools {
         return result;
     }
 
-    static final JSONEntry<?>[] jsonEntries(Field<?>... fields) {
+    static final List<JSONEntry<?>> jsonEntries(Field<?>... fields) {
         if (fields == null)
             return null;
 
-        JSONEntry<?>[] result = new JSONEntry[fields.length];
-        for (int i = 0; i < fields.length; i++)
-            result[i] = jsonEntry(fields[i]);
+        List<JSONEntry<?>> result = new ArrayList<>(fields.length);
+        for (Field<?> field : fields)
+            result.add(jsonEntry(field));
 
         return result;
     }

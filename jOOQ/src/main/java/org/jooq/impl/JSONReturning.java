@@ -35,39 +35,46 @@
  *
  *
  */
-package org.jooq;
-
-import org.jetbrains.annotations.*;
-
+package org.jooq.impl;
 
 // ...
 // ...
 import static org.jooq.SQLDialect.H2;
-// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.Keywords.K_RETURNING;
 
-import org.jooq.impl.DSL;
+import java.util.Set;
+
+import org.jooq.Context;
+import org.jooq.DataType;
+import org.jooq.SQLDialect;
 
 /**
- * A step in the construction of {@link DSL#jsonArrayAgg(Field)} or
- * {@link DSL#jsonbArrayAgg(Field)} functions where the <code>NULL</code> clause
- * can be defined.
- *
  * @author Lukas Eder
  */
-public interface JSONArrayAggNullStep<T> extends JSONArrayAggReturningStep<T> {
+final class JSONReturning extends AbstractQueryPart {
 
     /**
-     * Include <code>NULL</code> values in output JSON.
+     * Generated UID
      */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    JSONArrayAggReturningStep<T> nullOnNull();
+    private static final long    serialVersionUID     = 3121287280045911346L;
+    static final Set<SQLDialect> NO_SUPPORT_RETURNING = SQLDialect.supportedBy(H2, MARIADB, MYSQL, POSTGRES);
+    final DataType<?>            type;
 
-    /**
-     * Exclude <code>NULL</code> values in output JSON.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    JSONArrayAggReturningStep<T> absentOnNull();
+    JSONReturning(DataType<?> type) {
+        this.type = type;
+    }
+
+    @Override
+    public final boolean rendersContent(Context<?> ctx) {
+        return !NO_SUPPORT_RETURNING.contains(ctx.dialect()) && type != null;
+    }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        if (!NO_SUPPORT_RETURNING.contains(ctx.dialect()))
+            ctx.visit(K_RETURNING).sql(' ').sql(type.getCastTypeName(ctx.configuration()));
+    }
 }

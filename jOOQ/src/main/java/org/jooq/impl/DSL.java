@@ -18389,6 +18389,100 @@ public class DSL {
         return new Xmlforest(fields);
     }
 
+    // -------------------------------------------------------------------------
+    // JSON functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>JSON_ARRAY</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
+        return new JSONArray<>(SQLDataType.JSON, Arrays.asList(fields));
+    }
+
+    /**
+     * The <code>JSON_ARRAY</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
+        return new JSONArray<>(SQLDataType.JSON, fields);
+    }
+
+    /**
+     * The <code>JSONB_ARRAY</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
+        return new JSONArray<>(SQLDataType.JSONB, Arrays.asList(fields));
+    }
+
+    /**
+     * The <code>JSONB_ARRAY</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
+        return new JSONArray<>(SQLDataType.JSONB, fields);
+    }
+
+    /**
+     * The <code>JSON_OBJECT</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
+        return new JSONObject<>(SQLDataType.JSON, Tools.jsonEntries(entries));
+    }
+
+    /**
+     * The <code>JSON_OBJECT</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
+        return new JSONObject<>(SQLDataType.JSON, Arrays.asList(entries));
+    }
+
+    /**
+     * The <code>JSON_OBJECT</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
+        return new JSONObject<>(SQLDataType.JSON, entries);
+    }
+
+    /**
+     * The <code>JSONB_OBJECT</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
+        return new JSONObject<>(SQLDataType.JSONB, Tools.jsonEntries(entries));
+    }
+
+    /**
+     * The <code>JSONB_OBJECT</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
+        return new JSONObject<>(SQLDataType.JSONB, Arrays.asList(entries));
+    }
+
+    /**
+     * The <code>JSONB_OBJECT</code> function.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
+        return new JSONObject<>(SQLDataType.JSONB, entries);
+    }
+
 
 
 
@@ -22228,7 +22322,7 @@ public class DSL {
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, Field<String> path) {
-        return new JSONValue<>(SQLDataType.JSON, json, path);
+        return new JSONValue<>(SQLDataType.JSON, json, path, null);
     }
 
     /**
@@ -22246,43 +22340,7 @@ public class DSL {
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
-        return new JSONValue<>(SQLDataType.JSONB, json, path);
-    }
-
-    /**
-     * The JSON array constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
-        return jsonArray(Arrays.asList(fields));
-    }
-
-    /**
-     * The JSON array constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
-        return new JSONArray<>(JSON, fields);
-    }
-
-    /**
-     * The JSONB array constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
-        return jsonbArray(Arrays.asList(fields));
-    }
-
-    /**
-     * The JSONB array constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
-        return new JSONArray<>(JSONB, fields);
+        return new JSONValue<>(SQLDataType.JSONB, json, path, null);
     }
 
     /**
@@ -22377,63 +22435,6 @@ public class DSL {
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject() {
         return jsonObject(Tools.EMPTY_JSONENTRY);
-    }
-
-    /**
-     * The JSON object constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
-        return jsonObject(Tools.jsonEntries(entries));
-    }
-
-    /**
-     * The JSON object constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
-        return jsonObject(Arrays.asList(entries));
-    }
-
-    /**
-     * The JSON object constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
-        return new JSONObject<>(JSON, entries);
-    }
-
-    /**
-     * The JSONB object constructor.
-     * <p>
-     * This is the same as calling {@link #jsonEntry(String, Field)} with
-     * {@link Field#getName()} as a key.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
-        return jsonbObject(Tools.jsonEntries(entries));
-    }
-
-    /**
-     * The JSONB object constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
-        return jsonbObject(Arrays.asList(entries));
-    }
-
-    /**
-     * The JSONB object constructor.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
-        return new JSONObject<>(JSONB, entries);
     }
 
     /**

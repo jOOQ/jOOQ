@@ -35,39 +35,15 @@
  *
  *
  */
-package org.jooq;
-
-import org.jetbrains.annotations.*;
+package org.jooq.impl;
 
 
-// ...
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-
-import org.jooq.impl.DSL;
+import org.jooq.*;
 
 /**
- * A step in the construction of {@link DSL#jsonArrayAgg(Field)} or
- * {@link DSL#jsonbArrayAgg(Field)} functions where the <code>NULL</code> clause
- * can be defined.
- *
- * @author Lukas Eder
+ * The <code>JSONOnNull</code>.
  */
-public interface JSONArrayAggNullStep<T> extends JSONArrayAggReturningStep<T> {
-
-    /**
-     * Include <code>NULL</code> values in output JSON.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    JSONArrayAggReturningStep<T> nullOnNull();
-
-    /**
-     * Exclude <code>NULL</code> values in output JSON.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES })
-    JSONArrayAggReturningStep<T> absentOnNull();
+enum JSONOnNull {
+    NULL_ON_NULL,
+    ABSENT_ON_NULL,
 }

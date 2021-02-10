@@ -291,7 +291,6 @@ import static org.jooq.impl.DSL.splitPart;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.square;
-// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -337,8 +336,8 @@ import static org.jooq.impl.DSL.xmlquery;
 import static org.jooq.impl.DSL.xmltable;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
+import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_SELECT;
@@ -378,7 +377,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -497,10 +495,14 @@ import org.jooq.InsertValuesStepN;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggNullStep;
 import org.jooq.JSONArrayAggOrderByStep;
+import org.jooq.JSONArrayAggReturningStep;
 import org.jooq.JSONArrayNullStep;
+import org.jooq.JSONArrayReturningStep;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
+import org.jooq.JSONObjectAggReturningStep;
 import org.jooq.JSONObjectNullStep;
+import org.jooq.JSONObjectReturningStep;
 import org.jooq.JSONTableColumnPathStep;
 import org.jooq.JSONTableColumnsStep;
 import org.jooq.JSONValueDefaultStep;
@@ -595,7 +597,6 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.JSONNull.JSONNullType;
 import org.jooq.impl.ScopeStack.Value;
 import org.jooq.impl.XMLParse.DocumentOrContent;
 import org.jooq.tools.StringUtils;
@@ -8308,8 +8309,9 @@ final class ParserContext {
 
 
 
+            DataType<?> returning = parseJSONReturningIf();
             parse(')');
-            return s1;
+            return returning == null ? s1 : s1.returning(returning);
         }
 
         return null;
@@ -8339,6 +8341,10 @@ final class ParserContext {
             return null;
     }
 
+    private final DataType<?> parseJSONReturningIf() {
+        return parseKeywordIf("RETURNING") ? parseDataType() : null;
+    }
+
     private final Field<?> parseFieldJSONArrayConstructorIf() {
         if (parseFunctionNameIf("JSON_ARRAY")) {
             parse('(');
@@ -8346,21 +8352,24 @@ final class ParserContext {
                 return DSL.jsonArray();
 
             List<Field<?>> result = null;
-            JSONNullType nullType = parseJSONNullTypeIf();
+            JSONOnNull onNull = parseJSONNullTypeIf();
+            DataType<?> returning = parseJSONReturningIf();
 
-            if (nullType == null) {
+            if (onNull == null && returning == null) {
                 result = parseFields();
-                nullType = parseJSONNullTypeIf();
+                onNull = parseJSONNullTypeIf();
+                returning = parseJSONReturningIf();
             }
 
             parse(')');
 
-            JSONArrayNullStep<JSON> a = result == null ? DSL.jsonArray() : DSL.jsonArray(result);
-            return nullType == NULL_ON_NULL
-                 ? a.nullOnNull()
-                 : nullType == ABSENT_ON_NULL
-                 ? a.absentOnNull()
-                 : a;
+            JSONArrayNullStep<?> s1 = result == null ? DSL.jsonArray() : DSL.jsonArray(result);
+            JSONArrayReturningStep<?> s2 = onNull == NULL_ON_NULL
+                 ? s1.nullOnNull()
+                 : onNull == ABSENT_ON_NULL
+                 ? s1.absentOnNull()
+                 : s1;
+            return returning == null ? s2 : s2.returning(returning);
         }
 
         return null;
@@ -8369,18 +8378,23 @@ final class ParserContext {
     private final Field<?> parseFieldJSONArrayAggIf() {
         if (parseFunctionNameIf("JSON_ARRAYAGG")) {
             Field<?> result;
-            JSONArrayAggOrderByStep<JSON> s1;
-            JSONArrayAggNullStep<JSON> s2;
-            JSONNullType nullType;
+            JSONArrayAggOrderByStep<?> s1;
+            JSONArrayAggNullStep<?> s2;
+            JSONArrayAggReturningStep<?> s3;
+            JSONOnNull onNull;
+            DataType<?> returning;
 
             parse('(');
-            result = s2 = s1 = DSL.jsonArrayAgg(parseField());
+            result = s3 = s2 = s1 = DSL.jsonArrayAgg(parseField());
 
             if (parseKeywordIf("ORDER BY"))
-                result = s2 = s1.orderBy(parseSortSpecification());
+                result = s3 = s2 = s1.orderBy(parseSortSpecification());
 
-            if ((nullType = parseJSONNullTypeIf()) != null)
-                result = nullType == ABSENT_ON_NULL ? s2.absentOnNull() : s2.nullOnNull();
+            if ((onNull = parseJSONNullTypeIf()) != null)
+                result = s3 = onNull == ABSENT_ON_NULL ? s2.absentOnNull() : s2.nullOnNull();
+
+            if ((returning = parseJSONReturningIf()) != null)
+                result = s3.returning(returning);
 
             parse(')');
             return result;
@@ -8396,23 +8410,27 @@ final class ParserContext {
                 return DSL.jsonObject();
 
             List<JSONEntry<?>> result = new ArrayList<>();
-            JSONNullType nullType = parseJSONNullTypeIf();
+            JSONOnNull onNull = parseJSONNullTypeIf();
+            DataType<?> returning = parseJSONReturningIf();
 
-            if (nullType == null) {
+            if (onNull == null && returning == null) {
                 do
                     result.add(parseJSONEntry());
                 while (parseIf(','));
 
-                nullType = parseJSONNullTypeIf();
+                onNull = parseJSONNullTypeIf();
+                returning = parseJSONReturningIf();
             }
+
             parse(')');
 
-            JSONObjectNullStep<JSON> o = DSL.jsonObject(result);
-            return nullType == NULL_ON_NULL
-                 ? o.nullOnNull()
-                 : nullType == ABSENT_ON_NULL
-                 ? o.absentOnNull()
-                 : o;
+            JSONObjectNullStep<?> s1 = DSL.jsonObject(result);
+            JSONObjectReturningStep<?> s2 = onNull == NULL_ON_NULL
+                 ? s1.nullOnNull()
+                 : onNull == ABSENT_ON_NULL
+                 ? s1.absentOnNull()
+                 : s1;
+            return returning == null ? s2 : s2.returning(returning);
         }
 
         return null;
@@ -8421,14 +8439,19 @@ final class ParserContext {
     private final Field<?> parseFieldJSONObjectAggIf() {
         if (parseFunctionNameIf("JSON_OBJECTAGG")) {
             Field<?> result;
-            JSONObjectAggNullStep<JSON> s1;
-            JSONNullType nullType;
+            JSONObjectAggNullStep<?> s1;
+            JSONObjectAggReturningStep<?> s2;
+            JSONOnNull onNull;
+            DataType<?> returning;
 
             parse('(');
-            result = s1 = DSL.jsonObjectAgg(parseJSONEntry());
+            result = s2 = s1 = DSL.jsonObjectAgg(parseJSONEntry());
 
-            if ((nullType = parseJSONNullTypeIf()) != null)
-                result = nullType == ABSENT_ON_NULL ? s1.absentOnNull() : s1.nullOnNull();
+            if ((onNull = parseJSONNullTypeIf()) != null)
+                result = s2 = onNull == ABSENT_ON_NULL ? s1.absentOnNull() : s1.nullOnNull();
+
+            if ((returning = parseJSONReturningIf()) != null)
+                result = s2.returning(returning);
 
             parse(')');
             return result;
@@ -8437,7 +8460,7 @@ final class ParserContext {
         return null;
     }
 
-    private final JSONNullType parseJSONNullTypeIf() {
+    private final JSONOnNull parseJSONNullTypeIf() {
         if (parseKeywordIf("NULL ON NULL"))
             return NULL_ON_NULL;
         else if (parseKeywordIf("ABSENT ON NULL"))

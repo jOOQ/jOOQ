@@ -140,7 +140,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         }
     }
 
-    static final Function<Field<?>, Field<?>> jsonCastMapper(final Context<?> ctx) {
+    static final Function<? super Field<?>, ? extends Field<?>> jsonCastMapper(final Context<?> ctx) {
         return field -> jsonCast(ctx, field);
     }
 

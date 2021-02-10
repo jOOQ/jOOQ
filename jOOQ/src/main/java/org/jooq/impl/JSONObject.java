@@ -37,64 +37,71 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.impl.DSL.asterisk;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.jsonEntry;
-import static org.jooq.impl.DSL.jsonObject;
-import static org.jooq.impl.DSL.key;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.unquotedName;
-import static org.jooq.impl.DSL.values;
-import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
-import static org.jooq.impl.Keywords.K_JSON_OBJECT;
-import static org.jooq.impl.Names.N_JSON_MERGE;
-import static org.jooq.impl.Names.N_JSON_OBJECT;
-import static org.jooq.impl.Names.N_T;
-import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Collection;
-import java.util.UUID;
+import org.jooq.*;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.JSONB;
-import org.jooq.JSONEntry;
-import org.jooq.JSONObjectNullStep;
-import org.jooq.Name;
-// ...
-import org.jooq.impl.JSONNull.JSONNullType;
+import java.util.*;
 
 
 /**
- * The JSON array constructor.
- *
- * @author Lukas Eder
+ * The <code>JSON OBJECT</code> statement.
  */
-final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep<J> {
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class JSONObject<T>
+extends
+    AbstractField<T>
+implements
+    JSONObjectNullStep<T>,
+    JSONObjectReturningStep<T>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long                 serialVersionUID          = 1772007627336725780L;
+    private static final long serialVersionUID = 1L;
 
-    private final QueryPartList<JSONEntry<?>> args;
-    private final JSONNullType                nullType;
+    private final DataType<T>                        type;
+    private final Collection<? extends JSONEntry<?>> entries;
+    private       JSONOnNull                         onNull;
+    private       DataType<?>                        returning;
 
-    JSONObject(DataType<J> type, Collection<? extends JSONEntry<?>> args) {
-        this(type, args, null);
+    JSONObject(
+        DataType<T> type,
+        Collection<? extends JSONEntry<?>> entries
+    ) {
+        this(
+            type,
+            entries,
+            null,
+            null
+        );
     }
 
-    JSONObject(DataType<J> type, Collection<? extends JSONEntry<?>> args, JSONNullType nullType) {
-        super(N_JSON_OBJECT, type);
+    JSONObject(
+        DataType<T> type,
+        Collection<? extends JSONEntry<?>> entries,
+        JSONOnNull onNull,
+        DataType<?> returning
+    ) {
+        super(
+            N_JSON_OBJECT,
+            type
+        );
 
-        this.args = new QueryPartList<>(args);
-        this.nullType = nullType;
+        this.type = type;
+        this.entries = entries;
+        this.onNull = onNull;
+        this.returning = returning;
     }
 
     // -------------------------------------------------------------------------
@@ -102,18 +109,28 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
     // -------------------------------------------------------------------------
 
     @Override
-    public final JSONObject<J> nullOnNull() {
-        return new JSONObject<>(getDataType(), args, NULL_ON_NULL);
+    public final JSONObject<T> nullOnNull() {
+        this.onNull = JSONOnNull.NULL_ON_NULL;
+        return this;
     }
 
     @Override
-    public final JSONObject<J> absentOnNull() {
-        return new JSONObject<>(getDataType(), args, ABSENT_ON_NULL);
+    public final JSONObject<T> absentOnNull() {
+        this.onNull = JSONOnNull.ABSENT_ON_NULL;
+        return this;
+    }
+
+    @Override
+    public final JSONObject<T> returning(DataType<?> returning) {
+        this.returning = returning;
+        return this;
     }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -124,12 +141,12 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
 
 
             case POSTGRES:
-                if (nullType == ABSENT_ON_NULL)
+                if (onNull == JSONOnNull.ABSENT_ON_NULL)
                     ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_strip_nulls" : "json_strip_nulls")).sql('(');
 
-                ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_build_object" : "json_build_object")).sql('(').visit(args).sql(')');
+                ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_build_object" : "json_build_object")).sql('(').visit(QueryPartCollectionView.wrap(entries)).sql(')');
 
-                if (nullType == ABSENT_ON_NULL)
+                if (onNull == JSONOnNull.ABSENT_ON_NULL)
                     ctx.sql(')');
 
                 break;
@@ -170,29 +187,31 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
 
 
 
-            case MARIADB:
+            case MARIADB: {
+                JSONEntry<?> first;
 
                 // Workaround for https://jira.mariadb.org/browse/MDEV-13701
-                if (args.size() > 1) {
+                if (entries.size() > 1) {
                     ctx.visit(N_JSON_MERGE).sql('(').visit(inline("{}"))
                        .formatIndentStart();
 
-                    for (JSONEntry<?> entry : args)
+                    for (JSONEntry<?> entry : entries)
                         ctx.sql(',').formatSeparator().visit(jsonObject(entry));
 
                     ctx.formatIndentEnd()
                        .formatNewLine()
                        .sql(')');
                 }
-                else if (!args.isEmpty() && isJSONArray(args.get(0).value())) {
+                else if (!entries.isEmpty() && isJSONArray((first = entries.iterator().next()).value())) {
                     ctx.visit(jsonObject(
-                        key(args.get(0).key()).value(DSL.field("{0}({1}, {2})", getDataType(), N_JSON_MERGE, inline("[]"), args.get(0).value()))
+                        key(first.key()).value(DSL.field("{0}({1}, {2})", getDataType(), N_JSON_MERGE, inline("[]"), first.value()))
                     ));
                 }
                 else
                     acceptStandard(ctx);
 
                 break;
+            }
 
             default:
                 acceptStandard(ctx);
@@ -208,18 +227,39 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
 
     private final void acceptStandard(Context<?> ctx) {
         JSONNull jsonNull;
+        JSONReturning jsonReturning = new JSONReturning(returning);
 
         // Workaround for https://github.com/h2database/h2database/issues/2496
-        if (args.isEmpty() && ctx.family() == H2)
-            jsonNull = new JSONNull(NULL_ON_NULL);
+        if (entries.isEmpty() && ctx.family() == H2)
+            jsonNull = new JSONNull(JSONOnNull.NULL_ON_NULL);
 
 
 
 
 
         else
-            jsonNull = new JSONNull(nullType);
+            jsonNull = new JSONNull(onNull);
 
-        ctx.visit(K_JSON_OBJECT).sql('(').visit(wrap(args, jsonNull).separator("")).sql(')');
+        ctx.visit(K_JSON_OBJECT).sql('(').visit(QueryPartListView.wrap(QueryPartCollectionView.wrap(entries), jsonNull, jsonReturning).separator("")).sql(')');
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof JSONObject) {
+            return
+                StringUtils.equals(type, ((JSONObject) that).type) &&
+                StringUtils.equals(entries, ((JSONObject) that).entries) &&
+                StringUtils.equals(onNull, ((JSONObject) that).onNull) &&
+                StringUtils.equals(returning, ((JSONObject) that).returning)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

@@ -39,8 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
+import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_ABSENT;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ON;
@@ -61,9 +61,9 @@ final class JSONNull extends AbstractQueryPart {
     private static final long    serialVersionUID          = 3121287280045911346L;
     static final Set<SQLDialect> NO_SUPPORT_ABSENT_ON_NULL = SQLDialect.supportedBy(MARIADB, MYSQL);
 
-    final JSONNullType           type;
+    final JSONOnNull             type;
 
-    JSONNull(JSONNullType type) {
+    JSONNull(JSONOnNull type) {
         this.type = type;
     }
 
@@ -79,9 +79,5 @@ final class JSONNull extends AbstractQueryPart {
                 ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
             else if (type == ABSENT_ON_NULL)
                 ctx.visit(K_ABSENT).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
-    }
-
-    enum JSONNullType {
-        NULL_ON_NULL, ABSENT_ON_NULL
     }
 }

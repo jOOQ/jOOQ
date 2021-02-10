@@ -58,19 +58,19 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface JSONObjectAggNullStep<T> extends AggregateFilterStep<T> {
+public interface JSONObjectAggNullStep<T> extends JSONObjectAggReturningStep<T> {
 
     /**
      * Include <code>NULL</code> values in output JSON.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    AggregateFilterStep<T> nullOnNull();
+    JSONObjectAggReturningStep<T> nullOnNull();
 
     /**
      * Exclude <code>NULL</code> values in output JSON.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    AggregateFilterStep<T> absentOnNull();
+    JSONObjectAggReturningStep<T> absentOnNull();
 }

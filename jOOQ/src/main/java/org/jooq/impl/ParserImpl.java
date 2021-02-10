@@ -1584,17 +1584,16 @@ final class ParserContext {
         if (from != null)
             result.addFrom(from);
 
-        if (parseKeywordIf("WHERE"))
-            result.addConditions(parseCondition());
-
-        // [#10638] Oracle seems to support (but not document) arbitrary ordering
-        //          between these clauses
+        // [#10638] [#11403] Oracle and Teradata seem to support (but not document)
+        //                   arbitrary ordering between these clauses
+        boolean where = false;
         boolean connectBy = false;
         boolean startWith = false;
         boolean groupBy = false;
         boolean having = false;
 
-        while ((!connectBy && (connectBy = parseQueryPrimaryConnectBy(result)))
+        while ((!where && (where = parseQueryPrimaryWhere(result)))
+            || (!connectBy && (connectBy = parseQueryPrimaryConnectBy(result)))
             || (!startWith && (startWith = parseQueryPrimaryStartWith(result)))
             || (!groupBy && (groupBy = parseQueryPrimaryGroupBy(result)))
             || (!having && (having = parseQueryPrimaryHaving(result))))
@@ -1625,6 +1624,15 @@ final class ParserContext {
             result.setWithTies(true);
 
         return result;
+    }
+
+    private final boolean parseQueryPrimaryWhere(SelectQueryImpl<Record> result) {
+        if (parseKeywordIf("WHERE")) {
+            result.addConditions(parseCondition());
+            return true;
+        }
+        else
+            return false;
     }
 
     private final boolean parseQueryPrimaryHaving(SelectQueryImpl<Record> result) {
@@ -2152,19 +2160,24 @@ final class ParserContext {
 
         if (parseKeywordIf("AS"))
             table = table.as(parseIdentifier());
-        else if (!peekKeyword("SET"))
+        else if (!peekKeyword("SET", "FROM"))
             table = table.as(parseIdentifierIf());
 
         scope(table);
 
         UpdateSetFirstStep<?> s1 = (with == null ? dsl.update(table) : with.update(table));
+        List<Table<?>> from = parseKeywordIf("FROM") ? parseTables() : null;
 
         parseKeyword("SET");
 
         // TODO Row value expression updates
         Map<Field<?>, Object> map = parseSetClauseList();
         UpdateFromStep<?> s2 = s1.set(map);
-        UpdateWhereStep<?> s3 = parseKeywordIf("FROM") ? s2.from(parseTables()) : s2;
+        UpdateWhereStep<?> s3 = from != null
+            ? s2.from(from)
+            : parseKeywordIf("FROM")
+            ? s2.from(parseTables())
+            : s2;
         UpdateOrderByStep<?> s4 = parseKeywordIf("WHERE") ? s3.where(parseCondition()) : s3;
         UpdateLimitStep<?> s5 = parseKeywordIf("ORDER BY") ? s4.orderBy(parseSortSpecification()) : s4;
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf("LIMIT"))

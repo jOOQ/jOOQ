@@ -64,16 +64,18 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
     private static final long serialVersionUID = 6763689261249123076L;
 
     private final Select<R>   query;
+    private final boolean     subquery;
     private final Name[]      aliases;
 
-    AliasedSelect(Select<R> query) {
-        this(query, Tools.fieldNames(Tools.degree(query)));
+    AliasedSelect(Select<R> query, boolean subquery) {
+        this(query, subquery, Tools.fieldNames(Tools.degree(query)));
     }
 
-    AliasedSelect(Select<R> query, Name... aliases) {
+    AliasedSelect(Select<R> query, boolean subquery, Name... aliases) {
         super(TableOptions.expression(), N_SELECT);
 
         this.query = query;
+        this.subquery = subquery;
         this.aliases = aliases;
     }
 
@@ -117,7 +119,7 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
         if (ctx.family() == DERBY && q != null && q.hasUnions())
             visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)));
         else
-            ctx.data(DATA_SELECT_ALIASES, aliases, c -> visitSubquery(c, query));
+            ctx.data(DATA_SELECT_ALIASES, aliases, subquery ? c -> visitSubquery(c, query) : c -> c.visit(query));
     }
 
     @Override // Avoid AbstractTable implementation

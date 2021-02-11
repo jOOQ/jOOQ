@@ -208,7 +208,7 @@ final class RowSubqueryCondition extends AbstractCondition {
         Name[] names = fieldNames(l.size());
 
         return select()
-              .from(new AliasedSelect<>(s, names).as(table))
+              .from(new AliasedSelect<>(s, true, names).as(table))
               .where(c == null
                   ? noCondition()
                   : new RowCondition(l, row(fieldsByName(table, names)), c));

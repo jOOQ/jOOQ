@@ -684,6 +684,12 @@ final class Tools {
 
 
 
+
+
+
+
+
+
         /**
          * [#9017] We've already transformed ROWNUM expressions to LIMIT.
          */
@@ -5514,7 +5520,7 @@ final class Tools {
 
         Name tableName = name("t");
         Name[] fieldNames = fieldNames(result.size());
-        Table<?> t = new AliasedSelect<>(field.query, fieldNames).as("t");
+        Table<?> t = new AliasedSelect<>(field.query, true, fieldNames).as("t");
         for (int i = 0; i < result.size(); i++)
             result.set(i, DSL.field(DSL.select(DSL.field(tableName.append(fieldNames[i]), result.get(i).getDataType())).from(t)));
 

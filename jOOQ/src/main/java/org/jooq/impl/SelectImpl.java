@@ -110,6 +110,7 @@ import org.jooq.SelectForUpdateOfStep;
 // ...
 // ...
 // ...
+import org.jooq.SelectFromStep;
 import org.jooq.SelectHavingConditionStep;
 import org.jooq.SelectIntoStep;
 import org.jooq.SelectJoinStep;
@@ -149,7 +150,10 @@ import org.jooq.SelectSelectStep;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
+// ...
 import org.jooq.WindowDefinition;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -328,6 +332,21 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         getQuery().setInto(table);
         return this;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final SelectImpl hint(String hint) {

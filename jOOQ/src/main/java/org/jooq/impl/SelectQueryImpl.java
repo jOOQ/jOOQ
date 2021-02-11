@@ -126,6 +126,7 @@ import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlelement;
@@ -155,6 +156,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WINDOW;
 import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -164,6 +166,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
+import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.unalias;
@@ -238,6 +241,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
+// ...
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
 import org.jooq.exception.DataAccessException;
@@ -249,6 +253,8 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
@@ -265,7 +271,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final long            serialVersionUID                = 1646393178384872967L;
     private static final JooqLogger      log                             = JooqLogger.getLogger(SelectQueryImpl.class);
     private static final Clause[]        CLAUSES                         = { SELECT };
-    private static final Set<SQLDialect> EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    static final Set<SQLDialect>         EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supportedBy(HSQLDB, POSTGRES);
 
 
@@ -275,6 +281,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
+
+
 
 
 
@@ -310,12 +318,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final WithImpl                               with;
     private final SelectFieldList<SelectFieldOrAsterisk> select;
-    private Table<?>                                     into;
+    private Table<?>                                     intoTable;
     private String                                       hint;
     private String                                       option;
     private boolean                                      distinct;
     private QueryPartList<SelectFieldOrAsterisk>         distinctOn;
     private ForLock                                      forLock;
+
+
 
 
 
@@ -420,7 +430,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         result.grouping = grouping;
         result.having.setWhere(having.getWhere());
         result.hint = hint;
-        result.into = into;
+        result.intoTable = intoTable;
         result.limit.from(limit);
 
         result.option = option;
@@ -1258,6 +1268,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
+
+
+
         else
             ctx.data(DATA_TRANSFORM_ROWNUM_TO_LIMIT, null, c -> accept0(c));
     }
@@ -1298,11 +1318,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (localWindowDefinitions != null)
                 context.data(DATA_WINDOW_DEFINITIONS, null);
 
-            if (into != null
+            if (intoTable != null
                     && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
                     && EMULATE_SELECT_INTO_AS_CTAS.contains(dialect)) {
 
-                context.data(DATA_OMIT_INTO_CLAUSE, true, c -> c.visit(createTable(into).as(this)));
+                context.data(DATA_OMIT_INTO_CLAUSE, true, c -> c.visit(createTable(intoTable).as(this)));
                 return;
             }
 
@@ -1925,23 +1945,32 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         ) {
             context.start(SELECT_INTO);
 
-            QueryPart actualInto = (QueryPart) context.data(DATA_SELECT_INTO_TABLE);
+            QueryPart actualIntoTable = (QueryPart) context.data(DATA_SELECT_INTO_TABLE);
 
 
 
 
-            if (actualInto == null)
-                actualInto = into;
+            if (actualIntoTable == null)
+                actualIntoTable = intoTable;
 
-            if (actualInto != null
+            if (actualIntoTable != null
                     && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
-                    && (SUPPORT_SELECT_INTO_TABLE.contains(context.dialect()) || !(actualInto instanceof Table))) {
+                    && (SUPPORT_SELECT_INTO_TABLE.contains(context.dialect()) || !(actualIntoTable instanceof Table))) {
 
                 context.formatSeparator()
                        .visit(K_INTO)
                        .sql(' ')
-                       .visit(actualInto);
+                       .visit(actualIntoTable);
             }
+
+
+
+
+
+
+
+
+
 
             context.end(SELECT_INTO);
         }
@@ -2951,8 +2980,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final void setInto(Table<?> into) {
-        this.into = into;
+    public final void setInto(Table<?> table) {
+        this.intoTable = table;
+    }
+
+    @Override
+    public final void setInto(Collection<? extends Variable<?>> variables) {
+        this.intoVariables = variables;
     }
 
     @Override

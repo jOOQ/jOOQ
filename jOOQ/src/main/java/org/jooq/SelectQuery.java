@@ -78,6 +78,8 @@ import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A <code>SELECT</code> statement (model API).
  * <p>
@@ -131,10 +133,24 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
-     * Add <code>INTO</code> clause to the <code>SELECT</code> statement.
+     * Add a T-SQL style <code>INTO</code> clause to the <code>SELECT</code>
+     * statement to create a new table from a <code>SELECT</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void setInto(Table<?> table);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Add tables to the table product.

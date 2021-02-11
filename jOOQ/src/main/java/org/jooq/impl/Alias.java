@@ -92,6 +92,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.Name.Quoted;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -137,7 +138,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     @Override
-    public final void accept(Context<?> context) {
+    public final void accept(Context<?> ctx) {
 
 
 
@@ -147,74 +148,8 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
 
 
-        if (context.declareAliases() && (context.declareFields() || context.declareTables())) {
-            context.declareAliases(false);
-
-            if (wrapped instanceof TableImpl)
-                context.scopeMarkStart(wrapping);
-
-            SQLDialect dialect = context.dialect();
-            SQLDialect family = context.family();
-            boolean emulatedDerivedColumnList = false;
-
-
-
-
-
-
-
-
-            // [#454] [#1801] Some databases don't allow "derived column names" in
-            // "simple class specifications", or "common table expression references".
-            // Hence, wrap the table reference in a subselect
-            if (fieldAliases != null
-                    && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect))
-                    && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
-
-                visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)), true);
-            }
-
-            // [#1801] Some databases do not support "derived column names".
-            // They can be emulated by concatenating a dummy SELECT with no
-            // results using UNION ALL
-            else if (fieldAliases != null && (
-                    emulatedDerivedColumnList
-                 || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(dialect)
-                 || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect))) {
-
-                emulatedDerivedColumnList = true;
-
-                if (wrapped instanceof Values && NO_SUPPORT_VALUES.contains(dialect)) {
-                    context.data(DATA_SELECT_ALIASES, fieldAliases, t -> toSQLWrapped(t));
-                }
-                else {
-
-                    // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
-                    // in those derived tables
-                    Select<? extends Record> wrappedAsSelect =
-                        wrapped instanceof Select
-                      ? (Select<?>) wrapped
-                      : wrapped instanceof DerivedTable
-                      ? ((DerivedTable<?>) wrapped).query()
-                      : select(asterisk()).from(((Table<?>) wrapped).as(alias));
-
-                    List<Field<?>> select = wrappedAsSelect.getSelect();
-
-                    // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
-                    //         See: https://github.com/h2database/h2database/issues/2532
-                    if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect)) {
-                        List<Name> names = fieldNames(select);
-
-                        if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {
-                            toSQLWrapped(context);
-                            emulatedDerivedColumnList = false;
-                        }
-                    }
-
-                    if (emulatedDerivedColumnList) {
-                        SelectFieldList<Field<?>> fields = new SelectFieldList<>();
-                        for (int i = 0; i < fieldAliases.length; i++) {
-                            switch (family) {
+        if (ctx.declareAliases() && (ctx.declareFields() || ctx.declareTables())) {
+            ctx.declareAliases(false);
 
 
 
@@ -228,73 +163,159 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
 
 
-
-
-
-
-
-                                default:
-                                    fields.add(field("null").as(fieldAliases[i]));
-                                    break;
-                            }
-                        }
-
-                        visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true);
-                    }
-                }
-            }
-
-            // The default behaviour
-            else {
-                toSQLWrapped(context);
-            }
-
-            // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
-            toSQLAs(context);
-
-            context.sql(' ')
-                   .qualify(false, c -> c.visit(alias));
-
-            // [#1801] Add field aliases to the table alias, if applicable
-            if (fieldAliases != null && !emulatedDerivedColumnList) {
-                toSQLDerivedColumnList(context);
-            }
-
-            else {
-                // [#756] If the aliased object is an anonymous table (usually an
-                // unnested array), then field names must be part of the alias
-                // declaration. For example:
-                //
-                // SELECT t.column_value FROM UNNEST(ARRAY[1, 2]) AS t(column_value)
-
-                // TODO: Is this still needed?
-                switch (family) {
-
-
-
-
-                    case HSQLDB:
-                    case POSTGRES: {
-                        // The javac compiler doesn't like casting of generics
-                        Object o = wrapped;
-
-                        if (context.declareTables() && o instanceof ArrayTable)
-                            context.sql('(')
-                                   .visit(wrap(((ArrayTable) o).fields()).qualify(false).indentSize(0))
-                                   .sql(')');
-
-                        break;
-                    }
-                }
-            }
-
-            if (wrapped instanceof TableImpl)
-                context.scopeMarkEnd(wrapping);
-
-            context.declareAliases(true);
+            acceptDeclareAliasStandard(ctx);
+            ctx.declareAliases(true);
         }
         else
-            context.qualify(false, c -> c.visit(alias));
+            ctx.qualify(false, c -> c.visit(alias));
+    }
+
+    private final void acceptDeclareAliasTSQL(Context<?> ctx) {
+        ctx.visit(alias).sql(" = ");
+        toSQLWrapped(ctx);
+    }
+
+    private final void acceptDeclareAliasStandard(Context<?> context) {
+        if (wrapped instanceof TableImpl)
+            context.scopeMarkStart(wrapping);
+
+        SQLDialect dialect = context.dialect();
+        SQLDialect family = context.family();
+        boolean emulatedDerivedColumnList = false;
+
+
+
+
+
+
+
+
+        // [#454] [#1801] Some databases don't allow "derived column names" in
+        // "simple class specifications", or "common table expression references".
+        // Hence, wrap the table reference in a subselect
+        if (fieldAliases != null
+                && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect))
+                && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
+
+            visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)), true);
+        }
+
+        // [#1801] Some databases do not support "derived column names".
+        // They can be emulated by concatenating a dummy SELECT with no
+        // results using UNION ALL
+        else if (fieldAliases != null && (
+                emulatedDerivedColumnList
+             || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(dialect)
+             || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect))) {
+
+            emulatedDerivedColumnList = true;
+
+            if (wrapped instanceof Values && NO_SUPPORT_VALUES.contains(dialect)) {
+                context.data(DATA_SELECT_ALIASES, fieldAliases, t -> toSQLWrapped(t));
+            }
+            else {
+
+                // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
+                // in those derived tables
+                Select<? extends Record> wrappedAsSelect =
+                    wrapped instanceof Select
+                  ? (Select<?>) wrapped
+                  : wrapped instanceof DerivedTable
+                  ? ((DerivedTable<?>) wrapped).query()
+                  : select(asterisk()).from(((Table<?>) wrapped).as(alias));
+
+                List<Field<?>> select = wrappedAsSelect.getSelect();
+
+                // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
+                //         See: https://github.com/h2database/h2database/issues/2532
+                if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect)) {
+                    List<Name> names = fieldNames(select);
+
+                    if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {
+                        toSQLWrapped(context);
+                        emulatedDerivedColumnList = false;
+                    }
+                }
+
+                if (emulatedDerivedColumnList) {
+                    SelectFieldList<Field<?>> fields = new SelectFieldList<>();
+                    for (int i = 0; i < fieldAliases.length; i++) {
+                        switch (family) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            default:
+                                fields.add(field("null").as(fieldAliases[i]));
+                                break;
+                        }
+                    }
+
+                    visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true);
+                }
+            }
+        }
+
+        // The default behaviour
+        else {
+            toSQLWrapped(context);
+        }
+
+        // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
+        toSQLAs(context);
+
+        context.sql(' ')
+               .qualify(false, c -> c.visit(alias));
+
+        // [#1801] Add field aliases to the table alias, if applicable
+        if (fieldAliases != null && !emulatedDerivedColumnList) {
+            toSQLDerivedColumnList(context);
+        }
+
+        else {
+            // [#756] If the aliased object is an anonymous table (usually an
+            // unnested array), then field names must be part of the alias
+            // declaration. For example:
+            //
+            // SELECT t.column_value FROM UNNEST(ARRAY[1, 2]) AS t(column_value)
+
+            // TODO: Is this still needed?
+            switch (family) {
+
+
+
+
+                case HSQLDB:
+                case POSTGRES: {
+                    // The javac compiler doesn't like casting of generics
+                    Object o = wrapped;
+
+                    if (context.declareTables() && o instanceof ArrayTable)
+                        context.sql('(')
+                               .visit(wrap(((ArrayTable) o).fields()).qualify(false).indentSize(0))
+                               .sql(')');
+
+                    break;
+                }
+            }
+        }
+
+        if (wrapped instanceof TableImpl)
+            context.scopeMarkEnd(wrapping);
     }
 
     final void toSQLAs(Context<?> ctx) {

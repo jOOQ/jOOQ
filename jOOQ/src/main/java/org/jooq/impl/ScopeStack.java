@@ -46,6 +46,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.jooq.impl.AbstractContext.ScopeStackElement;
 
@@ -189,6 +190,13 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
     final V get(K key) {
         return get0(list(key));
+    }
+
+    final <T extends Throwable> V getOrThrow(K key, Supplier<T> exception) throws T {
+        V result = get(key);
+        if (result == null)
+            throw exception.get();
+        return result;
     }
 
     final V getOrCreate(K key) {

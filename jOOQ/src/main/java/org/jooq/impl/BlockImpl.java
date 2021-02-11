@@ -354,6 +354,11 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+
+
+
+
+
             {
                 begin(ctx);
                 scopeDeclarations(ctx, c -> accept1(c));

@@ -354,6 +354,7 @@ import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
@@ -1545,11 +1546,39 @@ final class ParserContext {
             throw exception("Select list must contain " + degree + " columns. Got: " + select.size());
         }
 
-        Table<?> into = null;
+        Table<?> intoTable = null;
+
+
+
         List<Table<?>> from = null;
 
-        if (parseKeywordIf("INTO"))
-            into = parseTableName();
+        if (parseKeywordIf("INTO")) {
+            if (proEdition()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+            else
+                intoTable = parseTableName();
+        }
 
         if (parseKeywordIf("FROM"))
             from = parseTables();
@@ -1578,8 +1607,13 @@ final class ParserContext {
         if (!select.isEmpty())
             result.addSelect(select);
 
-        if (into != null)
-            result.setInto(into);
+        if (intoTable != null)
+            result.setInto(intoTable);
+
+
+
+
+
 
         if (from != null)
             result.addFrom(from);
@@ -12892,8 +12926,12 @@ final class ParserContext {
         return this;
     }
 
+    private final boolean proEdition() {
+        return configuration().commercial();
+    }
+
     private final boolean requireProEdition() {
-        if (!configuration().commercial())
+        if (!proEdition())
             throw exception("Feature only supported in pro edition");
 
         return true;

@@ -1938,11 +1938,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // ------------
         // [#4910] This clause (and the Clause.SELECT_INTO signal) must be emitted
         //         only in top level SELECTs
-        if (!context.subquery()
-
-
-
-        ) {
+        if (!context.subquery()) {
             context.start(SELECT_INTO);
 
             QueryPart actualIntoTable = (QueryPart) context.data(DATA_SELECT_INTO_TABLE);
@@ -1953,10 +1949,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (actualIntoTable == null)
                 actualIntoTable = intoTable;
 
-            if (actualIntoTable != null
-                    && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
-                    && (SUPPORT_SELECT_INTO_TABLE.contains(context.dialect()) || !(actualIntoTable instanceof Table))) {
 
+            if (actualIntoTable != null
+                && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
+                && (SUPPORT_SELECT_INTO_TABLE.contains(context.dialect()) || !(actualIntoTable instanceof Table))
+
+
+
+            ) {
                 context.formatSeparator()
                        .visit(K_INTO)
                        .sql(' ')

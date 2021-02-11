@@ -149,6 +149,7 @@ final class Keywords {
     static final Keyword K_DROP_VIEW                        = keyword("drop view");
     static final Keyword K_EACH                             = keyword("each");
     static final Keyword K_ELEMENTS                         = keyword("elements");
+    static final Keyword K_ELIF                             = keyword("elif");
     static final Keyword K_ELSE                             = keyword("else");
     static final Keyword K_ELSEIF                           = keyword("elseif");
     static final Keyword K_ELSIF                            = keyword("elsif");

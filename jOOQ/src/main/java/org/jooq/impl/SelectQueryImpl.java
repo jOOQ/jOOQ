@@ -2984,10 +2984,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         this.intoTable = table;
     }
 
-    @Override
-    public final void setInto(Collection<? extends Variable<?>> variables) {
-        this.intoVariables = variables;
-    }
+
+
+
+
+
+
+
+
 
     @Override
     public final void addOffset(int offset) {

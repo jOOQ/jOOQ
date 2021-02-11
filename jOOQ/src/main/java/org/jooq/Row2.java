@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
 import java.util.Collection;
 
 import org.jooq.conf.Settings;
@@ -1639,5 +1641,47 @@ public interface Row2<T1, T2> extends Row {
     @NotNull
     @Support
     Condition overlaps(Row2<T1, T2> row);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

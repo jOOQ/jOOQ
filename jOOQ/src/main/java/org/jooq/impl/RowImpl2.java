@@ -54,6 +54,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.Select;
+import org.jooq.Statement;
 
 /**
  * @author Lukas Eder
@@ -754,4 +755,37 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
     public final Condition overlaps(Row2<T1, T2> row) {
         return new RowOverlapsCondition<>(this, row);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

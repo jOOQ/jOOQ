@@ -54,6 +54,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row8;
 import org.jooq.Select;
+import org.jooq.Statement;
 
 /**
  * @author Lukas Eder
@@ -765,4 +766,37 @@ final class RowImpl8<T1, T2, T3, T4, T5, T6, T7, T8> extends AbstractRow impleme
     public final Condition notIn(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select) {
         return compare(Comparator.NOT_IN, select);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

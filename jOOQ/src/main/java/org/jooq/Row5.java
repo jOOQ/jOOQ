@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
 import java.util.Collection;
 
 import org.jooq.conf.Settings;
@@ -1584,5 +1586,47 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
     @NotNull
     @Support
     Condition notIn(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

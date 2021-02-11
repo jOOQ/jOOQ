@@ -52,6 +52,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.RowN;
 import org.jooq.Select;
+import org.jooq.Statement;
 
 /**
  * @author Lukas Eder
@@ -722,4 +723,37 @@ final class RowImplN extends AbstractRow implements RowN {
     public final Condition notIn(Select<? extends Record> select) {
         return compare(Comparator.NOT_IN, select);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

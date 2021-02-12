@@ -4977,7 +4977,10 @@ final class ParserContext {
         else {
             do
                 parseAlterTableAddFieldsOrConstraints(list);
-            while (parseIf(',') && (parseKeywordIf("ADD") || !peekKeyword("ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME")));
+            while (
+                parseKeywordIf("ADD") ||
+                parseIf(',') && (parseKeywordIf("ADD") || !peekKeyword("ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME"))
+            );
         }
 
         if (list.size() == 1)

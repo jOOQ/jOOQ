@@ -118,8 +118,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
-
-
     final Collection<? extends Statement> statements;
     final boolean                         alwaysWrapInBeginEnd;
 
@@ -136,12 +134,16 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             case FIREBIRD: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
                     ctx.paramType(INLINED)
-                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).formatSeparator();
+                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS);
 
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                    scopeDeclarations(ctx.formatIndentStart(),
+                        c -> accept0(c.formatIndentEnd().formatSeparator())
+                    );
                 }
+                else
+                    accept0(ctx);
 
-                accept0(ctx);
                 decrement(ctx.data(), DATA_BLOCK_NESTING);
                 break;
             }
@@ -336,12 +338,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
         ;
 
         if (wrapInBeginEnd) {
-
-
-
-
-
-
 
 
 

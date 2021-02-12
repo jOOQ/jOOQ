@@ -4860,7 +4860,7 @@ final class ParserContext {
                         List<Field<?>> fields = null;
 
                         if (!ifColumnExists) {
-                            while (parseIf(',')) {
+                            while (parseIf(',') || parseKeywordIf("DROP") && (parseKeywordIf("COLUMN") || true)) {
                                 if (fields == null) {
                                     fields = new ArrayList<>();
                                     fields.add(field);

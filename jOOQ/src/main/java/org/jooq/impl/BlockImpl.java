@@ -49,6 +49,8 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_ALIAS;
 import static org.jooq.impl.Keywords.K_AS;
@@ -116,6 +118,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+
+
     final Collection<? extends Statement> statements;
     final boolean                         alwaysWrapInBeginEnd;
 
@@ -135,11 +139,9 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                        .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).formatSeparator();
 
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                    scopeDeclarations(ctx, c -> accept0(c));
                 }
-                else
-                    accept0(ctx);
 
+                accept0(ctx);
                 decrement(ctx.data(), DATA_BLOCK_NESTING);
                 break;
             }
@@ -179,7 +181,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
                 break;
             }
-
 
 
 
@@ -335,6 +336,15 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
         ;
 
         if (wrapInBeginEnd) {
+
+
+
+
+
+
+
+
+
 
 
 

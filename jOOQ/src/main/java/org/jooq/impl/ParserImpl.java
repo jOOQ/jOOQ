@@ -3190,7 +3190,7 @@ final class ParserContext {
 
 
                 ;
-                if (peekKeyword("EXECUTE") && requireProEdition())
+                if (peekKeyword("EXECUTE") && !peekKeyword("EXECUTE BLOCK") && requireProEdition())
 
 
 

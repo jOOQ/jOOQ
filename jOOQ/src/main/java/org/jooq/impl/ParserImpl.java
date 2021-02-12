@@ -5558,6 +5558,11 @@ final class ParserContext {
 
 
 
+
+
+
+
+
     private final DDLQuery parseDropType() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         List<Name> typeNames = parseIdentifiers();
@@ -11114,17 +11119,19 @@ final class ParserContext {
         boolean quoted = quoteEnd != 0;
 
         int start = position();
+        StringBuilder sb = new StringBuilder();
+        char c;
         if (quoted)
-            while (character() != quoteEnd && hasMore())
-                positionInc();
+            while ((c = character()) != quoteEnd && hasMore() && positionInc() || character(position + 1) == quoteEnd && hasMore(1) && positionInc(2))
+                sb.append(c);
         else
-            while (isIdentifierPart() && hasMore())
-                positionInc();
+            for (; isIdentifierPart() && hasMore(); positionInc())
+                sb.append(character());
 
         if (position() == start)
             return null;
 
-        String name = normaliseNameCase(configuration(), substring(start, position()), quoted, locale);
+        String name = normaliseNameCase(configuration(), sb.toString(), quoted, locale);
 
         if (quoted) {
             if (character() != quoteEnd)
@@ -13156,16 +13163,17 @@ final class ParserContext {
         return position;
     }
 
-    private final void position(int newPosition) {
+    private final boolean position(int newPosition) {
         position = newPosition;
+        return true;
     }
 
-    private final void positionInc() {
-        positionInc(1);
+    private final boolean positionInc() {
+        return positionInc(1);
     }
 
-    private final void positionInc(int inc) {
-        position(position + inc);
+    private final boolean positionInc(int inc) {
+        return position(position + inc);
     }
 
     private final String delimiter() {
@@ -13232,6 +13240,10 @@ final class ParserContext {
 
     private final boolean hasMore() {
         return position < sql.length;
+    }
+
+    private final boolean hasMore(int offset) {
+        return position + offset < sql.length;
     }
 
     private final boolean done() {

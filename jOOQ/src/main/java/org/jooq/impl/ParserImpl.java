@@ -12056,6 +12056,7 @@ final class ParserImpl implements Parser {
         "LIMIT",
         "MINUS",
         "OFFSET",
+        "ON",
         "ORDER BY",
         "PARTITION BY",
         "QUALIFY",

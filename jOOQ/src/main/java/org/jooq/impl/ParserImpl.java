@@ -12854,6 +12854,7 @@ final class ParserContext {
         "LIMIT",
         "MINUS",
         "OFFSET",
+        "ON",
         "ORDER BY",
         "PARTITION BY",
         "QUALIFY",

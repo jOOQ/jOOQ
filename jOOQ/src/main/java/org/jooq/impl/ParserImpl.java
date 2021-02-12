@@ -7533,11 +7533,7 @@ final class ParserContext {
                 if (J.is(type))
                     if ((field = parseFieldJSONArrayConstructorIf()) != null)
                         return field;
-                    else if ((field = parseFieldJSONArrayAggIf()) != null)
-                        return field;
                     else if ((field = parseFieldJSONObjectConstructorIf()) != null)
-                        return field;
-                    else if ((field = parseFieldJSONObjectAggIf()) != null)
                         return field;
                     else if ((field = parseFieldJSONValueIf()) != null)
                         return field;
@@ -8482,9 +8478,9 @@ final class ParserContext {
         return null;
     }
 
-    private final Field<?> parseFieldJSONArrayAggIf() {
+    private final AggregateFilterStep<?> parseJSONArrayAggFunctionIf() {
         if (parseFunctionNameIf("JSON_ARRAYAGG")) {
-            Field<?> result;
+            AggregateFilterStep<?> result;
             JSONArrayAggOrderByStep<?> s1;
             JSONArrayAggNullStep<?> s2;
             JSONArrayAggReturningStep<?> s3;
@@ -8543,9 +8539,9 @@ final class ParserContext {
         return null;
     }
 
-    private final Field<?> parseFieldJSONObjectAggIf() {
+    private final AggregateFilterStep<?> parseJSONObjectAggFunctionIf() {
         if (parseFunctionNameIf("JSON_OBJECTAGG")) {
-            Field<?> result;
+            AggregateFilterStep<?> result;
             JSONObjectAggNullStep<?> s1;
             JSONObjectAggReturningStep<?> s2;
             JSONOnNull onNull;
@@ -10247,6 +10243,10 @@ final class ParserContext {
             over = filter = parseArrayAggFunctionIf();
         if (filter == null && !basic)
             over = filter = parseXMLAggFunctionIf();
+        if (filter == null && !basic)
+            over = filter = parseJSONArrayAggFunctionIf();
+        if (filter == null && !basic)
+            over = filter = parseJSONObjectAggFunctionIf();
 
         if (filter == null && over == null)
             if (!basic)

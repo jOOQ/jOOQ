@@ -657,7 +657,7 @@ final class ParserImpl implements Parser {
 
     @Override
     public final Statement parseStatement(String sql, Object... bindings) {
-        return ctx(sql, bindings).parseStatementAndSemicolon();
+        return ctx(sql, bindings).parseStatementAndSemicolonIf();
     }
 
 
@@ -816,8 +816,11 @@ final class ParserContext {
     }
 
     final Statement parseStatement0() {
-        return this.done("Unexpected content", parseStatementAndSemicolon());
+        return this.done("Unexpected content", parseStatementAndSemicolonIf());
     }
+
+
+
 
 
 
@@ -3008,6 +3011,8 @@ final class ParserContext {
             parseKeywordIf("EXECUTE BLOCK AS");
 
         parseKeyword("BEGIN");
+        if (!(parseKeywordIf("NOT") && parseKeyword("ATOMIC")))
+            parseKeywordIf("ATOMIC");
         statements.addAll(parseStatements("END"));
         parseKeyword("END");
 
@@ -3029,7 +3034,16 @@ final class ParserContext {
             parseIf(';');
     }
 
-    final Statement parseStatementAndSemicolon() {
+    private final Statement parseStatementAndSemicolon() {
+        Statement result = parseStatementAndSemicolonIf();
+
+        if (result == null)
+            throw expected("Statement");
+
+        return result;
+    }
+
+    final Statement parseStatementAndSemicolonIf() {
         Statement result = parseStatement();
         parseSemicolonAfterNonBlocks(result);
         return result;
@@ -3153,7 +3167,16 @@ final class ParserContext {
                 break;
 
             case 'D':
-                if (peekKeyword("DECLARE", "DEFINE") && requireProEdition())
+                if (peekKeyword("DECLARE") && requireProEdition())
+
+
+
+
+
+
+
+                ;
+                else if (peekKeyword("DEFINE") && requireProEdition())
 
 
 
@@ -5470,6 +5493,27 @@ final class ParserContext {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final DDLQuery parseDropType() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         List<Name> typeNames = parseIdentifiers();
@@ -6573,8 +6617,10 @@ final class ParserContext {
         parseKeyword("VALUES");
 
         List<Row> rows = new ArrayList<>();
-        do
+        do {
+            parseKeywordIf("ROW");
             rows.add(parseTuple());
+        }
         while (parseIf(','));
         return values0(rows.toArray(EMPTY_ROW));
     }

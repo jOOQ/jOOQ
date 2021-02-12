@@ -136,6 +136,7 @@ import static org.jooq.impl.DSL.digits;
 import static org.jooq.impl.DSL.domain;
 import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.every;
+// ...
 import static org.jooq.impl.DSL.exists;
 // ...
 // ...
@@ -3189,6 +3190,11 @@ final class ParserContext {
 
 
                 ;
+                if (peekKeyword("EXECUTE") && requireProEdition())
+
+
+
+                ;
                 else if (peekKeyword("EXIT") && requireProEdition())
 
 
@@ -3318,6 +3324,27 @@ final class ParserContext {
         parseKeyword("NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

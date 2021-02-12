@@ -10886,10 +10886,10 @@ final class ParserContext {
             if (distinct)
                 if (fields == null)
                     return countDistinct(asterisk);
-                else if (fields.length > 0)
-                    return countDistinct(fields);
-                else
+                else if (fields.length == 1)
                     return countDistinct(fields[0]);
+                else
+                    return countDistinct(fields);
             else if (fields == null)
                 return count(asterisk);
             else

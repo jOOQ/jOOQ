@@ -992,8 +992,8 @@ final class ParserContext {
                     break;
 
                 case 'E':
-                    if (!parseResultQuery && peekKeyword("EXECUTE BLOCK AS BEGIN"))
-                        return parseBlock(false);
+                    if (!parseResultQuery && peekKeyword("EXECUTE BLOCK AS"))
+                        return parseBlock(true);
                     else if (!parseResultQuery && peekKeyword("EXEC"))
                         return parseExec();
 
@@ -2995,14 +2995,14 @@ final class ParserContext {
         }
     }
 
-    private final Block parseBlock(boolean allowDeclare) {
+    private final Block parseBlock(boolean allowDeclareSection) {
         List<Statement> statements = new ArrayList<>();
 
 
 
 
 
-        if (allowDeclare && parseKeywordIf("DECLARE") && requireProEdition())
+        if (allowDeclareSection && parseKeywordIf("DECLARE") && requireProEdition())
 
 
 

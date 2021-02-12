@@ -3146,8 +3146,7 @@ final class ParserContext {
 
     private final Block parseDo() {
         parseKeyword("DO");
-        String block = parseStringLiteral();
-        return (Block) dsl.parser().parseQuery(block);
+        return (Block) dsl.parser().parseQuery(parseStringLiteral());
     }
 
     private final Statement parseStatement() {
@@ -5203,6 +5202,21 @@ final class ParserContext {
 
         return s2;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

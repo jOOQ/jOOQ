@@ -6617,9 +6617,14 @@ final class ParserContext {
         parseKeyword("VALUES");
 
         List<Row> rows = new ArrayList<>();
+        Integer degree = null;
         do {
             parseKeywordIf("ROW");
-            rows.add(parseTuple());
+            Row row = parseTuple(degree);
+            rows.add(row);
+
+            if (degree == null)
+                degree = row.size();
         }
         while (parseIf(','));
         return values0(rows.toArray(EMPTY_ROW));

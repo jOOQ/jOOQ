@@ -10682,14 +10682,15 @@ final class ParserContext {
         // TODO Listagg set function
         OrderedAggregateFunction<?> orderedN;
         OrderedAggregateFunctionOfDeferredType ordered1;
+        boolean optionalWithinGroup = false;
 
         orderedN = parseHypotheticalSetFunctionIf();
         if (orderedN == null)
             orderedN = parseInverseDistributionFunctionIf();
         if (orderedN == null)
-            orderedN = parseListaggFunctionIf();
+            optionalWithinGroup = (orderedN = parseListaggFunctionIf()) != null;
         if (orderedN != null)
-            return orderedN.withinGroupOrderBy(parseWithinGroupN());
+            return orderedN.withinGroupOrderBy(parseWithinGroupN(optionalWithinGroup));
 
         ordered1 = parseModeIf();
         if (ordered1 != null)
@@ -10722,7 +10723,17 @@ final class ParserContext {
     }
 
     private final List<SortField<?>> parseWithinGroupN() {
-        parseKeyword("WITHIN GROUP");
+        return parseWithinGroupN(false);
+    }
+
+    private final List<SortField<?>> parseWithinGroupN(boolean optional) {
+        if (optional) {
+            if (!parseKeywordIf("WITHIN GROUP"))
+                return emptyList();
+        }
+        else
+            parseKeyword("WITHIN GROUP");
+
         parse('(');
         parseKeyword("ORDER BY");
         List<SortField<?>> result = parseSortSpecification();

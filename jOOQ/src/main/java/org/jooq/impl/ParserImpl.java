@@ -2207,10 +2207,25 @@ final class ParserContext {
         List<Table<?>> from = parseKeywordIf("FROM") ? parseTables() : null;
 
         parseKeyword("SET");
+        UpdateFromStep<?> s2;
 
-        // TODO Row value expression updates
-        Map<Field<?>, Object> map = parseSetClauseList();
-        UpdateFromStep<?> s2 = s1.set(map);
+        if (peek('(')) {
+            Row row = parseRow();
+            parse('=');
+
+            // TODO Can we extract a public API for this?
+            if (peekSelectOrWith(true))
+                ((UpdateImpl<?>) s1).getDelegate().addValues0(row, parseWithOrSelect(row.size()));
+            else
+                ((UpdateImpl<?>) s1).getDelegate().addValues0(row, parseRow(row.size()));
+
+            s2 = (UpdateFromStep<?>) s1;
+        }
+        else {
+            Map<Field<?>, Object> map = parseSetClauseList();
+            s2 = s1.set(map);
+        }
+
         UpdateWhereStep<?> s3 = from != null
             ? s2.from(from)
             : parseKeywordIf("FROM")

@@ -427,12 +427,12 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-    private final void addValues0(Row row, Row value) {
+    final void addValues0(Row row, Row value) {
         multiRow = row;
         multiValue = value;
     }
 
-    private final void addValues0(Row row, Select<?> select) {
+    final void addValues0(Row row, Select<?> select) {
         multiRow = row;
         multiSelect = select;
     }

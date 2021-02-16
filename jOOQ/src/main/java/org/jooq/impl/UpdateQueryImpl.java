@@ -577,6 +577,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             }
             else {
                 ctx.start(UPDATE_SET_ASSIGNMENT)
+                   .formatIndentStart()
+                   .formatSeparator()
                    .qualify(false, c -> c.visit(multiRow))
                    .sql(" = ");
 
@@ -606,7 +608,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     visitSubquery(ctx, select, true);
                 }
 
-                ctx.end(UPDATE_SET_ASSIGNMENT);
+                ctx.formatIndentEnd().end(UPDATE_SET_ASSIGNMENT);
             }
         }
 

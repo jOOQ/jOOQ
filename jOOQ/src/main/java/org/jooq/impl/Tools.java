@@ -847,6 +847,18 @@ final class Tools {
     };
 
     /**
+     * "Suffixes" that are placed behind a "?" character to form a JDBC bind
+     * variable, rather than an operator.
+     * <p>
+     * [#11442] The above NON_BIND_VARIABLE_SUFFIXES leads to false positives,
+     * such as <code>"?&lt;&gt;"</code>, which is a non-equality operator, not
+     * an operator on its own.
+     */
+    private static final char[][]      BIND_VARIABLE_SUFFIXES             = {
+        { '<', '>' }
+    };
+
+    /**
      * All hexadecimal digits accessible through array index, e.g.
      * <code>HEX_DIGITS[15] == 'f'</code>.
      */
@@ -2585,9 +2597,15 @@ final class Tools {
 
                 // [#5307] Consume PostgreSQL style operators. These aren't bind variables!
                 if (sqlChars[i] == '?' && i + 1 < sqlChars.length && SUPPORT_NON_BIND_VARIABLE_SUFFIXES.contains(ctx.dialect())) {
-                    for (char[] suffix : NON_BIND_VARIABLE_SUFFIXES) {
-                        if (peek(sqlChars, i + 1, suffix)) {
-                            for (int j = i; i - j <= suffix.length; i++)
+
+                    nonBindSuffixLoop:
+                    for (char[] candidate : NON_BIND_VARIABLE_SUFFIXES) {
+                        if (peek(sqlChars, i + 1, candidate)) {
+                            for (char[] exclude : BIND_VARIABLE_SUFFIXES)
+                                if (peek(sqlChars, i + 1, exclude))
+                                    continue nonBindSuffixLoop;
+
+                            for (int j = i; i - j <= candidate.length; i++)
                                 render.sql(sqlChars[i]);
 
                             render.sql(sqlChars[i]);

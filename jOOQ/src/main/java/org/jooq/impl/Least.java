@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_LEAST;
+import static org.jooq.impl.Names.N_MIN;
 import static org.jooq.impl.Names.N_MINVALUE;
 
 import org.jooq.Context;
@@ -110,7 +111,7 @@ final class Least<T> extends AbstractField<T> {
                 return;
 
             case SQLITE:
-                ctx.visit(function("min", getDataType(), args));
+                ctx.visit(function(N_MIN, getDataType(), args));
                 return;
 
             default:

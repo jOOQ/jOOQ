@@ -10297,8 +10297,15 @@ final class ParserContext {
         Condition condition = null;
 
         keep = over = filter = agg = parseCountIf();
-        if (filter == null)
-            keep = over = filter = agg = parseGeneralSetFunctionIf();
+        if (filter == null) {
+            Field<?> field = parseGeneralSetFunctionIf();
+
+            if (field != null && !(field instanceof AggregateFunction))
+                return field;
+
+            keep = over = filter = agg = (AggregateFunction<?>) field;
+        }
+
         if (filter == null && !basic)
             over = filter = agg = parseBinarySetFunctionIf();
         if (filter == null && !basic)
@@ -10835,7 +10842,7 @@ final class ParserContext {
         return ordered;
     }
 
-    private final AggregateFunction<?> parseGeneralSetFunctionIf() {
+    private final Field<?> parseGeneralSetFunctionIf() {
         boolean distinct;
         Field arg;
         Field arg2;
@@ -10860,6 +10867,18 @@ final class ParserContext {
         }
 
         arg = parseField();
+
+        switch (operation) {
+            case MAX:
+            case MIN: {
+                if (!distinct && parseIf(',')) {
+                    List<Field<?>> fields = parseFields();
+                    parse(')');
+
+                    return operation == ComputationalOperation.MAX ? greatest(arg, fields.toArray(EMPTY_FIELD)) : least(arg, fields.toArray(EMPTY_FIELD));
+                }
+            }
+        }
 
         parse(')');
 

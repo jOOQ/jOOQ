@@ -134,6 +134,17 @@ public class BatchedConnection extends DefaultConnection {
         lastSQL = null;
     }
 
+    void setBatch(BatchedPreparedStatement s) throws SQLException {
+        if (lastStatement == s)
+            return;
+
+        if (lastStatement != null)
+            executeLastBatch();
+
+        lastStatement = s;
+        lastSQL = s.sql;
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Creating non-batchable statements
     // -------------------------------------------------------------------------
@@ -222,7 +233,7 @@ public class BatchedConnection extends DefaultConnection {
 
         if (P_DML.matcher(sql).matches()) {
             lastSQL = sql;
-            return lastStatement = new BatchedPreparedStatement(this, result);
+            return lastStatement = new BatchedPreparedStatement(sql, this, result);
         }
         else
             return result;

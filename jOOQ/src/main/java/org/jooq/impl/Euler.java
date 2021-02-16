@@ -104,12 +104,12 @@ extends
 
 
 
-
             case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
+            case IGNITE:
             case MARIADB:
             case MYSQL:
             case POSTGRES:

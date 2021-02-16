@@ -37,8 +37,32 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 import org.jetbrains.annotations.*;
 
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -87,4 +111,81 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
     @NotNull
     @Support
     CreateTableConstraintStep constraints(Collection<? extends Constraint> constraints);
+
+    /**
+     * Convenience method to add an unnamed (system named)
+     * <code>PRIMARY KEY</code> constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#primaryKey(String...)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull
+    @Support
+    CreateTableConstraintStep primaryKey(String... fields);
+
+    /**
+     * Convenience method to add an unnamed (system named)
+     * <code>PRIMARY KEY</code> constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#primaryKey(Name...)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull
+    @Support
+    CreateTableConstraintStep primaryKey(Name... fields);
+
+    /**
+     * Convenience method to add an unnamed (system named)
+     * <code>PRIMARY KEY</code> constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#primaryKey(Field...)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull
+    @Support
+    CreateTableConstraintStep primaryKey(Field<?>... fields);
+
+    /**
+     * Convenience method to add an unnamed (system named) <code>UNIQUE</code>
+     * constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#unique(String...)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull
+    @Support
+    CreateTableConstraintStep unique(String... fields);
+
+    /**
+     * Convenience method to add an unnamed (system named) <code>UNIQUE</code>
+     * constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#unique(Name...)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull
+    @Support
+    CreateTableConstraintStep unique(Name... fields);
+
+    /**
+     * Convenience method to add an unnamed (system named) <code>UNIQUE</code>
+     * constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#unique(Field...)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull
+    @Support
+    CreateTableConstraintStep unique(Field<?>... fields);
+
+    /**
+     * Convenience method to add an unnamed (system named) <code>CHECK</code>
+     * constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#check(Condition)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateTableConstraintStep check(Condition condition);
 }

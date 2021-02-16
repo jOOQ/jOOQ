@@ -114,10 +114,12 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import org.jooq.Comment;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.CreateTableColumnStep;
+import org.jooq.CreateTableConstraintStep;
 import org.jooq.CreateTableWithDataStep;
 import org.jooq.DataType;
 import org.jooq.EnumType;
@@ -133,6 +135,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions.OnCommit;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -284,6 +288,41 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     public final CreateTableImpl constraints(Collection<? extends Constraint> c) {
         constraints.addAll(c);
         return this;
+    }
+
+    @Override
+    public final CreateTableConstraintStep primaryKey(String... fields) {
+        return constraint(DSL.primaryKey(fields));
+    }
+
+    @Override
+    public final CreateTableConstraintStep primaryKey(Name... fields) {
+        return constraint(DSL.primaryKey(fields));
+    }
+
+    @Override
+    public final CreateTableConstraintStep primaryKey(Field<?>... fields) {
+        return constraint(DSL.primaryKey(fields));
+    }
+
+    @Override
+    public final CreateTableConstraintStep unique(String... fields) {
+        return constraint(DSL.unique(fields));
+    }
+
+    @Override
+    public final CreateTableConstraintStep unique(Name... fields) {
+        return constraint(DSL.unique(fields));
+    }
+
+    @Override
+    public final CreateTableConstraintStep unique(Field<?>... fields) {
+        return constraint(DSL.unique(fields));
+    }
+
+    @Override
+    public final CreateTableConstraintStep check(Condition condition) {
+        return constraint(DSL.check(condition));
     }
 
     @Override

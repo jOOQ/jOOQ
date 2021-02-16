@@ -931,12 +931,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         if (returning.isEmpty()) {
             return super.execute(ctx, listener);
         }
-
-
-
-
-
-
+        // Column stores don't seem support fetching generated keys
+        else if (NO_SUPPORT_FETCHING_KEYS.contains(ctx.dialect())) {
+            return super.execute(ctx, listener);
+        }
         else {
             int result = 1;
             ResultSet rs;

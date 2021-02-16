@@ -6115,7 +6115,7 @@ final class ParserContext {
                         ? ((Field) left).isNotDocument()
                         : ((Field) left).isDocument();
 
-                parseKeyword("DISTINCT FROM");
+                not = parseKeywordIf("DISTINCT FROM") == not;
                 if (left instanceof Field) {
                     Field right = toField(parseConcat(null));
                     return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);

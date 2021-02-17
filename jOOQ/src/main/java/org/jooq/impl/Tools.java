@@ -48,6 +48,7 @@ import static java.util.Collections.singletonList;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -872,6 +873,10 @@ final class Tools {
     private static final Set<SQLDialect> DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect> DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
+
+
+
+
 
 
 
@@ -5043,6 +5048,10 @@ final class Tools {
             // [#6289] [#7191] Some databases don't support lengths on binary types
             if (type.isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(ctx.dialect()))
                 ctx.sql(typeName);
+
+
+
+
             else if (type.length() > 0)
                 ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
 
@@ -5071,6 +5080,10 @@ final class Tools {
                     ctx.sql(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
                 else
                     ctx.sql(typeName).sql('(').sql(type.precision()).sql(')');
+
+
+
+
             else
                 ctx.sql(type.getCastTypeName(ctx.configuration()));
         }

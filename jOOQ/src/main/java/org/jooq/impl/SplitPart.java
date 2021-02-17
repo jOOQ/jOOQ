@@ -94,7 +94,17 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_SPLIT_PART).sql('(').visit(string).sql(", ").visit(delimiter).sql(", ").visit(n).sql(')');
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(N_SPLIT_PART).sql('(').visit(string).sql(", ").visit(delimiter).sql(", ").visit(n).sql(')');
+                break;
+        }
     }
 
 

@@ -41,6 +41,7 @@ import org.jooq.SQLDialect;
 // ...
 // ...
 // ...
+// ...
 import org.jooq.meta.cubrid.CUBRIDDatabase;
 // ...
 import org.jooq.meta.derby.DerbyDatabase;
@@ -77,11 +78,11 @@ public class Databases {
     /**
      * Get a reference to a {@link Database} class for a given {@link SQLDialect}.
      */
-    @SuppressWarnings("deprecation")
     public static final Class<? extends Database> databaseClass(SQLDialect dialect) {
         Class<? extends Database> result = JDBCDatabase.class;
 
         switch (dialect.family()) {
+
 
 
 

@@ -51,6 +51,7 @@ import static java.time.temporal.ChronoField.YEAR;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DEFAULT;
@@ -565,6 +566,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
         final DataType<T>            dataType;
         final Converter<T, U>        converter;
         final boolean                attachable;
@@ -819,11 +822,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Escape a string literal by replacing <code>'</code> by <code>''</code>, and possibly also backslashes.
          */
-        static final String escape(Object val, Context<?> context) {
+        static final String escape(Object val, Context<?> ctx) {
             String result = val.toString();
 
-            if (needsBackslashEscaping(context.configuration()))
+            if (needsBackslashEscaping(ctx.configuration()))
                 result = StringUtils.replace(result, "\\", "\\\\");
+
+
+
+
+
 
             return StringUtils.replace(result, "'", "''");
         }
@@ -2809,6 +2817,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 // [#5895] HSQLDB derives the specific data type from the literal
                 case HSQLDB:
                     ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
@@ -4016,6 +4025,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1253] Sybase does not implement timestamp literals
             if (INLINE_AS_STRING_LITERAL.contains(ctx.dialect()))
                 ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
+
 
 
 

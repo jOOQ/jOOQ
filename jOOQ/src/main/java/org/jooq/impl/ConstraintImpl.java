@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.CONSTRAINT;
 // ...
+// ...
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
@@ -150,6 +151,7 @@ implements
      */
     private static final long            serialVersionUID             = 1018023703769802616L;
     private static final Clause[]        CLAUSES                      = { CONSTRAINT };
+    private static final Set<SQLDialect> NO_SUPPORT_PK                = SQLDialect.supportedBy();
     private static final Set<SQLDialect> NO_SUPPORT_UK                = SQLDialect.supportedBy(IGNITE);
     private static final Set<SQLDialect> NO_SUPPORT_FK                = SQLDialect.supportedBy(IGNITE);
     private static final Set<SQLDialect> NO_SUPPORT_CHECK             = SQLDialect.supportedBy(IGNITE);
@@ -1159,7 +1161,7 @@ implements
     }
 
     final boolean supported(Context<?> ctx) {
-        return primaryKey != null
+        return primaryKey != null && !NO_SUPPORT_PK.contains(ctx.dialect())
             || unique != null && !NO_SUPPORT_UK.contains(ctx.dialect())
             || references != null && !NO_SUPPORT_FK.contains(ctx.dialect())
             || check != null && !NO_SUPPORT_CHECK.contains(ctx.dialect());

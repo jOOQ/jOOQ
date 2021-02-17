@@ -38,6 +38,7 @@
 package org.jooq.tools.jdbc;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
@@ -408,6 +409,8 @@ public class JDBCUtils {
 
 
 
+
+
         return DEFAULT;
     }
 
@@ -441,6 +444,8 @@ public class JDBCUtils {
                 return "org.postgresql.Driver";
             case SQLITE:
                 return "org.sqlite.JDBC";
+
+
 
 
 

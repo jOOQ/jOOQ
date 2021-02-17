@@ -49,6 +49,7 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -74,6 +75,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
@@ -157,6 +159,9 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     private static final long            serialVersionUID          = -660460731970074719L;
     private static final Clause[]        CLAUSES                   = { UPDATE };
+
+
+
 
 
 
@@ -673,6 +678,12 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 ctx.formatSeparator()
                    .visit(K_WHERE).sql(' ')
                    .visit(getWhere());
+
+
+
+
+
+
 
             ctx.end(UPDATE_WHERE);
 

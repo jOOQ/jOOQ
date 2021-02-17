@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
+import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -401,7 +402,8 @@ final class MetaImpl extends AbstractMeta {
                         SQLDataType.VARCHAR, // TABLE_CAT
                         SQLDataType.VARCHAR, // TABLE_SCHEM
                         SQLDataType.VARCHAR, // TABLE_NAME
-                        SQLDataType.VARCHAR  // TABLE_TYPE
+                        SQLDataType.VARCHAR, // TABLE_TYPE
+                        SQLDataType.VARCHAR  // REMARKS
                     );
                 }
             });
@@ -412,6 +414,7 @@ final class MetaImpl extends AbstractMeta {
                 String schema = table.get(1, String.class);
                 String name = table.get(2, String.class);
                 String type = table.get(3, String.class);
+                String remarks = table.get(4, String.class);
 
                 // "TABLE","VIEW", "SYSTEM TABLE", "GLOBAL TEMPORARY","LOCAL TEMPORARY", "ALIAS", "SYNONYM".
                 TableType tableType =
@@ -430,7 +433,14 @@ final class MetaImpl extends AbstractMeta {
                     : TableType.TABLE;
 
 
-                result.add(new MetaTable(name, this, getColumns(catalog, schema, name), getUks(catalog, schema, name), tableType));
+                result.add(new MetaTable(
+                    name,
+                    this,
+                    getColumns(catalog, schema, name),
+                    getUks(catalog, schema, name),
+                    remarks,
+                    tableType
+                ));
 
 //              TODO: Find a more efficient way to do this
 //              Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
@@ -684,8 +694,8 @@ final class MetaImpl extends AbstractMeta {
         private static final long    serialVersionUID = 4843841667753000233L;
         private final Result<Record> uks;
 
-        MetaTable(String name, Schema schema, Result<Record> columns, Result<Record> uks, TableType tableType) {
-            super(name(name), schema, null, null, null, null, null, TableOptions.of(tableType));
+        MetaTable(String name, Schema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
+            super(name(name), schema, null, null, null, null, comment(remarks), TableOptions.of(tableType));
 
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM

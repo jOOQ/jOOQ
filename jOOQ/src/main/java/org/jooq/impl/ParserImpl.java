@@ -3853,8 +3853,21 @@ final class ParserContext {
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null)
             return IGNORE;
+        else if (parseKeywordIf("SET"))
+            return dsl.alterView(oldName).comment(parseOptionsDescription());
         else
-            throw expected("OWNER TO", "RENAME");
+            throw expected("OWNER TO", "RENAME", "SET");
+    }
+
+    private final Comment parseOptionsDescription() {
+        parseKeyword("OPTIONS");
+        parse('(');
+        parseKeyword("DESCRIPTION");
+        parse('=');
+        Comment comment = parseComment();
+        parse(')');
+
+        return comment;
     }
 
     private final DDLQuery parseDropView() {
@@ -4261,9 +4274,12 @@ final class ParserContext {
             }
 
             // [#10164] In a statement batch, this could already be the next statement
-            else if (!peekKeyword("COMMENT ON") && (keyword = parseAndGetKeywordIf("COMMENT")) != null) {
+            else if (!peekKeyword("COMMENT ON") && parseKeywordIf("COMMENT")) {
                 parseIf('=');
                 comment = parseComment();
+            }
+            else if (peekKeyword("OPTIONS")) {
+                comment = parseOptionsDescription();
             }
             else if ((keyword = parseAndGetKeywordIf("COMPRESSION")) != null) {
                 parseIf('=');
@@ -4574,6 +4590,10 @@ final class ParserContext {
                 // [#10164] In a statement batch, this could already be the next statement
                 if (!peekKeyword("COMMENT ON") && parseKeywordIf("COMMENT")) {
                     fieldComment = parseComment();
+                    continue;
+                }
+                else if (peekKeyword("OPTIONS")) {
+                    fieldComment = parseOptionsDescription();
                     continue;
                 }
             }
@@ -4948,9 +4968,15 @@ final class ParserContext {
                 }
 
                 break;
+
+            case 'S':
+                if (parseKeywordIf("SET"))
+                    return s1.comment(parseOptionsDescription());
+
+                break;
         }
 
-        throw expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME");
+        throw expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME", "SET");
     }
 
     private final AlterTableFinalStep parseCascadeRestrictIf(AlterTableDropStep step) {
@@ -12298,30 +12324,74 @@ final class ParserContext {
     }
 
     private final ComputationalOperation parseComputationalOperationIf() {
-        if (parseFunctionNameIf("AVG"))
-            return ComputationalOperation.AVG;
-        else if (parseFunctionNameIf("MAX"))
-            return ComputationalOperation.MAX;
-        else if (parseFunctionNameIf("MIN"))
-            return ComputationalOperation.MIN;
-        else if (parseFunctionNameIf("SUM"))
-            return ComputationalOperation.SUM;
-        else if (parseFunctionNameIf("PRODUCT"))
-            return ComputationalOperation.PRODUCT;
-        else if (parseFunctionNameIf("MEDIAN"))
-            return ComputationalOperation.MEDIAN;
-        else if (parseFunctionNameIf("EVERY", "BOOL_AND", "BOOLAND_AGG"))
-            return ComputationalOperation.EVERY;
-        else if (parseFunctionNameIf("ANY", "SOME", "BOOL_OR", "BOOLOR_AGG"))
-            return ComputationalOperation.ANY;
-        else if (parseFunctionNameIf("STDDEV_POP", "STDEVP"))
-            return ComputationalOperation.STDDEV_POP;
-        else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV", "STDEV_SAMP"))
-            return ComputationalOperation.STDDEV_SAMP;
-        else if (parseFunctionNameIf("VAR_POP", "VARIANCE", "VARP"))
-            return ComputationalOperation.VAR_POP;
-        else if (parseFunctionNameIf("VAR_SAMP", "VARIANCE_SAMP", "VAR"))
-            return ComputationalOperation.VAR_SAMP;
+        switch (characterUpper()) {
+            case 'A':
+                if (parseFunctionNameIf("ANY"))
+                    return ComputationalOperation.ANY;
+                else if (parseFunctionNameIf("AVG"))
+                    return ComputationalOperation.AVG;
+
+                break;
+
+            case 'B':
+                if (parseFunctionNameIf("BOOL_AND", "BOOLAND_AGG"))
+                    return ComputationalOperation.EVERY;
+                else if (parseFunctionNameIf("BOOL_OR", "BOOLOR_AGG"))
+                    return ComputationalOperation.ANY;
+
+                break;
+
+            case 'E':
+                if (parseFunctionNameIf("EVERY"))
+                    return ComputationalOperation.EVERY;
+
+                break;
+
+            case 'L':
+                if (parseFunctionNameIf("LOGICAL_AND"))
+                    return ComputationalOperation.EVERY;
+                else if (parseFunctionNameIf("LOGICAL_OR"))
+                    return ComputationalOperation.ANY;
+
+                break;
+
+
+            case 'M':
+                if (parseFunctionNameIf("MAX"))
+                    return ComputationalOperation.MAX;
+                else if (parseFunctionNameIf("MEDIAN"))
+                    return ComputationalOperation.MEDIAN;
+                else if (parseFunctionNameIf("MIN"))
+                    return ComputationalOperation.MIN;
+
+                break;
+
+            case 'P':
+                if (parseFunctionNameIf("PRODUCT"))
+                    return ComputationalOperation.PRODUCT;
+
+                break;
+
+            case 'S':
+                if (parseFunctionNameIf("SUM"))
+                    return ComputationalOperation.SUM;
+                else if (parseFunctionNameIf("SOME"))
+                    return ComputationalOperation.ANY;
+                else if (parseFunctionNameIf("STDDEV_POP", "STDEVP"))
+                    return ComputationalOperation.STDDEV_POP;
+                else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV", "STDEV_SAMP"))
+                    return ComputationalOperation.STDDEV_SAMP;
+
+                break;
+
+            case 'V':
+                if (parseFunctionNameIf("VAR_POP", "VARIANCE", "VARP"))
+                    return ComputationalOperation.VAR_POP;
+                else if (parseFunctionNameIf("VAR_SAMP", "VARIANCE_SAMP", "VAR"))
+                    return ComputationalOperation.VAR_SAMP;
+
+                break;
+        }
 
         return null;
     }

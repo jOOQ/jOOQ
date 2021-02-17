@@ -129,6 +129,7 @@ final class Keywords {
     static final Keyword K_DEFINE                           = keyword("define");
     static final Keyword K_DELETE                           = keyword("delete");
     static final Keyword K_DENSE_RANK                       = keyword("dense_rank");
+    static final Keyword K_DESCRIPTION                      = keyword("description");
     static final Keyword K_DETERMINISTIC                    = keyword("deterministic");
     static final Keyword K_DISABLE                          = keyword("disable");
     static final Keyword K_DISTINCT                         = keyword("distinct");
@@ -299,9 +300,11 @@ final class Keywords {
     static final Keyword K_ON_DUPLICATE_KEY_UPDATE          = keyword("on duplicate key update");
     static final Keyword K_ON_UPDATE                        = keyword("on update");
     static final Keyword K_OPEN                             = keyword("open");
+    static final Keyword K_OPTIONS                          = keyword("options");
     static final Keyword K_OR                               = keyword("or");
     static final Keyword K_ORDER                            = keyword("order");
     static final Keyword K_ORDER_BY                         = keyword("order by");
+    static final Keyword K_ORDINAL                          = keyword("ordinal");
     static final Keyword K_ORDINALITY                       = keyword("ordinality");
     static final Keyword K_OUT                              = keyword("out");
     static final Keyword K_OUTPUT                           = keyword("output");
@@ -387,6 +390,7 @@ final class Keywords {
     static final Keyword K_STATEMENT                        = keyword("statement");
     static final Keyword K_STEP                             = keyword("step");
     static final Keyword K_STORING                          = keyword("storing");
+    static final Keyword K_STRUCT                           = keyword("struct");
     static final Keyword K_SWITCH                           = keyword("switch");
     static final Keyword K_SYMMETRIC                        = keyword("symmetric");
     static final Keyword K_TABLE                            = keyword("table");

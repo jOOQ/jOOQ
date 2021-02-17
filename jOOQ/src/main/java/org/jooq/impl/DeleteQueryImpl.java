@@ -47,6 +47,7 @@ import static org.jooq.Clause.DELETE_WHERE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -73,6 +74,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
@@ -113,6 +115,11 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT = SQLDialect.supportedBy(IGNITE);
+
+
+
+
+
 
     private final TableList              using;
     private final ConditionProviderImpl  condition;
@@ -258,6 +265,12 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
                 ctx.formatSeparator()
                    .visit(K_WHERE).sql(' ')
                    .visit(getWhere());
+
+
+
+
+
+
 
             ctx.end(DELETE_WHERE);
 

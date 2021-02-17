@@ -46,6 +46,7 @@ import static org.jooq.Operator.OR;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
@@ -23353,8 +23354,8 @@ public class DSL {
      * <code>percentile_cont([number]) within group (order by [column])</code>
      * function.
      * <p>
-     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
-     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
+     * While most dialects support this as an aggregate function,
+     * {@link SQLDialect#BIGQUERY}, {@link SQLDialect#SQLSERVER}, and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
@@ -23368,8 +23369,8 @@ public class DSL {
      * <code>percentile_cont([number]) within group (order by [column])</code>
      * function.
      * <p>
-     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
-     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
+     * While most dialects support this as an aggregate function,
+     * {@link SQLDialect#BIGQUERY}, {@link SQLDialect#SQLSERVER}, and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
@@ -23383,8 +23384,8 @@ public class DSL {
      * <code>percentile_disc([number]) within group (order by [column])</code>
      * function.
      * <p>
-     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
-     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
+     * While most dialects support this as an aggregate function,
+     * {@link SQLDialect#BIGQUERY}, {@link SQLDialect#SQLSERVER}, and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull
@@ -23398,8 +23399,8 @@ public class DSL {
      * <code>percentile_disc([number]) within group (order by [column])</code>
      * function.
      * <p>
-     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
-     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
+     * While most dialects support this as an aggregate function,
+     * {@link SQLDialect#BIGQUERY}, {@link SQLDialect#SQLSERVER}, and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
     @NotNull

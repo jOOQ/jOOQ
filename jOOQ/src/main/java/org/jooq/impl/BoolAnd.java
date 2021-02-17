@@ -46,7 +46,6 @@ import java.util.Set;
 
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.Field;
 import org.jooq.SQLDialect;
 
 /**
@@ -71,6 +70,9 @@ final class BoolAnd extends DefaultAggregateFunction<Boolean> {
     @Override
     final void acceptFunctionName(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
 
 
 

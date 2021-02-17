@@ -37,9 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.unquotedName;
 
+import org.jooq.Keyword;
 import org.jooq.Name;
 
 /**
@@ -186,6 +188,8 @@ final class Names {
     static final Name N_LOCATE                 = unquotedName("locate");
     static final Name N_LOG                    = unquotedName("log");
     static final Name N_LOG10                  = unquotedName("log10");
+    static final Name N_LOGICAL_AND            = unquotedName("logical_and");
+    static final Name N_LOGICAL_OR             = unquotedName("logical_or");
     static final Name N_LOGN                   = unquotedName("logn");
     static final Name N_LOWER                  = unquotedName("lower");
     static final Name N_LPAD                   = unquotedName("lpad");
@@ -257,6 +261,7 @@ final class Names {
     static final Name N_SIN                    = unquotedName("sin");
     static final Name N_SINH                   = unquotedName("sinh");
     static final Name N_SPACE                  = unquotedName("space");
+    static final Name N_SPLIT                  = unquotedName("split");
     static final Name N_SPLIT_PART             = unquotedName("split_part");
     static final Name N_SQL_TSI_DAY            = unquotedName("sql_tsi_day");
     static final Name N_SQL_TSI_FRAC_SECOND    = unquotedName("sql_tsi_frac_second");

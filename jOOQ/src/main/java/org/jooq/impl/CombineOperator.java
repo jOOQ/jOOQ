@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.impl.Keywords.K_MINUS;
 
 import org.jooq.Keyword;
@@ -57,46 +58,48 @@ enum CombineOperator {
      * Unite the sets of rows produced by the two {@link Select}'s (disallowing
      * duplicate records).
      */
-    UNION("union"),
+    UNION("union", true),
 
     /**
      * Unite the bags of rows produced by the two {@link Select}'s (allowing
      * duplicate records).
      */
-    UNION_ALL("union all"),
+    UNION_ALL("union all", false),
 
     /**
      * Remove all rows in the set of rows produced by the second {@link Select}
      * from the set of rows produced by the first {@link Select} (disallowing
      * duplicate records).
      */
-    EXCEPT("except"),
+    EXCEPT("except", true),
 
     /**
      * Remove all rows in the bag of rows produced by the second {@link Select}
      * from the bag of rows produced by the first {@link Select} (allowing
      * duplicate records).
      */
-    EXCEPT_ALL("except all"),
+    EXCEPT_ALL("except all", false),
 
     /**
      * Retain all rows in the sets of rows produced by both {@link Select}'s
      * (disallowing duplicate records).
      */
-    INTERSECT("intersect"),
+    INTERSECT("intersect", true),
 
     /**
      * Retain all rows in the bags of rows produced by both {@link Select}'s
      * (allowing duplicate records).
      */
-    INTERSECT_ALL("intersect all");
+    INTERSECT_ALL("intersect all", false);
 
     private final String  sql;
+    private final Keyword keywordOptionalDistinct;
     private final Keyword keyword;
 
-    private CombineOperator(String sql) {
+    private CombineOperator(String sql, boolean distinct) {
         this.sql = sql;
         this.keyword = DSL.keyword(sql);
+        this.keywordOptionalDistinct = distinct ? DSL.keyword(sql + " distinct") : keyword;
     }
 
     public final String toSQL(SQLDialect dialect) {
@@ -109,6 +112,8 @@ enum CombineOperator {
     }
 
     public final Keyword toKeyword(SQLDialect dialect) {
+
+
 
 
 

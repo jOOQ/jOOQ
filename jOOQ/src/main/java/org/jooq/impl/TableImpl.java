@@ -43,6 +43,7 @@ import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -64,6 +65,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -83,11 +85,15 @@ import org.jooq.tools.StringUtils;
 @org.jooq.Internal
 public class TableImpl<R extends Record> extends AbstractTable<R> {
 
-    private static final long            serialVersionUID               = 261033315221985068L;
-    private static final Clause[]        CLAUSES_TABLE_REFERENCE        = { TABLE, TABLE_REFERENCE };
-    private static final Clause[]        CLAUSES_TABLE_ALIAS            = { TABLE, TABLE_ALIAS };
-    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS = SQLDialect.supportedBy(HSQLDB, POSTGRES);
-    private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR = SQLDialect.supportedBy(HSQLDB);
+    private static final long            serialVersionUID                  = 261033315221985068L;
+    private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
+    private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS    = SQLDialect.supportedBy(HSQLDB, POSTGRES);
+    private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR    = SQLDialect.supportedBy(HSQLDB);
+
+
+
+
 
     final FieldsImpl<R>                  fields;
     final Alias<Table<R>>                alias;
@@ -301,8 +307,12 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         if (ctx.declareTables())
             ctx.scopeMarkStart(this);
 
-        if (ctx.qualify() &&
-                (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.dialect()) || parameters == null || ctx.declareTables())) {
+        if (ctx.qualify() && (ctx.declareTables()
+            || (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.dialect()) || parameters == null)
+
+
+
+        )) {
             Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
             if (mappedSchema != null && !"".equals(mappedSchema.getName())) {

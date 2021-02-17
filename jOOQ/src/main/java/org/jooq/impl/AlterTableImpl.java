@@ -57,6 +57,7 @@ import static org.jooq.Nullability.NULL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -101,6 +102,7 @@ import static org.jooq.impl.Keywords.K_BEFORE;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
+import static org.jooq.impl.Keywords.K_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_CONSTRAINTS;
@@ -1311,6 +1313,11 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         else if (addColumn != null) {
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD).sql(' ');
+
+
+
+
+
 
             if (ifNotExistsColumn && supportsIfNotExistsColumn(ctx))
                 ctx.visit(K_IF_NOT_EXISTS).sql(' ');

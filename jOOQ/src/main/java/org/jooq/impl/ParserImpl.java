@@ -9273,7 +9273,7 @@ final class ParserContext {
             Field<?> date = parseField(Type.D);
             parse(',');
 
-            // TODO: Support parsing interval expressions
+            // [#8792] TODO: Support parsing interval expressions
             Field<?> interval = parseFieldIntervalLiteralIf();
             parse(')');
 

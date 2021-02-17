@@ -9252,6 +9252,9 @@ final class ParserContext {
     }
 
     private final Field<?> parseFieldDateAddIf() {
+        boolean sub = false;
+
+        // SQL Server style
         if (parseFunctionNameIf("DATEADD")) {
             parse('(');
             DatePart part = parseDatePart();
@@ -9262,6 +9265,19 @@ final class ParserContext {
             parse(')');
 
             return DSL.dateAdd(date, interval, part);
+        }
+
+        // MySQL style
+        else if (parseFunctionNameIf("DATE_ADD") || (sub = parseFunctionNameIf("DATE_SUB"))) {
+            parse('(');
+            Field<?> date = parseField(Type.D);
+            parse(',');
+
+            // TODO: Support parsing interval expressions
+            Field<?> interval = parseFieldIntervalLiteralIf();
+            parse(')');
+
+            return sub ? date.sub(interval) : date.add(interval);
         }
 
         return null;

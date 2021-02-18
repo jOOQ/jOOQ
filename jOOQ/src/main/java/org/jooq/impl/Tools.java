@@ -4968,8 +4968,7 @@ final class Tools {
 
 
                 case DERBY:
-                case FIREBIRD:
-                default:        ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+                case FIREBIRD:  ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
             }
         }
     }

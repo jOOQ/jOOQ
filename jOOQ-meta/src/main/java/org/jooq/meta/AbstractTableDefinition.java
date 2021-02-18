@@ -58,10 +58,10 @@ public abstract class AbstractTableDefinition
 extends AbstractElementContainerDefinition<ColumnDefinition>
 implements TableDefinition {
 
-    private       List<ParameterDefinition> parameters;
-    private       TableDefinition           parentTable;
-    private final List<TableDefinition>     childTables;
-    private final TableType                 tableType;
+    private List<ParameterDefinition>   parameters;
+    private TableDefinition             parentTable;
+    private final List<TableDefinition> childTables;
+    private final TableType             tableType;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
         this(schema, name, comment, TableType.TABLE, null);

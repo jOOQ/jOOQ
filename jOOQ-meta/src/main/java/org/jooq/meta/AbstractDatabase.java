@@ -99,6 +99,7 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultExecuteListenerProvider;
@@ -469,6 +470,11 @@ public abstract class AbstractDatabase implements Database {
                 .where(falseCondition())
                 .fetch();
 
+            return true;
+        }
+
+        // Happens when MetaGeneration generates the SQL in MetaSQL
+        catch (DetachedException e) {
             return true;
         }
         catch (DataAccessException e) {

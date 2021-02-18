@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.firebird;
 
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
@@ -89,7 +90,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     trim(r.RDB$FIELD_NAME).as(r.RDB$FIELD_NAME),
                     r.RDB$DESCRIPTION,
                     r.RDB$DEFAULT_VALUE,
-                    DSL.bitOr(r.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(r.RDB$NULL_FLAG),
+                    DSL.bitOr(r.RDB$NULL_FLAG.nvl(inline((short) 0)), f.RDB$NULL_FLAG.nvl(inline((short) 0))).as(r.RDB$NULL_FLAG),
                     r.RDB$DEFAULT_SOURCE,
                     r.RDB$FIELD_POSITION,
 
@@ -99,7 +100,9 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     FIELD_SCALE(f).as("FIELD_SCALE"),
                     FIELD_TYPE(f).as("FIELD_TYPE"),
                     trim(f.RDB$FIELD_NAME).as("DOMAIN_NAME"),
-                    r.RDB$DESCRIPTION)
+                    r.RDB$DESCRIPTION,
+                    (((FirebirdDatabase) getDatabase()).is30() ? r.RDB$IDENTITY_TYPE : inline((short) 0)).as(r.RDB$IDENTITY_TYPE)
+                )
                 .from(r)
                 .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
                 .where(r.RDB$RELATION_NAME.eq(getName()))
@@ -128,7 +131,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 record.get(r.RDB$FIELD_NAME),
                 result.size() + 1,
                 type,
-                false,
+                record.get(r.RDB$IDENTITY_TYPE, boolean.class),
                 record.get(r.RDB$DESCRIPTION)
             ));
         }

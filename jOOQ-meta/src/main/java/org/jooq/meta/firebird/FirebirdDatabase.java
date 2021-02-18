@@ -60,7 +60,7 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDICES;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$PROCEDURES;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$REF_CONSTRAINTS;
-import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATIONS;
+import static org.jooq.meta.firebird.rdb.Tables.*;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATION_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$TRIGGERS;
 
@@ -391,6 +391,15 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 inline(null, BIGINT).as("cache")
             )
             .from(RDB$GENERATORS)
+            .where(getIncludeSystemSequences() || !is30()
+                ? noCondition()
+                : RDB$GENERATORS.RDB$GENERATOR_NAME.notIn(
+                    select(RDB$RELATION_FIELDS.RDB$GENERATOR_NAME)
+                    .from(RDB$RELATION_FIELDS)
+                    .where(RDB$RELATION_FIELDS.RDB$GENERATOR_NAME.isNotNull())
+                    .and(RDB$RELATION_FIELDS.RDB$IDENTITY_TYPE.eq(inline((short) 1)))
+                )
+            )
             .orderBy(RDB$GENERATORS.RDB$GENERATOR_NAME);
     }
 

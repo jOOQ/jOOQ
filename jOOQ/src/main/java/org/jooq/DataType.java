@@ -392,7 +392,7 @@ public interface DataType<T> extends Named {
      * @return The new data type
      */
     @NotNull
-    @Support // TODO: List the correct dialects that support identities
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DataType<T> identity(boolean identity);
 
     /**

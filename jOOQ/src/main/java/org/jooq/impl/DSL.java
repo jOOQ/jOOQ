@@ -9316,7 +9316,7 @@ public class DSL {
      * @see DSLContext#dropView(String)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
         return dsl().dropView(view);
     }
@@ -9331,7 +9331,7 @@ public class DSL {
      * @see DSLContext#dropView(Name)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropView(Name view) {
         return dsl().dropView(view);
     }
@@ -9346,7 +9346,7 @@ public class DSL {
      * @see DSLContext#dropView(Table)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropView(Table<?> view) {
         return dsl().dropView(view);
     }

@@ -615,7 +615,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         case CUBRID:
 
                         // [#1029] Postgres and [#632] Sybase need explicit casting
-                        // in very rare cases.
+                        // in very rare cases. BigQuery doesn't support NULL BOOLEAN or INT64 bind values
+
 
 
 
@@ -1743,6 +1744,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
                 default:
                     return Types.BOOLEAN;
             }
@@ -1792,6 +1796,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
+
+
+
+
+
             return Types.TINYINT;
         }
     }
@@ -2353,6 +2362,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
             return Types.DOUBLE;
         }
     }
@@ -2523,6 +2534,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
             return Types.FLOAT;
         }
     }
@@ -2570,6 +2583,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
+
+
+
+
+
             return Types.INTEGER;
         }
     }
@@ -2623,6 +2641,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
+
+
+
+
+
             return Types.BIGINT;
         }
     }
@@ -3712,6 +3735,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
+
+
+
+
+
             return Types.SMALLINT;
         }
     }

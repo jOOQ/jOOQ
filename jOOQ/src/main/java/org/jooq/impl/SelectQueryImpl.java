@@ -102,6 +102,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT_ALL;
 import static org.jooq.impl.CombineOperator.INTERSECT;
@@ -282,6 +283,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
+
+
 
 
 
@@ -1984,7 +1987,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#....] Some SQL dialects do not require a FROM clause. Others do and
         //         jOOQ generates a "DUAL" table or something equivalent.
         //         See also org.jooq.impl.Dual for details.
-        boolean hasFrom = !getFrom().isEmpty() || !OPTIONAL_FROM_CLAUSE.contains(context.dialect());
+        boolean hasFrom = !getFrom().isEmpty()
+            || !OPTIONAL_FROM_CLAUSE.contains(context.dialect())
+
+
+
+
+
+
+
+
+
+
+
+            ;
+
         List<Condition> semiAntiJoinPredicates = null;
         ConditionProviderImpl where = getWhere();
 
@@ -3361,7 +3378,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         SelectFieldList<SelectFieldOrAsterisk> result = new SelectFieldList<>();
 
         // [#7921] Only H2 supports the * EXCEPT (..) syntax
-        boolean resolveExcept = resolveSupported || c.family() != H2;
+        boolean resolveExcept = resolveSupported || !SUPPORT_NATIVE_EXCEPT.contains(c.dialect());
 
         // [#7921] TODO Find a better, more efficient way to resolve asterisks
         for (SelectFieldOrAsterisk f : getSelectResolveImplicitAsterisks())

@@ -43,6 +43,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -79,7 +80,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -10541,7 +10541,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(String)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropView(@Stringly.Name String view);
 
     /**
@@ -10550,7 +10550,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(Name)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropView(Name view);
 
     /**
@@ -10559,7 +10559,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(Table)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropView(Table<?> view);
 
     /**

@@ -77,27 +77,20 @@ import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
-import static org.jooq.impl.DDLStatementType.ALTER_INDEX;
 import static org.jooq.impl.DDLStatementType.ALTER_SCHEMA;
-import static org.jooq.impl.DDLStatementType.ALTER_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
 import static org.jooq.impl.DDLStatementType.CREATE_DATABASE;
 import static org.jooq.impl.DDLStatementType.CREATE_DOMAIN;
-import static org.jooq.impl.DDLStatementType.CREATE_FUNCTION;
 import static org.jooq.impl.DDLStatementType.CREATE_INDEX;
-import static org.jooq.impl.DDLStatementType.CREATE_PROCEDURE;
 import static org.jooq.impl.DDLStatementType.CREATE_SCHEMA;
 import static org.jooq.impl.DDLStatementType.CREATE_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.CREATE_TABLE;
 import static org.jooq.impl.DDLStatementType.CREATE_VIEW;
-import static org.jooq.impl.DDLStatementType.DROP_FUNCTION;
 import static org.jooq.impl.DDLStatementType.DROP_INDEX;
-import static org.jooq.impl.DDLStatementType.DROP_PROCEDURE;
 import static org.jooq.impl.DDLStatementType.DROP_SCHEMA;
 import static org.jooq.impl.DDLStatementType.DROP_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.DROP_TABLE;
-import static org.jooq.impl.DDLStatementType.DROP_TRIGGER;
 import static org.jooq.impl.DDLStatementType.DROP_VIEW;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.concat;
@@ -106,6 +99,7 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
@@ -133,6 +127,7 @@ import static org.jooq.impl.Keywords.K_END_CATCH;
 import static org.jooq.impl.Keywords.K_END_IF;
 import static org.jooq.impl.Keywords.K_END_TRY;
 import static org.jooq.impl.Keywords.K_ENUM;
+import static org.jooq.impl.Keywords.K_ERROR;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
@@ -729,51 +724,51 @@ final class Tools {
      * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>
      * clauses.
      */
-    static final char                        ESCAPE                         = '!';
+    static final char               ESCAPE                             = '!';
 
     /**
      * A lock for the initialisation of other static members
      */
-    private static final Object              initLock                       = new Object();
+    private static final Object     initLock                           = new Object();
 
     /**
      * Indicating whether JPA (<code>javax.persistence</code>) is on the
      * classpath.
      */
-    private static volatile Boolean          isJPAAvailable;
+    private static volatile Boolean isJPAAvailable;
 
     /**
      * Indicating whether Kotlin (<code>kotlin.*</code>) is on the classpath.
      */
-    private static volatile Boolean          isKotlinAvailable;
-    private static volatile Reflect          ktJvmClassMapping;
-    private static volatile Reflect          ktKClasses;
-    private static volatile Reflect          ktKClass;
-    private static volatile Reflect          ktKTypeParameter;
+    private static volatile Boolean isKotlinAvailable;
+    private static volatile Reflect ktJvmClassMapping;
+    private static volatile Reflect ktKClasses;
+    private static volatile Reflect ktKClass;
+    private static volatile Reflect ktKTypeParameter;
 
     /**
      * [#3696] The maximum number of consumed exceptions in
      * {@link #consumeExceptions(Configuration, PreparedStatement, SQLException)}
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
-    static int                               maxForceSettingsAttempts       = 16;
-    static int                               maxConsumedExceptions          = 256;
-    static int                               maxConsumedResults             = 65536;
+    static int                      maxForceSettingsAttempts           = 16;
+    static int                      maxConsumedExceptions              = 256;
+    static int                      maxConsumedResults                 = 65536;
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern             DASH_PATTERN                   = Pattern.compile("(-+)");
+    private static final Pattern    DASH_PATTERN                       = Pattern.compile("(-+)");
 
     /**
      * A pattern for the pipe line syntax
      */
-    private static final Pattern             PIPE_PATTERN                   = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
+    private static final Pattern    PIPE_PATTERN                       = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern             PLUS_PATTERN                   = Pattern.compile("\\+(-+)(?=\\+)");
+    private static final Pattern    PLUS_PATTERN                       = Pattern.compile("\\+(-+)(?=\\+)");
 
     /**
      * All characters that are matched by Java's interpretation of \s.
@@ -783,25 +778,25 @@ final class Tools {
      * processing, it is probably safe to ignore most of those alternative
      * Unicode whitespaces.
      */
-    private static final char[]              WHITESPACE_CHARACTERS          = " \t\n\u000B\f\r".toCharArray();
+    private static final char[]     WHITESPACE_CHARACTERS              = " \t\n\u000B\f\r".toCharArray();
 
     /**
      * Acceptable prefixes for JDBC escape syntax.
      */
-    private static final char[][]            JDBC_ESCAPE_PREFIXES           = {
+    private static final char[][]   JDBC_ESCAPE_PREFIXES               = {
         "{fn ".toCharArray(),
         "{d ".toCharArray(),
         "{t ".toCharArray(),
         "{ts ".toCharArray()
     };
 
-    private static final char[]              TOKEN_SINGLE_LINE_COMMENT      = { '-', '-' };
-    private static final char[]              TOKEN_SINGLE_LINE_COMMENT_C    = { '/', '/' };
-    private static final char[]              TOKEN_HASH                     = { '#' };
-    private static final char[]              TOKEN_MULTI_LINE_COMMENT_OPEN  = { '/', '*' };
-    private static final char[]              TOKEN_MULTI_LINE_COMMENT_CLOSE = { '*', '/' };
-    private static final char[]              TOKEN_APOS                     = { '\'' };
-    private static final char[]              TOKEN_ESCAPED_APOS             = { '\'', '\'' };
+    private static final char[]     TOKEN_SINGLE_LINE_COMMENT          = { '-', '-' };
+    private static final char[]     TOKEN_SINGLE_LINE_COMMENT_C        = { '/', '/' };
+    private static final char[]     TOKEN_HASH                         = { '#' };
+    private static final char[]     TOKEN_MULTI_LINE_COMMENT_OPEN      = { '/', '*' };
+    private static final char[]     TOKEN_MULTI_LINE_COMMENT_CLOSE     = { '*', '/' };
+    private static final char[]     TOKEN_APOS                         = { '\'' };
+    private static final char[]     TOKEN_ESCAPED_APOS                 = { '\'', '\'' };
 
     /**
      * "Suffixes" that are placed behind a "?" character to form an operator,
@@ -836,7 +831,7 @@ final class Tools {
      * <li>?|</li>
      * </ul>
      */
-    private static final char[][]        NON_BIND_VARIABLE_SUFFIXES         = {
+    private static final char[][]   NON_BIND_VARIABLE_SUFFIXES         = {
         { '?' },
         { '|' },
         { '&' },
@@ -855,7 +850,7 @@ final class Tools {
      * such as <code>"?&lt;&gt;"</code>, which is a non-equality operator, not
      * an operator on its own.
      */
-    private static final char[][]      BIND_VARIABLE_SUFFIXES             = {
+    private static final char[][]   BIND_VARIABLE_SUFFIXES             = {
         { '<', '>' }
     };
 
@@ -863,16 +858,16 @@ final class Tools {
      * All hexadecimal digits accessible through array index, e.g.
      * <code>HEX_DIGITS[15] == 'f'</code>.
      */
-    private static final char[]          HEX_DIGITS                         = "0123456789abcdef".toCharArray();
+    private static final char[]     HEX_DIGITS                         = "0123456789abcdef".toCharArray();
 
-    private static final Set<SQLDialect> REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect> DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
-    static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
-    private static final Set<SQLDialect> DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
+    static final Set<SQLDialect>    REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>    NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    static final Set<SQLDialect>    NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect>    NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>    SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect>    DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
+    static final Set<SQLDialect>    NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
+    static final Set<SQLDialect>    DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
 
 
 
@@ -4499,6 +4494,56 @@ final class Tools {
 
     static final void tryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element, Consumer<? super Context<?>> runnable) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -47,6 +47,7 @@ import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCHAR;
 import static org.jooq.impl.SQLDataType.NCLOB;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
+import static org.jooq.impl.Tools.NO_SUPPORT_BINARY_TYPE_LENGTH;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -100,8 +101,8 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID               = 4155588654449505119L;
-    private static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final long    serialVersionUID               = 4155588654449505119L;
+    static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
     AbstractDataType(Name name, Comment comment) {
         super(name, comment);
@@ -429,7 +430,14 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         //         a null value, historically, so removing this check would
         //         introduce a lot of regressions!
         if (lengthDefined() && length() > 0) {
-            return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
+            if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(dialect))
+                return castTypeName0();
+
+
+
+
+            else
+                return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
         }
         else if (precisionDefined() && (isTimestamp() || precision() > 0)) {
 
@@ -438,6 +446,8 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
             // precision support in DDL.
             if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
                 return castTypePrefix0() + castTypeSuffix0();
+
+
 
 
 

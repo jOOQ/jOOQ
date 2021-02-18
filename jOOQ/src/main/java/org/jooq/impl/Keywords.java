@@ -50,6 +50,7 @@ final class Keywords {
 
     static final Keyword K_ABSENT                           = keyword("absent");
     static final Keyword K_ADD                              = keyword("add");
+    static final Keyword K_ADD_COLUMN                       = keyword("add column");
     static final Keyword K_AFTER                            = keyword("after");
     static final Keyword K_ALIAS                            = keyword("alias");
     static final Keyword K_ALL                              = keyword("all");

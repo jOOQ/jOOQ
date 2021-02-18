@@ -44,6 +44,8 @@ import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_SELECT;
+import static org.jooq.impl.Keywords.K_STRUCT;
+import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Names.N_COUNT;
 import static org.jooq.impl.Names.N_DUAL;
@@ -134,7 +136,6 @@ final class Dual extends AbstractTable<Record> {
 
 
 
-
                 case H2:
                 case POSTGRES:
                 case SQLITE:
@@ -159,6 +160,10 @@ final class Dual extends AbstractTable<Record> {
 
                 // These dialects don't have a DUAL table. But emulation is needed
                 // for queries like SELECT 1 WHERE 1 = 1
+
+
+
+
 
 
 

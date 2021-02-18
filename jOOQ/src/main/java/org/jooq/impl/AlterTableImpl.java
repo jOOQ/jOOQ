@@ -93,6 +93,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.sql;
 // ...
 import static org.jooq.impl.Keywords.K_ADD;
+import static org.jooq.impl.Keywords.K_ADD_COLUMN;
 import static org.jooq.impl.Keywords.K_AFTER;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
@@ -185,10 +186,12 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.FieldOrConstraint;
 import org.jooq.Index;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
@@ -1272,7 +1275,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             boolean comma = true ;
 
             ctx.start(ALTER_TABLE_ADD)
-               .visit(K_ADD)
+               .visit(addColumnKeyword(ctx))
                .sql(' ');
 
             if (parens)
@@ -1285,11 +1288,12 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                    .formatNewLine();
 
             for (int i = 0; i < add.size(); i++) {
-                if (i > 0)
+                if (i > 0) {
+                    ctx.sql(comma ? "," : "").formatSeparator();
+
                     if (multiAdd)
-                        ctx.sql(comma ? "," : "").formatSeparator().visit(K_ADD).sql(' ');
-                    else
-                        ctx.sql(comma ? "," : "").formatSeparator();
+                        ctx.visit(addColumnKeyword(ctx)).sql(' ');
+                }
 
                 FieldOrConstraint part = add.get(i);
                 ctx.qualify(false, c -> c.visit(part));
@@ -1312,12 +1316,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         }
         else if (addColumn != null) {
             ctx.start(ALTER_TABLE_ADD)
-               .visit(K_ADD).sql(' ');
-
-
-
-
-
+               .visit(addColumnKeyword(ctx)).sql(' ');
 
             if (ifNotExistsColumn && supportsIfNotExistsColumn(ctx))
                 ctx.visit(K_IF_NOT_EXISTS).sql(' ');
@@ -1645,6 +1644,15 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
         if (!omitAlterTable)
             ctx.formatIndentEnd();
+    }
+
+    private final Keyword addColumnKeyword(Context<?> ctx) {
+
+
+
+
+
+        return K_ADD;
     }
 
     private final void acceptCascade(Context<?> ctx) {

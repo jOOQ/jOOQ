@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonValue;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
@@ -123,9 +124,10 @@ implements JSONObjectAggNullStep<J> {
         ctx.visit(entry);
         ctx.sql(')');
 
-        // TODO: What about a user-defined filter clause?
         if (nullType == ABSENT_ON_NULL)
-            acceptFilterClause(ctx, entry.value().isNotNull());
+            acceptFilterClause(ctx, (filter == null ? noCondition() : filter).and(entry.value().isNotNull()));
+        else
+            acceptFilterClause(ctx);
 
         acceptOverClause(ctx);
     }

@@ -2,6 +2,10 @@ package org.jooq.kotlin
 
 import org.jooq.*
 import org.jooq.impl.DSL.*
+import java.util.concurrent.Executor
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 // ----------------------------------------------------------------------------
 // Extensions to make Field<Boolean> a Condition
@@ -82,6 +86,15 @@ inline fun Field<Boolean>.not(): Condition = condition(this).not()
 // ----------------------------------------------------------------------------
 // Extensions to extract fields from Tables
 // ----------------------------------------------------------------------------
+
+@Support
+inline fun <reified T: Any> TableLike<*>.field(index: Int) = this.field(index, T::class.java)
+
+@Support
+inline fun <reified T: Any> TableLike<*>.field(name: Name) = this.field(name, T::class.java)
+
+@Support
+inline fun <reified T: Any> TableLike<*>.field(name: String) = this.field(name, T::class.java)
 
 @Support
 inline operator fun TableLike<*>.get(index: Int) = this.field(index)
@@ -220,3 +233,59 @@ inline fun <reified T: Any> Select<Record1<T>>.notIn(vararg values: T): Conditio
 
 @Support
 inline fun <reified T: Any> Select<Record1<T>>.notIn(vararg values: Field<*>): Condition = field(this).notIn(values.asList())
+
+// ----------------------------------------------------------------------------
+// Extensions to make mapping into objects more idiomatic
+// ----------------------------------------------------------------------------
+
+@Support
+inline fun <reified T: Any> Record.into() = this.into(T::class.java)
+
+@Support
+inline fun <reified T: Any> Result<*>.into() = this.into(T::class.java)
+
+@Support
+inline fun <reified T: Any> Fetchable<*>.fetchInto() = this.fetchInto(T::class.java)
+
+@Support
+inline fun <reified T: Any> Fetchable<*>.fetchAnyInto() = this.fetchAnyInto(T::class.java)
+
+@Support
+inline fun <reified T: Any> Fetchable<*>.fetchOneInto() = this.fetchOneInto(T::class.java)
+
+@Support
+inline fun <reified T: Any> Fetchable<*>.fetchOptionalInto() = this.fetchOptionalInto(T::class.java)
+
+@Support
+inline fun <reified T: Any> Fetchable<*>.fetchSingleInto() = this.fetchSingleInto(T::class.java)
+
+@Support
+inline fun <reified T: Any> Fetchable<*>.fetchStreamInto() = this.fetchStreamInto(T::class.java)
+
+// ----------------------------------------------------------------------------
+// Extensions to integrate async methods with coroutines
+// ----------------------------------------------------------------------------
+
+@Support
+suspend fun <R: Record> Fetchable<R>.fetchAwait(executor: Executor): Result<R> = suspendCoroutine {
+        this.fetchAsync(executor)
+                .handle { result, error -> if (error != null) it.resumeWithException(error) else it.resume(result) }
+}
+
+@Support
+suspend fun <R: Record> Fetchable<R>.fetchAwait(): Result<R> = suspendCoroutine {
+        this.fetchAsync()
+                .handle { result, error -> if (error != null) it.resumeWithException(error) else it.resume(result) }
+}
+
+@Support
+suspend fun <R: Record> Query.executeAwait(executor: Executor): Int = suspendCoroutine {
+        this.executeAsync(executor)
+                .handle { result, error -> if (error != null) it.resumeWithException(error) else it.resume(result) }
+}
+
+@Support
+suspend fun Query.executeAwait(): Int = suspendCoroutine {
+        this.executeAsync()
+                .handle { result, error -> if (error != null) it.resumeWithException(error) else it.resume(result) }
+}

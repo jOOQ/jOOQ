@@ -14057,6 +14057,154 @@ public class DSL {
     }
 
     /**
+     * <code>aggregate()</code> can be used to access native or
+     * user-defined aggregate functions that are not yet or insufficiently
+     * supported by jOOQ.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param name The aggregate function name (possibly qualified)
+     * @param type The aggregate function return type
+     * @param arguments The aggregate function arguments
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    public static <T> AggregateFunction<T> aggregate(String name, Class<T> type, Field<?>... arguments) {
+        return aggregate(name, getDataType(type), Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>aggregate()</code> can be used to access native or
+     * user-defined aggregate functions that are not yet or insufficiently
+     * supported by jOOQ.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param name The aggregate function name
+     * @param type The aggregate function return type
+     * @param arguments The aggregate function arguments
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    public static <T> AggregateFunction<T> aggregate(String name, DataType<T> type, Field<?>... arguments) {
+        return new org.jooq.impl.DefaultAggregateFunction<>(name, type, Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>aggregate()</code> can be used to access native or
+     * user-defined aggregate functions that are not yet or insufficiently
+     * supported by jOOQ.
+     *
+     * @param name The aggregate function name (possibly qualified)
+     * @param type The aggregate function return type
+     * @param arguments The aggregate function arguments
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> aggregate(Name name, Class<T> type, Field<?>... arguments) {
+        return aggregate(name, getDataType(type), Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>aggregate()</code> can be used to access native or
+     * user-defined aggregate functions that are not yet or insufficiently
+     * supported by jOOQ.
+     *
+     * @param name The aggregate function name (possibly qualified)
+     * @param type The aggregate function return type
+     * @param arguments The aggregate function arguments
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> aggregate(Name name, DataType<T> type, Field<?>... arguments) {
+        return new org.jooq.impl.DefaultAggregateFunction<>(name, type, Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>aggregateDistinct()</code> can be used to access native or
+     * user-defined aggregate functions that are not yet or insufficiently
+     * supported by jOOQ.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param name The aggregate function name (possibly qualified)
+     * @param type The aggregate function return type
+     * @param arguments The aggregate function arguments
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    public static <T> AggregateFunction<T> aggregateDistinct(String name, Class<T> type, Field<?>... arguments) {
+        return aggregateDistinct(name, getDataType(type), Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>aggregateDistinct()</code> can be used to access native or
+     * user-defined aggregate functions that are not yet or insufficiently
+     * supported by jOOQ.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param name The aggregate function name
+     * @param type The aggregate function return type
+     * @param arguments The aggregate function arguments
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    public static <T> AggregateFunction<T> aggregateDistinct(String name, DataType<T> type, Field<?>... arguments) {
+        return new org.jooq.impl.DefaultAggregateFunction<>(true, name, type, Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>aggregateDistinct()</code> can be used to access native or
+     * user-defined aggregate functions that are not yet or insufficiently
+     * supported by jOOQ.
+     *
+     * @param name The aggregate function name (possibly qualified)
+     * @param type The aggregate function return type
+     * @param arguments The aggregate function arguments
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> aggregateDistinct(Name name, Class<T> type, Field<?>... arguments) {
+        return aggregateDistinct(name, getDataType(type), Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>aggregateDistinct()</code> can be used to access native or
+     * user-defined aggregate functions that are not yet or insufficiently
+     * supported by jOOQ.
+     *
+     * @param name The aggregate function name (possibly qualified)
+     * @param type The aggregate function return type
+     * @param arguments The aggregate function arguments
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> aggregateDistinct(Name name, DataType<T> type, Field<?>... arguments) {
+        return new org.jooq.impl.DefaultAggregateFunction<>(true, name, type, Tools.nullSafe(arguments));
+    }
+
+    /**
      * Create a new condition holding plain SQL.
      * <p>
      * There must not be any bind variables contained in the SQL.

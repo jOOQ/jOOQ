@@ -183,6 +183,8 @@ implements JSONObjectAggNullStep<J> {
             ctx.sql(' ').visit(jsonNull);
 
         ctx.sql(')');
+
+        acceptFilterClause(ctx);
         acceptOverClause(ctx);
     }
 

@@ -120,12 +120,12 @@ implements JSONArrayAggOrderByStep<J> {
                 acceptOrderBy(ctx);
                 ctx.sql(')');
 
-                // TODO: What about a user-defined filter clause?
                 if (onNull == ABSENT_ON_NULL)
                     acceptFilterClause(ctx, (filter == null ? noCondition() : filter).and(arguments.get(0).isNotNull()));
                 else
                     acceptFilterClause(ctx);
 
+                acceptOverClause(ctx);
                 break;
 
             default:
@@ -136,13 +136,13 @@ implements JSONArrayAggOrderByStep<J> {
 
     @SuppressWarnings("unchecked")
     private final Field<?> groupConcatEmulation(Context<?> ctx) {
-        Field<?> arg = arguments.get(0);
+        Field<?> arg1 = arguments.get(0);
 
-        if (arg.getDataType().isString()) {
+        if (arg1.getDataType().isString()) {
             switch (ctx.family()) {
                 case MARIADB:
                 case MYSQL:
-                    arg = function(N_JSON_QUOTE, getDataType(), arg);
+                    arg1 = function(N_JSON_QUOTE, getDataType(), arg1);
                     break;
 
 
@@ -153,7 +153,15 @@ implements JSONArrayAggOrderByStep<J> {
             }
         }
 
-        return DSL.concat(inline('['), groupConcatEmulationWithoutArrayWrappers(arg, withinGroupOrderBy), inline(']'));
+        Field<?> arg2 = arg1;
+        return DSL.concat(
+            inline('['),
+            DSL.field("{0}", VARCHAR, CustomQueryPart.of(c -> {
+                c.visit(groupConcatEmulationWithoutArrayWrappers(arg2, withinGroupOrderBy));
+                acceptOverClause(c);
+            })),
+            inline(']')
+        );
     }
 
     static final Field<?> groupConcatEmulationWithoutArrayWrappers(Field<?> field, SortFieldList orderBy) {
@@ -176,6 +184,8 @@ implements JSONArrayAggOrderByStep<J> {
             ctx.sql(' ').visit(jsonReturning);
 
         ctx.sql(')');
+
+        acceptOverClause(ctx);
     }
 
     @Override

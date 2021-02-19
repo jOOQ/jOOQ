@@ -60,6 +60,9 @@ import static org.jooq.tools.StringUtils.rightPad;
  * or, using {@link RecordFormat#OBJECT}: <code><pre>
  * [{"field-1": value-1-1, "field-2": value-1-2,..., "field-n": value-1-n},
  *  {"field-1": value-2-1, "field-2": value-2-2,..., "field-n": value-2-n}]</pre></code>
+ * <p>
+ * The type is immutable, meaning calls to setters like {@link #header(boolean)}
+ * do not modify the original reference, but return a new one instead.
  *
  * @author Lukas Eder
  */

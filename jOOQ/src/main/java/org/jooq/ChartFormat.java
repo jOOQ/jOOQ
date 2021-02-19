@@ -40,6 +40,11 @@ package org.jooq;
 import java.text.DecimalFormat;
 
 /**
+ * A CSV formatting type, which can be used to configure chart exports.
+ * <p>
+ * The type is immutable, meaning calls to setters like {@link #width(int)} do
+ * not modify the original reference, but return a new one instead.
+ *
  * @author Lukas Eder
  */
 public final class ChartFormat {

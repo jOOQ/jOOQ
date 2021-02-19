@@ -41,6 +41,9 @@ import static org.jooq.tools.StringUtils.rightPad;
 
 /**
  * An XML formatting type, which can be used to configure XML imports / exports.
+ * <p>
+ * The type is immutable, meaning calls to setters like {@link #header(boolean)}
+ * do not modify the original reference, but return a new one instead.
  *
  * @author Lukas Eder
  */

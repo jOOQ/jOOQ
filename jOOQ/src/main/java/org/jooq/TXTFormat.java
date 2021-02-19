@@ -39,7 +39,11 @@ package org.jooq;
 
 
 /**
- * A CSV formatting type, which can be used to configure CSV imports / exports.
+ * A text formatting type, which can be used to configure text imports /
+ * exports.
+ * <p>
+ * The type is immutable, meaning calls to setters like {@link #maxRows(int)} do
+ * not modify the original reference, but return a new one instead.
  *
  * @author Lukas Eder
  */

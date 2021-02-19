@@ -41,6 +41,9 @@ import static org.jooq.CSVFormat.Quote.SPECIAL_CHARACTERS;
 
 /**
  * A CSV formatting type, which can be used to configure CSV imports / exports.
+ * <p>
+ * The type is immutable, meaning calls to setters like {@link #delimiter(char)}
+ * do not modify the original reference, but return a new one instead.
  *
  * @author Lukas Eder
  */

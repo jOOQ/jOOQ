@@ -164,6 +164,8 @@ implements JSONObjectAggNullStep<J> {
             ctx.sql(' ').visit(jsonReturning);
 
         ctx.sql(')');
+
+        acceptFilterClause(ctx);
         acceptOverClause(ctx);
     }
 

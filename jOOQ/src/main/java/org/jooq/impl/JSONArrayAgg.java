@@ -185,6 +185,7 @@ implements JSONArrayAggOrderByStep<J> {
 
         ctx.sql(')');
 
+        acceptFilterClause(ctx);
         acceptOverClause(ctx);
     }
 

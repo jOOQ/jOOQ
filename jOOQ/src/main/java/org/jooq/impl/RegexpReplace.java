@@ -119,4 +119,14 @@ final class RegexpReplace extends AbstractField<String> {
                 break;
         }
     }
+
+    static String replacement(Context<?> ctx, int group) {
+        switch (ctx.family()) {
+            case MYSQL:
+                return "$" + group;
+
+            default:
+                return "\\" + group;
+        }
+    }
 }

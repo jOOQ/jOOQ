@@ -155,9 +155,19 @@ implements JSONArrayAggOrderByStep<J> {
             inline('['),
             DSL.field("{0}", VARCHAR, new CustomQueryPart() {
                 @Override
-                public void accept(Context<?> c) {
-                    c.visit(groupConcatEmulationWithoutArrayWrappers(arg2, withinGroupOrderBy));
-                    acceptOverClause(c);
+                public void accept(Context<?> c1) {
+                    c1.visit(groupConcatEmulationWithoutArrayWrappers(
+                        DSL.field("{0}", VARCHAR, new CustomQueryPart() {
+                            @Override
+                            public void accept(Context<?> c2) {
+                                acceptArguments2(c2, QueryPartListView.wrap(arg2));
+                            }
+                        }),
+                        withinGroupOrderBy
+                    ));
+
+                    acceptFilterClause(c1);
+                    acceptOverClause(c1);
                 }
             }),
             inline(']')

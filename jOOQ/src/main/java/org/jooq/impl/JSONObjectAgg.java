@@ -50,6 +50,7 @@ import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
 import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -102,7 +103,9 @@ implements JSONObjectAggNullStep<J> {
             // [#10089] These dialects support non-standard JSON_OBJECTAGG without ABSENT ON NULL support
             case MARIADB:
             case MYSQL:
-                if (nullType == ABSENT_ON_NULL)
+
+                // [#11238] FILTER cannot be emulated with the standard syntax
+                if (nullType == ABSENT_ON_NULL || filter != null)
                     acceptGroupConcat(ctx);
 
 
@@ -132,43 +135,29 @@ implements JSONObjectAggNullStep<J> {
         acceptOverClause(ctx);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes", "serial" })
+    @SuppressWarnings("serial")
     private final void acceptGroupConcat(Context<?> ctx) {
-        Field<?> value;
-
-        if (entry.value().getDataType().isJSON()) {
-            value = entry.value();
-        }
-        else {
-            Field<JSON> x = jsonObject(inline("x"), entry.value());
-
-            switch (ctx.family()) {
-
-
-
-
-
-
-                default:
-                    value = jsonValue(x, inline("$.x"));
-                    break;
-            }
-
-            if (nullType == ABSENT_ON_NULL)
-                value = when(entry.value().isNull(), inline((String) null)).else_((Field) value);
-        }
-
-        final Field<?> value1 = value;
-        final Field<String> listagg = DSL.field("{0}", String.class, new CustomQueryPart() {
+        final Field<String> listagg = DSL.field("{0}", VARCHAR, new CustomQueryPart() {
             @Override
-            public void accept(Context<?> c) {
-                c.visit(groupConcat(DSL.concat(
-                    inline('"'),
-                    DSL.replace(entry.key(), inline('"'), inline("\\\"")),
-                    inline("\":"),
-                    nullType == ABSENT_ON_NULL ? value1 : DSL.coalesce(value1, inline("null"))
+            public void accept(Context<?> c1) {
+                Field<JSON> o1 = jsonObject(entry.key(), entry.value());
+
+                if (nullType == ABSENT_ON_NULL)
+                    o1 = when(entry.value().isNull(), inline((JSON) null)).else_(o1);
+
+                Field<JSON> o2 = o1;
+                c1.visit(groupConcat(DSL.concat(
+                    DSL.field("{0}", VARCHAR, new CustomQueryPart() {
+                        @Override
+                        public void accept(Context<?> c2) {
+                            acceptArguments2(c2, QueryPartListView.wrap(
+                                DSL.regexpReplaceAll(o2.cast(VARCHAR), inline("^\\{(.*)\\}$"), inline(RegexpReplace.replacement(ctx, 1)))
+                            ));
+                        }
+                    })
                 )));
-                acceptOverClause(c);
+
+                acceptOverClause(c1);
             }
         });
 

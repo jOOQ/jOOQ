@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_MATERIALIZED;
@@ -52,6 +53,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
@@ -101,7 +103,17 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     @Override
     public final void accept(Context<?> ctx) {
         if (ctx.declareCTE()) {
-            ctx.visit(name).sql(' ').visit(K_AS).sql(' ');
+            QueryPart s = select;
+
+
+
+
+
+
+
+
+            ctx.visit(name);
+            ctx.sql(' ').visit(K_AS).sql(' ');
 
             Object previous = null;
             if (materialized != null) {
@@ -115,11 +127,9 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
 
 
-
             }
 
-            visitSubquery(ctx, select, true);
-
+            visitSubquery(ctx, s, true);
 
 
 
@@ -127,7 +137,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
         }
         else
-            ctx.visit(DSL.name(name.name));
+            ctx.visit(name.name);
     }
 
     @Override

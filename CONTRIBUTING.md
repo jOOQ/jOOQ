@@ -4,7 +4,8 @@ To PR or not to PR?
 Thanks for offering your help. We really appreciate your intentions. But let's review whether a PR is really reasonable for what you're trying to do.
 
 - **Did you discover a typo or minor bug that you think is really easy to fix?** A PR is perfect. Skip to [The ideal PR](#the-ideal-pr)
-- **Are you about to suggest a new feature, API, etc?** Please don't! We're very very likely to reject your PR and you will have wasted your time. Please use the [issue tracker](https://github.com/jOOQ/jOOQ/issues/new) or the [mailing list](https://groups.google.com/d/forum/jooq-user) to discuss your ideas first. Then, quite possibly, it's much more reasonable to leave the implementation to us. Here's why:
+- **Do you want to show some code in diff/PR form** Sure! That's a clever usage of PRs, often better than prose. If there's no expectation of it to be merged, go for it!
+- **Are you about to suggest a concrete implementation of a new feature, API, etc?** Please don't! We're very very likely to reject your PR and you will have wasted your time. Please use the [issue tracker](https://github.com/jOOQ/jOOQ/issues/new) or the [mailing list](https://groups.google.com/d/forum/jooq-user) to discuss your ideas first. Then, quite possibly, it's much more reasonable to leave the implementation to us. Here's why:
 
 Overlooking things
 ------------------

@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
@@ -118,7 +119,9 @@ implements JSONArrayAggOrderByStep<J> {
 
                 // TODO: What about a user-defined filter clause?
                 if (nullType == ABSENT_ON_NULL)
-                    acceptFilterClause(ctx, arguments.get(0).isNotNull());
+                    acceptFilterClause(ctx, (filter == null ? noCondition() : filter).and(arguments.get(0).isNotNull()));
+                else
+                    acceptFilterClause(ctx);
 
                 break;
 

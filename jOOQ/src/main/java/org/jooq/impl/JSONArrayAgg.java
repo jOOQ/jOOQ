@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
+import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
@@ -156,10 +157,14 @@ implements JSONArrayAggOrderByStep<J> {
         Field<?> arg2 = arg1;
         return DSL.concat(
             inline('['),
-            DSL.field("{0}", VARCHAR, CustomQueryPart.of(c -> {
-                c.visit(groupConcatEmulationWithoutArrayWrappers(arg2, withinGroupOrderBy));
-                acceptOverClause(c);
-            })),
+            CustomField.of(N_GROUP_CONCAT, VARCHAR, c1 -> {
+                c1.visit(groupConcatEmulationWithoutArrayWrappers(
+                    CustomField.of(Names.N_FIELD, VARCHAR, c2 -> acceptArguments2(c2, QueryPartListView.wrap(arg2))),
+                    withinGroupOrderBy
+                ));
+                acceptFilterClause(ctx);
+                acceptOverClause(c1);
+            }),
             inline(']')
         );
     }

@@ -84,21 +84,21 @@ implements
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID     = -8613744948308064895L;
-    private static final Set<SQLDialect> SUPPORT_FILTER       = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> SUPPORT_DISTINCT_RVE = SQLDialect.supportedBy(H2, POSTGRES);
+    private static final long     serialVersionUID     = -8613744948308064895L;
+    static final Set<SQLDialect>  SUPPORT_FILTER       = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, SQLITE);
+    static final Set<SQLDialect>  SUPPORT_DISTINCT_RVE = SQLDialect.supportedBy(H2, POSTGRES);
 
-    static final Field<Integer>          ASTERISK             = DSL.field("*", Integer.class);
-
-    // Other attributes
-    final QueryPartList<Field<?>>        arguments;
-    final boolean                        distinct;
-    Condition                            filter;
+    static final Field<Integer>   ASTERISK             = DSL.field("*", Integer.class);
 
     // Other attributes
-    SortFieldList                        withinGroupOrderBy;
-    SortFieldList                        keepDenseRankOrderBy;
-    boolean                              first;
+    final QueryPartList<Field<?>> arguments;
+    final boolean                 distinct;
+    Condition                     filter;
+
+    // Other attributes
+    SortFieldList                 withinGroupOrderBy;
+    SortFieldList                 keepDenseRankOrderBy;
+    boolean                       first;
 
     AbstractAggregateFunction(boolean distinct, Name name, DataType<T> type, Field<?>... arguments) {
         super(name, type);
@@ -124,23 +124,19 @@ implements
                 ctx.sql('(');
         }
 
-        if (!args.isEmpty()) {
-            if (filter == null || SUPPORT_FILTER.contains(ctx.dialect())) {
-                ctx.visit(args);
-            }
-            else {
-                QueryPartList<Field<?>> expressions = new QueryPartList<>();
-
-                for (Field<?> argument : args)
-                    expressions.add(DSL.when(filter, argument == ASTERISK ? one() : argument));
-
-                ctx.visit(expressions);
-            }
-        }
+        if (!args.isEmpty())
+            acceptArguments2(ctx, args);
 
         if (distinct)
             if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.dialect()))
                 ctx.sql(')');
+    }
+
+    final void acceptArguments2(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
+        if (filter == null || SUPPORT_FILTER.contains(ctx.dialect()))
+            ctx.visit(args);
+        else
+            ctx.visit(args.map(arg -> DSL.when(filter, arg == ASTERISK ? one() : arg)));
     }
 
     final void acceptFilterClause(Context<?> ctx) {

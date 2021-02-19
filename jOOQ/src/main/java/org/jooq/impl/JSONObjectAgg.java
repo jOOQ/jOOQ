@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
+import static org.jooq.impl.Names.N_FIELD;
 import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
@@ -106,7 +107,9 @@ implements JSONObjectAggNullStep<J> {
             // [#10089] These dialects support non-standard JSON_OBJECTAGG without ABSENT ON NULL support
             case MARIADB:
             case MYSQL:
-                if (onNull == ABSENT_ON_NULL)
+
+                // [#11238] FILTER cannot be emulated with the standard syntax
+                if (onNull == ABSENT_ON_NULL || filter != null)
                     acceptGroupConcat(ctx);
 
 
@@ -137,17 +140,21 @@ implements JSONObjectAggNullStep<J> {
     }
 
     private final void acceptGroupConcat(Context<?> ctx) {
-        final Field<String> listagg = DSL.field("{0}", String.class, CustomQueryPart.of(c -> {
-            Field<JSON> o = jsonObject(entry.key(), entry.value());
+        final Field<String> listagg = CustomField.of(Names.N_GROUP_CONCAT, VARCHAR, c1 -> {
+            Field<JSON> o1 = jsonObject(entry.key(), entry.value());
 
             if (onNull == ABSENT_ON_NULL)
-                o = when(entry.value().isNull(), inline((JSON) null)).else_(o);
+                o1 = when(entry.value().isNull(), inline((JSON) null)).else_(o1);
 
-            c.visit(groupConcat(DSL.concat(
-                DSL.regexpReplaceAll(o.cast(VARCHAR), inline("^\\{(.*)\\}$"), inline(RegexpReplace.replacement(ctx, 1)))
+            Field<JSON> o2 = o1;
+            c1.visit(groupConcat(DSL.concat(
+                CustomField.of(N_FIELD, VARCHAR, c2 -> acceptArguments2(c2, QueryPartListView.wrap(
+                    DSL.regexpReplaceAll(o2.cast(VARCHAR), inline("^\\{(.*)\\}$"), inline(RegexpReplace.replacement(ctx, 1)))
+                )))
             )));
-            acceptOverClause(c);
-        }));
+
+            acceptOverClause(c1);
+        });
 
         ctx.sql('(').visit(DSL.concat(inline('{'), listagg, inline('}'))).sql(')');
     }

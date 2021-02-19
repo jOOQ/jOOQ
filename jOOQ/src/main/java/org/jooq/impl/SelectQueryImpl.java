@@ -1203,6 +1203,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     final Select<?> distinctOnEmulation() {
 

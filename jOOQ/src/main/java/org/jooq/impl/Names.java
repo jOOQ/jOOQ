@@ -78,6 +78,7 @@ final class Names {
     static final Name N_BOOL_OR                = unquotedName("bool_or");
     static final Name N_BOOLAND_AGG            = unquotedName("booland_agg");
     static final Name N_BOOLOR_AGG             = unquotedName("boolor_agg");
+    static final Name N_BYTE_LENGTH            = unquotedName("byte_length");
     static final Name N_CARDINALITY            = unquotedName("cardinality");
     static final Name N_CASE                   = unquotedName("case");
     static final Name N_CAST                   = unquotedName("cast");

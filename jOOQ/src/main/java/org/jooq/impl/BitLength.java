@@ -111,6 +111,10 @@ extends
 
 
 
+
+
+
+
             case DERBY:
             case SQLITE:
                 ctx.visit(inline(8).times(function(N_LENGTH, getDataType(), string)));

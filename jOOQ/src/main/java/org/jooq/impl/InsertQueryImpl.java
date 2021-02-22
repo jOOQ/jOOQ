@@ -83,13 +83,13 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -655,6 +655,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+            ctx.data(DATA_INSERT_SELECT, true);
+
             // [#8353] TODO: Support overlapping embeddables
             ctx.formatSeparator()
                .start(INSERT_SELECT)
@@ -662,6 +664,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                .end(INSERT_SELECT);
 
             ctx.data().remove(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST);
+            ctx.data().remove(DATA_INSERT_SELECT);
         }
         else if (defaultValues) {
             switch (ctx.family()) {

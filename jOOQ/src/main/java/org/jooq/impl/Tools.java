@@ -479,6 +479,11 @@ final class Tools {
         DATA_COLLECT_SEMI_ANTI_JOIN,
 
         /**
+         * [#11486] An <code>INSERT .. SELECT</code> statement.
+         */
+        DATA_INSERT_SELECT,
+
+        /**
          * [#2995] An <code>INSERT INTO t SELECT</code> statement. Without any
          * explicit column list, the <code>SELECT</code> statement must not be
          * wrapped in parentheses (which would be interpreted as the column

@@ -163,6 +163,7 @@ import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
@@ -1197,6 +1198,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#6583] Work around MySQL's self-reference-in-DML-subquery restriction
         if (ctx.subqueryLevel() == 1
             && REQUIRES_DERIVED_TABLE_DML.contains(ctx.dialect())
+            && !TRUE.equals(ctx.data(DATA_INSERT_SELECT))
             && (dmlTable = (Table<?>) ctx.data(DATA_DML_TARGET_TABLE)) != null
             && containsTable(dmlTable)) {
             ctx.visit(DSL.select(asterisk()).from(asTable("t")));

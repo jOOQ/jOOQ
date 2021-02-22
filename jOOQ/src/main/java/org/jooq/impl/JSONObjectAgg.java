@@ -150,7 +150,7 @@ implements JSONObjectAggNullStep<J> {
                     DSL.field("{0}", VARCHAR, new CustomQueryPart() {
                         @Override
                         public void accept(Context<?> c2) {
-                            acceptArguments2(c2, QueryPartListView.wrap(
+                            acceptArguments2(c2, QueryPartListView.<Field<?>>wrap(
                                 DSL.regexpReplaceAll(o2.cast(VARCHAR), inline("^\\{(.*)\\}$"), inline(RegexpReplace.replacement(ctx, 1)))
                             ));
                         }

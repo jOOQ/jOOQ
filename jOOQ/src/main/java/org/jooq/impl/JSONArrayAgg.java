@@ -160,7 +160,7 @@ implements JSONArrayAggOrderByStep<J> {
                         DSL.field("{0}", VARCHAR, new CustomQueryPart() {
                             @Override
                             public void accept(Context<?> c2) {
-                                acceptArguments2(c2, QueryPartListView.wrap(arg2));
+                                acceptArguments2(c2, QueryPartListView.<Field<?>>wrap(arg2));
                             }
                         }),
                         withinGroupOrderBy

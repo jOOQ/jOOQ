@@ -44,6 +44,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DetachedException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
@@ -438,6 +439,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <T> T connectionResult(ConnectionCallable<T> callable) {
         final Connection connection = configuration().connectionProvider().acquire();
+
+        if (connection == null)
+            throw new DetachedException("No Connection provided by ConnectionProvider");
 
         try {
             return callable.run(connection);

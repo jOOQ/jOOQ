@@ -68,56 +68,8 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     // ------------------------------------------------------------------------
 
     @Override
-    @Deprecated
-    public final BindContext bind(Collection<? extends QueryPart> parts) {
-        return visitAll(this, parts);
-    }
-
-    @Override
-    @Deprecated
-    public final BindContext bind(QueryPart[] parts) {
-        return visitAll(this, parts);
-    }
-
-    @Override
-    @Deprecated
-    public final BindContext bind(QueryPart part) {
-        return visit(part);
-    }
-
-    @Override
     protected void visit0(QueryPartInternal internal) {
         bindInternal(internal);
-    }
-
-    @Override
-    @Deprecated
-    public final BindContext bindValues(Object... values) {
-
-        // [#724] When values is null, this is probably due to API-misuse
-        // The user probably meant new Object[] { null }
-        if (values == null) {
-            bindValues(new Object[] { null });
-        }
-        else {
-            for (Object value : values) {
-                Class<?> type = (value == null) ? Object.class : value.getClass();
-                bindValue(value, DSL.val(value, type));
-            }
-        }
-
-        return this;
-    }
-
-    @Override
-    @Deprecated
-    public final BindContext bindValue(Object value, Class<?> type) {
-        try {
-            return bindValue0(value, DSL.val(value, type));
-        }
-        catch (SQLException e) {
-            throw Tools.translate(null, e);
-        }
     }
 
     @Override

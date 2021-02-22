@@ -85,23 +85,6 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     /**
      * Convenience method to fetch a value at a given position in the result.
      *
-     * @param <T> The value's field's generic type parameter
-     * @param index The record's 0-based index in the record list
-     * @param field The value's field
-     * @param defaultValue The default value if the value was <code>null</code>
-     * @return The value
-     * @throws IndexOutOfBoundsException if the index is out of range (
-     *             <tt>index &lt; 0 || index &gt;= size()</tt>)
-     * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #fieldsRow()}
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException, IllegalArgumentException;
-
-    /**
-     * Convenience method to fetch a value at a given position in the result.
-     *
      * @param index The record's 0-based index in the record list
      * @param fieldIndex The value's field index
      * @return The value
@@ -117,23 +100,6 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Convenience method to fetch a value at a given position in the result.
      *
      * @param index The record's 0-based index in the record list
-     * @param fieldIndex The value's field index
-     * @param defaultValue The default value if the value was <code>null</code>
-     * @return The value
-     * @throws IndexOutOfBoundsException if the index is out of range (
-     *             <tt>index &lt; 0 || index &gt;= size()</tt>)
-     * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #fieldsRow()}
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Nullable
-    @Deprecated
-    Object getValue(int index, int fieldIndex, Object defaultValue) throws IndexOutOfBoundsException, IllegalArgumentException;
-
-    /**
-     * Convenience method to fetch a value at a given position in the result.
-     *
-     * @param index The record's 0-based index in the record list
      * @param fieldName The value's field name
      * @return The value
      * @throws IndexOutOfBoundsException if the index is out of range (
@@ -143,23 +109,6 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      */
     @Nullable
     Object getValue(int index, String fieldName) throws IndexOutOfBoundsException, IllegalArgumentException;
-
-    /**
-     * Convenience method to fetch a value at a given position in the result.
-     *
-     * @param index The record's 0-based index in the record list
-     * @param fieldName The value's field name
-     * @param defaultValue The default value if the value was <code>null</code>
-     * @return The value
-     * @throws IndexOutOfBoundsException if the index is out of range (
-     *             <tt>index &lt; 0 || index &gt;= size()</tt>)
-     * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #fieldsRow()}
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Nullable
-    @Deprecated
-    Object getValue(int index, String fieldName, Object defaultValue) throws IndexOutOfBoundsException, IllegalArgumentException;
 
     /**
      * Convenience method to fetch all values for a given field. This is

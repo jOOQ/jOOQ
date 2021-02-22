@@ -812,13 +812,6 @@ public interface DSLContext extends Scope {
     @NotNull
     BindContext bindContext(PreparedStatement stmt);
 
-    /**
-     * @deprecated - [#2662] - 3.2.0 - Do not reuse this method. It will be
-     *             removed with jOOQ 4.0
-     */
-    @Deprecated
-    int bind(QueryPart part, PreparedStatement stmt);
-
     // -------------------------------------------------------------------------
     // XXX Attachable and Serializable API
     // -------------------------------------------------------------------------

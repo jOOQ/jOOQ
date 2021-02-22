@@ -120,11 +120,6 @@ public class DefaultColumnDefinition
         return isIdentity;
     }
 
-    @Override
-    public final boolean isNullable() {
-        return getType().isNullable();
-    }
-
 
 
 

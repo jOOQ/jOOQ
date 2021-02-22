@@ -75,15 +75,6 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
      */
     boolean isIdentity();
 
-    /**
-     * Whether the column is nullable.
-     *
-     * @deprecated - [#2699] - 3.2.0 - Use
-     *             {@link DataTypeDefinition#isNullable()} instead.
-     */
-    @Deprecated
-    boolean isNullable();
-
 
 
 

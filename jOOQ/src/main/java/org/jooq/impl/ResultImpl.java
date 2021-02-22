@@ -167,31 +167,13 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     }
 
     @Override
-    @Deprecated
-    public final <T> T getValue(int index, Field<T> field, T defaultValue) {
-        return get(index).getValue(field, defaultValue);
-    }
-
-    @Override
     public final Object getValue(int index, int fieldIndex) {
         return get(index).get(fieldIndex);
     }
 
     @Override
-    @Deprecated
-    public final Object getValue(int index, int fieldIndex, Object defaultValue) {
-        return get(index).getValue(fieldIndex, defaultValue);
-    }
-
-    @Override
     public final Object getValue(int index, String fieldName) {
         return get(index).get(fieldName);
-    }
-
-    @Override
-    @Deprecated
-    public final Object getValue(int index, String fieldName, Object defaultValue) {
-        return get(index).getValue(fieldName, defaultValue);
     }
 
     @Override

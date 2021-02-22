@@ -76,22 +76,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // -------------------------------------------------------------------------
 
     /**
-     * @deprecated - 3.4.0 - [#2694] - Use
-     *             {@link QueryPartInternal#accept(Context)} instead.
-     */
-    @Override
-    @Deprecated
-    public final void toSQL(RenderContext context) {}
-
-    /**
-     * @deprecated - 3.4.0 - [#2694] - Use
-     *             {@link QueryPartInternal#accept(Context)} instead.
-     */
-    @Override
-    @Deprecated
-    public final void bind(BindContext context) throws DataAccessException {}
-
-    /**
      * @deprecated - 3.11.0 - [#8179] - This functionality will be removed in
      *             the future.
      */

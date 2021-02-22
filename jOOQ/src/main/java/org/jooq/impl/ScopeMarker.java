@@ -44,12 +44,10 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 // ...
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 import org.jooq.Statement;
 import org.jooq.impl.AbstractContext.ScopeStackElement;
 import org.jooq.impl.Tools.DataExtendedKey;
@@ -191,12 +189,6 @@ enum ScopeMarker {
 
         @Override
         public final void accept(Context<?> ctx) {}
-
-        @Override
-        public final void toSQL(RenderContext ctx) {}
-
-        @Override
-        public final void bind(BindContext ctx) {}
 
         @Override
         public final Clause[] clauses(Context<?> ctx) {

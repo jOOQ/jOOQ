@@ -71,33 +71,6 @@ public interface QueryPartInternal extends QueryPart {
     void accept(Context<?> ctx);
 
     /**
-     * Render this {@link QueryPart} to a SQL string contained in
-     * <code>context.sql()</code>. The <code>context</code> will contain
-     * additional information about how to render this <code>QueryPart</code>,
-     * e.g. whether this <code>QueryPart</code> should be rendered as a
-     * declaration or reference, whether this <code>QueryPart</code>'s contained
-     * bind variables should be inlined or replaced by <code>'?'</code>, etc.
-     *
-     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
-     */
-    @Deprecated
-    void toSQL(RenderContext ctx);
-
-    /**
-     * Bind all parameters of this {@link QueryPart} to a PreparedStatement
-     * <p>
-     * This method is for JOOQ INTERNAL USE only. Do not reference directly
-     *
-     * @param ctx The context holding the next bind index and other information
-     *            for variable binding
-     * @throws DataAccessException If something went wrong while binding a
-     *             variable
-     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
-     */
-    @Deprecated
-    void bind(BindContext ctx) throws DataAccessException;
-
-    /**
      * The {@link Clause}s that are represented by this query part.
      * <p>
      * {@link QueryPart}s can specify several <code>Clause</code>s for which an

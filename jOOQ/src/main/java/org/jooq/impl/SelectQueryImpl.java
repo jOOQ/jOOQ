@@ -257,8 +257,6 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
  * other <code>SELECT</code> statement in <code>UNION</code>s and similar
@@ -467,11 +465,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
         return result;
-    }
-
-    @Override
-    public final int fetchCount() throws DataAccessException {
-        return DSL.using(configuration()).fetchCount(this);
     }
 
     @SuppressWarnings("unchecked")

@@ -1258,22 +1258,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    @Deprecated
-    public final <T> T getValue(Field<T> field, T defaultValue) {
-        T result = getValue(field);
-        return result != null ? result : defaultValue;
-    }
-
-    @Override
     public final <T> T getValue(Field<?> field, Class<? extends T> type) {
         return get(field, type);
-    }
-
-    @Override
-    @Deprecated
-    public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) {
-        final T result = get(field, type);
-        return result == null ? defaultValue : result;
     }
 
     @Override
@@ -1282,22 +1268,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    @Deprecated
-    public final <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter, U defaultValue) {
-        final U result = get(field, converter);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
     public final Object getValue(int index) {
         return get(index);
-    }
-
-    @Override
-    @Deprecated
-    public final Object getValue(int index, Object defaultValue) {
-        final Object result = get(index);
-        return result == null ? defaultValue : result;
     }
 
     @Override
@@ -1306,22 +1278,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    @Deprecated
-    public final <T> T getValue(int index, Class<? extends T> type, T defaultValue) {
-        final T result = get(index, type);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
     public final <U> U getValue(int index, Converter<?, ? extends U> converter) {
         return get(index, converter);
-    }
-
-    @Override
-    @Deprecated
-    public final <U> U getValue(int index, Converter<?, ? extends U> converter, U defaultValue) {
-        final U result = get(index, converter);
-        return result == null ? defaultValue : result;
     }
 
     @Override
@@ -1330,33 +1288,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    @Deprecated
-    public final Object getValue(String fieldName, Object defaultValue) {
-        return getValue(indexOrFail(fields, fieldName), defaultValue);
-    }
-
-    @Override
     public final <T> T getValue(String fieldName, Class<? extends T> type) {
         return get(fieldName, type);
     }
 
     @Override
-    @Deprecated
-    public final <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) {
-        final T result = get(fieldName, type);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
     public final <U> U getValue(String fieldName, Converter<?, ? extends U> converter) {
         return get(fieldName, converter);
-    }
-
-    @Override
-    @Deprecated
-    public final <U> U getValue(String fieldName, Converter<?, ? extends U> converter, U defaultValue) {
-        final U result = get(fieldName, converter);
-        return result == null ? defaultValue : result;
     }
 
     @Override

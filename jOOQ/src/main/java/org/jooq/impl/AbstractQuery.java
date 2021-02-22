@@ -613,10 +613,4 @@ abstract class AbstractQuery<R extends Record> extends AbstractFetchable<R> impl
 
         throw new IllegalArgumentException("ParamType not supported: " + paramType);
     }
-
-    @Override
-    @Deprecated
-    public final String getSQL(boolean inline) {
-        return getSQL(inline ? INLINED : INDEXED);
-    }
 }

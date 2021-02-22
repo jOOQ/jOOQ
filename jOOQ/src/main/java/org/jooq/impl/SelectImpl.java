@@ -279,12 +279,6 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return (SelectQuery<R>) getDelegate();
     }
 
-    @Override
-    @Deprecated
-    public final int fetchCount() {
-        return getDelegate().fetchCount();
-    }
-
     /**
      * This method must be able to return both incompatible types
      * SelectSelectStep&lt;Record&gt; and SelectSelectStep&lt;R&gt;

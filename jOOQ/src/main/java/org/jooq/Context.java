@@ -761,44 +761,4 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C castModeIf(CastMode mode, boolean condition);
-
-    /**
-     * Whether casting must be applied. The result follows this logic:
-     * <table border="1">
-     * <tr>
-     * <th>CastMode</th>
-     * <th>result</th>
-     * </tr>
-     * <tr>
-     * <td><code>ALWAYS</code></td>
-     * <td><code>true</code></td>
-     * </tr>
-     * <tr>
-     * <td><code>NEVER</code></td>
-     * <td><code>false</code></td>
-     * </tr>
-     * <tr>
-     * <td><code>SOME</code></td>
-     * <td><code>true</code> or <code>false</code> depending on the dialect</td>
-     * </tr>
-     * <tr>
-     * <td><code>DEFAULT</code></td>
-     * <td><code>null</code></td>
-     * </tr>
-     * </table>
-     *
-     * @deprecated - [#3703] - 3.5.0 - Do not use this any longer
-     */
-    @Nullable
-    @Deprecated
-    Boolean cast();
-
-    /**
-     * Set the new cast mode to {@link CastMode#SOME} for a list of dialects.
-     *
-     * @deprecated - [#3703] - 3.5.0 - Do not use this any longer
-     */
-    @NotNull
-    @Deprecated
-    C castModeSome(SQLDialect... dialects);
 }

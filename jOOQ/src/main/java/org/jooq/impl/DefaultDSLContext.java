@@ -540,12 +540,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new DefaultBindContext(configuration(), stmt);
     }
 
-    @Override
-    @Deprecated
-    public int bind(QueryPart part, PreparedStatement stmt) {
-        return bindContext(stmt).visit(part).peekIndex();
-    }
-
     // -------------------------------------------------------------------------
     // XXX Attachable and Serializable API
     // -------------------------------------------------------------------------

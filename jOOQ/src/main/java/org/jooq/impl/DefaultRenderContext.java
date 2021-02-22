@@ -619,12 +619,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
-    @Deprecated
-    public final RenderContext sql(QueryPart part) {
-        return visit(part);
-    }
-
-    @Override
     protected final void visit0(QueryPartInternal internal) {
         int before = bindValues.size();
         internal.accept(this);
@@ -693,32 +687,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         if (bindValues.size() > max)
             if (TRUE.equals(data(DATA_COUNT_BIND_VALUES)))
                 throw new ForceInlineSignal();
-    }
-
-    @Override
-    @Deprecated
-    public final boolean inline() {
-        return paramType == INLINED;
-    }
-
-    @Override
-    @Deprecated
-    public final boolean namedParams() {
-        return paramType == NAMED;
-    }
-
-    @Override
-    @Deprecated
-    public final RenderContext inline(boolean i) {
-        this.paramType = i ? INLINED : INDEXED;
-        return this;
-    }
-
-    @Override
-    @Deprecated
-    public final RenderContext namedParams(boolean r) {
-        this.paramType = r ? NAMED : INDEXED;
-        return this;
     }
 
     // ------------------------------------------------------------------------

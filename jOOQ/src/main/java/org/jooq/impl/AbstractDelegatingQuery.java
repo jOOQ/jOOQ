@@ -97,12 +97,6 @@ abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
     }
 
     @Override
-    @Deprecated
-    public final String getSQL(boolean inline) {
-        return delegate.getSQL(inline);
-    }
-
-    @Override
     public final String getSQL(ParamType paramType) {
         return delegate.getSQL(paramType);
     }

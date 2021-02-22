@@ -37,10 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.conf.ParamType;
-
-import org.jetbrains.annotations.NotNull;
-
 /**
  * The render context is used for rendering {@link QueryPart}'s to SQL.
  * <p>
@@ -51,58 +47,6 @@ import org.jetbrains.annotations.NotNull;
  * @see BindContext
  */
 public interface RenderContext extends Context<RenderContext> {
-
-    /**
-     * Recurse rendering.
-     *
-     * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead
-     */
-    @NotNull
-    @Deprecated
-    RenderContext sql(QueryPart part);
-
-    /**
-     * Whether bind variables should be inlined, rather than rendered as
-     * <code>'?'</code>.
-     *
-     * @deprecated - 3.1.0 - [#2414] - This method should no longer be used. Use
-     *             {@link #paramType()} instead.
-     */
-    @Deprecated
-    boolean inline();
-
-    /**
-     * Set the new context value for {@link #inline()}.
-     *
-     * @deprecated - 3.1.0 - [#2414] - This method should no longer be used. Use
-     *             {@link #paramType(ParamType)} instead.
-     */
-    @NotNull
-    @Deprecated
-    RenderContext inline(boolean inline);
-
-    /**
-     * Whether bind variables should be rendered as named parameters:<br/>
-     * <code>&#160; :1, :2, :custom_name</code>
-     * <p>
-     * or as JDBC bind variables <br/>
-     * <code>&#160; ?</code>
-     *
-     * @deprecated - 3.1.0 - [#2414] - This method should no longer be used. Use
-     *             {@link #paramType()} instead.
-     */
-    @Deprecated
-    boolean namedParams();
-
-    /**
-     * Set the new context value for {@link #namedParams()}.
-     *
-     * @deprecated - 3.1.0 - [#2414] - This method should no longer be used. Use
-     *             {@link #paramType(ParamType)} instead.
-     */
-    @NotNull
-    @Deprecated
-    RenderContext namedParams(boolean renderNamedParams);
 
     /**
      * The cast mode for bind values.
@@ -120,16 +64,6 @@ public interface RenderContext extends Context<RenderContext> {
          * Cast no bind values to their respective type.
          */
         NEVER,
-
-        /**
-         * Cast bind values only in some dialects. The specified dialects assume
-         * {@link #ALWAYS} behaviour, all the other dialects assume
-         * {@link #NEVER}.
-         *
-         * @deprecated - [#3703] - 3.5.0 - Do not use this any longer
-         */
-        @Deprecated
-        SOME,
 
         /**
          * Cast when needed. This is the default mode if not specified

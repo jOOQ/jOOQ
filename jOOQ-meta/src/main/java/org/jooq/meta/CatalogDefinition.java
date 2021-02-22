@@ -73,12 +73,6 @@ public class CatalogDefinition extends AbstractDefinition {
 	    return null;
 	}
 
-	@SuppressWarnings("deprecation")
-    @Override
-    public final String getOutputName() {
-	    return getDatabase().getOutputCatalog(getInputName());
-    }
-
     @Override
     public final List<Definition> getDefinitionPath() {
         return asList(this);

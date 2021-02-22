@@ -7537,7 +7537,7 @@ final class ParserContext {
                           || parseFunctionNameIf("DEGREE")
                           || parseFunctionNameIf("DEG"))
                         return deg((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("DATA_LENGTH"))
+                    else if (parseFunctionNameIf("DATALENGTH"))
                         return octetLength((Field) parseFieldParenthesised(S));
 
                 if ((field = parseFieldDecodeIf()) != null)

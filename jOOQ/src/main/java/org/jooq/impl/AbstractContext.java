@@ -903,25 +903,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         return (C) this;
     }
 
-    @Override
-    @Deprecated
-    public final Boolean cast() {
-        switch (castMode) {
-            case ALWAYS:
-                return true;
-            case NEVER:
-                return false;
-        }
-
-        return null;
-    }
-
-    @Override
-    @Deprecated
-    public final C castModeSome(SQLDialect... dialects) {
-        return (C) this;
-    }
-
     // ------------------------------------------------------------------------
     // XXX BindContext API
     // ------------------------------------------------------------------------

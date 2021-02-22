@@ -136,16 +136,16 @@ implements JSONObjectAggNullStep<J> {
     }
 
     @SuppressWarnings("serial")
-    private final void acceptGroupConcat(Context<?> ctx) {
+    private final void acceptGroupConcat(final Context<?> ctx) {
         final Field<String> listagg = DSL.field("{0}", VARCHAR, new CustomQueryPart() {
             @Override
-            public void accept(Context<?> c1) {
+            public void accept(final Context<?> c1) {
                 Field<JSON> o1 = jsonObject(entry.key(), entry.value());
 
                 if (nullType == ABSENT_ON_NULL)
                     o1 = when(entry.value().isNull(), inline((JSON) null)).else_(o1);
 
-                Field<JSON> o2 = o1;
+                final Field<JSON> o2 = o1;
                 c1.visit(groupConcat(DSL.concat(
                     DSL.field("{0}", VARCHAR, new CustomQueryPart() {
                         @Override

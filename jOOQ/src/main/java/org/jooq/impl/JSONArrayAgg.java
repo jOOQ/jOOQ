@@ -150,7 +150,7 @@ implements JSONArrayAggOrderByStep<J> {
             }
         }
 
-        Field<?> arg2 = arg1;
+        final Field<?> arg2 = arg1;
         return DSL.concat(
             inline('['),
             DSL.field("{0}", VARCHAR, new CustomQueryPart() {

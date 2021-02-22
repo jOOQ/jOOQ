@@ -7403,6 +7403,8 @@ final class ParserContext {
                         return bitLength((Field) parseFieldParenthesised(S));
                     else if (parseFunctionNameIf("BIT_COUNT"))
                         return bitCount((Field) parseFieldNumericOpParenthesised());
+                    else if (parseFunctionNameIf("BYTE_LENGTH"))
+                        return octetLength((Field) parseFieldParenthesised(S));
                     else if ((field = parseFieldBitwiseFunctionIf()) != null)
                         return field;
 
@@ -7535,6 +7537,8 @@ final class ParserContext {
                           || parseFunctionNameIf("DEGREE")
                           || parseFunctionNameIf("DEG"))
                         return deg((Field) parseFieldNumericOpParenthesised());
+                    else if (parseFunctionNameIf("DATA_LENGTH"))
+                        return octetLength((Field) parseFieldParenthesised(S));
 
                 if ((field = parseFieldDecodeIf()) != null)
                     return field;
@@ -7644,6 +7648,8 @@ final class ParserContext {
                 if (N.is(type))
                     if (parseFunctionNameIf("LENGTH", "LEN"))
                         return length((Field) parseFieldParenthesised(S));
+                    else if (parseFunctionNameIf("LENGTHB"))
+                        return octetLength((Field) parseFieldParenthesised(S));
                     else if (parseFunctionNameIf("LN", "LOGN"))
                         return ln((Field) parseFieldNumericOpParenthesised());
                     else if (parseFunctionNameIf("LOG10"))

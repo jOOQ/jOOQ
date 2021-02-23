@@ -38,6 +38,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.AbstractName.NO_NAME;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,6 +123,10 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     // -------------------------------------------------------------------------
     // Utilities
     // -------------------------------------------------------------------------
+
+    static final Name nameOrDefault(Named named) {
+        return named == null ? NO_NAME : named.getQualifiedName();
+    }
 
     static final Name qualify(Named qualifier, Name name) {
         // [#9820] [#11292] name == null || name.empty() are special cases that

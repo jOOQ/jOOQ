@@ -37,18 +37,22 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.AbstractNamed.nameOrDefault;
 import static org.jooq.impl.Tools.EMPTY_CATALOG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.Meta;
+import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -74,7 +78,7 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     static final Meta filterCatalogs(Configuration configuration, Catalog[] catalogs) {
-        return filterCatalogs0(configuration, catalogs, new HashSet<>(Arrays.asList(catalogs)));
+        return filterCatalogs0(configuration, catalogs, new LinkedHashSet<>(Arrays.asList(catalogs)));
     }
 
     static final Meta filterCatalogs(Configuration configuration, Set<Catalog> catalogs) {
@@ -86,45 +90,47 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     static final Meta filterSchemas(Configuration configuration, Schema[] schemas) {
-        return filterSchemas(configuration, new HashSet<>(Arrays.asList(schemas)));
+        return filterSchemas(configuration, new LinkedHashSet<>(Arrays.asList(schemas)));
     }
 
     static final Meta filterSchemas(Configuration configuration, Set<Schema> schemas) {
+        Map<Name, Catalog> c = new LinkedHashMap<>();
+        Map<Name, List<Schema>> mapping = new LinkedHashMap<>();
 
-        // TODO: Some schemas may belong to another catalog
-        Catalog defaultCatalog = new CatalogImpl("") {
-            @Override
-            public List<Schema> getSchemas() {
-                return new ArrayList<>(schemas);
-            }
-        };
-
-        Set<Catalog> c = new HashSet<>();
         for (Schema schema : schemas)
-            c.add(schema.getCatalog() != null ? schema.getCatalog() : defaultCatalog);
+            mapping.computeIfAbsent(nameOrDefault(schema.getCatalog()), k -> new ArrayList<>()).add(schema);
 
-        return filterCatalogs(configuration, c).filterSchemas(schemas::contains);
+        for (Schema schema : schemas)
+            c.computeIfAbsent(nameOrDefault(schema.getCatalog()), k -> new CatalogImpl(k) {
+                @Override
+                public List<Schema> getSchemas() {
+                    return mapping.get(getQualifiedName());
+                }
+            });
+
+        return filterCatalogs(configuration, new LinkedHashSet<>(c.values())).filterSchemas(schemas::contains);
     }
 
     static final Meta filterTables(Configuration configuration, Table<?>[] tables) {
-        return filterTables(configuration, new HashSet<>(Arrays.asList(tables)));
+        return filterTables(configuration, new LinkedHashSet<>(Arrays.asList(tables)));
     }
 
     static final Meta filterTables(Configuration configuration, Set<Table<?>> tables) {
+        Map<Name, Schema> s = new LinkedHashMap<>();
+        Map<Name, List<Table<?>>> mapping = new LinkedHashMap<>();
 
-        // TODO: Some tables may belong to another schema
-        Schema defaultSchema = new SchemaImpl("") {
-            @Override
-            public List<Table<?>> getTables() {
-                return new ArrayList<>(tables);
-            }
-        };
-
-        Set<Schema> s = new HashSet<>();
         for (Table<?> table : tables)
-            s.add(table.getSchema() != null ? table.getSchema() : defaultSchema);
+            mapping.computeIfAbsent(nameOrDefault(table.getSchema()), k -> new ArrayList<>()).add(table);
 
-        return filterSchemas(configuration, s)
+        for (Table<?> table : tables)
+            s.computeIfAbsent(nameOrDefault(table.getSchema()), k -> new SchemaImpl(k, table.getCatalog()) {
+                @Override
+                public List<Table<?>> getTables() {
+                    return mapping.get(getQualifiedName());
+                }
+            });
+
+        return filterSchemas(configuration, new LinkedHashSet<>(s.values()))
               .filterTables(tables::contains)
               .filterSequences(none())
               .filterDomains(none())

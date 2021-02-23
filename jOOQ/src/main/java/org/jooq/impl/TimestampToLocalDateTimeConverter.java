@@ -40,9 +40,16 @@ package org.jooq.impl;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import org.jooq.Converter;
+
 /**
  * @author Lukas Eder
+ * @deprecated - 3.15.0 - [#11505] - Use
+ *             {@link Converter#ofNullable(Class, Class, java.util.function.Function, java.util.function.Function)}
+ *             instead, e.g.
+ *             <code>Converter.ofNullable(Timestamp.class, LocalDateTime.class, Timestamp::toLocalDateTime, Timestamp::valueOf)</code>.
  */
+@Deprecated
 public final class TimestampToLocalDateTimeConverter extends AbstractConverter<Timestamp, LocalDateTime> {
 
     /**

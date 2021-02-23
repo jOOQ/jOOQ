@@ -102,13 +102,17 @@ import static org.jooq.impl.Keywords.K_TIME_WITH_TIME_ZONE;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CHAR;
 import static org.jooq.impl.SQLDataType.DATE;
+import static org.jooq.impl.SQLDataType.DECIMAL_INTEGER;
 import static org.jooq.impl.SQLDataType.DOUBLE;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.LONGVARCHAR;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.ROWID;
+import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -281,24 +285,27 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultJSONBBinding(dataType, converter);
         else if (type == XML.class)
             return new DefaultXMLBinding(dataType, converter);
-        else if (type == LocalDate.class) {
-            DateToLocalDateConverter c1 = new DateToLocalDateConverter();
-            Converter<LocalDate, U> c2 = (Converter<LocalDate, U>) converter;
-            Converter<Date, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<>((DataType<LocalDate>) dataType, c1, c2, new DefaultDateBinding<>(DATE, c3));
-        }
-        else if (type == LocalDateTime.class) {
-            TimestampToLocalDateTimeConverter c1 = new TimestampToLocalDateTimeConverter();
-            Converter<LocalDateTime, U> c2 = (Converter<LocalDateTime, U>) converter;
-            Converter<Timestamp, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<>((DataType<LocalDateTime>) dataType, c1, c2, new DefaultTimestampBinding<>(TIMESTAMP, c3));
-        }
-        else if (type == LocalTime.class) {
-            TimeToLocalTimeConverter c1 = new TimeToLocalTimeConverter();
-            Converter<LocalTime, U> c2 = (Converter<LocalTime, U>) converter;
-            Converter<Time, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<>((DataType<LocalTime>) dataType, c1, c2, new DefaultTimeBinding<>(TIME, c3));
-        }
+        else if (type == LocalDate.class)
+            return (Binding<T, U>) new DelegatingBinding<>(
+                (DataType<LocalDate>) dataType,
+                serializableConverter(Date.class, LocalDate.class, Date::toLocalDate, Date::valueOf),
+                (Converter<LocalDate, U>) converter,
+                c -> new DefaultDateBinding<>(DATE, c)
+            );
+        else if (type == LocalDateTime.class)
+            return (Binding<T, U>) new DelegatingBinding<>(
+                (DataType<LocalDateTime>) dataType,
+                serializableConverter(Timestamp.class, LocalDateTime.class, Timestamp::toLocalDateTime, Timestamp::valueOf),
+                (Converter<LocalDateTime, U>) converter,
+                c -> new DefaultTimestampBinding<>(TIMESTAMP, c)
+            );
+        else if (type == LocalTime.class)
+            return (Binding<T, U>) new DelegatingBinding<>(
+                (DataType<LocalTime>) dataType,
+                serializableConverter(Time.class, LocalTime.class, Time::toLocalTime, Time::valueOf),
+                (Converter<LocalTime, U>) converter,
+                c -> new DefaultTimeBinding<>(TIME, c)
+            );
         else if (type == Long.class || type == long.class)
             return new DefaultLongBinding(dataType, converter);
         else if (type == OffsetDateTime.class)
@@ -324,13 +331,33 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == java.util.Date.class)
             return new DefaultTimestampBinding(dataType, Converters.of(TimestampToJavaUtilDateConverter.INSTANCE, (Converter<java.util.Date, java.util.Date>) converter));
         else if (type == UByte.class)
-            return new DefaultUByteBinding(dataType, converter);
+            return (Binding<T, U>) new DelegatingBinding<>(
+                (DataType<UByte>) dataType,
+                serializableConverter(Short.class, UByte.class, UByte::valueOf, UByte::shortValue),
+                (Converter<UByte, U>) converter,
+                c -> new DefaultShortBinding<>(SMALLINT, c)
+            );
         else if (type == UInteger.class)
-            return new DefaultUIntegerBinding(dataType, converter);
+            return (Binding<T, U>) new DelegatingBinding<>(
+                (DataType<UInteger>) dataType,
+                serializableConverter(Long.class, UInteger.class, UInteger::valueOf, UInteger::longValue),
+                (Converter<UInteger, U>) converter,
+                c -> new DefaultLongBinding<>(BIGINT, c)
+            );
         else if (type == ULong.class)
-            return new DefaultULongBinding(dataType, converter);
+            return (Binding<T, U>) new DelegatingBinding<>(
+                (DataType<ULong>) dataType,
+                serializableConverter(BigInteger.class, ULong.class, ULong::valueOf, ULong::toBigInteger),
+                (Converter<ULong, U>) converter,
+                c -> new DefaultBigIntegerBinding<>(DECIMAL_INTEGER, c)
+            );
         else if (type == UShort.class)
-            return new DefaultUShortBinding(dataType, converter);
+            return (Binding<T, U>) new DelegatingBinding<>(
+                (DataType<UShort>) dataType,
+                serializableConverter(Integer.class, UShort.class, UShort::valueOf, UShort::intValue),
+                (Converter<UShort, U>) converter,
+                c -> new DefaultIntegerBinding<>(INTEGER, c)
+            );
         else if (type == UUID.class)
             return new DefaultUUIDBinding(dataType, converter);
         else if (type == YearToSecond.class)
@@ -969,12 +996,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             DataType<X> originalDataType,
             Converter<T, X> delegatingConverter,
             Converter<X, U> originalConverter,
-            AbstractBinding<T, U> delegatingBinding
+            Function<? super Converter<T, U>, ? extends AbstractBinding<T, U>> f
         ) {
             super(originalDataType, originalConverter);
 
             this.delegatingConverter = delegatingConverter;
-            this.delegatingBinding = delegatingBinding;
+            this.delegatingBinding = f.apply(Converters.of(delegatingConverter, originalConverter));
         }
 
         @Override
@@ -3148,11 +3175,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long                               serialVersionUID = -1850495302106551527L;
 
-        private static final Converter<OffsetDateTime, Instant> CONVERTER        = Converter.ofNullable(
+        private static final Converter<OffsetDateTime, Instant> CONVERTER        = serializableConverter(
             OffsetDateTime.class,
             Instant.class,
-            (Function<OffsetDateTime, Instant> & Serializable) o -> o.toInstant(),
-            (Function<Instant, OffsetDateTime> & Serializable) i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
+            OffsetDateTime::toInstant,
+            i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
         );
 
         private final DefaultOffsetDateTimeBinding<U>           delegate;
@@ -4136,216 +4163,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    static final class DefaultUByteBinding<U> extends AbstractBinding<UByte, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -101167998250685198L;
-
-        DefaultUByteBinding(DataType<UByte> dataType, Converter<UByte, U> converter) {
-            super(dataType, converter);
-        }
-
-        @Override
-        final void sqlInline0(BindingSQLContext<U> ctx, UByte value) {
-            ctx.render().sql(value.toString());
-        }
-
-        @Override
-        final void set0(BindingSetStatementContext<U> ctx, UByte value) throws SQLException {
-            ctx.statement().setShort(ctx.index(), value.shortValue());
-        }
-
-        @Override
-        final void set0(BindingSetSQLOutputContext<U> ctx, UByte value) throws SQLException {
-            ctx.output().writeShort(value.shortValue());
-        }
-
-        @Override
-        final UByte get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            String string = ctx.resultSet().getString(ctx.index());
-            return string == null ? null : UByte.valueOf(string);
-        }
-
-        @Override
-        final UByte get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            String string = ctx.statement().getString(ctx.index());
-            return string == null ? null : UByte.valueOf(string);
-        }
-
-        @Override
-        final UByte get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            String string = ctx.input().readString();
-            return string == null ? null : UByte.valueOf(string);
-        }
-
-        @Override
-        final int sqltype(Statement statement, Configuration configuration) {
-            return Types.SMALLINT;
-        }
-    }
-
-    static final class DefaultUIntegerBinding<U> extends AbstractBinding<UInteger, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 1437279656720185207L;
-
-        DefaultUIntegerBinding(DataType<UInteger> dataType, Converter<UInteger, U> converter) {
-            super(dataType, converter);
-        }
-
-        @Override
-        final void sqlInline0(BindingSQLContext<U> ctx, UInteger value) {
-            ctx.render().sql(value.toString());
-        }
-
-        @Override
-        final void set0(BindingSetStatementContext<U> ctx, UInteger value) throws SQLException {
-
-
-
-
-
-            ctx.statement().setLong(ctx.index(), value.longValue());
-        }
-
-        @Override
-        final void set0(BindingSetSQLOutputContext<U> ctx, UInteger value) throws SQLException {
-            ctx.output().writeLong(value.longValue());
-        }
-
-        @Override
-        final UInteger get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            String string = ctx.resultSet().getString(ctx.index());
-            return string == null ? null : UInteger.valueOf(string);
-        }
-
-        @Override
-        final UInteger get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            String string = ctx.statement().getString(ctx.index());
-            return string == null ? null : UInteger.valueOf(string);
-        }
-
-        @Override
-        final UInteger get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            String string = ctx.input().readString();
-            return string == null ? null : UInteger.valueOf(string);
-        }
-
-        @Override
-        final int sqltype(Statement statement, Configuration configuration) {
-            return Types.BIGINT;
-        }
-    }
-
-    static final class DefaultULongBinding<U> extends AbstractBinding<ULong, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 4891128447530113299L;
-
-        DefaultULongBinding(DataType<ULong> dataType, Converter<ULong, U> converter) {
-            super(dataType, converter);
-        }
-
-        @Override
-        final void sqlInline0(BindingSQLContext<U> ctx, ULong value) {
-            ctx.render().sql(value.toString());
-        }
-
-        @Override
-        final void set0(BindingSetStatementContext<U> ctx, ULong value) throws SQLException {
-
-
-
-
-
-            ctx.statement().setBigDecimal(ctx.index(), new BigDecimal(value.toString()));
-        }
-
-        @Override
-        final void set0(BindingSetSQLOutputContext<U> ctx, ULong value) throws SQLException {
-            ctx.output().writeBigDecimal(new BigDecimal(value.toString()));
-        }
-
-        @Override
-        final ULong get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            String string = ctx.resultSet().getString(ctx.index());
-            return string == null ? null : ULong.valueOf(string);
-        }
-
-        @Override
-        final ULong get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            String string = ctx.statement().getString(ctx.index());
-            return string == null ? null : ULong.valueOf(string);
-        }
-
-        @Override
-        final ULong get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            String string = ctx.input().readString();
-            return string == null ? null : ULong.valueOf(string);
-        }
-
-        @Override
-        final int sqltype(Statement statement, Configuration configuration) {
-            return Types.DECIMAL;
-        }
-    }
-
-    static final class DefaultUShortBinding<U> extends AbstractBinding<UShort, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 2539811197808516971L;
-
-        DefaultUShortBinding(DataType<UShort> dataType, Converter<UShort, U> converter) {
-            super(dataType, converter);
-        }
-
-        @Override
-        final void sqlInline0(BindingSQLContext<U> ctx, UShort value) {
-            ctx.render().sql(value.toString());
-        }
-
-        @Override
-        final void set0(BindingSetStatementContext<U> ctx, UShort value) throws SQLException {
-            ctx.statement().setInt(ctx.index(), value.intValue());
-        }
-
-        @Override
-        final void set0(BindingSetSQLOutputContext<U> ctx, UShort value) throws SQLException {
-            ctx.output().writeInt(value.intValue());
-        }
-
-        @Override
-        final UShort get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            String string = ctx.resultSet().getString(ctx.index());
-            return string == null ? null : UShort.valueOf(string);
-        }
-
-        @Override
-        final UShort get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            String string = ctx.statement().getString(ctx.index());
-            return string == null ? null : UShort.valueOf(string);
-        }
-
-        @Override
-        final UShort get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            String string = ctx.input().readString();
-            return string == null ? null : UShort.valueOf(string);
-        }
-
-        @Override
-        final int sqltype(Statement statement, Configuration configuration) {
-            return Types.INTEGER;
-        }
-    }
-
     static final class DefaultUUIDBinding<U> extends AbstractBinding<UUID, U> {
 
         /**
@@ -4830,6 +4647,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final int sqltype(Statement statement, Configuration configuration) {
             return Types.VARCHAR;
         }
+    }
+
+    /**
+     * Create a serializable converter.
+     */
+    static final <
+        T, U,
+        FTU extends Function<? super T, ? extends U> & Serializable,
+        FUT extends Function<? super U, ? extends T> & Serializable
+    > Converter<T, U> serializableConverter(
+        Class<T> fromType,
+        Class<U> toType,
+        FTU from,
+        FUT to
+    ) {
+        return Converter.ofNullable(fromType, toType, from, to);
     }
 }
 

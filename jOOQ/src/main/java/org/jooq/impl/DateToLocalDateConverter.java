@@ -40,9 +40,16 @@ package org.jooq.impl;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import org.jooq.Converter;
+
 /**
  * @author Lukas Eder
+ * @deprecated - 3.15.0 - [#11505] - Use
+ *             {@link Converter#ofNullable(Class, Class, java.util.function.Function, java.util.function.Function)}
+ *             instead, e.g.
+ *             <code>Converter.ofNullable(Date.class, LocalDate.class, Date::toLocalDate, Date::valueOf)</code>.
  */
+@Deprecated
 public final class DateToLocalDateConverter extends AbstractConverter<Date, LocalDate> {
 
     /**

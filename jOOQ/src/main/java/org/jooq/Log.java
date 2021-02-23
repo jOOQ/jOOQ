@@ -163,6 +163,11 @@ public interface Log {
     void info(Object message, Object details, Throwable throwable);
 
     /**
+     * Check if <code>WARN</code> level logging is enabled.
+     */
+    boolean isWarnEnabled();
+
+    /**
      * Log a message in <code>WARN</code> level.
      *
      * @param message The log message

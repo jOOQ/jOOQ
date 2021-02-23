@@ -40,7 +40,11 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.CTX;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
@@ -55,6 +59,7 @@ import org.jooq.RenderContext;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
@@ -239,5 +244,24 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      */
     protected final DataAccessException translate(String sql, SQLException e) {
         return Tools.translate(sql, e);
+    }
+
+    private static class SerializationDeprecation {}
+    private static final JooqLogger    log       = JooqLogger.getLogger(SerializationDeprecation.class);
+    private static final AtomicInteger warnCount = new AtomicInteger(0);
+    private static final int           maxWarnings = 100;
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+
+        if (log.isWarnEnabled() && warnCount.getAndUpdate(i -> Math.min(i + 1, maxWarnings)) < maxWarnings)
+            log.warn("DEPRECATION", "A QueryPart of type " + getClass() + " has been deserialised. Serialization support is deprecated in jOOQ. Please contact https://github.com/jOOQ/jOOQ/issues/11506 and state your use-case to see if it can be implemented otherwise.");
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+
+        if (log.isWarnEnabled() && warnCount.getAndUpdate(i -> Math.min(i + 1, maxWarnings)) < maxWarnings)
+            log.warn("DEPRECATION", "A QueryPart of type " + getClass() + " has been serialised. Serialization support is deprecated in jOOQ. Please contact https://github.com/jOOQ/jOOQ/issues/11506 and state your use-case to see if it can be implemented otherwise.");
     }
 }

@@ -88,6 +88,11 @@ public final class JooqLogger implements Log {
     private boolean                   supportsInfo    = true;
 
     /**
+     * Whether calls to {@link #warn(Object)} are possible.
+     */
+    private boolean                   supportsWarn    = true;
+
+    /**
      * Get a logger wrapper for a class.
      */
     public static JooqLogger getLogger(Class<?> clazz) {
@@ -342,6 +347,21 @@ public final class JooqLogger implements Log {
             slf4j.info(getMessage(message, details), throwable);
         else
             util.log(java.util.logging.Level.INFO, "" + getMessage(message, details), throwable);
+    }
+
+    /**
+     * Check if <code>INFO</code> level logging is enabled.
+     */
+    @Override
+    public boolean isWarnEnabled() {
+        if (!globalThreshold.supports(Log.Level.WARN))
+            return false;
+        if (!supportsWarn)
+            return false;
+        else if (slf4j != null)
+            return slf4j.isWarnEnabled();
+        else
+            return util.isLoggable(java.util.logging.Level.WARNING);
     }
 
     /**

@@ -1591,11 +1591,9 @@ public class DefaultConfiguration implements Configuration {
     private <E> E[] cloneSerializables(E[] array) {
         E[] clone = array.clone();
 
-        for (int i = 0; i < clone.length; i++) {
-            if (!(clone[i] instanceof Serializable)) {
+        for (int i = 0; i < clone.length; i++)
+            if (!(clone[i] instanceof Serializable))
                 clone[i] = null;
-            }
-        }
 
         return clone;
     }

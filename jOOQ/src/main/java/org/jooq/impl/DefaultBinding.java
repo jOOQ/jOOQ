@@ -288,21 +288,30 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == LocalDate.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalDate>) dataType,
-                serializableConverter(Date.class, LocalDate.class, Date::toLocalDate, Date::valueOf),
+                Converter.ofNullable(Date.class, LocalDate.class,
+                    (Function<Date, LocalDate> & Serializable) Date::toLocalDate,
+                    (Function<LocalDate, Date> & Serializable) Date::valueOf
+                ),
                 (Converter<LocalDate, U>) converter,
                 c -> new DefaultDateBinding<>(DATE, c)
             );
         else if (type == LocalDateTime.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalDateTime>) dataType,
-                serializableConverter(Timestamp.class, LocalDateTime.class, Timestamp::toLocalDateTime, Timestamp::valueOf),
+                Converter.ofNullable(Timestamp.class, LocalDateTime.class,
+                    (Function<Timestamp, LocalDateTime> & Serializable) Timestamp::toLocalDateTime,
+                    (Function<LocalDateTime, Timestamp> & Serializable) Timestamp::valueOf
+                ),
                 (Converter<LocalDateTime, U>) converter,
                 c -> new DefaultTimestampBinding<>(TIMESTAMP, c)
             );
         else if (type == LocalTime.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<LocalTime>) dataType,
-                serializableConverter(Time.class, LocalTime.class, Time::toLocalTime, Time::valueOf),
+                Converter.ofNullable(Time.class, LocalTime.class,
+                    (Function<Time, LocalTime> & Serializable) Time::toLocalTime,
+                    (Function<LocalTime, Time> & Serializable) Time::valueOf
+                ),
                 (Converter<LocalTime, U>) converter,
                 c -> new DefaultTimeBinding<>(TIME, c)
             );
@@ -333,28 +342,40 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == UByte.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UByte>) dataType,
-                serializableConverter(Short.class, UByte.class, UByte::valueOf, UByte::shortValue),
+                Converter.ofNullable(Short.class, UByte.class,
+                    (Function<Short, UByte> & Serializable) UByte::valueOf,
+                    (Function<UByte, Short> & Serializable) UByte::shortValue
+                ),
                 (Converter<UByte, U>) converter,
                 c -> new DefaultShortBinding<>(SMALLINT, c)
             );
         else if (type == UInteger.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UInteger>) dataType,
-                serializableConverter(Long.class, UInteger.class, UInteger::valueOf, UInteger::longValue),
+                Converter.ofNullable(Long.class, UInteger.class,
+                    (Function<Long, UInteger> & Serializable) UInteger::valueOf,
+                    (Function<UInteger, Long> & Serializable) UInteger::longValue
+                ),
                 (Converter<UInteger, U>) converter,
                 c -> new DefaultLongBinding<>(BIGINT, c)
             );
         else if (type == ULong.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<ULong>) dataType,
-                serializableConverter(BigInteger.class, ULong.class, ULong::valueOf, ULong::toBigInteger),
+                Converter.ofNullable(BigInteger.class, ULong.class,
+                    (Function<BigInteger, ULong> & Serializable) ULong::valueOf,
+                    (Function<ULong, BigInteger> & Serializable) ULong::toBigInteger
+                ),
                 (Converter<ULong, U>) converter,
                 c -> new DefaultBigIntegerBinding<>(DECIMAL_INTEGER, c)
             );
         else if (type == UShort.class)
             return (Binding<T, U>) new DelegatingBinding<>(
                 (DataType<UShort>) dataType,
-                serializableConverter(Integer.class, UShort.class, UShort::valueOf, UShort::intValue),
+                Converter.ofNullable(Integer.class, UShort.class,
+                    (Function<Integer, UShort> & Serializable) UShort::valueOf,
+                    (Function<UShort, Integer> & Serializable) UShort::intValue
+                ),
                 (Converter<UShort, U>) converter,
                 c -> new DefaultIntegerBinding<>(INTEGER, c)
             );
@@ -3175,11 +3196,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long                               serialVersionUID = -1850495302106551527L;
 
-        private static final Converter<OffsetDateTime, Instant> CONVERTER        = serializableConverter(
+        private static final Converter<OffsetDateTime, Instant> CONVERTER        = Converter.ofNullable(
             OffsetDateTime.class,
             Instant.class,
-            OffsetDateTime::toInstant,
-            i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
+            (Function<OffsetDateTime, Instant> & Serializable) OffsetDateTime::toInstant,
+            (Function<Instant, OffsetDateTime> & Serializable) i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
         );
 
         private final DefaultOffsetDateTimeBinding<U>           delegate;
@@ -4647,22 +4668,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final int sqltype(Statement statement, Configuration configuration) {
             return Types.VARCHAR;
         }
-    }
-
-    /**
-     * Create a serializable converter.
-     */
-    static final <
-        T, U,
-        FTU extends Function<? super T, ? extends U> & Serializable,
-        FUT extends Function<? super U, ? extends T> & Serializable
-    > Converter<T, U> serializableConverter(
-        Class<T> fromType,
-        Class<U> toType,
-        FTU from,
-        FUT to
-    ) {
-        return Converter.ofNullable(fromType, toType, from, to);
     }
 }
 

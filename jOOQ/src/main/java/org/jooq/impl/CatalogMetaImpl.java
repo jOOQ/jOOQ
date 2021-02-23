@@ -98,8 +98,8 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     static final Meta filterSchemas(Configuration configuration, final Set<Schema> schemas) {
-        Map<Name, Catalog> c = new LinkedHashMap<>();
-        Map<Name, List<Schema>> mapping = new LinkedHashMap<>();
+        final Map<Name, Catalog> c = new LinkedHashMap<>();
+        final Map<Name, List<Schema>> mapping = new LinkedHashMap<>();
 
         for (Schema schema : schemas) {
             Name key = nameOrDefault(schema.getCatalog());
@@ -136,8 +136,8 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     static final Meta filterTables(Configuration configuration, final Set<Table<?>> tables) {
-        Map<Name, Schema> s = new LinkedHashMap<>();
-        Map<Name, List<Table<?>>> mapping = new LinkedHashMap<>();
+        final Map<Name, Schema> s = new LinkedHashMap<>();
+        final Map<Name, List<Table<?>>> mapping = new LinkedHashMap<>();
 
         for (Table<?> table : tables) {
             Name key = nameOrDefault(table.getSchema());

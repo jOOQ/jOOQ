@@ -39,7 +39,9 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
@@ -52,6 +54,7 @@ import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_MERGE;
+import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -59,15 +62,12 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
 import org.jooq.SQLDialect;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -82,8 +82,9 @@ implements JSONArrayAggOrderByStep<J> {
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID          = 1772007627336725780L;
-    static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final long    serialVersionUID            = 1772007627336725780L;
+    static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT   = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> SUPPORT_JSON_MERGE_PRESERVE = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private JSONOnNull           onNull;
     private DataType<?>          returning;
@@ -99,7 +100,7 @@ implements JSONArrayAggOrderByStep<J> {
             case MYSQL: {
                 // Workaround for https://jira.mariadb.org/browse/MDEV-21912,
                 // https://jira.mariadb.org/browse/MDEV-21914, and other issues
-                ctx.visit(N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(groupConcatEmulation(ctx)).sql(')');
+                ctx.visit(SUPPORT_JSON_MERGE_PRESERVE.contains(ctx.dialect()) ? N_JSON_MERGE_PRESERVE : N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(groupConcatEmulation(ctx)).sql(')');
                 break;
             }
 

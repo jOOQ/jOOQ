@@ -161,6 +161,7 @@ final class Names {
     static final Name N_JSON_CONTAINS_PATH     = unquotedName("json_contains_path");
     static final Name N_JSON_EXTRACT           = unquotedName("json_extract");
     static final Name N_JSON_MERGE             = unquotedName("json_merge");
+    static final Name N_JSON_MERGE_PRESERVE    = unquotedName("json_merge_preserve");
     static final Name N_JSON_OBJECT            = unquotedName("json_object");
     static final Name N_JSON_OBJECT_AGG        = unquotedName("json_object_agg");
     static final Name N_JSON_OBJECTAGG         = unquotedName("json_objectagg");

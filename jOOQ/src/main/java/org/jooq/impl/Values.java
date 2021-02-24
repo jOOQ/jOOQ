@@ -116,12 +116,16 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
             typeLoop:
             for (int i = 0; i < types.length; i++) {
-                for (Row row : rows) {
-                    DataType<?> type = row.dataType(i);
+                types[i] = rows[0].dataType(i);
 
-                    if (type.getType() != Object.class) {
-                        types[i] = type;
-                        continue typeLoop;
+                if (types[i].getType() == Object.class) {
+                    for (int j = 1; j < rows.length; j++) {
+                        DataType<?> type = rows[j].dataType(i);
+
+                        if (type.getType() != Object.class) {
+                            types[i] = type;
+                            continue typeLoop;
+                        }
                     }
                 }
             }

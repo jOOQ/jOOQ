@@ -9051,7 +9051,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(String)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropViewFinalStep dropViewIfExists(String view) {
         return dsl().dropViewIfExists(view);
     }
@@ -9065,7 +9065,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(Name)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropViewFinalStep dropViewIfExists(Name view) {
         return dsl().dropViewIfExists(view);
     }
@@ -9079,7 +9079,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(Table)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropViewFinalStep dropViewIfExists(Table<?> view) {
         return dsl().dropViewIfExists(view);
     }

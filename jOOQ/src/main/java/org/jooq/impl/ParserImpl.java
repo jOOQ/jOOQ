@@ -610,8 +610,6 @@ import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
-import org.jetbrains.annotations.Nullable;
-
 /**
  * @author Lukas Eder
  */

@@ -9361,7 +9361,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(String)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(@Stringly.Name String view) {
         return dsl().dropViewIfExists(view);
     }
@@ -9376,7 +9376,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(Name view) {
         return dsl().dropViewIfExists(view);
     }
@@ -9391,7 +9391,7 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(Table)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
         return dsl().dropViewIfExists(view);
     }

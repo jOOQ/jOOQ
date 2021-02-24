@@ -58,6 +58,9 @@ import org.jooq.ExecutorProvider;
 import org.jooq.MetaProvider;
 import org.jooq.MigrationListener;
 import org.jooq.MigrationListenerProvider;
+// ...
+// ...
+// ...
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapper;
@@ -198,6 +201,16 @@ public class MockConfiguration implements Configuration {
     public DiagnosticsListenerProvider[] diagnosticsListenerProviders() {
         return delegate.diagnosticsListenerProviders();
     }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public UnwrapperProvider unwrapperProvider() {
@@ -359,6 +372,22 @@ public class MockConfiguration implements Configuration {
         return delegate.set(newDiagnosticsListenerProviders);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public Configuration set(Unwrapper newUnwrapper) {
         return delegate.set(newUnwrapper);
@@ -519,6 +548,22 @@ public class MockConfiguration implements Configuration {
         return delegate.derive(newDiagnosticsListenerProviders);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public Configuration derive(Unwrapper newUnwrapper) {
         return delegate.derive(newUnwrapper);
@@ -548,5 +593,4 @@ public class MockConfiguration implements Configuration {
     public Configuration derive(Settings newSettings) {
         return delegate.derive(newSettings);
     }
-
 }

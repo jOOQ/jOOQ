@@ -57,6 +57,7 @@ import org.jooq.impl.DefaultDiagnosticsListenerProvider;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.DefaultExecutorProvider;
 import org.jooq.impl.DefaultMigrationListenerProvider;
+// ...
 import org.jooq.impl.DefaultRecordListenerProvider;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
@@ -518,6 +519,18 @@ public interface Configuration extends Serializable {
     @NotNull
     ConverterProvider converterProvider();
 
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Retrieve the configured schema mapping.
      *
@@ -955,6 +968,41 @@ public interface Configuration extends Serializable {
     @NotNull
     Configuration set(ConverterProvider newConverterProvider);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Change this configuration to hold a new dialect.
      * <p>
@@ -1325,6 +1373,33 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(ConverterProvider newConverterProvider);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Create a derived configuration from this one, with a new dialect.

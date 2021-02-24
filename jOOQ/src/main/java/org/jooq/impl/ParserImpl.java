@@ -528,6 +528,8 @@ import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
+// ...
+// ...
 import org.jooq.Parser;
 // ...
 // ...
@@ -607,6 +609,8 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -749,7 +753,7 @@ final class ParserImpl implements Parser {
 }
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class ParserContext {
+final class ParserContext extends AbstractScope {
 
 
 
@@ -5964,6 +5968,12 @@ final class ParserContext {
     // -----------------------------------------------------------------------------------------------------------------
 
     private final Condition parseCondition() {
+
+
+
+
+
+
         return toCondition(parseOr());
     }
 
@@ -6318,7 +6328,14 @@ final class ParserContext {
     }
 
     private final Table<?> parseTable() {
-        Table<?> result = parseLateral();
+        Table<?> result;
+
+
+
+
+
+
+        result = parseLateral();
 
         for (;;) {
             Table<?> joined = parseJoinedTableIf(result);
@@ -6975,6 +6992,13 @@ final class ParserContext {
     }
 
     private final Field<?> parseField() {
+        Field<?> result;
+
+
+
+
+
+
         return parseField(null);
     }
 
@@ -8733,7 +8757,7 @@ final class ParserContext {
     private final Field<?> parseFieldLogIf() {
         if (parseFunctionNameIf("LOG")) {
             parse('(');
-            switch (family()) {
+            switch (parseFamily()) {
 
 
 
@@ -9740,7 +9764,7 @@ final class ParserContext {
             Field<String> f2 = (Field) parseField(S);
             parse(')');
 
-            switch (dialect()) {
+            switch (parseDialect()) {
 
 
 
@@ -9830,7 +9854,7 @@ final class ParserContext {
                     }
                 }
 
-                if (!all) switch (family()) {
+                if (!all) switch (parseFamily()) {
 
 
 
@@ -11118,7 +11142,8 @@ final class ParserContext {
         return characterSet(parseName());
     }
 
-    private final Name parseName() {
+    
+    public final Name parseName() {
         Name result = parseNameIf();
 
         if (result == null)
@@ -11127,7 +11152,8 @@ final class ParserContext {
         return result;
     }
 
-    private final Name parseNameIf() {
+    
+    public final Name parseNameIf() {
         Name identifier = parseIdentifierIf();
 
         if (identifier == null)
@@ -12520,7 +12546,8 @@ final class ParserContext {
         return true;
     }
 
-    private final boolean parse(String string) {
+    
+    public final boolean parse(String string) {
         boolean result = parseIf(string);
 
         if (!result)
@@ -12529,7 +12556,8 @@ final class ParserContext {
         return result;
     }
 
-    private final boolean parseIf(String string) {
+    
+    public final boolean parseIf(String string) {
         return parseIf(string, true);
     }
 
@@ -12546,7 +12574,8 @@ final class ParserContext {
         return result;
     }
 
-    private final boolean parse(char c) {
+    
+    public final boolean parse(char c) {
         return parse(c, true);
     }
 
@@ -12557,7 +12586,8 @@ final class ParserContext {
         return true;
     }
 
-    private final boolean parseIf(char c) {
+    
+    public final boolean parseIf(char c) {
         return parseIf(c, true);
     }
 
@@ -12649,18 +12679,21 @@ final class ParserContext {
         return true;
     }
 
-    private final boolean parseKeyword(String keyword) {
+    
+    public final boolean parseKeyword(String keyword) {
         if (!parseKeywordIf(keyword))
             throw expected("Keyword '" + keyword + "'");
 
         return true;
     }
 
-    private final boolean parseKeywordIf(String keyword) {
+    
+    public final boolean parseKeywordIf(String keyword) {
         return peekKeyword(keyword, true, false, false);
     }
 
-    private final boolean parseKeywordIf(String... keywords) {
+    
+    public final boolean parseKeywordIf(String... keywords) {
         for (String keyword : keywords)
             if (parseKeywordIf(keyword))
                 return true;
@@ -12668,7 +12701,8 @@ final class ParserContext {
         return false;
     }
 
-    private final boolean parseKeyword(String... keywords) {
+    
+    public final boolean parseKeyword(String... keywords) {
         if (parseKeywordIf(keywords))
             return true;
 
@@ -12699,14 +12733,16 @@ final class ParserContext {
         return null;
     }
 
-    private final boolean peek(char c) {
+    
+    public final boolean peek(char c) {
         if (character() != c)
             return false;
 
         return true;
     }
 
-    private final boolean peek(String string) {
+    
+    public final boolean peek(String string) {
         return peek(string, position());
     }
 
@@ -12723,7 +12759,8 @@ final class ParserContext {
         return true;
     }
 
-    private final boolean peekKeyword(String... keywords) {
+    
+    public final boolean peekKeyword(String... keywords) {
         for (String keyword : keywords)
             if (peekKeyword(keyword))
                 return true;
@@ -12731,7 +12768,8 @@ final class ParserContext {
         return false;
     }
 
-    private final boolean peekKeyword(String keyword) {
+    
+    public final boolean peekKeyword(String keyword) {
         return peekKeyword(keyword, false, false, false);
     }
 
@@ -12883,7 +12921,7 @@ final class ParserContext {
                 case '-':
                 case '#':
                     if (sql[i] == '-' && i + 1 < sql.length && sql[i + 1] == '-' ||
-                        sql[i] == '#' && SUPPORTS_HASH_COMMENT_SYNTAX.contains(dialect())) {
+                        sql[i] == '#' && SUPPORTS_HASH_COMMENT_SYNTAX.contains(parseDialect())) {
 
                         if (sql[i] == '-')
                             i = i + 2;
@@ -13125,6 +13163,8 @@ final class ParserContext {
 
 
 
+
+
     ParserContext(
         DSLContext dsl,
         Meta meta,
@@ -13132,6 +13172,8 @@ final class ParserContext {
         String sqlString,
         Object[] bindings
     ) {
+        super(dsl.configuration());
+
         this.dsl = dsl;
         this.locale = parseLocale(dsl.settings());
         this.meta = meta;
@@ -13142,18 +13184,14 @@ final class ParserContext {
         // [#8722] This is an undocumented flag that allows for collecting parameters from the parser
         //         Do not rely on this flag. It will change incompatibly in the future.
         this.bindParamListener = (Consumer<Param<?>>) dsl.configuration().data("org.jooq.parser.param-collector");
+
+
+
         parseWhitespaceIf();
     }
 
-    private final Configuration configuration() {
-        return dsl.configuration();
-    }
-
-    private final Settings settings() {
-        return configuration().settings();
-    }
-
-    private final SQLDialect dialect() {
+    
+    public final SQLDialect parseDialect() {
         SQLDialect result = settings().getParseDialect();
 
         if (result == null)
@@ -13162,8 +13200,9 @@ final class ParserContext {
         return result;
     }
 
-    private final SQLDialect family() {
-        return dialect().family();
+    
+    public final SQLDialect parseFamily() {
+        return parseDialect().family();
     }
 
     private final boolean metaLookupsForceIgnore() {
@@ -13234,7 +13273,8 @@ final class ParserContext {
         return init(new ParserException(mark(), "Unsupported clause"));
     }
 
-    private final ParserException exception(String message) {
+    
+    public final ParserException exception(String message) {
         return init(new ParserException(mark(), message));
     }
 
@@ -13280,11 +13320,13 @@ final class ParserContext {
         return Character.toUpperCase(character());
     }
 
-    private final char character() {
+    
+    public final char character() {
         return character(position);
     }
 
-    private final char character(int pos) {
+    
+    public final char character(int pos) {
         return pos >= 0 && pos < sql.length ? sql[pos] : ' ';
     }
 
@@ -13296,11 +13338,13 @@ final class ParserContext {
         return character(position + 1);
     }
 
-    private final int position() {
+    
+    public final int position() {
         return position;
     }
 
-    private final boolean position(int newPosition) {
+    
+    public final boolean position(int newPosition) {
         position = newPosition;
         return true;
     }

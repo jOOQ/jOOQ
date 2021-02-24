@@ -67,6 +67,9 @@ import org.jooq.ExecutorProvider;
 import org.jooq.MetaProvider;
 import org.jooq.MigrationListener;
 import org.jooq.MigrationListenerProvider;
+// ...
+// ...
+// ...
 import org.jooq.Record;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
@@ -130,6 +133,10 @@ public class DefaultConfiguration implements Configuration {
     private transient CharsetProvider                   charsetProvider;
     private transient ConverterProvider                 converterProvider;
 
+
+
+
+
     // [#7062] Apart from the possibility of containing user defined objects, the data
     //         map also contains the reflection cache, which isn't serializable (and
     //         should not be serialized anyway).
@@ -183,6 +190,9 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
+
+
+
             null,
             dialect,
             settings,
@@ -218,6 +228,9 @@ public class DefaultConfiguration implements Configuration {
             configuration.unwrapperProvider,
             configuration.charsetProvider,
             configuration.converterProvider,
+
+
+
             configuration.clock,
             configuration.dialect,
             configuration.settings,
@@ -252,6 +265,9 @@ public class DefaultConfiguration implements Configuration {
         UnwrapperProvider unwrapperProvider,
         CharsetProvider charsetProvider,
         ConverterProvider converterProvider,
+
+
+
         Clock clock,
         SQLDialect dialect,
         Settings settings,
@@ -275,6 +291,9 @@ public class DefaultConfiguration implements Configuration {
         set(unwrapperProvider);
         set(charsetProvider);
         set(converterProvider);
+
+
+
         set(clock);
         set(dialect);
         set(settings);
@@ -333,6 +352,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -361,6 +383,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -389,6 +414,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -422,6 +450,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -450,6 +481,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -483,6 +517,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -516,6 +553,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -549,6 +589,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -582,6 +625,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -615,6 +661,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -648,6 +697,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -681,6 +733,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -714,6 +769,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -747,6 +805,9 @@ public class DefaultConfiguration implements Configuration {
             newUnwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -775,6 +836,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             newCharsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             settings,
@@ -803,12 +867,55 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             newConverterProvider,
+
+
+
             clock,
             dialect,
             settings,
             data
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Configuration derive(Clock newClock) {
@@ -831,6 +938,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             newClock,
             dialect,
             settings,
@@ -859,6 +969,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             newDialect,
             settings,
@@ -887,6 +1000,9 @@ public class DefaultConfiguration implements Configuration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+
+
+
             clock,
             dialect,
             newSettings,
@@ -1095,6 +1211,24 @@ public class DefaultConfiguration implements Configuration {
         return this;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final Configuration set(Clock newClock) {
 
@@ -1297,6 +1431,26 @@ public class DefaultConfiguration implements Configuration {
         set(newDiagnosticsListenerProviders);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * @see #set(Unwrapper)
      */
@@ -1470,6 +1624,15 @@ public class DefaultConfiguration implements Configuration {
             : new DefaultConverterProvider();
     }
 
+
+
+
+
+
+
+
+
+
     @Override
     public final Clock clock() {
         return clock;
@@ -1561,6 +1724,9 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(cloneSerializables(transactionListenerProviders));
         oos.writeObject(cloneSerializables(diagnosticsListenerProviders));
 
+
+
+
         oos.writeObject(unwrapperProvider instanceof Serializable
             ? unwrapperProvider
             : null);
@@ -1614,6 +1780,9 @@ public class DefaultConfiguration implements Configuration {
         visitListenerProviders = (VisitListenerProvider[]) ois.readObject();
         transactionListenerProviders = (TransactionListenerProvider[]) ois.readObject();
         diagnosticsListenerProviders = (DiagnosticsListenerProvider[]) ois.readObject();
+
+
+
         unwrapperProvider = (UnwrapperProvider) ois.readObject();
         charsetProvider = (CharsetProvider) ois.readObject();
         converterProvider = (ConverterProvider) ois.readObject();

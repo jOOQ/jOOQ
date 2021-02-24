@@ -388,6 +388,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -814,7 +816,7 @@ final class ParserContext extends AbstractScope {
         return query;
     }
 
-    public final Query parseQuery0() {
+    final Query parseQuery0() {
         return done("Unexpected clause", parseQuery(false, false));
     }
 
@@ -1205,7 +1207,7 @@ final class ParserContext extends AbstractScope {
 
             }
             else if (parseKeywordIf("BY"))
-                result.addOrderBy(orderBy = parseSortSpecification());
+                result.addOrderBy(orderBy = parseList(',', ParseContext::parseSortField));
             else
                 throw expected("SIBLINGS BY", "BY");
         }
@@ -1215,7 +1217,7 @@ final class ParserContext extends AbstractScope {
             if (!before)
                 parseKeywordIf("AFTER");
 
-            List<Field<?>> seek = parseFields();
+            List<Field<?>> seek = parseList(',', ParseContext::parseField);
             if (seek.size() != orderBy.size())
                 throw exception("ORDER BY size (" + orderBy.size() + ") and SEEK size (" + seek.size() + ") must match");
 
@@ -1314,7 +1316,7 @@ final class ParserContext extends AbstractScope {
                 throw expected("UPDATE", "NO KEY UPDATE", "SHARE", "KEY SHARE", "XML", "JSON");
 
             if (parseKeywordIf("OF"))
-                result.setForUpdateOf(parseFields());
+                result.setForUpdateOf(parseList(',', ParseContext::parseField));
 
             if (parseKeywordIf("NOWAIT"))
                 result.setForUpdateNoWait();
@@ -1397,10 +1399,10 @@ final class ParserContext extends AbstractScope {
                 parseKeyword("ONLY");
         }
         else if (!offsetStandard && !offsetPostgres && parseKeywordIf("ROWS")) {
-            Long from = parseUnsignedInteger();
+            Long from = parseUnsignedIntegerLiteral();
 
             if (parseKeywordIf("TO")) {
-                Long to = parseUnsignedInteger();
+                Long to = parseUnsignedIntegerLiteral();
                 result.addLimit(to - from);
                 result.addOffset(from - 1);
             }
@@ -1507,7 +1509,7 @@ final class ParserContext extends AbstractScope {
         if (distinct) {
             if (parseKeywordIf("ON")) {
                 parse('(');
-                distinctOn = parseFields();
+                distinctOn = parseList(',', ParseContext::parseField);
                 parse(')');
             }
         }
@@ -1587,7 +1589,7 @@ final class ParserContext extends AbstractScope {
         }
 
         if (parseKeywordIf("FROM"))
-            from = parseTables();
+            from = parseList(',', ParseContext::parseTable);
 
         // TODO is there a better way?
         if (from != null && from.size() == 1 && from.get(0).getName().equalsIgnoreCase("dual"))
@@ -1694,25 +1696,22 @@ final class ParserContext extends AbstractScope {
             }
             else if (parseKeywordIf("ROLLUP")) {
                 parse('(');
-                result.addGroupBy(rollup(parseFields().toArray(EMPTY_FIELD)));
+                result.addGroupBy(rollup(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)));
                 parse(')');
             }
             else if (parseKeywordIf("CUBE")) {
                 parse('(');
-                result.addGroupBy(cube(parseFields().toArray(EMPTY_FIELD)));
+                result.addGroupBy(cube(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)));
                 parse(')');
             }
             else if (parseKeywordIf("GROUPING SETS")) {
-                List<List<Field<?>>> fieldSets = new ArrayList<>();
                 parse('(');
-                do
-                    fieldSets.add(parseFieldsOrEmptyParenthesised());
-                while (parseIf(','));
+                List<List<Field<?>>> fieldSets = parseList(',', c -> parseFieldsOrEmptyParenthesised());
                 parse(')');
                 result.addGroupBy(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION)));
             }
             else {
-                groupBy = (List) parseFields();
+                groupBy = (List) parseList(',', ParseContext::parseField);
 
                 if (parseKeywordIf("WITH ROLLUP"))
                     result.addGroupBy(rollup(groupBy.toArray(EMPTY_FIELD)));
@@ -1753,18 +1752,14 @@ final class ParserContext extends AbstractScope {
     }
 
     private final List<WindowDefinition> parseWindowDefinitions() {
-        List<WindowDefinition> result = new ArrayList<>();
-
-        do {
+        return parseList(',', c -> {
             Name name = parseIdentifier();
             parseKeyword("AS");
             parse('(');
-            result.add(name.as(parseWindowSpecificationIf(null, true)));
+            WindowDefinition result = name.as(parseWindowSpecificationIf(null, true));
             parse(')');
-        }
-        while (parseIf(','));
-
-        return result;
+            return result;
+        });
     }
 
     private final WindowSpecification parseWindowSpecificationIf(Name windowName, boolean orderByAllowed) {
@@ -1777,14 +1772,14 @@ final class ParserContext extends AbstractScope {
         s1 = windowName != null
             ? windowName.as()
             : parseKeywordIf("PARTITION BY")
-            ? partitionBy(parseFields())
+            ? partitionBy(parseList(',', ParseContext::parseField))
             : null;
 
         if (parseKeywordIf("ORDER BY"))
             if (orderByAllowed)
                 s2 = s1 == null
-                    ? orderBy(parseSortSpecification())
-                    : s1.orderBy(parseSortSpecification());
+                    ? orderBy(parseList(',', ParseContext::parseSortField))
+                    : s1.orderBy(parseList(',', ParseContext::parseSortField));
             else
                 throw exception("ORDER BY not allowed");
         else
@@ -1840,7 +1835,7 @@ final class ParserContext extends AbstractScope {
                             : range
                             ? s2.rangeBetweenCurrentRow()
                             : s2.groupsBetweenCurrentRow();
-                else if ((n = parseUnsignedIntegerIf()) != null)
+                else if ((n = parseUnsignedIntegerLiteralIf()) != null)
                     if (parseKeywordIf("PRECEDING"))
                         s3 = s2 == null
                             ?     rows
@@ -1881,7 +1876,7 @@ final class ParserContext extends AbstractScope {
                         throw expected("FOLLOWING", "PRECEDING");
                 else if (parseKeywordIf("CURRENT ROW"))
                     s4 =  s3.andCurrentRow();
-                else if ((n = parseUnsignedInteger()) != null)
+                else if ((n = parseUnsignedIntegerLiteral()) != null)
                     if (parseKeywordIf("PRECEDING"))
                         s4 =  s3.andPreceding(n.intValue());
                     else if (parseKeywordIf("FOLLOWING"))
@@ -1930,7 +1925,7 @@ final class ParserContext extends AbstractScope {
                         : range
                         ? s2.rangeCurrentRow()
                         : s2.groupsCurrentRow();
-            else if ((n = parseUnsignedInteger()) != null)
+            else if ((n = parseUnsignedIntegerLiteral()) != null)
                 if (parseKeywordIf("PRECEDING"))
                     s4 = s2 == null
                         ?     rows
@@ -2017,9 +2012,9 @@ final class ParserContext extends AbstractScope {
         scope(table);
 
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
-        DeleteWhereStep<?> s2 = parseKeywordIf("USING") ? s1.using(parseTables()) : s1;
+        DeleteWhereStep<?> s2 = parseKeywordIf("USING") ? s1.using(parseList(',', ParseContext::parseTable)) : s1;
         DeleteOrderByStep<?> s3 = parseKeywordIf("WHERE") ? s2.where(parseCondition()) : s2;
-        DeleteLimitStep<?> s4 = parseKeywordIf("ORDER BY") ? s3.orderBy(parseSortSpecification()) : s3;
+        DeleteLimitStep<?> s4 = parseKeywordIf("ORDER BY") ? s3.orderBy(parseList(',', ParseContext::parseSortField)) : s3;
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf("LIMIT"))
             ? s4.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
             : s4;
@@ -2051,7 +2046,7 @@ final class ParserContext extends AbstractScope {
         Field<?>[] fields = null;
 
         if (parseIf('(')) {
-            fields = parseFieldNames().toArray(EMPTY_FIELD);
+            fields = parseList(',', c -> parseFieldName()).toArray(EMPTY_FIELD);
             parse(')');
         }
 
@@ -2070,10 +2065,7 @@ final class ParserContext extends AbstractScope {
                     if (fields == null && parseIf(')'))
                         break valuesLoop;
 
-                    List<Field<?>> values = new ArrayList<>();
-                    do
-                        values.add(parseKeywordIf("DEFAULT") ? default_() : parseField());
-                    while (parseIf(','));
+                    List<Field<?>> values = parseList(',', c -> c.parseKeywordIf("DEFAULT") ? default_() : c.parseField());
 
                     if (fields != null && fields.length != values.size())
                         throw exception("Insert field size (" + fields.length + ") must match values size (" + values.size() + ")");
@@ -2140,7 +2132,7 @@ final class ParserContext extends AbstractScope {
                         doUpdate = onDuplicate.onConflictOnConstraint(parseName());
                     }
                     else if (parseIf('(')) {
-                        InsertOnConflictWhereIndexPredicateStep<?> where = onDuplicate.onConflict(parseFieldNames());
+                        InsertOnConflictWhereIndexPredicateStep<?> where = onDuplicate.onConflict(parseList(',', c -> parseFieldName()));
                         parse(')');
 
                         doUpdate = parseKeywordIf("WHERE")
@@ -2206,7 +2198,7 @@ final class ParserContext extends AbstractScope {
         scope(table);
 
         UpdateSetFirstStep<?> s1 = (with == null ? dsl.update(table) : with.update(table));
-        List<Table<?>> from = parseKeywordIf("FROM") ? parseTables() : null;
+        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', ParseContext::parseTable) : null;
 
         parseKeyword("SET");
         UpdateFromStep<?> s2;
@@ -2231,10 +2223,10 @@ final class ParserContext extends AbstractScope {
         UpdateWhereStep<?> s3 = from != null
             ? s2.from(from)
             : parseKeywordIf("FROM")
-            ? s2.from(parseTables())
+            ? s2.from(parseList(',', ParseContext::parseTable))
             : s2;
         UpdateOrderByStep<?> s4 = parseKeywordIf("WHERE") ? s3.where(parseCondition()) : s3;
-        UpdateLimitStep<?> s5 = parseKeywordIf("ORDER BY") ? s4.orderBy(parseSortSpecification()) : s4;
+        UpdateLimitStep<?> s5 = parseKeywordIf("ORDER BY") ? s4.orderBy(parseList(',', ParseContext::parseSortField)) : s4;
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf("LIMIT"))
             ? s5.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
             : s5;
@@ -2344,10 +2336,7 @@ final class ParserContext extends AbstractScope {
                 parse(')');
                 parseKeyword("VALUES");
                 parse('(');
-                insertValues = new ArrayList<>();
-                do
-                    insertValues.add(parseKeywordIf("DEFAULT") ? default_() : parseField());
-                while (parseIf(','));
+                insertValues = parseList(',', c -> c.parseKeywordIf("DEFAULT") ? default_() : c.parseField());
                 parse(')');
 
                 if (insertColumns.length != insertValues.size())
@@ -2399,7 +2388,7 @@ final class ParserContext extends AbstractScope {
 
             // TODO: [#9780] Are there any possible syntaxes and data types?
             parseIf('=');
-            Object value = parseSignedIntegerIf();
+            Object value = parseSignedIntegerLiteralIf();
             return dsl.set(name, value != null ? inline(value) : inline(parseStringLiteral()));
         }
 
@@ -3760,17 +3749,6 @@ final class ParserContext extends AbstractScope {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     // -----------------------------------------------------------------------------------------------------------------
     // Statement clause parsing
     // -----------------------------------------------------------------------------------------------------------------
@@ -3798,7 +3776,7 @@ final class ParserContext extends AbstractScope {
         Field<?>[] fields = EMPTY_FIELD;
 
         if (parseIf('(')) {
-            fields = parseFieldNames().toArray(fields);
+            fields = parseList(',', c -> parseFieldName()).toArray(fields);
             parse(')');
         }
 
@@ -4059,7 +4037,7 @@ final class ParserContext extends AbstractScope {
     private final DDLQuery parseSetGenerator() {
         Sequence<?> sequenceName = parseSequenceName();
         parseKeyword("TO");
-        return dsl.alterSequence((Sequence) sequenceName).restartWith(parseUnsignedInteger());
+        return dsl.alterSequence((Sequence) sequenceName).restartWith(parseUnsignedIntegerLiteral());
     }
 
     private final DDLQuery parseDropSequence() {
@@ -4425,9 +4403,9 @@ final class ParserContext extends AbstractScope {
             if (!defaultValue) {
                 if (!identity && parseKeywordIf("IDENTITY")) {
                     if (parseIf('(')) {
-                        parseSignedInteger();
+                        parseSignedIntegerLiteral();
                         parse(',');
-                        parseSignedInteger();
+                        parseSignedIntegerLiteral();
                         parse(')');
                     }
 
@@ -4640,11 +4618,11 @@ final class ParserContext extends AbstractScope {
         parse('(');
 
         if (!parseIf(')')) {
-            do
-                values.add(parseStringLiteral());
-            while (parseIf(','));
+            values = parseList(',', ParseContext::parseStringLiteral);
             parse(')');
         }
+        else
+            values = new ArrayList<>();
 
         return dsl.createType(name).asEnum(values);
     }
@@ -4653,7 +4631,7 @@ final class ParserContext extends AbstractScope {
         Name name = parseIdentifierIf();
         parseUsingIndexTypeIf();
         parse('(');
-        SortField<?>[] fields = parseSortSpecification().toArray(EMPTY_SORTFIELD);
+        SortField<?>[] fields = parseList(',', ParseContext::parseSortField).toArray(EMPTY_SORTFIELD);
         parse(')');
         return Internal.createIndex(name == null ? NO_NAME : name, table, fields, false);
     }
@@ -4713,7 +4691,7 @@ final class ParserContext extends AbstractScope {
 
     private final Field<?>[] parseKeyColumnList() {
         parse('(');
-        SortField<?>[] fieldExpressions = parseSortSpecification().toArray(EMPTY_SORTFIELD);
+        SortField<?>[] fieldExpressions = parseList(',', ParseContext::parseSortField).toArray(EMPTY_SORTFIELD);
         parse(')');
 
         Field<?>[] fieldNames = new Field[fieldExpressions.length];
@@ -4749,7 +4727,7 @@ final class ParserContext extends AbstractScope {
                 constraint = constraint(constraintName);
 
         parse('(');
-        Field<?>[] referencing = parseFieldNames().toArray(EMPTY_FIELD);
+        Field<?>[] referencing = parseList(',', c -> parseFieldName()).toArray(EMPTY_FIELD);
         parse(')');
         parseKeyword("REFERENCES");
 
@@ -4761,7 +4739,7 @@ final class ParserContext extends AbstractScope {
         Field<?>[] referencedFields = EMPTY_FIELD;
 
         if (parseIf('(')) {
-            referencedFields = parseFieldNames().toArray(EMPTY_FIELD);
+            referencedFields = parseList(',', c -> parseFieldName()).toArray(EMPTY_FIELD);
             parse(')');
 
             if (referencing.length != referencedFields.length)
@@ -4998,7 +4976,7 @@ final class ParserContext extends AbstractScope {
         if (parseIndexOrKeyIf()) {
             Name name = parseIdentifierIf();
             parse('(');
-            List<SortField<?>> sort = parseSortSpecification();
+            List<SortField<?>> sort = parseList(',', ParseContext::parseSortField);
             parse(')');
 
             return name == null
@@ -5869,7 +5847,7 @@ final class ParserContext extends AbstractScope {
         Table<?> tableName = parseTableName();
         parseUsingIndexTypeIf();
         parse('(');
-        SortField<?>[] fields = parseSortSpecification().toArray(EMPTY_SORTFIELD);
+        SortField<?>[] fields = parseList(',', ParseContext::parseSortField).toArray(EMPTY_SORTFIELD);
         parse(')');
         parseUsingIndexTypeIf();
 
@@ -5965,7 +5943,8 @@ final class ParserContext extends AbstractScope {
     // QueryPart parsing
     // -----------------------------------------------------------------------------------------------------------------
 
-    private final Condition parseCondition() {
+    
+    public final Condition parseCondition() {
 
 
 
@@ -6106,7 +6085,7 @@ final class ParserContext extends AbstractScope {
                     ? left instanceof Field
                         ? peekSelectOrWith(true)
                             ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(1)))
-                            : ((Field) left).compare(comp, DSL.all(parseFields().toArray(EMPTY_FIELD)))
+                            : ((Field) left).compare(comp, DSL.all(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)))
 
                         // TODO: Support quantifiers also for rows
                         : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(((Row) left).size())), comp)
@@ -6115,7 +6094,7 @@ final class ParserContext extends AbstractScope {
                     ? left instanceof Field
                         ? peekSelectOrWith(true)
                             ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(1)))
-                            : ((Field) left).compare(comp, DSL.any(parseFields().toArray(EMPTY_FIELD)))
+                            : ((Field) left).compare(comp, DSL.any(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)))
 
                         // TODO: Support quantifiers also for rows
                         : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(((Row) left).size())), comp)
@@ -6185,11 +6164,11 @@ final class ParserContext extends AbstractScope {
                 else
                     result = not
                         ? left instanceof Field
-                            ? ((Field) left).notIn(parseFields())
-                            : new RowInCondition((Row) left, new QueryPartList<>(parseRows(((Row) left).size())), true)
+                            ? ((Field) left).notIn(parseList(',', ParseContext::parseField))
+                            : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
                         : left instanceof Field
-                            ? ((Field) left).in(parseFields())
-                            : new RowInCondition((Row) left, new QueryPartList<>(parseRows(((Row) left).size())), false);
+                            ? ((Field) left).in(parseList(',', ParseContext::parseField))
+                            : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
 
                 parse(')');
                 return result;
@@ -6235,10 +6214,7 @@ final class ParserContext extends AbstractScope {
                             fields = emptyList();
                         }
                         else {
-                            fields = new ArrayList<>();
-                            do
-                                fields.add(toField(parseConcat(null)));
-                            while (parseIf(','));
+                            fields = parseList(',', c -> toField(parseConcat(null)));
                             parse(')');
                         }
                         Field<String>[] fieldArray = fields.toArray(new Field[0]);
@@ -6260,10 +6236,7 @@ final class ParserContext extends AbstractScope {
                             fields = emptyList();
                         }
                         else {
-                            fields = new ArrayList<>();
-                            do
-                                fields.add(toField(parseConcat(null)));
-                            while (parseIf(','));
+                            fields = parseList(',', c -> toField(parseConcat(null)));
                             parse(')');
                         }
                         Field<String>[] fieldArray = fields.toArray(new Field[0]);
@@ -6315,17 +6288,8 @@ final class ParserContext extends AbstractScope {
         return parseKeywordIf("ESCAPE") ? like.escape(parseCharacterLiteral()) : like;
     }
 
-    private final List<Table<?>> parseTables() {
-        List<Table<?>> result = new ArrayList<>();
-
-        do
-            result.add(parseTable());
-        while (parseIf(','));
-
-        return result;
-    }
-
-    private final Table<?> parseTable() {
+    
+    public final Table<?> parseTable() {
         Table<?> result;
 
 
@@ -6757,9 +6721,9 @@ final class ParserContext extends AbstractScope {
         List<? extends FieldOrRow> fieldsOrRows;
 
         if (allowDoubleParens)
-            fieldsOrRows = parseFieldsOrRows();
+            fieldsOrRows = parseList(',', c -> parseFieldOrRow());
         else
-            fieldsOrRows = parseFields();
+            fieldsOrRows = parseList(',', ParseContext::parseField);
 
         Row row;
 
@@ -6883,7 +6847,7 @@ final class ParserContext extends AbstractScope {
             if (parseIf('*')) {
                 if (parseKeywordIf("EXCEPT")) {
                     parse('(');
-                    result.add(DSL.asterisk().except(parseFieldNames().toArray(EMPTY_FIELD)));
+                    result.add(DSL.asterisk().except(parseList(',', c -> parseFieldName()).toArray(EMPTY_FIELD)));
                     parse(')');
                 }
                 else
@@ -6892,7 +6856,7 @@ final class ParserContext extends AbstractScope {
             else if ((qa = parseQualifiedAsteriskIf()) != null) {
                 if (parseKeywordIf("EXCEPT")) {
                     parse('(');
-                    result.add(qa.except(parseFieldNames().toArray(EMPTY_FIELD)));
+                    result.add(qa.except(parseList(',', c -> parseFieldName()).toArray(EMPTY_FIELD)));
                     parse(')');
                 }
                 else
@@ -6932,16 +6896,8 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    private final List<SortField<?>> parseSortSpecification() {
-        List<SortField<?>> result = new ArrayList<>();
-
-        do
-            result.add(parseSortField());
-        while (parseIf(','));
-        return result;
-    }
-
-    private final SortField<?> parseSortField() {
+    
+    public final SortField<?> parseSortField() {
         Field<?> field = parseField();
         SortField<?> sort;
 
@@ -6967,29 +6923,14 @@ final class ParserContext extends AbstractScope {
             return emptyList();
         }
         else {
-            List<Field<?>> result = parseFields();
+            List<Field<?>> result = parseList(',', ParseContext::parseField);
             parse(')');
             return result;
         }
     }
 
-    private final List<Field<?>> parseFields() {
-        List<Field<?>> result = new ArrayList<>();
-        do
-            result.add(parseField());
-        while (parseIf(','));
-        return result;
-    }
-
-    private final List<FieldOrRow> parseFieldsOrRows() {
-        List<FieldOrRow> result = new ArrayList<>();
-        do
-            result.add(parseFieldOrRow());
-        while (parseIf(','));
-        return result;
-    }
-
-    private final Field<?> parseField() {
+    
+    public final Field<?> parseField() {
         Field<?> result;
 
 
@@ -7010,16 +6951,6 @@ final class ParserContext extends AbstractScope {
 
     private final Row parseRowIf() {
         return parseRowIf(null);
-    }
-
-    private final List<Row> parseRows(Integer degree) {
-        List<Row> result = new ArrayList<>();
-
-        do
-            result.add(parseRow(degree));
-        while (parseIf(','));
-
-        return result;
     }
 
     private final Row parseRow(Integer degree) {
@@ -8306,7 +8237,7 @@ final class ParserContext extends AbstractScope {
     private final Field<?> parseFieldXMLConcatIf() {
         if (parseFunctionNameIf("XMLCONCAT")) {
             parse('(');
-            List<Field<?>> fields = parseFields();
+            List<Field<?>> fields = parseList(',', ParseContext::parseField);
             parse(')');
 
             return xmlconcat(fields);
@@ -8480,7 +8411,7 @@ final class ParserContext extends AbstractScope {
             s2 = s1 = xmlagg((Field<XML>) parseField());
 
             if (parseKeywordIf("ORDER BY"))
-                s2 = s1.orderBy(parseSortSpecification());
+                s2 = s1.orderBy(parseList(',', ParseContext::parseSortField));
 
             parse(')');
             return s2;
@@ -8577,7 +8508,7 @@ final class ParserContext extends AbstractScope {
             DataType<?> returning = parseJSONReturningIf();
 
             if (onNull == null && returning == null) {
-                result = parseFields();
+                result = parseList(',', ParseContext::parseField);
                 onNull = parseJSONNullTypeIf();
                 returning = parseJSONReturningIf();
             }
@@ -8609,7 +8540,7 @@ final class ParserContext extends AbstractScope {
             result = s3 = s2 = s1 = DSL.jsonArrayAgg(parseField());
 
             if (parseKeywordIf("ORDER BY"))
-                result = s3 = s2 = s1.orderBy(parseSortSpecification());
+                result = s3 = s2 = s1.orderBy(parseList(',', ParseContext::parseSortField));
 
             if ((onNull = parseJSONNullTypeIf()) != null)
                 result = s3 = onNull == ABSENT_ON_NULL ? s2.absentOnNull() : s2.nullOnNull();
@@ -8630,18 +8561,17 @@ final class ParserContext extends AbstractScope {
             if (parseIf(')'))
                 return DSL.jsonObject();
 
-            List<JSONEntry<?>> result = new ArrayList<>();
+            List<JSONEntry<?>> result;
             JSONOnNull onNull = parseJSONNullTypeIf();
             DataType<?> returning = parseJSONReturningIf();
 
             if (onNull == null && returning == null) {
-                do
-                    result.add(parseJSONEntry());
-                while (parseIf(','));
-
+                result = parseList(',', c -> parseJSONEntry());
                 onNull = parseJSONNullTypeIf();
                 returning = parseJSONReturningIf();
             }
+            else
+                result = new ArrayList<>();
 
             parse(')');
 
@@ -8713,7 +8643,7 @@ final class ParserContext extends AbstractScope {
                 fields = emptyList();
             }
             else {
-                fields = parseFields();
+                fields = parseList(',', ParseContext::parseField);
                 parse(']');
             }
 
@@ -8903,7 +8833,7 @@ final class ParserContext extends AbstractScope {
     private final Field<?> parseFieldLeastIf() {
         if (parseFunctionNameIf("LEAST", "MINVALUE")) {
             parse('(');
-            List<Field<?>> fields = parseFields();
+            List<Field<?>> fields = parseList(',', ParseContext::parseField);
             parse(')');
 
             return least(fields.get(0), fields.size() > 1 ? fields.subList(1, fields.size()).toArray(EMPTY_FIELD) : EMPTY_FIELD);
@@ -8915,7 +8845,7 @@ final class ParserContext extends AbstractScope {
     private final Field<?> parseFieldGreatestIf() {
         if (parseFunctionNameIf("GREATEST", "MAXVALUE")) {
             parse('(');
-            List<Field<?>> fields = parseFields();
+            List<Field<?>> fields = parseList(',', ParseContext::parseField);
             parse(')');
 
             return greatest(fields.get(0), fields.size() > 1 ? fields.subList(1, fields.size()).toArray(EMPTY_FIELD) : EMPTY_FIELD);
@@ -9040,7 +8970,7 @@ final class ParserContext extends AbstractScope {
                 return inline(parseIntervalLiteral());
             }
             else {
-                Long interval = parseUnsignedIntegerIf();
+                Long interval = parseUnsignedIntegerLiteralIf();
 
                 if (interval != null) {
                     DatePart part = parseIntervalDatePart();
@@ -9631,7 +9561,7 @@ final class ParserContext extends AbstractScope {
     private final Field<?> parseFieldConcatIf() {
         if (parseFunctionNameIf("CONCAT")) {
             parse('(');
-            Field<String> result = concat(parseFields().toArray(EMPTY_FIELD));
+            Field<String> result = concat(parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD));
             parse(')');
             return result;
         }
@@ -9827,7 +9757,7 @@ final class ParserContext extends AbstractScope {
             }
             else if (ifx) {
                 if (parseIf(','))
-                    if (1L == parseUnsignedInteger())
+                    if (1L == parseUnsignedIntegerLiteral())
                         first = true;
                     else
                         throw expected("Only a limit of 1 is currently supported");
@@ -9841,9 +9771,9 @@ final class ParserContext extends AbstractScope {
                             all = true;
                     }
                     else {
-                        i1 = parseUnsignedInteger();
+                        i1 = parseUnsignedIntegerLiteral();
                         parse(',');
-                        i2 = parseUnsignedInteger();
+                        i2 = parseUnsignedIntegerLiteral();
 
                         if (Long.valueOf(1L).equals(i1) && Long.valueOf(1L).equals(i2))
                             all = true;
@@ -10102,7 +10032,7 @@ final class ParserContext extends AbstractScope {
     private final Field<?> parseFieldDecodeIf() {
         if (parseFunctionNameIf("DECODE")) {
             parse('(');
-            List<Field<?>> fields = parseFields();
+            List<Field<?>> fields = parseList(',', ParseContext::parseField);
             int size = fields.size();
             if (size < 3)
                 throw expected("At least three arguments to DECODE()");
@@ -10124,7 +10054,7 @@ final class ParserContext extends AbstractScope {
             parse('(');
             Field<Integer> index = (Field<Integer>) parseField(Type.N);
             parse(',');
-            List<Field<?>> fields = parseFields();
+            List<Field<?>> fields = parseList(',', ParseContext::parseField);
             parse(')');
 
             return DSL.choose(index, fields.toArray(EMPTY_FIELD));
@@ -10223,7 +10153,7 @@ final class ParserContext extends AbstractScope {
     private final Field<?> parseFieldCoalesceIf() {
         if (parseFunctionNameIf("COALESCE")) {
             parse('(');
-            List<Field<?>> fields = parseFields();
+            List<Field<?>> fields = parseList(',', ParseContext::parseField);
             parse(')');
 
             Field[] a = EMPTY_FIELD;
@@ -10238,7 +10168,7 @@ final class ParserContext extends AbstractScope {
             parse('(');
             Field<?> f1 = parseField();
             parse(',');
-            List<Field<?>> f2 = parseFields();
+            List<Field<?>> f2 = parseList(',', ParseContext::parseField);
             parse(')');
 
             return DSL.field((Field<T>) f1, (Field<T>[]) f2.toArray(EMPTY_FIELD));
@@ -10321,7 +10251,7 @@ final class ParserContext extends AbstractScope {
             Field<?> field = parseField();
             Long style = null;
             if (parseIf(',') && requireProEdition())
-                style = parseUnsignedInteger();
+                style = parseUnsignedIntegerLiteral();
             parse(')');
 
             if (style == null)
@@ -10457,7 +10387,7 @@ final class ParserContext extends AbstractScope {
                 s1 = DSL.groupConcat(parseField());
 
             if (parseKeywordIf("ORDER BY"))
-                s2 = s1.orderBy(parseSortSpecification());
+                s2 = s1.orderBy(parseList(',', ParseContext::parseSortField));
             else
                 s2 = s1;
 
@@ -10495,7 +10425,7 @@ final class ParserContext extends AbstractScope {
                 return parseWindowFunction(null, null, rank());
 
             // Hypothetical set function
-            List<Field<?>> args = parseFields();
+            List<Field<?>> args = parseList(',', ParseContext::parseField);
             parse(')');
             return rank(args).withinGroupOrderBy(parseWithinGroupN());
         }
@@ -10511,7 +10441,7 @@ final class ParserContext extends AbstractScope {
                 return parseWindowFunction(null, null, denseRank());
 
             // Hypothetical set function
-            List<Field<?>> args = parseFields();
+            List<Field<?>> args = parseList(',', ParseContext::parseField);
             parse(')');
             return denseRank(args).withinGroupOrderBy(parseWithinGroupN());
         }
@@ -10527,7 +10457,7 @@ final class ParserContext extends AbstractScope {
                 return parseWindowFunction(null, null, percentRank());
 
             // Hypothetical set function
-            List<Field<?>> args = parseFields();
+            List<Field<?>> args = parseList(',', ParseContext::parseField);
             parse(')');
             return percentRank(args).withinGroupOrderBy(parseWithinGroupN());
         }
@@ -10543,7 +10473,7 @@ final class ParserContext extends AbstractScope {
                 return parseWindowFunction(null, null, cumeDist());
 
             // Hypothetical set function
-            List<Field<?>> args = parseFields();
+            List<Field<?>> args = parseList(',', ParseContext::parseField);
             parse(')');
             return cumeDist(args).withinGroupOrderBy(parseWithinGroupN());
         }
@@ -10585,7 +10515,7 @@ final class ParserContext extends AbstractScope {
     private final Field<?> parseFieldNtileIf() {
         if (parseFunctionNameIf("NTILE")) {
             parse('(');
-            int number = (int) (long) parseUnsignedInteger();
+            int number = (int) (long) parseUnsignedIntegerLiteral();
             parse(')');
             return parseWindowFunction(null, null, ntile(number));
         }
@@ -10604,7 +10534,7 @@ final class ParserContext extends AbstractScope {
             Field<Void> f3 = null;
 
             if (parseIf(',')) {
-                f2 = (int) (long) parseUnsignedInteger();
+                f2 = (int) (long) parseUnsignedIntegerLiteral();
 
                 if (parseIf(','))
                     f3 = (Field) parseField();
@@ -10661,7 +10591,7 @@ final class ParserContext extends AbstractScope {
             parse('(');
             Field<?> f1 = parseField();
             parse(',');
-            int f2 = (int) (long) parseUnsignedInteger();
+            int f2 = (int) (long) parseUnsignedIntegerLiteral();
             WindowFromFirstLastStep<?> s1 = nthValue(f1, f2);
             WindowIgnoreNullsStep s2 = parseWindowFromFirstLast(s1, s1);
             WindowOverStep<?> s3 = parseWindowRespectIgnoreNulls(s2, s2);
@@ -10785,7 +10715,7 @@ final class ParserContext extends AbstractScope {
             List<SortField<?>> sort = null;
 
             if (parseKeywordIf("ORDER BY"))
-                sort = parseSortSpecification();
+                sort = parseList(',', ParseContext::parseSortField);
 
             parse(')');
 
@@ -10813,7 +10743,7 @@ final class ParserContext extends AbstractScope {
 
         parse('(');
         parseKeyword("ORDER BY");
-        List<SortField<?>> result = parseSortSpecification();
+        List<SortField<?>> result = parseList(',', ParseContext::parseSortField);
         parse(')');
         return result;
     }
@@ -10835,22 +10765,22 @@ final class ParserContext extends AbstractScope {
 
         if (parseFunctionNameIf("RANK")) {
             parse('(');
-            ordered = rank(parseFields());
+            ordered = rank(parseList(',', ParseContext::parseField));
             parse(')');
         }
         else if (parseFunctionNameIf("DENSE_RANK")) {
             parse('(');
-            ordered = denseRank(parseFields());
+            ordered = denseRank(parseList(',', ParseContext::parseField));
             parse(')');
         }
         else if (parseFunctionNameIf("PERCENT_RANK")) {
             parse('(');
-            ordered = percentRank(parseFields());
+            ordered = percentRank(parseList(',', ParseContext::parseField));
             parse(')');
         }
         else if (parseFunctionNameIf("CUME_DIST")) {
             parse('(');
-            ordered = cumeDist(parseFields());
+            ordered = cumeDist(parseList(',', ParseContext::parseField));
             parse(')');
         }
         else
@@ -10942,7 +10872,7 @@ final class ParserContext extends AbstractScope {
             case MAX:
             case MIN: {
                 if (!distinct && parseIf(',')) {
-                    List<Field<?>> fields = parseFields();
+                    List<Field<?>> fields = parseList(',', ParseContext::parseField);
                     parse(')');
 
                     return operation == ComputationalOperation.MAX ? greatest(arg, fields.toArray(EMPTY_FIELD)) : least(arg, fields.toArray(EMPTY_FIELD));
@@ -11001,7 +10931,7 @@ final class ParserContext extends AbstractScope {
                 fields = row.fields();
             else if ((asterisk = parseQualifiedAsteriskIf()) == null)
                 fields = distinct
-                        ? parseFields().toArray(EMPTY_FIELD)
+                        ? parseList(',', ParseContext::parseField).toArray(EMPTY_FIELD)
                         : new Field[] { parseField() };
 
             parse(')');
@@ -11071,16 +11001,15 @@ final class ParserContext extends AbstractScope {
         }
 
         if (dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && peek('(') && !peekTokens('(', '+', ')')) {
-            List<Field<?>> arguments = new ArrayList<>();
+            List<Field<?>> arguments;
 
             parse('(');
             if (!parseIf(')')) {
-                do
-                    arguments.add(parseField());
-                while (parseIf(','));
-
+                arguments = parseList(',', ParseContext::parseField);
                 parse(')');
             }
+            else
+                arguments = new ArrayList<>();
 
             return function(name, Object.class, arguments.toArray(EMPTY_FIELD));
         }
@@ -11100,16 +11029,6 @@ final class ParserContext extends AbstractScope {
 
     private final TableField<?, ?> parseFieldName() {
         return (TableField<?, ?>) lookupField(parseName());
-    }
-
-    private final List<Field<?>> parseFieldNames() {
-        List<Field<?>> result = new ArrayList<>();
-
-        do
-            result.add(parseFieldName());
-        while (parseIf(','));
-
-        return result;
     }
 
     private final Sequence<?> parseSequenceName() {
@@ -11214,7 +11133,8 @@ final class ParserContext extends AbstractScope {
         return new ArrayList<>(result);
     }
 
-    private final Name parseIdentifier() {
+    
+    public final Name parseIdentifier() {
         return parseIdentifier(false);
     }
 
@@ -11227,7 +11147,8 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    private final Name parseIdentifierIf() {
+    
+    public final Name parseIdentifierIf() {
         return parseIdentifierIf(false);
     }
 
@@ -11292,7 +11213,8 @@ final class ParserContext extends AbstractScope {
         return parseDataType();
     }
 
-    private final DataType<?> parseDataType() {
+    
+    public final DataType<?> parseDataType() {
         DataType<?> result = parseDataTypePrefix();
         boolean array = false;
 
@@ -11300,7 +11222,7 @@ final class ParserContext extends AbstractScope {
             array = true;
 
         if (parseIf('[')) {
-            parseUnsignedIntegerIf();
+            parseUnsignedIntegerLiteralIf();
             parse(']');
 
             array = true;
@@ -11574,7 +11496,7 @@ final class ParserContext extends AbstractScope {
 
     private final DataType<?> parseAndIgnoreDataTypeLength(DataType<?> result) {
         if (parseIf('(')) {
-            parseUnsignedInteger();
+            parseUnsignedIntegerLiteral();
             parse(')');
         }
 
@@ -11586,7 +11508,7 @@ final class ParserContext extends AbstractScope {
 
         if (parseIf('(')) {
             if (!parseKeywordIf("MAX"))
-                result = result.length((int) (long) parseUnsignedInteger());
+                result = result.length((int) (long) parseUnsignedIntegerLiteral());
 
             if (in == SQLDataType.VARCHAR || in == SQLDataType.CHAR)
                 if (!parseKeywordIf("BYTE"))
@@ -11630,10 +11552,10 @@ final class ParserContext extends AbstractScope {
 
     private final DataType<?> parseAndIgnoreDataTypePrecisionScaleIf(DataType<?> result) {
         if (parseIf('(')) {
-            parseUnsignedInteger();
+            parseUnsignedIntegerLiteral();
 
             if (parseIf(','))
-                parseUnsignedInteger();
+                parseUnsignedIntegerLiteral();
 
             parse(')');
         }
@@ -11645,7 +11567,7 @@ final class ParserContext extends AbstractScope {
         Integer precision = null;
 
         if (parseIf('(')) {
-            precision = (int) (long) parseUnsignedInteger();
+            precision = (int) (long) parseUnsignedIntegerLiteral();
             parse(')');
         }
 
@@ -11654,7 +11576,7 @@ final class ParserContext extends AbstractScope {
 
     private final DataType<?> parseDataTypePrecisionIf(DataType<?> result) {
         if (parseIf('(')) {
-            int precision = (int) (long) parseUnsignedInteger();
+            int precision = (int) (long) parseUnsignedIntegerLiteral();
             result = result.precision(precision);
             parse(')');
         }
@@ -11664,10 +11586,10 @@ final class ParserContext extends AbstractScope {
 
     private final DataType<?> parseDataTypePrecisionScaleIf(DataType<?> result) {
         if (parseIf('(')) {
-            int precision = parseIf('*') ? 38 : (int) (long) parseUnsignedInteger();
+            int precision = parseIf('*') ? 38 : (int) (long) parseUnsignedIntegerLiteral();
 
             if (parseIf(','))
-                result = result.precision(precision, (int) (long) parseSignedInteger());
+                result = result.precision(precision, (int) (long) parseSignedIntegerLiteral());
             else
                 result = result.precision(precision);
 
@@ -11785,7 +11707,8 @@ final class ParserContext extends AbstractScope {
         return value;
     }
 
-    private final String parseStringLiteral() {
+    
+    public final String parseStringLiteral() {
         String result = parseStringLiteralIf();
 
         if (result == null)
@@ -11794,7 +11717,8 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    private final String parseStringLiteralIf() {
+    
+    public final String parseStringLiteralIf() {
         if (parseIf('q', '\'', false) || parseIf('Q', '\'', false))
             return parseOracleQuotedStringLiteral();
         else if (parseIf('e', '\'', false) || parseIf('E', '\'', false))
@@ -12190,8 +12114,9 @@ final class ParserContext extends AbstractScope {
             throw expected("0 or 1");
     }
 
-    private final Long parseSignedInteger() {
-        Long result = parseSignedIntegerIf();
+    
+    public final Long parseSignedIntegerLiteral() {
+        Long result = parseSignedIntegerLiteralIf();
 
         if (result == null)
             throw expected("Signed integer");
@@ -12199,14 +12124,15 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    private final Long parseSignedIntegerIf() {
+    
+    public final Long parseSignedIntegerLiteralIf() {
         Sign sign = parseSign();
         Long unsigned;
 
         if (sign == Sign.MINUS)
-            unsigned = parseUnsignedInteger();
+            unsigned = parseUnsignedIntegerLiteral();
         else
-            unsigned = parseUnsignedIntegerIf();
+            unsigned = parseUnsignedIntegerLiteralIf();
 
         return unsigned == null
              ? null
@@ -12222,10 +12148,32 @@ final class ParserContext extends AbstractScope {
             throw expected("Bind parameter or constant");
     }
 
-    private final <T> T parseParenthesised(Supplier<T> supplier) {
+    private final <T> List<T> parseList(char separator, Function<? super ParseContext, ? extends T> element) {
+        return parseList(c -> c.parseIf(separator), element);
+    }
+
+    
+    public final <T> List<T> parseList(String separator, Function<? super ParseContext, ? extends T> element) {
+        return parseList(c -> c.parseIf(separator), element);
+    }
+
+    
+    public final <T> List<T> parseList(Predicate<? super ParseContext> separator, Function<? super ParseContext, ? extends T> element) {
+        List<T> result = new ArrayList<>();
+
+        do
+            result.add(element.apply(this));
+        while (separator.test(this));
+
+        return result;
+    }
+
+    
+    public final <T> T parseParenthesised(Function<? super ParseContext, ? extends T> content) {
         parse('(');
-        T result = supplier.get();
+        T result = content.apply(this);
         parse(')');
+
         return result;
     }
 
@@ -12241,20 +12189,22 @@ final class ParserContext extends AbstractScope {
     }
 
     private final Field<Long> parseUnsignedIntegerOrBindVariable() {
-        Long i = parseUnsignedIntegerIf();
+        Long i = parseUnsignedIntegerLiteralIf();
         return i != null ? DSL.inline(i) : (Field<Long>) parseBindVariable();
     }
 
-    private final Long parseUnsignedInteger() {
-        Long result = parseUnsignedIntegerIf();
+    
+    public final Long parseUnsignedIntegerLiteral() {
+        Long result = parseUnsignedIntegerLiteralIf();
 
         if (result == null)
-            throw expected("Unsigned integer");
+            throw expected("Unsigned integer literal");
 
         return result;
     }
 
-    private final Long parseUnsignedIntegerIf() {
+    
+    public final Long parseUnsignedIntegerLiteralIf() {
         int p = position();
 
         for (;;) {
@@ -12617,7 +12567,8 @@ final class ParserContext extends AbstractScope {
         return true;
     }
 
-    private final boolean parseFunctionNameIf(String name) {
+    
+    public final boolean parseFunctionNameIf(String name) {
         return peekKeyword(name, true, false, true);
     }
 
@@ -12629,7 +12580,8 @@ final class ParserContext extends AbstractScope {
         return parseFunctionNameIf(name1) || parseFunctionNameIf(name2) || parseFunctionNameIf(name3);
     }
 
-    private final boolean parseFunctionNameIf(String... names) {
+    
+    public final boolean parseFunctionNameIf(String... names) {
         for (String name : names)
             if (parseFunctionNameIf(name))
                 return true;

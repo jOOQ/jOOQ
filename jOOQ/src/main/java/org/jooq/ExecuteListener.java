@@ -47,6 +47,7 @@ import java.util.EventListener;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
+import org.jooq.impl.CallbackExecuteListener;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.tools.LoggerListener;
@@ -1180,4 +1181,164 @@ public interface ExecuteListener extends EventListener, Serializable {
      * warnings can be disabled using {@link Settings#isFetchWarnings()}
      */
     void warning(ExecuteContext ctx);
+
+    /**
+     * Create an {@link ExecuteListener} with a {@link #start(ExecuteContext)}
+     * implementation.
+     */
+    static CallbackExecuteListener onStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a {@link #end(ExecuteContext)}
+     * implementation.
+     */
+    static CallbackExecuteListener onEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #renderStart(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onRenderStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onRenderStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #renderEnd(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onRenderEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onRenderEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #prepareStart(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onPrepareStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onPrepareStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #prepareEnd(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onPrepareEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onPrepareEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #bindStart(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onBindStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onBindStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a {@link #bindEnd(ExecuteContext)}
+     * implementation.
+     */
+    static CallbackExecuteListener onBindEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onBindEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #executeStart(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onExecuteStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onExecuteStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #executeEnd(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onExecuteEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onExecuteEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #outStart(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onOutStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onOutStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #outEnd(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onOutEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onOutEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #fetchStart(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onFetchStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onFetchStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #fetchEnd(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onFetchEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onFetchEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #resultStart(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onResultStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onResultStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #resultEnd(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onResultEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onResultEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #recordStart(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onRecordStart(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onRecordStart(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #recordEnd(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onRecordEnd(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onRecordEnd(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #exception(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onException(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onException(handler);
+    }
+
+    /**
+     * Create an {@link ExecuteListener} with a
+     * {@link #warning(ExecuteContext)} implementation.
+     */
+    static CallbackExecuteListener onWarning(ExecuteEventHandler handler) {
+        return new CallbackExecuteListener().onWarning(handler);
+    }
 }

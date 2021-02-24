@@ -68,6 +68,8 @@ import static org.jooq.impl.Tools.visitSubquery;
 import java.util.Set;
 
 import org.jooq.Context;
+import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
@@ -75,6 +77,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An implementation for the <code>VALUES(...)</code> table constructor
@@ -86,10 +90,12 @@ final class Values<R extends Record> extends AbstractTable<R> {
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID  = -637982217747670311L;
-    static final Set<SQLDialect> NO_SUPPORT_VALUES = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    private static final long       serialVersionUID     = -637982217747670311L;
+    static final Set<SQLDialect>    NO_SUPPORT_VALUES    = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    static final Set<SQLDialect>    REQUIRE_ROWTYPE_CAST = SQLDialect.supportedBy(FIREBIRD);
 
-    private final Row[]          rows;
+    private final Row[]             rows;
+    private transient DataType<?>[] types;
 
     Values(Row[] rows) {
         super(TableOptions.expression(), N_VALUES);
@@ -97,11 +103,42 @@ final class Values<R extends Record> extends AbstractTable<R> {
         this.rows = assertNotEmpty(rows);
     }
 
-    static Row[] assertNotEmpty(Row[] rows) {
+    static final Row[] assertNotEmpty(Row[] rows) {
         if (rows == null || rows.length == 0)
             throw new IllegalArgumentException("Cannot create a VALUES() constructor with an empty set of rows");
 
         return rows;
+    }
+
+    private final DataType<?>[] rowType() {
+        if (types == null) {
+            types = new DataType[rows[0].size()];
+
+            typeLoop:
+            for (int i = 0; i < types.length; i++) {
+                for (Row row : rows) {
+                    DataType<?> type = row.dataType(i);
+
+                    if (type.getType() != Object.class) {
+                        types[i] = type;
+                        continue typeLoop;
+                    }
+                }
+            }
+        }
+
+        return types;
+    }
+
+    private final Field<?>[] castToRowType(Field<?>[] fields) {
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < result.length; i++) {
+            DataType<?> type = rowType()[i];
+            result[i] = fields[i].getDataType().equals(type) ? fields[i] : fields[i].cast(type);
+        }
+
+        return result;
     }
 
     @SuppressWarnings("unchecked")
@@ -127,9 +164,10 @@ final class Values<R extends Record> extends AbstractTable<R> {
         // for those dialects that do not support a VALUES() constructor
         if (NO_SUPPORT_VALUES.contains(ctx.dialect())) {
             Select<Record> selects = null;
+            boolean cast = REQUIRE_ROWTYPE_CAST.contains(ctx.dialect());
 
             for (Row row : rows) {
-                Select<Record> select = DSL.select(row.fields());
+                Select<Record> select = DSL.select(cast ? castToRowType(row.fields()) : row.fields());
 
                 if (selects == null)
                     selects = select;

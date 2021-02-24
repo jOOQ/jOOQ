@@ -56,6 +56,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
+import org.jooq.Param;
 // ...
 import org.jooq.Record1;
 import org.jooq.Select;
@@ -162,6 +163,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 if (type.getType() == Boolean.class)
                     return inlined(field);
 
+                break;
 
 
 
@@ -173,6 +175,22 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
 
+
+
+
+
+
+
+
+
+            case POSTGRES:
+                if (field instanceof Param)
+                    if (field.getType() != Object.class)
+                        return field.cast(field.getDataType());
+                    else
+                        return field.cast(VARCHAR);
+                else
+                    return field;
         }
 
         return field;

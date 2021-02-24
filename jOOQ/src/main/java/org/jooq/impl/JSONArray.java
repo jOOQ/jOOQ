@@ -134,6 +134,8 @@ implements
 
     @Override
     public void accept(Context<?> ctx) {
+        QueryPartCollectionView<Field<?>> mapped = QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(JSONEntryImpl.jsonCastMapper(ctx));
+
         switch (ctx.family()) {
 
 
@@ -156,9 +158,8 @@ implements
                         .where(a.isNotNull())
                     ));
                 }
-                else {
-                    ctx.visit(getDataType() == JSON ? N_JSON_BUILD_ARRAY : N_JSONB_BUILD_ARRAY).sql('(').visit(QueryPartCollectionView.wrap(fields)).sql(')');
-                }
+                else
+                    ctx.visit(getDataType() == JSON ? N_JSON_BUILD_ARRAY : N_JSONB_BUILD_ARRAY).sql('(').visit(mapped).sql(')');
 
                 break;
 
@@ -172,14 +173,7 @@ implements
                 else
                     jsonNull = new JSONNull(onNull);
 
-                ctx.visit(K_JSON_ARRAY).sql('(').visit(
-                    QueryPartListView.wrap(
-                        QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(JSONEntryImpl.jsonCastMapper(ctx)),
-                        jsonNull,
-                        jsonReturning
-                    ).separator("")
-                ).sql(')');
-
+                ctx.visit(K_JSON_ARRAY).sql('(').visit(QueryPartListView.wrap(mapped, jsonNull, jsonReturning).separator("")).sql(')');
                 break;
             }
         }

@@ -614,8 +614,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
         final DataType<T>            dataType;
         final Converter<T, U>        converter;
         final boolean                attachable;
@@ -744,17 +742,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 if (converted != null)
                     sqlCast(ctx, converted, DefaultDataType.getDataType(family, converted.getClass()), null, null, null);
 
-
-
-
-
-
-
-
-                // Derby and DB2 must have a type associated with NULL. Use VARCHAR
-                // as a workaround. That's probably not correct in all cases, though
+                // [#11511] Specifically when in a parser context, we must not
+                // blindly cast bind variables
                 else
-                    sqlCast(ctx, converted, DefaultDataType.getDataType(family, String.class), null, null, null);
+                    ctx.render().sql(ctx.variable());
 
             // [#1029] Postgres generally doesn't need the casting. Only in the
             // above case where the type is OTHER

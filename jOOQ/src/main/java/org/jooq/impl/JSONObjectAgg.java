@@ -153,6 +153,7 @@ implements JSONObjectAggNullStep<J> {
                 )))
             )));
 
+            acceptFilterClause(c1);
             acceptOverClause(c1);
         });
 

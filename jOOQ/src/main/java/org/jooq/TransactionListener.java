@@ -49,7 +49,7 @@ import org.jooq.impl.CallbackTransactionListener;
  *
  * @author Lukas Eder
  */
-public interface TransactionListener extends Serializable {
+public interface TransactionListener {
 
     /**
      * Called before {@link TransactionProvider#begin(TransactionContext)}.

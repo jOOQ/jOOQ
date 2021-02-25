@@ -39,6 +39,9 @@ package org.jooq;
 
 import java.sql.PreparedStatement;
 import java.util.EventListener;
+import java.util.function.Consumer;
+
+import org.jooq.impl.CallbackVisitListener;
 
 /**
  * A listener for {@link QueryPart} traversal events.
@@ -143,4 +146,36 @@ public interface VisitListener extends EventListener {
      * @see Context#visit(QueryPart)
      */
     void visitEnd(VisitContext context);
+
+    /**
+     * Create a {@link VisitListener} with a {@link #onClauseStart(Consumer)}
+     * implementation.
+     */
+    static CallbackVisitListener onClauseStart(Consumer<? super VisitContext> onClauseStart) {
+        return new CallbackVisitListener().onClauseStart(onClauseStart);
+    }
+
+    /**
+     * Create a {@link VisitListener} with a {@link #onClauseEnd(Consumer)}
+     * implementation.
+     */
+    static CallbackVisitListener onClauseEnd(Consumer<? super VisitContext> onClauseEnd) {
+        return new CallbackVisitListener().onClauseEnd(onClauseEnd);
+    }
+
+    /**
+     * Create a {@link VisitListener} with a {@link #onVisitStart(Consumer)}
+     * implementation.
+     */
+    static CallbackVisitListener onVisitStart(Consumer<? super VisitContext> onVisitStart) {
+        return new CallbackVisitListener().onVisitStart(onVisitStart);
+    }
+
+    /**
+     * Create a {@link VisitListener} with a {@link #onClauseStart(Consumer)}
+     * implementation.
+     */
+    static CallbackVisitListener onVisitEnd(Consumer<? super VisitContext> onVisitEnd) {
+        return new CallbackVisitListener().onVisitEnd(onVisitEnd);
+    }
 }

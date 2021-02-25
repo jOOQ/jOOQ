@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.VisitListener.onVisitStart;
 import static org.jooq.impl.DSL.name;
 
 import java.io.Reader;
@@ -58,6 +59,7 @@ import org.jooq.Query;
 import org.jooq.ResultQuery;
 import org.jooq.Source;
 import org.jooq.VisitContext;
+import org.jooq.VisitListener;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -117,42 +119,39 @@ final class TranslatingMetaProvider implements MetaProvider {
                 final RenderNameCase nameCase = settings.getRenderNameCase();
                 final Locale locale = SettingsTools.interpreterLocale(ctx.settings());
                 if (nameCase != null && nameCase != RenderNameCase.AS_IS) {
-                    ctx.configuration().set(new DefaultVisitListener() {
-                        @Override
-                        public void visitStart(VisitContext c) {
-                            if (c.queryPart() instanceof Name) {
-                                Name[] parts = ((Name) c.queryPart()).parts();
-                                boolean changed = false;
+                    ctx.configuration().set(onVisitStart(c -> {
+                        if (c.queryPart() instanceof Name) {
+                            Name[] parts = ((Name) c.queryPart()).parts();
+                            boolean changed = false;
 
-                                for (int i = 0; i < parts.length; i++) {
-                                    Name replacement = parts[i];
-                                    switch (nameCase) {
-                                        case LOWER_IF_UNQUOTED:
-                                            if (parts[i].quoted() == Quoted.QUOTED) break;
-                                        case LOWER:
-                                            replacement = DSL.quotedName(parts[i].first().toLowerCase(locale));
-                                            break;
+                            for (int i = 0; i < parts.length; i++) {
+                                Name replacement = parts[i];
+                                switch (nameCase) {
+                                    case LOWER_IF_UNQUOTED:
+                                        if (parts[i].quoted() == Quoted.QUOTED) break;
+                                    case LOWER:
+                                        replacement = DSL.quotedName(parts[i].first().toLowerCase(locale));
+                                        break;
 
-                                        case UPPER_IF_UNQUOTED:
-                                            if (parts[i].quoted() == Quoted.QUOTED) break;
-                                        case UPPER:
-                                            replacement = DSL.quotedName(parts[i].first().toUpperCase(locale));
-                                            break;
+                                    case UPPER_IF_UNQUOTED:
+                                        if (parts[i].quoted() == Quoted.QUOTED) break;
+                                    case UPPER:
+                                        replacement = DSL.quotedName(parts[i].first().toUpperCase(locale));
+                                        break;
 
-                                        default:
-                                            break;
-                                    }
-                                    if (!replacement.equals(parts[i])) {
-                                        parts[i] = replacement;
-                                        changed = true;
-                                    }
+                                    default:
+                                        break;
                                 }
-
-                                if (changed)
-                                    c.queryPart(DSL.name(parts));
+                                if (!replacement.equals(parts[i])) {
+                                    parts[i] = replacement;
+                                    changed = true;
+                                }
                             }
+
+                            if (changed)
+                                c.queryPart(DSL.name(parts));
                         }
-                    });
+                    }));
                 }
             }
             catch (Exception e) {

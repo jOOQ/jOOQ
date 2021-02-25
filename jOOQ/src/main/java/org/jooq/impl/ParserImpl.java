@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+import static org.jooq.VisitListener.onVisitStart;
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.conf.SettingsTools.parseLocale;
@@ -578,6 +579,7 @@ import org.jooq.User;
 // ...
 // ...
 import org.jooq.VisitContext;
+import org.jooq.VisitListener;
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFromFirstLastStep;
@@ -13392,17 +13394,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // [#8722]  TODO Replace this by a public SPI
             // [#11054] Use a VisitListener to find actual Params in the expression tree,
             //          which may have more refined DataTypes attached to them, from context
-            dsl.configuration().derive(new DefaultVisitListener() {
-                @Override
-                public void visitStart(VisitContext context) {
-                    if (context.queryPart() instanceof Param) {
-                        Param<?> p = (Param<?>) context.queryPart();
+            dsl.configuration().derive(onVisitStart(ctx -> {
+                if (ctx.queryPart() instanceof Param) {
+                    Param<?> p = (Param<?>) ctx.queryPart();
 
-                        if (!params.containsKey(p.getParamName()))
-                            params.put(p.getParamName(), p);
-                    }
+                    if (!params.containsKey(p.getParamName()))
+                        params.put(p.getParamName(), p);
                 }
-            }).dsl().render(result);
+            })).dsl().render(result);
 
             for (String name : bindParams.keySet())
                 bindParamListener.accept(params.get(name));

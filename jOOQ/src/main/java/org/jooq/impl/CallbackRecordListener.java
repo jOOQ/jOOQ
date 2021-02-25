@@ -56,11 +56,6 @@ import org.jooq.RecordListener;
  */
 public final class CallbackRecordListener implements RecordListener {
 
-    /**
-     * Generated UID
-     */
-    private static final long                     serialVersionUID = -4135358887698253754L;
-
     private final Consumer<? super RecordContext> onStoreStart;
     private final Consumer<? super RecordContext> onStoreEnd;
     private final Consumer<? super RecordContext> onInsertStart;

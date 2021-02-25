@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-import java.io.Serializable;
 import java.util.EventListener;
 import java.util.function.Consumer;
 
@@ -68,7 +67,7 @@ import org.jooq.impl.CallbackRecordListener;
  *
  * @author Lukas Eder
  */
-public interface RecordListener extends EventListener, Serializable {
+public interface RecordListener extends EventListener {
 
     /**
      * Called before storing an <code>UpdatableRecord</code>.

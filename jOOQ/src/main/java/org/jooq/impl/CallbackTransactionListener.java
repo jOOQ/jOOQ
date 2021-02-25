@@ -58,11 +58,6 @@ import org.jooq.TransactionListener;
  */
 public final class CallbackTransactionListener implements TransactionListener {
 
-    /**
-     * Generated UID
-     */
-    private static final long                          serialVersionUID = -4135358887698253754L;
-
     private final Consumer<? super TransactionContext> onBeginStart;
     private final Consumer<? super TransactionContext> onBeginEnd;
     private final Consumer<? super TransactionContext> onCommitStart;

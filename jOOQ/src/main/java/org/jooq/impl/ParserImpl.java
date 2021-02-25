@@ -343,14 +343,14 @@ import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_UPDATE;
-import static org.jooq.impl.ParserContext.Type.A;
-import static org.jooq.impl.ParserContext.Type.B;
-import static org.jooq.impl.ParserContext.Type.D;
-import static org.jooq.impl.ParserContext.Type.J;
-import static org.jooq.impl.ParserContext.Type.N;
-import static org.jooq.impl.ParserContext.Type.S;
-import static org.jooq.impl.ParserContext.Type.X;
-import static org.jooq.impl.ParserContext.Type.Y;
+import static org.jooq.impl.DefaultParseContext.Type.A;
+import static org.jooq.impl.DefaultParseContext.Type.B;
+import static org.jooq.impl.DefaultParseContext.Type.D;
+import static org.jooq.impl.DefaultParseContext.Type.J;
+import static org.jooq.impl.DefaultParseContext.Type.N;
+import static org.jooq.impl.DefaultParseContext.Type.S;
+import static org.jooq.impl.DefaultParseContext.Type.X;
+import static org.jooq.impl.DefaultParseContext.Type.Y;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
@@ -530,7 +530,7 @@ import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
-// ...
+import org.jooq.ParseContext;
 // ...
 import org.jooq.Parser;
 // ...
@@ -631,8 +631,8 @@ final class ParserImpl implements Parser {
     // XXX: Top level parsing
     // -------------------------------------------------------------------------
 
-    private final ParserContext ctx(String sql, Object... bindings) {
-        return new ParserContext(dsl, meta, metaLookups, sql, bindings);
+    private final DefaultParseContext ctx(String sql, Object... bindings) {
+        return new DefaultParseContext(dsl, meta, metaLookups, sql, bindings);
     }
 
     @Override
@@ -753,7 +753,7 @@ final class ParserImpl implements Parser {
 }
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class ParserContext extends AbstractScope {
+final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
@@ -5943,7 +5943,7 @@ final class ParserContext extends AbstractScope {
     // QueryPart parsing
     // -----------------------------------------------------------------------------------------------------------------
 
-    
+    @Override
     public final Condition parseCondition() {
 
 
@@ -6288,7 +6288,7 @@ final class ParserContext extends AbstractScope {
         return parseKeywordIf("ESCAPE") ? like.escape(parseCharacterLiteral()) : like;
     }
 
-    
+    @Override
     public final Table<?> parseTable() {
         Table<?> result;
 
@@ -6896,7 +6896,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final SortField<?> parseSortField() {
         Field<?> field = parseField();
         SortField<?> sort;
@@ -6929,7 +6929,7 @@ final class ParserContext extends AbstractScope {
         }
     }
 
-    
+    @Override
     public final Field<?> parseField() {
         Field<?> result;
 
@@ -11059,7 +11059,7 @@ final class ParserContext extends AbstractScope {
         return characterSet(parseName());
     }
 
-    
+    @Override
     public final Name parseName() {
         Name result = parseNameIf();
 
@@ -11069,7 +11069,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final Name parseNameIf() {
         Name identifier = parseIdentifierIf();
 
@@ -11133,7 +11133,7 @@ final class ParserContext extends AbstractScope {
         return new ArrayList<>(result);
     }
 
-    
+    @Override
     public final Name parseIdentifier() {
         return parseIdentifier(false);
     }
@@ -11147,7 +11147,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final Name parseIdentifierIf() {
         return parseIdentifierIf(false);
     }
@@ -11213,7 +11213,7 @@ final class ParserContext extends AbstractScope {
         return parseDataType();
     }
 
-    
+    @Override
     public final DataType<?> parseDataType() {
         DataType<?> result = parseDataTypePrefix();
         boolean array = false;
@@ -11707,7 +11707,7 @@ final class ParserContext extends AbstractScope {
         return value;
     }
 
-    
+    @Override
     public final String parseStringLiteral() {
         String result = parseStringLiteralIf();
 
@@ -11717,7 +11717,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final String parseStringLiteralIf() {
         if (parseIf('q', '\'', false) || parseIf('Q', '\'', false))
             return parseOracleQuotedStringLiteral();
@@ -12114,7 +12114,7 @@ final class ParserContext extends AbstractScope {
             throw expected("0 or 1");
     }
 
-    
+    @Override
     public final Long parseSignedIntegerLiteral() {
         Long result = parseSignedIntegerLiteralIf();
 
@@ -12124,7 +12124,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final Long parseSignedIntegerLiteralIf() {
         Sign sign = parseSign();
         Long unsigned;
@@ -12152,12 +12152,12 @@ final class ParserContext extends AbstractScope {
         return parseList(c -> c.parseIf(separator), element);
     }
 
-    
+    @Override
     public final <T> List<T> parseList(String separator, Function<? super ParseContext, ? extends T> element) {
         return parseList(c -> c.parseIf(separator), element);
     }
 
-    
+    @Override
     public final <T> List<T> parseList(Predicate<? super ParseContext> separator, Function<? super ParseContext, ? extends T> element) {
         List<T> result = new ArrayList<>();
 
@@ -12168,7 +12168,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final <T> T parseParenthesised(Function<? super ParseContext, ? extends T> content) {
         parse('(');
         T result = content.apply(this);
@@ -12193,7 +12193,7 @@ final class ParserContext extends AbstractScope {
         return i != null ? DSL.inline(i) : (Field<Long>) parseBindVariable();
     }
 
-    
+    @Override
     public final Long parseUnsignedIntegerLiteral() {
         Long result = parseUnsignedIntegerLiteralIf();
 
@@ -12203,7 +12203,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final Long parseUnsignedIntegerLiteralIf() {
         int p = position();
 
@@ -12494,7 +12494,7 @@ final class ParserContext extends AbstractScope {
         return true;
     }
 
-    
+    @Override
     public final boolean parse(String string) {
         boolean result = parseIf(string);
 
@@ -12504,7 +12504,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final boolean parseIf(String string) {
         return parseIf(string, true);
     }
@@ -12522,7 +12522,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final boolean parse(char c) {
         return parse(c, true);
     }
@@ -12534,7 +12534,7 @@ final class ParserContext extends AbstractScope {
         return true;
     }
 
-    
+    @Override
     public final boolean parseIf(char c) {
         return parseIf(c, true);
     }
@@ -12567,7 +12567,7 @@ final class ParserContext extends AbstractScope {
         return true;
     }
 
-    
+    @Override
     public final boolean parseFunctionNameIf(String name) {
         return peekKeyword(name, true, false, true);
     }
@@ -12580,7 +12580,7 @@ final class ParserContext extends AbstractScope {
         return parseFunctionNameIf(name1) || parseFunctionNameIf(name2) || parseFunctionNameIf(name3);
     }
 
-    
+    @Override
     public final boolean parseFunctionNameIf(String... names) {
         for (String name : names)
             if (parseFunctionNameIf(name))
@@ -12629,7 +12629,7 @@ final class ParserContext extends AbstractScope {
         return true;
     }
 
-    
+    @Override
     public final boolean parseKeyword(String keyword) {
         if (!parseKeywordIf(keyword))
             throw expected("Keyword '" + keyword + "'");
@@ -12637,12 +12637,12 @@ final class ParserContext extends AbstractScope {
         return true;
     }
 
-    
+    @Override
     public final boolean parseKeywordIf(String keyword) {
         return peekKeyword(keyword, true, false, false);
     }
 
-    
+    @Override
     public final boolean parseKeywordIf(String... keywords) {
         for (String keyword : keywords)
             if (parseKeywordIf(keyword))
@@ -12651,7 +12651,7 @@ final class ParserContext extends AbstractScope {
         return false;
     }
 
-    
+    @Override
     public final boolean parseKeyword(String... keywords) {
         if (parseKeywordIf(keywords))
             return true;
@@ -12683,7 +12683,7 @@ final class ParserContext extends AbstractScope {
         return null;
     }
 
-    
+    @Override
     public final boolean peek(char c) {
         if (character() != c)
             return false;
@@ -12691,7 +12691,7 @@ final class ParserContext extends AbstractScope {
         return true;
     }
 
-    
+    @Override
     public final boolean peek(String string) {
         return peek(string, position());
     }
@@ -12709,7 +12709,7 @@ final class ParserContext extends AbstractScope {
         return true;
     }
 
-    
+    @Override
     public final boolean peekKeyword(String... keywords) {
         for (String keyword : keywords)
             if (peekKeyword(keyword))
@@ -12718,7 +12718,7 @@ final class ParserContext extends AbstractScope {
         return false;
     }
 
-    
+    @Override
     public final boolean peekKeyword(String keyword) {
         return peekKeyword(keyword, false, false, false);
     }
@@ -13115,7 +13115,7 @@ final class ParserContext extends AbstractScope {
 
 
 
-    ParserContext(
+    DefaultParseContext(
         DSLContext dsl,
         Meta meta,
         ParseWithMetaLookups metaLookups,
@@ -13140,7 +13140,7 @@ final class ParserContext extends AbstractScope {
         parseWhitespaceIf();
     }
 
-    
+    @Override
     public final SQLDialect parseDialect() {
         SQLDialect result = settings().getParseDialect();
 
@@ -13150,7 +13150,7 @@ final class ParserContext extends AbstractScope {
         return result;
     }
 
-    
+    @Override
     public final SQLDialect parseFamily() {
         return parseDialect().family();
     }
@@ -13159,7 +13159,7 @@ final class ParserContext extends AbstractScope {
         return this.metaLookupsForceIgnore;
     }
 
-    private final ParserContext metaLookupsForceIgnore(boolean m) {
+    private final DefaultParseContext metaLookupsForceIgnore(boolean m) {
         this.metaLookupsForceIgnore = m;
         return this;
     }
@@ -13223,7 +13223,7 @@ final class ParserContext extends AbstractScope {
         return init(new ParserException(mark(), "Unsupported clause"));
     }
 
-    
+    @Override
     public final ParserException exception(String message) {
         return init(new ParserException(mark(), message));
     }
@@ -13270,12 +13270,12 @@ final class ParserContext extends AbstractScope {
         return Character.toUpperCase(character());
     }
 
-    
+    @Override
     public final char character() {
         return character(position);
     }
 
-    
+    @Override
     public final char character(int pos) {
         return pos >= 0 && pos < sql.length ? sql[pos] : ' ';
     }
@@ -13288,12 +13288,12 @@ final class ParserContext extends AbstractScope {
         return character(position + 1);
     }
 
-    
+    @Override
     public final int position() {
         return position;
     }
 
-    
+    @Override
     public final boolean position(int newPosition) {
         position = newPosition;
         return true;

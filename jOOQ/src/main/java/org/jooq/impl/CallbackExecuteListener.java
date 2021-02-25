@@ -45,7 +45,7 @@ import org.jooq.ExecuteListener;
  * An {@link ExecuteListener} that allows for functional composition.
  * <p>
  * For example: <code><pre>
- * ExecuteListener listener = new CallbackExecuteListener()
+ * ExecuteListener listener = ExecuteListener
  *   .onExecuteStart(ctx -&gt; something())
  *   .onExecuteEnd(ctx -&gt; something());
  * </pre></code>

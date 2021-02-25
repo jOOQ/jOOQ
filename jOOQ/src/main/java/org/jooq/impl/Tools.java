@@ -153,7 +153,7 @@ import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
-import static org.jooq.impl.ParserContext.SUPPORTS_HASH_COMMENT_SYNTAX;
+import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.JSON;

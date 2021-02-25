@@ -41,6 +41,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
+import static org.jooq.RecordListener.onStoreEnd;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Tools.EMPTY_RECORD;
@@ -51,6 +52,7 @@ import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -59,6 +61,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordContext;
+import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
@@ -476,35 +479,20 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     private /* non-final */ RecordListenerProvider[] providers(final RecordListenerProvider[] providers, final IdentityHashMap<R, Object> mapping) {
         RecordListenerProvider[] result = Arrays.copyOf(providers, providers.length + 1);
 
-        result[providers.length] = new DefaultRecordListenerProvider(new DefaultRecordListener() {
-            private final void end(RecordContext ctx) {
-                Record record = ctx.record();
+        Consumer<? super RecordContext> end = ctx -> {
+            Record record = ctx.record();
 
-                // TODO: [#2536] Use mapper()
-                if (record != null)
-                    record.into(mapping.get(record));
-            }
+            // TODO: [#2536] Use mapper()
+            if (record != null)
+                record.into(mapping.get(record));
+        };
 
-            @Override
-            public final void storeEnd(RecordContext ctx) {
-                end(ctx);
-            }
-
-            @Override
-            public final void insertEnd(RecordContext ctx) {
-                end(ctx);
-            }
-
-            @Override
-            public final void updateEnd(RecordContext ctx) {
-                end(ctx);
-            }
-
-            @Override
-            public final void deleteEnd(RecordContext ctx) {
-                end(ctx);
-            }
-        });
+        result[providers.length] = new DefaultRecordListenerProvider(
+            onStoreEnd(end)
+            .onInsertEnd(end)
+            .onUpdateEnd(end)
+            .onDeleteEnd(end)
+        );
 
         return result;
     }

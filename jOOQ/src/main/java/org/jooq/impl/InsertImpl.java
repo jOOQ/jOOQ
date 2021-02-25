@@ -42,11 +42,13 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.filterOne;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;

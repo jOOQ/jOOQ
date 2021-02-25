@@ -174,10 +174,12 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.insert;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
+import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonExists;
 import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
+import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.keyword;
@@ -8499,10 +8501,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldJSONArrayConstructorIf() {
-        if (parseFunctionNameIf("JSON_ARRAY")) {
+        boolean jsonb = false;
+
+        if (parseFunctionNameIf("JSON_ARRAY", "JSON_BUILD_ARRAY") || (jsonb = parseFunctionNameIf("JSONB_BUILD_ARRAY"))) {
             parse('(');
             if (parseIf(')'))
-                return DSL.jsonArray();
+                return jsonb ? jsonbArray() : jsonArray();
 
             List<Field<?>> result = null;
             JSONOnNull onNull = parseJSONNullTypeIf();
@@ -8516,12 +8520,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             parse(')');
 
-            JSONArrayNullStep<?> s1 = result == null ? DSL.jsonArray() : DSL.jsonArray(result);
+            JSONArrayNullStep<?> s1 = result == null
+                ? jsonb ? jsonbArray() : jsonArray()
+                : jsonb ? jsonbArray(result) : jsonArray(result);
             JSONArrayReturningStep<?> s2 = onNull == NULL_ON_NULL
-                 ? s1.nullOnNull()
-                 : onNull == ABSENT_ON_NULL
-                 ? s1.absentOnNull()
-                 : s1;
+                ? s1.nullOnNull()
+                : onNull == ABSENT_ON_NULL
+                ? s1.absentOnNull()
+                : s1;
             return returning == null ? s2 : s2.returning(returning);
         }
 

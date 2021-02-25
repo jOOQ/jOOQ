@@ -174,9 +174,11 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.insert;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
+import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonExists;
 import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
+import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
@@ -8527,7 +8529,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final AggregateFilterStep<?> parseJSONArrayAggFunctionIf() {
-        if (parseFunctionNameIf("JSON_ARRAYAGG")) {
+        boolean jsonb = false;
+
+        if (parseFunctionNameIf("JSON_ARRAYAGG", "JSON_AGG") || (jsonb = parseFunctionNameIf("JSONB_AGG"))) {
             AggregateFilterStep<?> result;
             JSONArrayAggOrderByStep<?> s1;
             JSONArrayAggNullStep<?> s2;
@@ -8536,7 +8540,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             DataType<?> returning;
 
             parse('(');
-            result = s3 = s2 = s1 = DSL.jsonArrayAgg(parseField());
+            result = s3 = s2 = s1 = jsonb ? jsonbArrayAgg(parseField()) : jsonArrayAgg(parseField());
 
             if (parseKeywordIf("ORDER BY"))
                 result = s3 = s2 = s1.orderBy(parseList(',', ParseContext::parseSortField));

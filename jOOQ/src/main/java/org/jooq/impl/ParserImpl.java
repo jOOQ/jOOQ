@@ -178,11 +178,13 @@ import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonExists;
 import static org.jooq.impl.DSL.jsonObject;
+import static org.jooq.impl.DSL.jsonObjectAgg;
 import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.jsonbObject;
+import static org.jooq.impl.DSL.jsonbObjectAgg;
 import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
@@ -8601,7 +8603,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final AggregateFilterStep<?> parseJSONObjectAggFunctionIf() {
-        if (parseFunctionNameIf("JSON_OBJECTAGG")) {
+        boolean jsonb = false;
+
+        if (parseFunctionNameIf("JSON_OBJECTAGG", "JSON_OBJECT_AGG") || (jsonb = parseFunctionNameIf("JSONB_OBJECT_AGG"))) {
             AggregateFilterStep<?> result;
             JSONObjectAggNullStep<?> s1;
             JSONObjectAggReturningStep<?> s2;
@@ -8609,7 +8613,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             DataType<?> returning;
 
             parse('(');
-            result = s2 = s1 = DSL.jsonObjectAgg(parseJSONEntry());
+            result = s2 = s1 = jsonb ? jsonbObjectAgg(parseJSONEntry()) : jsonObjectAgg(parseJSONEntry());
 
             if ((onNull = parseJSONNullTypeIf()) != null)
                 result = s2 = onNull == ABSENT_ON_NULL ? s1.absentOnNull() : s1.nullOnNull();

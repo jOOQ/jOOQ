@@ -159,10 +159,7 @@ implements
 
     private static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supportedBy(CUBRID);
     private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CUBRID, H2, IGNITE);
-
-
-
-
+    private static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, IGNITE);
     private static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(POSTGRES);
 
     final Table<?>                        lhs;
@@ -466,20 +463,18 @@ implements
     private final void toSQLJoinCondition(Context<?> ctx) {
         if (!using.isEmpty()) {
 
+            // [#582] Some dialects don't explicitly support a JOIN .. USING
+            // syntax. This can be emulated with JOIN .. ON
+            if (EMULATE_JOIN_USING.contains(ctx.dialect()))
+                toSQLJoinCondition(ctx, usingCondition());
 
-
-
-
-
-
-
-
-
-            ctx.formatSeparator()
-               .start(TABLE_JOIN_USING)
-               .visit(K_USING)
-               .sql(" (").visit(wrap(using).indentSize(0).qualify(false)).sql(')')
-               .end(TABLE_JOIN_USING);
+            // Native supporters of JOIN .. USING
+            else
+                ctx.formatSeparator()
+                   .start(TABLE_JOIN_USING)
+                   .visit(K_USING)
+                   .sql(" (").visit(wrap(using).indentSize(0).qualify(false)).sql(')')
+                   .end(TABLE_JOIN_USING);
         }
 
         // [#577] If any NATURAL JOIN syntax needs to be emulated, find out

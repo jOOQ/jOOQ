@@ -76,6 +76,7 @@ import org.jooq.UnwrapperProvider;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
+import org.jooq.impl.AbstractConfiguration;
 
 /**
  * A mock configuration.
@@ -87,7 +88,7 @@ import org.jooq.conf.Settings;
  * @author Lukas Eder
  */
 @SuppressWarnings("deprecation")
-public class MockConfiguration implements Configuration {
+public class MockConfiguration extends AbstractConfiguration {
 
     /**
      * Generated UID
@@ -313,18 +314,8 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration set(RecordListener... newRecordListeners) {
-        return delegate.set(newRecordListeners);
-    }
-
-    @Override
     public Configuration set(RecordListenerProvider... newRecordListenerProviders) {
         return delegate.set(newRecordListenerProviders);
-    }
-
-    @Override
-    public Configuration set(ExecuteListener... newExecuteListeners) {
-        return delegate.set(newExecuteListeners);
     }
 
     @Override
@@ -333,18 +324,8 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration set(MigrationListener... newMigrationListeners) {
-        return delegate.set(newMigrationListeners);
-    }
-
-    @Override
     public Configuration set(MigrationListenerProvider... newMigrationListenerProviders) {
         return delegate.set(newMigrationListenerProviders);
-    }
-
-    @Override
-    public Configuration set(VisitListener... newVisitListeners) {
-        return delegate.set(newVisitListeners);
     }
 
     @Override
@@ -353,30 +334,14 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration set(TransactionListener... newTransactionListeners) {
-        return delegate.set(newTransactionListeners);
-    }
-
-    @Override
     public Configuration set(TransactionListenerProvider... newTransactionListenerProviders) {
         return delegate.set(newTransactionListenerProviders);
-    }
-
-    @Override
-    public Configuration set(DiagnosticsListener... newDiagnosticsListeners) {
-        return delegate.set(newDiagnosticsListeners);
     }
 
     @Override
     public Configuration set(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
         return delegate.set(newDiagnosticsListenerProviders);
     }
-
-
-
-
-
-
 
 
 
@@ -489,18 +454,8 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration derive(RecordListener... newRecordListeners) {
-        return delegate.derive(newRecordListeners);
-    }
-
-    @Override
     public Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return delegate.derive(newRecordListenerProviders);
-    }
-
-    @Override
-    public Configuration derive(ExecuteListener... newExecuteListeners) {
-        return delegate.derive(newExecuteListeners);
     }
 
     @Override
@@ -509,18 +464,8 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration derive(MigrationListener... newMigrationListeners) {
-        return delegate.derive(newMigrationListeners);
-    }
-
-    @Override
     public Configuration derive(MigrationListenerProvider... newMigrationListenerProviders) {
         return delegate.derive(newMigrationListenerProviders);
-    }
-
-    @Override
-    public Configuration derive(VisitListener... newVisitListeners) {
-        return delegate.derive(newVisitListeners);
     }
 
     @Override
@@ -529,30 +474,14 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration derive(TransactionListener... newTransactionListeners) {
-        return delegate.derive(newTransactionListeners);
-    }
-
-    @Override
     public Configuration derive(TransactionListenerProvider... newTransactionListenerProviders) {
         return delegate.derive(newTransactionListenerProviders);
-    }
-
-    @Override
-    public Configuration derive(DiagnosticsListener... newDiagnosticsListeners) {
-        return delegate.derive(newDiagnosticsListeners);
     }
 
     @Override
     public Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
         return delegate.derive(newDiagnosticsListenerProviders);
     }
-
-
-
-
-
-
 
 
 

@@ -78,6 +78,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.Field;
 import org.jooq.Log;
@@ -345,10 +346,7 @@ public abstract class AbstractDatabase implements Database {
         }
         else {
             final Settings newSettings = SettingsTools.clone(configuration.settings()).withRenderFormatted(true);
-            final ExecuteListenerProvider[] oldProviders = configuration.executeListenerProviders();
-            final ExecuteListenerProvider[] newProviders = new ExecuteListenerProvider[oldProviders.length + 1];
-            System.arraycopy(oldProviders, 0, newProviders, 0, oldProviders.length);
-            newProviders[oldProviders.length] = new DefaultExecuteListenerProvider(new DefaultExecuteListener() {
+            final ExecuteListener newListener = new DefaultExecuteListener() {
 
                 class SQLPerformanceWarning extends Exception {}
 
@@ -449,8 +447,8 @@ public abstract class AbstractDatabase implements Database {
                 private String formatted(Query query) {
                     return DSL.using(configuration.derive(newSettings)).renderInlined(query);
                 }
-            });
-            return DSL.using(configuration.derive(newProviders));
+            };
+            return DSL.using(configuration.deriveAppending(newListener));
         }
     }
 

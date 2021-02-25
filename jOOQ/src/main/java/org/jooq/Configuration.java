@@ -743,7 +743,7 @@ public interface Configuration extends Serializable {
     Configuration set(RecordUnmapperProvider newRecordUnmapperProvider);
 
     /**
-     * Change this configuration to hold a new record listeners.
+     * Change this configuration to hold new record listeners.
      * <p>
      * This will wrap the argument {@link RecordListener} in a
      * {@link DefaultRecordListenerProvider} for convenience.
@@ -759,7 +759,23 @@ public interface Configuration extends Serializable {
     Configuration set(RecordListener... newRecordListeners);
 
     /**
-     * Change this configuration to hold a new record listener providers.
+     * Change this configuration by appending new record listeners.
+     * <p>
+     * This will wrap the argument {@link RecordListener} in a
+     * {@link DefaultRecordListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newRecordListeners The appended record listener to be contained in
+     *            the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(RecordListener... newRecordListeners);
+
+    /**
+     * Change this configuration to hold new record listener providers.
      * <p>
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
@@ -772,7 +788,20 @@ public interface Configuration extends Serializable {
     Configuration set(RecordListenerProvider... newRecordListenerProviders);
 
     /**
-     * Change this configuration to hold a new execute listeners.
+     * Change this configuration by appending new record listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newRecordListenerProviders The appended record listener providers
+     *            to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(RecordListenerProvider... newRecordListenerProviders);
+
+    /**
+     * Change this configuration to hold new execute listeners.
      * <p>
      * This will wrap the argument {@link ExecuteListener} in a
      * {@link DefaultExecuteListenerProvider} for convenience.
@@ -788,7 +817,23 @@ public interface Configuration extends Serializable {
     Configuration set(ExecuteListener... newExecuteListeners);
 
     /**
-     * Change this configuration to hold a new execute listener providers.
+     * Change this configuration by appending new execute listeners.
+     * <p>
+     * This will wrap the argument {@link ExecuteListener} in a
+     * {@link DefaultExecuteListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newExecuteListeners The appended execute listeners to be contained
+     *            in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(ExecuteListener... newExecuteListeners);
+
+    /**
+     * Change this configuration to hold new execute listener providers.
      * <p>
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
@@ -801,7 +846,20 @@ public interface Configuration extends Serializable {
     Configuration set(ExecuteListenerProvider... newExecuteListenerProviders);
 
     /**
-     * Change this configuration to hold a new migration listeners.
+     * Change this configuration by appending new execute listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newExecuteListenerProviders The appended execute listener
+     *            providers to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(ExecuteListenerProvider... newExecuteListenerProviders);
+
+    /**
+     * Change this configuration to hold new migration listeners.
      * <p>
      * This will wrap the argument {@link MigrationListener} in a
      * {@link DefaultMigrationListenerProvider} for convenience.
@@ -817,17 +875,47 @@ public interface Configuration extends Serializable {
     Configuration set(MigrationListener... newMigrationListeners);
 
     /**
-     * Change this configuration to hold a new migration listener providers.
+     * Change this configuration by appending new migration listeners.
+     * <p>
+     * This will wrap the argument {@link MigrationListener} in a
+     * {@link DefaultMigrationListenerProvider} for convenience.
      * <p>
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
      *
-     * @param newMigrationListenerProviders The new migration listener providers to
-     *            be contained in the changed configuration.
+     * @param newMigrationListeners The appended migration listeners to be
+     *            contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(MigrationListener... newMigrationListeners);
+
+    /**
+     * Change this configuration to hold new migration listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newMigrationListenerProviders The new migration listener providers
+     *            to be contained in the changed configuration.
      * @return The changed configuration.
      */
     @NotNull
     Configuration set(MigrationListenerProvider... newMigrationListenerProviders);
+
+    /**
+     * Change this configuration to hold by appending new migration listener
+     * providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newMigrationListenerProviders The appended migration listener
+     *            providers to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(MigrationListenerProvider... newMigrationListenerProviders);
 
     /**
      * Change this configuration to hold a new visit listeners.
@@ -846,20 +934,49 @@ public interface Configuration extends Serializable {
     Configuration set(VisitListener... newVisitListeners);
 
     /**
-     * Change this configuration to hold a new visit listener providers.
+     * Change this configuration to hold new visit listeners.
+     * <p>
+     * This will wrap the argument {@link VisitListener} in a
+     * {@link DefaultVisitListenerProvider} for convenience.
      * <p>
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
      *
-     * @param newVisitListenerProviders The new visit listener providers to
-     *            be contained in the changed configuration.
+     * @param newVisitListeners The new visit listeners to be contained in the
+     *            changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(VisitListener... newVisitListeners);
+
+    /**
+     * Change this configuration to hold new visit listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newVisitListenerProviders The new visit listener providers to be
+     *            contained in the changed configuration.
      * @return The changed configuration.
      */
     @NotNull
     Configuration set(VisitListenerProvider... newVisitListenerProviders);
 
     /**
-     * Change this configuration to hold a new transaction listeners.
+     * Change this configuration by appending new visit listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newVisitListenerProviders The appended visit listener providers to
+     *            be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(VisitListenerProvider... newVisitListenerProviders);
+
+    /**
+     * Change this configuration to hold new transaction listeners.
      * <p>
      * This will wrap the argument {@link TransactionListener} in a
      * {@link DefaultTransactionListenerProvider} for convenience.
@@ -875,7 +992,23 @@ public interface Configuration extends Serializable {
     Configuration set(TransactionListener... newTransactionListeners);
 
     /**
-     * Change this configuration to hold a new transaction listener providers.
+     * Change this configuration by appending new transaction listeners.
+     * <p>
+     * This will wrap the argument {@link TransactionListener} in a
+     * {@link DefaultTransactionListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newTransactionListeners The appended transaction listeners to be
+     *            contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(TransactionListener... newTransactionListeners);
+
+    /**
+     * Change this configuration to hold new transaction listener providers.
      * <p>
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
@@ -888,7 +1021,21 @@ public interface Configuration extends Serializable {
     Configuration set(TransactionListenerProvider... newTransactionListenerProviders);
 
     /**
-     * Change this configuration to hold a new diagnostics listeners.
+     * Change this configuration by appending new transaction listener
+     * providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newTransactionListenerProviders The appended transaction listener
+     *            providers to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(TransactionListenerProvider... newTransactionListenerProviders);
+
+    /**
+     * Change this configuration to hold new diagnostics listeners.
      * <p>
      * This will wrap the argument {@link DiagnosticsListener} in a
      * {@link DefaultDiagnosticsListenerProvider} for convenience.
@@ -904,6 +1051,22 @@ public interface Configuration extends Serializable {
     Configuration set(DiagnosticsListener... newDiagnosticsListeners);
 
     /**
+     * Change this configuration by appending new diagnostics listeners.
+     * <p>
+     * This will wrap the argument {@link DiagnosticsListener} in a
+     * {@link DefaultDiagnosticsListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newDiagnosticsListeners The new diagnostics listeners to be
+     *            contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(DiagnosticsListener... newDiagnosticsListeners);
+
+    /**
      * Change this configuration to hold new diagnostics listener providers.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -915,6 +1078,20 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration set(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
+
+    /**
+     * Change this configuration by appending new diagnostics listener
+     * providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newDiagnosticsListenerProviders The new diagnostics listener
+     *            providers to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration setAppending(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
 
     /**
      * Change this configuration to hold a new unwrapper.
@@ -967,6 +1144,37 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration set(ConverterProvider newConverterProvider);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1202,15 +1410,40 @@ public interface Configuration extends Serializable {
     Configuration derive(RecordListener... newRecordListeners);
 
     /**
+     * Create a derived configuration from this one, with appended record
+     * listeners.
+     * <p>
+     * This will wrap the argument {@link RecordListener} in a
+     * {@link DefaultRecordListenerProvider} for convenience.
+     *
+     * @param newRecordListeners The appended record listeners to be contained
+     *            in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(RecordListener... newRecordListeners);
+
+    /**
      * Create a derived configuration from this one, with new record listener
      * providers.
      *
-     * @param newRecordListenerProviders The new record listener providers to
-     *            be contained in the derived configuration.
+     * @param newRecordListenerProviders The new record listener providers to be
+     *            contained in the derived configuration.
      * @return The derived configuration.
      */
     @NotNull
     Configuration derive(RecordListenerProvider... newRecordListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with appended record
+     * listener providers.
+     *
+     * @param newRecordListenerProviders The appended record listener providers
+     *            to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(RecordListenerProvider... newRecordListenerProviders);
 
     /**
      * Create a derived configuration from this one, with new execute listeners.
@@ -1226,6 +1459,20 @@ public interface Configuration extends Serializable {
     Configuration derive(ExecuteListener... newExecuteListeners);
 
     /**
+     * Create a derived configuration from this one, with appended execute
+     * listeners.
+     * <p>
+     * This will wrap the argument {@link ExecuteListener} in a
+     * {@link DefaultExecuteListenerProvider} for convenience.
+     *
+     * @param newExecuteListeners The appended execute listener to be contained
+     *            in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(ExecuteListener... newExecuteListeners);
+
+    /**
      * Create a derived configuration from this one, with new execute listener
      * providers.
      *
@@ -1237,28 +1484,65 @@ public interface Configuration extends Serializable {
     Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders);
 
     /**
-     * Create a derived configuration from this one, with new migration listeners.
+     * Create a derived configuration from this one, with appended execute
+     * listener providers.
+     *
+     * @param newExecuteListenerProviders The appended execute listener
+     *            providers to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(ExecuteListenerProvider... newExecuteListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with new migration
+     * listeners.
      * <p>
      * This will wrap the argument {@link MigrationListener} in a
      * {@link DefaultMigrationListenerProvider} for convenience.
      *
-     * @param newMigrationListeners The new migration listener to be contained in
-     *            the derived configuration.
+     * @param newMigrationListeners The new migration listener to be contained
+     *            in the derived configuration.
      * @return The derived configuration.
      */
     @NotNull
     Configuration derive(MigrationListener... newMigrationListeners);
 
     /**
+     * Create a derived configuration from this one, with appended migration
+     * listeners.
+     * <p>
+     * This will wrap the argument {@link MigrationListener} in a
+     * {@link DefaultMigrationListenerProvider} for convenience.
+     *
+     * @param newMigrationListeners The appended migration listener to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(MigrationListener... newMigrationListeners);
+
+    /**
      * Create a derived configuration from this one, with new migration listener
      * providers.
      *
-     * @param newMigrationListenerProviders The new migration listener providers to
-     *            be contained in the derived configuration.
+     * @param newMigrationListenerProviders The new migration listener providers
+     *            to be contained in the derived configuration.
      * @return The derived configuration.
      */
     @NotNull
     Configuration derive(MigrationListenerProvider... newMigrationListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with appended migration
+     * listener providers.
+     *
+     * @param newMigrationListenerProviders The appended migration listener
+     *            providers to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(MigrationListenerProvider... newMigrationListenerProviders);
 
     /**
      * Create a derived configuration from this one, with new visit listeners.
@@ -1274,6 +1558,20 @@ public interface Configuration extends Serializable {
     Configuration derive(VisitListener... newVisitListeners);
 
     /**
+     * Create a derived configuration from this one, with appended visit
+     * listeners.
+     * <p>
+     * This will wrap the argument {@link VisitListener} in a
+     * {@link DefaultVisitListenerProvider} for convenience.
+     *
+     * @param newVisitListeners The appended visit listeners to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(VisitListener... newVisitListeners);
+
+    /**
      * Create a derived configuration from this one, with new visit listener
      * providers.
      *
@@ -1283,6 +1581,17 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(VisitListenerProvider... newVisitListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with appended visit
+     * listener providers.
+     *
+     * @param newVisitListenerProviders The appended visit listener providers to
+     *            be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(VisitListenerProvider... newVisitListenerProviders);
 
     /**
      * Create a derived configuration from this one, with new transaction
@@ -1299,6 +1608,20 @@ public interface Configuration extends Serializable {
     Configuration derive(TransactionListener... newTransactionListeners);
 
     /**
+     * Create a derived configuration from this one, with appended transaction
+     * listeners.
+     * <p>
+     * This will wrap the argument {@link TransactionListener} in a
+     * {@link DefaultTransactionListenerProvider} for convenience.
+     *
+     * @param newTransactionListeners The appended transaction listeners to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(TransactionListener... newTransactionListeners);
+
+    /**
      * Create a derived configuration from this one, with new transaction
      * listener providers.
      *
@@ -1308,6 +1631,17 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(TransactionListenerProvider... newTransactionListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with appended transaction
+     * listener providers.
+     *
+     * @param newTransactionListenerProviders The appended transaction listener
+     *            providers to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(TransactionListenerProvider... newTransactionListenerProviders);
 
     /**
      * Create a derived configuration from this one, with new diagnostics
@@ -1321,6 +1655,17 @@ public interface Configuration extends Serializable {
     Configuration derive(DiagnosticsListener... newDiagnosticsListeners);
 
     /**
+     * Create a derived configuration from this one, with appended diagnostics
+     * listeners.
+     *
+     * @param newDiagnosticsListeners The appended diagnostics listeners to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(DiagnosticsListener... newDiagnosticsListeners);
+
+    /**
      * Create a derived configuration from this one, with new diagnostics
      * listener providers.
      *
@@ -1330,6 +1675,17 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with appended diagnostics
+     * listener providers.
+     *
+     * @param newDiagnosticsListenerProviders The appended diagnostics listener
+     *            providers to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveAppending(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
 
     /**
      * Create a derived configuration from this one, with a new unwrapper.
@@ -1373,6 +1729,30 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(ConverterProvider newConverterProvider);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

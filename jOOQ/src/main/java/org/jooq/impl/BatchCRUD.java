@@ -96,10 +96,7 @@ final class BatchCRUD extends AbstractBatch {
         QueryCollector collector = new QueryCollector();
 
         // Add the QueryCollector to intercept query execution after rendering
-        Configuration local = configuration.derive(Tools.combine(
-            configuration.executeListenerProviders(),
-            new DefaultExecuteListenerProvider(collector)
-        ));
+        Configuration local = configuration.deriveAppending(collector);
 
         // [#1537] Communicate with UpdatableRecordImpl
         local.data(DATA_OMIT_RETURNING_CLAUSE, true);
@@ -153,11 +150,7 @@ final class BatchCRUD extends AbstractBatch {
     private final int[] executeStatic() {
         List<Query> queries = new ArrayList<>();
         QueryCollector collector = new QueryCollector();
-
-        Configuration local = configuration.derive(Tools.combine(
-            configuration.executeListenerProviders(),
-            new DefaultExecuteListenerProvider(collector)
-        ));
+        Configuration local = configuration.derive(collector);
 
         for (int i = 0; i < records.length; i++) {
             Configuration previous = records[i].configuration();

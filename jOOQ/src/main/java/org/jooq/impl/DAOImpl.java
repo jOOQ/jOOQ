@@ -448,13 +448,25 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         // [#7731] Create a Record -> POJO mapping to allow for reusing the below
         //         derived Configuration for improved reflection caching.
-        IdentityHashMap<R, Object> mapping = null;
+        IdentityHashMap<R, Object> mapping = !FALSE.equals(settings().isReturnRecordToPojo()) ? new IdentityHashMap<>() : null;
 
         // [#2536] Upon store(), insert(), update(), delete(), returned values in the record
         //         are copied back to the relevant POJO using the RecordListener SPI
-        if (!FALSE.equals(settings().isReturnRecordToPojo())) {
-            mapping = new IdentityHashMap<>();
-            ctx = configuration().derive(providers(configuration().recordListenerProviders(), mapping)).dsl();
+        if (mapping != null) {
+            Consumer<? super RecordContext> end = c -> {
+                Record record = c.record();
+
+                // TODO: [#2536] Use mapper()
+                if (record != null)
+                    record.into(mapping.get(record));
+            };
+
+            ctx = configuration().deriveAppending(
+                onStoreEnd(end)
+                .onInsertEnd(end)
+                .onUpdateEnd(end)
+                .onDeleteEnd(end)
+            ).dsl();
         }
         else
             ctx = ctx();

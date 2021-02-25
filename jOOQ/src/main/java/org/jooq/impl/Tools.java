@@ -2804,6 +2804,12 @@ final class Tools {
         return result;
     }
 
+    static final <T> T[] combine(T[] a1, T[] a2) {
+        T[] result = Arrays.copyOf(a1, a1.length + a2.length);
+        System.arraycopy(a2, 0, result, a1.length, a2.length);
+        return result;
+    }
+
     /**
      * Combine a field with an array of fields
      */

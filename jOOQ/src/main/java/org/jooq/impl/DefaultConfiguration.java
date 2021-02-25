@@ -65,7 +65,6 @@ import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
 import org.jooq.MetaProvider;
-import org.jooq.MigrationListener;
 import org.jooq.MigrationListenerProvider;
 // ...
 // ...
@@ -101,7 +100,7 @@ import org.jooq.migrations.xml.jaxb.MigrationsType;
  *
  * @author Lukas Eder
  */
-public class DefaultConfiguration implements Configuration {
+public class DefaultConfiguration extends AbstractConfiguration {
 
     /**
      * Serial version UID
@@ -564,11 +563,6 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final Configuration derive(RecordListener... newRecordListeners) {
-        return derive(DefaultRecordListenerProvider.providers(newRecordListeners));
-    }
-
-    @Override
     public final Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -597,11 +591,6 @@ public class DefaultConfiguration implements Configuration {
             settings,
             data
         );
-    }
-
-    @Override
-    public final Configuration derive(ExecuteListener... newExecuteListeners) {
-        return derive(DefaultExecuteListenerProvider.providers(newExecuteListeners));
     }
 
     @Override
@@ -636,11 +625,6 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final Configuration derive(MigrationListener... newMigrationListeners) {
-        return derive(DefaultMigrationListenerProvider.providers(newMigrationListeners));
-    }
-
-    @Override
     public final Configuration derive(MigrationListenerProvider... newMigrationListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -669,11 +653,6 @@ public class DefaultConfiguration implements Configuration {
             settings,
             data
         );
-    }
-
-    @Override
-    public final Configuration derive(VisitListener... newVisitListeners) {
-        return derive(DefaultVisitListenerProvider.providers(newVisitListeners));
     }
 
     @Override
@@ -708,11 +687,6 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final Configuration derive(TransactionListener... newTransactionListeners) {
-        return derive(DefaultTransactionListenerProvider.providers(newTransactionListeners));
-    }
-
-    @Override
     public final Configuration derive(TransactionListenerProvider... newTransactionListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -741,11 +715,6 @@ public class DefaultConfiguration implements Configuration {
             settings,
             data
         );
-    }
-
-    @Override
-    public final Configuration derive(DiagnosticsListener... newDiagnosticsListeners) {
-        return derive(DefaultDiagnosticsListenerProvider.providers(newDiagnosticsListeners));
     }
 
     @Override
@@ -876,12 +845,6 @@ public class DefaultConfiguration implements Configuration {
             data
         );
     }
-
-
-
-
-
-
 
 
 
@@ -1103,22 +1066,12 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final Configuration set(RecordListener... newRecordListeners) {
-        return set(DefaultRecordListenerProvider.providers(newRecordListeners));
-    }
-
-    @Override
     public final Configuration set(RecordListenerProvider... newRecordListenerProviders) {
         this.recordListenerProviders = newRecordListenerProviders != null
             ? newRecordListenerProviders
             : new RecordListenerProvider[0];
 
         return this;
-    }
-
-    @Override
-    public final Configuration set(ExecuteListener... newExecuteListeners) {
-        return set(DefaultExecuteListenerProvider.providers(newExecuteListeners));
     }
 
     @Override
@@ -1131,22 +1084,12 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final Configuration set(MigrationListener... newMigrationListeners) {
-        return set(DefaultMigrationListenerProvider.providers(newMigrationListeners));
-    }
-
-    @Override
     public final Configuration set(MigrationListenerProvider... newMigrationListenerProviders) {
         this.migrationListenerProviders = newMigrationListenerProviders != null
             ? newMigrationListenerProviders
             : new MigrationListenerProvider[0];
 
         return this;
-    }
-
-    @Override
-    public final Configuration set(VisitListener... newVisitListeners) {
-        return set(DefaultVisitListenerProvider.providers(newVisitListeners));
     }
 
     @Override
@@ -1159,22 +1102,12 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public final Configuration set(TransactionListener... newTransactionListeners) {
-        return set(DefaultTransactionListenerProvider.providers(newTransactionListeners));
-    }
-
-    @Override
     public final Configuration set(TransactionListenerProvider... newTransactionListenerProviders) {
         this.transactionListenerProviders = newTransactionListenerProviders != null
             ? newTransactionListenerProviders
             : new TransactionListenerProvider[0];
 
         return this;
-    }
-
-    @Override
-    public final Configuration set(DiagnosticsListener... newDiagnosticsListeners) {
-        return set(DefaultDiagnosticsListenerProvider.providers(newDiagnosticsListeners));
     }
 
     @Override
@@ -1210,10 +1143,6 @@ public class DefaultConfiguration implements Configuration {
         this.converterProvider = newConverterProvider;
         return this;
     }
-
-
-
-
 
 
 

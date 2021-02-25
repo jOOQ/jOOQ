@@ -60,12 +60,9 @@ import org.jooq.Record;
 import org.jooq.Routine;
 import org.jooq.TXTFormat;
 import org.jooq.VisitContext;
-import org.jooq.VisitListener;
-import org.jooq.VisitListenerProvider;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultVisitListener;
-import org.jooq.impl.DefaultVisitListenerProvider;
 
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
@@ -90,7 +87,7 @@ public class LoggerListener extends DefaultExecuteListener {
 
             // [#2939] Prevent excessive logging of bind variables only in DEBUG mode, not in TRACE mode.
             if (!log.isTraceEnabled())
-                configuration = abbreviateBindVariables(configuration);
+                configuration = configuration.deriveAppending(new BindValueAbbreviator());
 
             String[] batchSQL = ctx.batchSQL();
             if (ctx.query() != null) {
@@ -215,18 +212,6 @@ public class LoggerListener extends DefaultExecuteListener {
     }
 
     private static final int maxLength = 2000;
-
-    /**
-     * Add a {@link VisitListener} that transforms all bind variables by abbreviating them.
-     */
-    private final Configuration abbreviateBindVariables(Configuration configuration) {
-        VisitListenerProvider[] oldProviders = configuration.visitListenerProviders();
-        VisitListenerProvider[] newProviders = new VisitListenerProvider[oldProviders.length + 1];
-        System.arraycopy(oldProviders, 0, newProviders, 0, oldProviders.length);
-        newProviders[newProviders.length - 1] = new DefaultVisitListenerProvider(new BindValueAbbreviator());
-
-        return configuration.derive(newProviders);
-    }
 
     private static class BindValueAbbreviator extends DefaultVisitListener {
 

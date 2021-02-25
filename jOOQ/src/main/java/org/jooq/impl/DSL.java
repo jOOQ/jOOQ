@@ -22577,8 +22577,38 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static <T> JSONEntry<T> jsonEntry(String key, T value) {
+        return jsonEntry(Tools.field(key), Tools.field(value));
+    }
+
+    /**
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T> JSONEntry<T> jsonEntry(String key, Field<T> value) {
         return jsonEntry(Tools.field(key), value);
+    }
+
+    /**
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static <T> JSONEntry<T> jsonEntry(String key, Select<? extends Record1<T>> value) {
+        return jsonEntry(Tools.field(key), field(value));
+    }
+
+    /**
+     * A constructor for JSON entries to be used with
+     * {@link #jsonObject(JSONEntry...)}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static <T> JSONEntry<T> jsonEntry(Field<String> key, T value) {
+        return jsonEntry(key, Tools.field(value));
     }
 
     /**
@@ -22597,8 +22627,8 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static <T> JSONEntry<T> jsonEntry(Field<String> key, T value) {
-        return jsonEntry(key, Tools.field(value));
+    public static <T> JSONEntry<T> jsonEntry(Field<String> key, Select<? extends Record1<T>> value) {
+        return jsonEntry(key, field(value));
     }
 
     /**
@@ -22616,6 +22646,15 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Field<?> value) {
+        return jsonObject(jsonEntry(key, value));
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Select<? extends Record1<?>> value) {
         return jsonObject(jsonEntry(key, value));
     }
 

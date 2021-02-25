@@ -37,6 +37,11 @@
  */
 package org.jooq;
 
+import java.io.Serializable;
+import java.util.function.Consumer;
+
+import org.jooq.impl.CallbackRecordListener;
+import org.jooq.impl.CallbackTransactionListener;
 
 /**
  * The <code>TransactionListener</code> SPI is used to intercept the
@@ -44,7 +49,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface TransactionListener {
+public interface TransactionListener extends Serializable {
 
     /**
      * Called before {@link TransactionProvider#begin(TransactionContext)}.
@@ -76,4 +81,51 @@ public interface TransactionListener {
      */
     void rollbackEnd(TransactionContext ctx);
 
+    /**
+     * Create a {@link TransactionListener} with a
+     * {@link #onBeginStart(Consumer)} implementation.
+     */
+    static CallbackTransactionListener onBeginStart(Consumer<? super TransactionContext> onBeginStart) {
+        return new CallbackTransactionListener().onBeginStart(onBeginStart);
+    }
+
+    /**
+     * Create a {@link TransactionListener} with a {@link #onBeginEnd(Consumer)}
+     * implementation.
+     */
+    static CallbackTransactionListener onBeginEnd(Consumer<? super TransactionContext> onBeginEnd) {
+        return new CallbackTransactionListener().onBeginEnd(onBeginEnd);
+    }
+
+    /**
+     * Create a {@link TransactionListener} with a
+     * {@link #onCommitStart(Consumer)} implementation.
+     */
+    static CallbackTransactionListener onCommitStart(Consumer<? super TransactionContext> onCommitStart) {
+        return new CallbackTransactionListener().onCommitStart(onCommitStart);
+    }
+
+    /**
+     * Create a {@link TransactionListener} with a
+     * {@link #onCommitEnd(Consumer)} implementation.
+     */
+    static CallbackTransactionListener onCommitEnd(Consumer<? super TransactionContext> onCommitEnd) {
+        return new CallbackTransactionListener().onCommitEnd(onCommitEnd);
+    }
+
+    /**
+     * Create a {@link TransactionListener} with a
+     * {@link #onRollbackStart(Consumer)} implementation.
+     */
+    static CallbackTransactionListener onRollbackStart(Consumer<? super TransactionContext> onRollbackStart) {
+        return new CallbackTransactionListener().onRollbackStart(onRollbackStart);
+    }
+
+    /**
+     * Create a {@link TransactionListener} with a
+     * {@link #onRollbackEnd(Consumer)} implementation.
+     */
+    static CallbackTransactionListener onRollbackEnd(Consumer<? super TransactionContext> onRollbackEnd) {
+        return new CallbackTransactionListener().onRollbackEnd(onRollbackEnd);
+    }
 }

@@ -50,6 +50,11 @@ import org.jooq.TransactionListener;
  */
 public class DefaultTransactionListener implements TransactionListener {
 
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -1836373111252221549L;
+
     @Override
     public void beginStart(TransactionContext ctx) {}
 

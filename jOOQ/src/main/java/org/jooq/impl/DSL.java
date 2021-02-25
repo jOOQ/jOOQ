@@ -22668,6 +22668,15 @@ public class DSL {
     }
 
     /**
+     * The JSON object constructor.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSONB> jsonbObject() {
+        return jsonbObject(Tools.EMPTY_JSONENTRY);
+    }
+
+    /**
      * The JSON array aggregate function.
      */
     @NotNull

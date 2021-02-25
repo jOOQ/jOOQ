@@ -177,10 +177,12 @@ import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonExists;
+import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
+import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
@@ -8565,10 +8567,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldJSONObjectConstructorIf() {
-        if (parseFunctionNameIf("JSON_OBJECT")) {
+        boolean jsonb = false;
+
+        if (parseFunctionNameIf("JSON_OBJECT", "JSON_BUILD_OBJECT") || (jsonb = parseFunctionNameIf("JSONB_BUILD_OBJECT"))) {
             parse('(');
             if (parseIf(')'))
-                return DSL.jsonObject();
+                return jsonb ? jsonbObject() : jsonObject();
 
             List<JSONEntry<?>> result;
             JSONOnNull onNull = parseJSONNullTypeIf();
@@ -8584,12 +8588,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             parse(')');
 
-            JSONObjectNullStep<?> s1 = DSL.jsonObject(result);
+            JSONObjectNullStep<?> s1 = jsonb ? jsonbObject(result) : jsonObject(result);
             JSONObjectReturningStep<?> s2 = onNull == NULL_ON_NULL
-                 ? s1.nullOnNull()
-                 : onNull == ABSENT_ON_NULL
-                 ? s1.absentOnNull()
-                 : s1;
+                ? s1.nullOnNull()
+                : onNull == ABSENT_ON_NULL
+                ? s1.absentOnNull()
+                : s1;
             return returning == null ? s2 : s2.returning(returning);
         }
 

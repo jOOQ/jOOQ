@@ -119,11 +119,12 @@ final class CatalogMetaImpl extends AbstractMeta {
         Map<Name, Schema> s = new LinkedHashMap<>();
         Map<Name, List<Table<?>>> mapping = new LinkedHashMap<>();
 
+        // TODO: [#7172] Can't use Table.getQualifiedName() here, yet
         for (Table<?> table : tables)
-            mapping.computeIfAbsent(nameOrDefault(table.getSchema()), k -> new ArrayList<>()).add(table);
+            mapping.computeIfAbsent(nameOrDefault(table.getCatalog()).append(nameOrDefault(table.getSchema())), k -> new ArrayList<>()).add(table);
 
         for (Table<?> table : tables)
-            s.computeIfAbsent(nameOrDefault(table.getSchema()), k -> new SchemaImpl(k, table.getCatalog()) {
+            s.computeIfAbsent(nameOrDefault(table.getCatalog()).append(nameOrDefault(table.getSchema())), k -> new SchemaImpl(k, table.getCatalog()) {
                 @Override
                 public List<Table<?>> getTables() {
                     return mapping.get(getQualifiedName());

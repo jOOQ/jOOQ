@@ -10608,8 +10608,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             Field<?> f1 = parseField();
             parse(',');
-            int f2 = (int) (long) parseUnsignedIntegerLiteral();
-            WindowFromFirstLastStep<?> s1 = nthValue(f1, f2);
+            Field<?> f2 = parseField();
+            WindowFromFirstLastStep<?> s1 = nthValue(f1, (Field) f2);
             WindowIgnoreNullsStep s2 = parseWindowFromFirstLast(s1, s1);
             WindowOverStep<?> s3 = parseWindowRespectIgnoreNulls(s2, s2);
             parse(')');

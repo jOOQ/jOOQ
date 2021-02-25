@@ -5945,12 +5945,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Condition parseCondition() {
-
-
-
-
-
-
         return toCondition(parseOr());
     }
 
@@ -5979,6 +5973,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final QueryPart parsePredicate() {
+
+
+
+
+
+
         if (parseKeywordIf("EXISTS")) {
             parse('(');
             Select<?> select = parseWithOrSelect();
@@ -6290,14 +6290,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Table<?> parseTable() {
-        Table<?> result;
-
-
-
-
-
-
-        result = parseLateral();
+        Table<?> result = parseLateral();
 
         for (;;) {
             Table<?> joined = parseJoinedTableIf(result);
@@ -6332,6 +6325,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         // [#7982] Postpone turning Select into a Table in case there is an alias
         TableLike<?> result = null;
+
+
+
+
+
 
         // TODO [#5306] Support FINAL TABLE (<data change statement>)
         // TOOD ONLY ( table primary )
@@ -6931,13 +6929,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Field<?> parseField() {
-        Field<?> result;
-
-
-
-
-
-
         return parseField(null);
     }
 
@@ -7299,6 +7290,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final FieldOrRow parseTerm(Type type) {
         FieldOrRow field;
         Object value;
+
+
+
+
+
 
         switch (characterUpper()) {
             case ':':
@@ -7926,6 +7922,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case '7':
             case '8':
             case '9':
+            case '-':
             case '.':
                 if (N.is(type))
                     if ((field = parseFieldUnsignedNumericLiteralIf(Sign.NONE)) != null)

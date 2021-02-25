@@ -159,6 +159,7 @@ import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.qualify;
+import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
@@ -3521,9 +3522,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (getFrom().size() == 1 && getSelectAsSpecified().isEmpty())
             return (Class<? extends R>) getFrom().get(0).asTable().getRecordType();
 
-        // TODO: [#4695] Calculate the correct Record[B] type
+        // [#4695] [#11521] Calculate the correct Record[B] type
         else
-            return (Class<? extends R>) RecordImplN.class;
+            return (Class<? extends R>) recordType(getSelect().size());
     }
 
     final TableList getFrom() {

@@ -42,12 +42,11 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.filterOne;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -173,13 +172,13 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     private transient boolean doUpdateWhere;
 
     InsertImpl(Configuration configuration, WithImpl with, Table<R> into) {
-        super(new InsertQueryImpl<>(configuration, with, into));
-
-        this.into = into;
+        this(configuration, with, into, Collections.emptyList());
     }
 
     InsertImpl(Configuration configuration, WithImpl with, Table<R> into, Collection<? extends Field<?>> fields) {
-        this(configuration, with, into);
+        super(new InsertQueryImpl<>(configuration, with, into));
+
+        this.into = into;
         columns(fields);
     }
 
@@ -311,11 +310,11 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
             return defaultValues();
 
         // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
-        else if (fields.length > 0 && fields.length != values.length)
+        else if (!Tools.isEmpty(fields) && fields.length != values.length)
             throw new IllegalArgumentException("The number of values must match the number of fields");
 
         getDelegate().newRecord();
-        if (fields.length == 0)
+        if (Tools.isEmpty(fields))
             for (int i = 0; i < values.length; i++)
                 addValue(getDelegate(), null, i, values[i]);
         else
@@ -465,13 +464,13 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
             return defaultValues();
 
         // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
-        else if (fields.length > 0 && fields.length != values.length)
+        else if (!Tools.isEmpty(fields) && fields.length != values.length)
             throw new IllegalArgumentException("The number of values must match the number of fields");
 
         getDelegate().newRecord();
 
         // javac has trouble when inferring Object for T. Use Void instead
-        if (fields.length == 0)
+        if (Tools.isEmpty(fields))
             for (int i = 0; i < values.length; i++)
                 addValue(getDelegate(), (Field<Void>) null, i, (Field<Void>) values[i]);
         else
@@ -615,7 +614,7 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final InsertImpl columns(Field<?>... f) {
-        this.fields = (f == null || f.length == 0) ? into.fields() : f;
+        this.fields = Tools.isEmpty(f) ? into.fields() : f;
         return this;
     }
 

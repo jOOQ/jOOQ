@@ -139,8 +139,9 @@ final class CatalogMetaImpl extends AbstractMeta {
         final Map<Name, Schema> s = new LinkedHashMap<>();
         final Map<Name, List<Table<?>>> mapping = new LinkedHashMap<>();
 
+        // TODO: [#7172] Can't use Table.getQualifiedName() here, yet
         for (Table<?> table : tables) {
-            Name key = nameOrDefault(table.getSchema());
+            Name key = nameOrDefault(table.getCatalog()).append(nameOrDefault(table.getSchema()));
             List<Table<?>> list = mapping.get(key);
 
             if (list == null)
@@ -150,7 +151,7 @@ final class CatalogMetaImpl extends AbstractMeta {
         }
 
         for (Table<?> table : tables) {
-            Name key = nameOrDefault(table.getSchema());
+            Name key = nameOrDefault(table.getCatalog()).append(nameOrDefault(table.getSchema()));
 
             if (!s.containsKey(key))
                 s.put(key, new SchemaImpl(key, table.getCatalog()) {

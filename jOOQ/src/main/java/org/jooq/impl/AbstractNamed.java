@@ -122,7 +122,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     // -------------------------------------------------------------------------
 
     static final Name nameOrDefault(Named named) {
-        return named == null ? NO_NAME : named.getQualifiedName();
+        return named == null ? NO_NAME : named.getUnqualifiedName();
     }
 
     static final Name qualify(Named qualifier, Name name) {

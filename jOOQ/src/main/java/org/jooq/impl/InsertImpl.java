@@ -174,7 +174,7 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     private transient boolean doUpdateWhere;
 
     InsertImpl(Configuration configuration, WithImpl with, Table<R> into) {
-        this(configuration, with, into, Collections.<Field<?>>emptyList());
+        this(configuration, with, into, Collections.emptyList());
     }
 
     InsertImpl(Configuration configuration, WithImpl with, Table<R> into, Collection<? extends Field<?>> fields) {

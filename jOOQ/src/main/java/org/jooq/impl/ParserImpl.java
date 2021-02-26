@@ -365,6 +365,7 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
+import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_FOR_UPDATE_OF_FIELDS;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
@@ -374,6 +375,7 @@ import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
@@ -1326,7 +1328,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 throw expected("UPDATE", "NO KEY UPDATE", "SHARE", "KEY SHARE", "XML", "JSON");
 
             if (parseKeywordIf("OF"))
-                result.setForUpdateOf(parseList(',', ParseContext::parseField));
+                if (NO_SUPPORT_FOR_UPDATE_OF_FIELDS.contains(parseDialect()))
+                    result.setForUpdateOf(parseList(',', ParseContext::parseTable).toArray(EMPTY_TABLE));
+                else
+                    result.setForUpdateOf(parseList(',', ParseContext::parseField));
 
             if (parseKeywordIf("NOWAIT"))
                 result.setForUpdateNoWait();

@@ -171,9 +171,7 @@ final class Names {
     static final Name N_JSON_VALUE             = unquotedName("json_value");
     static final Name N_JSONB_AGG              = unquotedName("jsonb_agg");
     static final Name N_JSONB_BUILD_ARRAY      = unquotedName("jsonb_build_array");
-    static final Name N_JSONB_OBJECT           = unquotedName("jsonb_object");
     static final Name N_JSONB_OBJECT_AGG       = unquotedName("jsonb_object_agg");
-    static final Name N_JSONB_OBJECTAGG        = unquotedName("jsonb_objectagg");
     static final Name N_JSONB_PATH_EXISTS      = unquotedName("jsonb_path_exists");
     static final Name N_JSONB_PATH_QUERY_FIRST = unquotedName("jsonb_path_query_first");
     static final Name N_LCASE                  = unquotedName("lcase");

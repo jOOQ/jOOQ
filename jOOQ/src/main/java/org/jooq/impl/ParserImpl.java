@@ -4270,7 +4270,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             // [#10164] In a statement batch, this could already be the next statement
             else if (!peekKeyword("COMMENT ON") && parseKeywordIf("COMMENT")) {
-                parseIf('=');
+                if (!parseIf('='))
+                    parseKeywordIf("IS");
                 comment = parseComment();
             }
             else if (peekKeyword("OPTIONS")) {
@@ -4584,6 +4585,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 // [#10164] In a statement batch, this could already be the next statement
                 if (!peekKeyword("COMMENT ON") && parseKeywordIf("COMMENT")) {
+                    if (!parseIf('='))
+                        parseKeywordIf("IS");
                     fieldComment = parseComment();
                     continue;
                 }
@@ -4852,7 +4855,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 // TODO: support all of the storageLoop from the CREATE TABLE statement
                 if (parseKeywordIf("COMMENT")) {
-                    parseIf('=');
+                    if (!parseIf('='))
+                        parseKeywordIf("IS");
                     return dsl.commentOnTable(tableName).is(parseStringLiteral());
                 }
 
@@ -6158,7 +6162,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             else if (parseKeywordIf("IN")) {
                 Condition result;
-
                 parse('(');
                 if (peek(')'))
                     result = not

@@ -45,6 +45,7 @@ import org.jooq.SQLDialect;
 import org.jooq.meta.cubrid.CUBRIDDatabase;
 // ...
 import org.jooq.meta.derby.DerbyDatabase;
+// ...
 import org.jooq.meta.firebird.FirebirdDatabase;
 import org.jooq.meta.h2.H2Database;
 // ...
@@ -82,6 +83,7 @@ public class Databases {
         Class<? extends Database> result = JDBCDatabase.class;
 
         switch (dialect.family()) {
+
 
 
 

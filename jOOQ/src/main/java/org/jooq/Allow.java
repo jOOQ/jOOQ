@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -154,6 +155,7 @@ public @interface Allow {
      * method that is annotated with {@link Support}.
      */
     SQLDialect[] value() default {
+
 
 
 

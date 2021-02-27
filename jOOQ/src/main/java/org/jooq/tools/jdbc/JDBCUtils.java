@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
@@ -411,6 +412,8 @@ public class JDBCUtils {
 
 
 
+
+
         return DEFAULT;
     }
 
@@ -444,6 +447,8 @@ public class JDBCUtils {
                 return "org.postgresql.Driver";
             case SQLITE:
                 return "org.sqlite.JDBC";
+
+
 
 
 

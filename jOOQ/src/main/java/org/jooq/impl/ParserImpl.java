@@ -430,6 +430,7 @@ import org.jooq.Catalog;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Comment;
+import org.jooq.CommentOnFinalStep;
 import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
@@ -623,6 +624,8 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -1037,6 +1040,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 case 'M':
                     if (!parseResultQuery && peekKeyword("MERGE"))
                         return parseMerge(null);
+
+                    break;
+
+                case 'O':
+                    if (!parseResultQuery && peekKeyword("OPEN"))
+                        return parseOpen();
 
                     break;
 
@@ -2378,6 +2387,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return s3;
     }
 
+    private final Query parseOpen() {
+        parseKeyword("OPEN");
+        parseKeyword("SCHEMA");
+
+        return parseSetSchema();
+    }
+
     private final Query parseSet() {
         parseKeyword("SET");
 
@@ -2449,12 +2465,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         CommentOnIsStep s1;
 
-        if (parseKeywordIf("COLUMN"))
+        if (parseKeywordIf("COLUMN")) {
             s1 = dsl.commentOnColumn(parseFieldName());
-        else if (parseKeywordIf("TABLE"))
-            s1 = dsl.commentOnTable(parseTableName());
-        else if (parseKeywordIf("VIEW"))
+        }
+        else if (parseKeywordIf("TABLE")) {
+            Table<?> table = parseTableName();
+
+            if (parseIf('(')) {
+                s1 = dsl.commentOnColumn(table.getQualifiedName().append(parseIdentifier()));
+                parseKeyword("IS");
+                DDLQuery s2 = s1.is(parseStringLiteral());
+                parse(')');
+                return s2;
+            }
+            else
+                s1 = dsl.commentOnTable(table);
+        }
+        else if (parseKeywordIf("VIEW")) {
             s1 = dsl.commentOnView(parseTableName());
+        }
 
         // Ignored no-arg object comments
         // https://www.postgresql.org/docs/10/static/sql-comment.html
@@ -4648,10 +4677,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Index parseIndexSpecification(Table<?> table) {
         Name name = parseIdentifierIf();
         parseUsingIndexTypeIf();
-        parse('(');
-        SortField<?>[] fields = parseList(',', ParseContext::parseSortField).toArray(EMPTY_SORTFIELD);
-        parse(')');
-        return Internal.createIndex(name == null ? NO_NAME : name, table, fields, false);
+        return Internal.createIndex(name == null ? NO_NAME : name, table, parseParenthesisedSortSpecification(), false);
     }
 
     private final Constraint parseConstraintEnforcementIf(ConstraintEnforcementStep e) {
@@ -4708,10 +4734,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?>[] parseKeyColumnList() {
-        parse('(');
-        SortField<?>[] fieldExpressions = parseList(',', ParseContext::parseSortField).toArray(EMPTY_SORTFIELD);
-        parse(')');
-
+        SortField<?>[] fieldExpressions = parseParenthesisedSortSpecification();
         Field<?>[] fieldNames = new Field[fieldExpressions.length];
 
         for (int i = 0; i < fieldExpressions.length; i++)
@@ -4994,13 +5017,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseIndexOrKeyIf()) {
             Name name = parseIdentifierIf();
-            parse('(');
-            List<SortField<?>> sort = parseList(',', ParseContext::parseSortField);
-            parse(')');
 
             return name == null
-                ? dsl.createIndex().on(tableName, sort)
-                : dsl.createIndex(name).on(tableName, sort);
+                ? dsl.createIndex().on(tableName, parseParenthesisedSortSpecification())
+                : dsl.createIndex(name).on(tableName, parseParenthesisedSortSpecification());
         }
 
         if (parseIf('(')) {
@@ -5862,12 +5882,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Name indexName = parseIndexNameIf();
         parseUsingIndexTypeIf();
+        SortField<?>[] fields = null;
+        if (peek('('))
+            fields = parseParenthesisedSortSpecification();
         parseKeyword("ON");
         Table<?> tableName = parseTableName();
         parseUsingIndexTypeIf();
-        parse('(');
-        SortField<?>[] fields = parseList(',', ParseContext::parseSortField).toArray(EMPTY_SORTFIELD);
-        parse(')');
+        if (fields == null)
+            fields = parseParenthesisedSortSpecification();
         parseUsingIndexTypeIf();
 
         Name[] include = null;
@@ -5906,6 +5928,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : s3;
 
         return s4;
+    }
+
+    private SortField<?>[] parseParenthesisedSortSpecification() {
+        parse('(');
+        SortField<?>[] fields = parseList(',', ParseContext::parseSortField).toArray(EMPTY_SORTFIELD);
+        parse(')');
+
+        return fields;
     }
 
     private final boolean parseUsingIndexTypeIf() {
@@ -7563,6 +7593,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (N.is(type))
                     if (parseFunctionNameIf("HOUR"))
                         return hour(parseFieldParenthesised(D));
+
+                if (S.is(type))
+                    if (parseFunctionNameIf("HASH_MD5"))
+                        return md5((Field) parseFieldParenthesised(S));
 
                 break;
 
@@ -12368,6 +12402,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return ComputationalOperation.MEDIAN;
                 else if (parseFunctionNameIf("MIN"))
                     return ComputationalOperation.MIN;
+                else if (parseFunctionNameIf("MUL"))
+                    return ComputationalOperation.PRODUCT;
 
                 break;
 

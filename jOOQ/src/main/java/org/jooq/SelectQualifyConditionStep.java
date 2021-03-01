@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**

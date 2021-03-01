@@ -43,6 +43,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 // ...
@@ -62,7 +63,7 @@ import static org.jooq.impl.Keywords.K_IGNORE_NULLS;
 import static org.jooq.impl.Keywords.K_LAST;
 import static org.jooq.impl.Keywords.K_OVER;
 import static org.jooq.impl.Keywords.K_RESPECT_NULLS;
-import static org.jooq.impl.SelectQueryImpl.SUPPORT_WINDOW_CLAUSE;
+import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
@@ -151,7 +152,7 @@ implements
 
         // [#531] Inline window specifications if the WINDOW clause is not supported
         if (windowName != null) {
-            if (SUPPORT_WINDOW_CLAUSE.contains(ctx.dialect()))
+            if (!NO_SUPPORT_WINDOW_CLAUSE.contains(ctx.dialect()))
                 return windowName;
 
             QueryPartList<WindowDefinition> windows = (QueryPartList<WindowDefinition>) ctx.data(DATA_WINDOW_DEFINITIONS);
@@ -164,9 +165,8 @@ implements
 
             // [#3162] If a window specification is missing from the query's WINDOW clause,
             // jOOQ should just render the window name regardless of the SQL dialect
-            else {
+            else
                 return windowName;
-            }
         }
 
         return null;

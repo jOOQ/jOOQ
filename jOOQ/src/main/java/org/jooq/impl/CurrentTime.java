@@ -93,6 +93,7 @@ final class CurrentTime<T> extends AbstractField<T> {
 
 
 
+
             case MARIADB:
             case MYSQL:
                 ctx.visit(N_CURRENT_TIME).sql("()");

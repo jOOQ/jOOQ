@@ -103,6 +103,12 @@ final class BoolOr extends DefaultAggregateFunction<Boolean> {
 
 
 
+
+
+
+
+
+
             default:
                 super.acceptFunctionName(ctx);
                 break;

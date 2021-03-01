@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.H2;
@@ -92,6 +93,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_CUBE;
+import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
@@ -11571,7 +11573,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(DataType<T> type) {
-        return new SQLField<>(type, keyword("default"));
+        return new SQLField<>(type, K_DEFAULT);
     }
 
     /**
@@ -11581,7 +11583,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(Field<T> field) {
-        return new SQLField<>(field.getDataType(), keyword("default"));
+        return new SQLField<>(field.getDataType(), K_DEFAULT);
     }
 
     /**

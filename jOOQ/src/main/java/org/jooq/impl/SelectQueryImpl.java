@@ -71,6 +71,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -101,7 +102,9 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT_ALL;
@@ -248,6 +251,7 @@ import org.jooq.TablePartitionByStep;
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
+import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
@@ -257,6 +261,8 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
@@ -278,7 +284,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supportedBy(H2, MYSQL, POSTGRES, SQLITE);
+    static final Set<SQLDialect>         NO_SUPPORT_WINDOW_CLAUSE        = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB);
     private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(DEFAULT, H2, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
@@ -2113,6 +2119,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
         // GROUP BY and HAVING clause
         // --------------------------
         context.start(SELECT_GROUP_BY);
@@ -2185,7 +2193,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (Tools.isNotEmpty(window) && SUPPORT_WINDOW_CLAUSE.contains(context.dialect()))
+        if (Tools.isNotEmpty(window) && !NO_SUPPORT_WINDOW_CLAUSE.contains(context.dialect()))
             context.formatSeparator()
                    .visit(K_WINDOW)
                    .separatorRequired(true)

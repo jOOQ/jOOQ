@@ -59,6 +59,7 @@ final class Names {
     static final Name N_ADD_DAYS               = unquotedName("add_days");
     static final Name N_ADD_MONTHS             = unquotedName("add_months");
     static final Name N_ADD_SECONDS            = unquotedName("add_seconds");
+    static final Name N_ANY                    = unquotedName("any");
     static final Name N_ARRAY                  = unquotedName("array");
     static final Name N_ARRAY_AGG              = unquotedName("array_agg");
     static final Name N_ARRAY_GET              = unquotedName("array_get");
@@ -133,6 +134,7 @@ final class Names {
     static final Name N_DUAL                   = unquotedName("dual");
     static final Name N_E                      = unquotedName("e");
     static final Name N_EULER                  = unquotedName("e");
+    static final Name N_EVERY                  = unquotedName("every");
     static final Name N_EXP                    = unquotedName("exp");
     static final Name N_EXTRACT                = unquotedName("extract");
     static final Name N_FIELD                  = unquotedName("field");
@@ -145,6 +147,7 @@ final class Names {
     static final Name N_GREATEST               = unquotedName("greatest");
     static final Name N_GROUP_CONCAT           = unquotedName("group_concat");
     static final Name N_HASHBYTES              = unquotedName("hashbytes");
+    static final Name N_HASH_MD5               = unquotedName("hash_md5");
     static final Name N_HEX                    = unquotedName("hex");
     static final Name N_IF                     = unquotedName("if");
     static final Name N_IFNULL                 = unquotedName("ifnull");
@@ -203,6 +206,7 @@ final class Names {
     static final Name N_MINVALUE               = unquotedName("minvalue");
     static final Name N_MOD                    = unquotedName("mod");
     static final Name N_MODE                   = unquotedName("mode");
+    static final Name N_MUL                    = unquotedName("mul");
     static final Name N_NANO100_BETWEEN        = unquotedName("nano100_between");
     static final Name N_NEXTVAL                = unquotedName("nextval");
     static final Name N_NOT                    = unquotedName("not");

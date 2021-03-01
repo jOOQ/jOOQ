@@ -38,19 +38,25 @@
 package org.jooq.impl;
 
 // ...
+// ...
+import static org.jooq.impl.DSL.aggregate;
+import static org.jooq.impl.DSL.aggregateDistinct;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Internal.imul;
+import static org.jooq.impl.Names.N_MUL;
 import static org.jooq.impl.Names.N_PRODUCT;
 import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.math.BigDecimal;
 
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 
 /**
  * @author Lukas Eder
@@ -68,6 +74,29 @@ final class Product extends AbstractAggregateFunction<BigDecimal> {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+        acceptEmulation(ctx);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final void acceptEmulation(Context<?> ctx) {
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         final Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0).getDataType(), arguments.get(0));

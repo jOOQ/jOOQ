@@ -4957,6 +4957,7 @@ final class Tools {
 
 
 
+
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
 
 

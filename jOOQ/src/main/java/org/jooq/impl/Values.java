@@ -42,6 +42,7 @@ import static org.jooq.Clause.TABLE_VALUES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
@@ -56,6 +57,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_STRUCT;
@@ -77,6 +79,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
+import org.jooq.conf.ParamType;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -193,6 +196,13 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
 
 
+
+
+
+
+
+
+
             ctx.visit(K_VALUES);
 
             if (rows.length > 1)
@@ -219,6 +229,9 @@ final class Values<R extends Record> extends AbstractTable<R> {
             if (rows.length > 1)
                 ctx.formatIndentEnd()
                    .formatNewLine();
+
+
+
 
 
 

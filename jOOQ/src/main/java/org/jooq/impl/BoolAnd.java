@@ -79,6 +79,11 @@ final class BoolAnd extends DefaultAggregateFunction<Boolean> {
 
 
 
+
+
+
+
+
             default:
                 super.acceptFunctionName(ctx);
                 break;

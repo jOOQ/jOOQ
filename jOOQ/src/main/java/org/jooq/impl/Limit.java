@@ -294,21 +294,17 @@ final class Limit extends AbstractQueryPart {
 
             case MYSQL:
             case SQLITE: {
-                ctx.castMode(NEVER)
-                   .formatSeparator()
-                   .visit(K_LIMIT)
-                   .sql(' ').visit(numberOfRowsOrMax);
-
-                if (!offsetZero())
-                    ctx.formatSeparator()
-                       .visit(K_OFFSET)
-                       .sql(' ').visit(offsetOrZero);
-
-                ctx.castMode(castMode);
+                acceptDefaultLimitMandatory(ctx, castMode);
                 break;
             }
 
-            // [#4785] OFFSET can be without LIMIT
+
+
+
+
+
+
+
 
 
 
@@ -357,13 +353,27 @@ final class Limit extends AbstractQueryPart {
 
         if (!limitZero())
             ctx.formatSeparator()
-                   .visit(K_LIMIT)
-                   .sql(' ').visit(numberOfRows);
+               .visit(K_LIMIT)
+               .sql(' ').visit(numberOfRows);
 
         if (!offsetZero())
             ctx.formatSeparator()
-                   .visit(K_OFFSET)
-                   .sql(' ').visit(offsetOrZero);
+               .visit(K_OFFSET)
+               .sql(' ').visit(offsetOrZero);
+
+        ctx.castMode(castMode);
+    }
+
+    private void acceptDefaultLimitMandatory(Context<?> ctx, CastMode castMode) {
+        ctx.castMode(NEVER)
+           .formatSeparator()
+           .visit(K_LIMIT)
+           .sql(' ').visit(numberOfRowsOrMax);
+
+        if (!offsetZero())
+            ctx.formatSeparator()
+               .visit(K_OFFSET)
+               .sql(' ').visit(offsetOrZero);
 
         ctx.castMode(castMode);
     }

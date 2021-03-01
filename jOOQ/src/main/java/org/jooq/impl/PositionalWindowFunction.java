@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_COALESCE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAG;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LEAD;
@@ -45,6 +47,7 @@ import static org.jooq.impl.Tools.inlined;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -104,8 +107,19 @@ final class PositionalWindowFunction<T> extends AbstractWindowFunction<T> {
         ctx.visit(functionType.name).sql('(');
         ctx.visit(arg);
 
-        if (offset != null)
-            ctx.sql(", ").visit(offset);
+        if (offset != null) {
+            switch (ctx.family()) {
+
+
+
+
+
+
+                default:
+                    ctx.sql(", ").visit(offset);
+                    break;
+            }
+        }
 
         if (defaultValue != null) {
             switch (ctx.family()) {

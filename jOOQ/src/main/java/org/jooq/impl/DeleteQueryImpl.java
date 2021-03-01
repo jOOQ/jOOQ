@@ -51,6 +51,7 @@ import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -100,6 +101,7 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -239,6 +241,8 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
 
 
+        boolean noSupportParametersInWhere = false;
+
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
             Field<?>[] keyFields =
                   table().getKeys().isEmpty()
@@ -251,10 +255,12 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
                .formatSeparator()
                .visit(K_WHERE).sql(' ');
 
-            if (keyFields.length == 1)
-                ctx.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
-            else
-                ctx.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
+            ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
+                if (keyFields.length == 1)
+                    c.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
+                else
+                    c.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
+            });
 
             ctx.end(DELETE_WHERE);
         }
@@ -262,9 +268,11 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
             ctx.start(DELETE_WHERE);
 
             if (hasWhere())
-                ctx.formatSeparator()
-                   .visit(K_WHERE).sql(' ')
-                   .visit(getWhere());
+                ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c ->
+                    c.formatSeparator()
+                       .visit(K_WHERE).sql(' ')
+                       .visit(getWhere())
+                );
 
 
 

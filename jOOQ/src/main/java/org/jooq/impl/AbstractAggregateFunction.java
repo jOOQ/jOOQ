@@ -51,6 +51,8 @@ import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_FILTER;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.SQLDataType.DOUBLE;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -301,16 +303,30 @@ implements
     }
 
     /**
-     * Type safe <code>NVL2(y, x, null)</code> for REGR emulations.
+     * Type safe <code>NVL2(y, x, null)</code> for statistical function
+     * emulations.
      */
     final <U extends Number> Field<U> x(Field<U> x, Field<? extends Number> y) {
         return DSL.nvl2(y, x, DSL.NULL(x.getDataType()));
     }
 
     /**
-     * Type safe <code>NVL2(x, y, null)</code> for REGR emulations.
+     * Type safe <code>NVL2(x, y, null)</code> for statistical function
+     * emulations.
      */
     final <U extends Number> Field<U> y(Field<? extends Number> x, Field<U> y) {
         return DSL.nvl2(x, y, DSL.NULL(y.getDataType()));
+    }
+
+    /**
+     * The data type to use in casts when emulating statistical functions.
+     */
+    final DataType<? extends Number> d(Context<?> ctx) {
+        switch (ctx.family()) {
+            case SQLITE:
+                return DOUBLE;
+            default:
+                return NUMERIC;
+        }
     }
 }

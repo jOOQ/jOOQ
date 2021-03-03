@@ -10696,47 +10696,51 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final AggregateFunction<?> parseBinarySetFunctionIf() {
-        Field<? extends Number> arg1;
-        Field<? extends Number> arg2;
-        BinarySetFunctionType type = parseBinarySetFunctionTypeIf();
+        switch (characterUpper()) {
+            case 'C':
+                if (parseFunctionNameIf("CORR"))
+                    return parseBindarySetFunction(DSL::corr);
+                else if (parseFunctionNameIf("COVAR_POP"))
+                    return parseBindarySetFunction(DSL::covarPop);
+                else if (parseFunctionNameIf("COVAR_SAMP"))
+                    return parseBindarySetFunction(DSL::covarSamp);
 
-        if (type == null)
-            return null;
+                break;
 
+            case 'R':
+                if (parseFunctionNameIf("REGR_AVGX"))
+                    return parseBindarySetFunction(DSL::regrAvgX);
+                else if (parseFunctionNameIf("REGR_AVGY"))
+                    return parseBindarySetFunction(DSL::regrAvgY);
+                else if (parseFunctionNameIf("REGR_COUNT"))
+                    return parseBindarySetFunction(DSL::regrCount);
+                else if (parseFunctionNameIf("REGR_INTERCEPT"))
+                    return parseBindarySetFunction(DSL::regrIntercept);
+                else if (parseFunctionNameIf("REGR_R2"))
+                    return parseBindarySetFunction(DSL::regrR2);
+                else if (parseFunctionNameIf("REGR_SLOPE"))
+                    return parseBindarySetFunction(DSL::regrSlope);
+                else if (parseFunctionNameIf("REGR_SXX"))
+                    return parseBindarySetFunction(DSL::regrSXX);
+                else if (parseFunctionNameIf("REGR_SXY"))
+                    return parseBindarySetFunction(DSL::regrSXY);
+                else if (parseFunctionNameIf("REGR_SYY"))
+                    return parseBindarySetFunction(DSL::regrSYY);
+
+                break;
+        }
+
+        return null;
+    }
+
+    private final AggregateFunction<?> parseBindarySetFunction(BiFunction<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends AggregateFunction<?>> function) {
         parse('(');
-        arg1 = (Field) toField(parseNumericOp(N));
+        Field<? extends Number> arg1 = (Field) parseField();
         parse(',');
-        arg2 = (Field) toField(parseNumericOp(N));
+        Field<? extends Number> arg2 = (Field) parseField();
         parse(')');
 
-        switch (type) {
-            case CORR:
-                return corr(arg1, arg2);
-            case COVAR_POP:
-                return covarPop(arg1, arg2);
-            case COVAR_SAMP:
-                return covarSamp(arg1, arg2);
-            case REGR_AVGX:
-                return regrAvgX(arg1, arg2);
-            case REGR_AVGY:
-                return regrAvgY(arg1, arg2);
-            case REGR_COUNT:
-                return regrCount(arg1, arg2);
-            case REGR_INTERCEPT:
-                return regrIntercept(arg1, arg2);
-            case REGR_R2:
-                return regrR2(arg1, arg2);
-            case REGR_SLOPE:
-                return regrSlope(arg1, arg2);
-            case REGR_SXX:
-                return regrSXX(arg1, arg2);
-            case REGR_SXY:
-                return regrSXY(arg1, arg2);
-            case REGR_SYY:
-                return regrSYY(arg1, arg2);
-            default:
-                throw exception("Binary set function not supported: " + type);
-        }
+        return function.apply(arg1, arg2);
     }
 
     private final AggregateFilterStep<?> parseOrderedSetFunctionIf() {
@@ -12432,16 +12436,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private final BinarySetFunctionType parseBinarySetFunctionTypeIf() {
-
-        // TODO speed this up
-        for (BinarySetFunctionType type : BinarySetFunctionType.values())
-            if (parseFunctionNameIf(type.name()))
-                return type;
-
-        return null;
-    }
-
     private final Comparator parseComparatorIf() {
         if (parseIf("="))
             return Comparator.EQUALS;
@@ -13012,21 +13006,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 //        COLLECT,
 //        FUSION,
 //        INTERSECTION;
-    }
-
-    private static enum BinarySetFunctionType {
-        CORR,
-        COVAR_POP,
-        COVAR_SAMP,
-        REGR_SLOPE,
-        REGR_INTERCEPT,
-        REGR_COUNT,
-        REGR_R2,
-        REGR_AVGX,
-        REGR_AVGY,
-        REGR_SXX,
-        REGR_SYY,
-        REGR_SXY,
     }
 
     private static final String[] KEYWORDS_IN_STATEMENTS = {

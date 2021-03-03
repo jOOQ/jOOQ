@@ -18720,6 +18720,11 @@ public class DSL {
 
     /**
      * The <code>CORR</code> function.
+     * <p>
+     * Calculate the correlation coefficient. This standard SQL function may be supported
+     * natively, or emulated using {@link #covarPop(Field, Field)} and {@link #stddevPop(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -18729,6 +18734,11 @@ public class DSL {
 
     /**
      * The <code>COVAR_SAMP</code> function.
+     * <p>
+     * Calculate the sample covariance. This standard SQL function may be supported natively,
+     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support
@@ -18738,6 +18748,11 @@ public class DSL {
 
     /**
      * The <code>COVAR_POP</code> function.
+     * <p>
+     * Calculate the population covariance. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support
@@ -18756,6 +18771,11 @@ public class DSL {
 
     /**
      * The <code>REGR_AVG_X</code> function.
+     * <p>
+     * Calculate the average of the independent values (x). This standard SQL function may
+     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support
@@ -18765,6 +18785,11 @@ public class DSL {
 
     /**
      * The <code>REGR_AVG_Y</code> function.
+     * <p>
+     * Calculate the average of the dependent values (y). This standard SQL function may
+     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support
@@ -18774,6 +18799,11 @@ public class DSL {
 
     /**
      * The <code>REGR_COUNT</code> function.
+     * <p>
+     * Calculate the number of non-<code>NULL</code> pairs. This standard SQL function may
+     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support
@@ -18783,6 +18813,11 @@ public class DSL {
 
     /**
      * The <code>REGR_INTERCEPT</code> function.
+     * <p>
+     * Calculate the y intercept of the regression line. This standard SQL function may
+     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support
@@ -18792,33 +18827,53 @@ public class DSL {
 
     /**
      * The <code>REGR_R2</code> function.
+     * <p>
+     * Calculate the coefficient of determination. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrR2(y, x);
     }
 
     /**
      * The <code>REGR_SLOPE</code> function.
+     * <p>
+     * Calculate the slope of the regression line. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> regrSlope(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrSlope(y, x);
     }
 
     /**
      * The <code>REGR_SXX</code> function.
+     * <p>
+     * Calculate the <code>REGR_SXX</code> auxiliary function. This standard SQL function
+     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> regrSXX(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrSxx(y, x);
     }
 
     /**
      * The <code>REGR_SXY</code> function.
+     * <p>
+     * Calculate the <code>REGR_SXY</code> auxiliary function. This standard SQL function
+     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support
@@ -18828,15 +18883,25 @@ public class DSL {
 
     /**
      * The <code>REGR_SYY</code> function.
+     * <p>
+     * Calculate the <code>REGR_SYY</code> auxiliary function. This standard SQL function
+     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> regrSYY(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrSyy(y, x);
     }
 
     /**
      * The <code>STDDEV_POP</code> function.
+     * <p>
+     * Calculate the population standard deviation. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -18846,6 +18911,11 @@ public class DSL {
 
     /**
      * The <code>STDDEV_SAMP</code> function.
+     * <p>
+     * Calculate the sample standard deviation. This standard SQL function may be supported
+     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
+     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -18855,15 +18925,25 @@ public class DSL {
 
     /**
      * The <code>VAR_POP</code> function.
+     * <p>
+     * Calculate the population variance. This standard SQL function may be supported natively,
+     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
         return new VarPop(field);
     }
 
     /**
      * The <code>VAR_SAMP</code> function.
+     * <p>
+     * Calculate the sample variance. This standard SQL function may be supported natively,
+     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })

@@ -85,6 +85,20 @@ extends
 
 
 
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedUntil(DERBY, IGNITE, SQLITE);
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void accept(Context<?> ctx) {
+        if (NO_SUPPORT_NATIVE.contains(ctx.dialect())) {
+            Field<? extends Number> x = (Field) getArguments().get(0);
+
+            ctx.visit(fo(DSL.avg(DSL.square(x))).minus(DSL.square(fo(DSL.avg(x)))));
+        }
+        else
+            super.accept(ctx);
+    }
+
     @Override
     void acceptFunctionName(Context<?> ctx) {
         switch (ctx.family()) {

@@ -96,7 +96,7 @@ extends
             Field<? extends Number> x = (Field) getArguments().get(0);
             Field<? extends Number> y = (Field) getArguments().get(1);
 
-            ctx.visit(fo(DSL.avg(DSL.nvl2(x, y, DSL.NULL(NUMERIC)).cast(NUMERIC))));
+            ctx.visit(fo(DSL.avg(DSL.nvl2(x, y, DSL.NULL(d(ctx))).cast(d(ctx)))));
         }
         else
             super.accept(ctx);

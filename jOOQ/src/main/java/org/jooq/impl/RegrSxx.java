@@ -87,4 +87,20 @@ extends
 
 
 
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void accept(Context<?> ctx) {
+        if (NO_SUPPORT_NATIVE.contains(ctx.dialect())) {
+            Field<? extends Number> x = (Field) getArguments().get(0);
+            Field<? extends Number> y = (Field) getArguments().get(1);
+
+            ctx.visit(fo(DSL.regrCount(x, y)).times(fo(DSL.varPop(y(x, y)))));
+        }
+        else
+            super.accept(ctx);
+    }
+
+
 }

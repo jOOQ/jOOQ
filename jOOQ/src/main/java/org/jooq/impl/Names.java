@@ -97,6 +97,7 @@ final class Names {
     static final Name N_CONNECT_BY_IS_LEAF     = unquotedName("connect_by_isleaf");
     static final Name N_CONNECT_BY_ROOT        = unquotedName("connect_by_root");
     static final Name N_CONVERT                = unquotedName("convert");
+    static final Name N_CORR                   = unquotedName("corr");
     static final Name N_COS                    = unquotedName("cos");
     static final Name N_COSH                   = unquotedName("cosh");
     static final Name N_COT                    = unquotedName("cot");

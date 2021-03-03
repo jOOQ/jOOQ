@@ -107,6 +107,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.constraint;
 // ...
 // ...
+import static org.jooq.impl.DSL.corr;
 import static org.jooq.impl.DSL.cos;
 import static org.jooq.impl.DSL.cosh;
 import static org.jooq.impl.DSL.cot;
@@ -346,12 +347,6 @@ import static org.jooq.impl.DSL.xmlquery;
 import static org.jooq.impl.DSL.xmltable;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
-import static org.jooq.impl.Keywords.K_DELETE;
-import static org.jooq.impl.Keywords.K_INSERT;
-import static org.jooq.impl.Keywords.K_SELECT;
-import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.DefaultParseContext.Type.A;
 import static org.jooq.impl.DefaultParseContext.Type.B;
 import static org.jooq.impl.DefaultParseContext.Type.D;
@@ -360,6 +355,12 @@ import static org.jooq.impl.DefaultParseContext.Type.N;
 import static org.jooq.impl.DefaultParseContext.Type.S;
 import static org.jooq.impl.DefaultParseContext.Type.X;
 import static org.jooq.impl.DefaultParseContext.Type.Y;
+import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
+import static org.jooq.impl.Keywords.K_DELETE;
+import static org.jooq.impl.Keywords.K_INSERT;
+import static org.jooq.impl.Keywords.K_SELECT;
+import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
@@ -401,7 +402,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -430,7 +430,6 @@ import org.jooq.Catalog;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Comment;
-import org.jooq.CommentOnFinalStep;
 import org.jooq.CommentOnIsStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
@@ -508,7 +507,6 @@ import org.jooq.InsertOnDuplicateStep;
 import org.jooq.InsertReturningStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
-import org.jooq.JSON;
 import org.jooq.JSONArrayAggNullStep;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayAggReturningStep;
@@ -589,8 +587,6 @@ import org.jooq.UpdateWhereStep;
 import org.jooq.User;
 // ...
 // ...
-import org.jooq.VisitContext;
-import org.jooq.VisitListener;
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFromFirstLastStep;
@@ -614,7 +610,6 @@ import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
-import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.ScopeStack.Value;
 import org.jooq.impl.XMLParse.DocumentOrContent;
@@ -624,8 +619,6 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -10717,6 +10710,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parse(')');
 
         switch (type) {
+            case CORR:
+                return corr(arg1, arg2);
             case COVAR_POP:
                 return covarPop(arg1, arg2);
             case COVAR_SAMP:
@@ -13020,9 +13015,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private static enum BinarySetFunctionType {
+        CORR,
         COVAR_POP,
         COVAR_SAMP,
-//        CORR,
         REGR_SLOPE,
         REGR_INTERCEPT,
         REGR_COUNT,

@@ -18719,10 +18719,19 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>CORR</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<BigDecimal> corr(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Corr(y, x);
+    }
+
+    /**
      * The <code>COVAR_SAMP</code> function.
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> covarSamp(Field<? extends Number> y, Field<? extends Number> x) {
         return new CovarSamp(y, x);
     }
@@ -18731,7 +18740,7 @@ public class DSL {
      * The <code>COVAR_POP</code> function.
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> covarPop(Field<? extends Number> y, Field<? extends Number> x) {
         return new CovarPop(y, x);
     }
@@ -18749,7 +18758,7 @@ public class DSL {
      * The <code>REGR_AVG_X</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> regrAvgX(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrAvgx(y, x);
     }
@@ -18758,7 +18767,7 @@ public class DSL {
      * The <code>REGR_AVG_Y</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> regrAvgY(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrAvgy(y, x);
     }
@@ -18767,7 +18776,7 @@ public class DSL {
      * The <code>REGR_COUNT</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> regrCount(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrCount(y, x);
     }
@@ -18776,7 +18785,7 @@ public class DSL {
      * The <code>REGR_INTERCEPT</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> regrIntercept(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrIntercept(y, x);
     }
@@ -18785,7 +18794,7 @@ public class DSL {
      * The <code>REGR_R2</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrR2(y, x);
     }
@@ -18794,7 +18803,7 @@ public class DSL {
      * The <code>REGR_SLOPE</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> regrSlope(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrSlope(y, x);
     }
@@ -18803,7 +18812,7 @@ public class DSL {
      * The <code>REGR_SXX</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> regrSXX(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrSxx(y, x);
     }
@@ -18812,7 +18821,7 @@ public class DSL {
      * The <code>REGR_SXY</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support
     public static AggregateFunction<BigDecimal> regrSXY(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrSxy(y, x);
     }
@@ -18821,7 +18830,7 @@ public class DSL {
      * The <code>REGR_SYY</code> function.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> regrSYY(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrSyy(y, x);
     }

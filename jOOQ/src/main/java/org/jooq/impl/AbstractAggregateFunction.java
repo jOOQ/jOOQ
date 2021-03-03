@@ -282,4 +282,35 @@ implements
 
         return this;
     }
+
+    /**
+     * Apply this aggregate function's <code>FILTER</code> and <code>OVER</code>
+     * clauses to an argument aggregate function.
+     */
+    final <U> Field<U> fo(AggregateFunction<U> function) {
+        WindowBeforeOverStep<U> s1 = filter != null ? function.filterWhere(filter) : function;
+
+        if (windowSpecification != null)
+            return s1.over(windowSpecification);
+        else if (windowDefinition != null)
+            return s1.over(windowDefinition);
+        else if (windowName != null)
+            return s1.over(windowName);
+        else
+            return s1;
+    }
+
+    /**
+     * Type safe <code>NVL2(y, x, null)</code> for REGR emulations.
+     */
+    final <U extends Number> Field<U> x(Field<U> x, Field<? extends Number> y) {
+        return DSL.nvl2(y, x, DSL.NULL(x.getDataType()));
+    }
+
+    /**
+     * Type safe <code>NVL2(x, y, null)</code> for REGR emulations.
+     */
+    final <U extends Number> Field<U> y(Field<? extends Number> x, Field<U> y) {
+        return DSL.nvl2(x, y, DSL.NULL(y.getDataType()));
+    }
 }

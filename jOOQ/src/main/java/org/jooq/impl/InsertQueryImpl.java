@@ -394,6 +394,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+
                 case DERBY:
                 case FIREBIRD:
                 case H2:

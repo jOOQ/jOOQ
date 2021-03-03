@@ -297,6 +297,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, POSTGRES);
     private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES);
@@ -1490,6 +1492,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
                 case CUBRID:
                 case FIREBIRD:
                 case MARIADB:
@@ -1606,7 +1609,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * Emulate the LIMIT / OFFSET clause using window functions, specifically
      * when the WITH TIES clause is specified.
      */
-    @SuppressWarnings("serial")
     private final void toSQLReferenceLimitWithWindowFunctions(Context<?> ctx) {
 
         // AUTHOR.ID, BOOK.ID, BOOK.TITLE

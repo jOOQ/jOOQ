@@ -43,310 +43,15 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_IN;
+import static org.jooq.DatePart.*;
 import static org.jooq.JoinType.JOIN;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
-// ...
-// ...
+import static org.jooq.SQLDialect.*;
 import static org.jooq.VisitListener.onVisitStart;
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.conf.SettingsTools.parseLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
-import static org.jooq.impl.DSL.abs;
-import static org.jooq.impl.DSL.acos;
-import static org.jooq.impl.DSL.all;
-import static org.jooq.impl.DSL.any;
-import static org.jooq.impl.DSL.arrayAgg;
-import static org.jooq.impl.DSL.arrayAggDistinct;
-import static org.jooq.impl.DSL.arrayGet;
-import static org.jooq.impl.DSL.ascii;
-import static org.jooq.impl.DSL.asin;
-import static org.jooq.impl.DSL.asterisk;
-import static org.jooq.impl.DSL.atan;
-import static org.jooq.impl.DSL.atan2;
-import static org.jooq.impl.DSL.avg;
-import static org.jooq.impl.DSL.avgDistinct;
-import static org.jooq.impl.DSL.begin;
-import static org.jooq.impl.DSL.bitAnd;
-import static org.jooq.impl.DSL.bitCount;
-import static org.jooq.impl.DSL.bitLength;
-import static org.jooq.impl.DSL.bitNand;
-import static org.jooq.impl.DSL.bitNor;
-import static org.jooq.impl.DSL.bitNot;
-import static org.jooq.impl.DSL.bitOr;
-import static org.jooq.impl.DSL.bitXNor;
-import static org.jooq.impl.DSL.bitXor;
-import static org.jooq.impl.DSL.boolOr;
-// ...
-import static org.jooq.impl.DSL.cardinality;
-import static org.jooq.impl.DSL.cast;
-import static org.jooq.impl.DSL.catalog;
-import static org.jooq.impl.DSL.ceil;
-import static org.jooq.impl.DSL.century;
-import static org.jooq.impl.DSL.charLength;
-import static org.jooq.impl.DSL.characterSet;
-import static org.jooq.impl.DSL.check;
-import static org.jooq.impl.DSL.choose;
-import static org.jooq.impl.DSL.chr;
-import static org.jooq.impl.DSL.coalesce;
-import static org.jooq.impl.DSL.coerce;
-import static org.jooq.impl.DSL.collation;
-import static org.jooq.impl.DSL.concat;
-import static org.jooq.impl.DSL.condition;
-// ...
-// ...
-// ...
-import static org.jooq.impl.DSL.constraint;
-// ...
-// ...
-import static org.jooq.impl.DSL.corr;
-import static org.jooq.impl.DSL.cos;
-import static org.jooq.impl.DSL.cosh;
-import static org.jooq.impl.DSL.cot;
-import static org.jooq.impl.DSL.coth;
-import static org.jooq.impl.DSL.count;
-import static org.jooq.impl.DSL.countDistinct;
-import static org.jooq.impl.DSL.covarPop;
-import static org.jooq.impl.DSL.covarSamp;
-import static org.jooq.impl.DSL.cube;
-import static org.jooq.impl.DSL.cumeDist;
-import static org.jooq.impl.DSL.currentCatalog;
-import static org.jooq.impl.DSL.currentDate;
-import static org.jooq.impl.DSL.currentSchema;
-import static org.jooq.impl.DSL.currentTime;
-import static org.jooq.impl.DSL.currentTimestamp;
-import static org.jooq.impl.DSL.currentUser;
-import static org.jooq.impl.DSL.date;
-import static org.jooq.impl.DSL.day;
-import static org.jooq.impl.DSL.dayOfWeek;
-import static org.jooq.impl.DSL.dayOfYear;
-import static org.jooq.impl.DSL.decade;
-// ...
-import static org.jooq.impl.DSL.defaultValue;
-import static org.jooq.impl.DSL.default_;
-import static org.jooq.impl.DSL.deg;
-import static org.jooq.impl.DSL.denseRank;
-import static org.jooq.impl.DSL.digits;
-import static org.jooq.impl.DSL.domain;
-import static org.jooq.impl.DSL.epoch;
-import static org.jooq.impl.DSL.every;
-// ...
-import static org.jooq.impl.DSL.exists;
-// ...
-// ...
-import static org.jooq.impl.DSL.exp;
-import static org.jooq.impl.DSL.extract;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.firstValue;
-import static org.jooq.impl.DSL.floor;
-// ...
-import static org.jooq.impl.DSL.foreignKey;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.generateSeries;
-import static org.jooq.impl.DSL.greatest;
-import static org.jooq.impl.DSL.grouping;
-// ...
-import static org.jooq.impl.DSL.groupingSets;
-import static org.jooq.impl.DSL.groupsBetweenCurrentRow;
-import static org.jooq.impl.DSL.groupsBetweenFollowing;
-import static org.jooq.impl.DSL.groupsBetweenPreceding;
-import static org.jooq.impl.DSL.groupsBetweenUnboundedFollowing;
-import static org.jooq.impl.DSL.groupsBetweenUnboundedPreceding;
-import static org.jooq.impl.DSL.groupsCurrentRow;
-import static org.jooq.impl.DSL.groupsFollowing;
-import static org.jooq.impl.DSL.groupsPreceding;
-import static org.jooq.impl.DSL.groupsUnboundedFollowing;
-import static org.jooq.impl.DSL.groupsUnboundedPreceding;
-import static org.jooq.impl.DSL.hour;
-// ...
-import static org.jooq.impl.DSL.ifnull;
-import static org.jooq.impl.DSL.iif;
-import static org.jooq.impl.DSL.in;
-import static org.jooq.impl.DSL.inOut;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.insert;
-import static org.jooq.impl.DSL.isnull;
-import static org.jooq.impl.DSL.isoDayOfWeek;
-import static org.jooq.impl.DSL.jsonArray;
-import static org.jooq.impl.DSL.jsonArrayAgg;
-import static org.jooq.impl.DSL.jsonExists;
-import static org.jooq.impl.DSL.jsonObject;
-import static org.jooq.impl.DSL.jsonObjectAgg;
-import static org.jooq.impl.DSL.jsonTable;
-import static org.jooq.impl.DSL.jsonValue;
-import static org.jooq.impl.DSL.jsonbArray;
-import static org.jooq.impl.DSL.jsonbArrayAgg;
-import static org.jooq.impl.DSL.jsonbObject;
-import static org.jooq.impl.DSL.jsonbObjectAgg;
-import static org.jooq.impl.DSL.key;
-import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.DSL.lag;
-import static org.jooq.impl.DSL.lastValue;
-import static org.jooq.impl.DSL.lateral;
-import static org.jooq.impl.DSL.lead;
-import static org.jooq.impl.DSL.least;
-import static org.jooq.impl.DSL.left;
-import static org.jooq.impl.DSL.length;
-// ...
-import static org.jooq.impl.DSL.list;
-import static org.jooq.impl.DSL.listAgg;
-import static org.jooq.impl.DSL.ln;
-import static org.jooq.impl.DSL.log;
-import static org.jooq.impl.DSL.log10;
-// ...
-import static org.jooq.impl.DSL.lower;
-import static org.jooq.impl.DSL.lpad;
-import static org.jooq.impl.DSL.ltrim;
-import static org.jooq.impl.DSL.max;
-import static org.jooq.impl.DSL.maxDistinct;
-import static org.jooq.impl.DSL.md5;
-import static org.jooq.impl.DSL.median;
-import static org.jooq.impl.DSL.microsecond;
-import static org.jooq.impl.DSL.mid;
-import static org.jooq.impl.DSL.millennium;
-import static org.jooq.impl.DSL.millisecond;
-import static org.jooq.impl.DSL.min;
-import static org.jooq.impl.DSL.minDistinct;
-import static org.jooq.impl.DSL.minute;
-import static org.jooq.impl.DSL.mode;
-import static org.jooq.impl.DSL.month;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.now;
-import static org.jooq.impl.DSL.nthValue;
-import static org.jooq.impl.DSL.ntile;
-import static org.jooq.impl.DSL.nullif;
-import static org.jooq.impl.DSL.nvl;
-import static org.jooq.impl.DSL.nvl2;
-import static org.jooq.impl.DSL.octetLength;
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.orderBy;
-import static org.jooq.impl.DSL.out;
-import static org.jooq.impl.DSL.overlay;
-import static org.jooq.impl.DSL.partitionBy;
-import static org.jooq.impl.DSL.percentRank;
-import static org.jooq.impl.DSL.percentileCont;
-import static org.jooq.impl.DSL.percentileDisc;
-import static org.jooq.impl.DSL.pi;
-import static org.jooq.impl.DSL.primaryKey;
-// ...
-import static org.jooq.impl.DSL.privilege;
-import static org.jooq.impl.DSL.product;
-import static org.jooq.impl.DSL.productDistinct;
-import static org.jooq.impl.DSL.quarter;
-import static org.jooq.impl.DSL.rad;
-import static org.jooq.impl.DSL.rand;
-import static org.jooq.impl.DSL.rangeBetweenCurrentRow;
-import static org.jooq.impl.DSL.rangeBetweenFollowing;
-import static org.jooq.impl.DSL.rangeBetweenPreceding;
-import static org.jooq.impl.DSL.rangeBetweenUnboundedFollowing;
-import static org.jooq.impl.DSL.rangeBetweenUnboundedPreceding;
-import static org.jooq.impl.DSL.rangeCurrentRow;
-import static org.jooq.impl.DSL.rangeFollowing;
-import static org.jooq.impl.DSL.rangePreceding;
-import static org.jooq.impl.DSL.rangeUnboundedFollowing;
-import static org.jooq.impl.DSL.rangeUnboundedPreceding;
-import static org.jooq.impl.DSL.rank;
-import static org.jooq.impl.DSL.ratioToReport;
-import static org.jooq.impl.DSL.regexpReplaceAll;
-import static org.jooq.impl.DSL.regexpReplaceFirst;
-import static org.jooq.impl.DSL.regrAvgX;
-import static org.jooq.impl.DSL.regrAvgY;
-import static org.jooq.impl.DSL.regrCount;
-import static org.jooq.impl.DSL.regrIntercept;
-import static org.jooq.impl.DSL.regrR2;
-import static org.jooq.impl.DSL.regrSXX;
-import static org.jooq.impl.DSL.regrSXY;
-import static org.jooq.impl.DSL.regrSYY;
-import static org.jooq.impl.DSL.regrSlope;
-// ...
-import static org.jooq.impl.DSL.replace;
-// ...
-import static org.jooq.impl.DSL.reverse;
-import static org.jooq.impl.DSL.right;
-import static org.jooq.impl.DSL.rollup;
-import static org.jooq.impl.DSL.round;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.rowNumber;
-// ...
-import static org.jooq.impl.DSL.rowsBetweenCurrentRow;
-import static org.jooq.impl.DSL.rowsBetweenFollowing;
-import static org.jooq.impl.DSL.rowsBetweenPreceding;
-import static org.jooq.impl.DSL.rowsBetweenUnboundedFollowing;
-import static org.jooq.impl.DSL.rowsBetweenUnboundedPreceding;
-import static org.jooq.impl.DSL.rowsCurrentRow;
-import static org.jooq.impl.DSL.rowsFollowing;
-import static org.jooq.impl.DSL.rowsPreceding;
-import static org.jooq.impl.DSL.rowsUnboundedFollowing;
-import static org.jooq.impl.DSL.rowsUnboundedPreceding;
-import static org.jooq.impl.DSL.rpad;
-import static org.jooq.impl.DSL.rtrim;
-import static org.jooq.impl.DSL.schema;
-import static org.jooq.impl.DSL.second;
-import static org.jooq.impl.DSL.sequence;
-import static org.jooq.impl.DSL.shl;
-import static org.jooq.impl.DSL.shr;
-import static org.jooq.impl.DSL.sign;
-// ...
-import static org.jooq.impl.DSL.sin;
-import static org.jooq.impl.DSL.sinh;
-import static org.jooq.impl.DSL.space;
-import static org.jooq.impl.DSL.splitPart;
-import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.DSL.sqrt;
-import static org.jooq.impl.DSL.square;
-import static org.jooq.impl.DSL.stddevPop;
-import static org.jooq.impl.DSL.stddevSamp;
-import static org.jooq.impl.DSL.sum;
-import static org.jooq.impl.DSL.sumDistinct;
-// ...
-import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.tan;
-import static org.jooq.impl.DSL.tanh;
-import static org.jooq.impl.DSL.time;
-import static org.jooq.impl.DSL.timestamp;
-import static org.jooq.impl.DSL.timezone;
-import static org.jooq.impl.DSL.timezoneHour;
-import static org.jooq.impl.DSL.timezoneMinute;
-import static org.jooq.impl.DSL.toChar;
-import static org.jooq.impl.DSL.toDate;
-import static org.jooq.impl.DSL.toTimestamp;
-import static org.jooq.impl.DSL.translate;
-import static org.jooq.impl.DSL.trim;
-import static org.jooq.impl.DSL.trunc;
-import static org.jooq.impl.DSL.unique;
-import static org.jooq.impl.DSL.unnest;
-import static org.jooq.impl.DSL.unquotedName;
-import static org.jooq.impl.DSL.user;
-import static org.jooq.impl.DSL.values0;
-// ...
-import static org.jooq.impl.DSL.varPop;
-import static org.jooq.impl.DSL.varSamp;
-import static org.jooq.impl.DSL.week;
-import static org.jooq.impl.DSL.when;
-// ...
-import static org.jooq.impl.DSL.xmlagg;
-import static org.jooq.impl.DSL.xmlattributes;
-import static org.jooq.impl.DSL.xmlcomment;
-import static org.jooq.impl.DSL.xmlconcat;
-// ...
-import static org.jooq.impl.DSL.xmlelement;
-import static org.jooq.impl.DSL.xmlexists;
-import static org.jooq.impl.DSL.xmlforest;
-import static org.jooq.impl.DSL.xmlparseContent;
-import static org.jooq.impl.DSL.xmlparseDocument;
-import static org.jooq.impl.DSL.xmlpi;
-import static org.jooq.impl.DSL.xmlquery;
-import static org.jooq.impl.DSL.xmltable;
-import static org.jooq.impl.DSL.year;
-import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.DefaultParseContext.Type.A;
 import static org.jooq.impl.DefaultParseContext.Type.B;
 import static org.jooq.impl.DefaultParseContext.Type.D;
@@ -361,10 +66,7 @@ import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_UPDATE;
-import static org.jooq.impl.SQLDataType.BIGINT;
-import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.NVARCHAR;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_FOR_UPDATE_OF_FIELDS;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
@@ -7382,6 +7084,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     if ((field = parseArrayValueConstructorIf()) != null)
                         return field;
 
+                if (D.is(type))
+                    if (parseFunctionNameIf("ADD_YEARS"))
+                        return parseFieldAddDatePart(YEAR);
+                    else if (parseFunctionNameIf("ADD_MONTHS"))
+                        return parseFieldAddDatePart(MONTH);
+                    else if (parseFunctionNameIf("ADD_DAYS"))
+                        return parseFieldAddDatePart(DAY);
+                    else if (parseFunctionNameIf("ADD_HOURS"))
+                        return parseFieldAddDatePart(HOUR);
+                    else if (parseFunctionNameIf("ADD_MINUTES"))
+                        return parseFieldAddDatePart(MINUTE);
+                    else if (parseFunctionNameIf("ADD_SECONDS"))
+                        return parseFieldAddDatePart(SECOND);
+
                 if ((field = parseFieldArrayGetIf()) != null)
                     return field;
 
@@ -8066,6 +7782,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         else
             return parseFieldNameOrSequenceExpression();
+    }
+
+    private final Field<?> parseFieldAddDatePart(DatePart part) {
+        parse('(');
+        Field<?> arg1 = parseField();
+        parse(',');
+        Field<?> arg2 = parseField();
+        parse(')');
+
+        return DSL.dateAdd((Field) arg1, (Field) arg2, part);
     }
 
     private final boolean peekSelectOrWith(boolean peekIntoParens) {

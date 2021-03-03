@@ -18415,6 +18415,474 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // Date functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
+        return new DateAdd(Tools.field(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * The <code>DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd(Tools.field(date), interval, datePart);
+    }
+
+    /**
+     * The <code>DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
+        return new DateAdd(date, Tools.field(interval), datePart);
+    }
+
+    /**
+     * The <code>DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd(date, interval, datePart);
+    }
+
+    /**
+     * The <code>DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateAdd(Date date, Number interval) {
+        return new DateAdd(Tools.field(date), Tools.field(interval));
+    }
+
+    /**
+     * The <code>DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateAdd(Date date, Field<? extends Number> interval) {
+        return new DateAdd(Tools.field(date), interval);
+    }
+
+    /**
+     * The <code>DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateAdd(Field<Date> date, Number interval) {
+        return new DateAdd(date, Tools.field(interval));
+    }
+
+    /**
+     * The <code>DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval) {
+        return new DateAdd(date, interval);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDate> localDateAdd(LocalDate date, Number interval, DatePart datePart) {
+        return new DateAdd(Tools.field(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd(Tools.field(date), interval, datePart);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval, DatePart datePart) {
+        return new DateAdd(date, Tools.field(interval), datePart);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd(date, interval, datePart);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDate> localDateAdd(LocalDate date, Number interval) {
+        return new DateAdd(Tools.field(date), Tools.field(interval));
+    }
+
+    /**
+     * The <code>LOCAL_DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval) {
+        return new DateAdd(Tools.field(date), interval);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval) {
+        return new DateAdd(date, Tools.field(interval));
+    }
+
+    /**
+     * The <code>LOCAL_DATE_ADD</code> function.
+     * <p>
+     * Add an interval to a date.
+     *
+     * @param date The date to add an interval to
+     * @param interval The interval to add to the date
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval) {
+        return new DateAdd(date, interval);
+    }
+
+    /**
+     * The <code>TIMESTAMP_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
+        return new DateAdd(Tools.field(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * The <code>TIMESTAMP_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd(Tools.field(date), interval, datePart);
+    }
+
+    /**
+     * The <code>TIMESTAMP_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
+        return new DateAdd(date, Tools.field(interval), datePart);
+    }
+
+    /**
+     * The <code>TIMESTAMP_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd(date, interval, datePart);
+    }
+
+    /**
+     * The <code>TIMESTAMP_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Timestamp> timestampAdd(Timestamp date, Number interval) {
+        return new DateAdd(Tools.field(date), Tools.field(interval));
+    }
+
+    /**
+     * The <code>TIMESTAMP_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval) {
+        return new DateAdd(Tools.field(date), interval);
+    }
+
+    /**
+     * The <code>TIMESTAMP_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval) {
+        return new DateAdd(date, Tools.field(interval));
+    }
+
+    /**
+     * The <code>TIMESTAMP_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval) {
+        return new DateAdd(date, interval);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_TIME_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval, DatePart datePart) {
+        return new DateAdd(Tools.field(date), Tools.field(interval), datePart);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_TIME_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd(Tools.field(date), interval, datePart);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_TIME_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval, DatePart datePart) {
+        return new DateAdd(date, Tools.field(interval), datePart);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_TIME_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     * @param datePart The date part describing the interval
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd(date, interval, datePart);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_TIME_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval) {
+        return new DateAdd(Tools.field(date), Tools.field(interval));
+    }
+
+    /**
+     * The <code>LOCAL_DATE_TIME_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval) {
+        return new DateAdd(Tools.field(date), interval);
+    }
+
+    /**
+     * The <code>LOCAL_DATE_TIME_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval) {
+        return new DateAdd(date, Tools.field(interval));
+    }
+
+    /**
+     * The <code>LOCAL_DATE_TIME_ADD</code> function.
+     * <p>
+     * Add an interval to a timestamp.
+     *
+     * @param date The timestamp to add an interval to
+     * @param interval The interval to add to the timestamp
+     */
+    @NotNull
+    @Support
+    public static <T> Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval) {
+        return new DateAdd(date, interval);
+    }
+
+    // -------------------------------------------------------------------------
     // System functions
     // -------------------------------------------------------------------------
 
@@ -19486,76 +19954,6 @@ public class DSL {
     }
 
     /**
-     * Add an interval to a date.
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#add(Number)
-     */
-    @NotNull
-    @Support
-    public static Field<Date> dateAdd(Date date, Number interval) {
-        return dateAdd(Tools.field(date), Tools.field(interval));
-    }
-
-    /**
-     * Add an interval to a date.
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#add(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval) {
-        return Tools.nullSafe(date).add(interval);
-    }
-
-    /**
-     * Add an interval to a date, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
-        return dateAdd(Tools.field(date), Tools.field(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a date, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
-        return dateAdd(Tools.field(date), Tools.nullSafe(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a date, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
-        return dateAdd(Tools.nullSafe(date), Tools.field(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a date, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<>(Tools.nullSafe(date), Tools.nullSafe(interval), datePart);
-    }
-
-    /**
      * Subtract an interval from a date.
      * <p>
      * This translates into any dialect
@@ -19623,76 +20021,6 @@ public class DSL {
     @Support
     public static Field<Date> dateSub(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.nullSafe(date), Tools.nullSafe(interval).neg(), datePart);
-    }
-
-    /**
-     * Add an interval to a timestamp.
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#add(Number)
-     */
-    @NotNull
-    @Support
-    public static Field<Timestamp> timestampAdd(Timestamp timestamp, Number interval) {
-        return timestampAdd(Tools.field(timestamp), Tools.field(interval));
-    }
-
-    /**
-     * Add an interval to a timestamp.
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#add(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<Timestamp> timestampAdd(Field<Timestamp> timestamp, Field<? extends Number> interval) {
-        return Tools.nullSafe(timestamp).add(interval);
-    }
-
-    /**
-     * Add an interval to a timestamp, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
-        return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a timestamp, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<>(Tools.field(date), Tools.nullSafe(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a timestamp, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
-        return new DateAdd<>(Tools.nullSafe(date), Tools.field(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a timestamp, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<>(Tools.nullSafe(date), Tools.nullSafe(interval), datePart);
     }
 
     /**
@@ -19926,76 +20254,6 @@ public class DSL {
     }
 
     /**
-     * Add an interval to a date.
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#add(Number)
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDate> localDateAdd(LocalDate date, Number interval) {
-        return localDateAdd(Tools.field(date), Tools.field(interval));
-    }
-
-    /**
-     * Add an interval to a date.
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#add(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval) {
-        return Tools.nullSafe(date).add(interval);
-    }
-
-    /**
-     * Add an interval to a date, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDate> localDateAdd(LocalDate date, Number interval, DatePart datePart) {
-        return localDateAdd(Tools.field(date), Tools.field(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a date, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
-        return localDateAdd(Tools.field(date), Tools.nullSafe(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a date, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval, DatePart datePart) {
-        return localDateAdd(Tools.nullSafe(date), Tools.field(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a date, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<>(Tools.nullSafe(date), Tools.nullSafe(interval), datePart);
-    }
-
-    /**
      * Subtract an interval from a date.
      * <p>
      * This translates into any dialect
@@ -20063,76 +20321,6 @@ public class DSL {
     @Support
     public static Field<LocalDate> localDateSub(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.nullSafe(date), Tools.nullSafe(interval).neg(), datePart);
-    }
-
-    /**
-     * Add an interval to a timestamp.
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#add(Number)
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime timestamp, Number interval) {
-        return localDateTimeAdd(Tools.field(timestamp), Tools.field(interval));
-    }
-
-    /**
-     * Add an interval to a timestamp.
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#add(Field)
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> timestamp, Field<? extends Number> interval) {
-        return Tools.nullSafe(timestamp).add(interval);
-    }
-
-    /**
-     * Add an interval to a timestamp, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval, DatePart datePart) {
-        return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a timestamp, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<>(Tools.field(date), Tools.nullSafe(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a timestamp, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval, DatePart datePart) {
-        return new DateAdd<>(Tools.nullSafe(date), Tools.field(interval), datePart);
-    }
-
-    /**
-     * Add an interval to a timestamp, given a date part.
-     * <p>
-     * This translates into any dialect
-     */
-    @NotNull
-    @Support
-    public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<>(Tools.nullSafe(date), Tools.nullSafe(interval), datePart);
     }
 
     /**

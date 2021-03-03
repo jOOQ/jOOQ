@@ -57,8 +57,11 @@ final class Names {
     static final Name N_ABS                    = unquotedName("abs");
     static final Name N_ACOS                   = unquotedName("acos");
     static final Name N_ADD_DAYS               = unquotedName("add_days");
+    static final Name N_ADD_HOURS              = unquotedName("add_hours");
+    static final Name N_ADD_MINUTES            = unquotedName("add_minutes");
     static final Name N_ADD_MONTHS             = unquotedName("add_months");
     static final Name N_ADD_SECONDS            = unquotedName("add_seconds");
+    static final Name N_ADD_YEARS              = unquotedName("add_years");
     static final Name N_ANY                    = unquotedName("any");
     static final Name N_ARRAY                  = unquotedName("array");
     static final Name N_ARRAY_AGG              = unquotedName("array_agg");

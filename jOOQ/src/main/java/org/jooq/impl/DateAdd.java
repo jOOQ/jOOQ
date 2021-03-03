@@ -37,52 +37,79 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.DatePart.DAY;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
-import static org.jooq.impl.Keywords.K_DAY;
-import static org.jooq.impl.Keywords.K_HOUR;
-import static org.jooq.impl.Keywords.K_INTERVAL;
-import static org.jooq.impl.Keywords.K_MINUTE;
-import static org.jooq.impl.Keywords.K_SECOND;
-import static org.jooq.impl.Names.N_ADD_MONTHS;
-import static org.jooq.impl.Names.N_DATEADD;
-import static org.jooq.impl.Names.N_DATE_ADD;
-import static org.jooq.impl.Names.N_STRFTIME;
-import static org.jooq.impl.Names.N_TIMESTAMPADD;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.DatePart;
-import org.jooq.Field;
-import org.jooq.Keyword;
+import org.jooq.*;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>DATE ADD</code> statement.
  */
-final class DateAdd<T> extends AbstractField<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class DateAdd<T>
+extends
+    AbstractField<T>
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -19593015886723235L;
+    private static final long serialVersionUID = 1L;
 
     private final Field<T>                date;
     private final Field<? extends Number> interval;
     private final DatePart                datePart;
 
-    DateAdd(Field<T> date, Field<? extends Number> interval, DatePart datePart) {
-        super(N_DATEADD, date.getDataType());
+    DateAdd(
+        Field<T> date,
+        Field<? extends Number> interval
+    ) {
+        super(
+            N_DATE_ADD,
+            allNotNull((DataType) dataType(date))
+        );
+
+        this.date = date;
+        this.interval = interval;
+        this.datePart = null;
+    }
+
+    DateAdd(
+        Field<T> date,
+        Field<? extends Number> interval,
+        DatePart datePart
+    ) {
+        super(
+            N_DATE_ADD,
+            allNotNull((DataType) dataType(date))
+        );
 
         this.date = date;
         this.interval = interval;
         this.datePart = datePart;
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
     @Override
     public final void accept(Context<?> ctx) {
         Keyword keyword = null;
+        Name    name    = null;
         String  string  = null;
 
         switch (ctx.family()) {
@@ -151,7 +178,7 @@ final class DateAdd<T> extends AbstractField<T> {
                 if (getDataType().isDate())
 
                     // [#10258] Special case for DATE + INTEGER arithmetic
-                    if (datePart == DAY)
+                    if (datePart == DatePart.DAY)
                         ctx.sql('(').visit(date).sql(" + ").visit(interval).sql(')');
 
                     // [#3824] Ensure that the output for DATE arithmetic will also be of type DATE, not TIMESTAMP
@@ -284,6 +311,34 @@ final class DateAdd<T> extends AbstractField<T> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case FIREBIRD:
             default: {
                 ctx.visit(N_DATEADD).sql('(').visit(standardKeyword()).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
@@ -309,5 +364,24 @@ final class DateAdd<T> extends AbstractField<T> {
 
     private final UnsupportedOperationException unsupported() {
         return new UnsupportedOperationException("Unknown date part : " + datePart);
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof DateAdd) {
+            return
+                StringUtils.equals(date, ((DateAdd) that).date) &&
+                StringUtils.equals(interval, ((DateAdd) that).interval) &&
+                StringUtils.equals(datePart, ((DateAdd) that).datePart)
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }

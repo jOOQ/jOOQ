@@ -3696,13 +3696,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Result<?> get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            ResultSet nested = (ResultSet) ctx.resultSet().getObject(ctx.index());
+            ResultSet nested = Convert.convert(ctx.resultSet().getObject(ctx.index()), ResultSet.class);
             return DSL.using(ctx.configuration()).fetch(nested);
         }
 
         @Override
         final Result<?> get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            ResultSet nested = (ResultSet) ctx.statement().getObject(ctx.index());
+            ResultSet nested = Convert.convert(ctx.statement().getObject(ctx.index()), ResultSet.class);
             return DSL.using(ctx.configuration()).fetch(nested);
         }
 

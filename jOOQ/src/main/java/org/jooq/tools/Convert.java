@@ -59,6 +59,7 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.Struct;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -92,12 +93,14 @@ import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.tools.jdbc.MockArray;
+import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -588,6 +591,11 @@ public final class Convert {
                         return (U) new MockArray(null, fromArray, fromClass);
                     else
                         return (U) convertArray(fromArray, toClass);
+                }
+
+                // [#11560] Results wrapped in ResultSet
+                else if (Result.class.isAssignableFrom(fromClass) && toClass == ResultSet.class) {
+                    return (U) new MockResultSet((Result<?>) from);
                 }
 
                 // [#3062] Default collections if no specific collection type was requested

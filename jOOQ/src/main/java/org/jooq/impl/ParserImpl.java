@@ -6087,7 +6087,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             result = unnest(f);
             parse(')');
         }
-        else if (parseFunctionNameIf("GENERATE_SERIES")) {
+        else if (parseFunctionNameIf("GENERATE_SERIES", "SYSTEM_RANGE")) {
             parse('(');
             Field from = toField(parseConcat(Type.N));
             parse(',');

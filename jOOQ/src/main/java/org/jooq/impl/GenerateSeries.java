@@ -166,6 +166,9 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
     @Override
     public final Table<Record1<Integer>> autoAlias(Context<?> ctx) {
         if (EMULATE_WITH_RECURSIVE.contains(ctx.dialect()) ||
+
+
+
             EMULATE_SYSTEM_RANGE.contains(ctx.dialect()))
             return as(N_GENERATE_SERIES, N_GENERATE_SERIES);
         else

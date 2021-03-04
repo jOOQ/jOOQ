@@ -201,6 +201,7 @@ final class Names {
     static final Name N_LOWER                  = unquotedName("lower");
     static final Name N_LPAD                   = unquotedName("lpad");
     static final Name N_LTRIM                  = unquotedName("ltrim");
+    static final Name N_MAP                    = unquotedName("map");
     static final Name N_MAX                    = unquotedName("max");
     static final Name N_MAXVALUE               = unquotedName("maxvalue");
     static final Name N_MD5                    = unquotedName("md5");

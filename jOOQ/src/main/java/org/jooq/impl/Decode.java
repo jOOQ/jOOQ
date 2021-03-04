@@ -37,12 +37,18 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.*;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_DECODE;
+import static org.jooq.impl.Names.N_MAP;
+
+import java.util.Set;
 
 import org.jooq.CaseConditionStep;
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -52,7 +58,12 @@ final class Decode<T, Z> extends AbstractField<Z> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long            serialVersionUID = -7273879239726265322L;
+    private static final Set<SQLDialect> EMULATE_DISTINCT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+
+
+
+
 
     private final Field<T>    field;
     private final Field<T>    search;
@@ -71,44 +82,24 @@ final class Decode<T, Z> extends AbstractField<Z> {
     @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
+        if (EMULATE_DISTINCT.contains(ctx.dialect())) {
+            CaseConditionStep<Z> when = DSL.choose().when(field.isNotDistinctFrom(search), result);
 
+            for (int i = 0; i + 1 < more.length; i += 2)
+                when = when.when(field.isNotDistinctFrom((Field<T>) more[i]), (Field<Z>) more[i + 1]);
 
-
-
-
-
-
-
-
-
-            case H2:
-            case IGNITE:
-                ctx.visit(function("decode", getDataType(), Tools.combine(field, search, result, more)));
-                return;
-
-            // Other dialects emulate it with a CASE ... WHEN expression
-            default:
-                CaseConditionStep<Z> when = DSL
-                    .choose()
-                    .when(field.isNotDistinctFrom(search), result);
-
-                for (int i = 0; i < more.length; i += 2) {
-
-                    // search/result pair
-                    if (i + 1 < more.length) {
-                        when = when.when(field.isNotDistinctFrom((Field<T>) more[i]), (Field<Z>) more[i + 1]);
-                    }
-
-                    // trailing default value
-                    else {
-                        ctx.visit(when.otherwise((Field<Z>) more[i]));
-                        return;
-                    }
-                }
-
+            if (more.length % 2 == 0)
                 ctx.visit(when);
-                return;
+            else
+                ctx.visit(when.otherwise((Field<Z>) more[more.length - 1]));
         }
+
+
+
+
+
+
+        else
+            ctx.visit(function(N_DECODE, getDataType(), Tools.combine(field, search, result, more)));
     }
 }

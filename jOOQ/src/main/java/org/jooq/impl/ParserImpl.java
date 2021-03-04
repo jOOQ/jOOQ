@@ -7410,6 +7410,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldLeastIf()) != null)
                     return field;
+                else if ((field = parseFieldDecodeIf()) != null)
+                    return field;
 
                 break;
 
@@ -9808,7 +9810,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldDecodeIf() {
-        if (parseFunctionNameIf("DECODE")) {
+        if (parseFunctionNameIf("DECODE", "MAP")) {
             parse('(');
             List<Field<?>> fields = parseList(',', ParseContext::parseField);
             int size = fields.size();

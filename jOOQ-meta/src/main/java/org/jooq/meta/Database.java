@@ -41,6 +41,7 @@ package org.jooq.meta;
 import java.sql.Connection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.jooq.DSLContext;
@@ -70,6 +71,11 @@ import org.jooq.meta.jaxb.SyntheticViewType;
  * @author Lukas Eder
  */
 public interface Database extends AutoCloseable {
+
+    /**
+     * Get the sources for all objects that offer sources.
+     */
+    Map<Definition, String> getSources();
 
     /**
      * The catalogs generated from this database.

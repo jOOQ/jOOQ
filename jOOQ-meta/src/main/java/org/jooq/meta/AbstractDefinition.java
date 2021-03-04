@@ -72,11 +72,11 @@ public abstract class AbstractDefinition implements Definition {
     private final String            source;
 
     // [#2238] Some caches for strings that are heavy to calculate in large schemas
-    private transient String       qualifiedInputName;
-    private transient String       qualifiedOutputName;
-    private transient Name         qualifiedInputNamePart;
-    private transient Name         qualifiedOutputNamePart;
-    private transient Integer      hashCode;
+    private transient String        qualifiedInputName;
+    private transient String        qualifiedOutputName;
+    private transient Name          qualifiedInputNamePart;
+    private transient Name          qualifiedOutputNamePart;
+    private transient Integer       hashCode;
 
     public AbstractDefinition(Database database, SchemaDefinition schema, String name) {
         this(database, schema, name, null);
@@ -330,6 +330,6 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public final String getSource() {
-        return source;
+        return source != null ? source : getDatabase().getSources().get(this);
     }
 }

@@ -59,6 +59,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -219,6 +220,7 @@ public abstract class AbstractDatabase implements Database {
     // Loaded definitions
     // -------------------------------------------------------------------------
 
+    private Map<Definition, String>                                          sources;
     private List<String>                                                     inputCatalogs;
     private List<String>                                                     inputSchemata;
     private Map<String, List<String>>                                        inputSchemataPerCatalog;
@@ -596,6 +598,19 @@ public abstract class AbstractDatabase implements Database {
                 return true;
 
         return false;
+    }
+
+    @Override
+    public final Map<Definition, String> getSources() {
+        if (sources == null) {
+            sources = new LinkedHashMap<>();
+            onError(ERROR, "Could not load sources", () -> {
+                sources = getSources0();
+                log.info("Sequences fetched", fetchedSize(sources.values(), sources.values()));
+            });
+        }
+
+        return sources;
     }
 
     @Override
@@ -2702,7 +2717,7 @@ public abstract class AbstractDatabase implements Database {
         return false;
     }
 
-    protected static final String fetchedSize(List<?> fetched, List<?> included) {
+    protected static final String fetchedSize(Collection<?> fetched, Collection<?> included) {
         return fetched.size() + " (" + included.size() + " included, " + (fetched.size() - included.size()) + " excluded)";
     }
 
@@ -3079,6 +3094,13 @@ public abstract class AbstractDatabase implements Database {
      * Create a new Factory
      */
     protected abstract DSLContext create0();
+
+    /**
+     * Retrieve ALL source code from the database.
+     */
+    protected Map<Definition, String> getSources0() throws SQLException {
+        return new LinkedHashMap<>();
+    }
 
     /**
      * Retrieve ALL indexes from the database

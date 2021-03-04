@@ -80,6 +80,16 @@ final class TableList extends QueryPartList<Table<?>> {
     }
 
     @Override
+    protected void acceptElement(Context<?> ctx, Table<?> part) {
+        Table<?> alternative;
+
+        if (ctx.declareTables() && part instanceof AutoAliasTable && (alternative = ((AutoAliasTable<?>) part).autoAlias(ctx)) != null)
+            super.acceptElement(ctx, alternative);
+        else
+            super.acceptElement(ctx, part);
+    }
+
+    @Override
     protected void toSQLEmptyList(Context<?> ctx) {
         ctx.visit(new Dual());
     }

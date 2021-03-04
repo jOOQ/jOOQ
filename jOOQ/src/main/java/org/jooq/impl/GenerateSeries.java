@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 // ...
 import static org.jooq.impl.DSL.one;
@@ -56,12 +57,14 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record1;
+import org.jooq.Table;
 import org.jooq.TableOptions;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
  */
-final class GenerateSeries extends AbstractTable<Record1<Integer>> {
+final class GenerateSeries extends AbstractTable<Record1<Integer>> implements AutoAliasTable<Record1<Integer>> {
 
     /**
      * Generated UID
@@ -114,10 +117,16 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
             }
 
             case H2: {
-                if (step == null)
+                if (step == null) {
                     ctx.visit(N_SYSTEM_RANGE).sql('(').visit(from).sql(", ").visit(to).sql(')');
-                else
-                    ctx.visit(N_SYSTEM_RANGE).sql('(').visit(from).sql(", ").visit(to).sql(", ").visit(step).sql(')');
+                }
+
+                // Work around https://github.com/h2database/h2database/issues/3046
+                else {
+                    ctx.visit(N_SYSTEM_RANGE).sql('(').visit(from).sql(", ").visit(to).sql(", ");
+                    ctx.paramType(INLINED, c -> c.visit(step));
+                    ctx.sql(')');
+                }
 
                 break;
             }
@@ -170,5 +179,15 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
     @Override // Avoid AbstractTable implementation
     public final Clause[] clauses(Context<?> ctx) {
         return null;
+    }
+
+    @Override
+    public final Table<Record1<Integer>> autoAlias(Context<?> ctx) {
+        switch (ctx.family()) {
+            case H2:
+                return as(N_GENERATE_SERIES, N_GENERATE_SERIES);
+            default:
+                return null;
+        }
     }
 }

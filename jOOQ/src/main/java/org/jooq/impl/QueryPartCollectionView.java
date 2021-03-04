@@ -179,7 +179,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
                     );
                 }
                 else
-                    ctx.visit(part);
+                    acceptElement(ctx, part);
             }
         }
 
@@ -191,6 +191,13 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
         if (previousAlreadyIndented)
             ctx.data(DATA_LIST_ALREADY_INDENTED, previousAlreadyIndented);
+    }
+
+    /**
+     * Subclasses may override this method
+     */
+    protected void acceptElement(Context<?> ctx, T part) {
+        ctx.visit(part);
     }
 
     /**

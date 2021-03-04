@@ -82,47 +82,47 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
 
 
 
+    private final Field<Integer>         from;
+    private final Field<Integer>         to;
+    private final Field<Integer>         step;
 
+    GenerateSeries(Field<Integer> from, Field<Integer> to) {
+        this(from, to, null);
+    }
 
+    GenerateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
+        super(TableOptions.expression(), N_GENERATE_SERIES);
 
+        this.from = from;
+        this.to = to;
+        this.step = step;
+    }
 
+    @Override
+    public final void accept(Context<?> ctx) {
+        if (EMULATE_WITH_RECURSIVE.contains(ctx.dialect())) {
+            Name v = unquotedName("v");
+            Field<Integer> f = DSL.field(v, INTEGER);
+            visitSubquery(
+                ctx,
+                withRecursive(N_GENERATE_SERIES, v)
+                    .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(N_GENERATE_SERIES).where(f.lt(to))))
+                    .select(f.as(N_GENERATE_SERIES)).from(N_GENERATE_SERIES),
+                true
+            );
+        }
+        else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect())) {
+            if (step == null) {
+                ctx.visit(N_SYSTEM_RANGE).sql('(').visit(from).sql(", ").visit(to).sql(')');
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            // Work around https://github.com/h2database/h2database/issues/3046
+            else {
+                ctx.visit(N_SYSTEM_RANGE).sql('(').visit(from).sql(", ").visit(to).sql(", ");
+                ctx.paramType(INLINED, c -> c.visit(step));
+                ctx.sql(')');
+            }
+        }
 
 
 

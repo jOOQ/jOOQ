@@ -108,6 +108,13 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (datePart == null)
+            ctx.visit(date.add(interval));
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         Keyword keyword = null;
         Name    name    = null;
         String  string  = null;
@@ -126,7 +133,7 @@ extends
 
             case DERBY:
             case HSQLDB: {
-                switch (datePart()) {
+                switch (datePart) {
                     case YEAR:   keyword = DSL.keyword("sql_tsi_year");   break;
                     case MONTH:  keyword = DSL.keyword("sql_tsi_month");  break;
                     case DAY:    keyword = DSL.keyword("sql_tsi_day");    break;
@@ -141,7 +148,7 @@ extends
             }
 
             case H2: {
-                switch (datePart()) {
+                switch (datePart) {
                     case YEAR:   string = "year";   break;
                     case MONTH:  string = "month";  break;
                     case DAY:    string = "day";    break;
@@ -165,7 +172,7 @@ extends
 
 
             case POSTGRES: {
-                switch (datePart()) {
+                switch (datePart) {
                     case YEAR:   string = "1 year";   break;
                     case MONTH:  string = "1 month";  break;
                     case DAY:    string = "1 day";    break;
@@ -178,7 +185,7 @@ extends
                 if (getDataType().isDate())
 
                     // [#10258] Special case for DATE + INTEGER arithmetic
-                    if (datePart() == DatePart.DAY)
+                    if (datePart == DatePart.DAY)
                         ctx.sql('(').visit(date).sql(" + ").visit(interval).sql(')');
 
                     // [#3824] Ensure that the output for DATE arithmetic will also be of type DATE, not TIMESTAMP
@@ -192,7 +199,7 @@ extends
             }
 
             case SQLITE: {
-                switch (datePart()) {
+                switch (datePart) {
                     case YEAR:   string = " year";   break;
                     case MONTH:  string = " month";  break;
                     case DAY:    string = " day";    break;
@@ -348,22 +355,18 @@ extends
     }
 
     private final Keyword standardKeyword() {
-        switch (datePart()) {
+        switch (datePart) {
             case YEAR:
             case MONTH:
             case DAY:
             case HOUR:
             case MINUTE:
             case SECOND:
-                return datePart().toKeyword();
+                return datePart.toKeyword();
 
             default:
                 throw unsupported();
         }
-    }
-
-    private final DatePart datePart() {
-        return StringUtils.defaultIfNull(datePart, DatePart.DAY);
     }
 
     private final UnsupportedOperationException unsupported() {

@@ -181,13 +181,13 @@ public class JDBCUtils {
 
     @NotNull
     private static final SQLDialect dialect(String url, int majorVersion, int minorVersion) {
-        SQLDialect dialect = dialect(url);
+        SQLDialect family = dialect(url).family();
 
         // [#6814] If the driver can't report the version, fall back to the dialect family
         if (majorVersion == 0)
-            return dialect;
+            return family;
 
-        switch (dialect.family()) {
+        switch (family) {
 
 
 
@@ -206,7 +206,7 @@ public class JDBCUtils {
                 return postgresDialect(majorVersion, minorVersion);
         }
 
-        return dialect;
+        return family;
     }
 
 

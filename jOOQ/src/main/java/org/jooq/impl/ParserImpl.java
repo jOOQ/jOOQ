@@ -9472,7 +9472,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field<String> f2 = (Field) parseField(S);
             parse(')');
 
-            switch (parseDialect()) {
+            switch (parseFamily()) {
 
 
 

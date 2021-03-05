@@ -2873,11 +2873,11 @@ final class Tools {
     /**
      * Translate a {@link RuntimeException} to a {@link DataAccessException}
      */
-    static final RuntimeException translate(String sql, RuntimeException e) {
+    static final RuntimeException translate(String sql, RuntimeException e, SQLException cause) {
         if (e != null)
             return e;
         else
-            return new DataAccessException("SQL [" + sql + "]; Unspecified RuntimeException");
+            return new DataAccessException("SQL [" + sql + "]; Unspecified RuntimeException", cause);
     }
 
     /**

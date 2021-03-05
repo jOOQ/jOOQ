@@ -665,7 +665,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final void exception(RuntimeException e) {
-        this.exception = Tools.translate(sql(), e);
+        this.exception = Tools.translate(sql(), e, sqlException);
 
         if (Boolean.TRUE.equals(settings().isDebugInfoOnStackTrace())) {
 

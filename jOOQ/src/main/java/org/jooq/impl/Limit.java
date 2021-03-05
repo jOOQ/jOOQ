@@ -315,6 +315,8 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
+
             case HSQLDB:
                 // No break
 

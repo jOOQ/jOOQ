@@ -87,7 +87,7 @@ extends
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     @Override
     public void accept(Context<?> ctx) {

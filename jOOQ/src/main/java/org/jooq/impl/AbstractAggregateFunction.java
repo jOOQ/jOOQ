@@ -323,6 +323,7 @@ implements
      */
     final DataType<? extends Number> d(Context<?> ctx) {
         switch (ctx.family()) {
+            case FIREBIRD:
             case HSQLDB:
             case SQLITE:
                 return DOUBLE;

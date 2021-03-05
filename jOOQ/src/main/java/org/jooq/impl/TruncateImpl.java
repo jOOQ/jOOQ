@@ -74,7 +74,7 @@ implements
 
     private final Table<R> table;
     private       Boolean  restartIdentity;
-    private       Boolean  cascade;
+    private       Cascade  cascade;
 
     TruncateImpl(
         Configuration configuration,
@@ -92,7 +92,7 @@ implements
         Configuration configuration,
         Table<R> table,
         Boolean restartIdentity,
-        Boolean cascade
+        Cascade cascade
     ) {
         super(configuration);
 
@@ -103,7 +103,7 @@ implements
 
     final Table<R> $table()           { return table; }
     final Boolean  $restartIdentity() { return restartIdentity; }
-    final Boolean  $cascade()         { return cascade; }
+    final Cascade  $cascade()         { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -123,13 +123,13 @@ implements
 
     @Override
     public final TruncateImpl<R> cascade() {
-        this.cascade = true;
+        this.cascade = Cascade.CASCADE;
         return this;
     }
 
     @Override
     public final TruncateImpl<R> restrict() {
-        this.cascade = false;
+        this.cascade = Cascade.RESTRICT;
         return this;
     }
 
@@ -184,7 +184,7 @@ implements
 
 
                         ctx.formatSeparator()
-                           .visit(cascade ? K_CASCADE : K_RESTRICT);
+                           .visit(cascade == Cascade.CASCADE ? K_CASCADE : K_RESTRICT);
 
                 ctx.end(Clause.TRUNCATE_TRUNCATE);
                 break;

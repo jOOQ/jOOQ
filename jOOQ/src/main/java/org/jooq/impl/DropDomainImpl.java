@@ -72,7 +72,7 @@ implements
 
     private final Domain<?> domain;
     private final boolean   dropDomainIfExists;
-    private       Boolean   cascade;
+    private       Cascade   cascade;
 
     DropDomainImpl(
         Configuration configuration,
@@ -91,7 +91,7 @@ implements
         Configuration configuration,
         Domain<?> domain,
         boolean dropDomainIfExists,
-        Boolean cascade
+        Cascade cascade
     ) {
         super(configuration);
 
@@ -102,7 +102,7 @@ implements
 
     final Domain<?> $domain()             { return domain; }
     final boolean   $dropDomainIfExists() { return dropDomainIfExists; }
-    final Boolean   $cascade()            { return cascade; }
+    final Cascade   $cascade()            { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -110,13 +110,13 @@ implements
 
     @Override
     public final DropDomainImpl cascade() {
-        this.cascade = true;
+        this.cascade = Cascade.CASCADE;
         return this;
     }
 
     @Override
     public final DropDomainImpl restrict() {
-        this.cascade = false;
+        this.cascade = Cascade.RESTRICT;
         return this;
     }
 
@@ -158,11 +158,10 @@ implements
 
         ctx.sql(' ').visit(domain);
 
-        if (cascade != null)
-            if (cascade)
-                ctx.sql(' ').visit(K_CASCADE);
-            else
-                ctx.sql(' ').visit(K_RESTRICT);
+        if (cascade == Cascade.CASCADE)
+            ctx.sql(' ').visit(K_CASCADE);
+        else if (cascade == Cascade.RESTRICT)
+            ctx.sql(' ').visit(K_RESTRICT);
     }
 
 

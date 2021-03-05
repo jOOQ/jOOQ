@@ -73,7 +73,7 @@ implements
     private final Boolean  temporary;
     private final Table<?> table;
     private final boolean  dropTableIfExists;
-    private       Boolean  cascade;
+    private       Cascade  cascade;
 
     DropTableImpl(
         Configuration configuration,
@@ -95,7 +95,7 @@ implements
         Boolean temporary,
         Table<?> table,
         boolean dropTableIfExists,
-        Boolean cascade
+        Cascade cascade
     ) {
         super(configuration);
 
@@ -108,7 +108,7 @@ implements
     final Boolean  $temporary()         { return temporary; }
     final Table<?> $table()             { return table; }
     final boolean  $dropTableIfExists() { return dropTableIfExists; }
-    final Boolean  $cascade()           { return cascade; }
+    final Cascade  $cascade()           { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -116,13 +116,13 @@ implements
 
     @Override
     public final DropTableImpl cascade() {
-        this.cascade = true;
+        this.cascade = Cascade.CASCADE;
         return this;
     }
 
     @Override
     public final DropTableImpl restrict() {
-        this.cascade = false;
+        this.cascade = Cascade.RESTRICT;
         return this;
     }
 

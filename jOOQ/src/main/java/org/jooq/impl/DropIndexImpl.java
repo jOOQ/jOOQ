@@ -74,7 +74,7 @@ implements
     private final Index    index;
     private final boolean  dropIndexIfExists;
     private       Table<?> on;
-    private       Boolean  cascade;
+    private       Cascade  cascade;
 
     DropIndexImpl(
         Configuration configuration,
@@ -95,7 +95,7 @@ implements
         Index index,
         boolean dropIndexIfExists,
         Table<?> on,
-        Boolean cascade
+        Cascade cascade
     ) {
         super(configuration);
 
@@ -108,7 +108,7 @@ implements
     final Index    $index()             { return index; }
     final boolean  $dropIndexIfExists() { return dropIndexIfExists; }
     final Table<?> $on()                { return on; }
-    final Boolean  $cascade()           { return cascade; }
+    final Cascade  $cascade()           { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -132,13 +132,13 @@ implements
 
     @Override
     public final DropIndexImpl cascade() {
-        this.cascade = true;
+        this.cascade = Cascade.CASCADE;
         return this;
     }
 
     @Override
     public final DropIndexImpl restrict() {
-        this.cascade = false;
+        this.cascade = Cascade.RESTRICT;
         return this;
     }
 
@@ -183,8 +183,10 @@ implements
             else if (index.getTable() != null)
                 ctx.sql(' ').visit(K_ON).sql(' ').visit(index.getTable());
 
-        if (cascade != null)
-            ctx.sql(' ').visit(cascade ? K_CASCADE : K_RESTRICT);
+        if (cascade == Cascade.CASCADE)
+            ctx.sql(' ').visit(K_CASCADE);
+        else if (cascade == Cascade.RESTRICT)
+            ctx.sql(' ').visit(K_RESTRICT);
     }
 
     @Override

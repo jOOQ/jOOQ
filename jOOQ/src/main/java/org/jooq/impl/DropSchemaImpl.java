@@ -72,7 +72,7 @@ implements
 
     private final Schema  schema;
     private final boolean dropSchemaIfExists;
-    private       Boolean cascade;
+    private       Cascade cascade;
 
     DropSchemaImpl(
         Configuration configuration,
@@ -91,7 +91,7 @@ implements
         Configuration configuration,
         Schema schema,
         boolean dropSchemaIfExists,
-        Boolean cascade
+        Cascade cascade
     ) {
         super(configuration);
 
@@ -102,7 +102,7 @@ implements
 
     final Schema  $schema()             { return schema; }
     final boolean $dropSchemaIfExists() { return dropSchemaIfExists; }
-    final Boolean $cascade()            { return cascade; }
+    final Cascade $cascade()            { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -110,13 +110,13 @@ implements
 
     @Override
     public final DropSchemaImpl cascade() {
-        this.cascade = true;
+        this.cascade = Cascade.CASCADE;
         return this;
     }
 
     @Override
     public final DropSchemaImpl restrict() {
-        this.cascade = false;
+        this.cascade = Cascade.RESTRICT;
         return this;
     }
 
@@ -181,9 +181,9 @@ implements
 
         ctx.sql(' ').visit(schema);
 
-        if (cascade != null && cascade)
+        if (cascade == Cascade.CASCADE)
             ctx.sql(' ').visit(K_CASCADE);
-        else if (cascade != null && !cascade || REQUIRES_RESTRICT.contains(ctx.dialect()))
+        else if (cascade == Cascade.RESTRICT || REQUIRES_RESTRICT.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_RESTRICT);
 
         ctx.end(Clause.DROP_SCHEMA_SCHEMA);

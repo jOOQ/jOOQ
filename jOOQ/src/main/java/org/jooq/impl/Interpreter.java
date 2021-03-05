@@ -303,7 +303,7 @@ final class Interpreter {
             return;
         }
 
-        if (mutableSchema.isEmpty() || TRUE.equals(query.$cascade()))
+        if (mutableSchema.isEmpty() || query.$cascade() == Cascade.CASCADE)
             mutableSchema.catalog.schemas.remove(mutableSchema);
         else
             throw schemaNotEmpty(schema);
@@ -772,7 +772,7 @@ final class Interpreter {
         else if (query.$temporary() && existing.options.type() != TableType.TEMPORARY)
             throw objectNotTemporaryTable(table);
 
-        drop(schema.tables, existing, Cascade.of(query.$cascade()));
+        drop(schema.tables, existing, query.$cascade());
     }
 
     private final void accept0(TruncateImpl<?> query) {
@@ -785,7 +785,7 @@ final class Interpreter {
             throw notExists(table);
         else if (!existing.options.type().isTable())
             throw objectNotTable(table);
-        else if (!TRUE.equals(query.$cascade()) && existing.hasReferencingKeys())
+        else if (query.$cascade() != Cascade.CASCADE && existing.hasReferencingKeys())
             throw new DataDefinitionException("Cannot truncate table referenced by other tables. Use CASCADE: " + table);
     }
 
@@ -1094,7 +1094,7 @@ final class Interpreter {
             return;
         }
 
-        if (!TRUE.equals(query.$cascade()) && !existing.fields.isEmpty())
+        if (query.$cascade() != Cascade.CASCADE && !existing.fields.isEmpty())
             throw new DataDefinitionException("Domain " + domain.getQualifiedName() + " is still being referenced by fields.");
 
         List<MutableField> field = new ArrayList<>(existing.fields);

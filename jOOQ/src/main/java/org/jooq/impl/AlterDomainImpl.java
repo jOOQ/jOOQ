@@ -84,7 +84,7 @@ implements
     private       boolean    dropDefault;
     private       boolean    setNotNull;
     private       boolean    dropNotNull;
-    private       Boolean    cascade;
+    private       Cascade    cascade;
     private       Constraint renameConstraintTo;
 
     AlterDomainImpl(
@@ -125,7 +125,7 @@ implements
         boolean dropDefault,
         boolean setNotNull,
         boolean dropNotNull,
-        Boolean cascade,
+        Cascade cascade,
         Constraint renameConstraintTo
     ) {
         super(configuration);
@@ -158,7 +158,7 @@ implements
     final boolean    $dropDefault()              { return dropDefault; }
     final boolean    $setNotNull()               { return setNotNull; }
     final boolean    $dropNotNull()              { return dropNotNull; }
-    final Boolean    $cascade()                  { return cascade; }
+    final Cascade    $cascade()                  { return cascade; }
     final Constraint $renameConstraintTo()       { return renameConstraintTo; }
 
     // -------------------------------------------------------------------------
@@ -286,13 +286,13 @@ implements
 
     @Override
     public final AlterDomainImpl<T> cascade() {
-        this.cascade = true;
+        this.cascade = Cascade.CASCADE;
         return this;
     }
 
     @Override
     public final AlterDomainImpl<T> restrict() {
-        this.cascade = false;
+        this.cascade = Cascade.RESTRICT;
         return this;
     }
 
@@ -361,11 +361,10 @@ implements
             if (ctx.family() != FIREBIRD) {
                 ctx.sql(' ').data(DATA_CONSTRAINT_REFERENCE, true, c -> c.visit(dropConstraint));
 
-                if (cascade != null)
-                    if (cascade)
-                        ctx.sql(' ').visit(K_CASCADE);
-                    else
-                        ctx.sql(' ').visit(K_RESTRICT);
+                if (cascade == Cascade.CASCADE)
+                    ctx.sql(' ').visit(K_CASCADE);
+                else if (cascade == Cascade.RESTRICT)
+                    ctx.sql(' ').visit(K_RESTRICT);
             }
         }
         else if (renameTo != null) {

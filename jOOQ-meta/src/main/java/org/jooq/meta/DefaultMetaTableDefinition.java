@@ -84,7 +84,7 @@ public class DefaultMetaTableDefinition extends AbstractTableDefinition {
                 field.getName(),
                 result.size() + 1,
                 type,
-                false,
+                dataType.identity(),
                 field.getComment()
             ));
         }

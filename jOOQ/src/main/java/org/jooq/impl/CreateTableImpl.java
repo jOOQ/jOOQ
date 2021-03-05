@@ -87,6 +87,7 @@ import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_GLOBAL_TEMPORARY;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_INDEX;
+import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_ON_COMMIT_DELETE_ROWS;
 import static org.jooq.impl.Keywords.K_ON_COMMIT_DROP;
 import static org.jooq.impl.Keywords.K_ON_COMMIT_PRESERVE_ROWS;
@@ -471,9 +472,17 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
             toSQLOnCommit(ctx);
         }
 
-        if (comment != null && !EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect()))
+        if (comment != null && !EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect())) {
             ctx.formatSeparator()
-               .visit(K_COMMENT).sql(' ').visit(comment);
+               .visit(K_COMMENT).sql(' ');
+
+
+
+
+
+
+            ctx.visit(comment);
+        }
 
         // [#7772] This data() value should be available from ctx directly, not only from ctx.configuration()
         if (storage != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)

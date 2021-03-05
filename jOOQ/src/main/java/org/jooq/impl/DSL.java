@@ -92,6 +92,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
@@ -406,6 +407,7 @@ import org.jooq.XMLAttributes;
 import org.jooq.XMLExistsPassingStep;
 import org.jooq.XMLQueryPassingStep;
 import org.jooq.XMLTablePassingStep;
+import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.XMLParse.DocumentOrContent;
@@ -25013,6 +25015,46 @@ public class DSL {
     public static <T> Param<T> value(Object value, DataType<T> type) {
         return val(value, type);
     }
+
+    /**
+     * Inline all bind variables produced by the argument {@link Field}.
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> inlined(Field<T> field) {
+        return CustomField.of(field.getQualifiedName(), field.getDataType(), c -> c.visit(field, INLINED));
+    }
+
+    /**
+     * Inline all bind variables produced by the argument {@link Condition}.
+     */
+    @NotNull
+    @Support
+    public static Condition inlined(Condition condition) {
+        return CustomCondition.of(c -> c.visit(condition, INLINED));
+    }
+
+    /**
+     * Inline all bind variables produced by the argument {@link QueryPart}.
+     */
+    @NotNull
+    @Support
+    public static QueryPart inlined(QueryPart part) {
+        return CustomQueryPart.of(c -> c.visit(part, INLINED));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Create a bind value, that is always inlined.

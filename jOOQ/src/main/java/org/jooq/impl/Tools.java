@@ -1959,10 +1959,6 @@ final class Tools {
         return result;
     }
 
-    static final <T> Field<T> inlined(Field<T> field) {
-        return CustomField.of(field.getQualifiedName(), field.getDataType(), c -> c.visit(field, INLINED));
-    }
-
     static final IllegalArgumentException indexFail(Row row, Field<?> field) {
         return new IllegalArgumentException("Field (" + field + ") is not contained in Row " + row);
     }

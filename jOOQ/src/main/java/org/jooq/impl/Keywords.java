@@ -122,7 +122,7 @@ final class Keywords {
     static final Keyword K_DAY                              = keyword("day");
     static final Keyword K_DAY_MICROSECOND                  = keyword("day_microsecond");
     static final Keyword K_DAY_MILLISECOND                  = keyword("day_millisecond");
-    static final Keyword K_DAY_TO_SECOND                    = keyword("day_to_second");
+    static final Keyword K_DAY_TO_SECOND                    = keyword("day to second");
     static final Keyword K_DECIMAL                          = keyword("decimal");
     static final Keyword K_DECLARE                          = keyword("declare");
     static final Keyword K_DEFAULT                          = keyword("default");

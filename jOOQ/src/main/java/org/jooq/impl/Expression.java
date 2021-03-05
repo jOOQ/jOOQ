@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
@@ -488,6 +489,9 @@ final class Expression<T> extends AbstractTransformable<T> {
                     ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(interval).sql(')');
                     break;
                 }
+
+
+
 
 
 

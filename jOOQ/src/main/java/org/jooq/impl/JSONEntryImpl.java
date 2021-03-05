@@ -41,12 +41,12 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.inlined;
 
 import java.util.UUID;
 import java.util.function.Function;

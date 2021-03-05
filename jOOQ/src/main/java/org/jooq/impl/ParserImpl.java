@@ -7452,6 +7452,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return field;
                     else if ((field = parseFieldOverlayIf()) != null)
                         return field;
+                    else if ((field = parseFieldTranslateIf()) != null)
+                        return field;
 
                 if (N.is(type))
                     if (parseFunctionNameIf("OCTET_LENGTH"))
@@ -9654,7 +9656,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldTranslateIf() {
-        if (parseFunctionNameIf("TRANSLATE")) {
+        if (parseFunctionNameIf("TRANSLATE", "OTRANSLATE")) {
             parse('(');
             Field<String> f1 = (Field) parseField(S);
             parse(',');

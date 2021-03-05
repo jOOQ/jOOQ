@@ -93,7 +93,7 @@ extends
         if (NO_SUPPORT_NATIVE.contains(ctx.dialect())) {
             Field<? extends Number> x = (Field) getArguments().get(0);
 
-            ctx.visit(fo(DSL.avg(DSL.square(x))).minus(DSL.square(fo(DSL.avg(x)))));
+            ctx.visit(fo(DSL.avg(DSL.square(x).cast(d(ctx)))).minus(DSL.square(fo(DSL.avg(x.cast(d(ctx)))))));
         }
         else
             super.accept(ctx);

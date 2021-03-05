@@ -1414,6 +1414,13 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
+
+
+
+
+
+
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {

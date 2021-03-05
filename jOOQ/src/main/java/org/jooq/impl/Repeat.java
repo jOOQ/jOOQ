@@ -87,13 +87,9 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
-
-
 
 
 
@@ -104,11 +100,11 @@ extends
                 ctx.visit(DSL.rpad(string, imul(DSL.length(string), count), string));
                 break;
 
-            // Emulation of REPEAT() for SQLite currently cannot be achieved
-            // using RPAD() above, as RPAD() expects characters, not strings
-            // Another option is documented here, though:
-            // https://stackoverflow.com/a/51792334/521799
             case SQLITE:
+                // Emulation of REPEAT() for SQLite currently cannot be achieved
+                // using RPAD() above, as RPAD() expects characters, not strings
+                // Another option is documented here, though:
+                // https://stackoverflow.com/a/51792334/521799
                 ctx.visit(N_REPLACE).sql('(').visit(N_HEX).sql('(').visit(N_ZEROBLOB).sql('(').visit(count).sql(")), '00', ").visit(string).sql(')');
                 break;
 
@@ -121,12 +117,10 @@ extends
 
 
             default:
-                ctx.visit(N_REPEAT).sql('(').visit(string).sql(", ").visit(count).sql(')');
+                ctx.visit(function(N_REPEAT, getDataType(), string, count));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

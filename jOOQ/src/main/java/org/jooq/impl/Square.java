@@ -84,19 +84,42 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
-    private static final Set<SQLDialect> NO_SUPPORT_SQUARE = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
-
     @Override
     public final void accept(Context<?> ctx) {
-        if (NO_SUPPORT_SQUARE.contains(ctx.dialect()))
-            ctx.visit(value.times(value));
-        else
-            ctx.visit(N_SQUARE).sql('(').visit(value).sql(')');
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+                ctx.visit(value.times(value));
+                break;
+
+            default:
+                ctx.visit(function(N_SQUARE, getDataType(), value));
+                break;
+        }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

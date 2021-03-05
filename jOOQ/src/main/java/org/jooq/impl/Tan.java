@@ -85,14 +85,10 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(function(N_TAN, getDataType(), number));
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

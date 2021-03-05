@@ -87,8 +87,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -97,37 +95,15 @@ extends
                 break;
 
 
-
-
             case SQLITE:
                 ctx.visit(DSL.substring(string, length.neg()));
                 break;
 
-
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
             default:
-                ctx.visit(N_RIGHT).sql('(').visit(string).sql(", ").visit(length).sql(')');
+                ctx.visit(function(N_RIGHT, getDataType(), string, length));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

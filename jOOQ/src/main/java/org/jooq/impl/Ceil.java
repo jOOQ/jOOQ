@@ -84,8 +84,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -95,29 +93,23 @@ extends
 
 
 
-
-            // [#8275] Improved emulation for SQLite
             case SQLITE:
-                Field<Long> cast = DSL.cast(value, SQLDataType.BIGINT);
-                ctx.sql('(').visit(cast).sql(" + (").visit(value).sql(" > ").visit(cast).sql("))");
+                // [#8275] Improved emulation for SQLite
+                ctx.sql('(').visit(value.cast(BIGINT)).sql(" + (").visit(value).sql(" > ").visit(value.cast(BIGINT)).sql("))");
                 break;
-
-
 
 
 
 
             case H2:
-                ctx.visit(N_CEILING).sql('(').visit(value).sql(')');
+                ctx.visit(function(N_CEILING, getDataType(), value));
                 break;
 
             default:
-                ctx.visit(N_CEIL).sql('(').visit(value).sql(')');
+                ctx.visit(function(N_CEIL, getDataType(), value));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

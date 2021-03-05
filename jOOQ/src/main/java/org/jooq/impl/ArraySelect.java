@@ -97,8 +97,6 @@ final class ArraySelect<T> extends AbstractField<T[]> {
 
 
 
-
-
             case HSQLDB:
             case POSTGRES:
             default:

@@ -79,13 +79,9 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
-
-
 
 
 
@@ -116,20 +112,17 @@ extends
             case MYSQL:
             case POSTGRES:
                 ctx.visit(DSL.exp(one()));
-                return;
+                break;
 
             case SQLITE:
                 ctx.visit(inline(Math.E, BigDecimal.class));
-                return;
+                break;
 
-            // The Euler number doesn't seem to exist in any dialect...
             default:
-                ctx.visit(function(N_E, getDataType()));
-                return;
+                ctx.visit(function(N_EULER, getDataType()));
+                break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

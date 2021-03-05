@@ -84,8 +84,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -96,19 +94,16 @@ extends
 
 
             case SQLITE:
-                ctx.visit(DSL
-                    .when(((Field<Integer>) number).gt(zero()), inline(1))
-                    .when(((Field<Integer>) number).lt(zero()), inline(-1))
-                    .when(((Field<Integer>) number).eq(zero()), inline(0)));
+                ctx.visit(when(((Field) number).gt(zero()), inline(1))
+                .when(((Field) number).lt(zero()), inline(-1))
+                .when(((Field) number).eq(zero()), inline(0)));
                 break;
 
             default:
-                ctx.visit(N_SIGN).sql('(').visit(number).sql(')');
+                ctx.visit(function(N_SIGN, getDataType(), number));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

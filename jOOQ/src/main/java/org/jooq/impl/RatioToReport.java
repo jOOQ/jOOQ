@@ -81,8 +81,7 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
 
 
 
-
-
+            case CUBRID:
 
 
 
@@ -101,12 +100,6 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
                 acceptOverClause(ctx);
                 break;
 
-
-
-
-
-
-            case H2:
             default:
                 ctx.visit(N_RATIO_TO_REPORT).sql('(').visit(field).sql(')');
                 acceptOverClause(ctx);

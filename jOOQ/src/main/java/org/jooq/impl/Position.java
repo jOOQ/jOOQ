@@ -135,8 +135,6 @@ extends
         else {
             switch (ctx.family()) {
 
-
-
                 case DERBY:
                     ctx.visit(N_LOCATE).sql('(').visit(search).sql(", ").visit(in).sql(')');
                     break;

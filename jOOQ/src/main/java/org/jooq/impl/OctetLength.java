@@ -84,10 +84,8 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
 
@@ -116,8 +114,6 @@ extends
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

@@ -4406,8 +4406,6 @@ final class Tools {
             }
 
 
-
-
             case POSTGRES: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
                     ctx.visit(K_DO).sql(" $$").formatSeparator();
@@ -4439,8 +4437,6 @@ final class Tools {
                    .visit(K_END);
                 break;
             }
-
-
 
             case POSTGRES: {
                 ctx.formatIndentEnd().formatSeparator()
@@ -5926,14 +5922,11 @@ final class Tools {
 
 
 
-
-
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
                     return ParseNameCase.AS_IS;
 
-                case DEFAULT:
                 default:
                     // The SQL standard uses upper case identifiers if unquoted
                     return ParseNameCase.UPPER_IF_UNQUOTED;

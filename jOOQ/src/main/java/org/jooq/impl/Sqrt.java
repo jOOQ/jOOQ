@@ -85,12 +85,9 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
-
 
 
 
@@ -110,12 +107,10 @@ extends
                 break;
 
             default:
-                ctx.visit(N_SQRT).sql('(').visit(value).sql(')');
+                ctx.visit(function(N_SQRT, getDataType(), value));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

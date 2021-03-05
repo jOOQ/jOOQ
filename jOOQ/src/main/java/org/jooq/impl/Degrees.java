@@ -85,8 +85,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -105,12 +103,10 @@ extends
                 break;
 
             default:
-                ctx.visit(N_DEGREES).sql('(').visit(radians).sql(')');
+                ctx.visit(function(N_DEGREES, getDataType(), radians));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

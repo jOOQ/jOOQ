@@ -84,8 +84,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -95,27 +93,11 @@ extends
 
 
 
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case HSQLDB:
-            case POSTGRES:
-            case MARIADB:
-            case MYSQL:
             default:
-                ctx.visit(N_REVERSE).sql('(').visit(string).sql(')');
+                ctx.visit(function(N_REVERSE, getDataType(), string));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

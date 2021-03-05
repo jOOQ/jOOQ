@@ -174,8 +174,6 @@ implements
         switch (ctx.family()) {
 
 
-
-
             case MARIADB:
             case MYSQL: {
                 ctx.visit(K_ALTER_TABLE).sql(' ')

@@ -84,16 +84,9 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
-
-            // [#10135] Avoid REPEAT() emulation that is too complicated for SPACE(N)
-
-
-
 
 
 
@@ -102,11 +95,9 @@ extends
 
             case FIREBIRD:
             case SQLITE:
+                // [#10135] Avoid REPEAT() emulation that is too complicated for SPACE(N)
                 ctx.visit(DSL.rpad(DSL.inline(' '), count));
                 break;
-
-
-
 
 
 
@@ -118,28 +109,11 @@ extends
                 ctx.visit(DSL.repeat(DSL.inline(" "), count));
                 break;
 
-
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case MARIADB:
-            case MYSQL:
-            case H2:
             default:
-                ctx.visit(N_SPACE).sql('(').visit(count).sql(')');
+                ctx.visit(function(N_SPACE, getDataType(), count));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

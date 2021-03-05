@@ -85,8 +85,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -94,20 +92,16 @@ extends
 
 
 
-
-
             case FIREBIRD:
             case SQLITE:
                 ctx.visit(castIfNeeded(degrees, BigDecimal.class).mul(pi()).div(inline(180)));
-                return;
+                break;
 
             default:
-                ctx.visit(function(N_RADIANS, NUMERIC, degrees));
-                return;
+                ctx.visit(function(N_RADIANS, getDataType(), degrees));
+                break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

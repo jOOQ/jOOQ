@@ -992,8 +992,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             switch (family) {
 
 
-
-
                 case MARIADB:
                 case MYSQL:
                     break;
@@ -1075,9 +1073,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         // [#3805] Compound statements to alter data type and change nullability in a single statement if needed.
         if (alterColumnType != null && alterColumnType.nullability() != Nullability.DEFAULT) {
             switch (family) {
-
-
-
 
 
 
@@ -1178,8 +1173,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.start(ALTER_TABLE_RENAME_COLUMN);
 
             switch (ctx.family()) {
-
-
 
 
                 case DERBY:
@@ -1451,14 +1444,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 switch (family) {
 
 
-
-
-
                     case DERBY:
                         ctx.sql(' ').visit(K_SET_DATA_TYPE);
                         break;
-
-
 
 
 
@@ -1520,10 +1508,10 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-
                     // MySQL supports DROP DEFAULT, but it does not work correctly:
                     // https://bugs.mysql.com/bug.php?id=81010
                     // Same for MariaDB
+
                     case MARIADB:
                     case MYSQL:
                         ctx.sql(' ').visit(K_SET_DEFAULT).sql(' ').visit(K_NULL);
@@ -1684,7 +1672,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-
             case HSQLDB:
             case POSTGRES:
             default:
@@ -1828,7 +1815,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             c1.sql(';').formatSeparator();
 
             switch (c1.family()) {
-
 
 
 

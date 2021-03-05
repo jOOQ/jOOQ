@@ -134,9 +134,6 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
                 break;
 
 
-
-
-
             case FIREBIRD:
                 ctx.visit(N_DATEDIFF).sql('(').visit(K_MILLISECOND).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');
                 break;
@@ -149,9 +146,6 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
             // MySQL's datetime operations operate on a microsecond level
 
 
-
-
-
             case MARIADB:
             case MYSQL:
                 ctx.visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("microsecond")).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(") / 1000");
@@ -160,10 +154,6 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
             case SQLITE:
                 ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(timestamp1).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(timestamp2).sql(")) * 1000");
                 break;
-
-
-
-
 
             default:
                 // Default implementation for equals() and hashCode()

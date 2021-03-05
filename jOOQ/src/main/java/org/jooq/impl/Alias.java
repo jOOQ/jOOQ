@@ -298,8 +298,6 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             switch (family) {
 
 
-
-
                 case HSQLDB:
                 case POSTGRES: {
                     // The javac compiler doesn't like casting of generics

@@ -84,8 +84,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -96,22 +94,14 @@ extends
 
 
             case FIREBIRD:
-                ctx.visit(N_ASCII_VAL).sql('(').visit(string).sql(')');
+                ctx.visit(function(N_ASCII_VAL, getDataType(), string));
                 break;
 
-            // TODO [#862] [#864] emulate this for some dialects
-
-
-
-            case DERBY:
-            case SQLITE:
             default:
-                ctx.visit(N_ASCII).sql('(').visit(string).sql(')');
+                ctx.visit(function(N_ASCII, getDataType(), string));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

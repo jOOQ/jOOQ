@@ -79,13 +79,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
-
-
-
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -113,15 +106,14 @@ extends
             case DERBY:
             case POSTGRES:
             case SQLITE:
-                ctx.visit(N_RANDOM).sql("()");
+                ctx.visit(function(N_RANDOM, getDataType()));
                 break;
+
             default:
-                ctx.visit(N_RAND).sql("()");
+                ctx.visit(function(N_RAND, getDataType()));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

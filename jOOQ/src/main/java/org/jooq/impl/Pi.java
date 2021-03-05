@@ -79,8 +79,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -97,15 +95,13 @@ extends
 
             case SQLITE:
                 ctx.visit(inline(Math.PI, BigDecimal.class));
-                return;
+                break;
 
             default:
-                ctx.visit(function("pi", getDataType()));
-                return;
+                ctx.visit(function(N_PI, getDataType()));
+                break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

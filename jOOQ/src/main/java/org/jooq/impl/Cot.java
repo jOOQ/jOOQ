@@ -85,8 +85,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -101,12 +99,10 @@ extends
 
 
             default:
-                ctx.visit(N_COT).sql('(').visit(number).sql(')');
+                ctx.visit(function(N_COT, getDataType(), number));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

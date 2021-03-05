@@ -87,44 +87,20 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
-
-
 
             case DERBY:
             case SQLITE:
                 ctx.visit(DSL.substring(string, inline(1), length));
                 break;
 
-
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
             default:
-                ctx.visit(N_LEFT).sql('(').visit(string).sql(", ").visit(length).sql(')');
+                ctx.visit(function(N_LEFT, getDataType(), string, length));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

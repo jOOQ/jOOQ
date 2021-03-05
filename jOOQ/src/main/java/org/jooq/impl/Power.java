@@ -88,8 +88,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -105,12 +103,10 @@ extends
                 break;
 
             default:
-                ctx.visit(N_POWER).sql('(').visit(value).sql(", ").visit(exponent).sql(')');
+                ctx.visit(function(N_POWER, getDataType(), value, exponent));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

@@ -134,8 +134,6 @@ final class Dual extends AbstractTable<Record> {
 
 
 
-
-
                 case H2:
                 case POSTGRES:
                 case SQLITE:
@@ -203,14 +201,6 @@ final class Dual extends AbstractTable<Record> {
                 case DERBY:
                     ctx.visit(DUAL_DERBY);
                     break;
-
-                case MARIADB:
-                case MYSQL:
-
-
-
-
-
 
                 default:
                     ctx.visit(N_DUAL);

@@ -84,13 +84,9 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
-
-
 
 
 
@@ -103,20 +99,18 @@ extends
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                ctx.visit(N_CHAR).sql('(').visit(number).sql(')');
+                ctx.visit(function(N_CHAR, getDataType(), number));
                 break;
 
             case FIREBIRD:
-                ctx.visit(N_ASCII_CHAR).sql('(').visit(number).sql(')');
+                ctx.visit(function(N_ASCII_CHAR, getDataType(), number));
                 break;
 
             default:
-                ctx.visit(N_CHR).sql('(').visit(number).sql(')');
+                ctx.visit(function(N_CHR, getDataType(), number));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

@@ -190,8 +190,6 @@ final class ArrayTable extends AbstractTable<Record> {
             // arrays
 
 
-
-
             case HSQLDB:
             case POSTGRES:
                 return new PostgresHSQLDBTable().as(alias, fieldAliases);

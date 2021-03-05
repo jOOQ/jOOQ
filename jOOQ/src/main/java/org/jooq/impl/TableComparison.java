@@ -68,18 +68,13 @@ final class TableComparison<R extends Record> extends AbstractCondition {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-
-
-
-            case POSTGRES: {
+            case POSTGRES:
                 ctx.sql('(').visit(lhs).sql(' ').sql(comparator.toSQL()).sql(' ').visit(rhs).sql(')');
                 break;
-            }
 
-            default: {
+            default:
                 ctx.visit(row(lhs.fields()).compare(comparator, row(rhs.fields())));
                 break;
-            }
         }
     }
 

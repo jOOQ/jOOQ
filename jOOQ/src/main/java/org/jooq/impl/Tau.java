@@ -79,14 +79,10 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(imul(pi(), two()));
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

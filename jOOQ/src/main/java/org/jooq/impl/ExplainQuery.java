@@ -86,15 +86,6 @@ final class ExplainQuery {
                 result = ctx.fetch("{explain plan for} {0}", query);
                 break;
 
-
-
-
-
-
-
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
             default:
                 result = ctx.fetch("{explain} {0}", query);
                 break;
@@ -140,8 +131,6 @@ final class ExplainQuery {
                 rows = result.get(0).get("rows", double.class);
                 break;
             }
-
-
 
 
             case POSTGRES: {

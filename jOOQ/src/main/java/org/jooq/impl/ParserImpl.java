@@ -9566,8 +9566,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-
-
                     case POSTGRES:
                         first = true;
                         break;

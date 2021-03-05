@@ -84,14 +84,10 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_ABS).sql('(').visit(number).sql(')');
+        ctx.visit(function(N_ABS, getDataType(), number));
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

@@ -85,8 +85,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(idiv(
@@ -94,8 +92,6 @@ extends
             isub(DSL.exp(imul(number, two())), one())
         ));
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

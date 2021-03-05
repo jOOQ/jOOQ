@@ -66,9 +66,6 @@ final class BitCount extends AbstractField<Integer> {
         switch (ctx.family()) {
 
 
-
-
-
             case MARIADB:
             case MYSQL:
                 ctx.visit(N_BIT_COUNT).sql('(').visit(field).sql(')');
@@ -80,20 +77,19 @@ final class BitCount extends AbstractField<Integer> {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+            // [#3962] The databases listed here are the same ones that need to
+            // emulate the SHR(a, b) function via a / POWER(2, b). BitCount is
+            // expensive enough already, we shouldn't also introduce POWER()
             // Better solutions very welcome! See also:
             // See also http://stackoverflow.com/questions/7946349/how-to-simulate-the-mysql-bit-count-function-in-sybase-sql-anywhere
+
+
+
+
+
+
+
+
             case H2:
             case HSQLDB: {
                 if (field.getType() == Byte.class) {

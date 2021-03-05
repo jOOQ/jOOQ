@@ -379,13 +379,8 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         else if (Result.class.isAssignableFrom(tType)) {
             switch (configuration.family()) {
 
-
-
                 case H2:
                     return -10; // OracleTypes.CURSOR;
-
-
-
 
 
 

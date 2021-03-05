@@ -149,8 +149,6 @@ implements
 
 
 
-
-
             case FIREBIRD:
             case IGNITE:
             case SQLITE: {

@@ -32,6 +32,56 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
         </dependency>
+        <exclusions>
+            <exclusion>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>antlr</groupId>
+                <artifactId>antlr</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>javax.activation</groupId>
+                <artifactId>javax.activation-api</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>com.fasterxml</groupId>
+                <artifactId>classmate</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.jboss</groupId>
+                <artifactId>jandex</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.jboss.spec.javax.transaction</groupId>
+                <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.hibernate.common</groupId>
+                <artifactId>hibernate-commons-annotations</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+            </exclusion>
+        </exclusions>
     </dependencies>
 
     <build>

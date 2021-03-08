@@ -11762,16 +11762,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(DataType<T> type, String... qualifiedName) {
-        if (qualifiedName == null)
-            throw new NullPointerException();
-
-        if (qualifiedName.length < 1 || qualifiedName.length > 2)
-            throw new IllegalArgumentException("Must provide a qualified name of length 1 or 2 : " + name(qualifiedName));
-
-        String name = qualifiedName[qualifiedName.length - 1];
-        Schema schema = qualifiedName.length == 2 ? schemaByName(qualifiedName[0]) : null;
-
-        return new SequenceImpl<>(name, schema, type);
+        return sequence(name(qualifiedName), type);
     }
 
     /**
@@ -11828,16 +11819,12 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequence(Name name, DataType<T> type) {
-        if (name == null)
-            throw new NullPointerException();
-
-        if (name.getName().length < 1 || name.getName().length > 2)
-            throw new IllegalArgumentException("Must provide a qualified name of length 1 or 2 : " + name);
-
-        Name n = name.unqualifiedName();
-        Schema s = name.parts().length == 2 ? schema(name.qualifier()) : null;
-
-        return new SequenceImpl<>(n, s, type, false);
+        return new SequenceImpl<>(
+            name.unqualifiedName(),
+            name.qualified() ? schema(name.qualifier()) : null,
+            type,
+            false
+        );
     }
 
     /**
@@ -13567,16 +13554,11 @@ public class DSL {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Domain<?> domain(Name name) {
-        if (name == null)
-            throw new NullPointerException();
-
-        if (name.getName().length < 1 || name.getName().length > 2)
-            throw new IllegalArgumentException("Must provide a qualified name of length 1 or 2 : " + name);
-
-        Name n = name.unqualifiedName();
-        Schema s = name.parts().length == 2 ? schema(name.qualifier()) : null;
-
-        return new DomainImpl<>(s, n, new DefaultDataType<>(null, Object.class, name));
+        return new DomainImpl<>(
+            name.qualified() ? schema(name.qualifier()) : null,
+            name.unqualifiedName(),
+            new DefaultDataType<>(null, Object.class, name)
+        );
     }
 
     /**

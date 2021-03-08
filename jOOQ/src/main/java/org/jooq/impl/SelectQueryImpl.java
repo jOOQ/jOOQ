@@ -1296,8 +1296,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     final void accept0(Context<?> context) {
-        if (context.subqueryLevel() == 0)
-            context.scopeStart().data(DATA_TOP_LEVEL_CTE, new TopLevelCte());
+        boolean topLevelCte = false;
+
+        // Subquery scopes are started in AbstractContext
+        if (context.subqueryLevel() == 0) {
+            context.scopeStart();
+
+            if (topLevelCte |= (context.data(DATA_TOP_LEVEL_CTE) == null))
+                context.data(DATA_TOP_LEVEL_CTE, new TopLevelCte());
+        }
 
         SQLDialect dialect = context.dialect();
 
@@ -1341,7 +1348,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (with != null)
                 context.visit(with);
-            else if (context.subqueryLevel() == 0)
+            else if (topLevelCte && context.subqueryLevel() == 0)
                 context.scopeMarkStart(TOP_LEVEL_CTE.beforeFirst)
                        .scopeMarkEnd(TOP_LEVEL_CTE.beforeFirst)
                        .scopeMarkStart(TOP_LEVEL_CTE.afterLast)

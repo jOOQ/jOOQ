@@ -86,6 +86,7 @@ import static org.jooq.impl.Keywords.K_ROWCOUNT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.ScopeMarker.TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.flattenCollection;
@@ -93,6 +94,7 @@ import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
+import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
@@ -320,7 +322,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     public final void accept(Context<?> ctx) {
         WithImpl w = with;
 
-        ctx.data(DATA_DML_TARGET_TABLE, table);
+        ctx.scopeStart()
+           .data(DATA_DML_TARGET_TABLE, table);
+
+
+
+
 
 
 
@@ -340,6 +347,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
         if (w != null)
             ctx.visit(w);
+        else
+            ctx.scopeMarkStart(TOP_LEVEL_CTE.beforeFirst)
+               .scopeMarkEnd(TOP_LEVEL_CTE.beforeFirst)
+               .scopeMarkStart(TOP_LEVEL_CTE.afterLast)
+               .scopeMarkEnd(TOP_LEVEL_CTE.afterLast);
 
         boolean previousDeclareFields = ctx.declareFields();
 
@@ -608,6 +620,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
         ctx.data().remove(DATA_DML_TARGET_TABLE);
+        ctx.scopeEnd();
     }
 
 

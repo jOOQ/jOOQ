@@ -101,13 +101,12 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE_WITH_RECURSIVE.contains(ctx.dialect())) {
-            Name v = unquotedName("v");
-            Field<Integer> f = DSL.field(v, INTEGER);
+            Field<Integer> f = DSL.field(N_GENERATE_SERIES, INTEGER);
             visitSubquery(
                 ctx,
-                withRecursive(N_GENERATE_SERIES, v)
+                withRecursive(N_GENERATE_SERIES, N_GENERATE_SERIES)
                     .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(N_GENERATE_SERIES).where(f.lt(to))))
-                    .select(f.as(N_GENERATE_SERIES)).from(N_GENERATE_SERIES),
+                    .select(f).from(N_GENERATE_SERIES),
                 true
             );
         }

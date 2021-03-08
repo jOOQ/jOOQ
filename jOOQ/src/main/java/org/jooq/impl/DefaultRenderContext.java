@@ -39,9 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
@@ -56,7 +54,6 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -96,7 +93,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     final StringBuilder                   sql;
     private final QueryPartList<Param<?>> bindValues;
-    private int                           params;
     private int                           alias;
     private int                           indent;
     private Deque<Integer>                indentLock;
@@ -177,6 +173,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         applyNewLine();
         ScopeStackElement e = scopeStack.getOrCreate(part);
         e.positions = new int[] { sql.length(), -1 };
+        e.bindIndex = peekIndex();
         e.indent = indent;
         resetSeparatorFlags();
     }
@@ -253,7 +250,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         outer:
         for (ScopeStackElement e1 : scopeStack.iterable(e -> e.scopeLevel == scopeStack.scopeLevel())) {
-            String replaced = null;
+            String replacedSQL = null;
+            QueryPartList<Param<?>> insertedBindValues = null;
 
             if (e1.positions == null) {
                 continue outer;
@@ -262,7 +260,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             // [#11367] TODO: Move this logic into a ScopeMarker as well
             //          TODO: subqueryLevel() is lower than scopeLevel if we use implicit join in procedural logic
             else if (e1.joinNode != null && !e1.joinNode.children.isEmpty()) {
-                replaced = configuration
+                replacedSQL = configuration
                     .dsl()
                     .renderContext()
                     .declareTables(true)
@@ -283,21 +281,24 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     ScopeContent c = content[i];
 
                     if (e1 == e && c != null) {
-                        replaced = markers[i].renderer.render(
-                            configuration.dsl().renderContext().formatIndentStart(e.indent),
+                        DefaultRenderContext ctx = (DefaultRenderContext) configuration.dsl().renderContext();
+                        markers[i].renderer.render(
+                            (DefaultRenderContext) ctx.formatIndentStart(e.indent),
                             e,
                             afterLast[i],
                             c
                         );
 
+                        replacedSQL = ctx.render();
+                        insertedBindValues = ctx.bindValues();
                         break elementLoop;
                     }
                 }
             }
 
-            if (replaced != null) {
-                sql.replace(e1.positions[0], e1.positions[1], replaced);
-                int shift = replaced.length() - (e1.positions[1] - e1.positions[0]);
+            if (replacedSQL != null) {
+                sql.replace(e1.positions[0], e1.positions[1], replacedSQL);
+                int shift = replacedSQL.length() - (e1.positions[1] - e1.positions[0]);
 
                 inner:
                 for (ScopeStackElement e2 : scopeStack) {
@@ -307,6 +308,19 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     if (e2.positions[0] > e1.positions[0]) {
                         e2.positions[0] = e2.positions[0] + shift;
                         e2.positions[1] = e2.positions[1] + shift;
+                    }
+                }
+
+                if (insertedBindValues != null) {
+                    bindValues.addAll(e1.bindIndex - 1, insertedBindValues);
+
+                    inner:
+                    for (ScopeStackElement e2 : scopeStack) {
+                        if (e2.positions == null)
+                            continue inner;
+
+                        if (e2.bindIndex > e1.bindIndex)
+                            e2.bindIndex = e2.bindIndex + insertedBindValues.size();
                     }
                 }
             }
@@ -938,7 +952,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         public ForceInlineSignal() {
             if (log.isDebugEnabled())
-                log.debug("Re-render query", "Forcing bind variable inlining as " + configuration().dialect() + " does not support " + params + " bind variables (or more) in a single query");
+                log.debug("Re-render query", "Forcing bind variable inlining as " + configuration().dialect() + " does not support " + peekIndex() + " bind variables (or more) in a single query");
         }
     }
 }

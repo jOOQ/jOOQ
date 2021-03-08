@@ -112,33 +112,36 @@ enum ScopeMarker {
 
 
 
-
-
-
-
     TOP_LEVEL_CTE(
         true,
         DATA_TOP_LEVEL_CTE,
         (ctx, beforeFirst, afterLast, object) -> {
             TopLevelCte cte = (TopLevelCte) object;
             boolean single = cte.size() == 1;
+            boolean noWith = afterLast != null && beforeFirst.positions[0] == afterLast.positions[0];
 
-            // There is no WITH clause
-            if (afterLast != null && beforeFirst.positions[0] == afterLast.positions[0])
+            if (noWith) {
                 ctx.visit(K_WITH);
 
-            if (single)
-                ctx.formatIndentStart()
-                   .formatSeparator();
-            else
-                ctx.sql(' ');
+                if (single)
+                    ctx.formatIndentStart()
+                       .formatSeparator();
+                else
+                    ctx.sql(' ');
+            }
 
             ctx.declareCTE(true).visit(cte).declareCTE(false);
 
-            if (single)
-                ctx.formatIndentEnd();
+            if (noWith) {
+                if (single)
+                    ctx.formatIndentEnd();
+            }
 
-            return ctx.render();
+            // Top level CTE are inserted before all other CTEs
+            else
+                ctx.sql(',');
+
+            ctx.formatSeparator().sql("");
         }
     );
 
@@ -158,8 +161,8 @@ enum ScopeMarker {
 
     @FunctionalInterface
     interface ReplacementRenderer {
-        String render(
-            Context<?> ctx,
+        void render(
+            DefaultRenderContext ctx,
             ScopeStackElement beforeFirst,
             ScopeStackElement afterLast,
             ScopeContent content

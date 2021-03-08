@@ -998,6 +998,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     static class ScopeStackElement {
         final int scopeLevel;
         int[]     positions;
+        int       bindIndex;
         int       indent;
         JoinNode  joinNode;
 

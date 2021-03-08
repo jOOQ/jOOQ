@@ -130,7 +130,10 @@ enum ScopeMarker {
                     ctx.sql(' ');
             }
 
+            // [#11587] Recurse to allow for deeply nested CTE
+            ctx.scopeStart().data(DATA_TOP_LEVEL_CTE, new TopLevelCte());
             ctx.declareCTE(true).visit(cte).declareCTE(false);
+            ctx.scopeEnd();
 
             if (noWith) {
                 if (single)

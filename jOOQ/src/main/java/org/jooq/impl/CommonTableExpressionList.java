@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.ScopeMarker.TOP_LEVEL_CTE;
 
+import java.util.function.Consumer;
+
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 
@@ -56,11 +58,15 @@ final class CommonTableExpressionList extends QueryPartList<CommonTableExpressio
 
     @Override
     public void accept(Context<?> ctx) {
+        markTopLevelCteAndAccept(ctx, c -> super.accept(c));
+    }
+
+    static void markTopLevelCteAndAccept(Context<?> ctx, Consumer<? super Context<?>> consumer) {
         if (ctx.subqueryLevel() == 0)
             ctx.scopeMarkStart(TOP_LEVEL_CTE.beforeFirst)
                .scopeMarkEnd(TOP_LEVEL_CTE.beforeFirst);
 
-        super.accept(ctx);
+        consumer.accept(ctx);
 
         if (ctx.subqueryLevel() == 0)
             ctx.scopeMarkStart(TOP_LEVEL_CTE.afterLast)

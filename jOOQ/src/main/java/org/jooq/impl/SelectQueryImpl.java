@@ -102,7 +102,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SortOrder.DESC;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
@@ -112,6 +111,7 @@ import static org.jooq.impl.CombineOperator.INTERSECT;
 import static org.jooq.impl.CombineOperator.INTERSECT_ALL;
 import static org.jooq.impl.CombineOperator.UNION;
 import static org.jooq.impl.CombineOperator.UNION_ALL;
+import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.createTable;
 import static org.jooq.impl.DSL.falseCondition;
@@ -166,7 +166,6 @@ import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
-import static org.jooq.impl.ScopeMarker.TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.fieldArray;
@@ -251,7 +250,6 @@ import org.jooq.TablePartitionByStep;
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
-import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
@@ -261,8 +259,6 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
@@ -1348,11 +1344,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (with != null)
                 context.visit(with);
-            else if (topLevelCte && context.subqueryLevel() == 0)
-                context.scopeMarkStart(TOP_LEVEL_CTE.beforeFirst)
-                       .scopeMarkEnd(TOP_LEVEL_CTE.beforeFirst)
-                       .scopeMarkStart(TOP_LEVEL_CTE.afterLast)
-                       .scopeMarkEnd(TOP_LEVEL_CTE.afterLast);
+            else if (topLevelCte)
+                markTopLevelCteAndAccept(context, c -> {});
 
             pushWindow(context);
 

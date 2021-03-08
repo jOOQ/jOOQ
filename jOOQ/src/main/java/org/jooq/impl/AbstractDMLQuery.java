@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
+import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
@@ -348,10 +349,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         if (w != null)
             ctx.visit(w);
         else
-            ctx.scopeMarkStart(TOP_LEVEL_CTE.beforeFirst)
-               .scopeMarkEnd(TOP_LEVEL_CTE.beforeFirst)
-               .scopeMarkStart(TOP_LEVEL_CTE.afterLast)
-               .scopeMarkEnd(TOP_LEVEL_CTE.afterLast);
+            markTopLevelCteAndAccept(ctx, c -> {});
 
         boolean previousDeclareFields = ctx.declareFields();
 

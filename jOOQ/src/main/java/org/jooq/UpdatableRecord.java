@@ -226,12 +226,14 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * <h3>Statement execution enforcement</h3>
      * <p>
-     * If you want to enforce statement execution, regardless if the values in
-     * this record were changed, you can explicitly set the changed flags for
+     * If you want to control statement re-execution, regardless if the values
+     * in this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to storing, or alternatively, use
-     * {@link Settings#getUpdateUnchangedRecords()} and/or
-     * {@link Settings#isInsertUnchangedRecords()}.
+     * {@link #changed(Field, boolean)}, prior to storing. Consider also setting
+     * the flags {@link Settings#getUpdateUnchangedRecords()} and/or
+     * {@link Settings#isInsertUnchangedRecords()} appropriately to control if
+     * the record should be "touched" without any changes (<code>UPDATE</code>)
+     * or inserted with default values (<code>INSERT</code>).
      * <p>
      * This is the same as calling <code>record.store(record.fields())</code>
      *
@@ -283,16 +285,16 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * This is the same as {@link #store()}, except that an <code>INSERT</code>
      * statement (or no statement) will always be executed.
      * <p>
-     * If you want to enforce statement execution, regardless if the values in
-     * this record were changed, you can explicitly set the changed flags for
-     * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to insertion, or alternatively,
-     * use {@link Settings#isInsertUnchangedRecords()}.
+     * If you want to enforce re-insertion this record's values, regardless if
+     * the values in this record were changed, you can explicitly set the
+     * changed flags for all values with {@link #changed(boolean)} or for single
+     * values with {@link #changed(Field, boolean)}, prior to insertion.
      * <p>
      * This is the same as calling <code>record.insert(record.fields())</code>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
-     *         </code> if storing was not necessary.
+     *         </code> if storing was not necessary and
+     *         {@link Settings#isInsertUnchangedRecords()} is set to false.
      * @throws DataAccessException if something went wrong executing the query
      * @see #store()
      */
@@ -397,9 +399,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * If you want to enforce statement execution, regardless if the values in
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to insertion, or alternatively,
-     * use {@link Settings#getUpdateUnchangedRecords()} and/or
-     * {@link Settings#isInsertUnchangedRecords()}..
+     * {@link #changed(Field, boolean)}, prior to insertion.
      * <p>
      * This is the same as calling <code>record.merge(record.fields())</code>
      *

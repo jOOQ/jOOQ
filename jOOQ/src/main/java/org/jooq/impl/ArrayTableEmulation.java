@@ -54,8 +54,8 @@ import org.jooq.Table;
 import org.jooq.TableOptions;
 
 /**
- * Essentially, this is the same as <code>ArrayTable</code>, except that it simulates
- * unnested arrays using <code>UNION ALL</code>
+ * Essentially, this is the same as <code>ArrayTable</code>, except that it
+ * emulates unnested arrays using <code>UNION ALL</code>
  *
  * @author Lukas Eder
  */
@@ -136,7 +136,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
 
                 // [#1081] Be sure to get the correct cast type also for null
                 Field<?> val = DSL.val(element, field.fields[0].getDataType());
-                Select<Record> subselect = using(configuration).select(val.as("COLUMN_VALUE")).select();
+                Select<Record> subselect = using(configuration).select(val.as(fieldAlias)).select();
 
                 if (select == null)
                     select = subselect;
@@ -146,7 +146,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
 
             // Empty arrays should result in empty tables
             if (select == null)
-                select = using(configuration).select(one().as("COLUMN_VALUE")).select().where(falseCondition());
+                select = using(configuration).select(one().as(fieldAlias)).select().where(falseCondition());
 
             table = select.asTable(alias);
         }

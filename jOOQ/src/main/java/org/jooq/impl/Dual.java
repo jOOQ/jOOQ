@@ -46,6 +46,7 @@ import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_STRUCT;
 import static org.jooq.impl.Keywords.K_UNNEST;
+import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Names.N_COUNT;
 import static org.jooq.impl.Names.N_DUAL;
@@ -144,12 +145,7 @@ final class Dual extends AbstractTable<Record> {
                     break;
 
                 case HSQLDB:
-                    ctx.sqlIndentStart('(')
-                       .visit(K_SELECT).sql(" 1 ").visit(K_AS).sql(' ').visit(N_DUAL).formatSeparator()
-                       .visit(K_FROM).sql(' ').visit(DUAL_HSQLDB).formatSeparator()
-                       .visit(K_LIMIT).sql(" 1")
-                       .sqlIndentEnd(") ").visit(K_AS).sql(' ').visit(N_DUAL);
-
+                    ctx.sql('(').visit(K_VALUES).sql("(1)) ").visit(K_AS).sql(' ').visit(N_DUAL).sql('(').visit(N_DUAL).sql(')');
                     break;
 
                 case CUBRID:

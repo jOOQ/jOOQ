@@ -4030,9 +4030,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
-
-
-
             case CUBRID:
             case MARIADB:
             case MYSQL:
@@ -4040,9 +4037,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
             case SQLITE:
                 return fetchValue(field("last_insert_rowid()", BigInteger.class));
-
-
-
 
 
 

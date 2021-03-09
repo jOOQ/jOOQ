@@ -62,41 +62,21 @@ final class FieldCondition extends AbstractCondition {
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-            // [#2485] These don't work nicely, yet
+            // [#2485] Some of these don't work nicely, yet
+
+
+
+
+
+
+
+
+
             case CUBRID:
             case FIREBIRD:
-
-
-
-
-
-
-
-
-
-
-
-
-
                 ctx.visit(field.eq(inline(true, field.getDataType())));
                 break;
 
-
-
-
-
-
-
-
-
-            // Native support
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
             default:
                 ctx.visit(Tools.hasDefaultConverter(field) ? field : field.eq(inline(true, field.getDataType())));
                 break;

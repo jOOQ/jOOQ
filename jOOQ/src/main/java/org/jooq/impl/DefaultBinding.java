@@ -646,8 +646,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         // These dialects can hardly detect the type of a bound constant.
 
 
-
-
                         case DERBY:
                         case FIREBIRD:
 
@@ -662,8 +660,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                         // [#1029] Postgres and [#632] Sybase need explicit casting
                         // in very rare cases. BigQuery doesn't support NULL BOOLEAN or INT64 bind values
-
-
 
 
 
@@ -687,8 +683,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
                     case H2:
                     case HSQLDB:
                     case POSTGRES:
@@ -699,8 +693,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#7242] Other vendor specific types also need a lot of casting
             if (dataType.isJSON()) {
                 switch (ctx.family()) {
-
-
 
 
                     case POSTGRES:
@@ -1145,8 +1137,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
 
 
-
-
                 case POSTGRES:
 
                     // Postgres needs explicit casting for enum (array) types
@@ -1164,8 +1154,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Object[] value) throws SQLException {
             switch (ctx.family()) {
-
-
 
 
                 case POSTGRES: {
@@ -1204,8 +1192,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final Object[] get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
-
-
 
 
                 case POSTGRES:
@@ -1654,14 +1640,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // Some dialects have trouble binding binary data as BLOB
                 // Same logic in DefaultBytesBinding
 
+
+
+
+
                 case POSTGRES:
-
-
-
-
-
-
-
                     return Types.BINARY;
 
                 default:
@@ -1990,14 +1973,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // Some dialects have trouble binding binary data as BLOB
                 // Same logic in DefaultBlobBinding
 
+
+
+
+
                 case POSTGRES:
-
-
-
-
-
-
-
                     return Types.BINARY;
 
                 default:
@@ -2877,11 +2857,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             switch (family) {
 
-
-
-
-
                 // [#5895] HSQLDB derives the specific data type from the literal
+
+
                 case HSQLDB:
                     ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
                     break;
@@ -3458,8 +3436,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
 
 
-
-
                 case POSTGRES:
                     return pgNewRecord(dataType.getType(), null, ctx.resultSet().getObject(ctx.index()));
 
@@ -3471,8 +3447,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final Record get0(BindingGetStatementContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
-
-
 
 
                 case POSTGRES:
@@ -3716,16 +3690,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final int sqltype(Statement statement, Configuration configuration) {
             switch (configuration.family()) {
 
-
-
                 case H2:
                     return -10; // OracleTypes.CURSOR;
 
-
-
-
-
-                case POSTGRES:
                 default:
                     return Types.OTHER;
             }
@@ -4196,9 +4163,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-
                 case H2:
                 case POSTGRES: {
                     ctx.statement().setObject(ctx.index(), value);
@@ -4236,9 +4200,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-
                 case H2:
                 case POSTGRES:
                     return Convert.convert(ctx.resultSet().getObject(ctx.index()), UUID.class);
@@ -4264,9 +4225,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
-
-
-
 
 
 
@@ -4297,9 +4255,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
             switch (configuration.family()) {
-
-
-
 
 
                 case POSTGRES:

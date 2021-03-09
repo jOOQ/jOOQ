@@ -66,19 +66,16 @@ final class ConditionAsField extends AbstractField<Boolean> {
 
             // Some databases don't accept predicates where column expressions
             // are expected.
+
+
+
+
+
+
+
+
             case CUBRID:
             case FIREBIRD:
-
-
-
-
-
-
-
-
-
-
-
 
                 // [#10179] Avoid 3VL when not necessary
                 if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
@@ -91,23 +88,7 @@ final class ConditionAsField extends AbstractField<Boolean> {
                                  .when(not(condition), inline(false)));
                 break;
 
-            // These databases can inline predicates in column expression contexts
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-
-
-
-
-
-
-
-
-            // The default, for new dialects
+            // Other dialects can inline predicates in column expression contexts
             default:
                 ctx.sql('(').visit(condition).sql(')');
                 break;

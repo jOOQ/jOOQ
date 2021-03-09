@@ -3644,8 +3644,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
                 default:
                     result.add(DSL.field("({select} 0)").asc());
                     break;

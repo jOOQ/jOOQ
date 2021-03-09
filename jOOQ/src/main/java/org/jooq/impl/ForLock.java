@@ -153,8 +153,6 @@ final class ForLock extends AbstractQueryPart {
 
 
 
-
-
                 case DERBY: {
                     forLockOfTables.toSQLFields(ctx);
                     break;

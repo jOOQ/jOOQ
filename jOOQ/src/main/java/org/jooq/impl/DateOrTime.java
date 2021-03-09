@@ -88,8 +88,6 @@ final class DateOrTime<T> extends AbstractField<T> {
         switch (ctx.family()) {
 
 
-
-
             case MYSQL:
             case MARIADB:
                 ctx.visit(keyword(getDataType())).sql('(').visit(field).sql(')');
@@ -103,6 +101,7 @@ final class DateOrTime<T> extends AbstractField<T> {
                     ctx.visit(K_TIME).sql('(').visit(field).sql(')');
                 else
                     ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(field).sql(')');
+
                 break;
             }
 

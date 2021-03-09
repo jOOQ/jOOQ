@@ -156,8 +156,6 @@ final class InCondition<T> extends AbstractCondition {
 
 
 
-
-
                 case FIREBIRD: {
                     ctx.sqlIndentStart('(');
 

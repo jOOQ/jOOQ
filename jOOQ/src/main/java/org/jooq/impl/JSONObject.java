@@ -137,9 +137,6 @@ implements
         switch (ctx.family()) {
 
 
-
-
-
             case POSTGRES:
                 if (onNull == JSONOnNull.ABSENT_ON_NULL)
                     ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_strip_nulls" : "json_strip_nulls")).sql('(');

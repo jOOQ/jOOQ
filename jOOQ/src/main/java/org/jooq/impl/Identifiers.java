@@ -75,8 +75,6 @@ final class Identifiers {
 
 
 
-
-
                 case MARIADB:
                 case MYSQL:
                     QUOTES.put(family, new char[][][] {
@@ -102,25 +100,6 @@ final class Identifiers {
 
 
                 // Most dialects implement the SQL standard, using double quotes
-
-
-
-
-
-
-
-
-
-
-
-                case CUBRID:
-                case DERBY:
-                case FIREBIRD:
-                case H2:
-                case HSQLDB:
-                case IGNITE:
-                case POSTGRES:
-                case SQLITE:
                 default:
                     QUOTES.put(family, new char[][][] {
                         { { '"'      } },

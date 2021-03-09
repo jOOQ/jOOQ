@@ -139,9 +139,6 @@ implements
         switch (ctx.family()) {
 
 
-
-
-
             case POSTGRES:
                 if (onNull == JSONOnNull.ABSENT_ON_NULL) {
                     Row1[] rows = new Row1[fields.size()];

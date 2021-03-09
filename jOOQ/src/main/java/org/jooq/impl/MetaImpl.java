@@ -360,8 +360,6 @@ final class MetaImpl extends AbstractMeta {
                     // [#3977] [#11255] PostgreSQL returns other object types, too
 
 
-
-
                     case POSTGRES:
                         types = new String[] { "FOREIGN TABLE", "MATERIALIZED VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "TABLE", "VIEW" };
                         break;
@@ -378,7 +376,6 @@ final class MetaImpl extends AbstractMeta {
                     case SQLITE:
                         types = new String[] { "TABLE", "VIEW" };
                         break;
-                    /* [/pro] */
 
                     default:
                         types = null;

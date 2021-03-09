@@ -307,9 +307,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             switch (ctx.family()) {
 
 
-
-
-
                 case POSTGRES:
                 case SQLITE: {
                     toSQLInsert(ctx);
@@ -404,13 +401,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
 
                 // MySQL has a nice syntax for this
-
-
-
-
-                case CUBRID:
-                case MARIADB:
-                case MYSQL:
                 default: {
 
                     // [#2508] In H2, this syntax is supported in MySQL MODE (we're assuming users will
@@ -463,8 +453,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-
-
                 case MYSQL:
                 case MARIADB: {
                     toSQLInsert(ctx);
@@ -472,8 +460,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
-
-
 
 
 
@@ -547,8 +533,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
-
-
 
 
 
@@ -669,7 +653,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
         else if (defaultValues) {
             switch (ctx.family()) {
-
 
 
 

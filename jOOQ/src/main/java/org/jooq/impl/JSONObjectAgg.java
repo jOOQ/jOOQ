@@ -99,7 +99,6 @@ implements JSONObjectAggNullStep<J> {
 
 
 
-
             case POSTGRES:
                 acceptPostgres(ctx);
                 break;

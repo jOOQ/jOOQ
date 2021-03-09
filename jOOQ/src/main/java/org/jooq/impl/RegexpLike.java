@@ -74,13 +74,11 @@ final class RegexpLike extends AbstractCondition {
 
 
 
-
-
             case CUBRID:
             case H2:
             case MARIADB:
             case MYSQL:
-            case SQLITE: {
+            case SQLITE:
                 ctx.visit(search)
                    .sql(' ')
                    .visit(K_REGEXP)
@@ -88,28 +86,19 @@ final class RegexpLike extends AbstractCondition {
                    .visit(pattern);
 
                 break;
-            }
 
             // [#620] HSQLDB has its own syntax
-            case HSQLDB: {
-
+            case HSQLDB:
                 ctx.visit(keyword("regexp_matches")).sql('(').visit(search).sql(", ").visit(pattern).sql(')');
                 break;
-            }
 
             // [#620] Postgres has its own syntax
 
 
 
-
-
-            case POSTGRES: {
-
+            case POSTGRES:
                 ctx.sql('(').visit(search).sql(" ~ ").visit(pattern).sql(')');
                 break;
-            }
-
-
 
 
 
@@ -121,15 +110,6 @@ final class RegexpLike extends AbstractCondition {
 
             // Render the SQL standard for those databases that do not support
             // regular expressions
-
-
-
-
-
-
-
-            case DERBY:
-            case FIREBIRD:
             default: {
                 ctx.sql('(')
                    .visit(search)

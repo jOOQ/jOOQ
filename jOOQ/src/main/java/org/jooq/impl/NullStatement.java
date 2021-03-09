@@ -73,8 +73,6 @@ final class NullStatement extends AbstractStatement {
 
 
 
-
-
             default:
                 ctx.visit(K_NULL).sql(';');
                 break;

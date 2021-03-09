@@ -241,22 +241,18 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
 
 
 
-
-                case POSTGRES: {
+                case POSTGRES:
                     ctx.visit(method.keyword).sql('(');
                     ctx.sql('\'').stringLiteral(true).visit(sequence).stringLiteral(false).sql('\'');
                     ctx.sql(')');
                     break;
-                }
-
-
 
 
                 case DERBY:
                 case FIREBIRD:
                 case H2:
                 case HSQLDB:
-                case MARIADB: {
+                case MARIADB:
                     if (method == SequenceMethod.NEXTVAL)
                         ctx.visit(K_NEXT_VALUE_FOR).sql(' ').visit(sequence);
                     else if (family == H2)
@@ -285,9 +281,8 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
                         throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + family + " dialect.");
                     }
                     break;
-                }
 
-                case CUBRID: {
+                case CUBRID:
                     ctx.visit(sequence).sql('.');
 
                     if (method == SequenceMethod.NEXTVAL)
@@ -296,13 +291,11 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
                         ctx.visit(DSL.keyword("current_value"));
 
                     break;
-                }
 
                 // Default is needed for hashCode() and toString()
-                default: {
+                default:
                     ctx.visit(sequence).sql('.').visit(method.keyword);
                     break;
-                }
             }
         }
 

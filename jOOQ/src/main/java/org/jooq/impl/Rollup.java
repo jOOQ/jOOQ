@@ -65,8 +65,6 @@ final class Rollup extends AbstractField<Object> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-
-
             case CUBRID:
             case MARIADB:
             case MYSQL:

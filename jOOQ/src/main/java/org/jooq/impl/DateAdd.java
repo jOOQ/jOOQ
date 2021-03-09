@@ -122,8 +122,6 @@ extends
         switch (ctx.family()) {
 
 
-
-
             case CUBRID:
             case MARIADB:
             case MYSQL: {
@@ -346,7 +344,6 @@ extends
 
 
 
-            case FIREBIRD:
             default: {
                 ctx.visit(N_DATEADD).sql('(').visit(standardKeyword()).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
                 break;

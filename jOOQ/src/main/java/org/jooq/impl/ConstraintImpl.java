@@ -303,9 +303,6 @@ implements
 
 
 
-
-
-            case MYSQL:
             default:
                 if (enforced)
                     ctx.sql(' ').visit(K_ENFORCED);

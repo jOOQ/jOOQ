@@ -72,8 +72,6 @@ final class Iif<T> extends AbstractField<T> {
         switch (ctx.family()) {
 
 
-
-
             case MARIADB:
             case MYSQL:
                 ctx.visit(N_IF).sql('(').visit(condition).sql(", ").visit(ifTrue).sql(", ").visit(ifFalse).sql(')');

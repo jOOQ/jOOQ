@@ -94,8 +94,6 @@ extends
         switch (ctx.family()) {
 
 
-
-
             case DERBY: {
                 Field<?> power;
 
@@ -115,8 +113,6 @@ extends
 
 
 
-
-
             case H2:
             case MARIADB:
             case MYSQL:
@@ -125,8 +121,6 @@ extends
 
             // Postgres TRUNC() only takes NUMERIC arguments, no
             // DOUBLE PRECISION ones
-
-
 
 
             case POSTGRES:
@@ -155,13 +149,6 @@ extends
 
 
 
-
-
-
-
-
-            case CUBRID:
-            case HSQLDB:
             default:
                 ctx.visit(N_TRUNC).sql('(').visit(value).sql(", ").visit(decimals).sql(')');
                 break;

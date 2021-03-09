@@ -122,9 +122,9 @@ final class ExplainQuery {
             case H2:
 
             // HSQLDB's EXPLAIN PLAN FOR output doesn't contain any useful additional information
-            case HSQLDB: {
+            case HSQLDB:
                 break;
-            }
+
             case MARIADB:
             case MYSQL: {
                 // MySQL doesn't expose any cost (yet).

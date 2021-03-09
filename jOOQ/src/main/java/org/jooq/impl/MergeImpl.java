@@ -1320,14 +1320,10 @@ implements
 
 
 
-
-
                 case MARIADB:
                 case MYSQL:
                     toSQLMySQLOnDuplicateKeyUpdate(ctx);
                     break;
-
-
 
 
 

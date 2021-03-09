@@ -119,9 +119,6 @@ extends
 
 
 
-
-
-
                 case SQLITE:
                     ctx.visit(N_RTRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
                     break;

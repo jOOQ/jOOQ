@@ -96,8 +96,6 @@ final class DateDiff<T> extends AbstractField<Integer> {
         switch (ctx.family()) {
 
 
-
-
             case MARIADB:
             case MYSQL:
                 switch (p) {
@@ -169,9 +167,6 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
-
-
-
             case FIREBIRD:
             case H2:
             case HSQLDB:
@@ -216,8 +211,6 @@ final class DateDiff<T> extends AbstractField<Integer> {
             case SQLITE:
                 ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(endDate).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(startDate).sql(")) / 86400");
                 return;
-
-
 
 
 

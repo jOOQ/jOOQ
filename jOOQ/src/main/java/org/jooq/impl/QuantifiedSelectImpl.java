@@ -122,11 +122,8 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
                 // [#869] Postgres supports this syntax natively
 
 
-
-
-                case POSTGRES: {
+                case POSTGRES:
                     return array;
-                }
 
                 // [#869] H2 and HSQLDB can emulate this syntax by unnesting
                 // the array in a subselect

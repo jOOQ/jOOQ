@@ -177,13 +177,9 @@ implements
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-
-
             case MYSQL:
                 ctx.visit(N_JSON_EXTRACT).sql('(').visit(json).sql(", ").visit(path).sql(')');
                 break;
-
-
 
 
             case POSTGRES:

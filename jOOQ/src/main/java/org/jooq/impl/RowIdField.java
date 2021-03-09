@@ -77,11 +77,6 @@ final class RowIdField extends AbstractField<RowId> {
 
 
 
-
-
-
-
-            case SQLITE:
             default:
                 ctx.visit(getQualifiedName());
                 break;

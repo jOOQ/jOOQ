@@ -79,7 +79,6 @@ final class Nvl<T> extends AbstractField<T> {
 
 
 
-
             case H2:
             case HSQLDB:
                 ctx.visit(N_NVL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
@@ -87,14 +86,10 @@ final class Nvl<T> extends AbstractField<T> {
 
 
 
-
-
             case DERBY:
             case POSTGRES:
                 ctx.visit(K_COALESCE).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
                 break;
-
-
 
 
 

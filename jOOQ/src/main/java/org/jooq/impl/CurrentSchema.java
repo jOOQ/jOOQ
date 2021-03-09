@@ -114,8 +114,6 @@ extends
 
 
 
-
-
             case MARIADB:
             case MYSQL:
                 ctx.visit(K_DATABASE).sql("()");
@@ -124,12 +122,11 @@ extends
 
 
 
-
-
             case HSQLDB:
             case POSTGRES:
                 ctx.visit(K_CURRENT_SCHEMA);
                 break;
+
             default:
                 ctx.visit(K_CURRENT_SCHEMA).sql("()");
                 break;

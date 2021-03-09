@@ -4391,28 +4391,23 @@ final class Tools {
 
 
 
-
-
-            case FIREBIRD: {
+            case FIREBIRD:
                 ctx.visit(K_EXECUTE_BLOCK).formatSeparator()
                    .visit(K_AS).formatSeparator()
                    .visit(K_BEGIN).formatIndentStart().formatSeparator();
                 break;
-            }
 
-            case MARIADB: {
+            case MARIADB:
                 ctx.visit(K_BEGIN).sql(' ').visit(K_NOT).sql(' ').visit(K_ATOMIC).formatIndentStart().formatSeparator();
                 break;
-            }
 
 
-            case POSTGRES: {
+            case POSTGRES:
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
                     ctx.visit(K_DO).sql(" $$").formatSeparator();
 
                 ctx.visit(K_BEGIN).formatIndentStart().formatSeparator();
                 break;
-            }
         }
     }
 
@@ -4432,13 +4427,13 @@ final class Tools {
 
 
             case FIREBIRD:
-            case MARIADB: {
+            case MARIADB:
                 ctx.formatIndentEnd().formatSeparator()
                    .visit(K_END);
                 break;
-            }
 
-            case POSTGRES: {
+
+            case POSTGRES:
                 ctx.formatIndentEnd().formatSeparator()
                    .visit(K_END);
 
@@ -4446,7 +4441,6 @@ final class Tools {
                     ctx.sql(" $$");
 
                 break;
-            }
         }
     }
 
@@ -4472,11 +4466,9 @@ final class Tools {
 
 
 
-
-            case FIREBIRD: {
+            case FIREBIRD:
                 ctx.visit(K_EXECUTE_STATEMENT).sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
                 break;
-            }
         }
     }
 
@@ -4841,8 +4833,6 @@ final class Tools {
             }
 
 
-
-
             case POSTGRES: {
                 begin(ctx, c -> {
                     String sqlstate;
@@ -4953,8 +4943,6 @@ final class Tools {
 
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
 
-
-
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
                 case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
                 case POSTGRES:
@@ -4963,13 +4951,10 @@ final class Tools {
 
 
 
-
-
                         case POSTGRES:
                                 ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
                     }
                     break;
-
 
 
                 case DERBY:
@@ -4987,8 +4972,6 @@ final class Tools {
 
             // [#5062] H2's (and others') AUTO_INCREMENT flag is syntactically located *after* NULL flags.
             switch (ctx.family()) {
-
-
 
                 case H2:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
 
@@ -5045,9 +5028,6 @@ final class Tools {
             switch (ctx.family()) {
 
 
-
-
-
                 case H2:
                 case MARIADB:
                 case MYSQL: {
@@ -5064,8 +5044,6 @@ final class Tools {
                 }
 
                 // [#7597] In PostgreSQL, the enum type reference should be used
-
-
 
 
                 case POSTGRES: {

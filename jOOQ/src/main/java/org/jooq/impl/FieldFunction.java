@@ -73,8 +73,6 @@ final class FieldFunction<T> extends AbstractField<Integer> {
         switch (ctx.family()) {
 
 
-
-
             case MARIADB:
             case MYSQL:
                 if (arguments.size() > 1)

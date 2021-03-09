@@ -290,8 +290,6 @@ final class Limit extends AbstractQueryPart {
 
 
 
-
-
             case MYSQL:
             case SQLITE: {
                 acceptDefaultLimitMandatory(ctx, castMode);
@@ -307,20 +305,6 @@ final class Limit extends AbstractQueryPart {
 
 
 
-
-
-
-
-
-
-
-
-
-
-            case HSQLDB:
-                // No break
-
-            // A default implementation is necessary for hashCode() and toString()
             default: {
                 acceptDefault(ctx, castMode);
                 break;

@@ -114,8 +114,6 @@ extends
 
             // [#430] These databases use SQL standard syntax
 
-
-
             case FIREBIRD: {
                 if (length == null)
                     ctx.visit(N_SUBSTRING).sql('(').visit(string).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(')');

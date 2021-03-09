@@ -1145,8 +1145,6 @@ public enum SQLDialect {
                 case MARIADB:
 
 
-
-
                 case MYSQL:       return "MySQL";
                 case POSTGRES:    return "PostgreSQL";
 
@@ -1205,8 +1203,6 @@ public enum SQLDialect {
                 case H2:            return "org.hibernate.dialect.H2Dialect";
                 case HSQLDB:        return "org.hibernate.dialect.HSQLDialect";
                 case MARIADB:
-
-
 
 
 

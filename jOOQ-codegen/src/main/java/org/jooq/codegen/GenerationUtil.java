@@ -507,11 +507,8 @@ class GenerationUtil {
                 }
             }
 
-            case H2: {
+            case H2:
                 return name(H2DataType.OTHER.getTypeName());
-            }
-
-
 
 
             case HSQLDB: {

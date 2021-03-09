@@ -73,8 +73,6 @@ final class RegexpReplace extends AbstractField<String> {
 
 
 
-
-
             case POSTGRES:
                 ctx.visit(N_REGEXP_REPLACE).sql('(').visit(field).sql(", ").visit(pattern).sql(", ").visit(replacement);
 
@@ -96,13 +94,6 @@ final class RegexpReplace extends AbstractField<String> {
 
 
 
-
-
-
-
-
-
-            case MYSQL:
 
             // [#10151] TODO: Emulate REGEXP_REPLACE_FIRST for these three
             case H2:

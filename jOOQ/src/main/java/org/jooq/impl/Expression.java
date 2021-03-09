@@ -414,8 +414,6 @@ final class Expression<T> extends AbstractTransformable<T> {
             switch (family) {
 
 
-
-
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
@@ -704,8 +702,6 @@ final class Expression<T> extends AbstractTransformable<T> {
                 }
 
 
-
-
                 case HSQLDB: {
                     if (operator == ADD)
                         ctx.visit(lhs.add(DSL.field("({0}) day", rhsAsNumber())));
@@ -732,8 +728,6 @@ final class Expression<T> extends AbstractTransformable<T> {
 
                     break;
                 }
-
-
 
 
 
@@ -803,9 +797,7 @@ final class Expression<T> extends AbstractTransformable<T> {
 
 
 
-
-
-                case H2:
+                // These dialects can add / subtract days using +/- operators
                 default:
                     ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
                     break;

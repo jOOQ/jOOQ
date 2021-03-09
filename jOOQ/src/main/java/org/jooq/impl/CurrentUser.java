@@ -115,6 +115,7 @@ extends
             case SQLITE:
                 ctx.visit(DSL.inline(""));
                 break;
+
             default:
                 ctx.visit(N_CURRENT_USER).sql("()");
                 break;

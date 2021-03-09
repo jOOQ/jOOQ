@@ -83,8 +83,6 @@ final class Least<T> extends AbstractField<T> {
 
 
 
-
-
             case DERBY: {
                 Field<T> first = (Field<T>) args[0];
                 Field<T> other = (Field<T>) args[1];

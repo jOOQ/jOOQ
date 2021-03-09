@@ -131,18 +131,10 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         switch (ctx.family()) {
 
 
-
-
             case POSTGRES:
                 ctx.visit(K_ROW);
                 break;
 
-
-
-
-
-
-            // Assume default behaviour if dialect is not available
             default: {
                 ctx.visit(value.getUDT());
                 break;
@@ -166,17 +158,9 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         switch (ctx.family()) {
 
 
-
-
             case POSTGRES:
                 return "ROW";
 
-
-
-
-
-
-            // Assume default behaviour if dialect is not available
             default:
                 return Tools.getMappedUDTName(ctx.configuration(), value);
         }

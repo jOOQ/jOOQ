@@ -2705,10 +2705,8 @@ public abstract class AbstractDatabase implements Database {
             case H2:
                 return "ARRAY".equals(dataType);
 
+
             case HSQLDB:
-
-
-
                 // TODO: Is there any more robust way to recognise these?
                 // For instance, there could be a UDT that is called this way
                 return dataType.endsWith(" ARRAY");

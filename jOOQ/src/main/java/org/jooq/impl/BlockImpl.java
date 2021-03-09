@@ -148,8 +148,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                 break;
             }
 
-
-
             case POSTGRES: {
                 bodyAsString(ctx, K_DO, c -> accept0(c));
                 break;
@@ -222,8 +220,6 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
                 break;
             }
-
-
 
 
 
@@ -527,12 +523,10 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             ctx.visit(K_END);
 
         switch (ctx.family()) {
+
             case H2:
             case FIREBIRD:
                 break;
-
-
-
 
 
 

@@ -119,8 +119,6 @@ extends
         else {
             switch (ctx.family()) {
 
-
-
                 case SQLITE:
                     ctx.visit(N_TRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
                     break;

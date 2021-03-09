@@ -65,39 +65,20 @@ final class NotField extends AbstractField<Boolean> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-            // [#2485] These don't work nicely, yet
+            // [#2485] Some of these don't work nicely, yet
+
+
+
+
+
+
+
+
             case CUBRID:
             case FIREBIRD:
-
-
-
-
-
-
-
-
-
-
-
-
                 ctx.visit(DSL.field(not(condition(field))));
                 break;
 
-
-
-
-
-
-
-
-            // Native support
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
             default:
                 ctx.visit(K_NOT)
                     .sql('(')

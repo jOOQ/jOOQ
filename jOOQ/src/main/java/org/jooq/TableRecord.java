@@ -64,17 +64,16 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
     R original();
 
     /**
-     * Store this record to the database using an <code>INSERT</code>
-     * statement.
+     * Store this record to the database using an <code>INSERT</code> statement.
      * <p>
-     * If you want to enforce statement execution, regardless if the values in
-     * this record were changed, you can explicitly set the changed flags for
-     * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to insertion, or alternatively,
-     * use {@link Settings#isInsertUnchangedRecords()}.
+     * If you want to enforce re-insertion this record's values, regardless if
+     * the values in this record were changed, you can explicitly set the
+     * changed flags for all values with {@link #changed(boolean)} or for single
+     * values with {@link #changed(Field, boolean)}, prior to insertion.
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
-     *         </code> if storing was not necessary.
+     *         </code> if storing was not necessary and
+     *         {@link Settings#isInsertUnchangedRecords()} is set to false.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support

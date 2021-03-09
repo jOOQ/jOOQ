@@ -288,8 +288,8 @@ final class ArrayTable extends AbstractTable<Record> {
     }
 
     @SuppressWarnings("unchecked")
-    private final ArrayTableEmulation emulate() {
-        return new ArrayTableEmulation(((Param<Object[]>) array).getValue(), alias);
+    private final Table<Record> emulate() {
+        return new ArrayTableEmulation(((Param<Object[]>) array).getValue()).as(alias, fieldAliases);
     }
 
     @Override

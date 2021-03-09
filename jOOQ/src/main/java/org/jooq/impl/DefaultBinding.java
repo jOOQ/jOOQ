@@ -3953,8 +3953,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long            serialVersionUID         = -2563220967846617288L;
-        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
+        private static final long serialVersionUID = -2563220967846617288L;
 
         DefaultTimeBinding(DataType<Time> dataType, Converter<Time, U> converter) {
             super(dataType, converter);
@@ -3962,26 +3961,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Time value) {
-
-            // The SQLite JDBC driver does not implement the escape syntax
-            // [#1253] Sybase does not implement time literals
-            if (INLINE_AS_STRING_LITERAL.contains(ctx.dialect()))
-                ctx.render().sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format(value)).sql('\'');
+            switch (ctx.family()) {
+                // The SQLite JDBC driver does not implement the escape syntax
+                // [#1253] Sybase does not implement time literals
 
 
-
-
-
-
-
-
-            // [#1253] Derby doesn't support the standard literal
-            else if (ctx.family() == DERBY)
-                ctx.render().visit(K_TIME).sql("('").sql(escape(value, ctx.render())).sql("')");
-
-            // [#3648] Circumvent a MySQL bug related to date literals
-            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.dialect()))
-                ctx.render().sql("{t '").sql(escape(value, ctx.render())).sql("'}");
+                case SQLITE:
+                    ctx.render().sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format(value)).sql('\'');
+                    break;
 
 
 
@@ -3993,9 +3980,37 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            // Most dialects implement SQL standard time literals
-            else
-                ctx.render().visit(K_TIME).sql(" '").sql(escape(value, ctx.render())).sql('\'');
+                // [#1253] Derby doesn't support the standard literal
+                case DERBY:
+                    ctx.render().visit(K_TIME).sql("('").sql(escape(value, ctx.render())).sql("')");
+                    break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+
+                    // [#3648] Circumvent a MySQL bug related to date literals
+                    if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.dialect()))
+                        ctx.render().sql("{t '").sql(escape(value, ctx.render())).sql("'}");
+
+                    // Most dialects implement SQL standard time literals
+                    else
+                        ctx.render().visit(K_TIME).sql(" '").sql(escape(value, ctx.render())).sql('\'');
+
+                    break;
+            }
         }
 
         @Override

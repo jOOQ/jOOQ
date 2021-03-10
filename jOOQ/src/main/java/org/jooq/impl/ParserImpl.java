@@ -634,9 +634,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-
-
-
     private final void parseDelimiterSpecifications() {
         while (parseKeywordIf("DELIMITER"))
             delimiter(parseUntilEOL().trim());
@@ -852,7 +849,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             boolean materialized = parseKeywordIf("MATERIALIZED");
             boolean notMaterialized = !materialized && parseKeywordIf("NOT MATERIALIZED");
             parse('(');
-            Select<?> select = parseSelect();
+            Select<?> select = parseWithOrSelect();
             parse(')');
 
             cte.add(dcl != null
@@ -1218,9 +1215,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return (SelectQueryImpl<Record>) dsl.selectQuery(parseExplicitTable());
 
         ignoreHints(false);
-        if (!parseKeywordIf("SEL"))
-            parseKeyword("SELECT");
-
+        parseKeyword("SELECT", "SEL");
         String hints = parseHints();
         boolean distinct = parseKeywordIf("DISTINCT") || parseKeywordIf("UNIQUE");
         List<Field<?>> distinctOn = null;
@@ -1702,9 +1697,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Delete<?> parseDelete(WithImpl with) {
-        if (!parseKeywordIf("DEL"))
-            parseKeyword("DELETE");
-
+        parseKeyword("DELETE", "DEL");
         Param<Long> limit = null;
 
         // T-SQL style TOP .. START AT
@@ -1744,9 +1737,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Insert<?> parseInsert(WithImpl with) {
         scopeStart();
-        if (!parseKeywordIf("INS"))
-            parseKeyword("INSERT");
-
+        parseKeyword("INSERT", "INS");
         parseKeywordIf("INTO");
         Table<?> table = parseTableNameIf();
         if (table == null)
@@ -1892,9 +1883,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Update<?> parseUpdate(WithImpl with) {
-        if (!parseKeywordIf("UPD"))
-            parseKeyword("UPDATE");
-
+        parseKeyword("UPDATE", "UPD");
         Param<Long> limit = null;
 
         // T-SQL style TOP .. START AT
@@ -3486,8 +3475,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-
-
     // -----------------------------------------------------------------------------------------------------------------
     // Statement clause parsing
     // -----------------------------------------------------------------------------------------------------------------
@@ -3562,8 +3549,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Table<?> oldName = parseTableName();
 
         if (parseKeywordIf("RENAME")) {
-            if (!parseKeywordIf("AS"))
-                parseKeyword("TO");
+            parseKeyword("AS", "TO");
             Table<?> newName = parseTableName();
 
             return ifExists
@@ -3657,8 +3643,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : dsl.alterSequence(sequenceName);
 
         if (parseKeywordIf("RENAME")) {
-            if (!parseKeywordIf("AS"))
-                parseKeyword("TO");
+            parseKeyword("AS", "TO");
             return s.renameTo(parseSequenceName());
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null) {
@@ -4660,24 +4645,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     }
                     else if (parseKeywordIf("COLUMN")) {
                         Name oldName = parseIdentifier();
-                        if (!parseKeywordIf("AS"))
-                            parseKeyword("TO");
+                        parseKeyword("AS", "TO");
                         Name newName = parseIdentifier();
 
                         return s1.renameColumn(oldName).to(newName);
                     }
                     else if (parseKeywordIf("INDEX")) {
                         Name oldName = parseIdentifier();
-                        if (!parseKeywordIf("AS"))
-                            parseKeyword("TO");
+                        parseKeyword("AS", "TO");
                         Name newName = parseIdentifier();
 
                         return s1.renameIndex(oldName).to(newName);
                     }
                     else if (parseKeywordIf("CONSTRAINT")) {
                         Name oldName = parseIdentifier();
-                        if (!parseKeywordIf("AS"))
-                            parseKeyword("TO");
+                        parseKeyword("AS", "TO");
                         Name newName = parseIdentifier();
 
                         return s1.renameConstraint(oldName).to(newName);
@@ -4895,9 +4877,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'C':
                 if (parseKeywordIf("COLUMN")) {
                     TableField<?, ?> oldName = parseFieldName();
-                    if (!parseKeywordIf("AS"))
-                        parseKeyword("TO");
-
+                    parseKeyword("AS", "TO");
                     return dsl.alterTable(oldName.getTable()).renameColumn(oldName).to(parseFieldName());
                 }
 
@@ -4906,9 +4886,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'D':
                 if (parseKeywordIf("DATABASE")) {
                     Catalog oldName = parseCatalogName();
-                    if (!parseKeywordIf("AS"))
-                        parseKeyword("TO");
-
+                    parseKeyword("AS", "TO");
                     return dsl.alterDatabase(oldName).renameTo(parseCatalogName());
                 }
 
@@ -4917,9 +4895,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'I':
                 if (parseKeywordIf("INDEX")) {
                     Name oldName = parseIndexName();
-                    if (!parseKeywordIf("AS"))
-                        parseKeyword("TO");
-
+                    parseKeyword("AS", "TO");
                     return dsl.alterIndex(oldName).renameTo(parseIndexName());
                 }
 
@@ -4928,16 +4904,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'S':
                 if (parseKeywordIf("SCHEMA")) {
                     Schema oldName = parseSchemaName();
-                    if (!parseKeywordIf("AS"))
-                        parseKeyword("TO");
-
+                    parseKeyword("AS", "TO");
                     return dsl.alterSchema(oldName).renameTo(parseSchemaName());
                 }
                 else if (parseKeywordIf("SEQUENCE")) {
                     Sequence<?> oldName = parseSequenceName();
-                    if (!parseKeywordIf("AS"))
-                        parseKeyword("TO");
-
+                    parseKeyword("AS", "TO");
                     return dsl.alterSequence(oldName).renameTo(parseSequenceName());
                 }
 
@@ -4946,9 +4918,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'V':
                 if (parseKeywordIf("VIEW")) {
                     Table<?> oldName = parseTableName();
-                    if (!parseKeywordIf("AS"))
-                        parseKeyword("TO");
-
+                    parseKeyword("AS", "TO");
                     return dsl.alterView(oldName).renameTo(parseTableName());
                 }
 
@@ -4958,9 +4928,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // If all of the above fails, we can assume we're renaming a table.
         parseKeywordIf("TABLE");
         Table<?> oldName = parseTableName();
-        if (!parseKeywordIf("AS"))
-            parseKeyword("TO");
-
+        parseKeyword("AS", "TO");
         return dsl.alterTable(oldName).renameTo(parseTableName());
     }
 
@@ -5420,9 +5388,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     ? s1.renameConstraintIfExists(oldName)
                     : s1.renameConstraint(oldName);
 
-                if (!parseKeywordIf("TO"))
-                    parseKeyword("AS");
-
+                parseKeyword("AS", "TO");
                 return s2.to(constraint(parseIdentifier()));
             }
             else
@@ -5479,9 +5445,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : dsl.alterDatabase(catalogName);
 
         if (parseKeywordIf("RENAME")) {
-            if (!parseKeywordIf("AS"))
-                parseKeyword("TO");
-
+            parseKeyword("AS", "TO");
             return s1.renameTo(parseCatalogName());
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null)
@@ -5543,9 +5507,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : dsl.alterSchema(schemaName);
 
         if (parseKeywordIf("RENAME")) {
-            if (!parseKeywordIf("AS"))
-                parseKeyword("TO");
-
+            parseKeyword("AS", "TO");
             return s1.renameTo(parseSchemaName());
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null)
@@ -5644,8 +5606,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Name indexName = parseIndexName();
         parseKeyword("RENAME");
-        if (!parseKeywordIf("AS"))
-            parseKeyword("TO");
+        parseKeyword("AS", "TO");
         Name newName = parseIndexName();
 
         AlterIndexStep s1 = ifExists

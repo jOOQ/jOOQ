@@ -894,12 +894,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return result;
     }
 
-    private final Select<?> parseWithOrSelect() {
+    private final SelectQueryImpl<?> parseWithOrSelect() {
         return parseWithOrSelect(null);
     }
 
-    private final Select<?> parseWithOrSelect(Integer degree) {
-        return peekKeyword("WITH") ? (Select<?>) parseWith(true, degree) : parseSelect(degree, null);
+    private final SelectQueryImpl<?> parseWithOrSelect(Integer degree) {
+        return peekKeyword("WITH") ? (SelectQueryImpl<?>) parseWith(true, degree) : parseSelect(degree, null);
     }
 
     private final SelectQueryImpl<Record> parseSelect() {
@@ -6173,8 +6173,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // - A values derived table:              E.g. (values (1))
             // - A joined table:                      E.g. ((a join b on p) right join c on q)
             // - A combination of the above:          E.g. ((a join (select 1) on p) right join (((select 1)) union (select 2)) on q)
-            if (peekKeyword("SELECT") || peekKeyword("SEL")) {
-                SelectQueryImpl<Record> select = parseSelect();
+            if (peekKeyword("SELECT", "SEL", "WITH")) {
+                SelectQueryImpl<Record> select = (SelectQueryImpl<Record>) parseWithOrSelect();
                 parse(')');
                 result = parseQueryExpressionBody(null, null, select);
             }
@@ -12415,9 +12415,31 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return true;
     }
 
+    private final boolean parseKeyword(String keyword1, String keyword2) {
+        if (parseKeywordIf(keyword1, keyword2))
+            return true;
+
+        throw expected(keyword1, keyword2);
+    }
+
+    private final boolean parseKeyword(String keyword1, String keyword2, String keyword3) {
+        if (parseKeywordIf(keyword1, keyword2, keyword3))
+            return true;
+
+        throw expected(keyword1, keyword2, keyword3);
+    }
+
     @Override
     public final boolean parseKeywordIf(String keyword) {
         return peekKeyword(keyword, true, false, false);
+    }
+
+    private final boolean parseKeywordIf(String keyword1, String keyword2) {
+        return parseKeywordIf(keyword1) || parseKeywordIf(keyword2);
+    }
+
+    private final boolean parseKeywordIf(String keyword1, String keyword2, String keyword3) {
+        return parseKeywordIf(keyword1) || parseKeywordIf(keyword2) || parseKeywordIf(keyword3);
     }
 
     @Override
@@ -12499,6 +12521,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     @Override
     public final boolean peekKeyword(String keyword) {
         return peekKeyword(keyword, false, false, false);
+    }
+
+    private final boolean peekKeyword(String keyword1, String keyword2) {
+        return peekKeyword(keyword1) || peekKeyword(keyword2);
+    }
+
+    private final boolean peekKeyword(String keyword1, String keyword2, String keyword3) {
+        return peekKeyword(keyword1) || peekKeyword(keyword2) || peekKeyword(keyword3);
     }
 
     private final boolean peekKeyword(String keyword, boolean updatePosition, boolean peekIntoParens, boolean requireFunction) {

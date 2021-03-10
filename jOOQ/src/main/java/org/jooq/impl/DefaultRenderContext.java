@@ -135,6 +135,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     DefaultRenderContext(RenderContext context) {
+        this(context, true);
+    }
+
+    DefaultRenderContext(RenderContext context, boolean copyLocalState) {
         this(context.configuration());
 
         paramType(context.paramType());
@@ -142,13 +146,16 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         qualifySchema(context.qualifySchema());
         quote(context.quote());
         castMode(context.castMode());
-        data().putAll(context.data());
 
-        declareCTE = context.declareCTE();
-        declareWindows = context.declareWindows();
-        declareFields = context.declareFields();
-        declareTables = context.declareTables();
-        declareAliases = context.declareAliases();
+        if (copyLocalState) {
+            data().putAll(context.data());
+
+            declareCTE = context.declareCTE();
+            declareWindows = context.declareWindows();
+            declareFields = context.declareFields();
+            declareTables = context.declareTables();
+            declareAliases = context.declareAliases();
+        }
     }
 
     // ------------------------------------------------------------------------
@@ -281,7 +288,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     ScopeContent c = content[i];
 
                     if (e1 == e && c != null) {
-                        DefaultRenderContext ctx = new DefaultRenderContext(this);
+                        DefaultRenderContext ctx = new DefaultRenderContext(this, false);
                         markers[i].renderer.render(
                             (DefaultRenderContext) ctx.formatIndentStart(e.indent),
                             e,

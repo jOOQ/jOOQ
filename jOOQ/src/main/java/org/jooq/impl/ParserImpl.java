@@ -894,12 +894,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return result;
     }
 
-    private final SelectQueryImpl<?> parseWithOrSelect() {
+    private final SelectQueryImpl<Record> parseWithOrSelect() {
         return parseWithOrSelect(null);
     }
 
-    private final SelectQueryImpl<?> parseWithOrSelect(Integer degree) {
-        return peekKeyword("WITH") ? (SelectQueryImpl<?>) parseWith(true, degree) : parseSelect(degree, null);
+    private final SelectQueryImpl<Record> parseWithOrSelect(Integer degree) {
+        return peekKeyword("WITH") ? (SelectQueryImpl<Record>) parseWith(true, degree) : parseSelect(degree, null);
     }
 
     private final SelectQueryImpl<Record> parseSelect() {
@@ -6174,7 +6174,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // - A joined table:                      E.g. ((a join b on p) right join c on q)
             // - A combination of the above:          E.g. ((a join (select 1) on p) right join (((select 1)) union (select 2)) on q)
             if (peekKeyword("SELECT", "SEL", "WITH")) {
-                SelectQueryImpl<Record> select = (SelectQueryImpl<Record>) parseWithOrSelect();
+                SelectQueryImpl<Record> select = parseWithOrSelect();
                 parse(')');
                 result = parseQueryExpressionBody(null, null, select);
             }
@@ -7739,9 +7739,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 // - A combination of the above:                E.g. ((select 1) + 2, ((select 1) except (select 2)) + 2)
                 int p = position();
                 try {
-                    if (peekSelect(true)) {
+                    if (peekSelectOrWith(true)) {
                         parse('(');
-                        SelectQueryImpl<Record> select = parseSelect();
+                        SelectQueryImpl<Record> select = parseWithOrSelect();
                         parse(')');
                         if (Tools.degree(select) != 1)
                             throw exception("Select list must contain exactly one column");
@@ -10631,7 +10631,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseGeneralSetFunctionIf() {
         boolean distinct;
         Field arg;
-        Field arg2;
         ComputationalOperation operation = parseComputationalOperationIf();
 
         if (operation == null)

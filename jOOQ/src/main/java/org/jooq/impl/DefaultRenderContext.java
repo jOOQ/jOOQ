@@ -281,7 +281,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     ScopeContent c = content[i];
 
                     if (e1 == e && c != null) {
-                        DefaultRenderContext ctx = (DefaultRenderContext) configuration.dsl().renderContext();
+                        DefaultRenderContext ctx = new DefaultRenderContext(this);
                         markers[i].renderer.render(
                             (DefaultRenderContext) ctx.formatIndentStart(e.indent),
                             e,

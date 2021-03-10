@@ -70,14 +70,14 @@ public interface DropTableStep extends DropTableFinalStep {
     /**
      * Add the <code>CASCADE</code> clause to the <code>DROP TABLE</code> statement.
      */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @NotNull
     DropTableFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP TABLE</code> statement.
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     @NotNull
     DropTableFinalStep restrict();
 }

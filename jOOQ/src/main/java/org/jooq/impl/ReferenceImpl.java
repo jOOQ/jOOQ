@@ -172,12 +172,24 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
         TableField<R1, ?>[] fields1,
         TableField<R2, ?>[] fields2
     ) {
+        // [#11580] Some dialects support foreign keys with shorter column lists
+        //          than their referenced primary keys
+        TableField<R1, ?>[] f1 = truncate(fields1, fields2);
+        TableField<R2, ?>[] f2 = truncate(fields2, fields1);
+
         return new InlineDerivedTable<>(
             table,
-            fields1.length == 1
-                ? ((Field<Object>) fields1[0]).in(extractValues(records, fields2[0]))
-                : row(fields1).in(extractRows(records, fields2))
+            f1.length == 1
+                ? ((Field<Object>) f1[0]).in(extractValues(records, f2[0]))
+                : row(f1).in(extractRows(records, f2))
         );
+    }
+
+    private static <R extends Record> TableField<R, ?>[] truncate(TableField<R, ?>[] fields1, TableField<?, ?>[] fields2) {
+        if (fields1.length <= fields2.length)
+            return fields1;
+        else
+            return Arrays.copyOf(fields1, fields2.length);
     }
 
     /**

@@ -1650,10 +1650,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // ----------------------------------------------
             // DISTINCT seems irrelevant here (to be proven)
 
-            c.visit(getLimit().withTies()
-                ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
-                : distinct
+            c.visit(distinct
                 ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
+                : getLimit().withTies()
+                ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
                 : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())))
             );
 
@@ -2914,12 +2914,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         derivedTableRequired |= derivedTableRequired
 
-            // [#3579] [#6431] [#7222] Some databases don't support nested set operations at all
-            //                         because they do not allow wrapping set op subqueries in parentheses
-            || NO_SUPPORT_UNION_PARENTHESES.contains(ctx.dialect())
+            // [#3579] [#6431] [#7222] [#11582]
+            // Some databases don't support nested set operations at all because
+            // they do not allow wrapping set op subqueries in parentheses
+            || parensRequired && NO_SUPPORT_UNION_PARENTHESES.contains(ctx.dialect())
 
-            // [#3579] [#6431] [#7222] Nested set operations aren't supported, but parenthesised
-            //                         set op subqueries are.
+            // [#3579] [#6431] [#7222]
+            // Nested set operations aren't supported, but parenthesised set op
+            // subqueries are.
             || (TRUE.equals(ctx.data(DATA_NESTED_SET_OPERATIONS)) && UNION_PARENTHESIS.contains(ctx.dialect()))
 
             // [#2995] Ambiguity may need to be resolved when parentheses could mean both:

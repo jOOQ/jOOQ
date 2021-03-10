@@ -37,7 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_CASCADE;
+import static org.jooq.impl.Keywords.K_RESTRICT;
+
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DDLQuery;
 
 /**
@@ -52,5 +56,12 @@ abstract class AbstractDDLQuery extends AbstractRowCountQuery implements DDLQuer
 
     AbstractDDLQuery(Configuration configuration) {
         super(configuration);
+    }
+
+    static final void acceptCascade(Context<?> ctx, Cascade cascade) {
+        if (cascade == Cascade.CASCADE)
+            ctx.sql(' ').visit(K_CASCADE);
+        else if (cascade == Cascade.RESTRICT)
+            ctx.sql(' ').visit(K_RESTRICT);
     }
 }

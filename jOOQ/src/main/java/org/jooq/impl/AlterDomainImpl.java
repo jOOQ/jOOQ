@@ -360,11 +360,7 @@ implements
 
             if (ctx.family() != FIREBIRD) {
                 ctx.sql(' ').data(DATA_CONSTRAINT_REFERENCE, true, c -> c.visit(dropConstraint));
-
-                if (cascade == Cascade.CASCADE)
-                    ctx.sql(' ').visit(K_CASCADE);
-                else if (cascade == Cascade.RESTRICT)
-                    ctx.sql(' ').visit(K_RESTRICT);
+                acceptCascade(ctx, cascade);
             }
         }
         else if (renameTo != null) {

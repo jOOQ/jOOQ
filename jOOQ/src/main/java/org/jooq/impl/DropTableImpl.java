@@ -164,12 +164,7 @@ implements
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(table);
-
-        if (Boolean.TRUE.equals(cascade))
-            ctx.sql(' ').visit(K_CASCADE);
-        else if (Boolean.FALSE.equals(cascade))
-            ctx.sql(' ').visit(K_RESTRICT);
-
+        acceptCascade(ctx, cascade);
         ctx.end(Clause.DROP_TABLE_TABLE);
     }
 

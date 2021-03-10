@@ -157,11 +157,7 @@ implements
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(domain);
-
-        if (cascade == Cascade.CASCADE)
-            ctx.sql(' ').visit(K_CASCADE);
-        else if (cascade == Cascade.RESTRICT)
-            ctx.sql(' ').visit(K_RESTRICT);
+        acceptCascade(ctx, cascade);
     }
 
 

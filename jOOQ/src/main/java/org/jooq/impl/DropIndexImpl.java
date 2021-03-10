@@ -183,10 +183,7 @@ implements
             else if (index.getTable() != null)
                 ctx.sql(' ').visit(K_ON).sql(' ').visit(index.getTable());
 
-        if (cascade == Cascade.CASCADE)
-            ctx.sql(' ').visit(K_CASCADE);
-        else if (cascade == Cascade.RESTRICT)
-            ctx.sql(' ').visit(K_RESTRICT);
+        acceptCascade(ctx, cascade);
     }
 
     @Override

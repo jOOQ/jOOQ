@@ -187,6 +187,7 @@ public class XMLDatabase extends AbstractDatabase {
                                 }
                                 else {
                                     InputStream xslIs = null;
+                                    reader = source.reader();
 
                                     try {
                                         log.info("Using XSL file", xsl);

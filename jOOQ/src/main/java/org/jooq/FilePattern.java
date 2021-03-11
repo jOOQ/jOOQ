@@ -222,9 +222,11 @@ public final class FilePattern {
 
         try {
             if (url != null) {
-                log.info("Reading from classpath: " + pattern);
+                log.info("Reading from classpath: " + url.toString());
 
-                load0(new File(url.toURI()), loader);
+                // Create file from classpath resource url will cause the 'URI is not hierarchical' error
+                // See https://stackoverflow.com/questions/10144210/java-jar-file-use-resource-errors-uri-is-not-hierarchical
+                loader.accept(Source.of(url.openStream(), encoding));
                 loaded = true;
             }
             else {
@@ -254,10 +256,6 @@ public final class FilePattern {
             }
         }
 
-        // It is quite unlikely that a classpath URL doesn't produce a valid URI
-        catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
         catch (java.io.IOException e) {
             throw new IOException("Error while loading pattern", e);
         }

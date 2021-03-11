@@ -50,7 +50,10 @@ import java.sql.Statement;
  * both JDBC 4.0 (JDK 6) and 4.1 (JDK 7).
  *
  * @author Lukas Eder
+ * @deprecated - 3.15.0 - [#11618] - This type is no longer used by jOOQ and
+ *             will be removed in the future.
  */
+@Deprecated
 public abstract class JDBC41Statement {
 
     // ------------------------------------------------------------------------

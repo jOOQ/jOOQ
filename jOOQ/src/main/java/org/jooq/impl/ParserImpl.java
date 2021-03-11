@@ -682,8 +682,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return metaLookupsForceIgnore(true).parseCreate();
                     else if (!parseResultQuery && peekKeyword("COMMENT ON"))
                         return metaLookupsForceIgnore(true).parseCommentOn();
-                    else if (parseKeywordIf("CALL"))
-                        throw notImplemented("CALL");
+                    else if (peekKeyword("CALL") && requireProEdition())
+
+
+
+                        ;
                     else if (parseKeywordIf("COMMIT"))
                         throw notImplemented("COMMIT");
                     else if (parseKeywordIf("CONNECT"))
@@ -708,6 +711,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return parseBlock(true);
                     else if (!parseResultQuery && peekKeyword("EXEC"))
                         return parseExec();
+                    else if (peekKeyword("EXECUTE PROCEDURE") && requireProEdition())
+
+
+
+                        ;
 
                     break;
 
@@ -798,6 +806,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return parseWith(true);
                     else
                         return parseSelect();
+
+                case '{':
+                    if (peekKeyword("{ CALL") && requireProEdition())
+
+
+
+                        ;
+
+                    break;
 
                 default:
                     break;
@@ -2695,9 +2712,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Query parseExec() {
-        parseKeyword("EXEC");
-
-        if (parseKeywordIf("SP_RENAME")) {
+        if (parseKeywordIf("EXEC SP_RENAME")) {
             if (parseKeywordIf("@OBJNAME"))
                 parse('=');
             Name oldName = dsl.parser().parseName(parseStringLiteral());
@@ -2705,8 +2720,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(',');
             if (parseKeywordIf("@NEWNAME"))
                 parse('=');
-            Name newName = dsl.parser().parseName(parseStringLiteral());
 
+            Name newName = dsl.parser().parseName(parseStringLiteral());
             String objectType = "TABLE";
             if (parseIf(',')) {
                 if (parseKeywordIf("@OBJTYPE"))
@@ -2726,6 +2741,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 throw exception("Unsupported object type: " + objectType);
         }
         else {
+            if (requireProEdition()) {
+
+
+
+            }
+
             throw unsupportedClause();
         }
     }
@@ -3058,6 +3079,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("NULL");
         return new NullStatement();
     }
+
+
 
 
 
@@ -11916,9 +11939,23 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final <T> T parseParenthesised(Function<? super ParseContext, ? extends T> content) {
-        parse('(');
+        return parseParenthesised('(', content, ')');
+    }
+
+    @Override
+    public final <T> T parseParenthesised(char open, Function<? super ParseContext, ? extends T> content, char close) {
+        parse(open);
         T result = content.apply(this);
-        parse(')');
+        parse(close);
+
+        return result;
+    }
+
+    @Override
+    public final <T> T parseParenthesised(String open, Function<? super ParseContext, ? extends T> content, String close) {
+        parse(open);
+        T result = content.apply(this);
+        parse(close);
 
         return result;
     }

@@ -357,6 +357,16 @@ public interface ParseContext extends Scope {
     <T> T parseParenthesised(Function<? super ParseContext, ? extends T> content);
 
     /**
+     * Convenience method to parse parenthesised content.
+     */
+    <T> T parseParenthesised(char open, Function<? super ParseContext, ? extends T> content, char close);
+
+    /**
+     * Convenience method to parse parenthesised content.
+     */
+    <T> T parseParenthesised(String open, Function<? super ParseContext, ? extends T> content, String close);
+
+    /**
      * An exception that can be thrown from the current position.
      */
     ParserException exception(String message);

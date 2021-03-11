@@ -133,7 +133,7 @@ public class XMLDatabase extends AbstractDatabase {
 
     InformationSchema               info;
 
-    private InformationSchema info() {
+    protected InformationSchema info() {
         if (info == null) {
 
             // [#8118] Regardless of failure, prevent NPEs from subsequent calls

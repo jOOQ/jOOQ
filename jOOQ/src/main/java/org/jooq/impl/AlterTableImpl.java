@@ -1059,6 +1059,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+                case MARIADB:
 
                 case MYSQL:
                     break;

@@ -44,6 +44,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -74,7 +75,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     }
 
     QueryPartCollectionView(Collection<T> wrapped) {
-        this.wrapped = wrapped;
+        this.wrapped = wrapped != null ? wrapped : Collections.emptyList();
         this.indentSize = 2;
         this.separator = ",";
     }

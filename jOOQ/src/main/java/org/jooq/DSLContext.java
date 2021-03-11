@@ -9108,6 +9108,10 @@ public interface DSLContext extends Scope {
 
 
 
+    // -------------------------------------------------------------------------
+    // DDL statements
+    // -------------------------------------------------------------------------
+
     /**
      * The <code>ALTER DATABASE</code> statement.
      *
@@ -10805,6 +10809,38 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

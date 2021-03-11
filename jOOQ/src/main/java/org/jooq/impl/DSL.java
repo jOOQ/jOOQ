@@ -6971,6 +6971,10 @@ public class DSL {
 
 
 
+    // -------------------------------------------------------------------------
+    // DDL statements
+    // -------------------------------------------------------------------------
+
     /**
      * The <code>ALTER DATABASE</code> statement.
      * <p>
@@ -9760,6 +9764,50 @@ public class DSL {
     public static <R extends Record> org.jooq.TruncateIdentityStep<R> truncateTable(Table<R> table) {
         return dsl().truncateTable(table);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -19402,26 +19450,6 @@ public class DSL {
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new VarSamp(field);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

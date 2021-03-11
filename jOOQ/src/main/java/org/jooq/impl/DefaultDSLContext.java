@@ -2678,6 +2678,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
+    // -------------------------------------------------------------------------
+    // DDL statements
+    // -------------------------------------------------------------------------
+
     @Override
     public org.jooq.AlterDatabaseStep alterDatabase(@Stringly.Name String database) {
         return new AlterDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
@@ -3631,6 +3635,26 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <R extends Record> org.jooq.TruncateIdentityStep<R> truncateTable(Table<R> table) {
         return truncate(table);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

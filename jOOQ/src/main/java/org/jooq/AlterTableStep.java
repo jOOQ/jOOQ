@@ -177,7 +177,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ DERBY, H2, HSQLDB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameIndexToStep renameIndex(Name oldName);
 
     /**
@@ -185,7 +185,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ DERBY, H2, HSQLDB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameIndexToStep renameIndex(Index oldName);
 
     /**
@@ -193,7 +193,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull
-    @Support({ DERBY, H2, HSQLDB, MYSQL, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameIndexToStep renameIndex(String oldName);
 
     /**

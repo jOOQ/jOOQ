@@ -49,10 +49,16 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DefaultBinding.binding;
+import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.SQLDataType.BIT;
+import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.SQLType;
+import java.sql.Types;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -584,6 +590,80 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         }
 
         return result;
+    }
+
+    public static final DataType<?> getDataType(SQLDialect dialect, SQLType sqlType) {
+        Integer i = sqlType.getVendorTypeNumber();
+        return i == null ? OTHER : getDataType(dialect, i);
+    }
+
+    public static final DataType<?> getDataType(SQLDialect dialect, int sqlType) {
+        switch (sqlType) {
+            case Types.BIGINT:
+                return BIGINT;
+            case Types.BINARY:
+                return BINARY;
+            case Types.BIT:
+                return BIT;
+            case Types.BLOB:
+                return BLOB;
+            case Types.BOOLEAN:
+                return BOOLEAN;
+            case Types.CHAR:
+                return CHAR;
+            case Types.CLOB:
+                return CLOB;
+            case Types.DATE:
+                return DATE;
+            case Types.DECIMAL:
+                return DECIMAL;
+            case Types.DOUBLE:
+                return DOUBLE;
+            case Types.FLOAT:
+                return FLOAT;
+            case Types.INTEGER:
+                return INTEGER;
+            case Types.LONGNVARCHAR:
+                return LONGNVARCHAR;
+            case Types.LONGVARBINARY:
+                return LONGVARBINARY;
+            case Types.LONGVARCHAR:
+                return LONGVARCHAR;
+            case Types.NCHAR:
+                return NCHAR;
+            case Types.NCLOB:
+                return NCLOB;
+            case Types.NUMERIC:
+                return NUMERIC;
+            case Types.NVARCHAR:
+                return NVARCHAR;
+            case Types.REAL:
+                return REAL;
+            case Types.REF_CURSOR:
+                return RESULT;
+            case Types.SMALLINT:
+                return SMALLINT;
+            case Types.SQLXML:
+                return XML;
+            case Types.STRUCT:
+                return RECORD;
+            case Types.TIME:
+                return TIME;
+            case Types.TIME_WITH_TIMEZONE:
+                return TIMEWITHTIMEZONE;
+            case Types.TIMESTAMP:
+                return TIMESTAMP;
+            case Types.TIMESTAMP_WITH_TIMEZONE:
+                return TIMESTAMPWITHTIMEZONE;
+            case Types.TINYINT:
+                return TINYINT;
+            case Types.VARBINARY:
+                return VARBINARY;
+            case Types.VARCHAR:
+                return VARCHAR;
+            default:
+                return OTHER;
+        }
     }
 
     public static final <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {

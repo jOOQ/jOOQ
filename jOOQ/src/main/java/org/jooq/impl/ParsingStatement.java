@@ -417,14 +417,12 @@ final class ParsingStatement implements CallableStatement {
 
     @Override
     public final void setNull(int parameterIndex, int sqlType) throws SQLException {
-        // TODO: Type lookup
-        set(parameterIndex, () -> val((Object) null));
+        set(parameterIndex, () -> val(null, DefaultDataType.getDataType(connection.configuration.dialect(), sqlType)));
     }
 
     @Override
     public final void setNull(int parameterIndex, int sqlType, String typeName) throws SQLException {
-        // TODO: Type lookup
-        set(parameterIndex, () -> val((Object) null));
+        set(parameterIndex, () -> val(null, DefaultDataType.getDataType(connection.configuration.dialect(), sqlType)));
     }
 
     @Override
@@ -494,32 +492,27 @@ final class ParsingStatement implements CallableStatement {
 
     @Override
     public final void setObject(int parameterIndex, Object x, int targetSqlType) throws SQLException {
-        // TODO: Type lookup
-        set(parameterIndex, () -> val(x));
+        set(parameterIndex, () -> val(x, DefaultDataType.getDataType(connection.configuration.dialect(), targetSqlType)));
     }
 
     @Override
     public final void setObject(int parameterIndex, Object x) throws SQLException {
-        // TODO: Type lookup
         set(parameterIndex, () -> val(x));
     }
 
     @Override
     public final void setObject(int parameterIndex, Object x, int targetSqlType, int scaleOrLength) throws SQLException {
-        // TODO: Type lookup
-        set(parameterIndex, () -> val(x));
+        set(parameterIndex, () -> val(x, DefaultDataType.getDataType(connection.configuration.dialect(), targetSqlType)));
     }
 
     @Override
     public final void setObject(int parameterIndex, Object x, SQLType targetSqlType, int scaleOrLength) throws SQLException {
-        // TODO: Type lookup
-        set(parameterIndex, () -> val(x));
+        set(parameterIndex, () -> val(x, DefaultDataType.getDataType(connection.configuration.dialect(), targetSqlType)));
     }
 
     @Override
     public final void setObject(int parameterIndex, Object x, SQLType targetSqlType) throws SQLException {
-        // TODO: Type lookup
-        set(parameterIndex, () -> val(x));
+        set(parameterIndex, () -> val(x, DefaultDataType.getDataType(connection.configuration.dialect(), targetSqlType)));
     }
 
     @Override

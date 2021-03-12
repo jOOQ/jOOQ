@@ -322,6 +322,8 @@ import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -6777,20 +6779,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Condition toCondition(QueryPart part) {
-        if (part == null)
+        if (part == null) {
             return null;
-        else if (part instanceof Condition)
+        }
+        else if (part instanceof Condition) {
             return (Condition) part;
-        else if (part instanceof Field)
-            if (((Field) part).getDataType().getType() == Boolean.class)
+        }
+        else if (part instanceof Field) {
+            Class<?> type = ((Field) part).getDataType().getType();
+
+            if (type == Boolean.class)
                 return condition((Field) part);
 
             // [#7266] Support parsing column references as predicates
             // [#11631] Or bind values too
-            else if (part instanceof TableFieldImpl || part instanceof Val)
+            else if (type == Object.class && (part instanceof TableFieldImpl || part instanceof Val))
                 return condition((Field) part);
             else
                 throw expected("Boolean field");
+        }
         else
             throw expected("Condition");
     }

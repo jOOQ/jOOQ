@@ -37,10 +37,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_PARAM;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
@@ -96,14 +100,30 @@ final class ParsingConnection extends DefaultConnection {
         return new ParsingStatement(this, getDelegate().createStatement(resultSetType, resultSetConcurrency, resultSetHoldability));
     }
 
-    private final ThrowingFunction<Param<?>[], PreparedStatement, SQLException> prepareAndBind(
+    private final ThrowingFunction<List<List<Param<?>>>, PreparedStatement, SQLException> prepareAndBind(
         String sql,
-        ThrowingFunction<String, PreparedStatement, SQLException> f
+        ThrowingFunction<String, PreparedStatement, SQLException> prepare
     ) {
         return p -> {
-            Rendered rendered = translate(sql, p);
-            PreparedStatement s = f.apply(rendered.sql);
-            new DefaultBindContext(configuration, s).visit(rendered.bindValues);
+            int size = p.size();
+            Rendered rendered = size == 0 ? translate(sql) : translate(sql, p.get(0).toArray(EMPTY_PARAM));
+            PreparedStatement s = prepare.apply(rendered.sql);
+
+            for (int i = 0; i < size; i++) {
+
+                // TODO: Can we avoid re-parsing and re-generating the SQL and mapping bind values only?
+                if (i > 0)
+                    rendered = translate(sql, p.get(i).toArray(EMPTY_PARAM));
+
+                new DefaultBindContext(configuration, s).visit(rendered.bindValues);
+
+                // TODO: Find a less hacky way to signal that we're batching. Currently:
+                // - ArrayList<Arraylist<Param<?>>> = batching
+                // - SingletonList<ArrayList<Param<?>>> = not batching
+                if (size > 1 || p instanceof ArrayList)
+                    s.addBatch();
+            }
+
             return s;
         };
     }

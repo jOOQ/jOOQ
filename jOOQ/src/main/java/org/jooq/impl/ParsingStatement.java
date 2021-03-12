@@ -37,9 +37,9 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
-import static org.jooq.impl.Tools.EMPTY_PARAM;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -80,12 +80,13 @@ import org.jooq.Param;
  */
 final class ParsingStatement implements CallableStatement {
 
-    private final ParsingConnection                                             connection;
-    private final Statement                                                     statement;
-    private final ThrowingFunction<Param<?>[], PreparedStatement, SQLException> prepared;
-    private final List<ThrowingConsumer<Statement, SQLException>>               flags;
-    private final List<Param<?>>                                                binds;
-    private PreparedStatement                                                   last;
+    private final ParsingConnection                                                       connection;
+    private final Statement                                                               statement;
+    private final ThrowingFunction<List<List<Param<?>>>, PreparedStatement, SQLException> prepared;
+    private final List<ThrowingConsumer<Statement, SQLException>>                         flags;
+    private final List<Param<?>>                                                          binds;
+    private final List<List<Param<?>>>                                                    batch;
+    private PreparedStatement                                                             last;
 
     ParsingStatement(ParsingConnection connection, Statement statement) {
         this.connection = connection;
@@ -93,14 +94,16 @@ final class ParsingStatement implements CallableStatement {
         this.prepared = null;
         this.flags = null;
         this.binds = null;
+        this.batch = null;
     }
 
-    ParsingStatement(ParsingConnection connection, ThrowingFunction<Param<?>[], PreparedStatement, SQLException> lazy) {
+    ParsingStatement(ParsingConnection connection, ThrowingFunction<List<List<Param<?>>>, PreparedStatement, SQLException> prepared) {
         this.connection = connection;
         this.statement = null;
-        this.prepared = lazy;
+        this.prepared = prepared;
         this.flags = new ArrayList<>();
         this.binds = new ArrayList<>();
+        this.batch = new ArrayList<>();
     }
 
     private final List<Param<?>> bindValues(int index) {
@@ -185,6 +188,16 @@ final class ParsingStatement implements CallableStatement {
     @Override
     public final int getMaxRows() throws SQLException {
         return statement().getMaxRows();
+    }
+
+    @Override
+    public final void setLargeMaxRows(long max) throws SQLException {
+        setFlag(s -> s.setLargeMaxRows(max));
+    }
+
+    @Override
+    public final long getLargeMaxRows() throws SQLException {
+        return statement().getLargeMaxRows();
     }
 
     @Override
@@ -313,7 +326,7 @@ final class ParsingStatement implements CallableStatement {
     }
 
     private final PreparedStatement prepareAndBind() throws SQLException {
-        last = prepared.apply(binds.toArray(EMPTY_PARAM));
+        last = prepared.apply(batch.isEmpty() ? singletonList(binds) : batch);
 
         for (ThrowingConsumer<Statement, SQLException> flag : flags)
             flag.accept(last);
@@ -339,6 +352,39 @@ final class ParsingStatement implements CallableStatement {
     @Override
     public final long executeLargeUpdate() throws SQLException {
         return prepareAndBind().executeLargeUpdate();
+    }
+
+    @Override
+    public final void addBatch() throws SQLException {
+        batch.add(new ArrayList<>(binds));
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Shared static and prepared statement execution
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final void clearBatch() throws SQLException {
+        statement().clearBatch();
+
+        if (batch != null)
+            batch.clear();
+    }
+
+    @Override
+    public final int[] executeBatch() throws SQLException {
+        if (statement != null)
+            return statement.executeBatch();
+        else
+            return prepareAndBind().executeBatch();
+    }
+
+    @Override
+    public final long[] executeLargeBatch() throws SQLException {
+        if (statement != null)
+            return statement.executeLargeBatch();
+        else
+            return prepareAndBind().executeLargeBatch();
     }
 
     // -------------------------------------------------------------------------
@@ -385,6 +431,11 @@ final class ParsingStatement implements CallableStatement {
     @Override
     public final int getUpdateCount() throws SQLException {
         return last().getUpdateCount();
+    }
+
+    @Override
+    public final long getLargeUpdateCount() throws SQLException {
+        return last().getLargeUpdateCount();
     }
 
     @Override
@@ -1292,11 +1343,6 @@ final class ParsingStatement implements CallableStatement {
     // -------------------------------------------------------------------------
 
     @Override
-    public final void addBatch() throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
     public final ParameterMetaData getParameterMetaData() throws SQLException {
         throw new SQLFeatureNotSupportedException();
     }
@@ -1308,16 +1354,6 @@ final class ParsingStatement implements CallableStatement {
 
     @Override
     public final void clearWarnings() throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void clearBatch() throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final int[] executeBatch() throws SQLException {
         throw new SQLFeatureNotSupportedException();
     }
 

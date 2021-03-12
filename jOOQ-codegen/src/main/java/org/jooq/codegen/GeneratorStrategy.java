@@ -42,7 +42,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import org.jooq.codegen.AbstractGenerator.Language;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;

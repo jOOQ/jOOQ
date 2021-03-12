@@ -37,14 +37,9 @@
  */
 package org.jooq.codegen;
 
-import static org.jooq.codegen.Language.KOTLIN;
-
 /**
- * @author Lukas Eder
+ * The language used by a {@link Generator}.
  */
-public class KotlinGenerator extends JavaGenerator {
-
-    public KotlinGenerator() {
-        super(KOTLIN);
-    }
+public enum Language {
+    JAVA, SCALA, KOTLIN, XML
 }

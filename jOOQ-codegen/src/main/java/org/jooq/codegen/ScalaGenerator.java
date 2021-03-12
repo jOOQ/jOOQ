@@ -37,7 +37,7 @@
  */
 package org.jooq.codegen;
 
-import static org.jooq.codegen.AbstractGenerator.Language.SCALA;
+import static org.jooq.codegen.Language.SCALA;
 
 /**
  * @author Lukas Eder

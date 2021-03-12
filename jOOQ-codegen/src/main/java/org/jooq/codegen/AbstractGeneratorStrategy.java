@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
-import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
+import static org.jooq.codegen.Language.KOTLIN;
 
 /**
  * Common base class for convenience method abstraction

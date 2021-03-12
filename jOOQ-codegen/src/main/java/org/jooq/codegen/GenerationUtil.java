@@ -39,9 +39,9 @@ package org.jooq.codegen;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
-import static org.jooq.codegen.AbstractGenerator.Language.JAVA;
-import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
-import static org.jooq.codegen.AbstractGenerator.Language.SCALA;
+import static org.jooq.codegen.Language.JAVA;
+import static org.jooq.codegen.Language.KOTLIN;
+import static org.jooq.codegen.Language.SCALA;
 import static org.jooq.codegen.GenerationUtil.ExpressionType.CONSTRUCTOR_REFERENCE;
 import static org.jooq.codegen.GenerationUtil.ExpressionType.EXPRESSION;
 import static org.jooq.impl.DSL.name;
@@ -52,7 +52,6 @@ import java.util.regex.Pattern;
 
 import org.jooq.Name;
 import org.jooq.SQLDialect;
-import org.jooq.codegen.AbstractGenerator.Language;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.h2.H2DataType;
 

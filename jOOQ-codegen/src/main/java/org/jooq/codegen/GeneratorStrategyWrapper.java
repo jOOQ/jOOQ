@@ -54,7 +54,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.Record;
-import org.jooq.codegen.AbstractGenerator.Language;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;

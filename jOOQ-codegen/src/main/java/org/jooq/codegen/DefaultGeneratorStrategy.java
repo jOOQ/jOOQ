@@ -49,14 +49,13 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
-import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
+import static org.jooq.codegen.Language.KOTLIN;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 // ...
-import org.jooq.codegen.AbstractGenerator.Language;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;

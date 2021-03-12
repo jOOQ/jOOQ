@@ -165,10 +165,6 @@ abstract class AbstractGenerator implements Generator {
         this.languageConfigured = this.language = language;
     }
 
-    enum Language {
-        JAVA, SCALA, KOTLIN, XML
-    }
-
     void logDatabaseParameters(Database db) {
         String url = "";
         try {

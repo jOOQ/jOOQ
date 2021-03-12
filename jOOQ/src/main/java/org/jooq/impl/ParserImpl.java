@@ -5728,8 +5728,7 @@ final class ParserImpl implements Parser {
             // TODO Sample clause
         }
 
-        if (parseKeywordIf(ctx, "VERSIONS") && ctx.requireProEdition()) {
-
+        if (parseKeywordIf(ctx, "VERSIONS BETWEEN") && ctx.requireProEdition()) {
 
 
 

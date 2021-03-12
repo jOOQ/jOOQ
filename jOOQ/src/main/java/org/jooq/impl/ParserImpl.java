@@ -2769,7 +2769,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("BEGIN");
         if (!(parseKeywordIf("NOT") && parseKeyword("ATOMIC")))
             parseKeywordIf("ATOMIC");
-        statements.addAll(parseStatements("END"));
+        statements.addAll(parseStatementsAndPeek("END"));
         parseKeyword("END");
 
 
@@ -2805,7 +2805,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return result;
     }
 
-    private final List<Statement> parseStatements(String... peek) {
+    private final List<Statement> parseStatements(boolean peek, String... keywords) {
         List<Statement> statements = new ArrayList<>();
 
         for (;;) {
@@ -2827,11 +2827,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             statements.add(stored);
             parseSemicolonAfterNonBlocks(parsed);
-            if (peekKeyword(peek))
+            if (peek && peekKeyword(keywords) || !peek && parseKeywordIf(keywords))
                 break;
         }
 
         return statements;
+    }
+
+    private final List<Statement> parseStatementsAndPeek(String... keywords) {
+        return parseStatements(true, keywords);
+    }
+
+    private final List<Statement> parseStatementsAndKeyword(String... keywords) {
+        return parseStatements(false, keywords);
     }
 
 
@@ -3079,10 +3087,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("NULL");
         return new NullStatement();
     }
-
-
-
-
 
 
 

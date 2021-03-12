@@ -406,6 +406,11 @@ final class ParsingStatement implements CallableStatement {
     // XXX: Indexed Variable binding for PreparedStatement
     // -------------------------------------------------------------------------
 
+    @Override
+    public final void clearParameters() throws SQLException {
+        binds.clear();
+    }
+
     private final void set(int parameterIndex, Supplier<Param<?>> supplier) {
         bindValues(parameterIndex).set(parameterIndex - 1, supplier.get());
     }
@@ -1292,11 +1297,6 @@ final class ParsingStatement implements CallableStatement {
     // -------------------------------------------------------------------------
     // XXX: TODO
     // -------------------------------------------------------------------------
-
-    @Override
-    public final void clearParameters() throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
 
     @Override
     public final void addBatch() throws SQLException {

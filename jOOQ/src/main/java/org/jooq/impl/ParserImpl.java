@@ -3796,6 +3796,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseDropSequence() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Sequence<?> sequenceName = parseSequenceName();
+        parseKeywordIf("RESTRICT");
 
         return ifExists
             ? dsl.dropSequenceIfExists(sequenceName)

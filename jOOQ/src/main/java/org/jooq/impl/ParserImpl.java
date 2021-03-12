@@ -6177,8 +6177,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // TODO Sample clause
         }
 
-        if (parseKeywordIf("VERSIONS") && requireProEdition()) {
-
+        if (parseKeywordIf("VERSIONS BETWEEN") && requireProEdition()) {
 
 
 

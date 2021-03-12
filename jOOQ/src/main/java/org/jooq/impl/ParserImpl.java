@@ -2767,8 +2767,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseKeywordIf("EXECUTE BLOCK AS");
 
         parseKeyword("BEGIN");
-        if (!(parseKeywordIf("NOT") && parseKeyword("ATOMIC")))
-            parseKeywordIf("ATOMIC");
+        parseKeywordIf("ATOMIC", "NOT ATOMIC");
         statements.addAll(parseStatementsAndPeek("END"));
         parseKeyword("END");
 
@@ -2809,6 +2808,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         List<Statement> statements = new ArrayList<>();
 
         for (;;) {
+            if (peek && peekKeyword(keywords) || !peek && parseKeywordIf(keywords))
+                break;
+
             Statement parsed;
             Statement stored;
 
@@ -2827,8 +2829,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             statements.add(stored);
             parseSemicolonAfterNonBlocks(parsed);
-            if (peek && peekKeyword(keywords) || !peek && parseKeywordIf(keywords))
-                break;
         }
 
         return statements;

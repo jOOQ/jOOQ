@@ -88,8 +88,9 @@ final class DateOrTime<T> extends AbstractField<T> {
         switch (ctx.family()) {
 
 
-            case MYSQL:
+            case DERBY:
             case MARIADB:
+            case MYSQL:
                 ctx.visit(keyword(getDataType())).sql('(').visit(field).sql(')');
                 break;
 

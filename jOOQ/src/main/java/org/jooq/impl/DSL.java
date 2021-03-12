@@ -21308,7 +21308,7 @@ public class DSL {
      * Convert a string value to a <code>DATE</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(String value) {
         return Tools.field(Convert.convert(value, Date.class));
     }
@@ -21317,7 +21317,7 @@ public class DSL {
      * Convert a temporal value to a <code>DATE</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(java.util.Date value) {
         return Tools.field(Convert.convert(value, Date.class));
     }
@@ -21326,7 +21326,7 @@ public class DSL {
      * Convert a temporal value to a <code>DATE</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(Field<? extends java.util.Date> field) {
         return new DateOrTime<>(field, SQLDataType.DATE);
     }
@@ -21335,7 +21335,7 @@ public class DSL {
      * Convert a string value to a <code>TIME</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(String value) {
         return Tools.field(Convert.convert(value, Time.class));
     }
@@ -21344,7 +21344,7 @@ public class DSL {
      * Convert a temporal value to a <code>TIME</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(java.util.Date value) {
         return Tools.field(Convert.convert(value, Time.class));
     }
@@ -21353,7 +21353,7 @@ public class DSL {
      * Convert a temporal value to a <code>TIME</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(Field<? extends java.util.Date> field) {
         return new DateOrTime<>(field, SQLDataType.TIME);
     }
@@ -21362,7 +21362,7 @@ public class DSL {
      * Convert a string value to a <code>TIMESTAMP</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(String value) {
         return Tools.field(Convert.convert(value, Timestamp.class));
     }
@@ -21371,7 +21371,7 @@ public class DSL {
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(java.util.Date value) {
         return Tools.field(Convert.convert(value, Timestamp.class));
     }
@@ -21380,7 +21380,7 @@ public class DSL {
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(Field<? extends java.util.Date> field) {
         return new DateOrTime<>(field, SQLDataType.TIMESTAMP);
     }
@@ -21389,7 +21389,7 @@ public class DSL {
      * Convert a string value to a <code>DATE</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(String value) {
         return Tools.field(Convert.convert(value, LocalDate.class));
     }
@@ -21398,7 +21398,7 @@ public class DSL {
      * Convert a temporal value to a <code>DATE</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(LocalDate value) {
         return Tools.field(value);
     }
@@ -21407,7 +21407,7 @@ public class DSL {
      * Convert a temporal value to a <code>DATE</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(Field<LocalDate> field) {
         return new DateOrTime<>(field, SQLDataType.LOCALDATE);
     }
@@ -21416,7 +21416,7 @@ public class DSL {
      * Convert a string value to a <code>TIME</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(String value) {
         return Tools.field(Convert.convert(value, LocalTime.class));
     }
@@ -21425,7 +21425,7 @@ public class DSL {
      * Convert a temporal value to a <code>TIME</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(LocalTime value) {
         return Tools.field(value);
     }
@@ -21434,7 +21434,7 @@ public class DSL {
      * Convert a temporal value to a <code>TIME</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(Field<LocalTime> field) {
         return new DateOrTime<>(field, SQLDataType.LOCALTIME);
     }
@@ -21443,7 +21443,7 @@ public class DSL {
      * Convert a string value to a <code>TIMESTAMP</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(String value) {
         return Tools.field(Convert.convert(value, LocalDateTime.class));
     }
@@ -21452,7 +21452,7 @@ public class DSL {
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(LocalDateTime value) {
         return Tools.field(value);
     }
@@ -21461,7 +21461,7 @@ public class DSL {
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(Field<LocalDateTime> field) {
         return new DateOrTime<>(field, SQLDataType.LOCALDATETIME);
     }

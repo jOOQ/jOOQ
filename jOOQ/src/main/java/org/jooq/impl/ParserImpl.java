@@ -6786,7 +6786,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return condition((Field) part);
 
             // [#7266] Support parsing column references as predicates
-            else if (part instanceof TableFieldImpl)
+            // [#11631] Or bind values too
+            else if (part instanceof TableFieldImpl || part instanceof Val)
                 return condition((Field) part);
             else
                 throw expected("Boolean field");

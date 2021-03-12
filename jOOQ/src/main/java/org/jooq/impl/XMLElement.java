@@ -64,7 +64,7 @@ final class XMLElement extends AbstractField<XML> {
     private final QueryPartList<Field<?>> content;
 
     XMLElement(Name elementName, XMLAttributes attributes, Collection<? extends Field<?>> content) {
-        super(N_XMLCONCAT, SQLDataType.XML);
+        super(N_XMLELEMENT, SQLDataType.XML);
 
         this.elementName = elementName;
         this.attributes = attributes;

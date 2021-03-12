@@ -219,6 +219,8 @@ abstract class AbstractFormattable implements Formattable, Serializable {
         formatCSV(writer, new CSVFormat().header(header).delimiter(delimiter).nullString(nullString));
     }
 
+    abstract JSONFormat defaultJSONFormat();
+
     @Override
     public final String formatJSON() {
         StringWriter writer = new StringWriter();
@@ -245,12 +247,14 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void formatJSON(Writer writer) {
-        formatJSON(writer, (JSONFormat) null);
+        formatJSON(writer, defaultJSONFormat());
     }
+
+    abstract XMLFormat defaultXMLFormat();
 
     @Override
     public final String formatXML() {
-        return formatXML((XMLFormat) null);
+        return formatXML(defaultXMLFormat());
     }
 
     @Override
@@ -262,7 +266,7 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void formatXML(OutputStream stream) {
-        formatXML(stream, (XMLFormat) null);
+        formatXML(stream, defaultXMLFormat());
     }
 
     @Override
@@ -272,7 +276,7 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void formatXML(Writer writer) {
-        formatXML(writer, (XMLFormat) null);
+        formatXML(writer, defaultXMLFormat());
     }
 
     @Override
@@ -342,11 +346,11 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final Document intoXML() {
-        return intoXML((XMLFormat) null);
+        return intoXML(defaultXMLFormat());
     }
 
     @Override
     public final <H extends ContentHandler> H intoXML(H handler) throws SAXException {
-        return intoXML(handler, (XMLFormat) null);
+        return intoXML(handler, defaultXMLFormat());
     }
 }

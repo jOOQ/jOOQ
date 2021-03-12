@@ -49,6 +49,7 @@ import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
 
+import java.io.StringReader;
 import java.io.Writer;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -97,11 +98,15 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONValue;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Lukas Eder
@@ -545,10 +550,12 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
     }
 
     @Override
-    public final void formatJSON(Writer writer, JSONFormat format) {
-        if (format == null)
-            format = JSONFormat.DEFAULT_FOR_RESULTS;
+    final JSONFormat defaultJSONFormat() {
+        return JSONFormat.DEFAULT_FOR_RESULTS;
+    }
 
+    @Override
+    public final void formatJSON(Writer writer, JSONFormat format) {
         try {
             String separator;
             int recordLevel = format.header() ? 2 : 1;
@@ -791,10 +798,12 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
     }
 
     @Override
-    public final void formatXML(Writer writer, XMLFormat format) {
-        if (format == null)
-            format = XMLFormat.DEFAULT_FOR_RESULTS;
+    final XMLFormat defaultXMLFormat() {
+        return XMLFormat.DEFAULT_FOR_RESULTS;
+    }
 
+    @Override
+    public final void formatXML(Writer writer, XMLFormat format) {
         String newline = format.newline();
         int recordLevel = format.header() ? 2 : 1;
 
@@ -1223,9 +1232,11 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                         eValue.setAttribute("field", field.getName());
                     eRecord.appendChild(eValue);
 
-                    if (value != null) {
-                        eValue.setTextContent(format0(value, false, false));
-                    }
+                    if (value != null)
+                        if (value instanceof XML && !format.quoteNested())
+                            eValue.appendChild(createContent(builder, document, ((XML) value).data()));
+                        else
+                            eValue.setTextContent(format0(value, false, false));
                 }
             }
 
@@ -1234,6 +1245,60 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         catch (ParserConfigurationException ignore) {
             throw new RuntimeException(ignore);
         }
+    }
+
+    // Taken from JOOX Util.createContent()
+    static final DocumentFragment createContent(DocumentBuilder builder, Document doc, String text) {
+
+        // [#150] Text might hold XML content, which can be leniently identified by the presence
+        //        of either < or & characters (other entities, like >, ", ' are not stricly XML content)
+        if (text != null && (text.contains("<") || text.contains("&"))) {
+
+            // [#162] Prevent log output
+            builder.setErrorHandler(new DefaultHandler());
+
+            try {
+
+                // [#128] Trimming will get rid of leading and trailing whitespace, which would
+                // otherwise cause a HIERARCHY_REQUEST_ERR raised by the parser
+                text = text.trim();
+
+                // There is a processing instruction. We can safely assume
+                // valid XML and parse it as such
+                if (text.startsWith("<?xml")) {
+                    Document parsed = builder.parse(new InputSource(new StringReader(text)));
+                    DocumentFragment fragment = parsed.createDocumentFragment();
+                    fragment.appendChild(parsed.getDocumentElement());
+
+                    return (DocumentFragment) doc.importNode(fragment, true);
+                }
+
+                // Any XML document fragment. To be on the safe side, fragments
+                // are wrapped in a dummy root node
+                else {
+                    String wrapped = "<dummy>" + text + "</dummy>";
+                    Document parsed = builder.parse(new InputSource(new StringReader(wrapped)));
+                    DocumentFragment fragment = parsed.createDocumentFragment();
+                    NodeList children = parsed.getDocumentElement().getChildNodes();
+
+                    // appendChild removes children also from NodeList!
+                    while (children.getLength() > 0) {
+                        fragment.appendChild(children.item(0));
+                    }
+
+                    return (DocumentFragment) doc.importNode(fragment, true);
+                }
+            }
+
+            // This does not occur
+            catch (java.io.IOException ignore) {}
+
+            // The XML content is invalid
+            catch (SAXException ignore) {}
+        }
+
+        // Plain text or invalid XML
+        return null;
     }
 
     @Override

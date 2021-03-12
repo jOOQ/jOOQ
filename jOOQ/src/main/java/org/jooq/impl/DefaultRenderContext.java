@@ -962,4 +962,21 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 log.debug("Re-render query", "Forcing bind variable inlining as " + configuration().dialect() + " does not support " + peekIndex() + " bind variables (or more) in a single query");
         }
     }
+
+    static class Rendered {
+        String                  sql;
+        QueryPartList<Param<?>> bindValues;
+        int                     skipUpdateCounts;
+
+        Rendered(String sql, QueryPartList<Param<?>> bindValues, int skipUpdateCounts) {
+            this.sql = sql;
+            this.bindValues = bindValues;
+            this.skipUpdateCounts = skipUpdateCounts;
+        }
+
+        @Override
+        public String toString() {
+            return sql;
+        }
+    }
 }

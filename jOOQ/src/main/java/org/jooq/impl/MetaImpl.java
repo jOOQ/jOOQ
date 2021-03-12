@@ -157,7 +157,7 @@ final class MetaImpl extends AbstractMeta {
         this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(dialect());
     }
 
-    final <R> R catalogSchema(Catalog catalog, Schema schema, ThrowingBiFunction<String, String, R> function) throws SQLException {
+    final <R> R catalogSchema(Catalog catalog, Schema schema, ThrowingBiFunction<String, String, R, SQLException> function) throws SQLException {
         return catalogSchema(
             catalog != null ? catalog.getName() : null,
             schema != null ? schema.getName() : null,
@@ -165,7 +165,7 @@ final class MetaImpl extends AbstractMeta {
         );
     }
 
-    final <R> R catalogSchema(String catalog, String schema, ThrowingBiFunction<String, String, R> function) throws SQLException {
+    final <R> R catalogSchema(String catalog, String schema, ThrowingBiFunction<String, String, R, SQLException> function) throws SQLException {
         String c = defaultIfEmpty(catalog, null);
         String s = defaultIfEmpty(schema, null);
 
@@ -176,22 +176,12 @@ final class MetaImpl extends AbstractMeta {
             return function.apply(c, s);
     }
 
-    @FunctionalInterface
-    private interface ThrowingBiFunction<T1, T2, R> {
-        R apply(T1 t1, T2 t2) throws SQLException;
-    }
-
-    @FunctionalInterface
-    private interface MetaFunction {
-        Result<Record> run(DatabaseMetaData meta) throws SQLException;
-    }
-
-    private final Result<Record> meta(MetaFunction consumer) {
+    private final Result<Record> meta(ThrowingFunction<DatabaseMetaData, Result<Record>, SQLException> function) {
         if (databaseMetaData == null)
-            return dsl().connectionResult(connection -> consumer.run(connection.getMetaData()));
+            return dsl().connectionResult(connection -> function.apply(connection.getMetaData()));
 
         try {
-            return consumer.run(databaseMetaData);
+            return function.apply(databaseMetaData);
         }
         catch (SQLException e) {
             throw new DataAccessException("Error while running MetaFunction", e);

@@ -83,6 +83,7 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
 
@@ -486,23 +487,6 @@ abstract class AbstractQuery<R extends Record> extends AbstractFetchable<R> impl
     @Override
     public /* non-final */ boolean isExecutable() {
         return true;
-    }
-
-    static class Rendered {
-        String                  sql;
-        QueryPartList<Param<?>> bindValues;
-        int                     skipUpdateCounts;
-
-        Rendered(String sql, QueryPartList<Param<?>> bindValues, int skipUpdateCounts) {
-            this.sql = sql;
-            this.bindValues = bindValues;
-            this.skipUpdateCounts = skipUpdateCounts;
-        }
-
-        @Override
-        public String toString() {
-            return sql;
-        }
     }
 
     private final Rendered getSQL0(ExecuteContext ctx) {

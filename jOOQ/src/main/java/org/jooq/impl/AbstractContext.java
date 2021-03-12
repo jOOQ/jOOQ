@@ -330,11 +330,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         return (C) this;
     }
 
-    @FunctionalInterface
-    private interface BooleanConsumer {
-        void accept(boolean b);
-    }
-
     @Override
     public final C data(Object key, Object value, Consumer<? super C> consumer) {
         return toggle(

@@ -1453,7 +1453,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             throw new UnsupportedOperationException();
         }
 
-        private class CursorRecordInitialiser implements RecordOperation<AbstractRecord, SQLException> {
+        private class CursorRecordInitialiser implements ThrowingFunction<AbstractRecord, AbstractRecord, SQLException> {
 
             private final AbstractRow initialiserFields;
             private int               offset;
@@ -1469,7 +1469,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             }
 
             @Override
-            public AbstractRecord operate(AbstractRecord record) throws SQLException {
+            public AbstractRecord apply(AbstractRecord record) throws SQLException {
                 ctx.record(record);
                 listener.recordStart(ctx);
                 int size = initialiserFields.size();
@@ -1528,7 +1528,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     }
 
                     if (nested != null) {
-                        value = (T) Tools.newRecord(true, recordType, nested, ((DefaultExecuteContext) ctx).originalConfiguration())
+                        value = (T) Tools.newRecord(true, (Class<AbstractRecord>) recordType, nested, ((DefaultExecuteContext) ctx).originalConfiguration())
                                          .operate(new CursorRecordInitialiser(nested, offset + index));
 
                         offset += nested.size() - 1;

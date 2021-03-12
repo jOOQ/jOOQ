@@ -336,7 +336,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         else if (Tools.nonReplacingEmbeddable(field))
             return (T) Tools
                 .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
-                .operate(new TransferRecordState<Record>(embeddedFields(field)));
+                .operate(new TransferRecordState<>(embeddedFields(field)));
         else
             throw Tools.indexFail(fields, field);
     }
@@ -850,7 +850,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<>(null));
     }
 
-    private class TransferRecordState<R extends Record> implements RecordOperation<R, MappingException> {
+    private class TransferRecordState<R extends Record> implements ThrowingFunction<R, R, MappingException> {
 
         private final Field<?>[] targetFields;
 
@@ -859,7 +859,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
 
         @Override
-        public R operate(R target) throws MappingException {
+        public R apply(R target) throws MappingException {
             AbstractRecord source = AbstractRecord.this;
 
             try {

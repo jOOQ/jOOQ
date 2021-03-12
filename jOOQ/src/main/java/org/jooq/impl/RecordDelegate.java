@@ -92,7 +92,7 @@ final class RecordDelegate<R extends Record> {
     }
 
     @SuppressWarnings("unchecked")
-    final <E extends Exception> R operate(RecordOperation<? super R, E> operation) throws E {
+    final <E extends Exception> R operate(ThrowingFunction<R, R, E> operation) throws E {
         R record = recordSupplier.get();
 
         // [#3300] Records that were fetched from the database
@@ -142,7 +142,7 @@ final class RecordDelegate<R extends Record> {
 
         if (operation != null) {
             try {
-                operation.operate(record);
+                operation.apply(record);
             }
 
             // [#2770][#3036] Exceptions must not propagate before listeners receive "end" events

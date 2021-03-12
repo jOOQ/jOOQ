@@ -5699,9 +5699,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final QueryPart parseNot() {
-        boolean not = parseKeywordIf("NOT");
+        int not = parseNot0();
         QueryPart condition = parsePredicate();
-        return not ? toCondition(condition).not() : condition;
+
+        for (int i = 0; i < not; i++)
+            condition = toCondition(condition).not();
+
+        return condition;
+    }
+
+    private final int parseNot0() {
+        int not = 0;
+
+        while (parseKeywordIf("NOT"))
+            not++;
+
+        return not;
     }
 
     private final QueryPart parsePredicate() {

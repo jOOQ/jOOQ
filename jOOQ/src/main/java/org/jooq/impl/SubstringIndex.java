@@ -57,10 +57,10 @@ import java.util.*;
 
 
 /**
- * The <code>SPLIT PART</code> statement.
+ * The <code>SUBSTRING INDEX</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class SplitPart
+final class SubstringIndex
 extends
     AbstractField<String>
 {
@@ -71,13 +71,13 @@ extends
     private final Field<String>           delimiter;
     private final Field<? extends Number> n;
 
-    SplitPart(
+    SubstringIndex(
         Field<String> string,
         Field<String> delimiter,
         Field<? extends Number> n
     ) {
         super(
-            N_SPLIT_PART,
+            N_SUBSTRING_INDEX,
             allNotNull(VARCHAR, string, delimiter, n)
         );
 
@@ -107,50 +107,8 @@ extends
 
 
 
-
-
-
-            case MARIADB:
-            case MYSQL:
-                ctx.visit(DSL.substring(
-                    substringIndex(string, delimiter, n),
-                    case_((Field) n).when(one(), one()).else_(
-                        DSL.length(substringIndex(string, delimiter, n.minus(one())))
-                        .plus(DSL.length(delimiter))
-                        .plus(one())
-                    )
-                ));
-                break;
-
-            case HSQLDB: {
-                Field<String> rS = DSL.field(name("s"), String.class);
-                Field<Integer> rN = DSL.field(name("n"), int.class);
-                Field<String> rD = DSL.field(name("d"), String.class);
-                Field<Integer> rPos = DSL.position(rS, rD);
-                Field<Integer> rLen = DSL.length(rD);
-                Field<Integer> rPosN = DSL.nullif(rPos, zero());
-                Field<String> rStr = DSL.substring(rS, rPosN.plus(rLen));
-                Field<String> rRes = DSL.coalesce(DSL.substring(rS, one(), rPosN.minus(one())), rS);
-
-                CommonTableExpression<?> s1 = name("s1")
-                    .fields("s", "d")
-                    .as(select(string, delimiter));
-                CommonTableExpression<?> s2 = name("s2")
-                    .fields("s", "d", "x", "n")
-                    .as(select(rStr, rD, rRes, one()).from(s1)
-                        .unionAll(
-                        select(rStr, rD, rRes, rN.plus(one())).from(name("s2")).where(rS.isNotNull())
-                    ));
-
-                visitSubquery(
-                    ctx,
-                    withRecursive(s1, s2).select(DSL.coalesce(DSL.max(DSL.field(name("x"))), inline(""))).from(s2).where(s2.field("n").eq((Field) n))
-                );
-                break;
-            }
-
             default:
-                ctx.visit(function(N_SPLIT_PART, getDataType(), string, delimiter, n));
+                ctx.visit(function(N_SUBSTRING_INDEX, getDataType(), string, delimiter, n));
                 break;
         }
     }
@@ -161,11 +119,11 @@ extends
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof SplitPart) {
+        if (that instanceof SubstringIndex) {
             return
-                StringUtils.equals(string, ((SplitPart) that).string) &&
-                StringUtils.equals(delimiter, ((SplitPart) that).delimiter) &&
-                StringUtils.equals(n, ((SplitPart) that).n)
+                StringUtils.equals(string, ((SubstringIndex) that).string) &&
+                StringUtils.equals(delimiter, ((SubstringIndex) that).delimiter) &&
+                StringUtils.equals(n, ((SubstringIndex) that).n)
             ;
         }
         else

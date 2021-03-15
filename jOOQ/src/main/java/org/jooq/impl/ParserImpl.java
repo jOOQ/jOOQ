@@ -7547,6 +7547,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (S.is(type))
                     if ((field = parseFieldSubstringIf()) != null)
                         return field;
+                    else if ((field = parseFieldSubstringIndexIf()) != null)
+                        return field;
                     else if (parseFunctionNameIf("SPACE"))
                         return space((Field) parseFieldParenthesised(N));
                     else if ((field = parseFieldSplitPartIf()) != null)
@@ -9612,6 +9614,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return f3 == null
                 ? DSL.substring(f1, f2)
                 : DSL.substring(f1, f2, f3);
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldSubstringIndexIf() {
+        if (parseFunctionNameIf("SUBSTRING_INDEX")) {
+            parse('(');
+            Field<String> f1 = (Field) parseField(S);
+            parse(',');
+            Field<String> f2 = (Field) parseField(S);
+            parse(',');
+            Field<Integer> f3 = (Field) parseField(N);
+            parse(')');
+
+            return substringIndex(f1, f2, f3);
         }
 
         return null;

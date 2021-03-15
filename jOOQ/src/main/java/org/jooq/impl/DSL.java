@@ -18089,6 +18089,66 @@ public class DSL {
     }
 
     /**
+     * The <code>SUBSTRING_INDEX</code> function.
+     * <p>
+     * Get a substring of a string, from the beginning until the nth occurrence of a substring.
+     *
+     * @param string The string from which to get the substring.
+     * @param delimiter The delimiter.
+     * @param n The number of occurrences of the delimiter.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static Field<String> substringIndex(Field<String> string, @Stringly.Param String delimiter, int n) {
+        return new SubstringIndex(string, Tools.field(delimiter), Tools.field(n));
+    }
+
+    /**
+     * The <code>SUBSTRING_INDEX</code> function.
+     * <p>
+     * Get a substring of a string, from the beginning until the nth occurrence of a substring.
+     *
+     * @param string The string from which to get the substring.
+     * @param delimiter The delimiter.
+     * @param n The number of occurrences of the delimiter.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static Field<String> substringIndex(Field<String> string, @Stringly.Param String delimiter, Field<? extends Number> n) {
+        return new SubstringIndex(string, Tools.field(delimiter), n);
+    }
+
+    /**
+     * The <code>SUBSTRING_INDEX</code> function.
+     * <p>
+     * Get a substring of a string, from the beginning until the nth occurrence of a substring.
+     *
+     * @param string The string from which to get the substring.
+     * @param delimiter The delimiter.
+     * @param n The number of occurrences of the delimiter.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static Field<String> substringIndex(Field<String> string, Field<String> delimiter, int n) {
+        return new SubstringIndex(string, delimiter, Tools.field(n));
+    }
+
+    /**
+     * The <code>SUBSTRING_INDEX</code> function.
+     * <p>
+     * Get a substring of a string, from the beginning until the nth occurrence of a substring.
+     *
+     * @param string The string from which to get the substring.
+     * @param delimiter The delimiter.
+     * @param n The number of occurrences of the delimiter.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    public static Field<String> substringIndex(Field<String> string, Field<String> delimiter, Field<? extends Number> n) {
+        return new SubstringIndex(string, delimiter, n);
+    }
+
+    /**
      * The <code>TO_CHAR</code> function.
      * <p>
      * Format an arbitrary value as a string.

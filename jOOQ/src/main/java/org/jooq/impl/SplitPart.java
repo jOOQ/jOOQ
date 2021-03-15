@@ -107,6 +107,7 @@ extends
 
 
 
+            case MARIADB:
             case MYSQL:
                 Field<String> rS = DSL.field(name("s"), String.class);
                 Field<Integer> rN = DSL.field(name("n"), int.class);
@@ -129,7 +130,7 @@ extends
 
                 visitSubquery(
                     ctx,
-                    withRecursive(s1, s2).select(DSL.field(name("x"))).from(s2).where(s2.field("n").eq((Field) n))
+                    withRecursive(s1, s2).select(DSL.coalesce(DSL.max(DSL.field(name("x"))), inline(""))).from(s2).where(s2.field("n").eq((Field) n))
                 );
                 break;
 

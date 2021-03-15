@@ -17950,7 +17950,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> splitPart(Field<String> string, @Stringly.Param String delimiter, Number n) {
         return new SplitPart(string, Tools.field(delimiter), Tools.field(n));
     }
@@ -17965,7 +17965,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> splitPart(Field<String> string, @Stringly.Param String delimiter, Field<? extends Number> n) {
         return new SplitPart(string, Tools.field(delimiter), n);
     }
@@ -17980,7 +17980,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Number n) {
         return new SplitPart(string, delimiter, Tools.field(n));
     }
@@ -17995,7 +17995,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Field<? extends Number> n) {
         return new SplitPart(string, delimiter, n);
     }

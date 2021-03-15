@@ -111,8 +111,8 @@ extends
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT     = SQLDialect.supportedBy(DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect> SUPPORT_INSERT = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT     = SQLDialect.supportedBy(DERBY, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_INSERT = SQLDialect.supportedBy(H2, MARIADB, MYSQL);
 
     @Override
     public final void accept(Context<?> ctx) {

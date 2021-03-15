@@ -99,6 +99,40 @@ extends
 
 
 
+
+
+
+
+
+
+
+
+            case MYSQL:
+                Field<String> rS = DSL.field(name("s"), String.class);
+                Field<Integer> rN = DSL.field(name("n"), int.class);
+                Field<String> rD = DSL.field(name("d"), String.class);
+                Field<Integer> rPos = DSL.position(rS, rD);
+                Field<Integer> rLen = DSL.length(rD);
+                Field<Integer> rPosN = DSL.nullif(rPos, zero());
+                Field<String> rStr = DSL.substring(rS, rPosN.plus(rLen));
+                Field<String> rRes = DSL.coalesce(DSL.substring(rS, one(), rPosN.minus(one())), rS);
+
+                CommonTableExpression<?> s1 = name("s1")
+                    .fields("s", "d")
+                    .as(select(string, delimiter));
+                CommonTableExpression<?> s2 = name("s2")
+                    .fields("s", "d", "x", "n")
+                    .as(select(rStr, rD, rRes, one()).from(s1)
+                        .unionAll(
+                        select(rStr, rD, rRes, rN.plus(one())).from(name("s2")).where(rS.isNotNull())
+                    ));
+
+                visitSubquery(
+                    ctx,
+                    withRecursive(s1, s2).select(DSL.field(name("x"))).from(s2).where(s2.field("n").eq((Field) n))
+                );
+                break;
+
             default:
                 ctx.visit(function(N_SPLIT_PART, getDataType(), string, delimiter, n));
                 break;

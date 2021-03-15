@@ -198,7 +198,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect))
                 && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
-            visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)), true);
+            visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)));
         }
 
         // [#1801] Some databases do not support "derived column names".
@@ -266,7 +266,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                         }
                     }
 
-                    visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true);
+                    visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect));
                 }
             }
         }

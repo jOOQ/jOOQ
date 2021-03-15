@@ -140,7 +140,7 @@ final class RowIsDistinctFrom extends AbstractCondition {
             if (rhsRow != null)
                 ctx.visit(rhsRow);
             else
-                visitSubquery(ctx, rhsSelect, true);
+                visitSubquery(ctx, rhsSelect);
 
             if (!not)
                 ctx.sql(')');
@@ -156,7 +156,7 @@ final class RowIsDistinctFrom extends AbstractCondition {
             if (rhsRow != null)
                 ctx.visit(rhsRow);
             else
-                visitSubquery(ctx, rhsSelect, true);
+                visitSubquery(ctx, rhsSelect);
         }
 
 

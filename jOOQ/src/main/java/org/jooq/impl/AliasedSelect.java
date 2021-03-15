@@ -117,9 +117,9 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
         //                  they cannot be referenced. In that case, revert to
         //                  actual derived table usage.
         if (ctx.family() == DERBY && q != null && q.hasUnions())
-            visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)));
+            visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)), false);
         else
-            ctx.data(DATA_SELECT_ALIASES, aliases, subquery ? c -> visitSubquery(c, query) : c -> c.visit(query));
+            ctx.data(DATA_SELECT_ALIASES, aliases, subquery ? c -> visitSubquery(c, query, false) : c -> c.visit(query));
     }
 
     @Override // Avoid AbstractTable implementation

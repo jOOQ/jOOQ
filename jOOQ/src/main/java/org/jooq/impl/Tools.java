@@ -2312,7 +2312,7 @@ final class Tools {
     }
 
     static final void visitSubquery(Context<?> ctx, QueryPart query) {
-        visitSubquery(ctx, query, false);
+        visitSubquery(ctx, query, true);
     }
 
     static final void visitSubquery(Context<?> ctx, QueryPart query, boolean parentheses) {

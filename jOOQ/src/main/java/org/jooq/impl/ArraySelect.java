@@ -91,7 +91,7 @@ final class ArraySelect<T> extends AbstractField<T[]> {
 
                 // [#11053] TODO: Move ORDER BY clause from subquery to ARRAY_AGG
                 // See https://github.com/jOOQ/jOOQ/issues/11053#issuecomment-735773248
-                visitSubquery(ctx, DSL.select(arrayAgg(c)).from(t), true);
+                visitSubquery(ctx, DSL.select(arrayAgg(c)).from(t));
                 break;
             }
 
@@ -101,7 +101,7 @@ final class ArraySelect<T> extends AbstractField<T[]> {
             case POSTGRES:
             default:
                 ctx.visit(K_ARRAY);
-                visitSubquery(ctx, select, true);
+                visitSubquery(ctx, select);
 
                 break;
         }

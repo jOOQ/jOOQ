@@ -235,7 +235,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                 boolean extraParentheses = false ;
 
                 ctx.sql(extraParentheses ? "((" : "(")
-                   .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right))
+                   .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, false))
                    .sql(extraParentheses ? "))" : ")");
             }
 

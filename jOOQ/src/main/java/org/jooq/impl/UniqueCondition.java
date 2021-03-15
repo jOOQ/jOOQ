@@ -82,7 +82,7 @@ final class UniqueCondition extends AbstractCondition {
                     ctx.visit(K_NOT).sql(' ');
 
                 ctx.visit(K_UNIQUE).sql(' ');
-                visitSubquery(ctx, query, true);
+                visitSubquery(ctx, query);
                 break;
 
             default:

@@ -157,7 +157,7 @@ final class RowIsNull extends AbstractCondition {
         if (row != null)
             ctx.visit(row);
         else
-            visitSubquery(ctx, select, true);
+            visitSubquery(ctx, select);
 
         ctx.sql(' ')
            .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);

@@ -106,8 +106,7 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
                 ctx,
                 withRecursive(N_GENERATE_SERIES, N_GENERATE_SERIES)
                     .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(N_GENERATE_SERIES).where(f.lt(to))))
-                    .select(f).from(N_GENERATE_SERIES),
-                true
+                    .select(f).from(N_GENERATE_SERIES)
             );
         }
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect())) {
@@ -122,7 +121,6 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
                 ctx.sql(')');
             }
         }
-
 
 
 

@@ -61,6 +61,6 @@ final class ScalarSubquery<T> extends AbstractField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        visitSubquery(ctx, query, true);
+        visitSubquery(ctx, query);
     }
 }

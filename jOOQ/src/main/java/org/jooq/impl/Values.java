@@ -182,7 +182,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
                     selects = selects.unionAll(select);
             }
 
-            visitSubquery(ctx, selects);
+            visitSubquery(ctx, selects, false);
         }
 
         // [#915] Native support of VALUES(..)

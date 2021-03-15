@@ -90,7 +90,7 @@ class DerivedTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        visitSubquery(ctx, query);
+        visitSubquery(ctx, query, false);
     }
 
     @Override // Avoid AbstractTable implementation

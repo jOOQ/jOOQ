@@ -108,8 +108,21 @@ extends
 
 
 
+
+
             case MARIADB:
-            case MYSQL: {
+            case MYSQL:
+                ctx.visit(DSL.substring(
+                    function(N_SUBSTRING_INDEX, VARCHAR, string, delimiter, n),
+                    case_((Field) n).when(one(), one()).else_(
+                        DSL.length(function(N_SUBSTRING_INDEX, VARCHAR, string, delimiter, n.minus(one())))
+                        .plus(DSL.length(delimiter))
+                        .plus(one())
+                    )
+                ));
+                break;
+
+            case HSQLDB: {
                 Field<String> rS = DSL.field(name("s"), String.class);
                 Field<Integer> rN = DSL.field(name("n"), int.class);
                 Field<String> rD = DSL.field(name("d"), String.class);

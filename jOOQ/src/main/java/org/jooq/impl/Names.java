@@ -299,6 +299,7 @@ final class Names {
     static final Name      N_STRREVERSE             = unquotedName("strreverse");
     static final Name      N_SUBSTR                 = unquotedName("substr");
     static final Name      N_SUBSTRING              = unquotedName("substring");
+    static final Name      N_SUBSTRING_INDEX        = unquotedName("substring_index");
     static final Name      N_SYSTEM_RANGE           = unquotedName("system_range");
     static final Name      N_SYSTEM_TIME            = unquotedName("system_time");
     static final Name      N_SYS_CONNECT_BY_PATH    = unquotedName("sys_connect_by_path");

@@ -9483,6 +9483,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field<String> f1 = (Field) parseField(S);
             parse(',');
             Field<String> f2 = (Field) parseField(S);
+            Field<Integer> f3 = (Field) (parseIf(',') ? parseField(N) : null);
             parse(')');
 
             switch (parseFamily()) {
@@ -9493,7 +9494,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 default:
-                    return DSL.position(f2, f1);
+                    return f3 == null ? DSL.position(f2, f1) : DSL.position(f2, f1, f3);
             }
         }
 

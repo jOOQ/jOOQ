@@ -111,6 +111,18 @@ extends
         if (startIndex != null) {
             switch (ctx.family()) {
 
+                case DERBY:
+                case H2:
+                    ctx.visit(N_LOCATE).sql('(').visit(search).sql(", ").visit(in).sql(", ").visit(startIndex).sql(')');
+                    break;
+
+
+
+
+
+
+
+
 
 
 

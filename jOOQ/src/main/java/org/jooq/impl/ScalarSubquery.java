@@ -38,11 +38,18 @@
 
 package org.jooq.impl;
 
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.impl.DSL.asterisk;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Names.N_SELECT;
 import static org.jooq.impl.Tools.visitSubquery;
 
+import java.util.Set;
+
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 
 /**
@@ -50,8 +57,9 @@ import org.jooq.Select;
  */
 final class ScalarSubquery<T> extends AbstractField<T> {
 
-    private static final long serialVersionUID = 3463144434073231750L;
-    final Select<?>           query;
+    private static final long    serialVersionUID                   = 3463144434073231750L;
+    static final Set<SQLDialect> NO_SUPPORT_WITH_IN_SCALAR_SUBQUERY = SQLDialect.supportedBy(HSQLDB);
+    final Select<?>              query;
 
     ScalarSubquery(Select<?> query, DataType<T> type) {
         super(N_SELECT, type);
@@ -61,6 +69,13 @@ final class ScalarSubquery<T> extends AbstractField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        visitSubquery(ctx, query);
+        SelectQueryImpl<?> q = Tools.selectQueryImpl(query);
+
+        // HSQLDB allows for using WITH inside of IN, see: https://sourceforge.net/p/hsqldb/bugs/1617/
+        // We'll still emulate CTE in scalar subqueries with a derived tables in all cases.
+        if (q != null && q.with != null && NO_SUPPORT_WITH_IN_SCALAR_SUBQUERY.contains(ctx.dialect()))
+            visitSubquery(ctx, select(asterisk()).from(query.asTable("t")));
+        else
+            visitSubquery(ctx, query);
     }
 }

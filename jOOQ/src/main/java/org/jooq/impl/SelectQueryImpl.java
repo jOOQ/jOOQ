@@ -325,7 +325,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private final WithImpl                               with;
+    final WithImpl                                       with;
     private final SelectFieldList<SelectFieldOrAsterisk> select;
     private Table<?>                                     intoTable;
     private String                                       hint;

@@ -94,10 +94,11 @@ extends
 
 
             case FIREBIRD:
-            case SQLITE:
+            case SQLITE: {
                 // [#10135] Avoid REPEAT() emulation that is too complicated for SPACE(N)
                 ctx.visit(DSL.rpad(DSL.inline(' '), count));
                 break;
+            }
 
 
 

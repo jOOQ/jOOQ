@@ -88,10 +88,11 @@ extends
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-            case SQLITE:
+            case SQLITE: {
                 // [#8275] Improved emulation for SQLite                    
                 ctx.sql('(').visit(value.cast(BIGINT)).sql(" - (").visit(value).sql(" < ").visit(value.cast(BIGINT)).sql("))");
                 break;
+            }
 
             default:
                 ctx.visit(function(N_FLOOR, getDataType(), value));

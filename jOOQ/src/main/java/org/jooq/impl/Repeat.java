@@ -100,13 +100,14 @@ extends
                 ctx.visit(DSL.rpad(string, imul(DSL.length(string), count), string));
                 break;
 
-            case SQLITE:
+            case SQLITE: {
                 // Emulation of REPEAT() for SQLite currently cannot be achieved
                 // using RPAD() above, as RPAD() expects characters, not strings
                 // Another option is documented here, though:
                 // https://stackoverflow.com/a/51792334/521799
                 ctx.visit(N_REPLACE).sql('(').visit(N_HEX).sql('(').visit(N_ZEROBLOB).sql('(').visit(count).sql(")), '00', ").visit(string).sql(')');
                 break;
+            }
 
 
 

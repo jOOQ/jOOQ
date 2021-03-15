@@ -107,8 +107,9 @@ extends
 
 
 
+
             case MARIADB:
-            case MYSQL:
+            case MYSQL: {
                 Field<String> rS = DSL.field(name("s"), String.class);
                 Field<Integer> rN = DSL.field(name("n"), int.class);
                 Field<String> rD = DSL.field(name("d"), String.class);
@@ -133,6 +134,7 @@ extends
                     withRecursive(s1, s2).select(DSL.coalesce(DSL.max(DSL.field(name("x"))), inline(""))).from(s2).where(s2.field("n").eq((Field) n))
                 );
                 break;
+            }
 
             default:
                 ctx.visit(function(N_SPLIT_PART, getDataType(), string, delimiter, n));

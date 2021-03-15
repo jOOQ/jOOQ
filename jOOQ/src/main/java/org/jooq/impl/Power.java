@@ -97,6 +97,7 @@ extends
 
 
 
+
             case DERBY:
             case SQLITE:
                 ctx.visit(DSL.exp(imul(DSL.ln(value), exponent)));

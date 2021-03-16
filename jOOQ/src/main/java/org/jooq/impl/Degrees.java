@@ -97,9 +97,21 @@ extends
 
 
 
+
+
+
+
+
+
             case FIREBIRD:
             case SQLITE:
-                ctx.visit(castIfNeeded(radians, BigDecimal.class).mul(inline(180)).div(pi()));
+                ctx.visit(idiv(
+                    imul(
+                        castIfNeeded(radians, BigDecimal.class),
+                        inline(180)
+                    ),
+                    pi()
+                ));
                 break;
 
             default:

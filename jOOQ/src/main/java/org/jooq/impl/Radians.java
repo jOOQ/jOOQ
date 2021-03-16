@@ -94,7 +94,13 @@ extends
 
             case FIREBIRD:
             case SQLITE:
-                ctx.visit(castIfNeeded(degrees, BigDecimal.class).mul(pi()).div(inline(180)));
+                ctx.visit(idiv(
+                    imul(
+                        castIfNeeded(degrees, BigDecimal.class),
+                        pi()
+                    ),
+                    inline(180)
+                ));
                 break;
 
             default:

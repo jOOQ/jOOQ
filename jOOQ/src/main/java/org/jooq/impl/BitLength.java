@@ -115,7 +115,7 @@ extends
 
             case DERBY:
             case SQLITE:
-                ctx.visit(inline(8).times(function(N_LENGTH, getDataType(), string)));
+                ctx.visit(imul(inline(8), function(N_LENGTH, getDataType(), string)));
                 break;
 
             default:

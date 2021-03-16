@@ -96,7 +96,7 @@ extends
 
 
             case SQLITE:
-                ctx.visit(DSL.substring(string, length.neg()));
+                ctx.visit(DSL.substring(string, ineg(length)));
                 break;
 
             default:

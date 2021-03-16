@@ -113,7 +113,7 @@ extends
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-                ctx.visit(value.times(value));
+                ctx.visit(imul(value, value));
                 break;
 
             default:

@@ -87,19 +87,30 @@ extends
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE        = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+
+
+
+
 
     @Override
-    @SuppressWarnings("unchecked")
     public void accept(Context<?> ctx) {
-        if (NO_SUPPORT_NATIVE.contains(ctx.dialect())) {
-            Field<? extends Number> x = (Field) getArguments().get(0);
-            Field<? extends Number> y = (Field) getArguments().get(1);
+        if (NO_SUPPORT_NATIVE.contains(ctx.dialect()))
+            acceptEmulation(ctx);
 
-            ctx.visit(fo(DSL.sum(x.times(y))).minus(fo(DSL.sum(x(x, y))).times(fo(DSL.sum(y(x, y)))).div(fo(DSL.count(x.plus(y))).cast(d(ctx)))).div(fo(DSL.count(x.plus(y))).cast(d(ctx))));
-        }
+
+
+
         else
             super.accept(ctx);
+    }
+
+    @SuppressWarnings("unchecked")
+    private final void acceptEmulation(Context<?> ctx) {
+        Field<? extends Number> x = (Field) getArguments().get(0);
+        Field<? extends Number> y = (Field) getArguments().get(1);
+
+        ctx.visit(fo(DSL.sum(x.times(y))).minus(fo(DSL.sum(x(x, y))).times(fo(DSL.sum(y(x, y)))).div(fo(DSL.count(x.plus(y))).cast(d(ctx)))).div(fo(DSL.count(x.plus(y))).cast(d(ctx))));
     }
 
 

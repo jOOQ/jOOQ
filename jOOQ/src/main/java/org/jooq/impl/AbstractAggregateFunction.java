@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_FILTER;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
@@ -283,6 +284,11 @@ implements
             withinGroupOrderBy(fields);
 
         return this;
+    }
+
+    @SuppressWarnings("unchecked")
+    final <U> Field<U> fon(AggregateFunction<U> function) {
+        return DSL.nullif(fo(function), (Field<U>) zero());
     }
 
     /**

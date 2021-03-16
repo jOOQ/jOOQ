@@ -110,7 +110,7 @@ extends
         Field<? extends Number> x = (Field) getArguments().get(0);
         Field<? extends Number> y = (Field) getArguments().get(1);
 
-        ctx.visit(fo(DSL.sum(x.times(y))).minus(fo(DSL.sum(x(x, y))).times(fo(DSL.sum(y(x, y)))).div(fo(DSL.count(x.plus(y))).cast(d(ctx)))).div(fo(DSL.count(x.plus(y))).cast(d(ctx))));
+        ctx.visit(fo(DSL.sum(x.times(y))).minus(fo(DSL.sum(x(x, y))).times(fo(DSL.sum(y(x, y)))).div(fon(DSL.count(x.plus(y))).cast(d(ctx)))).div(fon(DSL.count(x.plus(y))).cast(d(ctx))));
     }
 
 

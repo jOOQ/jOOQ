@@ -87,19 +87,30 @@ extends
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE        = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
-    @SuppressWarnings("unchecked")
+
+
+
+
     @Override
     public final void accept(Context<?> ctx) {
-        if (NO_SUPPORT_NATIVE.contains(ctx.dialect())) {
-            Field<? extends Number> x = (Field) getArguments().get(0);
-            Field<? extends Number> y = (Field) getArguments().get(1);
+        if (NO_SUPPORT_NATIVE.contains(ctx.dialect()))
+            acceptEmulation(ctx);
 
-            ctx.visit(fo(covarPop(x, y)).div(fo(DSL.stddevPop(x(x, y))).times(fo(DSL.stddevPop(y(x, y))))));
-        }
+
+
+
         else
             super.accept(ctx);
+    }
+
+    @SuppressWarnings("unchecked")
+    private final void acceptEmulation(Context<?> ctx) {
+        Field<? extends Number> x = (Field) getArguments().get(0);
+        Field<? extends Number> y = (Field) getArguments().get(1);
+
+        ctx.visit(fo(covarPop(x, y)).div(fon(DSL.stddevPop(x(x, y))).times(fo(DSL.stddevPop(y(x, y))))));
     }
 
 

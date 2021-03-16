@@ -110,7 +110,7 @@ extends
         Field<? extends Number> x = (Field) getArguments().get(0);
         Field<? extends Number> y = (Field) getArguments().get(1);
 
-        ctx.visit(fo(DSL.covarPop(x, y)).div(fo(DSL.varPop(y(x, y)))));
+        ctx.visit(fo(DSL.covarPop(x, y)).div(fon(DSL.varPop(y(x, y)))));
     }
 
 

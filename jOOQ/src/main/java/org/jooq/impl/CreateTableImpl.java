@@ -165,6 +165,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     private static final Set<SQLDialect> EMULATE_COMMENT_IN_BLOCK           = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
     private static final Set<SQLDialect> REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRE_NON_PK_COLUMNS             = SQLDialect.supportedBy(IGNITE);
 
 
 
@@ -589,7 +590,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     private final void toSQLDummyColumns(Context<?> ctx) {
 
         // [#10551] [#11268] TODO: Make this behaviour configurable
-        if (ctx.family() == IGNITE) {
+        if (REQUIRE_NON_PK_COLUMNS.contains(ctx.dialect())) {
             Field<?>[] primaryKeyColumns = primaryKeyColumns();
 
             if (primaryKeyColumns != null && primaryKeyColumns.length == columnFields.size()) {

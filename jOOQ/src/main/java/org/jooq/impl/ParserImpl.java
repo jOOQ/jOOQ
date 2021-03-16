@@ -9478,7 +9478,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldLocateIf() {
-        if (parseFunctionNameIf("LOCATE")) {
+        boolean locate = parseFunctionNameIf("LOCATE");
+        if (locate || parseFunctionNameIf("LOCATE_IN_STRING")) {
             parse('(');
             Field<String> f1 = (Field) parseField(S);
             parse(',');
@@ -9486,16 +9487,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field<Integer> f3 = (Field) (parseIf(',') ? parseField(N) : null);
             parse(')');
 
-            switch (parseFamily()) {
 
 
 
 
 
 
-                default:
-                    return f3 == null ? DSL.position(f2, f1) : DSL.position(f2, f1, f3);
-            }
+
+
+
+
+
+            if (locate)
+                return f3 == null ? DSL.position(f2, f1) : DSL.position(f2, f1, f3);
+            else
+                return f3 == null ? DSL.position(f1, f2) : DSL.position(f1, f2, f3);
         }
 
         return null;

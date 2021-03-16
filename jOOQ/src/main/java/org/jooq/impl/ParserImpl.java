@@ -11063,6 +11063,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'A':
                 if (parseKeywordOrIdentifierIf("ARRAY"))
                     return SQLDataType.OTHER.getArrayDataType();
+                else if (parseKeywordIf("AUTO_INCREMENT")) {
+                    parseDataTypeIdentityArgsIf();
+                    return SQLDataType.INTEGER.identity(true);
+                }
 
                 break;
 
@@ -11147,6 +11151,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     }
                     else
                         return SQLDataType.INTERVAL;
+                }
+                else if (parseKeywordIf("IDENTITY")) {
+                    parseDataTypeIdentityArgsIf();
+                    return SQLDataType.INTEGER.identity(true);
                 }
 
                 break;
@@ -11284,6 +11292,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return new DefaultDataType(dsl.dialect(), Object.class, parseName());
+    }
+
+    private final void parseDataTypeIdentityArgsIf() {
+        if (parseIf('(')) {
+            parseList(',', ParseContext::parseField);
+            parse(')');
+        }
     }
 
     private final boolean parseKeywordOrIdentifierIf(String keyword) {

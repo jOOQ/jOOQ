@@ -406,6 +406,9 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
+
                     return executeSelect();
 
                 // [#773] If JDBC escape syntax is available for functions, use

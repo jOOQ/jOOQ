@@ -74,6 +74,7 @@ import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -170,12 +171,16 @@ import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.fieldArray;
+import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.selectQueryImpl;
+import static org.jooq.impl.Tools.traverseConditions;
 import static org.jooq.impl.Tools.traverseJoins;
+import static org.jooq.impl.Tools.traverseOrderBy;
+import static org.jooq.impl.Tools.traverseSelectList;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
@@ -203,12 +208,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -244,6 +252,7 @@ import org.jooq.SelectOffsetStep;
 import org.jooq.SelectQuery;
 import org.jooq.SelectWithTiesStep;
 import org.jooq.SortField;
+import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -328,6 +337,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     final WithImpl                                       with;
     private final SelectFieldList<SelectFieldOrAsterisk> select;
     private Table<?>                                     intoTable;
@@ -379,7 +390,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final QueryPartList<Field<?>>                unionSeek;
     private boolean                                      unionSeekBefore;      // [#3579] TODO
     private final Limit                                  unionLimit;
-    private final Map<Table<?>, Table<?>>                localTableMapping;
+    private final Map<QueryPart, QueryPart>              localQueryPartMapping;
 
     SelectQueryImpl(Configuration configuration, WithImpl with) {
         this(configuration, with, null);
@@ -419,7 +430,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (from != null)
             this.from.add(from.asTable());
 
-        this.localTableMapping = new LinkedHashMap<>();
+        this.localQueryPartMapping = new LinkedHashMap<>();
     }
 
     /**
@@ -596,10 +607,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final SelectQueryImpl<R> nest(SelectQueryImpl<R> result, SelectQueryImpl<R> nested, Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
 
         // [#10716] TODO: Qualify all fields with c1, c2, to avoid ambiguous
-        nested.select.add(DSL.asterisk());
         nested = nestedFinisher.apply(nested);
         Table<R> t = nested.asTable("t");
-        traverseJoins(from, t0 -> result.localTableMapping.put(t0, t));
+        traverseJoins(from, t0 -> result.localQueryPartMapping.put(t0, t));
 
         result.from.add(t);
         return result;
@@ -1345,7 +1355,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    final Select<?> distinctOnEmulation() {
+    private final Select<?> distinctOnEmulation() {
 
         // [#3564] TODO: Extract and merge this with getSelectResolveSomeAsterisks0()
         List<Field<?>> partitionBy = new ArrayList<>(distinctOn.size());
@@ -1378,6 +1388,39 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             return limit.offset != null ? s1.offset((Param) limit.offset) : s1;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
@@ -1391,10 +1434,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             ctx.visit(DSL.select(asterisk()).from(asTable("t")));
         }
 
-        // [#3564] Emulate DISINTCT ON queries at the top level
+        // [#3564] Emulate DISTINCT ON queries at the top level
         else if (Tools.isNotEmpty(distinctOn) && EMULATE_DISTINCT_ON.contains(ctx.dialect())) {
             ctx.visit(distinctOnEmulation());
         }
+
+
+
+
+
 
 
 
@@ -2020,7 +2068,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.scopeRegister(t, true);
         });
 
-        for (Entry<Table<?>, Table<?>> entry : localTableMapping.entrySet())
+        for (Entry<QueryPart, QueryPart> entry : localQueryPartMapping.entrySet())
             context.scopeRegister(entry.getKey(), true, entry.getValue());
 
         // SELECT clause
@@ -2317,15 +2365,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         context.end(SELECT_HAVING);
 
-        // QUALIFY clause
-        // -------------
-
-        if (getQualify().hasWhere())
-            context.formatSeparator()
-                   .visit(K_QUALIFY)
-                   .sql(' ')
-                   .visit(getQualify());
-
         // WINDOW clause
         // -------------
         context.start(SELECT_WINDOW);
@@ -2337,6 +2376,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                    .declareWindows(true, c -> c.visit(window));
 
         context.end(SELECT_WINDOW);
+
+        // QUALIFY clause
+        // -------------
+
+        if (getQualify().hasWhere())
+            context.formatSeparator()
+                   .visit(K_QUALIFY)
+                   .sql(' ')
+                   .visit(getQualify());
 
         // ORDER BY clause for local subselect
         // -----------------------------------

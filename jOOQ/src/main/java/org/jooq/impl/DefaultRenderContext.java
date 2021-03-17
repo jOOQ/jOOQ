@@ -195,21 +195,21 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public QueryPart scopeMapping(QueryPart part) {
-        if (scopeStack.inScope()) {
-            if (part instanceof TableImpl) {
-                ScopeStackElement e = scopeStack.get(part);
+        if (scopeStack.inScope() && part instanceof ScopeMappable) {
+            ScopeStackElement e = scopeStack.get(part);
 
-                if (e != null)
-                    return e.mapped;
-            }
+            if (e != null && e.mapped != null)
+                return e.mapped;
         }
 
-        return null;
+        return part;
     }
 
     @Override
     public RenderContext scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped) {
         if (scopeStack.inScope()) {
+            ScopeStackElement e;
+
             if (part instanceof TableImpl) {
                 Table<?> root = (Table<?>) part;
                 Table<?> child = root;
@@ -220,11 +220,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     root = child;
                 }
 
-                ScopeStackElement e = forceNew
+                e = forceNew
                     ? scopeStack.create(root)
                     : scopeStack.getOrCreate(root);
 
-                e.mapped = mapped;
                 if (e.joinNode == null)
                     e.joinNode = new JoinNode(configuration(), root);
 
@@ -243,13 +242,22 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 }
             }
             else if (forceNew)
-                scopeStack.create(part);
+                e = scopeStack.create(part);
             else
-                scopeStack.getOrCreate(part);
+                e = scopeStack.getOrCreate(part);
 
+            e.mapped = mapped;
         }
 
         return this;
+    }
+
+    @Override
+    void scopeStart0() {
+        for (ScopeStackElement e : scopeStack) {
+            if (e.part != e.mapped && !(e.part instanceof ScopeNestable))
+                scopeStack.set(e.part, null);
+        }
     }
 
     @Override

@@ -226,7 +226,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             QueryPart replacement = start(part);
 
             if (replacement != null) {
-                QueryPartInternal internal = (QueryPartInternal) replacement;
+                QueryPartInternal internal = (QueryPartInternal) scopeMapping(replacement);
 
                 // If this is supposed to be a declaration section and the part isn't
                 // able to declare anything, then disable declaration temporarily
@@ -701,7 +701,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public /* non-final */ QueryPart scopeMapping(QueryPart part) {
-        return null;
+        return part;
     }
 
     @Override
@@ -1011,6 +1011,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         ScopeStackElement(QueryPart part, int scopeLevel) {
             this.part = part;
+            this.mapped = part;
             this.scopeLevel = scopeLevel;
         }
 

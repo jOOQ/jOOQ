@@ -37,37 +37,14 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_NOT;
-import static org.jooq.impl.Keywords.K_NOT;
-
-import org.jooq.Clause;
-import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 
-final class NotCondition extends AbstractCondition {
-
-    private static final long     serialVersionUID = 2921001862882237932L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_NOT };
-
-    final Condition               condition;
-
-    NotCondition(Condition condition) {
-        this.condition = condition;
-    }
-
-    @Override
-    boolean isNullable() {
-        return !(condition instanceof AbstractCondition) || ((AbstractCondition) condition).isNullable();
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(K_NOT).sql(" (").visit(condition).sql(')');
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
+/**
+ * A marker interface for all query parts that are visible from nested scopes.
+ *
+ * @author Lukas Eder
+ */
+interface ScopeNestable extends QueryPartInternal {
 }

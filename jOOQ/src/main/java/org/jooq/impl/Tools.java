@@ -6090,6 +6090,9 @@ final class Tools {
              : field;
     }
 
+    // TODO: In a new expression tree model, we'll support generic visitors of some sort
+    // ---------------------------------------------------------------------------------
+
     static final void traverseJoins(Iterable<? extends Table<?>> i, Consumer<? super Table<?>> consumer) {
         for (Table<?> t : i)
             traverseJoins(t, consumer);
@@ -6102,5 +6105,54 @@ final class Tools {
         }
         else
             consumer.accept(t);
+    }
+
+    static final void traverseSelectList(SelectFieldList<?> list, Consumer<? super Field<?>> consumer) {
+
+        // TODO: Traverse expressions as well
+        for (SelectFieldOrAsterisk f : list)
+            if (f instanceof Field)
+                consumer.accept((Field<?>) f);
+    }
+
+    static final void traverseOrderBy(SortFieldList list, Consumer<? super Field<?>> consumer) {
+
+        // TODO: Traverse expressions as well
+        for (SortField<?> f : list)
+            consumer.accept(((SortFieldImpl<?>) f).getField());
+    }
+
+    static final void traverseConditions(Condition condition, Consumer<? super Field<?>> consumer) {
+        if (condition instanceof CombinedCondition) {
+            for (Condition c : ((CombinedCondition) condition).conditions)
+                traverseConditions(c, consumer);
+        }
+        else if (condition instanceof NotCondition) {
+            traverseConditions(((NotCondition) condition).condition, consumer);
+        }
+        else if (condition instanceof BetweenCondition) {
+            consumer.accept(((BetweenCondition<?>) condition).field);
+            consumer.accept(((BetweenCondition<?>) condition).minValue);
+            consumer.accept(((BetweenCondition<?>) condition).maxValue);
+        }
+        else if (condition instanceof CompareCondition) {
+            consumer.accept(((CompareCondition) condition).field1);
+            consumer.accept(((CompareCondition) condition).field2);
+        }
+        else if (condition instanceof FieldCondition) {
+            consumer.accept(((FieldCondition) condition).field);
+        }
+        else if (condition instanceof InCondition) {
+            consumer.accept(((InCondition<?>) condition).field);
+
+            for (Field<?> f : ((InCondition<?>) condition).values)
+                consumer.accept(f);
+        }
+        else if (condition instanceof IsDistinctFrom) {
+            consumer.accept(((IsDistinctFrom<?>) condition).lhs);
+            consumer.accept(((IsDistinctFrom<?>) condition).rhs);
+        }
+
+        // TODO: Other conditions
     }
 }

@@ -423,7 +423,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param condition The condition
      */
-    @Support({ H2 })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addQualify(Condition condition);
 
     /**
@@ -432,7 +432,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param conditions The condition
      */
-    @Support({ H2 })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addQualify(Condition... conditions);
 
     /**
@@ -441,7 +441,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param conditions The condition
      */
-    @Support({ H2 })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addQualify(Collection<? extends Condition> conditions);
 
     /**
@@ -452,7 +452,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param condition The condition
      */
-    @Support({ H2 })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addQualify(Operator operator, Condition condition);
 
     /**
@@ -463,7 +463,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param conditions The condition
      */
-    @Support({ H2 })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addQualify(Operator operator, Condition... conditions);
 
     /**
@@ -474,7 +474,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param conditions The condition
      */
-    @Support({ H2 })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addQualify(Operator operator, Collection<? extends Condition> conditions);
 
     /**

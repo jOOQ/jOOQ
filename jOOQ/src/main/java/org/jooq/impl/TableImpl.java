@@ -84,7 +84,7 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class TableImpl<R extends Record> extends AbstractTable<R> {
+public class TableImpl<R extends Record> extends AbstractTable<R> implements ScopeMappable, ScopeNestable {
 
     private static final long            serialVersionUID                  = 261033315221985068L;
     private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
@@ -305,15 +305,6 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     private void accept0(Context<?> ctx) {
-
-
-
-
-
-
-
-
-
         if (ctx.declareTables())
             ctx.scopeMarkStart(this);
 

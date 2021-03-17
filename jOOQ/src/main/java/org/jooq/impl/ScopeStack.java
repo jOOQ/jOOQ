@@ -184,12 +184,18 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     private final V get0(List<V> list) {
-        int i = list.size() - 1;
-        return i == -1 ? null : list.get(i);
+        int i;
+
+        if (list == null)
+            return null;
+        else if ((i = list.size()) == 0)
+            return null;
+        else
+            return list.get(i - 1);
     }
 
     final V get(K key) {
-        return get0(list(key));
+        return get0(listOrNull(key));
     }
 
     final <T extends Throwable> V getOrThrow(K key, Supplier<T> exception) throws T {
@@ -221,6 +227,10 @@ final class ScopeStack<K, V> implements Iterable<V> {
         if (size < l)
             list.addAll(nCopies(l - size, null));
         list.set(scopeLevel, value);
+    }
+
+    private List<V> listOrNull(K key) {
+        return stack().get(key);
     }
 
     private List<V> list(K key) {

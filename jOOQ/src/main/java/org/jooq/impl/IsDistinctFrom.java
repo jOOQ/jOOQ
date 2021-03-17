@@ -95,9 +95,9 @@ final class IsDistinctFrom<T> extends AbstractCondition {
 
 
 
-    private final Field<T>               lhs;
-    private final Field<T>               rhs;
-    private final Comparator             comparator;
+    final Field<T>                       lhs;
+    final Field<T>                       rhs;
+    final Comparator                     comparator;
 
     IsDistinctFrom(Field<T> lhs, Field<T> rhs, Comparator comparator) {
         this.lhs = lhs;

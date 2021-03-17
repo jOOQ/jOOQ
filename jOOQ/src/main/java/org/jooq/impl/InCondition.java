@@ -99,16 +99,16 @@ import org.jooq.SQLDialect;
  */
 final class InCondition<T> extends AbstractCondition {
 
-    private static final long              serialVersionUID       = -1653924248576930761L;
-    private static final int               IN_LIMIT               = 1000;
-    private static final Clause[]          CLAUSES_IN             = { CONDITION, CONDITION_IN };
-    private static final Clause[]          CLAUSES_IN_NOT         = { CONDITION, CONDITION_NOT_IN };
-    private static final Set<SQLDialect>   REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>   NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES);
+    private static final long            serialVersionUID       = -1653924248576930761L;
+    private static final int             IN_LIMIT               = 1000;
+    private static final Clause[]        CLAUSES_IN             = { CONDITION, CONDITION_IN };
+    private static final Clause[]        CLAUSES_IN_NOT         = { CONDITION, CONDITION_NOT_IN };
+    private static final Set<SQLDialect> REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES);
 
-    private final Field<T>                 field;
-    private final List<? extends Field<?>> values;
-    private final Comparator               comparator;
+    final Field<T>                       field;
+    final List<? extends Field<?>>       values;
+    final Comparator                     comparator;
 
     InCondition(Field<T> field, List<? extends Field<?>> values, Comparator comparator) {
         this.field = field;

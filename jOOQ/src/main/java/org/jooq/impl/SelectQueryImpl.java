@@ -2155,15 +2155,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         context.end(SELECT_HAVING);
 
-        // QUALIFY clause
-        // -------------
-
-        if (getQualify().hasWhere())
-            context.formatSeparator()
-                   .visit(K_QUALIFY)
-                   .sql(' ')
-                   .visit(getQualify());
-
         // WINDOW clause
         // -------------
         context.start(SELECT_WINDOW);
@@ -2177,6 +2168,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                    .declareWindows(false);
 
         context.end(SELECT_WINDOW);
+
+        // QUALIFY clause
+        // -------------
+
+        if (getQualify().hasWhere())
+            context.formatSeparator()
+                   .visit(K_QUALIFY)
+                   .sql(' ')
+                   .visit(getQualify());
 
         // ORDER BY clause for local subselect
         // -----------------------------------

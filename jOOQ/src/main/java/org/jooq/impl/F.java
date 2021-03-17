@@ -94,3 +94,11 @@ interface ThrowingBiFunction<T1, T2, R, E extends Throwable> {
 interface BooleanConsumer {
     void accept(boolean b);
 }
+
+/**
+ * A missing primitive type {@link BiFunction} for references and ints.
+ */
+@FunctionalInterface
+interface ObjIntFunction<T, R> {
+    R apply(T t, int i);
+}

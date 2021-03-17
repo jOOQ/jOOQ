@@ -66,6 +66,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -304,6 +305,15 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     private void accept0(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
         if (ctx.declareTables())
             ctx.scopeMarkStart(this);
 

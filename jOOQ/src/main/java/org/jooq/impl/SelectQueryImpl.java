@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static java.util.function.Function.identity;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_EXCEPT;
@@ -174,6 +175,7 @@ import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.selectQueryImpl;
+import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
@@ -234,6 +236,7 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectLimitPercentStep;
 import org.jooq.SelectLimitStep;
@@ -376,6 +379,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final QueryPartList<Field<?>>                unionSeek;
     private boolean                                      unionSeekBefore;      // [#3579] TODO
     private final Limit                                  unionLimit;
+    private final Map<Table<?>, Table<?>>                localTableMapping;
 
     SelectQueryImpl(Configuration configuration, WithImpl with) {
         this(configuration, with, null);
@@ -414,46 +418,136 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (from != null)
             this.from.add(from.asTable());
+
+        this.localTableMapping = new LinkedHashMap<>();
     }
 
-    final SelectQueryImpl<R> copy() {
-        SelectQueryImpl<R> result = new SelectQueryImpl<>(configuration(), with);
+    /**
+     * Whether any clauses logically following the <code>WHERE</code> clause are
+     * present.
+     */
+    private final boolean stopsAtWhere() {
+        return stopsAtQualify()
+            && !qualify.hasWhere()
+            && window == null
+            && !having.hasWhere()
+            && Tools.isEmpty(groupBy)
+            && !grouping
 
+
+
+
+
+        ;
+    }
+
+    /**
+     * Whether any clauses logically following the <code>QUALIFY</code> clause
+     * are present.
+     */
+    private final boolean stopsAtQualify() {
+        return !unionLimit.isApplicable()
+            && Tools.isEmpty(unionSeek)
+            && !unionSeekBefore
+
+
+
+            && Tools.isEmpty(unionOrderBy)
+            && Tools.isEmpty(unionOp)
+            && Tools.isEmpty(union)
+            && intoTable == null
+            && option == null
+
+
+
+
+
+
+            && forLock == null
+            && !limit.isApplicable()
+            && Tools.isEmpty(seek)
+
+
+
+            && Tools.isEmpty(orderBy)
+            && Tools.isEmpty(distinctOn)
+            && !distinct
+            && hint == null
+            && Tools.isEmpty(select)
+        ;
+    }
+
+    /**
+     * Copy all clauses up to the <code>WHERE</code> clause into a new query.
+     */
+    private final SelectQueryImpl<R> copyToWhere(SelectQueryImpl<R> result) {
+        result.from.addAll(from);
         result.condition.setWhere(condition.getWhere());
 
+        return result;
+    }
+
+    /**
+     * Copy all clauses up to the <code>QUALIFY</code> clause into a new query.
+     */
+    private final SelectQueryImpl<R> copyToQualify(SelectQueryImpl<R> result) {
+        return copyAfterWhereToQualify(copyToWhere(result));
+    }
+
+    /**
+     * Copy all clauses between to the <code>WHERE</code> clause and the
+     * <code>QUALIFY</code> clause into a new query.
+     */
+    private final SelectQueryImpl<R> copyAfterWhereToQualify(SelectQueryImpl<R> result) {
 
 
 
 
+
+        result.grouping = grouping;
+        result.groupBy = groupBy;
+        result.having.setWhere(having.getWhere());
+        if (window != null)
+            result.addWindow(window);
+        result.qualify.setWhere(qualify.getWhere());
+
+        return result;
+    }
+
+    /**
+     * Copy all clauses after the <code>WHERE</code> clause.
+     */
+    private final SelectQueryImpl<R> copyAfterWhere(SelectQueryImpl<R> result) {
+        return copyAfterQualify(copyAfterWhereToQualify(result));
+    }
+
+    /**
+     * Copy all clauses after the <code>QUALIFY</code> clause.
+     */
+    private final SelectQueryImpl<R> copyAfterQualify(SelectQueryImpl<R> result) {
+
+        result.select.addAll(select);
+        result.hint = hint;
         result.distinct = distinct;
         result.distinctOn = distinctOn;
-
-
-
-
-
-
-        result.forLock = forLock;
-        result.from.addAll(from);
-        result.groupBy = groupBy;
-        result.grouping = grouping;
-        result.having.setWhere(having.getWhere());
-        result.hint = hint;
-        result.intoTable = intoTable;
-        result.limit.from(limit);
-
-        result.option = option;
         result.orderBy.addAll(orderBy);
 
 
 
-        result.qualify.setWhere(qualify.getWhere());
         result.seek.addAll(seek);
-        result.select.addAll(select);
+        result.limit.from(limit);
+        result.forLock = forLock;
+
+
+
+
+
+
+        result.option = option;
+        result.intoTable = intoTable;
 
         // TODO: Should the remaining union subqueries also be copied?
         result.union.addAll(union);
-        result.unionLimit.from(unionLimit);
         result.unionOp.addAll(unionOp);
         result.unionOrderBy.addAll(unionOrderBy);
 
@@ -461,15 +555,53 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         result.unionSeek.addAll(unionSeek);
         result.unionSeekBefore = unionSeekBefore;
+        result.unionLimit.from(unionLimit);
 
-        if (window != null)
-            result.addWindow(window);
+        return result;
+    }
 
+    /**
+     * Copy all clauses into a new query.
+     */
+    private final SelectQueryImpl<R> copy(Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> finisher) {
+        return finisher.apply(copyAfterWhere(copyToWhere(new SelectQueryImpl<>(configuration(), with))));
+    }
 
+    /**
+     * Nest all clauses up to the <code>WHERE</code> clause in a derived table.
+     */
+    private final SelectQueryImpl<R> nestToWhere(Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
+        SelectQueryImpl<R> result = new SelectQueryImpl<>(configuration(), with);
 
+        // Nesting is only required if we have clauses after WHERE
+        if (stopsAtWhere())
+            return nestedFinisher.apply(copyToWhere(result));
+        else
+            return copyAfterWhere(nest(result, copyToWhere(new SelectQueryImpl<>(configuration(), null)), nestedFinisher));
+    }
 
+    /**
+     * Nest all clauses up to the <code>QUALIFY</code> clause in a derived table.
+     */
+    private final SelectQueryImpl<R> nestToQualify(Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
+        SelectQueryImpl<R> result = new SelectQueryImpl<>(configuration(), with);
 
+        // Nesting is only required if we have clauses after QUALIFY
+        if (stopsAtQualify())
+            return nestedFinisher.apply(copyToQualify(result));
+        else
+            return copyAfterQualify(nest(result, copyToQualify(new SelectQueryImpl<>(configuration(), null)), nestedFinisher));
+    }
 
+    private final SelectQueryImpl<R> nest(SelectQueryImpl<R> result, SelectQueryImpl<R> nested, Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
+
+        // [#10716] TODO: Qualify all fields with c1, c2, to avoid ambiguous
+        nested.select.add(DSL.asterisk());
+        nested = nestedFinisher.apply(nested);
+        Table<R> t = nested.asTable("t");
+        traverseJoins(from, t0 -> result.localTableMapping.put(t0, t));
+
+        result.from.add(t);
         return result;
     }
 
@@ -1207,6 +1339,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     final Select<?> distinctOnEmulation() {
 
@@ -1219,7 +1356,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         Field<Integer> rn = rowNumber().over(partitionBy(partitionBy).orderBy(orderBy)).as("rn");
 
-        SelectQueryImpl<R> copy = copy();
+        SelectQueryImpl<R> copy = copy(identity());
         copy.distinctOn = null;
         copy.select.add(rn);
         copy.orderBy.clear();
@@ -1583,15 +1720,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context.scopeEnd();
     }
 
-    private final void registerTable(Context<?> context, Table<?> table) {
-        if (table instanceof JoinTable) {
-            registerTable(context, ((JoinTable) table).lhs);
-            registerTable(context, ((JoinTable) table).rhs);
-        }
-        else if (table instanceof TableImpl)
-            context.scopeRegister(table, true);
-    }
-
     private final void pushWindow(Context<?> context) {
         // [#531] [#2790] Make the WINDOW clause available to the SELECT clause
         // to be able to inline window definitions if the WINDOW clause is not
@@ -1887,8 +2015,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
         }
 
-        for (Table<?> table : getFrom())
-            registerTable(context, table);
+        traverseJoins(getFrom(), t -> {
+            if (t instanceof TableImpl)
+                context.scopeRegister(t, true);
+        });
+
+        for (Entry<Table<?>, Table<?>> entry : localTableMapping.entrySet())
+            context.scopeRegister(entry.getKey(), true, entry.getValue());
 
         // SELECT clause
         // -------------

@@ -6089,4 +6089,18 @@ final class Tools {
              ? extractVal(field).convertTo(field.getDataType().nullable(nullable))
              : field;
     }
+
+    static final void traverseJoins(Iterable<? extends Table<?>> i, Consumer<? super Table<?>> consumer) {
+        for (Table<?> t : i)
+            traverseJoins(t, consumer);
+    }
+
+    static final void traverseJoins(Table<?> t, Consumer<? super Table<?>> consumer) {
+        if (t instanceof JoinTable) {
+            traverseJoins(((JoinTable) t).lhs, consumer);
+            traverseJoins(((JoinTable) t).rhs, consumer);
+        }
+        else
+            consumer.accept(t);
+    }
 }

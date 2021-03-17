@@ -690,8 +690,18 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
-    public /* non-final */ C scopeRegister(QueryPart part, boolean forceNew) {
+    public final C scopeRegister(QueryPart part, boolean forceNew) {
+        return scopeRegister(part, forceNew, null);
+    }
+
+    @Override
+    public /* non-final */ C scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped) {
         return (C) this;
+    }
+
+    @Override
+    public /* non-final */ QueryPart scopeMapping(QueryPart part) {
+        return null;
     }
 
     @Override
@@ -991,19 +1001,24 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     static class ScopeStackElement {
-        final int scopeLevel;
-        int[]     positions;
-        int       bindIndex;
-        int       indent;
-        JoinNode  joinNode;
+        final int       scopeLevel;
+        final QueryPart part;
+        QueryPart       mapped;
+        int[]           positions;
+        int             bindIndex;
+        int             indent;
+        JoinNode        joinNode;
 
-        ScopeStackElement(int scopeLevel) {
+        ScopeStackElement(QueryPart part, int scopeLevel) {
+            this.part = part;
             this.scopeLevel = scopeLevel;
         }
 
         @Override
         public String toString() {
-            return Arrays.toString(positions) + ": " + joinNode;
+            return (positions != null ? Arrays.toString(positions) + ": " : "")
+                 + part
+                 + (mapped != null ? " (" + mapped + ")" : "");
         }
     }
 }

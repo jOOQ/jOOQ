@@ -63,6 +63,7 @@ import org.jooq.Constants;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Param;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -193,7 +194,21 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
-    public RenderContext scopeRegister(QueryPart part, boolean forceNew) {
+    public QueryPart scopeMapping(QueryPart part) {
+        if (scopeStack.inScope()) {
+            if (part instanceof TableImpl) {
+                ScopeStackElement e = scopeStack.get(part);
+
+                if (e != null)
+                    return e.mapped;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public RenderContext scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped) {
         if (scopeStack.inScope()) {
             if (part instanceof TableImpl) {
                 Table<?> root = (Table<?>) part;
@@ -209,6 +224,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     ? scopeStack.create(root)
                     : scopeStack.getOrCreate(root);
 
+                e.mapped = mapped;
                 if (e.joinNode == null)
                     e.joinNode = new JoinNode(configuration(), root);
 

@@ -59,15 +59,15 @@ import static java.util.Collections.nCopies;
  */
 final class ScopeStack<K, V> implements Iterable<V> {
 
-    private int                  scopeLevel = -1;
-    private Map<K, List<V>>      stack;
-    private final IntFunction<V> constructor;
+    private int                        scopeLevel = -1;
+    private Map<K, List<V>>            stack;
+    private final ObjIntFunction<K, V> constructor;
 
     ScopeStack(V defaultValue) {
-        this(scopeLevel -> defaultValue);
+        this((part, scopeLevel) -> defaultValue);
     }
 
-    ScopeStack(IntFunction<V> constructor) {
+    ScopeStack(ObjIntFunction<K, V> constructor) {
         this.constructor = constructor;
     }
 
@@ -202,15 +202,15 @@ final class ScopeStack<K, V> implements Iterable<V> {
     final V getOrCreate(K key) {
         List<V> list = list(key);
         V result = get0(list);
-        return result != null ? result : create0(list);
+        return result != null ? result : create0(key, list);
     }
 
     final V create(K key) {
-        return create0(list(key));
+        return create0(key, list(key));
     }
 
-    private final V create0(List<V> list) {
-        V result = constructor.apply(scopeLevel);
+    private final V create0(K key, List<V> list) {
+        V result = constructor.apply(key, scopeLevel);
         set0(list, result);
         return result;
     }

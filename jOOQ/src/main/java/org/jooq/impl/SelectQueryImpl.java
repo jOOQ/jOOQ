@@ -180,7 +180,10 @@ import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.search;
 import static org.jooq.impl.Tools.selectQueryImpl;
+// ...
 import static org.jooq.impl.Tools.traverseJoins;
+// ...
+// ...
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;

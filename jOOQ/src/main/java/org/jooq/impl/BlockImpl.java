@@ -94,6 +94,8 @@ import org.jooq.conf.ParamType;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.impl.Tools.DataExtendedKey;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Lukas Eder
  */
@@ -235,6 +237,10 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             }
         }
     }
+
+
+
+
 
 
 

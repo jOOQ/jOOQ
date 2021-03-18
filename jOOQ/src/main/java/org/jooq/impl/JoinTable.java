@@ -102,12 +102,13 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.search;
+import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -665,7 +666,7 @@ implements
                     unaliased.set(i, (TableField<?, ?>) alias.wrapped().field(f));
             }
 
-            if (search(lhs, keyFields[0].getTable()) != null) {
+            if (traverseJoins(lhs, false, r -> r, search(keyFields[0].getTable()))) {
                 for (ForeignKey<?, ?> key : lhs.getReferences())
                     if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
                         return onKey(key);
@@ -674,7 +675,7 @@ implements
                     if (key.getFields().containsAll(unaliased))
                         return onKey(key);
             }
-            else if (search(rhs, keyFields[0].getTable()) != null) {
+            else if (traverseJoins(rhs, false, r -> r, search(keyFields[0].getTable()))) {
                 for (ForeignKey<?, ?> key : rhs.getReferences())
                     if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
                         return onKey(key);
@@ -690,38 +691,12 @@ implements
 
     @Override
     public final JoinTable onKey(ForeignKey<?, ?> key) {
-        if (search(lhs, key.getTable()) != null)
+        if (traverseJoins(lhs, false, r -> r, search(key.getTable())))
             return onKey(key, lhs, rhs);
-        else if (search(rhs, key.getTable()) != null)
+        else if (traverseJoins(rhs, false, r -> r, search(key.getTable())))
             return onKey(key, rhs, lhs);
 
         throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);
-    }
-
-    private final Table<?> search(Table<?> tree, Table<?> search) {
-
-        // [#6304] [#7626] Improved alias discovery
-        Alias<? extends Table<?>> treeAlias = Tools.alias(tree);
-        Alias<? extends Table<?>> searchAlias = Tools.alias(search);
-
-        if (treeAlias != null || searchAlias != null) {
-            return search(
-                treeAlias != null ? treeAlias.wrapped() : tree,
-                searchAlias != null ? searchAlias.wrapped() : search
-            );
-        }
-        else if (tree instanceof JoinTable) {
-            JoinTable t = (JoinTable) tree;
-
-            Table<?> r = search(t.lhs, search);
-            if (r == null)
-                r = search(t.rhs, search);
-
-            return r;
-        }
-        else {
-            return search.equals(tree) ? tree : null;
-        }
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

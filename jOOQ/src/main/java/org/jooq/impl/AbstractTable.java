@@ -61,6 +61,7 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.traverseJoins;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -590,7 +591,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         List<ForeignKey<R, O>> result = new ArrayList<>();
 
         for (ForeignKey<R, ?> reference : getReferences()) {
-            for (Table<?> o : flattenJoins(other)) {
+            traverseJoins(other, o -> {
                 if (o.equals(reference.getKey().getTable())) {
                     result.add((ForeignKey<R, O>) reference);
                 }
@@ -602,25 +603,10 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
                     if (aliased != null && aliased.equals(reference.getKey().getTable()))
                         result.add((ForeignKey<R, O>) reference);
                 }
-            }
+            });
         }
 
         return Collections.unmodifiableList(result);
-    }
-
-    private final List<Table<?>> flattenJoins(Table<?> other) {
-        return flattenJoins(other, new ArrayList<>());
-    }
-
-    private final List<Table<?>> flattenJoins(Table<?> other, List<Table<?>> list) {
-        if (other instanceof JoinTable) {
-            flattenJoins(((JoinTable) other).lhs, list);
-            flattenJoins(((JoinTable) other).rhs, list);
-        }
-        else
-            list.add(other);
-
-        return list;
     }
 
     /**

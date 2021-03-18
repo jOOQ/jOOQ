@@ -176,6 +176,7 @@ import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
+import static org.jooq.impl.Tools.search;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.traverseConditions;
 import static org.jooq.impl.Tools.traverseJoins;
@@ -199,6 +200,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.sql.ResultSetMetaData;
 import java.util.ArrayDeque;
@@ -606,7 +608,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final SelectQueryImpl<R> nest(SelectQueryImpl<R> result, SelectQueryImpl<R> nested, Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
 
-        // [#10716] TODO: Qualify all fields with c1, c2, to avoid ambiguous
+        // [#10716] TODO: Qualify all fields with c1, c2, to avoid ambiguous fields in derived tables
         nested = nestedFinisher.apply(nested);
         Table<R> t = nested.asTable("t");
         traverseJoins(from, t0 -> result.localQueryPartMapping.put(t0, t));
@@ -875,7 +877,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
-
 
 
 
@@ -3656,40 +3657,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean knownTableSource() {
-        for (Table<?> table : getFrom())
-            if (!knownTable(table))
-                return false;
-
-        return true;
-    }
-
-    private final boolean knownTable(Table<?> table) {
-        if (table instanceof JoinTable)
-            return knownTable(((JoinTable) table).lhs) && knownTable(((JoinTable) table).rhs);
-        else
-            return table.fieldsRow().size() > 0;
+        return traverseJoins(getFrom(), true, r -> !r, (r, t) -> r && t.fieldsRow().size() > 0);
     }
 
     private final boolean containsTable(Table<?> table) {
-        for (Table<?> t : getFrom())
-            if (containsTable(t, table))
-                return true;
-
-        return false;
-    }
-
-    private final boolean containsTable(Table<?> table, Table<?> contained) {
-        Table<?> alias;
-
-        if ((alias = Tools.aliased(table)) != null)
-            return containsTable(alias, contained);
-        else if ((alias = Tools.aliased(contained)) != null)
-            return containsTable(table, alias);
-        else if (table instanceof JoinTable)
-            return containsTable(((JoinTable) table).lhs, contained)
-                || containsTable(((JoinTable) table).rhs, contained);
-        else
-            return contained.equals(table);
+        return traverseJoins(getFrom(), false, r -> r, search(table));
     }
 
     @SuppressWarnings("unchecked")

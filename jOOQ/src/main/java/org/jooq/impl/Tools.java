@@ -105,6 +105,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -154,7 +155,6 @@ import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
-import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.JSON;
@@ -217,7 +217,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinPool.ManagedBlocker;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6093,18 +6095,62 @@ final class Tools {
     // TODO: In a new expression tree model, we'll support generic visitors of some sort
     // ---------------------------------------------------------------------------------
 
+    static final BiFunction<Boolean, Table<?>, Boolean> search(Table<?> table) {
+        return (r, t) -> {
+
+            // [#6304] [#7626] Improved alias discovery
+            Table<?> t1 = defaultIfNull(Tools.aliased(table), table);
+            Table<?> t2 = defaultIfNull(Tools.aliased(t), t);
+
+            return r || t1.equals(t2);
+        };
+    }
+
     static final void traverseJoins(Iterable<? extends Table<?>> i, Consumer<? super Table<?>> consumer) {
         for (Table<?> t : i)
             traverseJoins(t, consumer);
     }
 
     static final void traverseJoins(Table<?> t, Consumer<? super Table<?>> consumer) {
+        traverseJoins(t, null, x -> false, (result, x) -> { consumer.accept(x); return result; });
+    }
+
+    static final <T> T traverseJoins(
+        Iterable<? extends Table<?>> i,
+        T result,
+        Predicate<? super T> abort,
+        BiFunction<? super T, ? super Table<?>, ? extends T> function
+    ) {
+        for (Table<?> t : i)
+            if (abort.test(result))
+                return result;
+            else
+                result = traverseJoins(t, result, abort, function);
+
+        return result;
+    }
+
+    static final <T> T traverseJoins(
+        Table<?> t,
+        T result,
+        Predicate<? super T> abort,
+        BiFunction<? super T, ? super Table<?>, ? extends T> function
+    ) {
+        if (abort.test(result))
+            return result;
+
         if (t instanceof JoinTable) {
-            traverseJoins(((JoinTable) t).lhs, consumer);
-            traverseJoins(((JoinTable) t).rhs, consumer);
+            result = traverseJoins(((JoinTable) t).lhs, result, abort, function);
+
+            if (abort.test(result))
+                return result;
+
+            result = traverseJoins(((JoinTable) t).rhs, result, abort, function);
         }
         else
-            consumer.accept(t);
+            result = function.apply(result, t);
+
+        return result;
     }
 
     static final void traverseSelectList(SelectFieldList<?> list, Consumer<? super Field<?>> consumer) {

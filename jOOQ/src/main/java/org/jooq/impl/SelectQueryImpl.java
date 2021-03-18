@@ -299,6 +299,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_QUALIFY                 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE);
 
 
 
@@ -312,8 +313,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, POSTGRES);
     private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES);
-
-
 
 
 
@@ -1395,8 +1394,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
@@ -1415,10 +1412,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             ctx.visit(distinctOnEmulation());
         }
 
+        // [#5810] Emulate the Teradata QUALIFY clause
+        else if (qualify.hasWhere() && EMULATE_QUALIFY.contains(ctx.dialect()) && ctx.configuration().commercial(() -> "The QUALIFY clause can be emulated in the jOOQ 3.15 Professional Edition and jOOQ Enterprise Edition, see https://github.com/jOOQ/jOOQ/issues/5810")) {
 
 
 
-
+        }
 
 
 

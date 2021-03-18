@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.combine;
 
+import java.util.function.Supplier;
+
 import org.jooq.Configuration;
 import org.jooq.DiagnosticsListener;
 import org.jooq.DiagnosticsListenerProvider;
@@ -55,6 +57,8 @@ import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
+import org.jooq.exception.DataAccessException;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A base implementation for {@link Configuration} classes, implementing the
@@ -67,7 +71,8 @@ public abstract class AbstractConfiguration implements Configuration {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 4192586780235493065L;
+    private static final long       serialVersionUID = 4192586780235493065L;
+    private static final JooqLogger log              = JooqLogger.getLogger(AbstractConfiguration.class);
 
     @Override
     public final Configuration set(RecordListener... newRecordListeners) {
@@ -293,4 +298,20 @@ public abstract class AbstractConfiguration implements Configuration {
 
 
 
+    @Override
+    public boolean commercial(Supplier<String> logMessage) {
+        if (commercial())
+            return true;
+
+        log.warn(logMessage.get());
+        return false;
+    }
+
+    @Override
+    public boolean requireCommercial(Supplier<String> logMessage) throws DataAccessException {
+        if (commercial())
+            return true;
+
+        throw new DataAccessException(logMessage.get());
+    }
 }

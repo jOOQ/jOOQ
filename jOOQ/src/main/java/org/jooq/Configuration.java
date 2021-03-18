@@ -45,10 +45,12 @@ import java.time.Clock;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
+import java.util.function.Supplier;
 
 import javax.sql.DataSource;
 
 import org.jooq.conf.Settings;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
@@ -1807,4 +1809,16 @@ public interface Configuration extends Serializable {
     default boolean commercial() {
         return false ;
     }
+
+    /**
+     * Whether this is a commercial edition of jOOQ, logging a warning message,
+     * if not.
+     */
+    boolean commercial(Supplier<String> logMessage);
+
+    /**
+     * Whether this is a commercial edition of jOOQ, throwing an exception with
+     * a message, if not.
+     */
+    boolean requireCommercial(Supplier<String> logMessage) throws DataAccessException;
 }

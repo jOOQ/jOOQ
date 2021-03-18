@@ -50,6 +50,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 
 import javax.sql.DataSource;
 
@@ -88,9 +89,11 @@ import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
 import org.jooq.impl.Tools.DataCacheKey;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A default implementation for configurations within a {@link DSLContext}, if no

@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
@@ -66,6 +67,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.jooq.Catalog;
 import org.jooq.Condition;
@@ -111,6 +113,7 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(H2);
+
 
 
 
@@ -868,6 +871,12 @@ final class MetaImpl extends AbstractMeta {
                 boolean isAutoIncrement = column.size() >= 23
                     ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
                     : false;
+
+
+
+
+
+
 
 
 

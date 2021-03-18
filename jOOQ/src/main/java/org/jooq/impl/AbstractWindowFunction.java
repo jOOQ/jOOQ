@@ -173,6 +173,10 @@ implements
         return null;
     }
 
+    final boolean isWindow() {
+        return windowSpecification != null || windowDefinition != null || windowName != null;
+    }
+
     final void acceptOverClause(Context<?> ctx) {
         QueryPart window = window(ctx);
 

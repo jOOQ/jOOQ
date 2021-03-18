@@ -308,10 +308,6 @@ implements
             return s1;
     }
 
-    final boolean isWindow() {
-        return windowSpecification != null || windowDefinition != null || windowName != null;
-    }
-
     /**
      * Type safe <code>NVL2(y, x, null)</code> for statistical function
      * emulations.

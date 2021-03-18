@@ -435,30 +435,22 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         this.localQueryPartMapping = new LinkedHashMap<>();
     }
 
+    private enum CopyClause {
+        START,
+        WHERE,
+        QUALIFY,
+        END;
+
+        final boolean between(CopyClause startInclusive, CopyClause endExclusive) {
+            return compareTo(startInclusive) >= 0 && compareTo(endExclusive) < 0;
+        }
+    }
+
     /**
      * Whether any clauses logically following the <code>WHERE</code> clause are
      * present.
      */
-    private final boolean stopsAtWhere() {
-        return stopsAtQualify()
-            && !qualify.hasWhere()
-            && window == null
-            && !having.hasWhere()
-            && Tools.isEmpty(groupBy)
-            && !grouping
-
-
-
-
-
-        ;
-    }
-
-    /**
-     * Whether any clauses logically following the <code>QUALIFY</code> clause
-     * are present.
-     */
-    private final boolean stopsAtQualify() {
+    private final boolean stopsAt(CopyClause clause) {
         return !unionLimit.isApplicable()
             && Tools.isEmpty(unionSeek)
             && !unionSeekBefore
@@ -487,123 +479,98 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && !distinct
             && hint == null
             && Tools.isEmpty(select)
+            && (clause == CopyClause.QUALIFY ||
+                !qualify.hasWhere()
+                && window == null
+                && !having.hasWhere()
+                && Tools.isEmpty(groupBy)
+                && !grouping
+
+
+
+
+
+            )
         ;
     }
 
-    /**
-     * Copy all clauses up to the <code>WHERE</code> clause into a new query.
-     */
-    private final SelectQueryImpl<R> copyToWhere(SelectQueryImpl<R> result) {
-        result.from.addAll(from);
-        result.condition.setWhere(condition.getWhere());
+    private final SelectQueryImpl<R> copyTo(CopyClause clause, SelectQueryImpl<R> result) {
+        return copyBetween(CopyClause.START, clause, result);
+    }
+
+    private final SelectQueryImpl<R> copyAfter(CopyClause clause, SelectQueryImpl<R> result) {
+        return copyBetween(clause, CopyClause.END, result);
+    }
+
+    private final SelectQueryImpl<R> copyBetween(CopyClause start, CopyClause end, SelectQueryImpl<R> result) {
+        if (CopyClause.START.between(start, end)) {
+            result.from.addAll(from);
+            result.condition.setWhere(condition.getWhere());
+        }
+
+        if (CopyClause.WHERE.between(start, end)) {
+
+
+
+
+
+
+            result.grouping = grouping;
+            result.groupBy = groupBy;
+            result.having.setWhere(having.getWhere());
+            if (window != null)
+                result.addWindow(window);
+            result.qualify.setWhere(qualify.getWhere());
+        }
+
+        if (CopyClause.QUALIFY.between(start, end)) {
+            result.select.addAll(select);
+            result.hint = hint;
+            result.distinct = distinct;
+            result.distinctOn = distinctOn;
+            result.orderBy.addAll(orderBy);
+
+
+
+            result.seek.addAll(seek);
+            result.limit.from(limit);
+            result.forLock = forLock;
+
+
+
+
+
+
+            result.option = option;
+            result.intoTable = intoTable;
+
+            // TODO: Should the remaining union subqueries also be copied?
+            result.union.addAll(union);
+            result.unionOp.addAll(unionOp);
+            result.unionOrderBy.addAll(unionOrderBy);
+
+
+
+            result.unionSeek.addAll(unionSeek);
+            result.unionSeekBefore = unionSeekBefore;
+            result.unionLimit.from(unionLimit);
+        }
 
         return result;
     }
 
-    /**
-     * Copy all clauses up to the <code>QUALIFY</code> clause into a new query.
-     */
-    private final SelectQueryImpl<R> copyToQualify(SelectQueryImpl<R> result) {
-        return copyAfterWhereToQualify(copyToWhere(result));
-    }
-
-    /**
-     * Copy all clauses between to the <code>WHERE</code> clause and the
-     * <code>QUALIFY</code> clause into a new query.
-     */
-    private final SelectQueryImpl<R> copyAfterWhereToQualify(SelectQueryImpl<R> result) {
-
-
-
-
-
-        result.grouping = grouping;
-        result.groupBy = groupBy;
-        result.having.setWhere(having.getWhere());
-        if (window != null)
-            result.addWindow(window);
-        result.qualify.setWhere(qualify.getWhere());
-
-        return result;
-    }
-
-    /**
-     * Copy all clauses after the <code>WHERE</code> clause.
-     */
-    private final SelectQueryImpl<R> copyAfterWhere(SelectQueryImpl<R> result) {
-        return copyAfterQualify(copyAfterWhereToQualify(result));
-    }
-
-    /**
-     * Copy all clauses after the <code>QUALIFY</code> clause.
-     */
-    private final SelectQueryImpl<R> copyAfterQualify(SelectQueryImpl<R> result) {
-
-        result.select.addAll(select);
-        result.hint = hint;
-        result.distinct = distinct;
-        result.distinctOn = distinctOn;
-        result.orderBy.addAll(orderBy);
-
-
-
-        result.seek.addAll(seek);
-        result.limit.from(limit);
-        result.forLock = forLock;
-
-
-
-
-
-
-        result.option = option;
-        result.intoTable = intoTable;
-
-        // TODO: Should the remaining union subqueries also be copied?
-        result.union.addAll(union);
-        result.unionOp.addAll(unionOp);
-        result.unionOrderBy.addAll(unionOrderBy);
-
-
-
-        result.unionSeek.addAll(unionSeek);
-        result.unionSeekBefore = unionSeekBefore;
-        result.unionLimit.from(unionLimit);
-
-        return result;
-    }
-
-    /**
-     * Copy all clauses into a new query.
-     */
     private final SelectQueryImpl<R> copy(Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> finisher) {
-        return finisher.apply(copyAfterWhere(copyToWhere(new SelectQueryImpl<>(configuration(), with))));
+        return finisher.apply(copyTo(CopyClause.END, new SelectQueryImpl<>(configuration(), with)));
     }
 
-    /**
-     * Nest all clauses up to the <code>WHERE</code> clause in a derived table.
-     */
-    private final SelectQueryImpl<R> nestToWhere(Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
+    private final SelectQueryImpl<R> nestTo(CopyClause clause, Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
         SelectQueryImpl<R> result = new SelectQueryImpl<>(configuration(), with);
 
-        // Nesting is only required if we have clauses after WHERE
-        if (stopsAtWhere())
-            return nestedFinisher.apply(copyToWhere(result));
+        // Nesting is only required if we have clauses after the requested clause
+        if (stopsAt(clause))
+            return nestedFinisher.apply(copyTo(clause, result));
         else
-            return copyAfterWhere(nest(result, copyToWhere(new SelectQueryImpl<>(configuration(), null)), nestedFinisher));
-    }
-
-    /**
-     * Nest all clauses up to the <code>QUALIFY</code> clause in a derived table.
-     */
-    private final SelectQueryImpl<R> nestToQualify(Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
-        SelectQueryImpl<R> result = new SelectQueryImpl<>(configuration(), with);
-
-        // Nesting is only required if we have clauses after QUALIFY
-        if (stopsAtQualify())
-            return nestedFinisher.apply(copyToQualify(result));
-        else
-            return copyAfterQualify(nest(result, copyToQualify(new SelectQueryImpl<>(configuration(), null)), nestedFinisher));
+            return copyAfter(clause, nest(result, copyTo(clause, new SelectQueryImpl<>(configuration(), null)), nestedFinisher));
     }
 
     private final SelectQueryImpl<R> nest(SelectQueryImpl<R> result, SelectQueryImpl<R> nested, Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> nestedFinisher) {
@@ -1388,6 +1355,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return limit.offset != null ? s1.offset((Param) limit.offset) : s1;
     }
+
+
+
+
+
+
+
+
 
 
 

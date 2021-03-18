@@ -142,6 +142,7 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
     private static final Pattern         P_SYSINDEX_DERBY                 = Pattern.compile("^(?i:SQL\\d{14,}).*$");
     private static final Pattern         P_SYSINDEX_H2                    = Pattern.compile("^(?i:PRIMARY_KEY_|UK_INDEX_|FK_INDEX_).*$");
     private static final Pattern         P_SYSINDEX_HSQLDB                = Pattern.compile("^(?i:SYS_IDX_(?:PK|UK|FK)_).*$");
@@ -1031,6 +1032,12 @@ final class MetaImpl extends AbstractMeta {
                 boolean isAutoIncrement = column.size() >= 23
                     ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
                     : false;
+
+
+
+
+
+
 
 
 

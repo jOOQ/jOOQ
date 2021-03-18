@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.impl.Keywords.K_EXCEPT;
 
 import java.util.Arrays;
@@ -58,9 +59,10 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
     /**
      * Generated UI
      */
-    private static final long     serialVersionUID      = 6298415939984684260L;
-    static final AsteriskImpl     INSTANCE              = new AsteriskImpl(new QueryPartList<>());
-    static final Set<SQLDialect>  SUPPORT_NATIVE_EXCEPT = SQLDialect.supportedBy(H2);
+    private static final long     serialVersionUID                = 6298415939984684260L;
+    static final AsteriskImpl     INSTANCE                        = new AsteriskImpl(new QueryPartList<>());
+    static final Set<SQLDialect>  SUPPORT_NATIVE_EXCEPT           = SQLDialect.supportedBy(H2);
+    static final Set<SQLDialect>  NO_SUPPORT_UNQUALIFIED_COMBINED = SQLDialect.supportedBy();
     final QueryPartList<Field<?>> fields;
 
     private AsteriskImpl(QueryPartList<Field<?>> fields) {

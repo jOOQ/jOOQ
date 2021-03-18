@@ -105,6 +105,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SortOrder.DESC;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.AsteriskImpl.NO_SUPPORT_UNQUALIFIED_COMBINED;
 import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT_ALL;
@@ -3560,9 +3561,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // [#7921] Only H2 supports the * EXCEPT (..) syntax
         boolean resolveExcept = resolveSupported || !SUPPORT_NATIVE_EXCEPT.contains(c.dialect());
+        boolean resolveUnqualifiedCombined = resolveSupported || NO_SUPPORT_UNQUALIFIED_COMBINED.contains(c.dialect());
 
         // [#7921] TODO Find a better, more efficient way to resolve asterisks
-        for (SelectFieldOrAsterisk f : getSelectResolveImplicitAsterisks())
+        SelectFieldList<SelectFieldOrAsterisk> list = getSelectResolveImplicitAsterisks();
+
+        for (SelectFieldOrAsterisk f : list)
             if (f instanceof Field<?>)
                 result.add(getResolveProjection(c, (Field<?>) f));
             else if (f instanceof QualifiedAsterisk)
@@ -3577,7 +3581,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     result.add(f);
             else if (f instanceof Asterisk)
                 if (((AsteriskImpl) f).fields.isEmpty())
-                    if (resolveSupported)
+                    if (resolveSupported || resolveUnqualifiedCombined && list.size() > 1)
                         result.addAll(resolveAsterisk(new QueryPartList<>()));
                     else
                         result.add(f);

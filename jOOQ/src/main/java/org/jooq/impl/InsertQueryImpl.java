@@ -779,7 +779,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             else {
                 for (Map<Field<?>, Field<?>> map : insertMaps.maps()) {
                     Select<Record> row =
-                        select(aliasedFields(map.values().toArray(EMPTY_FIELD)))
+                        select(aliasedFields(map.values()))
                         .whereNotExists(
                             selectOne()
                             .from(table())

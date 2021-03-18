@@ -100,8 +100,7 @@ implements
     WindowPartitionByStep<T>,
     WindowRowsStep<T>,
     WindowRowsAndStep<T>,
-    WindowExcludeStep<T>,
-    ScopeMappable
+    WindowExcludeStep<T>
 {
 
     /**

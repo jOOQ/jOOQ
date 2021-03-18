@@ -1425,14 +1425,14 @@ final class Tools {
         return result;
     }
 
-    static final Field<?>[] unaliasedFields(Field<?>[] fields) {
+    static final List<Field<?>> unaliasedFields(Collection<? extends Field<?>> fields) {
         if (fields == null)
             return null;
 
-        Field<?>[] result = new Field[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            result[i] = DSL.field(fieldName(i), fields[i].getDataType()).as(fields[i]);
+        List<Field<?>> result = new ArrayList<>(fields.size());
+        int i = 0;
+        for (Field<?> field : fields)
+            result.add(DSL.field(fieldName(i++), field.getDataType()).as(field));
 
         return result;
     }
@@ -1452,14 +1452,18 @@ final class Tools {
         );
     }
 
-    static final Field<?>[] aliasedFields(Field<?>[] fields) {
+    static final List<Field<?>> aliasedFields(Collection<? extends Field<?>> fields) {
+        return aliasedFields(0, fields);
+    }
+
+    static final List<Field<?>> aliasedFields(int offset, Collection<? extends Field<?>> fields) {
         if (fields == null)
             return null;
 
-        Field<?>[] result = new Field[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].as(fieldName(i));
+        List<Field<?>> result = new ArrayList<>(fields.size());
+        int i = offset;
+        for (Field<?> field : fields)
+            result.add(field.as(fieldName(i++)));
 
         return result;
     }
@@ -3136,6 +3140,11 @@ final class Tools {
     static final boolean isVal(Field<?> field) {
         return field instanceof Val
             || field instanceof ConvertedVal && ((ConvertedVal<?>) field).delegate instanceof Val;
+    }
+
+    static final boolean isWindow(Field<?> f) {
+        return f instanceof AbstractWindowFunction
+            && ((AbstractWindowFunction<?>) f).isWindow();
     }
 
     static final Val<?> extractVal(Field<?> field) {
@@ -6153,52 +6162,60 @@ final class Tools {
         return result;
     }
 
-    static final void traverseSelectList(SelectFieldList<?> list, Consumer<? super Field<?>> consumer) {
 
-        // TODO: Traverse expressions as well
-        for (SelectFieldOrAsterisk f : list)
-            if (f instanceof Field)
-                consumer.accept((Field<?>) f);
-    }
 
-    static final void traverseOrderBy(SortFieldList list, Consumer<? super Field<?>> consumer) {
 
-        // TODO: Traverse expressions as well
-        for (SortField<?> f : list)
-            consumer.accept(((SortFieldImpl<?>) f).getField());
-    }
 
-    static final void traverseConditions(Condition condition, Consumer<? super Field<?>> consumer) {
-        if (condition instanceof CombinedCondition) {
-            for (Condition c : ((CombinedCondition) condition).conditions)
-                traverseConditions(c, consumer);
-        }
-        else if (condition instanceof NotCondition) {
-            traverseConditions(((NotCondition) condition).condition, consumer);
-        }
-        else if (condition instanceof BetweenCondition) {
-            consumer.accept(((BetweenCondition<?>) condition).field);
-            consumer.accept(((BetweenCondition<?>) condition).minValue);
-            consumer.accept(((BetweenCondition<?>) condition).maxValue);
-        }
-        else if (condition instanceof CompareCondition) {
-            consumer.accept(((CompareCondition) condition).field1);
-            consumer.accept(((CompareCondition) condition).field2);
-        }
-        else if (condition instanceof FieldCondition) {
-            consumer.accept(((FieldCondition) condition).field);
-        }
-        else if (condition instanceof InCondition) {
-            consumer.accept(((InCondition<?>) condition).field);
 
-            for (Field<?> f : ((InCondition<?>) condition).values)
-                consumer.accept(f);
-        }
-        else if (condition instanceof IsDistinctFrom) {
-            consumer.accept(((IsDistinctFrom<?>) condition).lhs);
-            consumer.accept(((IsDistinctFrom<?>) condition).rhs);
-        }
 
-        // TODO: Other conditions
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

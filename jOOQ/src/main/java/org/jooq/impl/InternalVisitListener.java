@@ -43,6 +43,8 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 
+import java.util.List;
+
 import org.jooq.Field;
 // ...
 import org.jooq.QueryPart;
@@ -65,7 +67,6 @@ import org.jooq.VisitListener;
  * @author Lukas Eder
  */
 final class InternalVisitListener extends DefaultVisitListener {
-
 
 
 

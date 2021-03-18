@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -97,6 +98,16 @@ final class TableList extends QueryPartList<Table<?>> {
     @Override
     public final boolean declaresTables() {
         return true;
+    }
+
+    final List<Field<?>> fields() {
+        List<Field<?>> result = new ArrayList<>();
+
+        for (Table<?> table : this)
+            for (Field<?> field : table.fieldsRow().fields())
+                result.add(field);
+
+        return result;
     }
 
     /**

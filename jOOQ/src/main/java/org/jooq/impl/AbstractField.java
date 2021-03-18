@@ -104,7 +104,7 @@ import org.jooq.tools.Convert;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T> {
+abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T>, ScopeMappable {
 
     /**
      * Generated UID

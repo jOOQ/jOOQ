@@ -67,7 +67,7 @@ import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 
-final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
+final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, SimpleQueryPart {
 
     /**
      * Generated UID
@@ -85,6 +85,11 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
     SortFieldImpl(Field<T> field, SortOrder order) {
         this.field = field;
         this.order = order;
+    }
+
+    @Override
+    public boolean isSimple() {
+        return !nullsFirst && !nullsLast && Tools.isSimple(field);
     }
 
     @Override

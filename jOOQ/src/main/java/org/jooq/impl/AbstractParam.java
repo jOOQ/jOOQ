@@ -64,7 +64,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-abstract class AbstractParam<T> extends AbstractParamX<T> {
+abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQueryPart {
 
     /**
      * Generated UID

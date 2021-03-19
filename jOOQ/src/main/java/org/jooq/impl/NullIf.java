@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_NULLIF;
@@ -74,7 +75,7 @@ final class NullIf<T> extends AbstractField<T> {
 
 
             default:
-                ctx.visit(N_NULLIF).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                ctx.visit(function(N_NULLIF, getDataType(), arg1, arg2));
                 break;
         }
     }

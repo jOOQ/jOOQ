@@ -47,7 +47,7 @@ import org.jooq.Privilege;
 /**
  * @author Timur Shaidullin
  */
-final class PrivilegeImpl extends AbstractQueryPart implements Privilege {
+final class PrivilegeImpl extends AbstractQueryPart implements Privilege, SimpleQueryPart {
 
     /**
      * Generated UID

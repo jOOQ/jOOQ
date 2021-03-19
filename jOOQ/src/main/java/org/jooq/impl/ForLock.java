@@ -160,7 +160,7 @@ final class ForLock extends AbstractQueryPart {
 
                 // Render the OF [table-names] clause
                 default:
-                    ctx.visit(wrap(forLockOfTables).qualify(false).indentSize(0));
+                    ctx.visit(wrap(forLockOfTables).qualify(false));
                     break;
             }
         }

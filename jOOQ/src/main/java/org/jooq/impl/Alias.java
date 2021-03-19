@@ -305,7 +305,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                     if (context.declareTables() && o instanceof ArrayTable)
                         context.sql('(')
-                               .visit(wrap(((ArrayTable) o).fields()).qualify(false).indentSize(0))
+                               .visit(wrap(((ArrayTable) o).fields()).qualify(false))
                                .sql(')');
 
                     break;
@@ -352,7 +352,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     private final void toSQLDerivedColumnList(Context<?> ctx) {
-        ctx.sql(" (").visit(wrap(fieldAliases).indentSize(0)).sql(')');
+        ctx.sql(" (").visit(wrap(fieldAliases)).sql(')');
     }
 
     @Override

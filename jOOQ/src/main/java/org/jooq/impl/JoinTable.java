@@ -475,7 +475,7 @@ implements
                 ctx.formatSeparator()
                    .start(TABLE_JOIN_USING)
                    .visit(K_USING)
-                   .sql(" (").visit(wrap(using).indentSize(0).qualify(false)).sql(')')
+                   .sql(" (").visit(wrap(using).qualify(false)).sql(')')
                    .end(TABLE_JOIN_USING);
         }
 

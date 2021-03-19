@@ -39,7 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inlined;
-import static org.jooq.impl.Keywords.K_COALESCE;
+import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAG;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LEAD;
 

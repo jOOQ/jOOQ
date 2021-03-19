@@ -170,7 +170,7 @@ implements
     public final void accept(Context<?> ctx) {
         ctx.start(Clause.GRANT_PRIVILEGE)
            .visit(K_GRANT).sql(' ')
-           .visit(QueryPartCollectionView.wrap(privileges).indentSize(0))
+           .visit(QueryPartCollectionView.wrap(privileges))
            .end(Clause.GRANT_PRIVILEGE).sql(' ')
            .start(Clause.GRANT_ON)
            .visit(K_ON).sql(' ')

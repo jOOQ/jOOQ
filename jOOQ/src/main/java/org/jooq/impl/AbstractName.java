@@ -54,7 +54,7 @@ import org.jooq.WindowSpecification;
  *
  * @author Lukas Eder
  */
-abstract class AbstractName extends AbstractQueryPart implements Name {
+abstract class AbstractName extends AbstractQueryPart implements Name, SimpleQueryPart {
 
     /**
      * Generated UID

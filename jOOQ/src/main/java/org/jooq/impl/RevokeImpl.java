@@ -169,7 +169,7 @@ implements
             ctx.visit(K_GRANT_OPTION_FOR)
                .sql(' ');
 
-        ctx.visit(QueryPartCollectionView.wrap(privileges).indentSize(0))
+        ctx.visit(QueryPartCollectionView.wrap(privileges))
            .end(Clause.REVOKE_PRIVILEGE).sql(' ')
            .start(Clause.REVOKE_ON)
            .visit(K_ON).sql(' ')

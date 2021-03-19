@@ -65,7 +65,6 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
     private static final long        serialVersionUID = -2936922742534009564L;
     final Collection<T>              wrapped;
-    int                              indentSize;
     Boolean                          qualify;
     String                           separator;
     Function<? super T, ? extends T> mapper;
@@ -76,16 +75,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
     QueryPartCollectionView(Collection<T> wrapped) {
         this.wrapped = wrapped != null ? wrapped : Collections.emptyList();
-        this.indentSize = 2;
         this.separator = ",";
-    }
-
-    /**
-     * Whether to indent this list, and after what size indentation is applied.
-     */
-    QueryPartCollectionView<T> indentSize(int newIndentSize) {
-        this.indentSize = newIndentSize <= 0 ? Integer.MAX_VALUE : newIndentSize;
-        return this;
     }
 
     QueryPartCollectionView<T> qualify(boolean newQualify) {
@@ -121,7 +111,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
             rendersContent.set(i++, ((QueryPartInternal) e).rendersContent(ctx));
 
         int size = rendersContent.cardinality();
-        boolean format = ctx.format() && size >= indentSize;
+        boolean format = ctx.format() && (size >= 2 && requireIndentation());
         boolean previousQualify = ctx.qualify();
         boolean previousAlreadyIndented = TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
         boolean indent = format && !previousAlreadyIndented;
@@ -192,6 +182,14 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
         if (previousAlreadyIndented)
             ctx.data(DATA_LIST_ALREADY_INDENTED, previousAlreadyIndented);
+    }
+
+    private final boolean requireIndentation() {
+        for (T t : this)
+            if (!Tools.isSimple(t))
+                return true;
+
+        return false;
     }
 
     /**

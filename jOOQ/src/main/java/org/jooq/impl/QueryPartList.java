@@ -69,11 +69,6 @@ class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
     }
 
     @Override
-    QueryPartList<T> indentSize(int newIndentSize) {
-        return (QueryPartList<T>) super.indentSize(newIndentSize);
-    }
-
-    @Override
     QueryPartList<T> qualify(boolean newQualify) {
         return (QueryPartList<T>) super.qualify(newQualify);
     }

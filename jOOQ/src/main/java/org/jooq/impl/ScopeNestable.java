@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Context;
-import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 
 /**
@@ -46,5 +44,4 @@ import org.jooq.QueryPartInternal;
  *
  * @author Lukas Eder
  */
-interface ScopeNestable extends QueryPartInternal {
-}
+interface ScopeNestable extends QueryPartInternal {}

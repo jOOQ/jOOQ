@@ -162,9 +162,9 @@ extends
         }
 
         if (length == null)
-            ctx.visit(functionName).sql('(').visit(string).sql(", ").visit(startingPosition).sql(')');
+            ctx.visit(function(functionName, getDataType(), string, startingPosition));
         else
-            ctx.visit(functionName).sql('(').visit(string).sql(", ").visit(startingPosition).sql(", ").visit(length).sql(')');
+            ctx.visit(function(functionName, getDataType(), string, startingPosition, length));
     }
 
 

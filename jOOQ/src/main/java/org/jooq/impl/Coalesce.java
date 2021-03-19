@@ -80,7 +80,7 @@ final class Coalesce<T> extends AbstractField<T> {
 
 
             default: {
-                ctx.visit(DSL.function("coalesce", getDataType(), fields));
+                ctx.visit(DSL.function(N_COALESCE, getDataType(), fields));
                 break;
             }
         }

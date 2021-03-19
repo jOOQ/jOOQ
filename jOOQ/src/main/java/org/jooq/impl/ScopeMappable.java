@@ -47,5 +47,4 @@ import org.jooq.QueryPartInternal;
  *
  * @author Lukas Eder
  */
-interface ScopeMappable extends QueryPartInternal {
-}
+interface ScopeMappable extends QueryPartInternal {}

@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_COALESCE;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Keywords.K_IS_NULL;
 import static org.jooq.impl.Names.N_IFNULL;
 import static org.jooq.impl.Names.N_IIF;
@@ -79,16 +79,22 @@ final class Nvl<T> extends AbstractField<T> {
 
 
 
-            case H2:
-            case HSQLDB:
-                ctx.visit(N_NVL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
-                break;
 
 
 
+
+
+
+
+
+
+
+            case CUBRID:
             case DERBY:
+            case IGNITE:
+            case FIREBIRD:
             case POSTGRES:
-                ctx.visit(K_COALESCE).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                ctx.visit(DSL.coalesce(arg1, arg2));
                 break;
 
 
@@ -97,11 +103,11 @@ final class Nvl<T> extends AbstractField<T> {
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                ctx.visit(N_IFNULL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                ctx.visit(function(N_IFNULL, getDataType(), arg1, arg2));
                 break;
 
             default:
-                ctx.visit(DSL.when(arg1.isNotNull(), arg1).otherwise(arg2));
+                ctx.visit(function(N_NVL, getDataType(), arg1, arg2));
                 break;
         }
     }

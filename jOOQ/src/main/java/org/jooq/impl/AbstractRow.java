@@ -124,7 +124,7 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
 
 
         ctx.sql("(")
-           .visit(wrap(fields.fields).indentSize(0))
+           .visit(wrap(fields.fields))
            .sql(")");
     }
 

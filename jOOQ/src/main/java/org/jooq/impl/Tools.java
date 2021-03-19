@@ -3149,8 +3149,11 @@ final class Tools {
     }
 
     static final boolean isWindow(Field<?> f) {
-        return f instanceof AbstractWindowFunction
-            && ((AbstractWindowFunction<?>) f).isWindow();
+        return f instanceof AbstractWindowFunction && ((AbstractWindowFunction<?>) f).isWindow();
+    }
+
+    static final boolean isSimple(QueryPart part) {
+        return part instanceof SimpleQueryPart && ((SimpleQueryPart) part).isSimple();
     }
 
     static final Val<?> extractVal(Field<?> field) {

@@ -12207,8 +12207,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return ComputationalOperation.SUM;
                 else if (parseFunctionNameIf("SOME"))
                     return ComputationalOperation.ANY;
-                else if (parseFunctionNameIf("STDDEV_POP", "STDEVP"))
+                else if (parseFunctionNameIf("STDDEV", "STDEVP", "STDDEV_POP"))
                     return ComputationalOperation.STDDEV_POP;
+
+
+
+
                 else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV", "STDEV_SAMP"))
                     return ComputationalOperation.STDDEV_SAMP;
 
@@ -12217,6 +12221,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'V':
                 if (parseFunctionNameIf("VAR_POP", "VARIANCE", "VARP"))
                     return ComputationalOperation.VAR_POP;
+
+
+
+
                 else if (parseFunctionNameIf("VAR_SAMP", "VARIANCE_SAMP", "VAR"))
                     return ComputationalOperation.VAR_SAMP;
 

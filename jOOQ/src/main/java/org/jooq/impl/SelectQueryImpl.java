@@ -117,6 +117,7 @@ import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.createTable;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArrayAgg;
@@ -124,6 +125,7 @@ import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.key;
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
@@ -138,6 +140,7 @@ import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.JSONArrayAgg.EMULATE_WITH_GROUP_CONCAT;
 import static org.jooq.impl.JSONNull.NO_SUPPORT_ABSENT_ON_NULL;
 import static org.jooq.impl.Keywords.K_AND;
@@ -164,6 +167,8 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WINDOW;
 import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
+import static org.jooq.impl.Names.N_DUAL;
+import static org.jooq.impl.Names.N_LEVEL;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
@@ -298,6 +303,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_QUALIFY                 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE);
+
+
 
 
 
@@ -1407,6 +1414,54 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
@@ -1431,6 +1486,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
         }
+
+
+
+
+
 
 
 

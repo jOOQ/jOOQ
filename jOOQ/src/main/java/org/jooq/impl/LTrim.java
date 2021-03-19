@@ -110,7 +110,7 @@ extends
                     break;
 
                 default:
-                    ctx.visit(N_LTRIM).sql('(').visit(string).sql(')');
+                    ctx.visit(function(N_LTRIM, getDataType(), string));
                     break;
             }
         }
@@ -120,7 +120,7 @@ extends
 
 
                 case SQLITE:
-                    ctx.visit(N_LTRIM).sql('(').visit(string).sql(", ").visit(characters).sql(')');
+                    ctx.visit(function(N_LTRIM, getDataType(), string, characters));
                     break;
 
                 default:

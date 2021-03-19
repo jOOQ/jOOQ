@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.Names.N_NVL2;
 
@@ -75,16 +78,44 @@ final class Nvl2<T> extends AbstractField<T> {
 
 
 
+            case MARIADB:
 
 
-            case H2:
-            case HSQLDB:
-                ctx.visit(N_NVL2).sql('(').visit(arg1).sql(", ").visit(arg2).sql(", ").visit(arg3).sql(')');
+
+
+
+                acceptDefault(ctx);
+                break;
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+                acceptCase(ctx);
                 break;
 
             default:
-                ctx.visit(DSL.when(arg1.isNotNull(), arg2).otherwise(arg3));
+                acceptDefault(ctx);
                 break;
         }
+    }
+
+    private void acceptCase(Context<?> ctx) {
+        ctx.visit(DSL.when(arg1.isNotNull(), arg2).otherwise(arg3));
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
+        ctx.visit(function(N_NVL2, getDataType(), arg1, arg2, arg3));
     }
 }

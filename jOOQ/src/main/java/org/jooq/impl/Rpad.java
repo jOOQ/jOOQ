@@ -140,7 +140,7 @@ extends
                 break;
 
             default:
-                ctx.visit(N_RPAD).sql('(').visit(string).sql(", ").visit(length).sql(", ").visit(character()).sql(')');
+                ctx.visit(function(N_RPAD, getDataType(), string, length, character()));
                 break;
         }
     }

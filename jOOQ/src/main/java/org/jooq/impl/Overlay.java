@@ -126,7 +126,7 @@ extends
 
         if (l != null) {
             if (SUPPORT_INSERT.contains(ctx.dialect())) {
-                ctx.visit(N_INSERT).sql('(').visit(in).sql(", ").visit(startIndex).sql(", ").visit(l).sql(", ").visit(placing).sql(')');
+                ctx.visit(function(N_INSERT, getDataType(), in, startIndex, l, placing));
             }
             else if (NO_SUPPORT.contains(ctx.dialect())) {
                 ctx.visit(
@@ -144,7 +144,7 @@ extends
         }
         else {
             if (SUPPORT_INSERT.contains(ctx.dialect())) {
-                ctx.visit(N_INSERT).sql('(').visit(in).sql(", ").visit(startIndex).sql(", ").visit(DSL.length(placing)).sql(", ").visit(placing).sql(')');
+                ctx.visit(function(N_INSERT, getDataType(), in, startIndex, DSL.length(placing), placing));
             }
             else if (NO_SUPPORT.contains(ctx.dialect())) {
                 ctx.visit(

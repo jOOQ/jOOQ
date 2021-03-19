@@ -85,8 +85,6 @@ extends
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -105,7 +103,7 @@ extends
 
 
 
-            case POSTGRES:
+            case POSTGRES: {
 
 
 
@@ -114,14 +112,13 @@ extends
 
                 ctx.visit(N_LOG10).sql('(').visit(value).sql(')');
                 break;
+            }
 
             default:
-                ctx.visit(N_LOG10).sql('(').visit(value).sql(')');
+                ctx.visit(function(N_LOG10, getDataType(), value));
                 break;
         }
     }
-
-
 
     // -------------------------------------------------------------------------
     // The Object API

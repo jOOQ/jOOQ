@@ -116,10 +116,10 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.ORDINAL_POSITION,
                 dataType.as(COLUMNS.DATA_TYPE),
 
-                // [#8067] A more robust / sophisticated decoding might be available
+                // [#8067] [#11658] A more robust / sophisticated decoding might be available
                 nvl(
                     COLUMNS.CHARACTER_MAXIMUM_LENGTH,
-                    when(COLUMNS.UDT_NAME.eq(inline("_varchar")), PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)))).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
+                    when(COLUMNS.UDT_NAME.in(inline("_varchar"), inline("_bpchar"), inline("_char")), PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)))).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 precision.as(COLUMNS.NUMERIC_PRECISION),
                 COLUMNS.NUMERIC_SCALE,
                 (when(isIdentity, inline("YES"))).as(COLUMNS.IS_IDENTITY),

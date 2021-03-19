@@ -120,7 +120,7 @@ extends
 
 
                 case SQLITE:
-                    ctx.visit(function(N_RTRIM, getDataType(), string, characters)));
+                    ctx.visit(function(N_RTRIM, getDataType(), string, characters));
                     break;
 
                 default:

@@ -54,7 +54,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-final class JSONReturning extends AbstractQueryPart {
+final class JSONReturning extends AbstractQueryPart implements SimpleQueryPart {
 
     /**
      * Generated UID

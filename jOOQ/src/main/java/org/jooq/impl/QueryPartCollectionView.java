@@ -61,7 +61,7 @@ import org.jooq.Statement;
  *
  * @author Lukas Eder
  */
-class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements Collection<T> {
+class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements Collection<T>, SimpleQueryPart {
 
     private static final long        serialVersionUID = -2936922742534009564L;
     final Collection<T>              wrapped;
@@ -95,6 +95,15 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
     Collection<T> wrapped() {
         return wrapped;
+    }
+
+    @Override
+    public boolean isSimple() {
+        for (T e : this)
+            if (!Tools.isSimple(e))
+                return false;
+
+        return true;
     }
 
     @Override

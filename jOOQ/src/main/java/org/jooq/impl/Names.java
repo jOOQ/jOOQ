@@ -223,6 +223,7 @@ final class Names {
     static final Name      N_OCTET_LENGTH           = unquotedName("octet_length");
     static final Name      N_OPENJSON               = unquotedName("openjson");
     static final Name      N_OPENXML                = unquotedName("openxml");
+    static final Name      N_OREPLACE               = unquotedName("oreplace");
     static final Name      N_OTRANSLATE             = unquotedName("otranslate");
     static final Name      N_OVERLAY                = unquotedName("overlay");
     static final Name      N_PI                     = unquotedName("pi");
@@ -297,6 +298,7 @@ final class Names {
     static final Name      N_STRFTIME               = unquotedName("strftime");
     static final Name      N_STRING_AGG             = unquotedName("string_agg");
     static final Name      N_STRREVERSE             = unquotedName("strreverse");
+    static final Name      N_STR_REPLACE            = unquotedName("str_replace");
     static final Name      N_SUBSTR                 = unquotedName("substr");
     static final Name      N_SUBSTRING              = unquotedName("substring");
     static final Name      N_SUBSTRING_INDEX        = unquotedName("substring_index");

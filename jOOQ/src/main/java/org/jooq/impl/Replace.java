@@ -150,17 +150,17 @@ extends
             case POSTGRES:
             case SQLITE:
                 if (replace == null)
-                    ctx.visit(function("replace", VARCHAR, string, search, val("")));
+                    ctx.visit(function(N_REPLACE, VARCHAR, string, search, inline("")));
                 else
-                    ctx.visit(function("replace", VARCHAR, string, search, replace));
+                    ctx.visit(function(N_REPLACE, VARCHAR, string, search, replace));
 
                 return;
 
             default:
                 if (replace == null)
-                    ctx.visit(function("replace", VARCHAR, string, search));
+                    ctx.visit(function(N_REPLACE, VARCHAR, string, search));
                 else
-                    ctx.visit(function("replace", VARCHAR, string, search, replace));
+                    ctx.visit(function(N_REPLACE, VARCHAR, string, search, replace));
 
                 return;
         }

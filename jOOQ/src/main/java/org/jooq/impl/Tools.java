@@ -104,6 +104,13 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_GETTER;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_MEMBERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_SETTERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
 import static org.jooq.impl.Identifiers.QUOTES;
@@ -162,13 +169,6 @@ import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
-import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER;
-import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
-import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
-import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHING_GETTER;
-import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS;
-import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS;
-import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -704,30 +704,6 @@ final class Tools {
          * [#9017] We've already transformed ROWNUM expressions to LIMIT.
          */
         DATA_TRANSFORM_ROWNUM_TO_LIMIT
-    }
-
-    /**
-     * [#2965] These are {@link ConcurrentHashMap}s containing caches for
-     * reflection information.
-     * <p>
-     * <code>new String()</code> is used to allow for synchronizing on these
-     * objects.
-     */
-    enum DataCacheKey {
-        DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER("org.jooq.configuration.reflection-cache.get-annotated-getter"),
-        DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS("org.jooq.configuration.reflection-cache.get-annotated-members"),
-        DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS("org.jooq.configuration.reflection-cache.get-annotated-setters"),
-        DATA_REFLECTION_CACHE_GET_MATCHING_GETTER("org.jooq.configuration.reflection-cache.get-matching-getter"),
-        DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS("org.jooq.configuration.reflection-cache.get-matching-members"),
-        DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS("org.jooq.configuration.reflection-cache.get-matching-setters"),
-        DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS("org.jooq.configuration.reflection-cache.has-column-annotations"),
-        DATA_CACHE_RECORD_MAPPERS("org.jooq.configuration.cache.record-mappers");
-
-        final String key;
-
-        DataCacheKey(String key) {
-            this.key = key;
-        }
     }
 
     // ------------------------------------------------------------------------
@@ -3355,7 +3331,7 @@ final class Tools {
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, Supplier<V> operation, DataCacheKey type, Object key) {
+        static final <V> V run(Configuration configuration, Supplier<V> operation, CacheType type, Object key) {
 
             // If no configuration is provided take the default configuration that loads the default Settings
             if (configuration == null)
@@ -3365,30 +3341,21 @@ final class Tools {
             if (!reflectionCaching(configuration.settings()))
                 return operation.get();
 
-            Map<Object, Object> cache = (Map<Object, Object>) configuration.data(type);
-            if (cache == null) {
+            Object cacheOrNull = configuration.data(type);
+            if (cacheOrNull == null) {
                 synchronized (type) {
-                    cache = (Map<Object, Object>) configuration.data(type);
+                    cacheOrNull = configuration.data(type);
 
-                    if (cache == null) {
-                        cache = new ConcurrentHashMap<>();
-                        configuration.data(type, cache);
-                    }
+                    if (cacheOrNull == null)
+                        configuration.data(type, cacheOrNull = defaultIfNull(configuration.cacheProvider().provide(type), NULL));
                 }
             }
 
-            Object result = cache.get(key);
-            if (result == null) {
-                synchronized (cache) {
-                    result = cache.get(key);
+            if (cacheOrNull == NULL)
+                return operation.get();
 
-                    if (result == null) {
-                        result = operation.get();
-                        cache.put(key, result == null ? NULL : result);
-                    }
-                }
-            }
-
+            // The cache is guaranteed to be thread safe by the CacheProvider contract
+            Object result = ((Map<Object, Object>) cacheOrNull).computeIfAbsent(key, k -> defaultIfNull(operation.get(), NULL));
             return (V) (result == NULL ? null : result);
         }
 
@@ -3603,7 +3570,7 @@ final class Tools {
                     return true;
 
             return false;
-        }, DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, type);
+        }, REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, type);
     }
 
     static final <T extends AccessibleObject> T accessible(T object, boolean makeAccessible) {
@@ -3640,7 +3607,7 @@ final class Tools {
             }
 
             return result;
-        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, Cache.key(type, name));
     }
 
     private static final boolean namesMatch(String name, String annotation) {
@@ -3675,7 +3642,7 @@ final class Tools {
                     result.add(accessible(member, makeAccessible));
 
             return result;
-        }, DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_MATCHING_MEMBERS, Cache.key(type, name));
     }
 
     /**
@@ -3726,7 +3693,7 @@ final class Tools {
             }
 
             return SourceMethod.methods(set);
-        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, Cache.key(type, name));
     }
 
     /**
@@ -3777,7 +3744,7 @@ final class Tools {
             }
 
             return null;
-        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, Cache.key(type, name));
     }
 
     /**
@@ -3814,7 +3781,7 @@ final class Tools {
             }
 
             return SourceMethod.methods(set);
-        }, DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_MATCHING_SETTERS, Cache.key(type, name));
     }
 
 
@@ -3849,7 +3816,7 @@ final class Tools {
                         return accessible(method, makeAccessible);
 
             return null;
-        }, DATA_REFLECTION_CACHE_GET_MATCHING_GETTER, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_MATCHING_GETTER, Cache.key(type, name));
     }
 
     /**

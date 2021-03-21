@@ -37,20 +37,26 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
+import static org.jooq.impl.Tools.dataTypes;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.impl.DefaultRenderContext.Rendered;
+import org.jooq.impl.Tools.Cache;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultConnection;
 
@@ -73,14 +79,60 @@ final class ParsingConnection extends DefaultConnection {
         this.parser = ctx.parser();
     }
 
+    final class CacheValue {
+        final String                      output;
+        final int                         bindSize;
+        final Map<Integer, List<Integer>> bindMapping;
+
+        CacheValue(String input, Param<?>[] bindValues) {
+            DefaultRenderContext render = (DefaultRenderContext) ctx.renderContext();
+            render.visit(parser.parseQuery(input, (Object[]) bindValues));
+
+            output = render.render();
+            bindSize = render.bindValues().size();
+            bindMapping = new HashMap<>();
+
+            // TODO: We shouldn't rely on identity for these reasons:
+            // - Copies are possible
+            // - Wrappings are possible
+            // - Conversions are possible
+            // Ideally, we should be able to maintain and extract the map directly in the DefaultRenderContext
+            // TODO: If anything goes wrong (probably because of the above), the cache must be invalid, and we must re-parse and re-render the query every time
+            for (int i = 0; i < bindValues.length; i++)
+                for (int j = 0; j < render.bindValues().size(); j++)
+                    if (bindValues[i] == render.bindValues().get(j))
+                        bindMapping.computeIfAbsent(i, x -> new ArrayList<>()).add(j);
+        }
+
+        Rendered rendered(Param<?>... bindValues) {
+            Param<?>[] binds = new Param[bindSize];
+
+            for (int i = 0; i < bindValues.length; i++)
+                for (int mapped : bindMapping.getOrDefault(i, emptyList()))
+                    binds[mapped] = bindValues[i];
+
+            return new Rendered(output, new QueryPartList<>(binds), 0);
+        }
+
+        @Override
+        public String toString() {
+            return output;
+        }
+    }
+
     final Rendered translate(String sql, Param<?>... bindValues) {
         log.debug("Translating from", sql);
-        DefaultRenderContext render = (DefaultRenderContext) ctx.renderContext();
-        Rendered result = new Rendered(
-            render.visit(parser.parseQuery(sql, (Object[]) bindValues)).render(),
-            render.bindValues(),
-            render.skipUpdateCounts()
-        );
+
+        Rendered result = Cache.run(
+            configuration,
+            () -> {
+                log.debug("Translation cache miss", sql);
+                return new CacheValue(sql, bindValues);
+            },
+            CacheType.CACHE_PARSING_CONNECTION,
+            Cache.key(sql, asList(dataTypes(bindValues)))
+        ).rendered(bindValues);
+
         log.debug("Translating to", result.sql);
         return result;
     }

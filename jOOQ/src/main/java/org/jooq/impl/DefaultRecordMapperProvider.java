@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.impl.Tools.DataCacheKey.DATA_CACHE_RECORD_MAPPERS;
+import static org.jooq.impl.CacheType.CACHE_RECORD_MAPPERS;
 
 import java.io.Serializable;
 
@@ -80,7 +80,7 @@ public class DefaultRecordMapperProvider implements RecordMapperProvider, Serial
     @Override
     public final <R extends Record, E> RecordMapper<R, E> provide(final RecordType<R> rowType, final Class<? extends E> type) {
         if (configuration != null && TRUE.equals(configuration.settings().isCacheRecordMappers()))
-            return Cache.run(configuration, () -> new DefaultRecordMapper<>(rowType, type, configuration), DATA_CACHE_RECORD_MAPPERS, Cache.key(rowType, type));
+            return Cache.run(configuration, () -> new DefaultRecordMapper<>(rowType, type, configuration), CACHE_RECORD_MAPPERS, Cache.key(rowType, type));
         else
             return new DefaultRecordMapper<>(rowType, type, configuration);
     }

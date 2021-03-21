@@ -43,6 +43,7 @@ import java.sql.Savepoint;
 import java.sql.Wrapper;
 import java.time.Clock;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Supplier;
@@ -358,6 +359,18 @@ public interface Configuration extends Serializable {
     ExecutorProvider executorProvider();
 
     /**
+     * Get this configuration's underlying cache provider.
+     * <p>
+     * Cached operations will call this SPI to obtain a thread safe cache
+     * implementation to cache various things internally. This SPI allows for
+     * replacing the default cache implementation, which is mostly a
+     * {@link ConcurrentHashMap}, by a more specialised one, e.g. a LRU cache,
+     * e.g. from Guava.
+     */
+    @NotNull
+    CacheProvider cacheProvider();
+
+    /**
      * Get this configuration's underlying transaction provider.
      * <p>
      * If no explicit transaction provider was specified, and if
@@ -628,6 +641,19 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration set(ExecutorProvider newExecutorProvider);
+
+    /**
+     * Change this configuration to hold a new cache provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newCacheProvider The new cache provider to be contained in the
+     *            changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration set(CacheProvider newCacheProvider);
 
     /**
      * Change this configuration to hold a new executor.
@@ -1338,6 +1364,16 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(ExecutorProvider newExecutorProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new cache provider.
+     *
+     * @param newCacheProvider The new cache provider to be contained in the
+     *            derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration derive(CacheProvider newCacheProvider);
 
     /**
      * Create a derived configuration from this one, with a new transaction

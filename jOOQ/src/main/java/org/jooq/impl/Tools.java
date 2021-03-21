@@ -3354,8 +3354,20 @@ final class Tools {
             if (cacheOrNull == NULL)
                 return operation.get();
 
-            // The cache is guaranteed to be thread safe by the CacheProvider contract
-            Object result = ((Map<Object, Object>) cacheOrNull).computeIfAbsent(key.get(), k -> defaultIfNull(operation.get(), NULL));
+            // The cache is guaranteed to be thread safe by the CacheProvider
+            // contract. However since we cannot use ConcurrentHashMap.computeIfAbsent()
+            // recursively, we have to revert to double checked locking nonetheless.
+            Map<Object, Object> cache = (Map<Object, Object>) cacheOrNull;
+            Object result = cache.get(key);
+            if (result == null) {
+                synchronized (cache) {
+                    result = cache.get(key);
+
+                    if (result == null)
+                        cache.put(key, (result = operation.get()) == null ? NULL : result);
+                }
+            }
+
             return (V) (result == NULL ? null : result);
         }
 

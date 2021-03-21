@@ -3358,17 +3358,18 @@ final class Tools {
             // contract. However since we cannot use ConcurrentHashMap.computeIfAbsent()
             // recursively, we have to revert to double checked locking nonetheless.
             Map<Object, Object> cache = (Map<Object, Object>) cacheOrNull;
-            Object result = cache.get(key);
-            if (result == null) {
+            Object k = key.get();
+            Object v = cache.get(k);
+            if (v == null) {
                 synchronized (cache) {
-                    result = cache.get(key);
+                    v = cache.get(k);
 
-                    if (result == null)
-                        cache.put(key, (result = operation.get()) == null ? NULL : result);
+                    if (v == null)
+                        cache.put(k, (v = operation.get()) == null ? NULL : v);
                 }
             }
 
-            return (V) (result == NULL ? null : result);
+            return (V) (v == NULL ? null : v);
         }
 
         /**

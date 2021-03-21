@@ -3331,7 +3331,7 @@ final class Tools {
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, Supplier<V> operation, CacheType type, Object key) {
+        static final <V> V run(Configuration configuration, Supplier<V> operation, CacheType type, Supplier<?> key) {
 
             // If no configuration is provided take the default configuration that loads the default Settings
             if (configuration == null)
@@ -3355,7 +3355,7 @@ final class Tools {
                 return operation.get();
 
             // The cache is guaranteed to be thread safe by the CacheProvider contract
-            Object result = ((Map<Object, Object>) cacheOrNull).computeIfAbsent(key, k -> defaultIfNull(operation.get(), NULL));
+            Object result = ((Map<Object, Object>) cacheOrNull).computeIfAbsent(key.get(), k -> defaultIfNull(operation.get(), NULL));
             return (V) (result == NULL ? null : result);
         }
 
@@ -3570,7 +3570,7 @@ final class Tools {
                     return true;
 
             return false;
-        }, REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, type);
+        }, REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, () -> type);
     }
 
     static final <T extends AccessibleObject> T accessible(T object, boolean makeAccessible) {
@@ -3607,7 +3607,7 @@ final class Tools {
             }
 
             return result;
-        }, REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, () -> Cache.key(type, name));
     }
 
     private static final boolean namesMatch(String name, String annotation) {
@@ -3642,7 +3642,7 @@ final class Tools {
                     result.add(accessible(member, makeAccessible));
 
             return result;
-        }, REFLECTION_CACHE_GET_MATCHING_MEMBERS, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_MATCHING_MEMBERS, () -> Cache.key(type, name));
     }
 
     /**
@@ -3693,7 +3693,7 @@ final class Tools {
             }
 
             return SourceMethod.methods(set);
-        }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, () -> Cache.key(type, name));
     }
 
     /**
@@ -3744,7 +3744,7 @@ final class Tools {
             }
 
             return null;
-        }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, () -> Cache.key(type, name));
     }
 
     /**
@@ -3781,7 +3781,7 @@ final class Tools {
             }
 
             return SourceMethod.methods(set);
-        }, REFLECTION_CACHE_GET_MATCHING_SETTERS, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_MATCHING_SETTERS, () -> Cache.key(type, name));
     }
 
 
@@ -3816,7 +3816,7 @@ final class Tools {
                         return accessible(method, makeAccessible);
 
             return null;
-        }, REFLECTION_CACHE_GET_MATCHING_GETTER, Cache.key(type, name));
+        }, REFLECTION_CACHE_GET_MATCHING_GETTER, () -> Cache.key(type, name));
     }
 
     /**

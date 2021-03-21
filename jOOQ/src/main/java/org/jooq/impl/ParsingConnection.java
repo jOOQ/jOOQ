@@ -130,7 +130,7 @@ final class ParsingConnection extends DefaultConnection {
                 return new CacheValue(sql, bindValues);
             },
             CacheType.CACHE_PARSING_CONNECTION,
-            Cache.key(sql, asList(dataTypes(bindValues)))
+            () -> Cache.key(sql, asList(dataTypes(bindValues)))
         ).rendered(bindValues);
 
         log.debug("Translating to", result.sql);

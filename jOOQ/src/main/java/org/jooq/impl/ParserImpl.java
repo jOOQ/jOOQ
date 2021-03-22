@@ -12233,6 +12233,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Comparator parseComparatorIf() {
+
+
+
+
+
+
+
+
+
+
         if (parseIf("="))
             return Comparator.EQUALS;
         else if (parseIf("!=") || parseIf("<>") || parseIf("^="))

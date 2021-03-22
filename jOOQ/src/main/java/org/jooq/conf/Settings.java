@@ -261,6 +261,10 @@ public class Settings
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale parseLocale;
+    @XmlElement(defaultValue = "YYYY-MM-DD")
+    protected String parseDateFormat = "YYYY-MM-DD";
+    @XmlElement(defaultValue = "YYYY-MM-DD HH24:MI:SS.FF")
+    protected String parseTimestampFormat = "YYYY-MM-DD HH24:MI:SS.FF";
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected ParseNameCase parseNameCase = ParseNameCase.DEFAULT;
@@ -2354,6 +2358,38 @@ public class Settings
     }
 
     /**
+     * The date format to use when parsing functions whose behaviour depends on some session date format, such as NLS_DATE_FORMAT in Oracle
+     * 
+     */
+    public String getParseDateFormat() {
+        return parseDateFormat;
+    }
+
+    /**
+     * The date format to use when parsing functions whose behaviour depends on some session date format, such as NLS_DATE_FORMAT in Oracle
+     * 
+     */
+    public void setParseDateFormat(String value) {
+        this.parseDateFormat = value;
+    }
+
+    /**
+     * The timestamp format to use when parsing functions whose behaviour depends on some session date format, such as NLS_TIMESTAMP_FORMAT in Oracle
+     * 
+     */
+    public String getParseTimestampFormat() {
+        return parseTimestampFormat;
+    }
+
+    /**
+     * The timestamp format to use when parsing functions whose behaviour depends on some session date format, such as NLS_TIMESTAMP_FORMAT in Oracle
+     * 
+     */
+    public void setParseTimestampFormat(String value) {
+        this.parseTimestampFormat = value;
+    }
+
+    /**
      * [#7337] The default name case for parsed identifiers.
      * 
      */
@@ -3302,6 +3338,24 @@ public class Settings
     }
 
     /**
+     * The date format to use when parsing functions whose behaviour depends on some session date format, such as NLS_DATE_FORMAT in Oracle
+     * 
+     */
+    public Settings withParseDateFormat(String value) {
+        setParseDateFormat(value);
+        return this;
+    }
+
+    /**
+     * The timestamp format to use when parsing functions whose behaviour depends on some session date format, such as NLS_TIMESTAMP_FORMAT in Oracle
+     * 
+     */
+    public Settings withParseTimestampFormat(String value) {
+        setParseTimestampFormat(value);
+        return this;
+    }
+
+    /**
      * [#7337] The default name case for parsed identifiers.
      * 
      */
@@ -3534,6 +3588,8 @@ public class Settings
         builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
         builder.append("parseLocale", parseLocale);
+        builder.append("parseDateFormat", parseDateFormat);
+        builder.append("parseTimestampFormat", parseTimestampFormat);
         builder.append("parseNameCase", parseNameCase);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
         builder.append("parseSetCommands", parseSetCommands);
@@ -4414,6 +4470,24 @@ public class Settings
                 return false;
             }
         }
+        if (parseDateFormat == null) {
+            if (other.parseDateFormat!= null) {
+                return false;
+            }
+        } else {
+            if (!parseDateFormat.equals(other.parseDateFormat)) {
+                return false;
+            }
+        }
+        if (parseTimestampFormat == null) {
+            if (other.parseTimestampFormat!= null) {
+                return false;
+            }
+        } else {
+            if (!parseTimestampFormat.equals(other.parseTimestampFormat)) {
+                return false;
+            }
+        }
         if (parseNameCase == null) {
             if (other.parseNameCase!= null) {
                 return false;
@@ -4632,6 +4706,8 @@ public class Settings
         result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseLocale == null)? 0 :parseLocale.hashCode()));
+        result = ((prime*result)+((parseDateFormat == null)? 0 :parseDateFormat.hashCode()));
+        result = ((prime*result)+((parseTimestampFormat == null)? 0 :parseTimestampFormat.hashCode()));
         result = ((prime*result)+((parseNameCase == null)? 0 :parseNameCase.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
         result = ((prime*result)+((parseSetCommands == null)? 0 :parseSetCommands.hashCode()));

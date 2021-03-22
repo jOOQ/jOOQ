@@ -560,6 +560,14 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="parseLocale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any parser locale dependent logic, defaulting to {@link #getLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="parseDateFormat" type="string" minOccurs="0" maxOccurs="1" default="YYYY-MM-DD">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The date format to use when parsing functions whose behaviour depends on some session date format, such as NLS_DATE_FORMAT in Oracle]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="parseTimestampFormat" type="string" minOccurs="0" maxOccurs="1" default="YYYY-MM-DD HH24:MI:SS.FF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The timestamp format to use when parsing functions whose behaviour depends on some session date format, such as NLS_TIMESTAMP_FORMAT in Oracle]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="parseNameCase" type="jooq-runtime:ParseNameCase" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The default name case for parsed identifiers.]]></jxb:javadoc></jxb:property></appinfo></annotation>

@@ -9738,8 +9738,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseFunctionNameIf("TO_DATE")) {
             parse('(');
             Field<String> f1 = (Field) parseField(S);
-            parse(',');
-            Field<String> f2 = (Field) parseField(S);
+            Field<String> f2 = parseIf(',') ? (Field) parseField(S) : inline(settings().getParseDateFormat());
             parse(')');
 
             return toDate(f1, f2);
@@ -9752,8 +9751,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseFunctionNameIf("TO_TIMESTAMP")) {
             parse('(');
             Field<String> f1 = (Field) parseField(S);
-            parse(',');
-            Field<String> f2 = (Field) parseField(S);
+            Field<String> f2 = parseIf(',') ? (Field) parseField(S) : inline(settings().getParseTimestampFormat());
             parse(')');
 
             return toTimestamp(f1, f2);

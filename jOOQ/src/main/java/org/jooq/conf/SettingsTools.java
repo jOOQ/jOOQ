@@ -164,10 +164,24 @@ public final class SettingsTools {
     }
 
     /**
-     * Whether primary keys should be updatable.
+     * Whether reflection caching is active.
      */
     public static final boolean reflectionCaching(Settings settings) {
         return defaultIfNull(settings.isReflectionCaching(), true);
+    }
+
+    /**
+     * Whether record mapper caching is active.
+     */
+    public static final boolean recordMapperCaching(Settings settings) {
+        return defaultIfNull(settings.isCacheRecordMappers(), true);
+    }
+
+    /**
+     * Whether parsing connection caching is active.
+     */
+    public static final boolean parsingConnectionCaching(Settings settings) {
+        return defaultIfNull(settings.isCacheParsingConnection(), true);
     }
 
     /**

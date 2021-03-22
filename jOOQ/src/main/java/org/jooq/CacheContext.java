@@ -37,31 +37,18 @@
  */
 package org.jooq;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
-
 import org.jooq.impl.CacheType;
 
-import org.jetbrains.annotations.Nullable;
-
 /**
- * A provider for cache implementations to replace the default.
+ * The parameter object passed to the
+ * {@link CacheProvider#provide(CacheContext)} method.
  *
  * @author Lukas Eder
  */
-@FunctionalInterface
-public interface CacheProvider {
+public interface CacheContext extends Scope {
 
     /**
-     * Provide a thread safe map for the given {@link CacheType}.
-     * <p>
-     * Implementations must ensure that the resulting {@link Map} is thread
-     * safe. Two examples of such thread safe maps are {@link ConcurrentMap} or
-     * {@link Collections#synchronizedMap(Map)}.
-     * <p>
-     * A <code>null</code> cache effectively turns off caching for the key.
+     * The cache type for which a cache should be provided.
      */
-    @Nullable
-    Map<Object, Object> provide(CacheContext context);
+    CacheType cacheType();
 }

@@ -407,7 +407,6 @@ import org.jooq.XMLAttributes;
 import org.jooq.XMLExistsPassingStep;
 import org.jooq.XMLQueryPassingStep;
 import org.jooq.XMLTablePassingStep;
-import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.XMLParse.DocumentOrContent;

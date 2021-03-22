@@ -387,6 +387,14 @@ UpdatableRecord.store() and UpdatableRecord.update().]]></jxb:javadoc></jxb:prop
       <element name="cacheRecordMappers" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether record mappers should be cached in the configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="cacheParsingConnection" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether parsing connection translations should be cached in the configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="cacheParsingConnectionLRUCacheSize" type="int" minOccurs="0" maxOccurs="1" default="8192">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default implementation of the ParsingConnection cache's LRU cache size.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="cachePreparedStatementInLoader" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether JDBC {@link java.sql.PreparedStatement} instances should be cached in loader API.]]></jxb:javadoc></jxb:property></appinfo></annotation>

@@ -3338,7 +3338,7 @@ final class Tools {
                 configuration = new DefaultConfiguration();
 
             // Shortcut caching when the relevant Settings flag isn't set.
-            if (!reflectionCaching(configuration.settings()))
+            if (!type.category.predicate.test(configuration.settings()))
                 return operation.get();
 
             Object cacheOrNull = configuration.data(type);
@@ -3347,7 +3347,10 @@ final class Tools {
                     cacheOrNull = configuration.data(type);
 
                     if (cacheOrNull == null)
-                        configuration.data(type, cacheOrNull = defaultIfNull(configuration.cacheProvider().provide(type), NULL));
+                        configuration.data(type, cacheOrNull = defaultIfNull(
+                            configuration.cacheProvider().provide(new DefaultCacheContext(configuration, type)),
+                            NULL
+                        ));
                 }
             }
 

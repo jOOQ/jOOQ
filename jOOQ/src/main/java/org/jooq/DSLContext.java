@@ -103,6 +103,7 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
+import org.jooq.impl.CacheType;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 import org.jooq.impl.ThreadLocalTransactionProvider;
@@ -195,9 +196,23 @@ public interface DSLContext extends Scope {
      * A JDBC connection that runs each statement through the {@link #parser()}
      * first, prior to re-generating and running the SQL.
      * <p>
+     * Static statements are translated eagerly upon execution, e.g. of
+     * {@link java.sql.Statement#executeQuery(String)}. Prepared statements are
+     * prepared lazily once all bind variables are available, because the
+     * specific bind value and type may influence the generated SQL. As such, a
+     * {@link PreparedStatement} created from a parsing connection does not yet
+     * allocate any server side resources until it is executed for the first
+     * time.
+     * <p>
+     * The {@link Configuration#cacheProvider()} is called for
+     * {@link CacheType#CACHE_PARSING_CONNECTION} to provide a translation cache
+     * to avoid the overhead of re-parsing and re-generating the same SQL string
+     * all the time. By default, this is an LRU cache.
+     * <p>
      * The resulting {@link Connection} wraps an underlying JDBC connection that
      * has been obtained from {@link ConnectionProvider#acquire()} and must be
-     * released by calling {@link Connection#close()}.
+     * released by calling {@link Connection#close()}, which calls
+     * {@link ConnectionProvider#release(Connection)}.
      */
     @NotNull
     Connection parsingConnection();

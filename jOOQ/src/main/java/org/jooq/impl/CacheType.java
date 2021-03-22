@@ -38,11 +38,19 @@
 package org.jooq.impl;
 
 
+import static org.jooq.impl.CacheType.CacheCategory.PARSING_CONNECTION;
+import static org.jooq.impl.CacheType.CacheCategory.RECORD_MAPPER;
+import static org.jooq.impl.CacheType.CacheCategory.REFLECTION;
+
+import java.util.function.Predicate;
+
 import org.jooq.CacheProvider;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
 import org.jooq.RecordType;
+import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 
 /**
  * The set of internal cache types.
@@ -64,60 +72,74 @@ public enum CacheType {
      * A reflection cache for lookups of JPA annotated getters in
      * {@link DefaultRecordMapper}.
      */
-    REFLECTION_CACHE_GET_ANNOTATED_GETTER("org.jooq.configuration.reflection-cache.get-annotated-getter"),
+    REFLECTION_CACHE_GET_ANNOTATED_GETTER(REFLECTION, "org.jooq.configuration.reflection-cache.get-annotated-getter"),
 
     /**
      * A reflection cache for lookups of JPA annotated members in
      * {@link DefaultRecordMapper}.
      */
-    REFLECTION_CACHE_GET_ANNOTATED_MEMBERS("org.jooq.configuration.reflection-cache.get-annotated-members"),
+    REFLECTION_CACHE_GET_ANNOTATED_MEMBERS(REFLECTION, "org.jooq.configuration.reflection-cache.get-annotated-members"),
 
     /**
      * A reflection cache for lookups of JPA annotated setters in
      * {@link DefaultRecordMapper}.
      */
-    REFLECTION_CACHE_GET_ANNOTATED_SETTERS("org.jooq.configuration.reflection-cache.get-annotated-setters"),
+    REFLECTION_CACHE_GET_ANNOTATED_SETTERS(REFLECTION, "org.jooq.configuration.reflection-cache.get-annotated-setters"),
 
     /**
      * A reflection cache for lookups of getters matched by name in
      * {@link DefaultRecordMapper}.
      */
-    REFLECTION_CACHE_GET_MATCHING_GETTER("org.jooq.configuration.reflection-cache.get-matching-getter"),
+    REFLECTION_CACHE_GET_MATCHING_GETTER(REFLECTION, "org.jooq.configuration.reflection-cache.get-matching-getter"),
 
     /**
      * A reflection cache for lookups of members matched by name in
      * {@link DefaultRecordMapper}.
      */
-    REFLECTION_CACHE_GET_MATCHING_MEMBERS("org.jooq.configuration.reflection-cache.get-matching-members"),
+    REFLECTION_CACHE_GET_MATCHING_MEMBERS(REFLECTION, "org.jooq.configuration.reflection-cache.get-matching-members"),
 
     /**
      * A reflection cache for lookups of setters matched by name in
      * {@link DefaultRecordMapper}.
      */
-    REFLECTION_CACHE_GET_MATCHING_SETTERS("org.jooq.configuration.reflection-cache.get-matching-setters"),
+    REFLECTION_CACHE_GET_MATCHING_SETTERS(REFLECTION, "org.jooq.configuration.reflection-cache.get-matching-setters"),
 
     /**
      * A reflection cache to check if a type has any JPA annotations at all, in
      * {@link DefaultRecordMapper}.
      */
-    REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS("org.jooq.configuration.reflection-cache.has-column-annotations"),
+    REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS(REFLECTION, "org.jooq.configuration.reflection-cache.has-column-annotations"),
 
     /**
      * A cache used by the {@link DefaultRecordMapperProvider} to cache all
      * {@link RecordMapper} instances and their possibly expensive
      * initialisations per {@link RecordType} and {@link Class} pairs.
      */
-    CACHE_RECORD_MAPPERS("org.jooq.configuration.cache.record-mappers"),
+    CACHE_RECORD_MAPPERS(RECORD_MAPPER, "org.jooq.configuration.cache.record-mappers"),
 
     /**
      * [#8334] A cache for SQL to SQL translations in the
      * {@link DSLContext#parsingConnection()}, to speed up its usage.
      */
-    CACHE_PARSING_CONNECTION("org.jooq.configuration.cache.parsing-connection");
+    CACHE_PARSING_CONNECTION(PARSING_CONNECTION, "org.jooq.configuration.cache.parsing-connection");
 
-    final String key;
+    final CacheCategory category;
+    final String        key;
 
-    CacheType(String key) {
+    CacheType(CacheCategory category, String key) {
+        this.category = category;
         this.key = key;
+    }
+
+    enum CacheCategory {
+        REFLECTION(SettingsTools::reflectionCaching),
+        RECORD_MAPPER(SettingsTools::recordMapperCaching),
+        PARSING_CONNECTION(SettingsTools::parsingConnectionCaching);
+
+        final Predicate<? super Settings> predicate;
+
+        CacheCategory(Predicate<? super Settings> predicate) {
+            this.predicate = predicate;
+        }
     }
 }

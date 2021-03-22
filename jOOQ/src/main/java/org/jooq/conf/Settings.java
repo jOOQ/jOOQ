@@ -174,6 +174,10 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean cacheRecordMappers = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean cacheParsingConnection = true;
+    @XmlElement(defaultValue = "8192")
+    protected Integer cacheParsingConnectionLRUCacheSize = 8192;
+    @XmlElement(defaultValue = "true")
     protected Boolean cachePreparedStatementInLoader = true;
     @XmlElement(defaultValue = "THROW_ALL")
     @XmlSchemaType(name = "string")
@@ -1542,6 +1546,46 @@ public class Settings
      */
     public void setCacheRecordMappers(Boolean value) {
         this.cacheRecordMappers = value;
+    }
+
+    /**
+     * Whether parsing connection translations should be cached in the configuration.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isCacheParsingConnection() {
+        return cacheParsingConnection;
+    }
+
+    /**
+     * Sets the value of the cacheParsingConnection property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setCacheParsingConnection(Boolean value) {
+        this.cacheParsingConnection = value;
+    }
+
+    /**
+     * The default implementation of the ParsingConnection cache's LRU cache size.
+     * 
+     */
+    public Integer getCacheParsingConnectionLRUCacheSize() {
+        return cacheParsingConnectionLRUCacheSize;
+    }
+
+    /**
+     * The default implementation of the ParsingConnection cache's LRU cache size.
+     * 
+     */
+    public void setCacheParsingConnectionLRUCacheSize(Integer value) {
+        this.cacheParsingConnectionLRUCacheSize = value;
     }
 
     /**
@@ -2986,6 +3030,20 @@ public class Settings
         return this;
     }
 
+    public Settings withCacheParsingConnection(Boolean value) {
+        setCacheParsingConnection(value);
+        return this;
+    }
+
+    /**
+     * The default implementation of the ParsingConnection cache's LRU cache size.
+     * 
+     */
+    public Settings withCacheParsingConnectionLRUCacheSize(Integer value) {
+        setCacheParsingConnectionLRUCacheSize(value);
+        return this;
+    }
+
     public Settings withCachePreparedStatementInLoader(Boolean value) {
         setCachePreparedStatementInLoader(value);
         return this;
@@ -3437,6 +3495,8 @@ public class Settings
         builder.append("updatablePrimaryKeys", updatablePrimaryKeys);
         builder.append("reflectionCaching", reflectionCaching);
         builder.append("cacheRecordMappers", cacheRecordMappers);
+        builder.append("cacheParsingConnection", cacheParsingConnection);
+        builder.append("cacheParsingConnectionLRUCacheSize", cacheParsingConnectionLRUCacheSize);
         builder.append("cachePreparedStatementInLoader", cachePreparedStatementInLoader);
         builder.append("throwExceptions", throwExceptions);
         builder.append("fetchWarnings", fetchWarnings);
@@ -4003,6 +4063,24 @@ public class Settings
                 return false;
             }
         }
+        if (cacheParsingConnection == null) {
+            if (other.cacheParsingConnection!= null) {
+                return false;
+            }
+        } else {
+            if (!cacheParsingConnection.equals(other.cacheParsingConnection)) {
+                return false;
+            }
+        }
+        if (cacheParsingConnectionLRUCacheSize == null) {
+            if (other.cacheParsingConnectionLRUCacheSize!= null) {
+                return false;
+            }
+        } else {
+            if (!cacheParsingConnectionLRUCacheSize.equals(other.cacheParsingConnectionLRUCacheSize)) {
+                return false;
+            }
+        }
         if (cachePreparedStatementInLoader == null) {
             if (other.cachePreparedStatementInLoader!= null) {
                 return false;
@@ -4515,6 +4593,8 @@ public class Settings
         result = ((prime*result)+((updatablePrimaryKeys == null)? 0 :updatablePrimaryKeys.hashCode()));
         result = ((prime*result)+((reflectionCaching == null)? 0 :reflectionCaching.hashCode()));
         result = ((prime*result)+((cacheRecordMappers == null)? 0 :cacheRecordMappers.hashCode()));
+        result = ((prime*result)+((cacheParsingConnection == null)? 0 :cacheParsingConnection.hashCode()));
+        result = ((prime*result)+((cacheParsingConnectionLRUCacheSize == null)? 0 :cacheParsingConnectionLRUCacheSize.hashCode()));
         result = ((prime*result)+((cachePreparedStatementInLoader == null)? 0 :cachePreparedStatementInLoader.hashCode()));
         result = ((prime*result)+((throwExceptions == null)? 0 :throwExceptions.hashCode()));
         result = ((prime*result)+((fetchWarnings == null)? 0 :fetchWarnings.hashCode()));

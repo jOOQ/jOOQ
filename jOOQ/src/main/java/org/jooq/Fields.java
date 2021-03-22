@@ -39,12 +39,19 @@ package org.jooq;
 
 import java.util.stream.Stream;
 
+import org.jooq.impl.DSL;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * A common super type for various types that can provide a set of fields,
  * similar to a {@link Record}.
+ * <p>
+ * Not all implementations actually <em>know</em> their fields. For example,
+ * when using plain SQL templates ({@link DSL#field(String)}) or tables
+ * constructed from identifiers ({@link DSL#field(Name)}), then the fields are
+ * unknown to jOOQ and empty lists or arrays are returned.
  *
  * @author Lukas Eder
  */

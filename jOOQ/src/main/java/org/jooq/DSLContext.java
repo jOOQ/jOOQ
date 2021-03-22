@@ -187,8 +187,6 @@ public interface DSLContext extends Scope {
 
     /**
      * Access the parser API.
-     * <p>
-     * This is experimental functionality.
      */
     @NotNull
     Parser parser();
@@ -200,17 +198,6 @@ public interface DSLContext extends Scope {
      * The resulting {@link Connection} wraps an underlying JDBC connection that
      * has been obtained from {@link ConnectionProvider#acquire()} and must be
      * released by calling {@link Connection#close()}.
-     * <p>
-     * <strong>This is experimental functionality:</strong>
-     * <ul>
-     * <li>While this works well for static {@link Statement} executions, bind
-     * variables and their position calculation might cause issues when the
-     * generated SQL output involves more complex SQL transformation. See also
-     * <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/5759">https://github.com/jOOQ/jOOQ/issues/5759</a>.</li>
-     * <li>Batching statements is currently not supported. See also <a href=
-     * "https://github.com/jOOQ/jOOQ/issues/5757">https://github.com/jOOQ/jOOQ/issues/5757</a>.</li>
-     * </ul>
      */
     @NotNull
     Connection parsingConnection();
@@ -219,7 +206,8 @@ public interface DSLContext extends Scope {
      * A JDBC data source that runs each statement through the {@link #parser()}
      * first, prior to re-generating and running the SQL.
      * <p>
-     * This simply wraps the {@link #parsingConnection()} in a {@link DataSource}.
+     * This simply wraps the {@link #parsingConnection()} in a
+     * {@link DataSource}.
      */
     @NotNull
     DataSource parsingDataSource();

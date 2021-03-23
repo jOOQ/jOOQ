@@ -87,6 +87,11 @@ extends
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+            case SQLITE:
+                ctx.visit(imul(value, value));
+                break;
+
+
 
 
 
@@ -111,10 +116,13 @@ extends
             case IGNITE:
             case MARIADB:
             case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                ctx.visit(imul(value, value));
+            case POSTGRES: {
+                if (isSimple(value))
+                    ctx.visit(imul(value, value));
+                else
+                    ctx.visit(DSL.power(value, inline(2)));
                 break;
+            }
 
             default:
                 ctx.visit(function(N_SQUARE, getDataType(), value));

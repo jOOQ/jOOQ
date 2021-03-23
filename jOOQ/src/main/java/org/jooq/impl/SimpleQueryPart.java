@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Context;
 import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;

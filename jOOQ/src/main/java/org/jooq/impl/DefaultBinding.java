@@ -74,6 +74,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.field;
@@ -605,7 +606,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // Type-specific subclasses API
     // -----------------------------------------------------------------------------------------------------------------
 
-    abstract static class AbstractBinding<T, U> implements Binding<T, U> {
+    abstract static class AbstractBinding<T, U> implements org.jooq.Binding<T, U> {
 
         /**
          * Generated UID

@@ -2307,14 +2307,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Double value) {
 
-            // [#5249] [#6912] [#8063] Special inlining of special floating point values
-            if (value.isNaN())
+            // [#5249] [#6912] [#8063] [#11701] Special inlining of special floating point values
+            if (value.isNaN() || value.isInfinite())
                 if (REQUIRE_NAN_CAST.contains(ctx.dialect()))
-                    ctx.render().visit(inline("NaN")).sql("::float8");
+                    ctx.render().visit(inline(value.toString())).sql("::float8");
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
                 else
-                    ctx.render().visit(new CastNative<>(inline("NaN"), DOUBLE));
+                    ctx.render().visit(new CastNative<>(inline(value.toString()), DOUBLE));
             else
                 ctx.render().sql(value);
         }
@@ -2482,14 +2482,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Float value) {
 
-            // [#5249] [#6912] [#8063] Special inlining of special floating point values
-            if (value.isNaN())
+            // [#5249] [#6912] [#8063] [#11701] Special inlining of special floating point values
+            if (value.isNaN() || value.isInfinite())
                 if (REQUIRE_NAN_CAST.contains(ctx.dialect()))
-                    ctx.render().visit(inline("NaN")).sql("::float4");
+                    ctx.render().visit(inline(value.toString())).sql("::float4");
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
                 else
-                    ctx.render().visit(new CastNative<>(inline("NaN"), DOUBLE));
+                    ctx.render().visit(new CastNative<>(inline(value.toString()), DOUBLE));
             else
                 ctx.render().sql(value);
         }

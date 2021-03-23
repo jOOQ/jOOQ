@@ -1596,7 +1596,9 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
     @Override
     public final ConnectionFactory connectionFactory() {
-        return connectionFactory;
+        return connectionFactory != null
+             ? connectionFactory
+             : new NoConnectionFactory();
     }
 
     @Override

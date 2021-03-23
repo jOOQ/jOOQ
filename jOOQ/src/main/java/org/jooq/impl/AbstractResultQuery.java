@@ -48,7 +48,6 @@ import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
@@ -90,10 +89,14 @@ import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.Flow.BlockingSubscription;
+import org.jooq.impl.Flow.RecordSubscription;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
 
 import org.reactivestreams.Subscriber;
+
+import io.r2dbc.spi.ConnectionFactory;
 
 /**
  * A query that returns a {@link Result}
@@ -328,53 +331,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
 
     @Override
     public final void subscribe(Subscriber<? super R> subscriber) {
-        subscriber.onSubscribe(new org.reactivestreams.Subscription() {
-            Cursor<R> c;
-            ArrayDeque<R> buffer;
+        ConnectionFactory cf = configuration().connectionFactory();
 
-            @Override
-            public void request(long n) {
-                int i = (int) Math.min(n, Integer.MAX_VALUE);
-
-                try {
-                    if (c == null)
-                        c = fetchLazyNonAutoClosing();
-
-                    if (buffer == null)
-                        buffer = new ArrayDeque<>();
-
-                    if (buffer.size() < i)
-                        buffer.addAll(c.fetchNext(i - buffer.size()));
-
-                    boolean complete = buffer.size() < i;
-                    while (!buffer.isEmpty()) {
-                        subscriber.onNext(buffer.pollFirst());
-                    }
-
-                    if (complete)
-                        doComplete();
-                }
-                catch (Throwable t) {
-                    subscriber.onError(t);
-                    doComplete();
-                }
-            }
-
-            private void doComplete() {
-                close();
-                subscriber.onComplete();
-            }
-
-            private void close() {
-                if (c != null)
-                    c.close();
-            }
-
-            @Override
-            public void cancel() {
-                close();
-            }
-        });
+        if (!(cf instanceof NoConnectionFactory))
+            subscriber.onSubscribe(new RecordSubscription<R>(this, subscriber));
+        else
+            subscriber.onSubscribe(new BlockingSubscription<>(this, subscriber));
     }
 
     @Override

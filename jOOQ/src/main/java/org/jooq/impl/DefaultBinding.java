@@ -76,10 +76,15 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.power;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
+import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.DefaultExecuteContext.targetPreparedStatement;
 import static org.jooq.impl.Keywords.K_ARRAY;
@@ -111,6 +116,7 @@ import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.LONGVARCHAR;
 import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.SQLDataType.REAL;
 import static org.jooq.impl.SQLDataType.ROWID;
 import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.TIME;
@@ -2323,24 +2329,50 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long            serialVersionUID = -615723070592774059L;
-        private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supportedBy(POSTGRES);
+        private static final long serialVersionUID = -615723070592774059L;
 
         DefaultDoubleBinding(DataType<Double> dataType, Converter<Double, U> converter) {
             super(dataType, converter);
+        }
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        static final Field<?> nan(BindingSQLContext<?> ctx, DataType<?> type) {
+            switch (ctx.family()) {
+                case FIREBIRD:
+                    return log(inline(1), inline(1));
+                case H2:
+                    return sqrt(inline(-1));
+                case HSQLDB:
+                    return inline(0.0).div(field("0.0e0", (DataType) type));
+                default:
+                    return inline("NaN").cast(type);
+            }
+        }
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        static final Field<?> infinity(BindingSQLContext<?> ctx, DataType<?> type, boolean negative) {
+            switch (ctx.family()) {
+                case FIREBIRD:
+                    return log(negative ? inline(0.5) : inline(1.5), inline(1));
+                case H2:
+                    return negative ? power(inline(0), inline(-1)).neg() : power(inline(0), inline(-1));
+                case HSQLDB:
+                    return inline(negative ? -1.0 : 1.0).div(field("0.0e0", (DataType) type));
+                default:
+                    return inline(negative ? "-Infinity" : "Infinity").cast(type);
+            }
         }
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Double value) {
 
             // [#5249] [#6912] [#8063] [#11701] Special inlining of special floating point values
-            if (value.isNaN() || value.isInfinite())
-                if (REQUIRE_NAN_CAST.contains(ctx.dialect()))
-                    ctx.render().visit(inline(value.toString())).sql("::float8");
-                else if (ctx.family() == HSQLDB)
-                    ctx.render().visit(sqrt(inline(-1)));
-                else
-                    ctx.render().visit(new CastNative<>(inline(value.toString()), DOUBLE));
+            if (value.isNaN())
+                ctx.render().visit(nan(ctx, DOUBLE));
+            else if (value == Double.POSITIVE_INFINITY)
+                ctx.render().visit(infinity(ctx, DOUBLE, false));
+            else if (value == Double.NEGATIVE_INFINITY)
+                ctx.render().visit(infinity(ctx, DOUBLE, true));
             else
                 ctx.render().sql(value);
         }
@@ -2496,7 +2528,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID = -2468794191255859536L;
-        private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultFloatBinding(DataType<Float> dataType, Converter<Float, U> converter) {
             super(dataType, converter);
@@ -2506,13 +2537,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlInline0(BindingSQLContext<U> ctx, Float value) {
 
             // [#5249] [#6912] [#8063] [#11701] Special inlining of special floating point values
-            if (value.isNaN() || value.isInfinite())
-                if (REQUIRE_NAN_CAST.contains(ctx.dialect()))
-                    ctx.render().visit(inline(value.toString())).sql("::float4");
-                else if (ctx.family() == HSQLDB)
-                    ctx.render().visit(sqrt(inline(-1)));
-                else
-                    ctx.render().visit(new CastNative<>(inline(value.toString()), DOUBLE));
+            if (value.isNaN())
+                ctx.render().visit(nan(ctx, REAL));
+            else if (value == Double.POSITIVE_INFINITY)
+                ctx.render().visit(infinity(ctx, REAL, false));
+            else if (value == Double.NEGATIVE_INFINITY)
+                ctx.render().visit(infinity(ctx, REAL, true));
             else
                 ctx.render().sql(value);
         }

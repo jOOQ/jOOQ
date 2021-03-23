@@ -54,7 +54,6 @@ import java.util.Map;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
-import org.jooq.Parser;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.Tools.Cache;
 import org.jooq.tools.JooqLogger;
@@ -68,25 +67,22 @@ final class ParsingConnection extends DefaultConnection {
     private static final JooqLogger log = JooqLogger.getLogger(ParsingConnection.class);
 
     final Configuration             configuration;
-    final DSLContext                ctx;
-    final Parser                    parser;
 
     ParsingConnection(Configuration configuration) {
         super(configuration.connectionProvider().acquire());
 
         this.configuration = configuration;
-        this.ctx = DSL.using(configuration);
-        this.parser = ctx.parser();
     }
 
-    final class CacheValue {
+    static final class CacheValue {
         final String                      output;
         final int                         bindSize;
         final Map<Integer, List<Integer>> bindMapping;
 
-        CacheValue(String input, Param<?>[] bindValues) {
+        CacheValue(Configuration configuration, String input, Param<?>[] bindValues) {
+            DSLContext ctx = configuration.dsl();
             DefaultRenderContext render = (DefaultRenderContext) ctx.renderContext();
-            render.visit(parser.parseQuery(input, (Object[]) bindValues));
+            render.paramType(configuration.settings().getParamType()).visit(ctx.parser().parseQuery(input, (Object[]) bindValues));
 
             output = render.render();
             bindSize = render.bindValues().size();
@@ -120,14 +116,14 @@ final class ParsingConnection extends DefaultConnection {
         }
     }
 
-    final Rendered translate(String sql, Param<?>... bindValues) {
+    static final Rendered translate(Configuration configuration, String sql, Param<?>... bindValues) {
         log.debug("Translating from", sql);
 
         Rendered result = Cache.run(
             configuration,
             () -> {
                 log.debug("Translation cache miss", sql);
-                return new CacheValue(sql, bindValues);
+                return new CacheValue(configuration, sql, bindValues);
             },
             CacheType.CACHE_PARSING_CONNECTION,
             () -> Cache.key(sql, asList(dataTypes(bindValues)))
@@ -158,14 +154,14 @@ final class ParsingConnection extends DefaultConnection {
     ) {
         return p -> {
             int size = p.size();
-            Rendered rendered = size == 0 ? translate(sql) : translate(sql, p.get(0).toArray(EMPTY_PARAM));
+            Rendered rendered = size == 0 ? translate(configuration, sql) : translate(configuration, sql, p.get(0).toArray(EMPTY_PARAM));
             PreparedStatement s = prepare.apply(rendered.sql);
 
             for (int i = 0; i < size; i++) {
 
                 // TODO: Can we avoid re-parsing and re-generating the SQL and mapping bind values only?
                 if (i > 0)
-                    rendered = translate(sql, p.get(i).toArray(EMPTY_PARAM));
+                    rendered = translate(configuration, sql, p.get(i).toArray(EMPTY_PARAM));
 
                 new DefaultBindContext(configuration, s).visit(rendered.bindValues);
 

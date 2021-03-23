@@ -116,6 +116,8 @@ import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import io.r2dbc.spi.ConnectionFactory;
+
 /**
  * A contextual DSL providing "attached" implementations to the
  * <code>org.jooq</code> interfaces.
@@ -226,6 +228,13 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     DataSource parsingDataSource();
+
+    /**
+     * An R2DBC {@link ConnectionFactory} that runs each statement through the
+     * {@link #parser()} first, prior to re-generating and running the SQL.
+     */
+    @NotNull
+    ConnectionFactory parsingConnectionFactory();
 
     /**
      * A JDBC connection that proxies the underlying connection to run the jOOQ

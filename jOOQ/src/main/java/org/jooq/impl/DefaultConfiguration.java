@@ -92,6 +92,8 @@ import org.jooq.exception.ConfigurationException;
 import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
 
+import io.r2dbc.spi.ConnectionFactory;
+
 /**
  * A default implementation for configurations within a {@link DSLContext}, if no
  * custom configuration was supplied to {@link DSL#using(Configuration)}.
@@ -116,6 +118,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
     private transient ConnectionProvider                connectionProvider;
     private transient ConnectionProvider                interpreterConnectionProvider;
     private transient ConnectionProvider                systemConnectionProvider;
+    private transient ConnectionFactory                 connectionFactory;
     private transient MetaProvider                      metaProvider;
     private transient CommitProvider                    commitProvider;
     private transient ExecutorProvider                  executorProvider;
@@ -191,6 +194,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             null,
             null,
             null,
+            null,
 
 
 
@@ -214,6 +218,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             configuration.connectionProvider,
             configuration.interpreterConnectionProvider,
             configuration.systemConnectionProvider,
+            configuration.connectionFactory,
             configuration.metaProvider,
             configuration.commitProvider,
             configuration.executorProvider,
@@ -252,6 +257,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         ConnectionProvider connectionProvider,
         ConnectionProvider interpreterConnectionProvider,
         ConnectionProvider systemConnectionProvider,
+        ConnectionFactory connectionFactory,
         MetaProvider metaProvider,
         CommitProvider commitProvider,
         ExecutorProvider executorProvider,
@@ -279,6 +285,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         set(connectionProvider);
         setInterpreterConnectionProvider(interpreterConnectionProvider);
         setSystemConnectionProvider(systemConnectionProvider);
+        set(connectionFactory);
         set(metaProvider);
         set(commitProvider);
         set(executorProvider);
@@ -336,11 +343,45 @@ public class DefaultConfiguration extends AbstractConfiguration {
     }
 
     @Override
+    public final Configuration derive(ConnectionFactory newConnectionFactory) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            interpreterConnectionProvider,
+            systemConnectionProvider,
+            newConnectionFactory,
+            metaProvider,
+            commitProvider,
+            executorProvider,
+            cacheProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            migrationListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            unwrapperProvider,
+            charsetProvider,
+            converterProvider,
+
+
+
+            clock,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    @Override
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
         return new DefaultConfiguration(
             newConnectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -373,6 +414,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             newMetaProvider,
             commitProvider,
             executorProvider,
@@ -405,6 +447,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             newCommitProvider,
             executorProvider,
@@ -442,6 +485,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             newExecutorProvider,
@@ -474,6 +518,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -506,6 +551,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -543,6 +589,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -580,6 +627,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -612,6 +660,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -644,6 +693,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -676,6 +726,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -708,6 +759,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -740,6 +792,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -772,6 +825,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -809,6 +863,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -841,6 +896,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -873,6 +929,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -934,12 +991,14 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
     @Override
     public final Configuration derive(Clock newClock) {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -972,6 +1031,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -1004,6 +1064,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             connectionProvider,
             interpreterConnectionProvider,
             systemConnectionProvider,
+            connectionFactory,
             metaProvider,
             commitProvider,
             executorProvider,
@@ -1059,6 +1120,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
             this.connectionProvider = new NoConnectionProvider();
         }
 
+        return this;
+    }
+
+    @Override
+    public final Configuration set(ConnectionFactory newConnectionFactory) {
+        this.connectionFactory = newConnectionFactory;
         return this;
     }
 
@@ -1263,6 +1330,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
      */
     public final void setDataSource(DataSource newDataSource) {
         set(newDataSource);
+    }
+
+    /**
+     * @see #set(ConnectionFactory)
+     */
+    public final void setConnectionFactory(ConnectionFactory newConnectionFactory) {
+        set(newConnectionFactory);
     }
 
     /**
@@ -1518,6 +1592,11 @@ public class DefaultConfiguration extends AbstractConfiguration {
         return systemConnectionProvider != null
              ? systemConnectionProvider
              : connectionProvider();
+    }
+
+    @Override
+    public final ConnectionFactory connectionFactory() {
+        return connectionFactory;
     }
 
     @Override

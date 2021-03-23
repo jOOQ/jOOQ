@@ -72,6 +72,8 @@ import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.impl.AbstractConfiguration;
 
+import io.r2dbc.spi.ConnectionFactory;
+
 /**
  * A mock configuration.
  * <p>
@@ -135,6 +137,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public ConnectionProvider systemConnectionProvider() {
         return new MockConnectionProvider(delegate.systemConnectionProvider(), provider);
+    }
+
+    @Override
+    public ConnectionFactory connectionFactory() {
+        throw new UnsupportedOperationException("TODO: Add support for MockConnectionFactory");
     }
 
     @Override
@@ -278,6 +285,11 @@ public class MockConfiguration extends AbstractConfiguration {
     }
 
     @Override
+    public Configuration set(ConnectionFactory newConnectionFactory) {
+        return delegate.set(newConnectionFactory);
+    }
+
+    @Override
     public Configuration set(Executor newExecutor) {
         return delegate.set(newExecutor);
     }
@@ -405,6 +417,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public Configuration derive(DataSource newDataSource) {
         return delegate.derive(newDataSource);
+    }
+
+    @Override
+    public Configuration derive(ConnectionFactory newConnectionFactory) {
+        return delegate.derive(newConnectionFactory);
     }
 
     @Override

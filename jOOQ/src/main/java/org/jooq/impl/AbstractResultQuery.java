@@ -93,6 +93,8 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
 
+import org.reactivestreams.Subscriber;
+
 /**
  * A query that returns a {@link Result}
  *
@@ -325,7 +327,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
 
 
     @Override
-    public final void subscribe(org.reactivestreams.Subscriber<? super R> subscriber) {
+    public final void subscribe(Subscriber<? super R> subscriber) {
         subscriber.onSubscribe(new org.reactivestreams.Subscription() {
             Cursor<R> c;
             ArrayDeque<R> buffer;

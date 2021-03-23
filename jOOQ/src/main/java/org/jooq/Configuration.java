@@ -74,6 +74,8 @@ import org.jooq.tools.StopWatchListener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import io.r2dbc.spi.ConnectionFactory;
+
 /**
  * A <code>Configuration</code> configures a {@link DSLContext}, providing it
  * with information for query rendering and execution.
@@ -298,6 +300,12 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     ConnectionProvider connectionProvider();
+
+    /**
+     * Get this configuration's underlying R2DBC connection factory.
+     */
+    @NotNull
+    ConnectionFactory connectionFactory();
 
     /**
      * Get this configuration's underlying interpreter connection provider,
@@ -698,6 +706,19 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration set(DataSource newDataSource);
+
+    /**
+     * Change this configuration to hold a new R2DBC connection factory.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newConnection The new connection to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration set(ConnectionFactory newConnectionFactory);
 
     /**
      * Change this configuration to hold a new transaction provider.
@@ -1309,6 +1330,17 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(DataSource newDataSource);
+
+    /**
+     * Create a derived configuration from this one, with a new R2DBC connection
+     * factory.
+     *
+     * @param newConnectionFactory The new connection factory to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration derive(ConnectionFactory newConnectionFactory);
 
     /**
      * Create a derived configuration from this one, with a new connection

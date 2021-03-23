@@ -11078,7 +11078,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseKeywordOrIdentifierIf("BIT"))
                     return parseDataTypeLength(SQLDataType.BIT);
                 else if (parseKeywordOrIdentifierIf("BLOB"))
-                    return parseDataTypeLength(SQLDataType.BLOB);
+                    if (parseKeywordIf("SUB_TYPE"))
+                        if (parseKeywordIf("0", "BINARY"))
+                            return parseDataTypeLength(SQLDataType.BLOB);
+                        else if (parseKeywordIf("1", "TEXT"))
+                            return parseDataTypeLength(SQLDataType.CLOB);
+                        else
+                            throw expected("0", "BINARY", "1", "TEXT");
+                    else
+                        return parseDataTypeLength(SQLDataType.BLOB);
                 else if (parseKeywordOrIdentifierIf("BOOLEAN") ||
                          parseKeywordOrIdentifierIf("BOOL"))
                     return SQLDataType.BOOLEAN;

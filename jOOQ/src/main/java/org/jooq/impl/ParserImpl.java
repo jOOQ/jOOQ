@@ -83,6 +83,7 @@ import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
@@ -7049,9 +7050,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
         switch (characterUpper()) {
+
+            // [#8821] Known prefixes so far:
             case ':':
+            case '@':
             case '?':
-                return parseBindVariable();
+                if ((field = parseBindVariableIf()) != null)
+                    return field;
+
+                break;
 
 
 
@@ -7065,7 +7072,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return inline(parseStringLiteral());
 
             case '$':
-                if ((value = parseDollarQuotedStringLiteralIf()) != null)
+                if ((field = parseBindVariableIf()) != null)
+                    return field;
+                else if ((value = parseDollarQuotedStringLiteralIf()) != null)
                     return inline((String) value);
 
                 break;
@@ -11501,10 +11510,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return c;
     }
 
-    private final Field<?> parseBindVariable() {
-
-        // [#11074] Bindings can be Param or even Field types
-        Object binding = nextBinding();
+    private final Field<?> parseBindVariableIf() {
+        int p = position();
         String paramName;
 
         switch (character()) {
@@ -11513,15 +11520,27 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 paramName = "" + bindIndex;
                 break;
 
-            case ':':
-                parse(':', false);
-                Name identifier = parseIdentifier();
-                paramName = identifier.last();
-                break;
-
             default:
-                throw exception("Illegal bind variable character");
+                String prefix = defaultIfNull(settings().getParseNamedParamPrefix(), ":");
+
+                if (parseIf(prefix, false)) {
+                    Name identifier = parseIdentifier();
+                    paramName = identifier.last();
+
+                    // [#8821] Avoid conflicts with dollar quoted string literals
+                    if ("$".equals(prefix) && paramName.endsWith("$")) {
+                        position(p);
+                        return null;
+                    }
+
+                    break;
+                }
+                else
+                    return null;
         }
+
+        // [#11074] Bindings can be Param or even Field types
+        Object binding = nextBinding();
 
         if (binding instanceof Field)
             return (Field<?>) binding;
@@ -11684,8 +11703,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final String parseDollarQuotedStringLiteralIf() {
         int previous = position();
 
-        if (!parseIf('$'))
+        if (!peek('$'))
             return null;
+        else
+            parse('$');
 
         int openTokenStart = previous;
         int openTokenEnd = previous;
@@ -12044,7 +12065,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Field<Long> parseUnsignedIntegerOrBindVariable() {
         Long i = parseUnsignedIntegerLiteralIf();
-        return i != null ? DSL.inline(i) : (Field<Long>) parseBindVariable();
+
+        if (i != null)
+            return DSL.inline(i);
+
+        Field<?> f = parseBindVariableIf();
+        if (f != null)
+            return (Field<Long>) f;
+
+        throw expected("Unsigned integer or bind variable");
     }
 
     @Override

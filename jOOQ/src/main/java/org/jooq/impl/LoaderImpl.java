@@ -748,7 +748,7 @@ final class LoaderImpl<R extends Record> implements
         }
 
         @Override
-        public void close() {
+        public void close() throws SQLException {
             for (CachedPS ps : map.values())
                 safeClose(ps.getDelegate());
         }

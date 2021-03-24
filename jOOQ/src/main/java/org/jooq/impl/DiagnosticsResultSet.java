@@ -596,7 +596,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
     // XXX Utilities
     // ------------------------------------------------------------------------
 
-    private final void wasPrimitive(int columnIndex) {
+    private final void wasPrimitive(int columnIndex) throws SQLException {
         checkPrimitive();
 
         wasColumnIndex = columnIndex;
@@ -608,7 +608,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         wasPrimitive(super.findColumn(columnLabel));
     }
 
-    private final void checkPrimitive() {
+    private final void checkPrimitive() throws SQLException {
         if (wasPrimitive && wasNullable) {
             DefaultDiagnosticsContext ctx = ctx();
             ctx.resultSetMissingWasNullCall = true;
@@ -628,7 +628,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         read(super.findColumn(columnLabel));
     }
 
-    private final DefaultDiagnosticsContext ctx() {
+    private final DefaultDiagnosticsContext ctx() throws SQLException {
         DefaultDiagnosticsContext ctx = new DefaultDiagnosticsContext(sql);
 
         ctx.resultSet = super.getDelegate();

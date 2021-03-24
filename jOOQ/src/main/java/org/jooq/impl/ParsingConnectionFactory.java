@@ -76,6 +76,7 @@ final class ParsingConnectionFactory implements ConnectionFactory {
     ParsingConnectionFactory(Configuration configuration) {
         this.configuration = configuration.derive();
         this.configuration.set(SettingsTools.clone(configuration.settings())
+            .withParseNamedParamPrefix("$")
             .withRenderNamedParamPrefix("$")
             .withParamType(ParamType.NAMED));
     }

@@ -43,6 +43,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.sql.SQLException;
 import java.sql.SQLWarning;
@@ -163,7 +164,7 @@ final class Val<T> extends AbstractParam<T> {
     final String getBindVariable(Context<?> ctx) {
         if (ctx.paramType() == NAMED || ctx.paramType() == NAMED_OR_INLINED) {
             int index = ctx.nextIndex();
-            String prefix = StringUtils.defaultIfNull(ctx.settings().getRenderNamedParamPrefix(), ":");
+            String prefix = defaultIfNull(ctx.settings().getRenderNamedParamPrefix(), ":");
 
             if (StringUtils.isBlank(getParamName()))
                 return prefix + index;

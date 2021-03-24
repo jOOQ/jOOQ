@@ -75,11 +75,11 @@ public class DefaultCallableStatement extends DefaultPreparedStatement implement
     }
 
     @Override
-    public CallableStatement getDelegate() {
+    public CallableStatement getDelegate() throws SQLException {
         return getDelegateCallableStatement();
     }
 
-    public CallableStatement getDelegateCallableStatement() {
+    public CallableStatement getDelegateCallableStatement() throws SQLException {
         return (CallableStatement) getDelegateStatement();
     }
 

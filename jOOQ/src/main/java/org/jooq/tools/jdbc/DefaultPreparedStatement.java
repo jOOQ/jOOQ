@@ -60,6 +60,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.function.Supplier;
 
 /**
  * A default JDBC PreparedStatement implementation delegating all JDBC 4.0 calls
@@ -81,12 +82,16 @@ public class DefaultPreparedStatement extends DefaultStatement implements Prepar
         super(delegate, creator);
     }
 
+    protected DefaultPreparedStatement(Statement delegate, Connection creator, Supplier<? extends SQLException> errorIfUnsupported) {
+        super(delegate, creator, errorIfUnsupported);
+    }
+
     @Override
-    public PreparedStatement getDelegate() {
+    public PreparedStatement getDelegate() throws SQLException {
         return getDelegatePreparedStatement();
     }
 
-    public final PreparedStatement getDelegatePreparedStatement() {
+    public final PreparedStatement getDelegatePreparedStatement() throws SQLException {
         return (PreparedStatement) getDelegateStatement();
     }
 

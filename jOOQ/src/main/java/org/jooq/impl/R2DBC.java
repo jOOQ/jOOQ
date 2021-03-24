@@ -41,35 +41,24 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.io.InputStream;
-import java.io.Reader;
 import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.Date;
-import java.sql.NClob;
-import java.sql.Ref;
 import java.sql.ResultSetMetaData;
-import java.sql.RowId;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.SQLType;
-import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.sql.Wrapper;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayDeque;
-import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jooq.BindingGetResultSetContext;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.DataType;
@@ -78,6 +67,7 @@ import org.jooq.Record;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
+import org.jooq.tools.jdbc.DefaultResultSet;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -85,6 +75,7 @@ import org.reactivestreams.Subscription;
 
 import io.r2dbc.spi.ColumnMetadata;
 import io.r2dbc.spi.Connection;
+import io.r2dbc.spi.Row;
 import io.r2dbc.spi.RowMetadata;
 import io.r2dbc.spi.Statement;
 
@@ -159,13 +150,21 @@ final class R2DBC {
                     RecordDelegate<AbstractRecord> delegate = Tools.newRecord(true, (Supplier<AbstractRecord>) recordFactory(query.getRecordType(), Tools.row0(fields)), query.configuration());
 
                     return (R) delegate.operate(record -> {
-                        // TODO: Go through Field.getBinding()
+
+                        // TODO: What data to pass here?
+                        DefaultBindingGetResultSetContext<?> ctx = new DefaultBindingGetResultSetContext<>(
+                            query.configuration(),
+                            query.configuration().data(),
+                            new R2DBCResultSet(query.configuration(), row),
+                            0
+                        );
+
                         // TODO: Make sure all the embeddable records, and other types of nested records are supported
                         for (int i = 0; i < fields.length; i++) {
-                            Field<?> f = fields[i];
-                            Object value = row.get(i, f.getType());
-                            record.values[i] = value;
-                            record.originals[i] = value;
+                            ctx.index(i + 1);
+                            fields[i].getBinding().get((BindingGetResultSetContext) ctx);
+                            record.values[i] = ctx.value();
+                            record.originals[i] = ctx.value();
                         }
 
                         return record;
@@ -208,20 +207,15 @@ final class R2DBC {
         public final void onNext(Connection c) {
             try {
                 DefaultRenderContext render = new DefaultRenderContext(query.configuration().derive(
-                    SettingsTools.clone(query.configuration().settings()).withParamType(NAMED).withRenderNamedParamPrefix("$")
+                    SettingsTools.clone(query.configuration().settings())
+                        .withParseNamedParamPrefix("$")
+                        .withRenderNamedParamPrefix("$")
+                        .withParamType(NAMED)
                 ));
 
                 Rendered r = new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
                 Statement stmt = c.createStatement(r.sql);
                 new DefaultBindContext(query.configuration(), new R2DBCPreparedStatement(query.configuration(), stmt)).visit(r.bindValues);
-//                ;
-//                int i = 0;
-//                for (Param<?> p : r.bindValues)
-//                    if (p.getValue() == null)
-//                        stmt.bindNull(i++, p.getType());
-//                    else
-//                        stmt.bind(i++, p.getValue());
-
                 stmt.execute().subscribe(new ResultSubscriber<>(query, this));
             }
 
@@ -328,28 +322,13 @@ final class R2DBC {
     // JDBC to R2DBC bridges for better interop, where it doesn't matter
     // -------------------------------------------------------------------------
 
-    static abstract class R2DBCWrapper implements Wrapper {
-
-        @Override
-        public final <T> T unwrap(Class<T> iface) throws SQLException {
-            throw new SQLFeatureNotSupportedException("R2DBC can't unwrap JDBC types");
-        }
-
-        @Override
-        public final boolean isWrapperFor(Class<?> iface) throws SQLException {
-            return false;
-        }
-    }
-
     static final class R2DBCPreparedStatement extends DefaultPreparedStatement {
 
         final Configuration c;
         final Statement     s;
 
         R2DBCPreparedStatement(Configuration c, Statement s) {
-
-            // TODO: Refactor super class to throw a custom exception if trying to dereference this null pointer.
-            super(null);
+            super(null, null, () -> new SQLFeatureNotSupportedException("Unsupported operation of the JDBC to R2DBC bridge."));
 
             this.c = c;
             this.s = s;
@@ -367,7 +346,7 @@ final class R2DBC {
             if (x == null)
                 s.bindNull(parameterIndex - 1, type);
             else
-                bindNonNull(parameterIndex - 1, conversion.apply(x));
+                bindNonNull(parameterIndex, conversion.apply(x));
         }
 
         private final void bindNonNull(int parameterIndex, Object x) {
@@ -483,154 +462,122 @@ final class R2DBC {
         public final void setObject(int parameterIndex, Object x, SQLType targetSqlType) throws SQLException {
             setObject(parameterIndex, x, defaultIfNull(targetSqlType.getVendorTypeNumber(), Types.OTHER));
         }
+    }
 
-        @Override
-        public final void setAsciiStream(int parameterIndex, InputStream x, int length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+    static final class R2DBCResultSet extends DefaultResultSet {
+
+        final Configuration c;
+        final Row           r;
+        boolean             wasNull;
+
+        R2DBCResultSet(Configuration c, Row r) {
+            super(null, null, () -> new SQLFeatureNotSupportedException("Unsupported operation of the JDBC to R2DBC bridge."));
+
+            this.c = c;
+            this.r = r;
+        }
+
+        private final <T> T wasNull(T nullable) {
+            wasNull = nullable == null;
+            return nullable;
+        }
+
+        private final <T> T nullable(int columnIndex, Class<T> type) {
+            return nullable(columnIndex, type, t -> t);
+        }
+
+        private final <T, U> U nullable(int columnIndex, Class<T> type, Function<? super T, ? extends U> conversion) {
+            T t = wasNull(r.get(columnIndex - 1, type));
+            return wasNull ? null : conversion.apply(t);
+        }
+
+        private final <T> T nonNull(int columnIndex, Class<T> type, T nullValue) {
+            T t = wasNull(r.get(columnIndex - 1, type));
+            return wasNull ? nullValue : t;
         }
 
         @Override
-        public final void setUnicodeStream(int parameterIndex, InputStream x, int length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final boolean wasNull() throws SQLException {
+            return wasNull;
         }
 
         @Override
-        public final void setBinaryStream(int parameterIndex, InputStream x, int length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final boolean getBoolean(int columnIndex) throws SQLException {
+            return nonNull(columnIndex, Boolean.class, false);
         }
 
         @Override
-        public final void setCharacterStream(int parameterIndex, Reader reader, int length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final byte getByte(int columnIndex) throws SQLException {
+            return nonNull(columnIndex, Byte.class, (byte) 0);
         }
 
         @Override
-        public final void setRef(int parameterIndex, Ref x) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final short getShort(int columnIndex) throws SQLException {
+            return nonNull(columnIndex, Short.class, (short) 0);
         }
 
         @Override
-        public final void setBlob(int parameterIndex, Blob x) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final int getInt(int columnIndex) throws SQLException {
+            return nonNull(columnIndex, Integer.class, 0);
         }
 
         @Override
-        public final void setClob(int parameterIndex, Clob x) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final long getLong(int columnIndex) throws SQLException {
+            return nonNull(columnIndex, Long.class, 0L);
         }
 
         @Override
-        public final void setArray(int parameterIndex, Array x) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final float getFloat(int columnIndex) throws SQLException {
+            return nonNull(columnIndex, Float.class, 0.0f);
         }
 
         @Override
-        public final void setDate(int parameterIndex, Date x, Calendar cal) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final double getDouble(int columnIndex) throws SQLException {
+            return nonNull(columnIndex, Double.class, 0.0);
         }
 
         @Override
-        public final void setTime(int parameterIndex, Time x, Calendar cal) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final BigDecimal getBigDecimal(int columnIndex) throws SQLException {
+            return nullable(columnIndex, BigDecimal.class);
         }
 
         @Override
-        public final void setTimestamp(int parameterIndex, Timestamp x, Calendar cal) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final String getString(int columnIndex) throws SQLException {
+            return nullable(columnIndex, String.class);
         }
 
         @Override
-        public final void setURL(int parameterIndex, URL x) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final byte[] getBytes(int columnIndex) throws SQLException {
+            return nullable(columnIndex, byte[].class);
         }
 
         @Override
-        public final void setRowId(int parameterIndex, RowId x) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final Date getDate(int columnIndex) throws SQLException {
+            return nullable(columnIndex, LocalDate.class, Date::valueOf);
         }
 
         @Override
-        public final void setNCharacterStream(int parameterIndex, Reader value, long length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final Time getTime(int columnIndex) throws SQLException {
+            return nullable(columnIndex, LocalTime.class, Time::valueOf);
         }
 
         @Override
-        public final void setNClob(int parameterIndex, NClob value) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final Timestamp getTimestamp(int columnIndex) throws SQLException {
+            return nullable(columnIndex, LocalDateTime.class, Timestamp::valueOf);
         }
 
         @Override
-        public final void setClob(int parameterIndex, Reader reader, long length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final Object getObject(int columnIndex) throws SQLException {
+            return getObject(columnIndex, Object.class);
         }
 
         @Override
-        public final void setBlob(int parameterIndex, InputStream inputStream, long length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setNClob(int parameterIndex, Reader reader, long length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setSQLXML(int parameterIndex, SQLXML xmlObject) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setAsciiStream(int parameterIndex, InputStream x, long length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setBinaryStream(int parameterIndex, InputStream x, long length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setCharacterStream(int parameterIndex, Reader reader, long length) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setAsciiStream(int parameterIndex, InputStream x) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setBinaryStream(int parameterIndex, InputStream x) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setCharacterStream(int parameterIndex, Reader reader) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setNCharacterStream(int parameterIndex, Reader value) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setClob(int parameterIndex, Reader reader) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setBlob(int parameterIndex, InputStream inputStream) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
-        }
-
-        @Override
-        public final void setNClob(int parameterIndex, Reader reader) throws SQLException {
-            throw new SQLFeatureNotSupportedException("The JDBC to R2DBC bridge doesn't support this data type");
+        public final <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+            return nullable(columnIndex, type);
         }
     }
 
-    static final class R2DBCResultSetMetaData extends R2DBCWrapper implements ResultSetMetaData {
+    static final class R2DBCResultSetMetaData implements ResultSetMetaData {
 
         final Configuration     c;
         final RowMetadata       m;
@@ -642,6 +589,16 @@ final class R2DBC {
 
         private final ColumnMetadata meta(int column) {
             return m.getColumnMetadata(column - 1);
+        }
+
+        @Override
+        public final <T> T unwrap(Class<T> iface) throws SQLException {
+            throw new SQLFeatureNotSupportedException("R2DBC can't unwrap JDBC types");
+        }
+
+        @Override
+        public final boolean isWrapperFor(Class<?> iface) throws SQLException {
+            return false;
         }
 
         @Override

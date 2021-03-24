@@ -42,6 +42,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.function.Supplier;
 
 /**
  * A default JDBC Statement implementation delegating all JDBC 4.0 calls to an
@@ -51,24 +52,33 @@ import java.sql.Statement;
  */
 public class DefaultStatement extends JDBC41Statement implements Statement {
 
-    private final Statement delegate;
-    private final Connection creator;
+    private final Statement                        delegate;
+    private final Connection                       creator;
+    private final Supplier<? extends SQLException> errorIfUnsupported;
 
     public DefaultStatement(Statement delegate) {
-        this(delegate, null);
+        this(delegate, null, null);
     }
 
     public DefaultStatement(Statement delegate, Connection creator) {
-        this.delegate = delegate;
-        this.creator = creator;
+        this(delegate, creator, null);
     }
 
-    public Statement getDelegate() {
+    public DefaultStatement(Statement delegate, Connection creator, Supplier<? extends SQLException> errorIfUnsupported) {
+        this.delegate = delegate;
+        this.creator = creator;
+        this.errorIfUnsupported = errorIfUnsupported;
+    }
+
+    public Statement getDelegate() throws SQLException {
         return getDelegateStatement();
     }
 
-    public Statement getDelegateStatement() {
-        return delegate;
+    public Statement getDelegateStatement() throws SQLException {
+        if (delegate != null || errorIfUnsupported == null)
+            return delegate;
+        else
+            throw errorIfUnsupported.get();
     }
 
     // ------------------------------------------------------------------------

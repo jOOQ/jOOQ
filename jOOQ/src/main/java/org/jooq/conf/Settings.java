@@ -265,6 +265,8 @@ public class Settings
     protected String parseDateFormat = "YYYY-MM-DD";
     @XmlElement(defaultValue = "YYYY-MM-DD HH24:MI:SS.FF")
     protected String parseTimestampFormat = "YYYY-MM-DD HH24:MI:SS.FF";
+    @XmlElement(defaultValue = ":")
+    protected String parseNamedParamPrefix = ":";
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected ParseNameCase parseNameCase = ParseNameCase.DEFAULT;
@@ -450,12 +452,12 @@ public class Settings
     }
 
     /**
-     * The prefix to use for named parameters.
+     * The prefix to use for named parameters in generated SQL.
      * <p>
      * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
-     * for PostgreSQL's <code>$name</code>.
+     * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
@@ -466,12 +468,12 @@ public class Settings
     }
 
     /**
-     * The prefix to use for named parameters.
+     * The prefix to use for named parameters in generated SQL.
      * <p>
      * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
-     * for PostgreSQL's <code>$name</code>.
+     * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
@@ -2390,6 +2392,38 @@ public class Settings
     }
 
     /**
+     * The prefix to use for named parameters in parsed SQL.
+     * <p>
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
+     * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
+     * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
+     * for PostgreSQL's <code>$name</code> when parsing SQL.
+     * <p>
+     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
+     * 
+     */
+    public String getParseNamedParamPrefix() {
+        return parseNamedParamPrefix;
+    }
+
+    /**
+     * The prefix to use for named parameters in parsed SQL.
+     * <p>
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
+     * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
+     * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
+     * for PostgreSQL's <code>$name</code> when parsing SQL.
+     * <p>
+     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
+     * 
+     */
+    public void setParseNamedParamPrefix(String value) {
+        this.parseNamedParamPrefix = value;
+    }
+
+    /**
      * [#7337] The default name case for parsed identifiers.
      * 
      */
@@ -2676,12 +2710,12 @@ public class Settings
     }
 
     /**
-     * The prefix to use for named parameters.
+     * The prefix to use for named parameters in generated SQL.
      * <p>
      * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
-     * for PostgreSQL's <code>$name</code>.
+     * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
@@ -3356,6 +3390,23 @@ public class Settings
     }
 
     /**
+     * The prefix to use for named parameters in parsed SQL.
+     * <p>
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
+     * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
+     * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
+     * for PostgreSQL's <code>$name</code> when parsing SQL.
+     * <p>
+     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
+     * 
+     */
+    public Settings withParseNamedParamPrefix(String value) {
+        setParseNamedParamPrefix(value);
+        return this;
+    }
+
+    /**
      * [#7337] The default name case for parsed identifiers.
      * 
      */
@@ -3590,6 +3641,7 @@ public class Settings
         builder.append("parseLocale", parseLocale);
         builder.append("parseDateFormat", parseDateFormat);
         builder.append("parseTimestampFormat", parseTimestampFormat);
+        builder.append("parseNamedParamPrefix", parseNamedParamPrefix);
         builder.append("parseNameCase", parseNameCase);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
         builder.append("parseSetCommands", parseSetCommands);
@@ -4488,6 +4540,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseNamedParamPrefix == null) {
+            if (other.parseNamedParamPrefix!= null) {
+                return false;
+            }
+        } else {
+            if (!parseNamedParamPrefix.equals(other.parseNamedParamPrefix)) {
+                return false;
+            }
+        }
         if (parseNameCase == null) {
             if (other.parseNameCase!= null) {
                 return false;
@@ -4708,6 +4769,7 @@ public class Settings
         result = ((prime*result)+((parseLocale == null)? 0 :parseLocale.hashCode()));
         result = ((prime*result)+((parseDateFormat == null)? 0 :parseDateFormat.hashCode()));
         result = ((prime*result)+((parseTimestampFormat == null)? 0 :parseTimestampFormat.hashCode()));
+        result = ((prime*result)+((parseNamedParamPrefix == null)? 0 :parseNamedParamPrefix.hashCode()));
         result = ((prime*result)+((parseNameCase == null)? 0 :parseNameCase.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
         result = ((prime*result)+((parseSetCommands == null)? 0 :parseSetCommands.hashCode()));

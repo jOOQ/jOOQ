@@ -59,6 +59,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * A default JDBC ResultSet implementation delegating all JDBC 4.0 calls to an
@@ -68,20 +69,29 @@ import java.util.Map;
  */
 public class DefaultResultSet extends JDBC41ResultSet implements ResultSet {
 
-    private final ResultSet delegate;
-    private final Statement creator;
+    private final ResultSet                        delegate;
+    private final Statement                        creator;
+    private final Supplier<? extends SQLException> errorIfUnsupported;
 
     public DefaultResultSet(ResultSet delegate) {
-        this(delegate, null);
+        this(delegate, null, null);
     }
 
     public DefaultResultSet(ResultSet delegate, Statement creator) {
-        this.delegate = delegate;
-        this.creator = creator;
+        this(delegate, creator, null);
     }
 
-    public ResultSet getDelegate() {
-        return delegate;
+    public DefaultResultSet(ResultSet delegate, Statement creator, Supplier<? extends SQLException> errorIfUnsupported) {
+        this.delegate = delegate;
+        this.creator = creator;
+        this.errorIfUnsupported = errorIfUnsupported;
+    }
+
+    public ResultSet getDelegate() throws SQLException {
+        if (delegate != null || errorIfUnsupported == null)
+            return delegate;
+        else
+            throw errorIfUnsupported.get();
     }
 
     @Override

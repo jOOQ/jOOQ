@@ -69,12 +69,12 @@ This is set to "QUOTED" by default for backwards-compatibility.
       </element>
       
       <element name="renderNamedParamPrefix" type="string" minOccurs="0" maxOccurs="1" default=":">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The prefix to use for named parameters.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The prefix to use for named parameters in generated SQL.
 <p>
 Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
 vendor specific parameters may look differently. This flag can be used to determine the prefix to be
 used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
-for PostgreSQL's <code>$name</code>.
+for PostgreSQL's <code>$name</code>, when generating SQL.
 <p>
 "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
 providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -568,7 +568,19 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="parseTimestampFormat" type="string" minOccurs="0" maxOccurs="1" default="YYYY-MM-DD HH24:MI:SS.FF">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The timestamp format to use when parsing functions whose behaviour depends on some session date format, such as NLS_TIMESTAMP_FORMAT in Oracle]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
+      <element name="parseNamedParamPrefix" type="string" minOccurs="0" maxOccurs="1" default=":">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The prefix to use for named parameters in parsed SQL.
+<p>
+Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
+vendor specific parameters may look differently. This flag can be used to determine the prefix to be
+used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
+for PostgreSQL's <code>$name</code> when parsing SQL.
+<p>
+"Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="parseNameCase" type="jooq-runtime:ParseNameCase" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The default name case for parsed identifiers.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

@@ -89,8 +89,8 @@ import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.Flow.BlockingSubscription;
-import org.jooq.impl.Flow.RecordSubscription;
+import org.jooq.impl.R2DBC.BlockingSubscription;
+import org.jooq.impl.R2DBC.RecordSubscription;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
 

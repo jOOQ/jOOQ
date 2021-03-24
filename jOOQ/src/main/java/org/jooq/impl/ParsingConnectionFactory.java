@@ -205,7 +205,7 @@ final class ParsingConnectionFactory implements ConnectionFactory {
 
         @Override
         public Statement createStatement(String sql) {
-            return new ParsingR2DBCStatement(this, sql);
+            return new ParsingR2DBCStatement(delegate, sql);
         }
     }
 

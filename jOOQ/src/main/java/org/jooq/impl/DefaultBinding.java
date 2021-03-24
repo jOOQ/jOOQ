@@ -2341,8 +2341,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
                 case FIREBIRD:
                     return log(inline(1), inline(1));
-                case H2:
-                    return sqrt(inline(-1));
                 case HSQLDB:
                     return inline(0.0).div(field("0.0e0", (DataType) type));
                 default:
@@ -2355,8 +2353,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
                 case FIREBIRD:
                     return log(negative ? inline(0.5) : inline(1.5), inline(1));
-                case H2:
-                    return negative ? power(inline(0), inline(-1)).neg() : power(inline(0), inline(-1));
                 case HSQLDB:
                     return inline(negative ? -1.0 : 1.0).div(field("0.0e0", (DataType) type));
                 default:

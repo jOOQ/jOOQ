@@ -37,9 +37,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.recordFactory;
+
 import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Supplier;
 
 import org.jooq.Cursor;
 import org.jooq.Field;
@@ -112,26 +115,38 @@ final class Flow {
             s.request(1);
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public void onNext(io.r2dbc.spi.Result r) {
             r.map((row, m) -> {
                 // TODO: Cache this getFields() call
-                Field<?>[] fields = null;
+                Field<?>[] fields;
                 try {
                     fields = query.getFields(null);
                 }
+
+                // TODO: Can this happen? If so, trigger onError() correctly
                 catch (SQLException ignore) {
                     throw new DataAccessException("", ignore);
                 }
 
-                R record = (R) query.configuration().dsl().newRecord(fields);
+                // TODO: This call is duplicated from CursorImpl and related classes.
+                // Refactor this call to make sure code is re-used, especially when
+                // ExecuteListener lifecycle management is implemented
+                RecordDelegate<AbstractRecord> delegate = Tools.newRecord(true, (Supplier<AbstractRecord>) recordFactory(query.getRecordType(), Tools.row0(fields)), query.configuration());
 
-                for (int j = 0; j < fields.length; j++) {
-                    Field<?> f = fields[j];
-                    record.set((Field) f, row.get(j, f.getType()));
-                }
+                return (R) delegate.operate(record -> {
+                    // TODO: Go through Field.getBinding()
+                    // TODO: Make sure all the embeddable records, and other types of nested records are supported
+                    for (int i = 0; i < fields.length; i++) {
+                        Field<?> f = fields[i];
+                        Object value = row.get(i, f.getType());
+                        record.values[i] = value;
+                        record.originals[i] = value;
+                    }
 
-                return record;
+                    return record;
+                });
             }).subscribe(new RowSubscriber<R>(this));
         }
 

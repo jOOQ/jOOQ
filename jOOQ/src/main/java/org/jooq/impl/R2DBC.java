@@ -37,7 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -54,6 +57,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayDeque;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -64,7 +68,10 @@ import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
+import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.conf.StatementType;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;
@@ -84,7 +91,8 @@ import io.r2dbc.spi.Statement;
  */
 final class R2DBC {
 
-    static volatile boolean is_0_9 = true;
+    static final Set<SQLDialect> NO_SUPPORT_BIND_VARIABLES = SQLDialect.supportedBy(MARIADB);
+    static volatile boolean      is_0_9                    = true;
 
     static final class RowSubscriber<R extends Record> implements Subscriber<R> {
 
@@ -206,16 +214,19 @@ final class R2DBC {
         @Override
         public final void onNext(Connection c) {
             try {
-                DefaultRenderContext render = new DefaultRenderContext(query.configuration().derive(
-                    SettingsTools.clone(query.configuration().settings())
-                        .withParseNamedParamPrefix("$")
-                        .withRenderNamedParamPrefix("$")
-                        .withParamType(NAMED)
-                ));
+                Settings settings = SettingsTools.clone(query.configuration().settings())
+                    .withParseNamedParamPrefix("$")
+                    .withRenderNamedParamPrefix("$")
+                    .withParamType(NAMED);
 
-                Rendered r = new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
-                Statement stmt = c.createStatement(r.sql);
-                new DefaultBindContext(query.configuration(), new R2DBCPreparedStatement(query.configuration(), stmt)).visit(r.bindValues);
+                // MariaDB's R2DBC driver doesn't support bind variables yet: https://jira.mariadb.org/browse/CONJ-868
+                if (NO_SUPPORT_BIND_VARIABLES.contains(query.configuration().dialect()))
+                    settings.withStatementType(STATIC_STATEMENT);
+
+                DefaultRenderContext render = new DefaultRenderContext(query.configuration().derive(settings));
+                Rendered rendered = new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
+                Statement stmt = c.createStatement(rendered.sql);
+                new DefaultBindContext(query.configuration(), new R2DBCPreparedStatement(query.configuration(), stmt)).visit(rendered.bindValues);
                 stmt.execute().subscribe(new ResultSubscriber<>(query, this));
             }
 

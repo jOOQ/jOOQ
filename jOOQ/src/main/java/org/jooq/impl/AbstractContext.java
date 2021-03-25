@@ -50,11 +50,11 @@ import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
-import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.sql.PreparedStatement;
+import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -62,10 +62,10 @@ import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.Set;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -91,8 +91,6 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -140,6 +138,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     boolean                                        quote                       = true;
     boolean                                        qualifySchema               = true;
     boolean                                        qualifyCatalog              = true;
+
+    // [#11711] Enforcing scientific notation
+    private transient DecimalFormat                doubleFormat;
+    private transient DecimalFormat                floatFormat;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);
@@ -781,6 +783,22 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     // ------------------------------------------------------------------------
     // XXX RenderContext API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final DecimalFormat floatFormat() {
+        if (floatFormat == null)
+            floatFormat = new DecimalFormat("0.#######E0");
+
+        return floatFormat;
+    }
+
+    @Override
+    public final DecimalFormat doubleFormat() {
+        if (doubleFormat == null)
+            doubleFormat = new DecimalFormat("0.################E0");
+
+        return doubleFormat;
+    }
 
     @Override
     public final ParamType paramType() {

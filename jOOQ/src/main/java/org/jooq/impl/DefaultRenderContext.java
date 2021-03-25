@@ -63,7 +63,6 @@ import org.jooq.Constants;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Param;
-// ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -459,7 +458,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext sql(float f) {
         applyNewLine();
-        sql.append(f);
+        sql.append(floatFormat().format(f));
         resetSeparatorFlags();
         return this;
     }
@@ -467,7 +466,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext sql(double d) {
         applyNewLine();
-        sql.append(d);
+        sql.append(doubleFormat().format(d));
         resetSeparatorFlags();
         return this;
     }

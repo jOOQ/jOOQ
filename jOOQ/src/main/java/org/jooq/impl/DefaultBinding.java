@@ -84,6 +84,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.power;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL_CAST;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
@@ -2330,7 +2331,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -615723070592774059L;
+        private static final long    serialVersionUID      = -615723070592774059L;
+        static final Set<SQLDialect> REQUIRES_LITERAL_CAST = SQLDialect.supportedBy(H2);
 
         DefaultDoubleBinding(DataType<Double> dataType, Converter<Double, U> converter) {
             super(dataType, converter);
@@ -2370,6 +2372,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().visit(infinity(ctx, DOUBLE, false));
             else if (value == Double.NEGATIVE_INFINITY)
                 ctx.render().visit(infinity(ctx, DOUBLE, true));
+            else if (REQUIRES_LITERAL_CAST.contains(ctx.dialect()))
+                ctx.render().visit(field(ctx.render().doubleFormat().format(value)).cast(DOUBLE));
             else
                 ctx.render().sql(value);
         }
@@ -2540,6 +2544,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().visit(infinity(ctx, REAL, false));
             else if (value == Double.NEGATIVE_INFINITY)
                 ctx.render().visit(infinity(ctx, REAL, true));
+            else if (REQUIRES_LITERAL_CAST.contains(ctx.dialect()))
+                ctx.render().visit(field(ctx.render().floatFormat().format(value)).cast(REAL));
             else
                 ctx.render().sql(value);
         }

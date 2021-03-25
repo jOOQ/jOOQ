@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.sql.PreparedStatement;
+import java.text.DecimalFormat;
 import java.util.function.Consumer;
 
 import org.jooq.RenderContext.CastMode;
@@ -482,10 +483,20 @@ public interface Context<C extends Context<C>> extends Scope {
     C sql(long sql);
 
     /**
+     * A formatter to produce scientific notation for {@link Float} types.
+     */
+    DecimalFormat floatFormat();
+
+    /**
      * Append some SQL to the context's contained {@link StringBuilder}.
      */
     @NotNull
     C sql(float sql);
+
+    /**
+     * A formatter to produce scientific notation for {@link Double} types.
+     */
+    DecimalFormat doubleFormat();
 
     /**
      * Append some SQL to the context's contained {@link StringBuilder}.

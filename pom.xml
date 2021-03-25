@@ -33,7 +33,7 @@
         <hsqldb.version>2.5.1</hsqldb.version>
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules -->
-        <postgres.version>42.2.18</postgres.version>
+        <postgres.version>42.2.19</postgres.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>2.3.1</jaxb.version>

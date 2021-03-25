@@ -11903,56 +11903,48 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Number parseUnsignedNumericLiteralIf(Sign sign) {
         int p = position();
-        char c;
+        boolean decimal = false;
+        parseDigits();
 
-        for (;;) {
-            c = character();
-            if (c >= '0' && c <= '9') {
-                positionInc();
-            }
-            else
-                break;
-        }
-
-        if (c == '.') {
-            positionInc();
-        }
-        else {
-            if (p == position())
-                return null;
-
-            String s = substring(p, position());
-            parseWhitespaceIf();
-            try {
-                return sign == Sign.MINUS
-                    ? -Long.valueOf(s)
-                    : Long.valueOf(s);
-            }
-            catch (Exception e1) {
-                return sign == Sign.MINUS
-                    ? new BigInteger(s).negate()
-                    : new BigInteger(s);
-            }
-        }
-
-        for (;;) {
-            c = character();
-            if (c >= '0' && c <= '9') {
-                positionInc();
-            }
-            else
-                break;
-        }
+        if (decimal |= parseIf('.', false))
+            parseDigits();
 
         if (p == position())
             return null;
 
-        String s = substring(p, position());
-        parseWhitespaceIf();
-        return sign == Sign.MINUS
-            ? new BigDecimal(s).negate()
-            : new BigDecimal(s);
-        // TODO add floating point support
+        if (parseIf('e', false) || parseIf('E', false)) {
+            parseIf('-', false);
+            parseDigits();
+
+            String s = substring(p, position());
+            parseWhitespaceIf();
+            return sign == Sign.MINUS ? -Double.parseDouble(s) : Double.parseDouble(s);
+        }
+        else {
+            String s = substring(p, position());
+            parseWhitespaceIf();
+
+            if (decimal)
+                return sign == Sign.MINUS ? new BigDecimal(s).negate() : new BigDecimal(s);
+
+            try {
+                return sign == Sign.MINUS ? -Long.valueOf(s) : Long.valueOf(s);
+            }
+            catch (Exception e1) {
+                return sign == Sign.MINUS ? new BigInteger(s).negate() : new BigInteger(s);
+            }
+        }
+    }
+
+    private void parseDigits() {
+        for (;;) {
+            char c = character();
+
+            if (c >= '0' && c <= '9')
+                positionInc();
+            else
+                break;
+        }
     }
 
     private final Field<Integer> parseZeroOne() {
@@ -12089,15 +12081,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     @Override
     public final Long parseUnsignedIntegerLiteralIf() {
         int p = position();
-
-        for (;;) {
-            char c = character();
-
-            if (c >= '0' && c <= '9')
-                positionInc();
-            else
-                break;
-        }
+        parseDigits();
 
         if (p == position())
             return null;

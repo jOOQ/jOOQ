@@ -54,6 +54,7 @@ import java.util.Map;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.Tools.Cache;
 import org.jooq.tools.JooqLogger;
@@ -126,11 +127,19 @@ final class ParsingConnection extends DefaultConnection {
                 return new CacheValue(configuration, sql, bindValues);
             },
             CacheType.CACHE_PARSING_CONNECTION,
-            () -> Cache.key(sql, asList(dataTypes(bindValues)))
+            () -> Cache.key(sql, asList(dataTypes(nonNull(bindValues))))
         ).rendered(bindValues);
 
         log.debug("Translating to", result.sql);
         return result;
+    }
+
+    private static Param<?>[] nonNull(Param<?>[] bindValues) {
+        for (int i = 0; i < bindValues.length; i++)
+            if (bindValues[i] == null)
+                throw new DataAccessException("Bind value at position " + i + " not set");
+
+        return bindValues;
     }
 
     @Override

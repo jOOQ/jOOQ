@@ -89,8 +89,10 @@ import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.R2DBC.BlockingSubscription;
-import org.jooq.impl.R2DBC.RecordSubscription;
+import org.jooq.impl.R2DBC.BlockingRecordSubscription;
+import org.jooq.impl.R2DBC.ConnectionSubscriber;
+import org.jooq.impl.R2DBC.QuerySubscription;
+import org.jooq.impl.R2DBC.ResultSubscriber;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
 
@@ -338,9 +340,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
         ConnectionFactory cf = configuration().connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new RecordSubscription<R>(this, subscriber));
+            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (AbstractResultQuery<R> t, ConnectionSubscriber<R, R, AbstractResultQuery<R>> u) -> new ResultSubscriber<>(t, u)));
         else
-            subscriber.onSubscribe(new BlockingSubscription<>(this, subscriber));
+            subscriber.onSubscribe(new BlockingRecordSubscription<>(this, subscriber));
     }
 
     @Override

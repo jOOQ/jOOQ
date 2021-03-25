@@ -40,6 +40,12 @@ package org.jooq.impl;
 import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.RowCountQuery;
+import org.jooq.impl.R2DBC.BlockingRowCountSubscription;
+import org.jooq.impl.R2DBC.ConnectionSubscriber;
+import org.jooq.impl.R2DBC.QuerySubscription;
+import org.jooq.impl.R2DBC.RowCountSubscriber;
+
+import io.r2dbc.spi.ConnectionFactory;
 
 /**
  * @author Lukas Eder
@@ -55,36 +61,22 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
         super(configuration);
     }
 
+
+
+
+
+
+
+
+
+
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super Integer> subscriber) {
-        subscriber.onSubscribe(new org.reactivestreams.Subscription() {
-            Integer rows;
+        ConnectionFactory cf = configuration().connectionFactory();
 
-            @Override
-            public void request(long n) {
-                try {
-                    if (rows == null)
-                        subscriber.onNext(rows = execute());
-                }
-                catch (Throwable t) {
-                    subscriber.onError(t);
-                }
-
-                subscriber.onComplete();
-            }
-
-            @Override
-            public void cancel() {
-            }
-        });
+        if (!(cf instanceof NoConnectionFactory))
+            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (AbstractRowCountQuery t, ConnectionSubscriber<Integer, Record, AbstractRowCountQuery> u) -> new RowCountSubscriber<>(t, u)));
+        else
+            subscriber.onSubscribe(new BlockingRowCountSubscription(this, subscriber));
     }
-
-
-
-
-
-
-
-
-
 }

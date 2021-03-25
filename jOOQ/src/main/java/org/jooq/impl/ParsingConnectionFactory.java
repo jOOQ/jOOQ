@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.nCopies;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ParsingConnection.translate;
 import static org.jooq.impl.R2DBC.setParamType;
@@ -44,13 +45,9 @@ import static org.jooq.impl.Tools.EMPTY_PARAM;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.jooq.Configuration;
 import org.jooq.Param;
-import org.jooq.conf.ParamType;
-import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 
 import org.reactivestreams.Publisher;
@@ -100,22 +97,22 @@ final class ParsingConnectionFactory implements ConnectionFactory {
         }
 
         @Override
-        public void onSubscribe(Subscription s) {
+        public final void onSubscribe(Subscription s) {
             subscriber.onSubscribe(s);
         }
 
         @Override
-        public void onNext(Connection c) {
+        public final void onNext(Connection c) {
             subscriber.onNext(new ParsingR2DBCConnection(c));
         }
 
         @Override
-        public void onError(Throwable t) {
+        public final void onError(Throwable t) {
             subscriber.onError(t);
         }
 
         @Override
-        public void onComplete() {
+        public final void onComplete() {
             subscriber.onComplete();
         }
     }
@@ -128,82 +125,82 @@ final class ParsingConnectionFactory implements ConnectionFactory {
         }
 
         @Override
-        public Publisher<Void> beginTransaction() {
+        public final Publisher<Void> beginTransaction() {
             return delegate.beginTransaction();
         }
 
         @Override
-        public Publisher<Void> beginTransaction(TransactionDefinition definition) {
+        public final Publisher<Void> beginTransaction(TransactionDefinition definition) {
             return delegate.beginTransaction(definition);
         }
 
         @Override
-        public Publisher<Void> close() {
+        public final Publisher<Void> close() {
             return delegate.close();
         }
 
         @Override
-        public Publisher<Void> commitTransaction() {
+        public final Publisher<Void> commitTransaction() {
             return delegate.commitTransaction();
         }
 
         @Override
-        public Publisher<Void> createSavepoint(String name) {
+        public final Publisher<Void> createSavepoint(String name) {
             return delegate.createSavepoint(name);
         }
 
         @Override
-        public boolean isAutoCommit() {
+        public final boolean isAutoCommit() {
             return delegate.isAutoCommit();
         }
 
         @Override
-        public ConnectionMetadata getMetadata() {
+        public final ConnectionMetadata getMetadata() {
             return delegate.getMetadata();
         }
 
         @Override
-        public IsolationLevel getTransactionIsolationLevel() {
+        public final IsolationLevel getTransactionIsolationLevel() {
             return delegate.getTransactionIsolationLevel();
         }
 
         @Override
-        public Publisher<Void> releaseSavepoint(String name) {
+        public final Publisher<Void> releaseSavepoint(String name) {
             return delegate.releaseSavepoint(name);
         }
 
         @Override
-        public Publisher<Void> rollbackTransaction() {
+        public final Publisher<Void> rollbackTransaction() {
             return delegate.rollbackTransaction();
         }
 
         @Override
-        public Publisher<Void> rollbackTransactionToSavepoint(String name) {
+        public final Publisher<Void> rollbackTransactionToSavepoint(String name) {
             return delegate.rollbackTransactionToSavepoint(name);
         }
 
         @Override
-        public Publisher<Void> setAutoCommit(boolean autoCommit) {
+        public final Publisher<Void> setAutoCommit(boolean autoCommit) {
             return delegate.setAutoCommit(autoCommit);
         }
 
         @Override
-        public Publisher<Void> setTransactionIsolationLevel(IsolationLevel isolationLevel) {
+        public final Publisher<Void> setTransactionIsolationLevel(IsolationLevel isolationLevel) {
             return delegate.setTransactionIsolationLevel(isolationLevel);
         }
 
         @Override
-        public Publisher<Boolean> validate(ValidationDepth depth) {
+        public final Publisher<Boolean> validate(ValidationDepth depth) {
             return delegate.validate(depth);
         }
 
         @Override
-        public Batch createBatch() {
+        public final Batch createBatch() {
             return new ParsingR2DBCBatch(delegate.createBatch());
         }
 
         @Override
-        public Statement createStatement(String sql) {
+        public final Statement createStatement(String sql) {
             return new ParsingR2DBCStatement(delegate, sql);
         }
     }
@@ -216,70 +213,80 @@ final class ParsingConnectionFactory implements ConnectionFactory {
         }
 
         @Override
-        public Batch add(String sql) {
+        public final Batch add(String sql) {
             delegate.add(translate(configuration, sql).sql);
             return this;
         }
 
         @Override
-        public Publisher<? extends Result> execute() {
+        public final Publisher<? extends Result> execute() {
             return delegate.execute();
         }
     }
 
     private final class ParsingR2DBCStatement implements Statement {
-        private final Connection                   delegate;
-        private final String                       input;
-        private final List<Map<Integer, Param<?>>> params;
+        private final Connection           delegate;
+        private final String               input;
+        private final List<List<Param<?>>> params;
 
         private ParsingR2DBCStatement(Connection delegate, String input) {
             this.delegate = delegate;
             this.input = input;
             this.params = new ArrayList<>();
 
-            params.add(new TreeMap<>());
+            params.add(new ArrayList<>());
+        }
+
+        private final List<Param<?>> list(int index) {
+            List<Param<?>> list = params.get(params.size() - 1);
+
+            int reserve = index + 1 - list.size();
+            if (reserve > 0)
+                list.addAll(nCopies(reserve, null));
+
+            return list;
         }
 
         @Override
-        public Statement add() {
-            params.add(new TreeMap<>());
+        public final Statement add() {
+            params.add(new ArrayList<>());
             return this;
         }
 
         @Override
-        public Statement bind(int index, Object value) {
-            params.get(params.size() - 1).put(index, val(value));
+        public final Statement bind(int index, Object value) {
+            list(index).set(index, val(value));
             return this;
         }
 
         @Override
-        public Statement bind(String name, Object value) {
+        public final Statement bind(String name, Object value) {
             // TODO
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public Statement bindNull(int index, Class<?> type) {
-            params.get(params.size() - 1).put(index, val(null, type));
+        public final Statement bindNull(int index, Class<?> type) {
+            list(index).set(index, val(null, type));
             return this;
         }
 
         @Override
-        public Statement bindNull(String name, Class<?> type) {
+        public final Statement bindNull(String name, Class<?> type) {
             // TODO
             throw new UnsupportedOperationException();
         }
 
         @SuppressWarnings("null")
         @Override
-        public Publisher<? extends Result> execute() {
+        public final Publisher<? extends Result> execute() {
             Statement statement = null;
 
-            for (Map<Integer, Param<?>> p : params) {
+            for (List<Param<?>> p : params) {
                 if (statement != null)
                     statement.add();
 
-                Rendered rendered = translate(configuration, input, p.values().toArray(EMPTY_PARAM));
+                Rendered rendered = translate(configuration, input, p.toArray(EMPTY_PARAM));
 
                 if (statement == null)
                     statement = delegate.createStatement(rendered.sql);

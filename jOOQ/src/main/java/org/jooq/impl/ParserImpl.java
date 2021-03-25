@@ -6961,7 +6961,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (N.is(type) && r instanceof Field)
             for (;;)
-                if (!peek("^=") && parseIf('^'))
+                if (!peek("^=") && parseIf('^') || parseIf("**"))
                     r = ((Field) r).pow(toField(parseUnaryOps(type)));
                 else
                     break;

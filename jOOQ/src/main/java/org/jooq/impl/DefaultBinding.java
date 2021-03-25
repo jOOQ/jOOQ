@@ -214,6 +214,7 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.Cast.CastNative;
+import org.jooq.impl.R2DBC.R2DBCPreparedStatement;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.Longs;
@@ -953,7 +954,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         /* non-final */ void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
-            ctx.statement().setNull(ctx.index(), sqltype(ctx.statement(), ctx.configuration()));
+            if (ctx.statement() instanceof R2DBCPreparedStatement)
+                ((R2DBCPreparedStatement) ctx.statement()).setNull(ctx.index(), dataType);
+            else
+                ctx.statement().setNull(ctx.index(), sqltype(ctx.statement(), ctx.configuration()));
         }
 
         /* non-final */ void register0(BindingRegisterContext<U> ctx) throws SQLException {

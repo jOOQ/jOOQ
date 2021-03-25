@@ -43,6 +43,7 @@ import static org.jooq.tools.Convert.convert;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigDecimal;
+import java.sql.Array;
 import java.sql.Date;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -74,6 +75,7 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;
+import org.jooq.tools.jdbc.MockArray;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -359,6 +361,10 @@ final class R2DBC {
             bindNull(parameterIndex, type(sqlType));
         }
 
+        public final void setNull(int parameterIndex, DataType<?> dataType) {
+            bindNull(parameterIndex, dataType.getType());
+        }
+
         @Override
         public final void setBoolean(int parameterIndex, boolean x) throws SQLException {
             bindNonNull(parameterIndex, x);
@@ -584,6 +590,11 @@ final class R2DBC {
         @Override
         public final <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
             return nullable(columnIndex, type);
+        }
+
+        @Override
+        public final Array getArray(int columnIndex) throws SQLException {
+            return new MockArray<>(c.dialect(), (Object[]) nullable(columnIndex, Object.class), Object[].class);
         }
     }
 

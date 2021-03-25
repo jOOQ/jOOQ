@@ -108,27 +108,27 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID                  = -5588344253566055707L;
-    private static final JooqLogger          log                               = JooqLogger.getLogger(AbstractResultQuery.class);
+    private static final long              serialVersionUID                  = -5588344253566055707L;
+    private static final JooqLogger        log                               = JooqLogger.getLogger(AbstractResultQuery.class);
 
-    private static final Set<SQLDialect>     REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>   REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES);
 
-    private int                              maxRows;
-    private int                              fetchSize;
-    private int                              resultSetConcurrency;
-    private int                              resultSetType;
-    private int                              resultSetHoldability;
-    private Table<?>                         coerceTable;
-    private Collection<? extends Field<?>>   coerceFields;
-    private transient boolean                lazy;
-    private transient boolean                many;
-    private transient Cursor<R>              cursor;
-    private transient boolean                autoclosing           = true;
-    private Result<R>                        result;
-    private ResultsImpl                      results;
+    private int                            maxRows;
+    private int                            fetchSize;
+    private int                            resultSetConcurrency;
+    private int                            resultSetType;
+    private int                            resultSetHoldability;
+    private Table<?>                       coerceTable;
+    private Collection<? extends Field<?>> coerceFields;
+    private transient boolean              lazy;
+    private transient boolean              many;
+    private transient Cursor<R>            cursor;
+    private transient boolean              autoclosing                       = true;
+    private Result<R>                      result;
+    private ResultsImpl                    results;
 
     // Some temp variables for String interning
-    private final Intern                     intern                = new Intern();
+    private final Intern                   intern                            = new Intern();
 
     AbstractResultQuery(Configuration configuration) {
         super(configuration);
@@ -179,6 +179,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
     public final ResultQuery<R> fetchSize(int rows) {
         this.fetchSize = rows;
         return this;
+    }
+
+    final int fetchSize() {
+        return fetchSize;
     }
 
     @Override

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ParsingConnection.translate;
+import static org.jooq.impl.R2DBC.setParamType;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 
 import java.util.ArrayList;
@@ -75,10 +76,7 @@ final class ParsingConnectionFactory implements ConnectionFactory {
 
     ParsingConnectionFactory(Configuration configuration) {
         this.configuration = configuration.derive();
-        this.configuration.set(SettingsTools.clone(configuration.settings())
-            .withParseNamedParamPrefix("$")
-            .withRenderNamedParamPrefix("$")
-            .withParamType(ParamType.NAMED));
+        this.configuration.set(setParamType(configuration.dialect(), configuration.settings()));
     }
 
     @Override

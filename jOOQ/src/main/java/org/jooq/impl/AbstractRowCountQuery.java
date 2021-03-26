@@ -49,6 +49,8 @@ import org.jooq.impl.R2DBC.ConnectionSubscriber;
 import org.jooq.impl.R2DBC.QuerySubscription;
 import org.jooq.impl.R2DBC.RowCountSubscriber;
 
+import org.reactivestreams.Subscriber;
+
 import io.r2dbc.spi.ConnectionFactory;
 
 /**
@@ -75,11 +77,11 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
 
 
     @Override
-    public final void subscribe(org.reactivestreams.Subscriber<? super Integer> subscriber) {
+    public final void subscribe(Subscriber<? super Integer> subscriber) {
         ConnectionFactory cf = configuration().connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, RowCountSubscriber::new));
+            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u) -> new RowCountSubscriber(t, u)));
         else
             subscriber.onSubscribe(new BlockingRowCountSubscription(this, subscriber));
     }

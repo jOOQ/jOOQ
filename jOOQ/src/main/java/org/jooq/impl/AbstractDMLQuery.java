@@ -103,6 +103,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Instant;
@@ -1290,5 +1291,15 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                     return field;
 
         return null;
+    }
+
+    @Override
+    final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
+        return returningResolvedAsterisks.toArray(EMPTY_FIELD);
+    }
+
+    @Override
+    final Class<? extends Record> getRecordType() {
+        return Tools.recordType(returningResolvedAsterisks.size());
     }
 }

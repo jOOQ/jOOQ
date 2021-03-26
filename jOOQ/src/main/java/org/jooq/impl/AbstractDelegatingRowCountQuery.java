@@ -37,16 +37,19 @@
  */
 package org.jooq.impl;
 
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 // ...
 
 import org.jooq.Fetchable;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RowCountQuery;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDelegatingRowCountQuery<R extends Record, Q extends RowCountQuery>
+abstract class AbstractDelegatingRowCountQuery<R extends Record, Q extends AbstractRowCountQuery>
     extends AbstractDelegatingQuery<R, Q>
     implements RowCountQuery {
 
@@ -71,5 +74,16 @@ abstract class AbstractDelegatingRowCountQuery<R extends Record, Q extends RowCo
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super Integer> subscriber) {
         getDelegate().subscribe(subscriber);
+    }
+
+    @Override
+    final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
+        return getDelegate().getFields(rs);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    final Class<? extends R> getRecordType() {
+        return (Class<? extends R>) getDelegate().getRecordType();
     }
 }

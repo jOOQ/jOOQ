@@ -143,7 +143,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class CreateTableImpl extends AbstractRowCountQuery implements
+final class CreateTableImpl extends AbstractDDLQuery implements
 
     // Cascading interface implementations for CREATE TABLE behaviour
     CreateTableWithDataStep,

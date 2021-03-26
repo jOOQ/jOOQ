@@ -136,11 +136,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
         super(configuration);
     }
 
-    /**
-     * Get a list of fields provided a result set.
-     */
-    protected abstract Field<?>[] getFields(ResultSetMetaData rs) throws SQLException;
-
     @SuppressWarnings("unchecked")
     @Override
     public final ResultQuery<R> bind(String param, Object value) {
@@ -340,7 +335,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
         ConnectionFactory cf = configuration().connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (AbstractResultQuery<R> t, ConnectionSubscriber<R, R, AbstractResultQuery<R>> u) -> new ResultSubscriber<>(t, u)));
+            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, ResultSubscriber::new));
         else
             subscriber.onSubscribe(new BlockingRecordSubscription<>(this, subscriber));
     }
@@ -406,7 +401,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
     }
 
     abstract Class<? extends R> getRecordType0();
-
 
     @Override
     public final Result<R> getResult() {

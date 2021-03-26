@@ -97,45 +97,45 @@ final class R2DBC {
 
     static final class SendResultUpstream<T> implements Subscriber<T> {
 
-        final ConnectionSubscriber<T, ?, ?> upstream;
-        Subscription                        subscription;
+        final QuerySubscription<T, ?, ?> upstream;
+        Subscription                     subscription;
 
-        SendResultUpstream(ConnectionSubscriber<T, ?, ?> s) {
-            this.upstream = s;
+        SendResultUpstream(QuerySubscription<T, ?, ?> upstream) {
+            this.upstream = upstream;
         }
 
         @Override
         public final void onSubscribe(Subscription s) {
             this.subscription = s;
-            subscription.request(upstream.upstream.requested.getAndSet(0L));
+            subscription.request(upstream.requested.getAndSet(0L));
         }
 
         @Override
         public final void onNext(T value) {
-            upstream.upstream.subscriber.onNext(value);
+            upstream.subscriber.onNext(value);
 
-            long more = upstream.upstream.requested.getAndSet(0L);
+            long more = upstream.requested.getAndSet(0L);
             if (more > 0)
                 subscription.request(more);
         }
 
         @Override
         public final void onError(Throwable t) {
-            upstream.onError(t);
+            upstream.subscriber.onError(t);
         }
 
         @Override
         public final void onComplete() {
-            upstream.upstream.subscriber.onComplete();
+            upstream.subscriber.onComplete();
         }
     }
 
-    static final class RowCountSubscriber<R extends Record, Q extends AbstractQuery<R>> implements Subscriber<Result> {
+    static final class RowCountSubscriber implements Subscriber<Result> {
 
-        final Q                                   query;
-        final ConnectionSubscriber<Integer, R, Q> upstream;
+        final AbstractQuery<?>                         query;
+        final QuerySubscription<? super Integer, ?, ?> upstream;
 
-        RowCountSubscriber(Q query, ConnectionSubscriber<Integer, R, Q> upstream) {
+        RowCountSubscriber(AbstractQuery<?> query, QuerySubscription<? super Integer, ?, ?> upstream) {
             this.query = query;
             this.upstream = upstream;
         }
@@ -152,19 +152,19 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            upstream.onError(t);
+            upstream.subscriber.onError(t);
         }
 
         @Override
         public final void onComplete() {}
     }
 
-    static final class ResultSubscriber<R extends Record, Q extends AbstractResultQuery<R>> implements Subscriber<Result> {
+    static final class ResultSubscriber<R extends Record, Q extends AbstractFetchable<R>> implements Subscriber<Result> {
 
-        final Q                             query;
-        final ConnectionSubscriber<R, R, Q> upstream;
+        final Q                                  query;
+        final QuerySubscription<? super R, R, Q> upstream;
 
-        ResultSubscriber(Q query, ConnectionSubscriber<R, R, Q> upstream) {
+        ResultSubscriber(Q query, QuerySubscription<? super R, R, Q> upstream) {
             this.query = query;
             this.upstream = upstream;
         }
@@ -219,23 +219,23 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            upstream.onError(t);
+            upstream.subscriber.onError(t);
         }
 
         @Override
         public final void onComplete() {}
     }
 
-    static final class ConnectionSubscriber<T, R extends Record, Q extends AbstractQuery<R>> implements Subscriber<Connection> {
+    static final class ConnectionSubscriber<T, R extends Record, Q extends AbstractFetchable<R>> implements Subscriber<Connection> {
 
-        final Q                                                                query;
-        final QuerySubscription<T, R, Q>                                       upstream;
-        final BiFunction<Q, ConnectionSubscriber<T, R, Q>, Subscriber<Result>> resultSubscriber;
+        final Q                                                             query;
+        final QuerySubscription<T, R, Q>                                    upstream;
+        final BiFunction<Q, QuerySubscription<T, R, Q>, Subscriber<Result>> resultSubscriber;
 
         ConnectionSubscriber(
             Q query,
             QuerySubscription<T, R, Q> upstream,
-            BiFunction<Q, ConnectionSubscriber<T, R, Q>, Subscriber<Result>> resultSubscriber
+            BiFunction<Q, QuerySubscription<T, R, Q>, Subscriber<Result>> resultSubscriber
         ) {
             this.query = query;
             this.upstream = upstream;
@@ -269,7 +269,7 @@ final class R2DBC {
                     }
                 }
 
-                stmt.execute().subscribe(resultSubscriber.apply(query, this));
+                stmt.execute().subscribe(resultSubscriber.apply(query, upstream));
             }
 
             // TODO: More specific error handling
@@ -287,29 +287,27 @@ final class R2DBC {
         public final void onComplete() {}
     }
 
-    static final class QuerySubscription<T, R extends Record, Q extends AbstractQuery<R>> implements Subscription {
-        final Q                                                                query;
-        final Subscriber<? super T>                                            subscriber;
-        final BiFunction<Q, ConnectionSubscriber<T, R, Q>, Subscriber<Result>> resultSubscriber;
-        final AtomicLong                                                       requested;
-        final Publisher<? extends Connection>                                  connection;
+    static final class QuerySubscription<T, R extends Record, Q extends AbstractFetchable<R>> implements Subscription {
+        final Subscriber<? super T>           subscriber;
+        final AtomicLong                      requested;
+        final Publisher<? extends Connection> connection;
+        final ConnectionSubscriber<T, R, Q>   connectionSubscriber;
 
         QuerySubscription(
             Q query,
             Subscriber<? super T> subscriber,
-            BiFunction<Q, ConnectionSubscriber<T, R, Q>, Subscriber<Result>> resultSubscriber
+            BiFunction<Q, QuerySubscription<T, R, Q>, Subscriber<Result>> resultSubscriber
         ) {
-            this.query = query;
             this.subscriber = subscriber;
-            this.resultSubscriber = resultSubscriber;
             this.requested = new AtomicLong();
             this.connection = query.configuration().connectionFactory().create();
+            this.connectionSubscriber = new ConnectionSubscriber<>(query, this, resultSubscriber);
         }
 
         @Override
         public final void request(long n) {
             requested.getAndAdd(n);
-            connection.subscribe(new ConnectionSubscriber<>(query, this, resultSubscriber));
+            connection.subscribe(connectionSubscriber);
         }
 
         @Override
@@ -825,12 +823,12 @@ final class R2DBC {
     // -------------------------------------------------------------------------
 
     static final class BlockingRecordSubscription<R extends Record> implements Subscription {
-        private final AbstractResultQuery<R> query;
-        private final Subscriber<? super R>  subscriber;
-        private Cursor<R>                    c;
-        private ArrayDeque<R>                buffer;
+        private final AbstractFetchable<R>  query;
+        private final Subscriber<? super R> subscriber;
+        private Cursor<R>                   c;
+        private ArrayDeque<R>               buffer;
 
-        BlockingRecordSubscription(AbstractResultQuery<R> query, Subscriber<? super R> subscriber) {
+        BlockingRecordSubscription(AbstractFetchable<R> query, Subscriber<? super R> subscriber) {
             this.query = query;
             this.subscriber = subscriber;
         }

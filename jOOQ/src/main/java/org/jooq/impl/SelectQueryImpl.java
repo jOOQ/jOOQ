@@ -832,7 +832,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    protected final Field<?>[] getFields(ResultSetMetaData meta) {
+    final Field<?>[] getFields(ResultSetMetaData meta) {
         Collection<? extends Field<?>> fields = coerce();
 
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()
@@ -4108,7 +4108,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @SuppressWarnings("rawtypes")
-    private final Select<R> combine(CombineOperator op, Select<? extends R> other) {
+    private final SelectQueryImpl<R> combine(CombineOperator op, Select<? extends R> other) {
 
         // [#8557] Prevent StackOverflowError when using same query instance on
         //         both sides of a set operation
@@ -4129,32 +4129,32 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final Select<R> union(Select<? extends R> other) {
+    public final SelectQueryImpl<R> union(Select<? extends R> other) {
         return combine(UNION, other);
     }
 
     @Override
-    public final Select<R> unionAll(Select<? extends R> other) {
+    public final SelectQueryImpl<R> unionAll(Select<? extends R> other) {
         return combine(UNION_ALL, other);
     }
 
     @Override
-    public final Select<R> except(Select<? extends R> other) {
+    public final SelectQueryImpl<R> except(Select<? extends R> other) {
         return combine(EXCEPT, other);
     }
 
     @Override
-    public final Select<R> exceptAll(Select<? extends R> other) {
+    public final SelectQueryImpl<R> exceptAll(Select<? extends R> other) {
         return combine(EXCEPT_ALL, other);
     }
 
     @Override
-    public final Select<R> intersect(Select<? extends R> other) {
+    public final SelectQueryImpl<R> intersect(Select<? extends R> other) {
         return combine(INTERSECT, other);
     }
 
     @Override
-    public final Select<R> intersectAll(Select<? extends R> other) {
+    public final SelectQueryImpl<R> intersectAll(Select<? extends R> other) {
         return combine(INTERSECT_ALL, other);
     }
 

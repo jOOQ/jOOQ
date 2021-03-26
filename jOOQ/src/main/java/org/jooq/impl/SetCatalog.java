@@ -62,7 +62,7 @@ import java.util.*;
 @SuppressWarnings({ "unused" })
 final class SetCatalog
 extends
-    AbstractRowCountQuery
+    AbstractDDLQuery
 {
 
     private static final long serialVersionUID = 1L;

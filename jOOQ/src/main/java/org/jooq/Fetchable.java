@@ -64,6 +64,7 @@ import org.jooq.impl.DefaultRecordMapper;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.reactivestreams.Publisher;
 
 public interface Fetchable<R extends Record> extends Iterable<R> {
 
@@ -305,6 +306,15 @@ public interface Fetchable<R extends Record> extends Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      */
     <X, A> X collect(Collector<? super R, A, X> collector) throws DataAccessException;
+
+    /**
+     * Execute this query reactively producing results via a {@link Publisher}.
+     * <p>
+     * If an R2DBC {@link Configuration#connectionFactory()} is configured, that
+     * is used to produce the publisher. Otherwise, a blocking, JDBC backed
+     * publisher is created.
+     */
+    Publisher<? extends R> publisher();
 
     /**
      * Execute the query and "lazily" return the generated result.

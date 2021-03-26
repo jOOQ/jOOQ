@@ -93,7 +93,7 @@ import org.jooq.conf.ParamType;
 /**
  * @author Lukas Eder
  */
-final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery implements
+final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
 
     // Cascading interface implementations for CREATE VIEW behaviour
     CreateViewAsStep<R>,

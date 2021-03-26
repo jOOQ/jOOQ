@@ -41,6 +41,8 @@ import static org.jooq.impl.Tools.blocking;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +69,13 @@ import org.jooq.Results;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.R2DBC.BlockingRecordSubscription;
+import org.jooq.impl.R2DBC.QuerySubscription;
+import org.jooq.impl.R2DBC.ResultSubscriber;
+
+import org.reactivestreams.Publisher;
+
+import io.r2dbc.spi.ConnectionFactory;
 
 abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart implements Fetchable<R>, Attachable {
 
@@ -94,6 +103,12 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
     public /* non-final */ Results fetchMany() throws DataAccessException {
         throw new DataAccessException("Attempt to call fetchMany() on " + getClass());
     }
+
+    /**
+     * Get a list of fields provided a result set.
+     */
+    abstract Field<?>[] getFields(ResultSetMetaData rs) throws SQLException;
+    abstract Class<? extends R> getRecordType();
 
     /* non-final */ Cursor<R> fetchLazyNonAutoClosing() {
         return fetchLazy();
@@ -144,6 +159,16 @@ abstract class AbstractFetchable<R extends Record> extends AbstractQueryPart imp
         try (Cursor<R> c = fetchLazyNonAutoClosing()) {
             return c.collect(collector);
         }
+    }
+
+    @Override
+    public final Publisher<R> publisher() {
+        ConnectionFactory cf = configuration().connectionFactory();
+
+        if (!(cf instanceof NoConnectionFactory))
+            return subscriber -> subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, ResultSubscriber::new));
+        else
+            return subscriber -> subscriber.onSubscribe(new BlockingRecordSubscription<>(this, subscriber));
     }
 
     @Override

@@ -180,7 +180,7 @@
             <dependency>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>org.eclipse.xtend.lib</artifactId>
-                <version>2.22.0</version>
+                <version>2.25.0</version>
             </dependency>
 
             <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->

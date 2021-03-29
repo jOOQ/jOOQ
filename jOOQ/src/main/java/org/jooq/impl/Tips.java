@@ -70,7 +70,12 @@ final class Tips {
         "To version control jOOQ generated code or not? There are pros and cons to both approaches: https://www.jooq.org/doc/latest/manual/code-generation/codegen-version-control/",
         "While you don't have to use jOOQ's code generator, there are *lots* of awesome features you're missing out on if you're not using it!",
         "A NoClassDefFoundError or ClassNotFoundException is often a sign that your jOOQ code is generated with a different version of jOOQ than runtime library you're using",
-        "The logical order of SELECT operations doesn't match the lexical (syntactic) order of operations. Learn more about this here: https://blog.jooq.org/2016/12/09/a-beginners-guide-to-the-true-order-of-sql-operations/"
+        "The logical order of SELECT operations doesn't match the lexical (syntactic) order of operations. Learn more about this here: https://blog.jooq.org/2016/12/09/a-beginners-guide-to-the-true-order-of-sql-operations/",
+        "If you must be using OFFSET pagination (you probably shouldn't!), then do it right, and without extra round trips: https://blog.jooq.org/2021/03/11/calculating-pagination-metadata-without-extra-roundtrips-in-sql/",
+        "Keyset pagination is usually a faster and more useful way to paginate than OFFSET, and jOOQ supports it out of the box via the synthetic SEEK clause: https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/select-statement/seek-clause/",
+        "Want to learn more about SQL? Check out our many blog posts: https://blog.jooq.org/sql",
+        "You don't *have to* map SQL results to POJOs if you're consuming XML or JSON in the end. Generate the XML or JSON directly in SQL, instead! https://blog.jooq.org/2019/11/13/stop-mapping-stuff-in-your-middleware-use-sqls-xml-or-json-operators-instead/",
+        ""
     };
 
     static String randomTip() {

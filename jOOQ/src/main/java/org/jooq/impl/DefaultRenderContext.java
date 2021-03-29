@@ -965,6 +965,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                    "\n                                      ");
         }
 
+        if (!Boolean.getBoolean("org.jooq.no-tips")) {
+            JooqLogger l = JooqLogger.getLogger(Constants.class);
+
+            l.info("\n\njOOQ tip of the day: " + Tips.randomTip() + "\n");
+        }
+
     }
 
     /**

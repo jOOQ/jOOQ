@@ -37,11 +37,13 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigDecimal;
+import java.nio.ByteBuffer;
 import java.sql.Array;
 import java.sql.Date;
 import java.sql.ResultSetMetaData;
@@ -71,6 +73,7 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultRenderContext.Rendered;
+import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;
@@ -544,6 +547,11 @@ final class R2DBC {
             return wasNull ? null : conversion.apply(t);
         }
 
+        private final <U> U nullable(int columnIndex, Function<? super Object, ? extends U> conversion) {
+            Object t = wasNull(r.get(columnIndex - 1));
+            return wasNull ? null : conversion.apply(t);
+        }
+
         private final <T> T nonNull(int columnIndex, Class<T> type, T nullValue) {
             T t = wasNull(r.get(columnIndex - 1, type));
             return wasNull ? nullValue : t;
@@ -601,6 +609,13 @@ final class R2DBC {
 
         @Override
         public final byte[] getBytes(int columnIndex) throws SQLException {
+
+
+
+
+
+
+
             return nullable(columnIndex, byte[].class);
         }
 

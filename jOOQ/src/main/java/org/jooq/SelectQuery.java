@@ -79,8 +79,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
-
-import org.jetbrains.annotations.NotNull;
+import org.jooq.impl.DSL;
 
 /**
  * A <code>SELECT</code> statement (model API).
@@ -539,6 +538,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support
     void addOption(String option);
+
+
+
 
 
 

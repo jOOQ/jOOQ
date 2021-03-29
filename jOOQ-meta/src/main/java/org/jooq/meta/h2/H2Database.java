@@ -664,6 +664,9 @@ public class H2Database extends AbstractDatabase {
             .and(DOMAINS.TYPE_NAME.ne(inline("ENUM")))
             .orderBy(DOMAINS.DOMAIN_SCHEMA, DOMAINS.DOMAIN_NAME)
         ) {
+            // [#7644] [#11721] H2 puts DATETIME_PRECISION in NUMERIC_SCALE column
+            boolean isTimestamp = record.get(DOMAINS.TYPE_NAME).trim().toLowerCase().startsWith("timestamp");
+
             SchemaDefinition schema = getSchema(record.get(DOMAINS.DOMAIN_SCHEMA));
 
             DataTypeDefinition baseType = new DefaultDataTypeDefinition(
@@ -671,8 +674,12 @@ public class H2Database extends AbstractDatabase {
                 schema,
                 record.get(DOMAINS.TYPE_NAME),
                 record.get(DOMAINS.PRECISION),
-                record.get(DOMAINS.PRECISION),
-                record.get(DOMAINS.SCALE),
+                isTimestamp
+                    ? record.get(DOMAINS.SCALE)
+                    : record.get(DOMAINS.PRECISION),
+                isTimestamp
+                    ? 0
+                    : record.get(DOMAINS.SCALE),
                !record.get(DOMAINS.IS_NULLABLE, boolean.class),
                 record.get(DOMAINS.COLUMN_DEFAULT)
             );

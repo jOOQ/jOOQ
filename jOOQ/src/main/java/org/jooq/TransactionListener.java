@@ -37,10 +37,8 @@
  */
 package org.jooq;
 
-import java.io.Serializable;
 import java.util.function.Consumer;
 
-import org.jooq.impl.CallbackRecordListener;
 import org.jooq.impl.CallbackTransactionListener;
 
 /**

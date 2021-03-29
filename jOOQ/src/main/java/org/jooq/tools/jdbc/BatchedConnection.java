@@ -41,7 +41,6 @@ import static java.util.Collections.emptyMap;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.sql.CallableStatement;
-import java.sql.ClientInfoStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLClientInfoException;
@@ -49,7 +48,6 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Savepoint;
 import java.sql.Statement;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;

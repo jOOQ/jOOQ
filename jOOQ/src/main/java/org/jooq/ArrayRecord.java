@@ -123,7 +123,3 @@ package org.jooq;
 
 
 
-
-
-
-

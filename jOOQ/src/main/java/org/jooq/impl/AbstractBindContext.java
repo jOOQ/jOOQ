@@ -37,11 +37,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.visitAll;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collection;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
@@ -49,8 +46,6 @@ import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.exception.DataAccessException;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A base class for {@link BindContext} implementations

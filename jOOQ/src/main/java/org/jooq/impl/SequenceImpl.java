@@ -343,7 +343,7 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
     @Override
     public boolean equals(Object that) {
         if (that instanceof SequenceImpl)
-            return getQualifiedName().equals(((SequenceImpl) that).getQualifiedName());
+            return getQualifiedName().equals(((SequenceImpl<?>) that).getQualifiedName());
         else
             return super.equals(that);
     }

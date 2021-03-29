@@ -143,4 +143,3 @@ package org.jooq;
 
 
 
-

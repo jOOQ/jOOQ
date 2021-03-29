@@ -62,7 +62,15 @@ final class Tips {
         "Most formats that can be exported can be imported again: https://www.jooq.org/doc/latest/manual/sql-execution/importing/",
         "If you're using the code generator, you can profit from jOOQ's very useful implicit join syntax: https://blog.jooq.org/2018/02/20/type-safe-implicit-join-through-path-navigation-in-jooq-3-11/",
         "Synthetic primary keys / foreign keys are very helpful when working with views: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-synthetic-objects/codegen-database-synthetic-fks/",
-        "An 'example' record can be turned into a predicate using the Query By Example (QBE) API, i.e. the DSL.condition(Record) method: https://www.jooq.org/doc/latest/manual/sql-building/conditional-expressions/query-by-example/"
+        "An 'example' record can be turned into a predicate using the Query By Example (QBE) API, i.e. the DSL.condition(Record) method: https://www.jooq.org/doc/latest/manual/sql-building/conditional-expressions/query-by-example/",
+        "When working with jOOQ and JPA, you can generate your jOOQ code also from your JPA entities rather than a live database: https://www.jooq.org/doc/latest/manual/code-generation/codegen-jpa/",
+        "The jOOQ code generator doesn't have to connect to a live database. It can reverse engineer your DDL scripts (e.g. the Flyway ones), too, if you're not using anything too fancy vendor specific: https://www.jooq.org/doc/latest/manual/code-generation/codegen-ddl/",
+        "The jOOQ code generator can generate code from an XML representation of your schema: https://www.jooq.org/doc/latest/manual/code-generation/codegen-xml/",
+        "If you're using Liquibase to migrate your schema, the jOOQ code generator can simulate a Liquibase migration to produce its generated code, rather than connecting to an actual database: https://www.jooq.org/doc/latest/manual/code-generation/codegen-liquibase/",
+        "To version control jOOQ generated code or not? There are pros and cons to both approaches: https://www.jooq.org/doc/latest/manual/code-generation/codegen-version-control/",
+        "While you don't have to use jOOQ's code generator, there are *lots* of awesome features you're missing out on if you're not using it!",
+        "A NoClassDefFoundError or ClassNotFoundException is often a sign that your jOOQ code is generated with a different version of jOOQ than runtime library you're using",
+        "The logical order of SELECT operations doesn't match the lexical (syntactic) order of operations. Learn more about this here: https://blog.jooq.org/2016/12/09/a-beginners-guide-to-the-true-order-of-sql-operations/"
     };
 
     static String randomTip() {

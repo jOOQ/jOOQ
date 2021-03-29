@@ -92,7 +92,28 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(function(N_TO_DATE, getDataType(), value, formatMask));
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(function(N_TO_DATE, getDataType(), value, formatMask));
+                break;
+        }
     }
 
 

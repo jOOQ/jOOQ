@@ -62,21 +62,12 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
         super(configuration);
     }
 
-
-
-
-
-
-
-
-
-
     @Override
     public final void subscribe(Subscriber<? super Integer> subscriber) {
         ConnectionFactory cf = configuration().connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u) -> new RowCountSubscriber(t, u)));
+            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u) -> new RowCountSubscriber(u, 1)));
         else
             subscriber.onSubscribe(new BlockingRowCountSubscription(this, subscriber));
     }

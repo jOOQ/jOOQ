@@ -314,15 +314,6 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
         }
     }
 
-
-
-
-
-
-
-
-
-
     @Override
     default void subscribe(Subscriber<? super R> subscriber) {
         ConnectionFactory cf = configuration().connectionFactory();

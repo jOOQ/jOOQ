@@ -46,6 +46,12 @@ import org.jooq.ExecuteListener;
 import org.jooq.Query;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.impl.R2DBC.BatchMultipleSubscription;
+import org.jooq.impl.R2DBC.RowCountSubscriber;
+
+import org.reactivestreams.Subscriber;
+
+import io.r2dbc.spi.ConnectionFactory;
 
 /**
  * @author Lukas Eder
@@ -55,9 +61,9 @@ final class BatchMultiple extends AbstractBatch {
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = -7337667281292354043L;
+    private static final long serialVersionUID = -7337667281292354043L;
 
-    private final Query[]       queries;
+    final Query[]             queries;
 
     public BatchMultiple(Configuration configuration, Query... queries) {
         super(configuration);
@@ -68,6 +74,18 @@ final class BatchMultiple extends AbstractBatch {
     @Override
     public final int size() {
         return queries.length;
+    }
+
+    @Override
+    public final void subscribe(Subscriber<? super Integer> subscriber) {
+        ConnectionFactory cf = configuration.connectionFactory();
+
+        if (!(cf instanceof NoConnectionFactory))
+            subscriber.onSubscribe(new BatchMultipleSubscription(this, subscriber, (t, u) -> new RowCountSubscriber(u, queries.length)));
+
+        // TODO: [#11700] Implement this
+        else
+            throw new UnsupportedOperationException();
     }
 
     @Override

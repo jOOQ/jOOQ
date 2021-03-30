@@ -67,7 +67,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  * @see Statement#executeBatch()
  */
-public interface Batch extends Serializable {
+public interface Batch extends Serializable, Publisher<Integer> {
 
     /**
      * Execute the batch operation.

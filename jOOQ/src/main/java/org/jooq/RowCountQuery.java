@@ -37,19 +37,12 @@
  */
 package org.jooq;
 
-// ...
-
 /**
  * Any query that is not a {@link ResultQuery}, and thus possibly produces a row
  * count as a result, instead of a {@link Result}.
  *
  * @author Lukas Eder
  */
-public interface RowCountQuery
-extends
-    Query
-  , org.reactivestreams.Publisher<Integer>
-    
-{
+public interface RowCountQuery extends Query, Publisher<Integer> {
 
 }

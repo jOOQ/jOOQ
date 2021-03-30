@@ -47,6 +47,8 @@ import org.jooq.Batch;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 
+import org.reactivestreams.Subscriber;
+
 /**
  * @author Lukas Eder
  */
@@ -62,6 +64,13 @@ abstract class AbstractBatch implements Batch {
     AbstractBatch(Configuration configuration) {
         this.configuration = configuration;
         this.dsl = DSL.using(configuration);
+    }
+
+    @Override
+    public void subscribe(Subscriber<? super Integer> s) {
+
+        // [#11700] TODO: Implement this
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -126,7 +126,7 @@ implements
     @Override
     public final Result<R> fetch() {
         delegate.execute();
-        return (Result<R>) (returningResult ? delegate.getResult() : delegate.getReturnedRecords());
+        return getResult();
     }
 
     @Override
@@ -196,7 +196,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        delegate.accept(ctx);
+        ctx.visit(delegate);
     }
 
     @Override
@@ -206,7 +206,7 @@ implements
 
     @Override
     public final Result<R> getResult() {
-        return null;
+        return (Result<R>) (returningResult ? delegate.getResult() : delegate.getReturnedRecords());
     }
 
     @Override

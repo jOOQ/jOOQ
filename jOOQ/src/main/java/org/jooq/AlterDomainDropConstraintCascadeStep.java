@@ -71,13 +71,13 @@ public interface AlterDomainDropConstraintCascadeStep extends AlterDomainFinalSt
      * Add the <code>CASCADE</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterDomainFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ FIREBIRD, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterDomainFinalStep restrict();
 }

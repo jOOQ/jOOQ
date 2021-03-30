@@ -71,13 +71,13 @@ public interface CreateDomainAsStep {
      * Add the <code>AS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     <T> CreateDomainDefaultStep<T> as(Class<T> dataType);
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     <T> CreateDomainDefaultStep<T> as(DataType<T> dataType);
 }

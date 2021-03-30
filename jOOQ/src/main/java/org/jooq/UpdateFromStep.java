@@ -91,21 +91,21 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     UpdateWhereStep<R> from(TableLike<?> table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     UpdateWhereStep<R> from(TableLike<?>... table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     UpdateWhereStep<R> from(Collection<? extends TableLike<?>> tables);
 
@@ -120,7 +120,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see DSL#table(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     @PlainSQL
     UpdateWhereStep<R> from(SQL sql);
@@ -136,7 +136,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see DSL#table(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     @PlainSQL
     UpdateWhereStep<R> from(String sql);
@@ -153,7 +153,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     @PlainSQL
     UpdateWhereStep<R> from(String sql, Object... bindings);
@@ -170,7 +170,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     @PlainSQL
     UpdateWhereStep<R> from(String sql, QueryPart... parts);
@@ -180,7 +180,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      *
      * @see DSL#table(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     UpdateWhereStep<R> from(Name name);
 }

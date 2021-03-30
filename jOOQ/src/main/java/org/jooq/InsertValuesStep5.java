@@ -62,35 +62,35 @@ public interface InsertValuesStep5<R extends Record, T1, T2, T3, T4, T5> extends
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep5<R, T1, T2, T3, T4, T5> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5);
 
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep5<R, T1, T2, T3, T4, T5> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5);
 
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep5<R, T1, T2, T3, T4, T5> values(Collection<?> values);
 
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep5<R, T1, T2, T3, T4, T5> values(Row5<T1, T2, T3, T4, T5> values);
 
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep5<R, T1, T2, T3, T4, T5> values(Record5<T1, T2, T3, T4, T5> values);
 
@@ -100,7 +100,7 @@ public interface InsertValuesStep5<R extends Record, T1, T2, T3, T4, T5> extends
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @SuppressWarnings("unchecked")
     InsertValuesStep5<R, T1, T2, T3, T4, T5> valuesOfRows(Row5<T1, T2, T3, T4, T5>... values);
@@ -111,7 +111,7 @@ public interface InsertValuesStep5<R extends Record, T1, T2, T3, T4, T5> extends
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep5<R, T1, T2, T3, T4, T5> valuesOfRows(Collection<? extends Row5<T1, T2, T3, T4, T5>> values);
 
@@ -121,7 +121,7 @@ public interface InsertValuesStep5<R extends Record, T1, T2, T3, T4, T5> extends
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @SuppressWarnings("unchecked")
     InsertValuesStep5<R, T1, T2, T3, T4, T5> valuesOfRecords(Record5<T1, T2, T3, T4, T5>... values);
@@ -132,7 +132,7 @@ public interface InsertValuesStep5<R extends Record, T1, T2, T3, T4, T5> extends
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep5<R, T1, T2, T3, T4, T5> valuesOfRecords(Collection<? extends Record5<T1, T2, T3, T4, T5>> values);
 
@@ -145,7 +145,7 @@ public interface InsertValuesStep5<R extends Record, T1, T2, T3, T4, T5> extends
      * <code>INTO</code> clause:
      * {@link DSLContext#insertInto(Table, Field, Field, Field, Field, Field)}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertOnDuplicateStep<R> select(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 }

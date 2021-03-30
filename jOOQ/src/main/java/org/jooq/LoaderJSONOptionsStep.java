@@ -55,7 +55,7 @@ public interface LoaderJSONOptionsStep<R extends Record> extends LoaderListenerS
      * @deprecated - [#4859] - This is not supported for JSON loading.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     LoaderJSONOptionsStep<R> ignoreRows(int number);
 }

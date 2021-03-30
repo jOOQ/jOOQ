@@ -79,14 +79,14 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
     /**
      * Add the <code>DO UPDATE</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**
      * Add the <code>DO NOTHING</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertReturningStep<R> doNothing();
 }

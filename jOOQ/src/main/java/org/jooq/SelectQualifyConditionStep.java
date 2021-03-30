@@ -108,7 +108,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> and(Condition condition);
 
@@ -116,7 +116,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> and(Field<Boolean> condition);
 
@@ -132,7 +132,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectQualifyConditionStep<R> and(SQL sql);
@@ -149,7 +149,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectQualifyConditionStep<R> and(String sql);
@@ -167,7 +167,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectQualifyConditionStep<R> and(String sql, Object... bindings);
@@ -185,7 +185,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectQualifyConditionStep<R> and(String sql, QueryPart... parts);
@@ -194,7 +194,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> andNot(Condition condition);
 
@@ -202,7 +202,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> andNot(Field<Boolean> condition);
 
@@ -210,7 +210,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> andExists(Select<?> select);
 
@@ -218,7 +218,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> andNotExists(Select<?> select);
 
@@ -226,7 +226,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> or(Condition condition);
 
@@ -234,7 +234,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> or(Field<Boolean> condition);
 
@@ -250,7 +250,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectQualifyConditionStep<R> or(SQL sql);
@@ -267,7 +267,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectQualifyConditionStep<R> or(String sql);
@@ -285,7 +285,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectQualifyConditionStep<R> or(String sql, Object... bindings);
@@ -303,7 +303,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectQualifyConditionStep<R> or(String sql, QueryPart... parts);
@@ -312,7 +312,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> orNot(Condition condition);
 
@@ -320,7 +320,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> orNot(Field<Boolean> condition);
 
@@ -328,7 +328,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> orExists(Select<?> select);
 
@@ -336,7 +336,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQualifyConditionStep<R> orNotExists(Select<?> select);
 }

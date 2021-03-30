@@ -77,21 +77,21 @@ public interface LoaderCSVOptionsStep<R extends Record> extends LoaderListenerSt
      *
      * @param number The number of rows to ignore.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     LoaderCSVOptionsStep<R> ignoreRows(int number);
 
     /**
      * Specify the quote character. By default, this is <code>"</code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     LoaderCSVOptionsStep<R> quote(char quote);
 
     /**
      * Specify the separator character. By default, this is <code>,</code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     LoaderCSVOptionsStep<R> separator(char separator);
 
@@ -108,7 +108,7 @@ public interface LoaderCSVOptionsStep<R extends Record> extends LoaderListenerSt
      * overridden with something like <code>{null}</code>, for instance, then
      * empty strings will also be loaded as such by jOOQ.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     LoaderCSVOptionsStep<R> nullString(String nullString);
 }

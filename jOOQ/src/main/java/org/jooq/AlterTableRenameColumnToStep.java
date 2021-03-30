@@ -98,21 +98,21 @@ public interface AlterTableRenameColumnToStep {
     /**
      * Specify a new column name.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep to(Field<?> newName);
 
     /**
      * Specify a new column name.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep to(Name newName);
 
     /**
      * Specify a new column name.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep to(String newName);
 }

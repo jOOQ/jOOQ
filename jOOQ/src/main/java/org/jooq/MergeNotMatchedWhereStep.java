@@ -95,7 +95,7 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2 })
     MergeFinalStep<R> where(Condition condition);
 
@@ -108,7 +108,7 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2 })
     MergeFinalStep<R> where(Field<Boolean> condition);
 }

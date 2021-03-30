@@ -417,7 +417,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
     @Override
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Result<R> getReturnedRecords();
 

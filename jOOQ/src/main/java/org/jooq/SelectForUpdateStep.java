@@ -134,7 +134,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      *
      * @see SelectQuery#setForUpdate(boolean)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectForUpdateOfStep<R> forUpdate();
 
@@ -143,7 +143,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      *
      * @see SelectQuery#setForShare(boolean)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     SelectForUpdateOfStep<R> forNoKeyUpdate();
 
@@ -152,7 +152,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      *
      * @see SelectQuery#setForShare(boolean)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     SelectForUpdateOfStep<R> forShare();
 
@@ -161,7 +161,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
      *
      * @see SelectQuery#setForShare(boolean)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     SelectForUpdateOfStep<R> forKeyShare();
 

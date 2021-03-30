@@ -62,35 +62,35 @@ public interface InsertValuesStep16<R extends Record, T1, T2, T3, T4, T5, T6, T7
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16);
 
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16);
 
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values(Collection<?> values);
 
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values);
 
     /**
      * Add a single row of values to the insert statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> values);
 
@@ -100,7 +100,7 @@ public interface InsertValuesStep16<R extends Record, T1, T2, T3, T4, T5, T6, T7
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @SuppressWarnings("unchecked")
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> valuesOfRows(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... values);
@@ -111,7 +111,7 @@ public interface InsertValuesStep16<R extends Record, T1, T2, T3, T4, T5, T6, T7
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> valuesOfRows(Collection<? extends Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> values);
 
@@ -121,7 +121,7 @@ public interface InsertValuesStep16<R extends Record, T1, T2, T3, T4, T5, T6, T7
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @SuppressWarnings("unchecked")
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> valuesOfRecords(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... values);
@@ -132,7 +132,7 @@ public interface InsertValuesStep16<R extends Record, T1, T2, T3, T4, T5, T6, T7
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> valuesOfRecords(Collection<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> values);
 
@@ -145,7 +145,7 @@ public interface InsertValuesStep16<R extends Record, T1, T2, T3, T4, T5, T6, T7
      * <code>INTO</code> clause:
      * {@link DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertOnDuplicateStep<R> select(Select<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 }

@@ -75,7 +75,7 @@ public interface AlterIndexStep {
      * DSLContext#alterTable(String)} with {@link AlterTableStep#renameIndex(String)} instead.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterIndexFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
@@ -86,7 +86,7 @@ public interface AlterIndexStep {
      * DSLContext#alterTable(String)} with {@link AlterTableStep#renameIndex(String)} instead.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterIndexFinalStep renameTo(Name renameTo);
 
     /**
@@ -97,6 +97,6 @@ public interface AlterIndexStep {
      * DSLContext#alterTable(String)} with {@link AlterTableStep#renameIndex(String)} instead.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterIndexFinalStep renameTo(Index renameTo);
 }

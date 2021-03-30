@@ -118,7 +118,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      *
      * @see SelectQuery#setForLockModeWait(int)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, POSTGRES })
     SelectForStep<R> wait(int seconds);
 
@@ -128,7 +128,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      *
      * @see SelectQuery#setForLockModeNoWait()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     SelectForStep<R> noWait();
 
@@ -138,7 +138,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      *
      * @see SelectQuery#setForLockModeSkipLocked()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MYSQL, POSTGRES })
     SelectForStep<R> skipLocked();
 }

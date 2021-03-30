@@ -79,7 +79,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     CreateTableCommentStep onCommitDeleteRows();
 
@@ -91,7 +91,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     CreateTableCommentStep onCommitPreserveRows();
 
@@ -103,7 +103,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     CreateTableCommentStep onCommitDrop();
 }

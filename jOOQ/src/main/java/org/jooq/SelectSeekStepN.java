@@ -133,7 +133,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Object...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSeekLimitStep<R> seek(Object... values);
 
@@ -186,7 +186,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Field...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSeekLimitStep<R> seek(Field<?>... fields);
 
@@ -238,7 +238,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSeekLimitStep<R> seekAfter(Object... values);
 
@@ -290,7 +290,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSeekLimitStep<R> seekAfter(Field<?>... fields);
 
@@ -343,7 +343,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @Deprecated
     SelectSeekLimitStep<R> seekBefore(Object... values);
@@ -397,7 +397,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @Deprecated
     SelectSeekLimitStep<R> seekBefore(Field<?>... fields);

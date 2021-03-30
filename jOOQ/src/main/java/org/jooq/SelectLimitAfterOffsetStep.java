@@ -135,7 +135,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
      * function and nested <code>SELECT</code> statements.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectLimitPercentAfterOffsetStep<R> limit(int numberOfRows);
 
@@ -146,7 +146,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
      * function and nested <code>SELECT</code> statements.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectLimitPercentAfterOffsetStep<R> limit(Number numberOfRows);
 
@@ -162,7 +162,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
      * statements.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectLimitPercentAfterOffsetStep<R> limit(Param<? extends Number> numberOfRows);
 

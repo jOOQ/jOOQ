@@ -124,7 +124,7 @@ public interface SelectWithTiesAfterOffsetStep<R extends Record> extends SelectF
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
     SelectForUpdateStep<R> withTies();
 }

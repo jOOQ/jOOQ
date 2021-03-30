@@ -71,62 +71,62 @@ public interface AlterTypeStep {
      * Add the <code>RENAME TO</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>SET SCHEMA</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep setSchema(@Stringly.Name String setSchema);
 
     /**
      * Add the <code>SET SCHEMA</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep setSchema(Name setSchema);
 
     /**
      * Add the <code>SET SCHEMA</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep setSchema(Schema setSchema);
 
     /**
      * Add the <code>ADD VALUE</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep addValue(@Stringly.Param String addValue);
 
     /**
      * Add the <code>ADD VALUE</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep addValue(Field<String> addValue);
 
     /**
      * Add the <code>RENAME VALUE</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeRenameValueToStep renameValue(@Stringly.Param String renameValue);
 
     /**
      * Add the <code>RENAME VALUE</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeRenameValueToStep renameValue(Field<String> renameValue);
 }

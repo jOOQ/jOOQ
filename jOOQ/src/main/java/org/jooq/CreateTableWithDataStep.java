@@ -93,14 +93,14 @@ public interface CreateTableWithDataStep extends CreateTableOnCommitStep {
     /**
      * Add a <code>WITH DATA</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableCommentStep withData();
 
     /**
      * Add a <code>WITH DATA</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableCommentStep withNoData();
 }

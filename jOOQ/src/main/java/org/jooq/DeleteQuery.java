@@ -223,7 +223,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *         keys from the JDBC driver.</li>
      *         </ul>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, POSTGRES })
     Result<R> getReturnedRecords();
 

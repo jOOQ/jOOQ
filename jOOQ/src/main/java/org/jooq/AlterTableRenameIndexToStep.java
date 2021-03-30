@@ -86,21 +86,21 @@ public interface AlterTableRenameIndexToStep {
     /**
      * Specify a new index name.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep to(String newName);
 
     /**
      * Specify a new index name.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep to(Name newName);
 
     /**
      * Specify a new index name.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep to(Index newName);
 

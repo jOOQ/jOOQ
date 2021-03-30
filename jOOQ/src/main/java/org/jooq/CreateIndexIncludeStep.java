@@ -74,7 +74,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * be put in the index as ordinary columns, making the index a composite index.
      */
     @Support
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexWhereStep include(String... include);
 
     /**
@@ -84,7 +84,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * be put in the index as ordinary columns, making the index a composite index.
      */
     @Support
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexWhereStep include(Name... include);
 
     /**
@@ -94,7 +94,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * be put in the index as ordinary columns, making the index a composite index.
      */
     @Support
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexWhereStep include(Field<?>... include);
 
     /**
@@ -104,6 +104,6 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * be put in the index as ordinary columns, making the index a composite index.
      */
     @Support
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexWhereStep include(Collection<? extends Field<?>> include);
 }

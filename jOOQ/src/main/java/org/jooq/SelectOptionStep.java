@@ -132,7 +132,7 @@ public interface SelectOptionStep<R extends Record> extends SelectUnionStep<R> {
      * @see Table#with(String)
      * @see SelectQuery#addOption(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectUnionStep<R> option(String string);
 }

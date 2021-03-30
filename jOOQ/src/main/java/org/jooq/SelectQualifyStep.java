@@ -133,7 +133,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * Add a <code>QUALIFY</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectQualifyConditionStep<R> qualify(Condition condition);
 
@@ -141,7 +141,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * Add a <code>QUALIFY</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectQualifyConditionStep<R> qualify(Condition... conditions);
 
@@ -149,14 +149,14 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * Add a <code>QUALIFY</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectQualifyConditionStep<R> qualify(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>QUALIFY</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectQualifyConditionStep<R> qualify(Field<Boolean> condition);
 
@@ -171,7 +171,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(SQL sql);
@@ -187,7 +187,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql);
@@ -204,7 +204,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql, Object... bindings);
@@ -221,7 +221,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql, QueryPart... parts);

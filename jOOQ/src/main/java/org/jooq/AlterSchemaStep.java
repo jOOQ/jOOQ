@@ -71,20 +71,20 @@ public interface AlterSchemaStep {
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code> statement.
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterSchemaFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code> statement.
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterSchemaFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code> statement.
      */
     @Support({ H2, HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterSchemaFinalStep renameTo(Schema renameTo);
 }

@@ -71,20 +71,20 @@ public interface AlterDomainRenameConstraintStep {
      * Add the <code>TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterDomainFinalStep to(@Stringly.Name String renameConstraintTo);
 
     /**
      * Add the <code>TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterDomainFinalStep to(Name renameConstraintTo);
 
     /**
      * Add the <code>TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterDomainFinalStep to(Constraint renameConstraintTo);
 }

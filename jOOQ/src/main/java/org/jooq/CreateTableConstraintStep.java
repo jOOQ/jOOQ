@@ -94,21 +94,21 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
     /**
      * Add a constraint to the table.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep constraint(Constraint constraint);
 
     /**
      * Add constraints to the table.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep constraints(Constraint... constraints);
 
     /**
      * Add constraints to the table.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep constraints(Collection<? extends Constraint> constraints);
 
@@ -119,7 +119,7 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
      * This does the same as adding {@link DSL#primaryKey(String...)} via
      * {@link #constraint(Constraint)} explicitly.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep primaryKey(String... fields);
 
@@ -130,7 +130,7 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
      * This does the same as adding {@link DSL#primaryKey(Name...)} via
      * {@link #constraint(Constraint)} explicitly.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep primaryKey(Name... fields);
 
@@ -141,7 +141,7 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
      * This does the same as adding {@link DSL#primaryKey(Field...)} via
      * {@link #constraint(Constraint)} explicitly.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep primaryKey(Field<?>... fields);
 
@@ -152,7 +152,7 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
      * This does the same as adding {@link DSL#unique(String...)} via
      * {@link #constraint(Constraint)} explicitly.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep unique(String... fields);
 
@@ -163,7 +163,7 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
      * This does the same as adding {@link DSL#unique(Name...)} via
      * {@link #constraint(Constraint)} explicitly.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep unique(Name... fields);
 
@@ -174,7 +174,7 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
      * This does the same as adding {@link DSL#unique(Field...)} via
      * {@link #constraint(Constraint)} explicitly.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep unique(Field<?>... fields);
 
@@ -185,7 +185,7 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
      * This does the same as adding {@link DSL#check(Condition)} via
      * {@link #constraint(Constraint)} explicitly.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableConstraintStep check(Condition condition);
 }

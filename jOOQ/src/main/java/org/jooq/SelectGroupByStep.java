@@ -110,7 +110,7 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
      * Calling this with an empty argument list will result in an empty
      * <code>GROUP BY ()</code> clause being rendered.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectHavingStep<R> groupBy(GroupField... fields);
 
@@ -120,7 +120,7 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
      * Calling this with an empty argument list will result in an empty
      * <code>GROUP BY ()</code> clause being rendered.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectHavingStep<R> groupBy(Collection<? extends GroupField> fields);
 }

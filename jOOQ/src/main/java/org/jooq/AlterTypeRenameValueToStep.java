@@ -71,13 +71,13 @@ public interface AlterTypeRenameValueToStep {
      * Add the <code>TO</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep to(@Stringly.Param String renameValueTo);
 
     /**
      * Add the <code>TO</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterTypeFinalStep to(Field<String> renameValueTo);
 }

@@ -134,7 +134,7 @@ public interface SelectIntoStep<R extends Record> extends SelectFromStep<R> {
      * Add a T-SQL style <code>INTO</code> clause to the <code>SELECT</code>
      * statement to create a new table from a <code>SELECT</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectFromStep<Record> into(Table<?> table);
 

@@ -109,21 +109,21 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> from(TableLike<?> table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> from(TableLike<?>... tables);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> from(Collection<? extends TableLike<?>> tables);
 
@@ -138,7 +138,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectJoinStep<R> from(SQL sql);
@@ -154,7 +154,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectJoinStep<R> from(String sql);
@@ -171,7 +171,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectJoinStep<R> from(String sql, Object... bindings);
@@ -188,7 +188,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectJoinStep<R> from(String sql, QueryPart... parts);
@@ -198,7 +198,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see DSL#table(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> from(Name name);
 
@@ -232,7 +232,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#with(String)
      * @see SelectQuery#addHint(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectFromStep<R> hint(String hint);
 }

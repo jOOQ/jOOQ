@@ -55,7 +55,7 @@ public interface Loader<R extends Record> {
     /**
      * A list of errors that might have happened during the load.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     List<LoaderError> errors();
 
     /**
@@ -88,7 +88,7 @@ public interface Loader<R extends Record> {
     /**
      * The results that are also returned from {@link Loader}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     LoaderContext result();
 
 }

@@ -53,19 +53,19 @@ public interface LoaderContext {
      * Override the row that will be processed. Changing it has now effect on
      * the {@link LoaderListenerStep#onRowEnd(LoaderRowListener)} event.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     LoaderContext row(Object[] row);
 
     /**
      * The row that will be or has been processed.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Object[] row();
 
     /**
      * A list of errors that might have happened during the load.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     List<LoaderError> errors();
 
     /**

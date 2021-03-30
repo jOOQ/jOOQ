@@ -75,7 +75,7 @@ public interface LoaderLoadStep<R extends Record> {
      * <code>Loader</code> object. They can be accessed using
      * {@link Loader#errors()}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Loader<R> execute() throws IOException;
 }

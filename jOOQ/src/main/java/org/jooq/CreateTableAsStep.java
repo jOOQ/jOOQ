@@ -93,7 +93,7 @@ public interface CreateTableAsStep<R extends Record> {
     /**
      * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableWithDataStep as(Select<? extends R> select);
 }

@@ -71,13 +71,13 @@ public interface TruncateCascadeStep<R extends Record> extends TruncateFinalStep
      * Add the <code>CASCADE</code> clause to the <code>TRUNCATE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     TruncateFinalStep<R> cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>TRUNCATE</code> statement.
      */
     @Support({ POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     TruncateFinalStep<R> restrict();
 }

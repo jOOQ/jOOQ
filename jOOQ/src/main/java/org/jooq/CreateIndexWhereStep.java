@@ -71,28 +71,28 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      */
     @Support({ POSTGRES, SQLITE })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep where(Field<Boolean> where);
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      */
     @Support({ POSTGRES, SQLITE })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep where(Condition... where);
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      */
     @Support({ POSTGRES, SQLITE })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep where(Collection<? extends Condition> where);
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
      */
     @Support({ POSTGRES, SQLITE })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep where(Condition where);
 
     /**
@@ -102,7 +102,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      */
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep where(@Stringly.SQL String where, QueryPart... parts);
 
     /**
@@ -112,7 +112,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      */
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep where(@Stringly.SQL String where, Object... bindings);
 
     /**
@@ -122,7 +122,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      */
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep where(@Stringly.SQL String where);
 
     /**
@@ -132,13 +132,13 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      */
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep where(SQL where);
 
     /**
      * Add the <code>EXCLUDE NULL KEYS</code> clause to the <code>CREATE INDEX</code> statement.
      */
     @Support({ POSTGRES, SQLITE })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateIndexFinalStep excludeNullKeys();
 }

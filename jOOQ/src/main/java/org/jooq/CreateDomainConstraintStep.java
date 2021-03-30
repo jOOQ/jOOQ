@@ -71,13 +71,13 @@ public interface CreateDomainConstraintStep extends CreateDomainFinalStep {
      * Add the <code>CONSTRAINTS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateDomainConstraintStep constraints(Constraint... constraints);
 
     /**
      * Add the <code>CONSTRAINTS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateDomainConstraintStep constraints(Collection<? extends Constraint> constraints);
 }

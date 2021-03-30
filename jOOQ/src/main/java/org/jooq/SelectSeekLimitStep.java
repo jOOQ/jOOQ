@@ -130,7 +130,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
      * function and nested <code>SELECT</code> statements.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectForUpdateStep<R> limit(int numberOfRows);
 
@@ -141,7 +141,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
      * function and nested <code>SELECT</code> statements.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectForUpdateStep<R> limit(Number numberOfRows);
 
@@ -157,7 +157,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
      * statements.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectForUpdateStep<R> limit(Param<? extends Number> numberOfRows);
 

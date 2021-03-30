@@ -109,7 +109,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> and(Condition condition);
 
@@ -117,7 +117,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> and(Field<Boolean> condition);
 
@@ -133,7 +133,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> and(SQL sql);
@@ -150,7 +150,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> and(String sql);
@@ -168,7 +168,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> and(String sql, Object... bindings);
@@ -186,7 +186,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> and(String sql, QueryPart... parts);
@@ -195,7 +195,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> andNot(Condition condition);
 
@@ -203,7 +203,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> andNot(Field<Boolean> condition);
 
@@ -211,7 +211,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> andExists(Select<?> select);
 
@@ -219,7 +219,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> andNotExists(Select<?> select);
 
@@ -227,7 +227,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> or(Condition condition);
 
@@ -235,7 +235,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> or(Field<Boolean> condition);
 
@@ -251,7 +251,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> or(SQL sql);
@@ -268,7 +268,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> or(String sql);
@@ -286,7 +286,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> or(String sql, Object... bindings);
@@ -304,7 +304,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> or(String sql, QueryPart... parts);
@@ -313,7 +313,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> orNot(Condition condition);
 
@@ -321,7 +321,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> orNot(Field<Boolean> condition);
 
@@ -329,7 +329,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> orExists(Select<?> select);
 
@@ -337,7 +337,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> orNotExists(Select<?> select);
 

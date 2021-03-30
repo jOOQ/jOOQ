@@ -71,104 +71,104 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      * Add the <code>START WITH</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep startWith(Number startWith);
 
     /**
      * Add the <code>START WITH</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep startWith(Field<? extends Number> startWith);
 
     /**
      * Add the <code>INCREMENT BY</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep incrementBy(Number incrementBy);
 
     /**
      * Add the <code>INCREMENT BY</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep incrementBy(Field<? extends Number> incrementBy);
 
     /**
      * Add the <code>MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep minvalue(Number minvalue);
 
     /**
      * Add the <code>MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep minvalue(Field<? extends Number> minvalue);
 
     /**
      * Add the <code>NO MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep noMinvalue();
 
     /**
      * Add the <code>MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep maxvalue(Number maxvalue);
 
     /**
      * Add the <code>MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep maxvalue(Field<? extends Number> maxvalue);
 
     /**
      * Add the <code>NO MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep noMaxvalue();
 
     /**
      * Add the <code>CYCLE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep cycle();
 
     /**
      * Add the <code>NO CYCLE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep noCycle();
 
     /**
      * Add the <code>CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep cache(Number cache);
 
     /**
      * Add the <code>CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep cache(Field<? extends Number> cache);
 
     /**
      * Add the <code>NO CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CreateSequenceFlagsStep noCache();
 }

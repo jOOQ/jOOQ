@@ -80,7 +80,7 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStepN<R> key(Field<?>... keys);
 
@@ -90,7 +90,7 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStepN<R> key(Collection<? extends Field<?>> keys);
 }

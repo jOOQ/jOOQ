@@ -71,14 +71,14 @@ public interface DropTypeStep extends DropTypeFinalStep {
     /**
      * Add the <code>CASCADE</code> clause to the <code>DROP TYPE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP TYPE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeFinalStep restrict();
 }

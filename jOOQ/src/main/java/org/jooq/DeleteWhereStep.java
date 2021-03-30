@@ -81,7 +81,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
      * Add conditions to the query, connecting them with each other with
      * {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteConditionStep<R> where(Condition condition);
 
@@ -89,7 +89,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
      * Add conditions to the query, connecting them with each other with
      * {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteConditionStep<R> where(Condition... conditions);
 
@@ -97,14 +97,14 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
      * Add conditions to the query, connecting them with each other with
      * {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add conditions to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteConditionStep<R> where(Field<Boolean> condition);
 
@@ -119,7 +119,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     DeleteConditionStep<R> where(SQL sql);
@@ -135,7 +135,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     DeleteConditionStep<R> where(String sql);
@@ -152,7 +152,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     DeleteConditionStep<R> where(String sql, Object... bindings);
@@ -169,7 +169,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     DeleteConditionStep<R> where(String sql, QueryPart... parts);
@@ -177,14 +177,14 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
     /**
      * Add an EXISTS clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a NOT EXISTS clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteConditionStep<R> whereNotExists(Select<?> select);
 }

@@ -78,14 +78,14 @@ public interface DeleteOrderByStep<R extends Record> extends DeleteLimitStep<R> 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteLimitStep<R> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteLimitStep<R> orderBy(Collection<? extends OrderField<?>> fields);
 
@@ -98,7 +98,7 @@ public interface DeleteOrderByStep<R extends Record> extends DeleteLimitStep<R> 
      * <code>orderBy(DSL.literal(1).desc())</code> to apply descending
      * ordering
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DeleteLimitStep<R> orderBy(int... fieldIndexes);
 }

@@ -71,13 +71,13 @@ public interface CommentOnIsStep {
      * Add the <code>IS</code> clause to the <code>COMMENT ON TABLE</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CommentOnFinalStep is(@Stringly.Comment String comment);
 
     /**
      * Add the <code>IS</code> clause to the <code>COMMENT ON TABLE</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     CommentOnFinalStep is(Comment comment);
 }

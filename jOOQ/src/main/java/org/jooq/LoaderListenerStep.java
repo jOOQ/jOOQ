@@ -75,21 +75,21 @@ public interface LoaderListenerStep<R extends Record> extends LoaderLoadStep<R> 
      *             instead.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     LoaderLoadStep<R> onRow(LoaderRowListener listener);
 
     /**
      * Specify a listener that is invoked before a row is processed.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     LoaderLoadStep<R> onRowStart(LoaderRowListener listener);
 
     /**
      * Specify a listener that is invoked after a row has been processed.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     LoaderLoadStep<R> onRowEnd(LoaderRowListener listener);
 }

@@ -111,7 +111,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
      * </pre><code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedDeleteStep<R> where(Condition condition);
 
@@ -131,7 +131,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
      * </pre><code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedDeleteStep<R> where(Field<Boolean> condition);
 }

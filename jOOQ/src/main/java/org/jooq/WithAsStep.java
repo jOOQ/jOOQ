@@ -103,7 +103,7 @@ public interface WithAsStep {
      * Associate a subselect with a common table expression's table and column
      * names.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep as(Select<?> select);
 
@@ -115,7 +115,7 @@ public interface WithAsStep {
      * table expression definition, or silently ignores it, if the hint is not
      * supported.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep asMaterialized(Select<?> select);
 
@@ -127,7 +127,7 @@ public interface WithAsStep {
      * common table expression definition, or silently ignores it, if the hint
      * is not supported.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep asNotMaterialized(Select<?> select);
 

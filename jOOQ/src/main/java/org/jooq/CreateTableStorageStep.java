@@ -98,7 +98,7 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      *
      * @param sql The SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     CreateTableFinalStep storage(SQL sql);
@@ -134,7 +134,7 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      *
      * @param sql The SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     CreateTableFinalStep storage(String sql);
@@ -171,7 +171,7 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      * @param sql The SQL
      * @param bindings The bindings
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     CreateTableFinalStep storage(String sql, Object... bindings);
@@ -210,7 +210,7 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     CreateTableFinalStep storage(String sql, QueryPart... parts);

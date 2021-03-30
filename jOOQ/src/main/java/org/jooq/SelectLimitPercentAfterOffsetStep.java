@@ -109,7 +109,7 @@ public interface SelectLimitPercentAfterOffsetStep<R extends Record> extends Sel
     /**
      * Add the <code>PERCENT</code> clause to a <code>LIMIT</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2 })
     SelectWithTiesAfterOffsetStep<R> percent();
 }

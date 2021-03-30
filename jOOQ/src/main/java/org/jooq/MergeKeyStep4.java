@@ -70,7 +70,7 @@ public interface MergeKeyStep4<R extends Record, T1, T2, T3, T4> extends MergeVa
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStep4<R, T1, T2, T3, T4> key(Field<?>... keys);
 
@@ -83,7 +83,7 @@ public interface MergeKeyStep4<R extends Record, T1, T2, T3, T4> extends MergeVa
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStep4<R, T1, T2, T3, T4> key(Collection<? extends Field<?>> keys);
 }

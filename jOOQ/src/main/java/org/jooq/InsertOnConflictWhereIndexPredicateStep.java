@@ -90,7 +90,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * Add a <code>WHERE</code> clause to supply an index predicate to the
      * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictDoUpdateStep<R> where(Condition condition);
 
@@ -99,7 +99,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictDoUpdateStep<R> where(Condition... conditions);
 
@@ -108,7 +108,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictDoUpdateStep<R> where(Collection<? extends Condition> conditions);
 
@@ -116,7 +116,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * Add a <code>WHERE</code> clause to supply an index predicate to the
      * <code>INSERT</code> statement's <code>ON CONFLICT ...</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictDoUpdateStep<R> where(Field<Boolean> field);
 
@@ -132,7 +132,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(SQL sql);
@@ -149,7 +149,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql);
@@ -167,7 +167,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql, Object... bindings);
@@ -185,7 +185,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql, QueryPart... parts);

@@ -111,7 +111,7 @@ public interface SelectOnStep<R extends Record> {
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>,
      * connecting them with each other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectOnConditionStep<R> on(Condition condition);
 
@@ -119,14 +119,14 @@ public interface SelectOnStep<R extends Record> {
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>,
      * connecting them with each other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectOnConditionStep<R> on(Field<Boolean> condition);
 
@@ -141,7 +141,7 @@ public interface SelectOnStep<R extends Record> {
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectOnConditionStep<R> on(SQL sql);
@@ -157,7 +157,7 @@ public interface SelectOnStep<R extends Record> {
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectOnConditionStep<R> on(String sql);
@@ -174,7 +174,7 @@ public interface SelectOnStep<R extends Record> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectOnConditionStep<R> on(String sql, Object... bindings);
@@ -191,7 +191,7 @@ public interface SelectOnStep<R extends Record> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectOnConditionStep<R> on(String sql, QueryPart... parts);
@@ -206,7 +206,7 @@ public interface SelectOnStep<R extends Record> {
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> onKey() throws DataAccessException;
 
@@ -220,7 +220,7 @@ public interface SelectOnStep<R extends Record> {
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> onKey(TableField<?, ?>... keyFields) throws DataAccessException;
 
@@ -232,7 +232,7 @@ public interface SelectOnStep<R extends Record> {
      *
      * @see TableOnStep#onKey(ForeignKey)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> onKey(ForeignKey<?, ?> key);
 
@@ -243,7 +243,7 @@ public interface SelectOnStep<R extends Record> {
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> using(Field<?>... fields);
 
@@ -254,7 +254,7 @@ public interface SelectOnStep<R extends Record> {
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectJoinStep<R> using(Collection<? extends Field<?>> fields);
 }

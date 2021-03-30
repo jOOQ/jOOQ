@@ -80,14 +80,14 @@ public interface UpdateOrderByStep<R extends Record> extends UpdateLimitStep<R> 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     UpdateLimitStep<R> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     UpdateLimitStep<R> orderBy(Collection<? extends OrderField<?>> fields);
 
@@ -100,7 +100,7 @@ public interface UpdateOrderByStep<R extends Record> extends UpdateLimitStep<R> 
      * <code>orderBy(DSL.literal(1).desc())</code> to apply descending
      * ordering
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     UpdateLimitStep<R> orderBy(int... fieldIndexes);
 

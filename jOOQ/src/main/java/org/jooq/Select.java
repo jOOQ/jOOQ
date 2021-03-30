@@ -101,7 +101,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Select<R> union(Select<? extends R> select);
 
@@ -114,7 +114,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Select<R> unionAll(Select<? extends R> select);
 
@@ -127,7 +127,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     Select<R> except(Select<? extends R> select);
 
@@ -140,7 +140,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, HSQLDB, POSTGRES })
     Select<R> exceptAll(Select<? extends R> select);
 
@@ -153,7 +153,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     Select<R> intersect(Select<? extends R> select);
 
@@ -166,13 +166,13 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, HSQLDB, POSTGRES })
     Select<R> intersectAll(Select<? extends R> select);
 
     /**
      * All fields selected in this query
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     List<Field<?>> getSelect();
 }

@@ -108,14 +108,14 @@ public interface SelectSelectStep<R extends Record> extends SelectDistinctOnStep
     /**
      * Add additional fields to the <code>SELECT</code> clause of this query
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields);
 
     /**
      * Add additional fields to the <code>SELECT</code> clause of this query
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record> select(Collection<? extends SelectFieldOrAsterisk> fields);
 }

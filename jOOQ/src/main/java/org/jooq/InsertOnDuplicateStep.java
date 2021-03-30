@@ -103,21 +103,21 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Constraint constraint);
 
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Name constraint);
 
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(UniqueKey<R> constraint);
 
@@ -128,7 +128,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * native support for this clause. The other dialects can emulate it using
      * <code>MERGE</code>, if table meta data is available.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertOnConflictWhereIndexPredicateStep<R> onConflict(Field<?>... keys);
 
@@ -139,7 +139,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * native support for this clause. The other dialects can emulate it using
      * <code>MERGE</code>, if table meta data is available.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertOnConflictWhereIndexPredicateStep<R> onConflict(Collection<? extends Field<?>> keys);
 
@@ -150,7 +150,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * native support for this clause. The other dialects can emulate it using
      * <code>MERGE</code>, if table meta data is available.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertReturningStep<R> onConflictDoNothing();
 
@@ -174,7 +174,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <p>
      * H2 supports this clause in MySQL mode.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
@@ -224,7 +224,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * </tr>
      * </table>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertReturningStep<R> onDuplicateKeyIgnore();
 }

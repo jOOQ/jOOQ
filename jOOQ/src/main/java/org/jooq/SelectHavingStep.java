@@ -110,7 +110,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * Add a <code>HAVING</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectHavingConditionStep<R> having(Condition condition);
 
@@ -118,7 +118,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * Add a <code>HAVING</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectHavingConditionStep<R> having(Condition... conditions);
 
@@ -126,14 +126,14 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * Add a <code>HAVING</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectHavingConditionStep<R> having(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectHavingConditionStep<R> having(Field<Boolean> condition);
 
@@ -148,7 +148,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> having(SQL sql);
@@ -164,7 +164,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> having(String sql);
@@ -181,7 +181,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> having(String sql, Object... bindings);
@@ -198,7 +198,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> having(String sql, QueryPart... parts);

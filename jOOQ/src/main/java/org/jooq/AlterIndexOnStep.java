@@ -77,7 +77,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * reasons.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterIndexStep on(@Stringly.Name String on);
 
     /**
@@ -90,7 +90,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * reasons.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterIndexStep on(Name on);
 
     /**
@@ -103,6 +103,6 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * reasons.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterIndexStep on(Table<?> on);
 }

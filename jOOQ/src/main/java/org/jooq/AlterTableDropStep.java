@@ -78,7 +78,7 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
      * Add a <code>CASCADE</code> clause to the
      * <code>ALTER TABLE .. DROP</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, POSTGRES })
     AlterTableFinalStep cascade();
 
@@ -86,7 +86,7 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
      * Add a <code>RESTRICT</code> clause to the
      * <code>ALTER TABLE .. DROP</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, HSQLDB, POSTGRES })
     AlterTableFinalStep restrict();
 }

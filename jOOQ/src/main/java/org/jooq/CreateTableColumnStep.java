@@ -74,28 +74,28 @@ public interface CreateTableColumnStep extends CreateTableAsStep<Record>, Create
      * This is the same as calling {@link #column(Field, DataType)} with
      * {@link Field#getDataType()} as the argument data type.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep column(Field<?> field);
 
     /**
      * Add a column to the column list of the <code>CREATE TABLE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> CreateTableColumnStep column(Field<T> field, DataType<T> type);
 
     /**
      * Add a column to the column list of the <code>CREATE TABLE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep column(Name field, DataType<?> type);
 
     /**
      * Add a column to the column list of the <code>CREATE TABLE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep column(String field, DataType<?> type);
 
@@ -106,7 +106,7 @@ public interface CreateTableColumnStep extends CreateTableAsStep<Record>, Create
      * This is the same as calling {@link #column(Field, DataType)} for each
      * column, with {@link Field#getDataType()} as the argument data type.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep columns(Field<?>... fields);
 
@@ -118,7 +118,7 @@ public interface CreateTableColumnStep extends CreateTableAsStep<Record>, Create
      * column. Lacking an explicit data type, this makes sense only for a
      * <code>CREATE TABLE AS SELECT...</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep columns(Name... fields);
 
@@ -130,7 +130,7 @@ public interface CreateTableColumnStep extends CreateTableAsStep<Record>, Create
      * column. Lacking an explicit data type, this makes sense only for a
      * <code>CREATE TABLE AS SELECT...</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep columns(String... fields);
 
@@ -141,7 +141,7 @@ public interface CreateTableColumnStep extends CreateTableAsStep<Record>, Create
      * This is the same as calling {@link #column(Field, DataType)} for each
      * column, with {@link Field#getDataType()} as the argument data type.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep columns(Collection<? extends Field<?>> fields);
 }

@@ -98,7 +98,7 @@ public interface CreateViewAsStep<R extends Record> {
     /**
      * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewFinalStep as(Select<? extends R> select);
 
@@ -113,7 +113,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @param sql The SQL
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     CreateViewFinalStep as(SQL sql);
@@ -129,7 +129,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @param sql The SQL
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     CreateViewFinalStep as(String sql);
@@ -145,7 +145,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @param sql The SQL
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     CreateViewFinalStep as(String sql, Object... bindings);
@@ -161,7 +161,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @param sql The SQL
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     CreateViewFinalStep as(String sql, QueryPart... parts);

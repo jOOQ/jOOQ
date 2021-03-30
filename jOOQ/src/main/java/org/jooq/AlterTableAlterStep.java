@@ -98,7 +98,7 @@ public interface AlterTableAlterStep<T> {
      * <p>
      * This is an alias for {@link #default_(Object)}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep defaultValue(T literal);
 
@@ -107,42 +107,42 @@ public interface AlterTableAlterStep<T> {
      * <p>
      * This is an alias for {@link #default_(Field)}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep defaultValue(Field<T> expression);
 
     /**
      * Specify a new column <code>DEFAULT</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep default_(T literal);
 
     /**
      * Specify a new column <code>DEFAULT</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep default_(Field<T> expression);
 
     /**
      * Specify a new column <code>DEFAULT</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep setDefault(T literal);
 
     /**
      * Specify a new column <code>DEFAULT</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep setDefault(Field<T> expression);
 
     /**
      * Drop the column <code>DEFAULT</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep dropDefault();
 
@@ -153,21 +153,21 @@ public interface AlterTableAlterStep<T> {
      * {@link DataType#nullable()} is specified explicitly (not all databases
      * support this).
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep set(DataType<?> type);
 
     /**
      * Make the column <code>NOT NULL</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterTableFinalStep setNotNull();
 
     /**
      * Make the column nullable.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterTableFinalStep dropNotNull();
 }

@@ -71,20 +71,20 @@ public interface GrantOnStep {
      * Add the <code>ON</code> clause to the <code>GRANT</code> statement.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     GrantToStep on(@Stringly.Name String on);
 
     /**
      * Add the <code>ON</code> clause to the <code>GRANT</code> statement.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     GrantToStep on(Name on);
 
     /**
      * Add the <code>ON</code> clause to the <code>GRANT</code> statement.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     GrantToStep on(Table<?> on);
 }

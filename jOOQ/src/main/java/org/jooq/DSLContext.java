@@ -849,7 +849,7 @@ public interface DSLContext extends Scope {
      * Create a new <code>Loader</code> object to load data from a CSV or XML
      * source.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> LoaderOptionsStep<R> loadInto(Table<R> table);
 
@@ -862,7 +862,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#queries(Query...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Queries queries(Query... queries);
 
@@ -871,7 +871,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#queries(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Queries queries(Collection<? extends Query> queries);
 
@@ -880,7 +880,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#begin(Statement...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Block begin(Statement... statements);
 
@@ -889,7 +889,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#begin(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Block begin(Collection<? extends Statement> statements);
 
@@ -941,7 +941,7 @@ public interface DSLContext extends Scope {
      * @return A query wrapping the plain SQL
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     RowCountQuery query(SQL sql);
@@ -964,7 +964,7 @@ public interface DSLContext extends Scope {
      * @return A query wrapping the plain SQL
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     RowCountQuery query(String sql);
@@ -989,7 +989,7 @@ public interface DSLContext extends Scope {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     RowCountQuery query(String sql, Object... bindings);
@@ -1022,7 +1022,7 @@ public interface DSLContext extends Scope {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     RowCountQuery query(String sql, QueryPart... parts);
@@ -1050,7 +1050,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     Result<Record> fetch(SQL sql) throws DataAccessException;
@@ -2717,7 +2717,7 @@ public interface DSLContext extends Scope {
      * @return An executable query
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     ResultQuery<Record> resultQuery(SQL sql);
@@ -2764,7 +2764,7 @@ public interface DSLContext extends Scope {
      * @return An executable query
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     ResultQuery<Record> resultQuery(String sql);
@@ -2814,7 +2814,7 @@ public interface DSLContext extends Scope {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     ResultQuery<Record> resultQuery(String sql, Object... bindings);
@@ -2847,7 +2847,7 @@ public interface DSLContext extends Scope {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     ResultQuery<Record> resultQuery(String sql, QueryPart... parts);
@@ -4052,7 +4052,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias);
 
@@ -4069,7 +4069,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, String... fieldAliases);
 
@@ -4086,7 +4086,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, Collection<String> fieldAliases);
 
@@ -4103,7 +4103,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(Name)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(Name alias);
 
@@ -4120,7 +4120,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(Name, Name...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(Name alias, Name... fieldAliases);
 
@@ -4137,7 +4137,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(Name, Name...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(Name alias, Collection<? extends Name> fieldAliases);
 
@@ -4164,7 +4164,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -4191,7 +4191,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -4210,7 +4210,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep1 with(String alias, String fieldAlias1);
 
@@ -4227,7 +4227,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep2 with(String alias, String fieldAlias1, String fieldAlias2);
 
@@ -4244,7 +4244,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep3 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3);
 
@@ -4261,7 +4261,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep4 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4);
 
@@ -4278,7 +4278,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep5 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5);
 
@@ -4295,7 +4295,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep6 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6);
 
@@ -4312,7 +4312,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep7 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7);
 
@@ -4329,7 +4329,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep8 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8);
 
@@ -4346,7 +4346,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep9 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9);
 
@@ -4363,7 +4363,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep10 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10);
 
@@ -4380,7 +4380,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep11 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11);
 
@@ -4397,7 +4397,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep12 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12);
 
@@ -4414,7 +4414,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep13 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13);
 
@@ -4431,7 +4431,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep14 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14);
 
@@ -4448,7 +4448,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep15 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15);
 
@@ -4465,7 +4465,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep16 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16);
 
@@ -4482,7 +4482,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep17 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17);
 
@@ -4499,7 +4499,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep18 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18);
 
@@ -4516,7 +4516,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep19 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19);
 
@@ -4533,7 +4533,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep20 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20);
 
@@ -4550,7 +4550,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep21 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21);
 
@@ -4567,7 +4567,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
 
@@ -4584,7 +4584,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep1 with(Name alias, Name fieldAlias1);
 
@@ -4601,7 +4601,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2);
 
@@ -4618,7 +4618,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3);
 
@@ -4635,7 +4635,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4);
 
@@ -4652,7 +4652,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5);
 
@@ -4669,7 +4669,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6);
 
@@ -4686,7 +4686,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7);
 
@@ -4703,7 +4703,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8);
 
@@ -4720,7 +4720,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9);
 
@@ -4737,7 +4737,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10);
 
@@ -4754,7 +4754,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11);
 
@@ -4771,7 +4771,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12);
 
@@ -4788,7 +4788,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13);
 
@@ -4805,7 +4805,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14);
 
@@ -4822,7 +4822,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15);
 
@@ -4839,7 +4839,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16);
 
@@ -4856,7 +4856,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17);
 
@@ -4873,7 +4873,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18);
 
@@ -4890,7 +4890,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19);
 
@@ -4907,7 +4907,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20);
 
@@ -4924,7 +4924,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21);
 
@@ -4941,7 +4941,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
 
@@ -4968,7 +4968,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep with(CommonTableExpression<?>... tables);
 
@@ -4993,7 +4993,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep with(Collection<? extends CommonTableExpression<?>> tables);
 
@@ -5010,7 +5010,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(String alias);
 
@@ -5027,7 +5027,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(String alias, String... fieldAliases);
 
@@ -5044,7 +5044,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(String alias, Collection<String> fieldAliases);
 
@@ -5061,7 +5061,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(Name)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(Name alias);
 
@@ -5078,7 +5078,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(Name, Name...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(Name alias, Name... fieldAliases);
 
@@ -5095,7 +5095,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(Name, Name...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(Name alias, Collection<? extends Name> fieldAliases);
 
@@ -5123,7 +5123,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -5151,7 +5151,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -5170,7 +5170,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep1 withRecursive(String alias, String fieldAlias1);
 
@@ -5187,7 +5187,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep2 withRecursive(String alias, String fieldAlias1, String fieldAlias2);
 
@@ -5204,7 +5204,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep3 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3);
 
@@ -5221,7 +5221,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep4 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4);
 
@@ -5238,7 +5238,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep5 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5);
 
@@ -5255,7 +5255,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep6 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6);
 
@@ -5272,7 +5272,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep7 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7);
 
@@ -5289,7 +5289,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep8 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8);
 
@@ -5306,7 +5306,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep9 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9);
 
@@ -5323,7 +5323,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep10 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10);
 
@@ -5340,7 +5340,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep11 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11);
 
@@ -5357,7 +5357,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep12 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12);
 
@@ -5374,7 +5374,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep13 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13);
 
@@ -5391,7 +5391,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep14 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14);
 
@@ -5408,7 +5408,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep15 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15);
 
@@ -5425,7 +5425,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep16 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16);
 
@@ -5442,7 +5442,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep17 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17);
 
@@ -5459,7 +5459,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep18 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18);
 
@@ -5476,7 +5476,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep19 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19);
 
@@ -5493,7 +5493,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep20 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20);
 
@@ -5510,7 +5510,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep21 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21);
 
@@ -5527,7 +5527,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep22 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
 
@@ -5544,7 +5544,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep1 withRecursive(Name alias, Name fieldAlias1);
 
@@ -5561,7 +5561,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep2 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2);
 
@@ -5578,7 +5578,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep3 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3);
 
@@ -5595,7 +5595,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep4 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4);
 
@@ -5612,7 +5612,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep5 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5);
 
@@ -5629,7 +5629,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep6 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6);
 
@@ -5646,7 +5646,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep7 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7);
 
@@ -5663,7 +5663,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep8 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8);
 
@@ -5680,7 +5680,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep9 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9);
 
@@ -5697,7 +5697,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep10 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10);
 
@@ -5714,7 +5714,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep11 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11);
 
@@ -5731,7 +5731,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep12 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12);
 
@@ -5748,7 +5748,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep13 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13);
 
@@ -5765,7 +5765,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep14 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14);
 
@@ -5782,7 +5782,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep15 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15);
 
@@ -5799,7 +5799,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep16 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16);
 
@@ -5816,7 +5816,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep17 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17);
 
@@ -5833,7 +5833,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep18 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18);
 
@@ -5850,7 +5850,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep19 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19);
 
@@ -5867,7 +5867,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep20 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20);
 
@@ -5884,7 +5884,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep21 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21);
 
@@ -5901,7 +5901,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep22 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
 
@@ -5928,7 +5928,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep withRecursive(CommonTableExpression<?>... tables);
 
@@ -5953,7 +5953,7 @@ public interface DSLContext extends Scope {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep withRecursive(Collection<? extends CommonTableExpression<?>> tables);
 
@@ -5972,7 +5972,7 @@ public interface DSLContext extends Scope {
      * SELECT table.col1, table.col2 FROM table
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);
 
@@ -5990,7 +5990,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#table(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectWhereStep<Record> selectFrom(Name table);
 
@@ -6014,7 +6014,7 @@ public interface DSLContext extends Scope {
      * @see DSL#table(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectWhereStep<Record> selectFrom(SQL sql);
@@ -6040,7 +6040,7 @@ public interface DSLContext extends Scope {
      * @see DSL#sql(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectWhereStep<Record> selectFrom(String sql);
@@ -6066,7 +6066,7 @@ public interface DSLContext extends Scope {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectWhereStep<Record> selectFrom(String sql, Object... bindings);
@@ -6092,7 +6092,7 @@ public interface DSLContext extends Scope {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectWhereStep<Record> selectFrom(String sql, QueryPart... parts);
@@ -6127,7 +6127,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#select(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record> select(Collection<? extends SelectFieldOrAsterisk> fields);
 
@@ -6162,7 +6162,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#select(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields);
 
@@ -6194,7 +6194,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1> SelectSelectStep<Record1<T1>> select(SelectField<T1> field1);
 
@@ -6224,7 +6224,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2> SelectSelectStep<Record2<T1, T2>> select(SelectField<T1> field1, SelectField<T2> field2);
 
@@ -6254,7 +6254,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3);
 
@@ -6284,7 +6284,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4);
 
@@ -6314,7 +6314,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5);
 
@@ -6344,7 +6344,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6);
 
@@ -6374,7 +6374,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7);
 
@@ -6404,7 +6404,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8);
 
@@ -6434,7 +6434,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9);
 
@@ -6464,7 +6464,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10);
 
@@ -6494,7 +6494,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11);
 
@@ -6524,7 +6524,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12);
 
@@ -6554,7 +6554,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13);
 
@@ -6584,7 +6584,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14);
 
@@ -6614,7 +6614,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15);
 
@@ -6644,7 +6644,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16);
 
@@ -6674,7 +6674,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17);
 
@@ -6704,7 +6704,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18);
 
@@ -6734,7 +6734,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19);
 
@@ -6764,7 +6764,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20);
 
@@ -6794,7 +6794,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21);
 
@@ -6824,7 +6824,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
@@ -6860,7 +6860,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#selectDistinct(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields);
 
@@ -6894,7 +6894,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields);
 
@@ -6926,7 +6926,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1> SelectSelectStep<Record1<T1>> selectDistinct(SelectField<T1> field1);
 
@@ -6956,7 +6956,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2);
 
@@ -6986,7 +6986,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3);
 
@@ -7016,7 +7016,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4);
 
@@ -7046,7 +7046,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5);
 
@@ -7076,7 +7076,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6);
 
@@ -7106,7 +7106,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7);
 
@@ -7136,7 +7136,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8);
 
@@ -7166,7 +7166,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9);
 
@@ -7196,7 +7196,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10);
 
@@ -7226,7 +7226,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11);
 
@@ -7256,7 +7256,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12);
 
@@ -7286,7 +7286,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13);
 
@@ -7316,7 +7316,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14);
 
@@ -7346,7 +7346,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15);
 
@@ -7376,7 +7376,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16);
 
@@ -7406,7 +7406,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17);
 
@@ -7436,7 +7436,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18);
 
@@ -7466,7 +7466,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19);
 
@@ -7496,7 +7496,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20);
 
@@ -7526,7 +7526,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21);
 
@@ -7556,7 +7556,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
@@ -7584,7 +7584,7 @@ public interface DSLContext extends Scope {
      * @see DSL#zero()
      * @see DSL#selectZero()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record1<Integer>> selectZero();
 
@@ -7610,7 +7610,7 @@ public interface DSLContext extends Scope {
      * @see DSL#one()
      * @see DSL#selectOne()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record1<Integer>> selectOne();
 
@@ -7635,14 +7635,14 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#selectCount()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectSelectStep<Record1<Integer>> selectCount();
 
     /**
      * Create a new {@link SelectQuery}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectQuery<Record> selectQuery();
 
@@ -7652,7 +7652,7 @@ public interface DSLContext extends Scope {
      * @param table The table to select data from
      * @return The new {@link SelectQuery}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> SelectQuery<R> selectQuery(TableLike<R> table);
 
@@ -7662,7 +7662,7 @@ public interface DSLContext extends Scope {
      * @param into The table to insert data into
      * @return The new {@link InsertQuery}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> InsertQuery<R> insertQuery(Table<R> into);
 
@@ -7687,7 +7687,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> InsertSetStep<R> insertInto(Table<R> into);
 
@@ -7707,7 +7707,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1);
 
@@ -7725,7 +7725,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2> InsertValuesStep2<R, T1, T2> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2);
 
@@ -7743,7 +7743,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
@@ -7761,7 +7761,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
@@ -7779,7 +7779,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
@@ -7797,7 +7797,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
@@ -7815,7 +7815,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
@@ -7833,7 +7833,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
@@ -7851,7 +7851,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
@@ -7869,7 +7869,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
@@ -7887,7 +7887,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
@@ -7905,7 +7905,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
@@ -7923,7 +7923,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
@@ -7941,7 +7941,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
@@ -7959,7 +7959,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
@@ -7977,7 +7977,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
@@ -7995,7 +7995,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
@@ -8013,7 +8013,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
@@ -8031,7 +8031,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
@@ -8049,7 +8049,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
@@ -8067,7 +8067,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
@@ -8085,7 +8085,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
@@ -8106,7 +8106,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields);
 
@@ -8125,7 +8125,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields);
 
@@ -8135,7 +8135,7 @@ public interface DSLContext extends Scope {
      * @param table The table to update data into
      * @return The new {@link UpdateQuery}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> UpdateQuery<R> updateQuery(Table<R> table);
 
@@ -8162,7 +8162,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> UpdateSetFirstStep<R> update(Table<R> table);
 
@@ -8233,7 +8233,7 @@ public interface DSLContext extends Scope {
      * statement without field specification. See also
      * {@link #mergeInto(Table, Field...)}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
@@ -8247,7 +8247,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1);
 
@@ -8259,7 +8259,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2);
 
@@ -8271,7 +8271,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
@@ -8283,7 +8283,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
@@ -8295,7 +8295,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
@@ -8307,7 +8307,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
@@ -8319,7 +8319,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
@@ -8331,7 +8331,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
@@ -8343,7 +8343,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
@@ -8355,7 +8355,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
@@ -8367,7 +8367,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
@@ -8379,7 +8379,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
@@ -8391,7 +8391,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
@@ -8403,7 +8403,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
@@ -8415,7 +8415,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
@@ -8427,7 +8427,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
@@ -8439,7 +8439,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
@@ -8451,7 +8451,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
@@ -8463,7 +8463,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
@@ -8475,7 +8475,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
@@ -8487,7 +8487,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
@@ -8499,7 +8499,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
@@ -8539,7 +8539,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields);
 
@@ -8550,7 +8550,7 @@ public interface DSLContext extends Scope {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields);
 
@@ -8560,7 +8560,7 @@ public interface DSLContext extends Scope {
      * @param table The table to delete data from
      * @return The new {@link DeleteQuery}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table);
 
@@ -8577,7 +8577,7 @@ public interface DSLContext extends Scope {
      * <p>
      * Some but not all databases support aliased tables in delete statements.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> DeleteUsingStep<R> deleteFrom(Table<R> table);
 
@@ -8586,7 +8586,7 @@ public interface DSLContext extends Scope {
      * <p>
      * This is an alias for {@link #deleteFrom(Table)}
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> DeleteUsingStep<R> delete(Table<R> table);
 
@@ -8626,7 +8626,7 @@ public interface DSLContext extends Scope {
      *
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batch(Query... queries);
 
@@ -8646,7 +8646,7 @@ public interface DSLContext extends Scope {
      *
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batch(Queries queries);
 
@@ -8661,7 +8661,7 @@ public interface DSLContext extends Scope {
      * @see #batch(Query...)
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     Batch batch(String... queries);
@@ -8682,7 +8682,7 @@ public interface DSLContext extends Scope {
      *
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batch(Collection<? extends Query> queries);
 
@@ -8717,7 +8717,7 @@ public interface DSLContext extends Scope {
      *
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     BatchBindStep batch(Query query);
 
@@ -8732,7 +8732,7 @@ public interface DSLContext extends Scope {
      * @see #batch(Query)
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     BatchBindStep batch(String sql);
@@ -8751,7 +8751,7 @@ public interface DSLContext extends Scope {
      * @see #batch(Query)
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batch(Query query, Object[]... bindings);
 
@@ -8766,7 +8766,7 @@ public interface DSLContext extends Scope {
      * @see #batch(Query, Object[][])
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     Batch batch(String sql, Object[]... bindings);
@@ -8823,7 +8823,7 @@ public interface DSLContext extends Scope {
      * @see UpdatableRecord#store()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchStore(UpdatableRecord<?>... records);
 
@@ -8836,7 +8836,7 @@ public interface DSLContext extends Scope {
      * @see UpdatableRecord#store()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchStore(Collection<? extends UpdatableRecord<?>> records);
 
@@ -8849,7 +8849,7 @@ public interface DSLContext extends Scope {
      * @see TableRecord#insert()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchInsert(TableRecord<?>... records);
 
@@ -8861,7 +8861,7 @@ public interface DSLContext extends Scope {
      * @see #batchStore(UpdatableRecord...)
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchInsert(Collection<? extends TableRecord<?>> records);
 
@@ -8874,7 +8874,7 @@ public interface DSLContext extends Scope {
      * @see UpdatableRecord#update()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchUpdate(UpdatableRecord<?>... records);
 
@@ -8887,7 +8887,7 @@ public interface DSLContext extends Scope {
      * @see UpdatableRecord#update()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records);
 
@@ -8899,7 +8899,7 @@ public interface DSLContext extends Scope {
      * @see UpdatableRecord#merge()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchMerge(UpdatableRecord<?>... records);
 
@@ -8911,7 +8911,7 @@ public interface DSLContext extends Scope {
      * @see UpdatableRecord#merge()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchMerge(Collection<? extends UpdatableRecord<?>> records);
 
@@ -8958,7 +8958,7 @@ public interface DSLContext extends Scope {
      * @see UpdatableRecord#delete()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchDelete(UpdatableRecord<?>... records);
 
@@ -8971,7 +8971,7 @@ public interface DSLContext extends Scope {
      * @see UpdatableRecord#delete()
      * @see java.sql.Statement#executeBatch()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     Batch batchDelete(Collection<? extends UpdatableRecord<?>> records);
 
@@ -8985,7 +8985,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Catalog...)
      * @see Meta#ddl()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Catalog catalog);
 
     /**
@@ -8994,7 +8994,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Catalog...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Catalog schema, DDLExportConfiguration configuration);
 
     /**
@@ -9003,7 +9003,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Catalog...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Catalog schema, DDLFlag... flags);
 
     /**
@@ -9012,7 +9012,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Schema...)
      * @see Meta#ddl()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Schema schema);
 
     /**
@@ -9021,7 +9021,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Schema...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Schema schema, DDLExportConfiguration configuration);
 
     /**
@@ -9030,7 +9030,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Schema...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Schema schema, DDLFlag... flags);
 
     /**
@@ -9039,7 +9039,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Table<?> table);
 
     /**
@@ -9048,7 +9048,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Table<?> table, DDLExportConfiguration configuration);
 
     /**
@@ -9057,7 +9057,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Table<?> table, DDLFlag... flags);
 
     /**
@@ -9066,7 +9066,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Table<?>... tables);
 
     /**
@@ -9075,7 +9075,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Table<?>[] tables, DDLExportConfiguration configuration);
 
     /**
@@ -9084,7 +9084,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Table<?>[] tables, DDLFlag... flags);
 
     /**
@@ -9093,7 +9093,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Collection<? extends Table<?>> tables);
 
     /**
@@ -9102,7 +9102,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Collection<? extends Table<?>> tables, DDLFlag... flags);
 
     /**
@@ -9111,7 +9111,7 @@ public interface DSLContext extends Scope {
      * @see #meta(Table...)
      * @see Meta#ddl(DDLExportConfiguration)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     Queries ddl(Collection<? extends Table<?>> tables, DDLExportConfiguration configuration);
 
     // -------------------------------------------------------------------------
@@ -9129,7 +9129,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDatabase(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     AlterDatabaseStep alterDatabase(@Stringly.Name String database);
 
@@ -9138,7 +9138,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDatabase(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     AlterDatabaseStep alterDatabase(Name database);
 
@@ -9147,7 +9147,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDatabase(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     AlterDatabaseStep alterDatabase(Catalog database);
 
@@ -9156,7 +9156,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDatabaseIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     AlterDatabaseStep alterDatabaseIfExists(@Stringly.Name String database);
 
@@ -9165,7 +9165,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDatabaseIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     AlterDatabaseStep alterDatabaseIfExists(Name database);
 
@@ -9174,7 +9174,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDatabaseIfExists(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     AlterDatabaseStep alterDatabaseIfExists(Catalog database);
 
@@ -9183,7 +9183,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDomain(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomain(@Stringly.Name String domain);
 
@@ -9192,7 +9192,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDomain(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomain(Name domain);
 
@@ -9201,7 +9201,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDomain(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomain(Domain<T> domain);
 
@@ -9210,7 +9210,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDomainIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomainIfExists(@Stringly.Name String domain);
 
@@ -9219,7 +9219,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDomainIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomainIfExists(Name domain);
 
@@ -9228,7 +9228,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterDomainIfExists(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomainIfExists(Domain<T> domain);
 
@@ -9237,7 +9237,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterIndex(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndex(@Stringly.Name String index);
 
@@ -9246,7 +9246,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterIndex(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndex(Name index);
 
@@ -9255,7 +9255,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterIndex(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndex(Index index);
 
@@ -9264,7 +9264,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterIndexIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     AlterIndexOnStep alterIndexIfExists(@Stringly.Name String index);
 
@@ -9273,7 +9273,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterIndexIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     AlterIndexOnStep alterIndexIfExists(Name index);
 
@@ -9282,7 +9282,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterIndexIfExists(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     AlterIndexOnStep alterIndexIfExists(Index index);
 
@@ -9291,7 +9291,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSchema(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(@Stringly.Name String schema);
 
@@ -9300,7 +9300,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSchema(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(Name schema);
 
@@ -9309,7 +9309,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSchema(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(Schema schema);
 
@@ -9318,7 +9318,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSchemaIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2 })
     AlterSchemaStep alterSchemaIfExists(@Stringly.Name String schema);
 
@@ -9327,7 +9327,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSchemaIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2 })
     AlterSchemaStep alterSchemaIfExists(Name schema);
 
@@ -9336,7 +9336,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSchemaIfExists(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2 })
     AlterSchemaStep alterSchemaIfExists(Schema schema);
 
@@ -9345,7 +9345,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceStep<Number> alterSequence(@Stringly.Name String sequence);
 
@@ -9354,7 +9354,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceStep<Number> alterSequence(Name sequence);
 
@@ -9363,7 +9363,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence);
 
@@ -9372,7 +9372,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequenceIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, POSTGRES })
     AlterSequenceStep<Number> alterSequenceIfExists(@Stringly.Name String sequence);
 
@@ -9381,7 +9381,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequenceIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, POSTGRES })
     AlterSequenceStep<Number> alterSequenceIfExists(Name sequence);
 
@@ -9390,7 +9390,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequenceIfExists(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, POSTGRES })
     <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence);
 
@@ -9399,7 +9399,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterType(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     AlterTypeStep alterType(@Stringly.Name String type);
 
@@ -9408,7 +9408,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterType(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     AlterTypeStep alterType(Name type);
 
@@ -9417,7 +9417,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterView(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterViewStep alterView(@Stringly.Name String view);
 
@@ -9426,7 +9426,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterView(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterViewStep alterView(Name view);
 
@@ -9435,7 +9435,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterView(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterViewStep alterView(Table<?> view);
 
@@ -9444,7 +9444,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterViewIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     AlterViewStep alterViewIfExists(@Stringly.Name String view);
 
@@ -9453,7 +9453,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterViewIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     AlterViewStep alterViewIfExists(Name view);
 
@@ -9462,7 +9462,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterViewIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     AlterViewStep alterViewIfExists(Table<?> view);
 
@@ -9471,7 +9471,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CommentOnIsStep commentOnTable(@Stringly.Name String table);
 
@@ -9480,7 +9480,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CommentOnIsStep commentOnTable(Name table);
 
@@ -9489,7 +9489,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CommentOnIsStep commentOnTable(Table<?> table);
 
@@ -9498,7 +9498,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnView(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CommentOnIsStep commentOnView(@Stringly.Name String view);
 
@@ -9507,7 +9507,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnView(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CommentOnIsStep commentOnView(Name view);
 
@@ -9516,7 +9516,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnView(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CommentOnIsStep commentOnView(Table<?> view);
 
@@ -9525,7 +9525,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnColumn(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CommentOnIsStep commentOnColumn(@Stringly.Name String field);
 
@@ -9534,7 +9534,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnColumn(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CommentOnIsStep commentOnColumn(Name field);
 
@@ -9543,7 +9543,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#commentOnColumn(Field)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CommentOnIsStep commentOnColumn(Field<?> field);
 
@@ -9552,7 +9552,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDatabase(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     CreateDatabaseFinalStep createDatabase(@Stringly.Name String database);
 
@@ -9561,7 +9561,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDatabase(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     CreateDatabaseFinalStep createDatabase(Name database);
 
@@ -9570,7 +9570,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDatabase(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     CreateDatabaseFinalStep createDatabase(Catalog database);
 
@@ -9579,7 +9579,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDatabaseIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     CreateDatabaseFinalStep createDatabaseIfNotExists(@Stringly.Name String database);
 
@@ -9588,7 +9588,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDatabaseIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     CreateDatabaseFinalStep createDatabaseIfNotExists(Name database);
 
@@ -9597,7 +9597,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDatabaseIfNotExists(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database);
 
@@ -9606,7 +9606,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDomain(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateDomainAsStep createDomain(@Stringly.Name String domain);
 
@@ -9615,7 +9615,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDomain(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateDomainAsStep createDomain(Name domain);
 
@@ -9624,7 +9624,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDomain(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateDomainAsStep createDomain(Domain<?> domain);
 
@@ -9633,7 +9633,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDomainIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, POSTGRES })
     CreateDomainAsStep createDomainIfNotExists(@Stringly.Name String domain);
 
@@ -9642,7 +9642,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDomainIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, POSTGRES })
     CreateDomainAsStep createDomainIfNotExists(Name domain);
 
@@ -9651,7 +9651,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createDomainIfNotExists(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, POSTGRES })
     CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
 
@@ -9704,7 +9704,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndex(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateIndexStep createIndex(@Stringly.Name String index);
 
@@ -9713,7 +9713,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndex(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateIndexStep createIndex(Name index);
 
@@ -9722,7 +9722,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndex(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateIndexStep createIndex(Index index);
 
@@ -9731,7 +9731,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndex()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateIndexStep createIndex();
 
@@ -9740,7 +9740,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndexIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(@Stringly.Name String index);
 
@@ -9749,7 +9749,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndexIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Name index);
 
@@ -9758,7 +9758,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndexIfNotExists(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Index index);
 
@@ -9767,7 +9767,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndexIfNotExists()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists();
 
@@ -9776,7 +9776,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createUniqueIndex(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex(@Stringly.Name String index);
 
@@ -9785,7 +9785,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createUniqueIndex(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex(Name index);
 
@@ -9794,7 +9794,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createUniqueIndex(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex(Index index);
 
@@ -9803,7 +9803,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createUniqueIndex()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex();
 
@@ -9812,7 +9812,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createUniqueIndexIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists(@Stringly.Name String index);
 
@@ -9821,7 +9821,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createUniqueIndexIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists(Name index);
 
@@ -9830,7 +9830,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createUniqueIndexIfNotExists(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists(Index index);
 
@@ -9839,7 +9839,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createUniqueIndexIfNotExists()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists();
 
@@ -9932,7 +9932,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSchema(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchema(@Stringly.Name String schema);
 
@@ -9941,7 +9941,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSchema(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchema(Name schema);
 
@@ -9950,7 +9950,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSchema(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchema(Schema schema);
 
@@ -9959,7 +9959,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSchemaIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(@Stringly.Name String schema);
 
@@ -9968,7 +9968,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSchemaIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
 
@@ -9977,7 +9977,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSchemaIfNotExists(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
 
@@ -9986,7 +9986,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequence(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence);
 
@@ -9995,7 +9995,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequence(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequence(Name sequence);
 
@@ -10004,7 +10004,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequence(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequence(Sequence<?> sequence);
 
@@ -10013,7 +10013,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequenceIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence);
 
@@ -10022,7 +10022,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequenceIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence);
 
@@ -10031,7 +10031,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequenceIfNotExists(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);
 
@@ -10040,7 +10040,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDatabase(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     DropDatabaseFinalStep dropDatabase(@Stringly.Name String database);
 
@@ -10049,7 +10049,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDatabase(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     DropDatabaseFinalStep dropDatabase(Name database);
 
@@ -10058,7 +10058,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDatabase(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     DropDatabaseFinalStep dropDatabase(Catalog database);
 
@@ -10067,7 +10067,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDatabaseIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     DropDatabaseFinalStep dropDatabaseIfExists(@Stringly.Name String database);
 
@@ -10076,7 +10076,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDatabaseIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     DropDatabaseFinalStep dropDatabaseIfExists(Name database);
 
@@ -10085,7 +10085,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDatabaseIfExists(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     DropDatabaseFinalStep dropDatabaseIfExists(Catalog database);
 
@@ -10094,7 +10094,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDomain(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomain(@Stringly.Name String domain);
 
@@ -10103,7 +10103,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDomain(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomain(Name domain);
 
@@ -10112,7 +10112,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDomain(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomain(Domain<?> domain);
 
@@ -10121,7 +10121,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDomainIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomainIfExists(@Stringly.Name String domain);
 
@@ -10130,7 +10130,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDomainIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomainIfExists(Name domain);
 
@@ -10139,7 +10139,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropDomainIfExists(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomainIfExists(Domain<?> domain);
 
@@ -10192,7 +10192,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropIndex(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DropIndexOnStep dropIndex(@Stringly.Name String index);
 
@@ -10201,7 +10201,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropIndex(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DropIndexOnStep dropIndex(Name index);
 
@@ -10210,7 +10210,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropIndex(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DropIndexOnStep dropIndex(Index index);
 
@@ -10219,7 +10219,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropIndexIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(@Stringly.Name String index);
 
@@ -10228,7 +10228,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropIndexIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Name index);
 
@@ -10237,7 +10237,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropIndexIfExists(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Index index);
 
@@ -10290,7 +10290,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSchema(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchema(@Stringly.Name String schema);
 
@@ -10299,7 +10299,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSchema(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchema(Name schema);
 
@@ -10308,7 +10308,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSchema(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchema(Schema schema);
 
@@ -10317,7 +10317,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSchemaIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchemaIfExists(@Stringly.Name String schema);
 
@@ -10326,7 +10326,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSchemaIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Name schema);
 
@@ -10335,7 +10335,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSchemaIfExists(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Schema schema);
 
@@ -10344,7 +10344,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequence(@Stringly.Name String sequence);
 
@@ -10353,7 +10353,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequence(Name sequence);
 
@@ -10362,7 +10362,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequence(Sequence<?> sequence);
 
@@ -10371,7 +10371,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(@Stringly.Name String sequence);
 
@@ -10380,7 +10380,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(Name sequence);
 
@@ -10389,7 +10389,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
@@ -10398,7 +10398,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DropTableStep dropTable(@Stringly.Name String table);
 
@@ -10407,7 +10407,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DropTableStep dropTable(Name table);
 
@@ -10416,7 +10416,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     DropTableStep dropTable(Table<?> table);
 
@@ -10425,7 +10425,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTableIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropTableStep dropTableIfExists(@Stringly.Name String table);
 
@@ -10434,7 +10434,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTableIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropTableStep dropTableIfExists(Name table);
 
@@ -10443,7 +10443,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTableIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropTableStep dropTableIfExists(Table<?> table);
 
@@ -10452,7 +10452,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTemporaryTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(@Stringly.Name String table);
 
@@ -10461,7 +10461,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTemporaryTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(Name table);
 
@@ -10470,7 +10470,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTemporaryTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(Table<?> table);
 
@@ -10479,7 +10479,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTemporaryTableIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table);
 
@@ -10488,7 +10488,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTemporaryTableIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTableIfExists(Name table);
 
@@ -10497,7 +10497,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTemporaryTableIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
 
@@ -10550,7 +10550,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropView(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropView(@Stringly.Name String view);
 
@@ -10559,7 +10559,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropView(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropView(Name view);
 
@@ -10568,7 +10568,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropView(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropView(Table<?> view);
 
@@ -10577,7 +10577,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropViewIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropViewIfExists(@Stringly.Name String view);
 
@@ -10586,7 +10586,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropViewIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropViewIfExists(Name view);
 
@@ -10595,7 +10595,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropViewIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DropViewFinalStep dropViewIfExists(Table<?> view);
 
@@ -10604,7 +10604,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#grant(Privilege)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantOnStep grant(Privilege privileges);
 
@@ -10613,7 +10613,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#grant(Privilege...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantOnStep grant(Privilege... privileges);
 
@@ -10622,7 +10622,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#grant(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantOnStep grant(Collection<? extends Privilege> privileges);
 
@@ -10631,7 +10631,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#revoke(Privilege)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeOnStep revoke(Privilege privileges);
 
@@ -10640,7 +10640,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#revoke(Privilege...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeOnStep revoke(Privilege... privileges);
 
@@ -10649,7 +10649,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#revoke(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeOnStep revoke(Collection<? extends Privilege> privileges);
 
@@ -10658,7 +10658,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#revokeGrantOptionFor(Privilege)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ HSQLDB, POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Privilege privileges);
 
@@ -10667,7 +10667,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#revokeGrantOptionFor(Privilege...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ HSQLDB, POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Privilege... privileges);
 
@@ -10676,7 +10676,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#revokeGrantOptionFor(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ HSQLDB, POSTGRES })
     RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges);
 
@@ -10687,7 +10687,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#set(Name, Param)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MYSQL, POSTGRES })
     RowCountQuery set(Name name, Param<?> value);
 
@@ -10698,7 +10698,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#setLocal(Name, Param)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     RowCountQuery setLocal(Name name, Param<?> value);
 
@@ -10709,7 +10709,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#setCatalog(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     RowCountQuery setCatalog(@Stringly.Name String catalog);
 
@@ -10720,7 +10720,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#setCatalog(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     RowCountQuery setCatalog(Name catalog);
 
@@ -10731,7 +10731,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#setCatalog(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     RowCountQuery setCatalog(Catalog catalog);
 
@@ -10742,7 +10742,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#setSchema(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RowCountQuery setSchema(@Stringly.Name String schema);
 
@@ -10753,7 +10753,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#setSchema(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RowCountQuery setSchema(Name schema);
 
@@ -10764,7 +10764,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#setSchema(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RowCountQuery setSchema(Schema schema);
 
@@ -10773,7 +10773,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#truncate(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     TruncateIdentityStep<Record> truncate(@Stringly.Name String table);
 
@@ -10782,7 +10782,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#truncate(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     TruncateIdentityStep<Record> truncate(Name table);
 
@@ -10791,7 +10791,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#truncate(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
 
@@ -10800,7 +10800,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#truncateTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     TruncateIdentityStep<Record> truncateTable(@Stringly.Name String table);
 
@@ -10809,7 +10809,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#truncateTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     TruncateIdentityStep<Record> truncateTable(Name table);
 
@@ -10818,7 +10818,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#truncateTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table);
 
@@ -10861,7 +10861,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep createTable(String table);
 
@@ -10870,7 +10870,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep createTable(Name table);
 
@@ -10879,7 +10879,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     CreateTableColumnStep createTable(Table<?> table);
 
@@ -10888,7 +10888,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTableIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableColumnStep createTableIfNotExists(String table);
 
@@ -10897,7 +10897,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTableIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableColumnStep createTableIfNotExists(Name table);
 
@@ -10906,7 +10906,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTableIfNotExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableColumnStep createTableIfNotExists(Table<?> table);
 
@@ -10915,7 +10915,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTable(String table);
 
@@ -10924,7 +10924,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTable(Name table);
 
@@ -10933,7 +10933,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTable(Table<?> table);
 
@@ -10942,7 +10942,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTableIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTableIfNotExists(String table);
 
@@ -10951,7 +10951,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTableIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTableIfNotExists(Name table);
 
@@ -10960,7 +10960,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTableIfNotExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table);
 
@@ -10969,7 +10969,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createGlobalTemporaryTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createGlobalTemporaryTable(String table);
 
@@ -10978,7 +10978,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createGlobalTemporaryTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createGlobalTemporaryTable(Name table);
 
@@ -10987,7 +10987,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createGlobalTemporaryTable(Table<?> table);
 
@@ -10996,7 +10996,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createView(String, String...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(String view, String... fields);
 
@@ -11005,7 +11005,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createView(Name, Name...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Name view, Name... fields);
 
@@ -11014,7 +11014,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createView(Table, Field...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
 
@@ -11033,7 +11033,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -11052,7 +11052,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -11071,7 +11071,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
@@ -11090,7 +11090,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
@@ -11109,7 +11109,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
@@ -11128,7 +11128,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
@@ -11137,7 +11137,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, String... fields);
 
@@ -11146,7 +11146,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createOrReplaceView(Name, Name...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
 
@@ -11155,7 +11155,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createOrReplaceView(Table, Field...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
 
@@ -11174,7 +11174,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -11193,7 +11193,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -11212,7 +11212,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
@@ -11231,7 +11231,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
@@ -11250,7 +11250,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
@@ -11269,7 +11269,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
@@ -11278,7 +11278,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createViewIfNotExists(String, String...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields);
 
@@ -11287,7 +11287,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createViewIfNotExists(Name, Name...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields);
 
@@ -11296,7 +11296,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createViewIfNotExists(Table, Field...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields);
 
@@ -11315,7 +11315,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -11334,7 +11334,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -11353,7 +11353,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
@@ -11372,7 +11372,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
@@ -11391,7 +11391,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
@@ -11410,7 +11410,7 @@ public interface DSLContext extends Scope {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
@@ -11419,7 +11419,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createType(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     CreateTypeStep createType(String type);
 
@@ -11428,7 +11428,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createType(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     CreateTypeStep createType(Name type);
 
@@ -11437,7 +11437,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropType(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropType(String type);
 
@@ -11446,7 +11446,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropType(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropType(Name type);
 
@@ -11455,7 +11455,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropType(String...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropType(String... type);
 
@@ -11464,7 +11464,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropType(Name...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropType(Name... type);
 
@@ -11473,7 +11473,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropType(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropType(Collection<?> type);
 
@@ -11482,7 +11482,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTypeIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropTypeIfExists(String type);
 
@@ -11491,7 +11491,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTypeIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropTypeIfExists(Name type);
 
@@ -11500,7 +11500,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTypeIfExists(String...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropTypeIfExists(String... type);
 
@@ -11509,7 +11509,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTypeIfExists(Name...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropTypeIfExists(Name... type);
 
@@ -11518,7 +11518,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropTypeIfExists(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     DropTypeStep dropTypeIfExists(Collection<?> type);
 
@@ -11527,7 +11527,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     AlterTableStep alterTable(String table);
 
@@ -11536,7 +11536,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     AlterTableStep alterTable(Name table);
 
@@ -11545,7 +11545,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     AlterTableStep alterTable(Table<?> table);
 
@@ -11554,7 +11554,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterTableIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(String table);
 
@@ -11563,7 +11563,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterTableIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Name table);
 
@@ -11572,7 +11572,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterTableIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, IGNITE, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
 

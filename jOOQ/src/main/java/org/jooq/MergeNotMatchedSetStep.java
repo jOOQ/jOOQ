@@ -100,7 +100,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
      * <code>WHEN NOT MATCHED</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, T value);
 
@@ -108,7 +108,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
      * <code>WHEN NOT MATCHED</INSERT> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
 
@@ -116,7 +116,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
      * <code>WHEN NOT MATCHED</INSERT> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
@@ -128,7 +128,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * without the necessity of casting the Java <code>null</code> literal to
      * <code>(T)</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     <T> MergeNotMatchedSetMoreStep<R> setNull(Field<T> field);
 
@@ -143,7 +143,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedSetMoreStep<R> set(Map<?, ?> map);
 
@@ -156,7 +156,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      *
      * @see #set(Map)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedSetMoreStep<R> set(Record record);
 }

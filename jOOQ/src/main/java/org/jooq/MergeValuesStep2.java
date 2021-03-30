@@ -66,7 +66,7 @@ public interface MergeValuesStep2<R extends Record, T1, T2> {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(T1 value1, T2 value2);
 
@@ -76,7 +76,7 @@ public interface MergeValuesStep2<R extends Record, T1, T2> {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Field<T1> value1, Field<T2> value2);
 
@@ -86,7 +86,7 @@ public interface MergeValuesStep2<R extends Record, T1, T2> {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Collection<?> values);
 
@@ -102,7 +102,7 @@ public interface MergeValuesStep2<R extends Record, T1, T2> {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB })
     Merge<R> select(Select<? extends Record2<T1, T2>> select);
 }

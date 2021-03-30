@@ -85,21 +85,21 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
     /**
      * Set a value for a field in the <code>INSERT</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>INSERT</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set a value for a field in the <code>INSERT</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
@@ -111,7 +111,7 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
      * without the necessity of casting the Java <code>null</code> literal to
      * <code>(T)</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> InsertSetMoreStep<R> setNull(Field<T> field);
 
@@ -125,7 +125,7 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertSetMoreStep<R> set(Map<?, ?> map);
 
@@ -137,7 +137,7 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
      *
      * @see #set(Map)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertSetMoreStep<R> set(Record record);
 
@@ -146,7 +146,7 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
      *
      * @see InsertQuery#newRecord()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     InsertSetStep<R> newRecord();
 }

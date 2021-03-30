@@ -71,14 +71,14 @@ public interface AlterTableAlterConstraintStep {
     /**
      * Add the <code>ENFORCED</code> clause to the constraint.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MYSQL })
     AlterTableFinalStep enforced();
 
     /**
      * Add the <code>NOT ENFORCED</code> clause to the constraint.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MYSQL })
     AlterTableFinalStep notEnforced();
 }

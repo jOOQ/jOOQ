@@ -71,20 +71,20 @@ public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsS
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
     @Support({ HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterSequenceFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
     @Support({ HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterSequenceFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code> statement.
      */
     @Support({ HSQLDB, MARIADB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     AlterSequenceFinalStep renameTo(Sequence<?> renameTo);
 }

@@ -68,7 +68,7 @@ public interface MergeNotMatchedValuesStep1<R extends Record, T1> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(T1 value1);
 
@@ -76,7 +76,7 @@ public interface MergeNotMatchedValuesStep1<R extends Record, T1> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Field<T1> value1);
 
@@ -84,7 +84,7 @@ public interface MergeNotMatchedValuesStep1<R extends Record, T1> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

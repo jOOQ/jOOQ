@@ -80,21 +80,21 @@ public interface UpdateSetStep<R extends Record> {
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> UpdateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> UpdateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> UpdateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
@@ -106,7 +106,7 @@ public interface UpdateSetStep<R extends Record> {
      * without the necessity of casting the Java <code>null</code> literal to
      * <code>(T)</code>.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     <T> UpdateSetMoreStep<R> setNull(Field<T> field);
 
@@ -120,7 +120,7 @@ public interface UpdateSetStep<R extends Record> {
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     UpdateSetMoreStep<R> set(Map<?, ?> map);
 
@@ -134,7 +134,7 @@ public interface UpdateSetStep<R extends Record> {
      *
      * @see #set(Map)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     UpdateSetMoreStep<R> set(Record record);
 }

@@ -72,7 +72,7 @@ public interface BatchBindStep extends Batch {
      * <li><code>:N+2</code> -&gt; unmodified</li>
      * </ul>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     BatchBindStep bind(Object... bindValues);
 
@@ -81,7 +81,7 @@ public interface BatchBindStep extends Batch {
      * <p>
      * This is the same as calling {@link #bind(Object...)} several times.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     BatchBindStep bind(Object[]... bindValues);
 
@@ -103,7 +103,7 @@ public interface BatchBindStep extends Batch {
      * <li><code>:nameN+2</code> -&gt; unmodified</li>
      * </ul>
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     BatchBindStep bind(Map<String, Object> namedBindValues);
 
@@ -112,7 +112,7 @@ public interface BatchBindStep extends Batch {
      * <p>
      * This is the same as calling {@link #bind(Map...)} several times.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     BatchBindStep bind(Map<String, Object>... namedBindValues);
 }

@@ -110,7 +110,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * Add a <code>WHERE</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> where(Condition condition);
 
@@ -118,7 +118,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * Add a <code>WHERE</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> where(Condition... conditions);
 
@@ -126,14 +126,14 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * Add a <code>WHERE</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> where(Field<Boolean> field);
 
@@ -148,7 +148,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> where(SQL sql);
@@ -164,7 +164,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> where(String sql);
@@ -181,7 +181,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> where(String sql, Object... bindings);
@@ -198,7 +198,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     @PlainSQL
     SelectConditionStep<R> where(String sql, QueryPart... parts);
@@ -206,14 +206,14 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     /**
      * Add a <code>WHERE EXISTS</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the query.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     SelectConditionStep<R> whereNotExists(Select<?> select);
 }

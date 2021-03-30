@@ -81,14 +81,14 @@ public interface CreateTableCommentStep extends CreateTableStorageStep {
     /**
      * Add a comment to the table.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableStorageStep comment(String comment);
 
     /**
      * Add a comment to the table.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableStorageStep comment(Comment comment);
 

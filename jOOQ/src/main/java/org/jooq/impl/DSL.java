@@ -158,6 +158,7 @@ import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Catalog;
 import org.jooq.CharacterSet;
+import org.jooq.CheckReturnValue;
 import org.jooq.CloseableDSLContext;
 import org.jooq.Collation;
 import org.jooq.Comment;
@@ -6983,7 +6984,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabase(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabase(@Stringly.Name String database) {
         return dsl().alterDatabase(database);
@@ -6998,7 +6999,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabase(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabase(Name database) {
         return dsl().alterDatabase(database);
@@ -7013,7 +7014,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabase(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabase(Catalog database) {
         return dsl().alterDatabase(database);
@@ -7028,7 +7029,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabaseIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(@Stringly.Name String database) {
         return dsl().alterDatabaseIfExists(database);
@@ -7043,7 +7044,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabaseIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(Name database) {
         return dsl().alterDatabaseIfExists(database);
@@ -7058,7 +7059,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabaseIfExists(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
         return dsl().alterDatabaseIfExists(database);
@@ -7073,7 +7074,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(@Stringly.Name String domain) {
         return dsl().alterDomain(domain);
@@ -7088,7 +7089,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(Name domain) {
         return dsl().alterDomain(domain);
@@ -7103,7 +7104,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(Domain<T> domain) {
         return dsl().alterDomain(domain);
@@ -7118,7 +7119,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(@Stringly.Name String domain) {
         return dsl().alterDomainIfExists(domain);
@@ -7133,7 +7134,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Name domain) {
         return dsl().alterDomainIfExists(domain);
@@ -7148,7 +7149,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Domain<T> domain) {
         return dsl().alterDomainIfExists(domain);
@@ -7163,7 +7164,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndex(@Stringly.Name String index) {
         return dsl().alterIndex(index);
@@ -7178,7 +7179,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndex(Name index) {
         return dsl().alterIndex(index);
@@ -7193,7 +7194,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndex(Index index) {
         return dsl().alterIndex(index);
@@ -7208,7 +7209,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndexIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndexIfExists(@Stringly.Name String index) {
         return dsl().alterIndexIfExists(index);
@@ -7223,7 +7224,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndexIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndexIfExists(Name index) {
         return dsl().alterIndexIfExists(index);
@@ -7238,7 +7239,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndexIfExists(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndexIfExists(Index index) {
         return dsl().alterIndexIfExists(index);
@@ -7253,7 +7254,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterSchemaStep alterSchema(@Stringly.Name String schema) {
         return dsl().alterSchema(schema);
@@ -7268,7 +7269,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterSchemaStep alterSchema(Name schema) {
         return dsl().alterSchema(schema);
@@ -7283,7 +7284,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterSchemaStep alterSchema(Schema schema) {
         return dsl().alterSchema(schema);
@@ -7298,7 +7299,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2 })
     public static org.jooq.AlterSchemaStep alterSchemaIfExists(@Stringly.Name String schema) {
         return dsl().alterSchemaIfExists(schema);
@@ -7313,7 +7314,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2 })
     public static org.jooq.AlterSchemaStep alterSchemaIfExists(Name schema) {
         return dsl().alterSchemaIfExists(schema);
@@ -7328,7 +7329,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2 })
     public static org.jooq.AlterSchemaStep alterSchemaIfExists(Schema schema) {
         return dsl().alterSchemaIfExists(schema);
@@ -7343,7 +7344,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.AlterSequenceStep<Number> alterSequence(@Stringly.Name String sequence) {
         return dsl().alterSequence(sequence);
@@ -7358,7 +7359,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.AlterSequenceStep<Number> alterSequence(Name sequence) {
         return dsl().alterSequence(sequence);
@@ -7373,7 +7374,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> org.jooq.AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
         return dsl().alterSequence(sequence);
@@ -7388,7 +7389,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, POSTGRES })
     public static org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(@Stringly.Name String sequence) {
         return dsl().alterSequenceIfExists(sequence);
@@ -7403,7 +7404,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, POSTGRES })
     public static org.jooq.AlterSequenceStep<Number> alterSequenceIfExists(Name sequence) {
         return dsl().alterSequenceIfExists(sequence);
@@ -7418,7 +7419,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, POSTGRES })
     public static <T extends Number> org.jooq.AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
         return dsl().alterSequenceIfExists(sequence);
@@ -7433,7 +7434,7 @@ public class DSL {
      *
      * @see DSLContext#alterType(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.AlterTypeStep alterType(@Stringly.Name String type) {
         return dsl().alterType(type);
@@ -7448,7 +7449,7 @@ public class DSL {
      *
      * @see DSLContext#alterType(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.AlterTypeStep alterType(Name type) {
         return dsl().alterType(type);
@@ -7463,7 +7464,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterViewStep alterView(@Stringly.Name String view) {
         return dsl().alterView(view);
@@ -7478,7 +7479,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterViewStep alterView(Name view) {
         return dsl().alterView(view);
@@ -7493,7 +7494,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterViewStep alterView(Table<?> view) {
         return dsl().alterView(view);
@@ -7508,7 +7509,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     public static org.jooq.AlterViewStep alterViewIfExists(@Stringly.Name String view) {
         return dsl().alterViewIfExists(view);
@@ -7523,7 +7524,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     public static org.jooq.AlterViewStep alterViewIfExists(Name view) {
         return dsl().alterViewIfExists(view);
@@ -7538,7 +7539,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES })
     public static org.jooq.AlterViewStep alterViewIfExists(Table<?> view) {
         return dsl().alterViewIfExists(view);
@@ -7553,7 +7554,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnTable(@Stringly.Name String table) {
         return dsl().commentOnTable(table);
@@ -7568,7 +7569,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnTable(Name table) {
         return dsl().commentOnTable(table);
@@ -7583,7 +7584,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnTable(Table<?> table) {
         return dsl().commentOnTable(table);
@@ -7598,7 +7599,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnView(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnView(@Stringly.Name String view) {
         return dsl().commentOnView(view);
@@ -7613,7 +7614,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnView(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnView(Name view) {
         return dsl().commentOnView(view);
@@ -7628,7 +7629,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnView(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnView(Table<?> view) {
         return dsl().commentOnView(view);
@@ -7643,7 +7644,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnColumn(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnColumn(@Stringly.Name String field) {
         return dsl().commentOnColumn(field);
@@ -7658,7 +7659,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnColumn(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnColumn(Name field) {
         return dsl().commentOnColumn(field);
@@ -7673,7 +7674,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnColumn(Field)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
         return dsl().commentOnColumn(field);
@@ -7688,7 +7689,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabase(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(@Stringly.Name String database) {
         return dsl().createDatabase(database);
@@ -7703,7 +7704,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabase(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
         return dsl().createDatabase(database);
@@ -7718,7 +7719,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabase(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
         return dsl().createDatabase(database);
@@ -7733,7 +7734,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabaseIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(@Stringly.Name String database) {
         return dsl().createDatabaseIfNotExists(database);
@@ -7748,7 +7749,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabaseIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
         return dsl().createDatabaseIfNotExists(database);
@@ -7763,7 +7764,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabaseIfNotExists(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
         return dsl().createDatabaseIfNotExists(database);
@@ -7778,7 +7779,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(@Stringly.Name String domain) {
         return dsl().createDomain(domain);
@@ -7793,7 +7794,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(Name domain) {
         return dsl().createDomain(domain);
@@ -7808,7 +7809,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
         return dsl().createDomain(domain);
@@ -7823,7 +7824,7 @@ public class DSL {
      *
      * @see DSLContext#createDomainIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(@Stringly.Name String domain) {
         return dsl().createDomainIfNotExists(domain);
@@ -7838,7 +7839,7 @@ public class DSL {
      *
      * @see DSLContext#createDomainIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
         return dsl().createDomainIfNotExists(domain);
@@ -7853,7 +7854,7 @@ public class DSL {
      *
      * @see DSLContext#createDomainIfNotExists(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
         return dsl().createDomainIfNotExists(domain);
@@ -7936,7 +7937,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.CreateIndexStep createIndex(@Stringly.Name String index) {
         return dsl().createIndex(index);
@@ -7951,7 +7952,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.CreateIndexStep createIndex(Name index) {
         return dsl().createIndex(index);
@@ -7966,7 +7967,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.CreateIndexStep createIndex(Index index) {
         return dsl().createIndex(index);
@@ -7981,7 +7982,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.CreateIndexStep createIndex() {
         return dsl().createIndex();
@@ -7996,7 +7997,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createIndexIfNotExists(index);
@@ -8011,7 +8012,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
         return dsl().createIndexIfNotExists(index);
@@ -8026,7 +8027,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
         return dsl().createIndexIfNotExists(index);
@@ -8041,7 +8042,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createIndexIfNotExists() {
         return dsl().createIndexIfNotExists();
@@ -8056,7 +8057,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndex(@Stringly.Name String index) {
         return dsl().createUniqueIndex(index);
@@ -8071,7 +8072,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndex(Name index) {
         return dsl().createUniqueIndex(index);
@@ -8086,7 +8087,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndex(Index index) {
         return dsl().createUniqueIndex(index);
@@ -8101,7 +8102,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndex() {
         return dsl().createUniqueIndex();
@@ -8116,7 +8117,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createUniqueIndexIfNotExists(index);
@@ -8131,7 +8132,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
         return dsl().createUniqueIndexIfNotExists(index);
@@ -8146,7 +8147,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
         return dsl().createUniqueIndexIfNotExists(index);
@@ -8161,7 +8162,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists()
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
         return dsl().createUniqueIndexIfNotExists();
@@ -8308,7 +8309,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchema(@Stringly.Name String schema) {
         return dsl().createSchema(schema);
@@ -8323,7 +8324,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
         return dsl().createSchema(schema);
@@ -8338,7 +8339,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
         return dsl().createSchema(schema);
@@ -8353,7 +8354,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(@Stringly.Name String schema) {
         return dsl().createSchemaIfNotExists(schema);
@@ -8368,7 +8369,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
         return dsl().createSchemaIfNotExists(schema);
@@ -8383,7 +8384,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
         return dsl().createSchemaIfNotExists(schema);
@@ -8398,7 +8399,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence) {
         return dsl().createSequence(sequence);
@@ -8413,7 +8414,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
         return dsl().createSequence(sequence);
@@ -8428,7 +8429,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
         return dsl().createSequence(sequence);
@@ -8443,7 +8444,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence) {
         return dsl().createSequenceIfNotExists(sequence);
@@ -8458,7 +8459,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
         return dsl().createSequenceIfNotExists(sequence);
@@ -8473,7 +8474,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
         return dsl().createSequenceIfNotExists(sequence);
@@ -8488,7 +8489,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabase(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(@Stringly.Name String database) {
         return dsl().dropDatabase(database);
@@ -8503,7 +8504,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabase(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(Name database) {
         return dsl().dropDatabase(database);
@@ -8518,7 +8519,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabase(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(Catalog database) {
         return dsl().dropDatabase(database);
@@ -8533,7 +8534,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabaseIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(@Stringly.Name String database) {
         return dsl().dropDatabaseIfExists(database);
@@ -8548,7 +8549,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabaseIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
         return dsl().dropDatabaseIfExists(database);
@@ -8563,7 +8564,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabaseIfExists(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
         return dsl().dropDatabaseIfExists(database);
@@ -8578,7 +8579,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(@Stringly.Name String domain) {
         return dsl().dropDomain(domain);
@@ -8593,7 +8594,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(Name domain) {
         return dsl().dropDomain(domain);
@@ -8608,7 +8609,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(Domain<?> domain) {
         return dsl().dropDomain(domain);
@@ -8623,7 +8624,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(@Stringly.Name String domain) {
         return dsl().dropDomainIfExists(domain);
@@ -8638,7 +8639,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Name domain) {
         return dsl().dropDomainIfExists(domain);
@@ -8653,7 +8654,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(Domain)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Domain<?> domain) {
         return dsl().dropDomainIfExists(domain);
@@ -8736,7 +8737,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.DropIndexOnStep dropIndex(@Stringly.Name String index) {
         return dsl().dropIndex(index);
@@ -8751,7 +8752,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.DropIndexOnStep dropIndex(Name index) {
         return dsl().dropIndex(index);
@@ -8766,7 +8767,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.DropIndexOnStep dropIndex(Index index) {
         return dsl().dropIndex(index);
@@ -8781,7 +8782,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndexIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(@Stringly.Name String index) {
         return dsl().dropIndexIfExists(index);
@@ -8796,7 +8797,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndexIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(Name index) {
         return dsl().dropIndexIfExists(index);
@@ -8811,7 +8812,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndexIfExists(Index)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(Index index) {
         return dsl().dropIndexIfExists(index);
@@ -8894,7 +8895,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchema(@Stringly.Name String schema) {
         return dsl().dropSchema(schema);
@@ -8909,7 +8910,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchema(Name schema) {
         return dsl().dropSchema(schema);
@@ -8924,7 +8925,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchema(Schema schema) {
         return dsl().dropSchema(schema);
@@ -8939,7 +8940,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(@Stringly.Name String schema) {
         return dsl().dropSchemaIfExists(schema);
@@ -8954,7 +8955,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(Name schema) {
         return dsl().dropSchemaIfExists(schema);
@@ -8969,7 +8970,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(Schema schema) {
         return dsl().dropSchemaIfExists(schema);
@@ -8984,7 +8985,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequence(@Stringly.Name String sequence) {
         return dsl().dropSequence(sequence);
@@ -8999,7 +9000,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequence(Name sequence) {
         return dsl().dropSequence(sequence);
@@ -9014,7 +9015,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
         return dsl().dropSequence(sequence);
@@ -9029,7 +9030,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(@Stringly.Name String sequence) {
         return dsl().dropSequenceIfExists(sequence);
@@ -9044,7 +9045,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
         return dsl().dropSequenceIfExists(sequence);
@@ -9059,7 +9060,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(Sequence)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
         return dsl().dropSequenceIfExists(sequence);
@@ -9074,7 +9075,7 @@ public class DSL {
      *
      * @see DSLContext#dropTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.DropTableStep dropTable(@Stringly.Name String table) {
         return dsl().dropTable(table);
@@ -9089,7 +9090,7 @@ public class DSL {
      *
      * @see DSLContext#dropTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.DropTableStep dropTable(Name table) {
         return dsl().dropTable(table);
@@ -9104,7 +9105,7 @@ public class DSL {
      *
      * @see DSLContext#dropTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.DropTableStep dropTable(Table<?> table) {
         return dsl().dropTable(table);
@@ -9119,7 +9120,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropTableStep dropTableIfExists(@Stringly.Name String table) {
         return dsl().dropTableIfExists(table);
@@ -9134,7 +9135,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropTableStep dropTableIfExists(Name table) {
         return dsl().dropTableIfExists(table);
@@ -9149,7 +9150,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropTableStep dropTableIfExists(Table<?> table) {
         return dsl().dropTableIfExists(table);
@@ -9164,7 +9165,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropTableStep dropTemporaryTable(@Stringly.Name String table) {
         return dsl().dropTemporaryTable(table);
@@ -9179,7 +9180,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropTableStep dropTemporaryTable(Name table) {
         return dsl().dropTemporaryTable(table);
@@ -9194,7 +9195,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropTableStep dropTemporaryTable(Table<?> table) {
         return dsl().dropTemporaryTable(table);
@@ -9209,7 +9210,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table) {
         return dsl().dropTemporaryTableIfExists(table);
@@ -9224,7 +9225,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(Name table) {
         return dsl().dropTemporaryTableIfExists(table);
@@ -9239,7 +9240,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return dsl().dropTemporaryTableIfExists(table);
@@ -9322,7 +9323,7 @@ public class DSL {
      *
      * @see DSLContext#dropView(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
         return dsl().dropView(view);
@@ -9337,7 +9338,7 @@ public class DSL {
      *
      * @see DSLContext#dropView(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropView(Name view) {
         return dsl().dropView(view);
@@ -9352,7 +9353,7 @@ public class DSL {
      *
      * @see DSLContext#dropView(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropView(Table<?> view) {
         return dsl().dropView(view);
@@ -9367,7 +9368,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(@Stringly.Name String view) {
         return dsl().dropViewIfExists(view);
@@ -9382,7 +9383,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(Name view) {
         return dsl().dropViewIfExists(view);
@@ -9397,7 +9398,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
         return dsl().dropViewIfExists(view);
@@ -9412,7 +9413,7 @@ public class DSL {
      *
      * @see DSLContext#grant(Privilege)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.GrantOnStep grant(Privilege privileges) {
         return dsl().grant(privileges);
@@ -9427,7 +9428,7 @@ public class DSL {
      *
      * @see DSLContext#grant(Privilege...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.GrantOnStep grant(Privilege... privileges) {
         return dsl().grant(privileges);
@@ -9442,7 +9443,7 @@ public class DSL {
      *
      * @see DSLContext#grant(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.GrantOnStep grant(Collection<? extends Privilege> privileges) {
         return dsl().grant(privileges);
@@ -9457,7 +9458,7 @@ public class DSL {
      *
      * @see DSLContext#revoke(Privilege)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.RevokeOnStep revoke(Privilege privileges) {
         return dsl().revoke(privileges);
@@ -9472,7 +9473,7 @@ public class DSL {
      *
      * @see DSLContext#revoke(Privilege...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.RevokeOnStep revoke(Privilege... privileges) {
         return dsl().revoke(privileges);
@@ -9487,7 +9488,7 @@ public class DSL {
      *
      * @see DSLContext#revoke(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
         return dsl().revoke(privileges);
@@ -9502,7 +9503,7 @@ public class DSL {
      *
      * @see DSLContext#revokeGrantOptionFor(Privilege)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ HSQLDB, POSTGRES })
     public static org.jooq.RevokeOnStep revokeGrantOptionFor(Privilege privileges) {
         return dsl().revokeGrantOptionFor(privileges);
@@ -9517,7 +9518,7 @@ public class DSL {
      *
      * @see DSLContext#revokeGrantOptionFor(Privilege...)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ HSQLDB, POSTGRES })
     public static org.jooq.RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
         return dsl().revokeGrantOptionFor(privileges);
@@ -9532,7 +9533,7 @@ public class DSL {
      *
      * @see DSLContext#revokeGrantOptionFor(Collection)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ HSQLDB, POSTGRES })
     public static org.jooq.RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
         return dsl().revokeGrantOptionFor(privileges);
@@ -9549,7 +9550,7 @@ public class DSL {
      *
      * @see DSLContext#set(Name, Param)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MYSQL, POSTGRES })
     public static org.jooq.RowCountQuery set(Name name, Param<?> value) {
         return dsl().set(name, value);
@@ -9566,7 +9567,7 @@ public class DSL {
      *
      * @see DSLContext#setLocal(Name, Param)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ POSTGRES })
     public static org.jooq.RowCountQuery setLocal(Name name, Param<?> value) {
         return dsl().setLocal(name, value);
@@ -9583,7 +9584,7 @@ public class DSL {
      *
      * @see DSLContext#setCatalog(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     public static org.jooq.RowCountQuery setCatalog(@Stringly.Name String catalog) {
         return dsl().setCatalog(catalog);
@@ -9600,7 +9601,7 @@ public class DSL {
      *
      * @see DSLContext#setCatalog(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     public static org.jooq.RowCountQuery setCatalog(Name catalog) {
         return dsl().setCatalog(catalog);
@@ -9617,7 +9618,7 @@ public class DSL {
      *
      * @see DSLContext#setCatalog(Catalog)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     public static org.jooq.RowCountQuery setCatalog(Catalog catalog) {
         return dsl().setCatalog(catalog);
@@ -9634,7 +9635,7 @@ public class DSL {
      *
      * @see DSLContext#setSchema(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.RowCountQuery setSchema(@Stringly.Name String schema) {
         return dsl().setSchema(schema);
@@ -9651,7 +9652,7 @@ public class DSL {
      *
      * @see DSLContext#setSchema(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.RowCountQuery setSchema(Name schema) {
         return dsl().setSchema(schema);
@@ -9668,7 +9669,7 @@ public class DSL {
      *
      * @see DSLContext#setSchema(Schema)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.RowCountQuery setSchema(Schema schema) {
         return dsl().setSchema(schema);
@@ -9683,7 +9684,7 @@ public class DSL {
      *
      * @see DSLContext#truncate(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.TruncateIdentityStep<Record> truncate(@Stringly.Name String table) {
         return dsl().truncate(table);
@@ -9698,7 +9699,7 @@ public class DSL {
      *
      * @see DSLContext#truncate(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.TruncateIdentityStep<Record> truncate(Name table) {
         return dsl().truncate(table);
@@ -9713,7 +9714,7 @@ public class DSL {
      *
      * @see DSLContext#truncate(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static <R extends Record> org.jooq.TruncateIdentityStep<R> truncate(Table<R> table) {
         return dsl().truncate(table);
@@ -9728,7 +9729,7 @@ public class DSL {
      *
      * @see DSLContext#truncateTable(String)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.TruncateIdentityStep<Record> truncateTable(@Stringly.Name String table) {
         return dsl().truncateTable(table);
@@ -9743,7 +9744,7 @@ public class DSL {
      *
      * @see DSLContext#truncateTable(Name)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static org.jooq.TruncateIdentityStep<Record> truncateTable(Name table) {
         return dsl().truncateTable(table);
@@ -9758,7 +9759,7 @@ public class DSL {
      *
      * @see DSLContext#truncateTable(Table)
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support
     public static <R extends Record> org.jooq.TruncateIdentityStep<R> truncateTable(Table<R> table) {
         return dsl().truncateTable(table);

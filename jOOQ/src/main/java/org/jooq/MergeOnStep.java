@@ -100,7 +100,7 @@ public interface MergeOnStep<R extends Record> {
      * Provide join conditions and proceed to the next step, connecting them
      * with each other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeOnConditionStep<R> on(Condition condition);
 
@@ -108,14 +108,14 @@ public interface MergeOnStep<R extends Record> {
      * Provide join conditions and proceed to the next step, connecting them
      * with each other with {@link Operator#AND}.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Provide join conditions and proceed to the next step
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeOnConditionStep<R> on(Field<Boolean> condition);
 
@@ -130,7 +130,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> on(SQL sql);
@@ -146,7 +146,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(String)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> on(String sql);
@@ -163,7 +163,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> on(String sql, Object... bindings);
@@ -180,7 +180,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> on(String sql, QueryPart... parts);

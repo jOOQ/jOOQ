@@ -71,13 +71,13 @@ public interface TruncateIdentityStep<R extends Record> extends TruncateCascadeS
      * Add the <code>RESTART IDENTITY</code> clause to the <code>TRUNCATE</code> statement.
      */
     @Support({ HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     TruncateCascadeStep<R> restartIdentity();
 
     /**
      * Add the <code>CONTINUE IDENTITY</code> clause to the <code>TRUNCATE</code> statement.
      */
     @Support({ HSQLDB, POSTGRES })
-    @NotNull
+    @NotNull @CheckReturnValue
     TruncateCascadeStep<R> continueIdentity();
 }

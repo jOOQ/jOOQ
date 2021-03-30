@@ -64,7 +64,7 @@ public interface WithAsStep10 {
      * Associate a subselect with a common table expression's table and column
      * names.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep as(Select<? extends Record10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> select);
 
@@ -76,7 +76,7 @@ public interface WithAsStep10 {
      * table expression definition, or silently ignores it, if the hint is not
      * supported.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep asMaterialized(Select<? extends Record10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> select);
 
@@ -88,7 +88,7 @@ public interface WithAsStep10 {
      * common table expression definition, or silently ignores it, if the hint
      * is not supported.
      */
-    @NotNull
+    @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep asNotMaterialized(Select<? extends Record10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> select);
 }

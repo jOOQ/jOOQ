@@ -93,11 +93,17 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
 
-                // [#2230] Translate INTERVAL_TYPE to supported types
-                when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
-                .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
-                .else_(COLUMNS.TYPE_NAME).as(COLUMNS.TYPE_NAME),
-                (((H2Database) getDatabase()).is1_4_197() ? COLUMNS.COLUMN_TYPE : COLUMNS.TYPE_NAME).as(COLUMNS.COLUMN_TYPE),
+                // [#2230] [#11733] Translate INTERVAL_TYPE to supported types
+                (((H2Database) getDatabase()).is1_4_198()
+                    ? (when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
+                      .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
+                      .else_(COLUMNS.TYPE_NAME))
+                    : COLUMNS.TYPE_NAME
+                ).as(COLUMNS.TYPE_NAME),
+                (((H2Database) getDatabase()).is1_4_197()
+                    ? COLUMNS.COLUMN_TYPE
+                    : COLUMNS.TYPE_NAME
+                ).as(COLUMNS.COLUMN_TYPE),
                 choose().when(COLUMNS.NUMERIC_PRECISION.eq(maxP).and(COLUMNS.NUMERIC_SCALE.eq(maxS)), zero())
                         .otherwise(COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 COLUMNS.NUMERIC_PRECISION.decode(maxP, zero(), COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),

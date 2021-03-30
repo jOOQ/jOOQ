@@ -1293,13 +1293,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         return null;
     }
 
-    @Override
-    final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
+    public final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
         return returningResolvedAsterisks.toArray(EMPTY_FIELD);
     }
 
-    @Override
-    final Class<? extends Record> getRecordType() {
+    public final Class<? extends Record> getRecordType() {
         return Tools.recordType(returningResolvedAsterisks.size());
     }
 }

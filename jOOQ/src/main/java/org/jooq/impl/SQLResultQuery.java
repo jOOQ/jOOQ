@@ -87,12 +87,12 @@ final class SQLResultQuery extends AbstractResultQuery<Record> {
     }
 
     @Override
-    final Class<? extends Record> getRecordType0() {
+    public final Class<? extends Record> getRecordType0() {
         return RecordImplN.class;
     }
 
     @Override
-    protected final Field<?>[] getFields(ResultSetMetaData meta) {
+    public final Field<?>[] getFields(ResultSetMetaData meta) {
         Collection<? extends Field<?>> coerce = coerce();
 
         if (coerce != null && !coerce.isEmpty())

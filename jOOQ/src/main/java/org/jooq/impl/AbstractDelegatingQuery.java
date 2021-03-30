@@ -53,7 +53,7 @@ import org.jooq.conf.ParamType;
  * @author Lukas Eder
  */
 abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
-    extends AbstractFetchable<R>
+    extends AbstractQueryPart
     implements Query {
 
     /**

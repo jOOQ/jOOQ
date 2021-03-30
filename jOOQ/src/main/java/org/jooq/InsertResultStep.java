@@ -87,6 +87,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface InsertResultStep<R extends Record> extends Insert<R>, Fetchable<R> {
+public interface InsertResultStep<R extends Record> extends ResultQuery<R> {
 
 }

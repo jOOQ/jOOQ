@@ -37,15 +37,10 @@
  */
 package org.jooq.impl;
 
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-
 import org.jooq.Configuration;
-import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RowCountQuery;
 import org.jooq.impl.R2DBC.BlockingRowCountSubscription;
-import org.jooq.impl.R2DBC.ConnectionSubscriber;
 import org.jooq.impl.R2DBC.QuerySubscription;
 import org.jooq.impl.R2DBC.RowCountSubscriber;
 
@@ -84,15 +79,5 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
             subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u) -> new RowCountSubscriber(t, u)));
         else
             subscriber.onSubscribe(new BlockingRowCountSubscription(this, subscriber));
-    }
-
-    @Override
-    /* non-final */ Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    /* non-final */ Class<? extends Record> getRecordType() {
-        throw new UnsupportedOperationException();
     }
 }

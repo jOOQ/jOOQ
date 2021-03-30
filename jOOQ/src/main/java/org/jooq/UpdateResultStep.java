@@ -79,6 +79,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface UpdateResultStep<R extends Record> extends Update<R>, Fetchable<R> {
+public interface UpdateResultStep<R extends Record> extends ResultQuery<R> {
 
 }

@@ -171,7 +171,6 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 // ...
-import org.jooq.Delete;
 import org.jooq.DeleteLimitStep;
 import org.jooq.DeleteOrderByStep;
 import org.jooq.DeleteReturningStep;
@@ -202,7 +201,6 @@ import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
 // ...
 import org.jooq.Index;
-import org.jooq.Insert;
 import org.jooq.InsertOnConflictDoUpdateStep;
 import org.jooq.InsertOnConflictWhereIndexPredicateStep;
 import org.jooq.InsertOnConflictWhereStep;
@@ -280,7 +278,6 @@ import org.jooq.Truncate;
 import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
-import org.jooq.Update;
 import org.jooq.UpdateFromStep;
 import org.jooq.UpdateLimitStep;
 import org.jooq.UpdateOrderByStep;
@@ -322,8 +319,6 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -1162,16 +1157,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             SelectQueryImpl<Record> rhs = degreeCheck(degree, parseQueryTerm(degree, null, null));
             switch (combine) {
                 case UNION:
-                    lhs = (SelectQueryImpl<Record>) lhs.union(rhs);
+                    lhs = lhs.union(rhs);
                     break;
                 case UNION_ALL:
-                    lhs = (SelectQueryImpl<Record>) lhs.unionAll(rhs);
+                    lhs = lhs.unionAll(rhs);
                     break;
                 case EXCEPT:
-                    lhs = (SelectQueryImpl<Record>) lhs.except(rhs);
+                    lhs = lhs.except(rhs);
                     break;
                 case EXCEPT_ALL:
-                    lhs = (SelectQueryImpl<Record>) lhs.exceptAll(rhs);
+                    lhs = lhs.exceptAll(rhs);
                     break;
                 default:
                     throw internalError();
@@ -1195,10 +1190,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             SelectQueryImpl<Record> rhs = degreeCheck(degree, parseQueryPrimary(degree, null));
             switch (combine) {
                 case INTERSECT:
-                    lhs = (SelectQueryImpl<Record>) lhs.intersect(rhs);
+                    lhs = lhs.intersect(rhs);
                     break;
                 case INTERSECT_ALL:
-                    lhs = (SelectQueryImpl<Record>) lhs.intersectAll(rhs);
+                    lhs = lhs.intersectAll(rhs);
                     break;
                 default:
                     throw internalError();
@@ -1716,7 +1711,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return null;
     }
 
-    private final Delete<?> parseDelete(WithImpl with) {
+    private final Query parseDelete(WithImpl with) {
         parseKeyword("DELETE", "DEL");
         Param<Long> limit = null;
 
@@ -1750,12 +1745,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf("LIMIT"))
             ? s4.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
             : s4;
-        Delete<?> s6 = parseKeywordIf("RETURNING") ? s5.returning(parseSelectList()) : s5;
-
-        return s6;
+        return parseKeywordIf("RETURNING") ? s5.returning(parseSelectList()) : s5;
     }
 
-    private final Insert<?> parseInsert(WithImpl with) {
+    private final Query parseInsert(WithImpl with) {
         scopeStart();
         parseKeyword("INSERT", "INS");
         parseKeywordIf("INTO");
@@ -1902,7 +1895,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
     }
 
-    private final Update<?> parseUpdate(WithImpl with) {
+    private final Query parseUpdate(WithImpl with) {
         parseKeyword("UPDATE", "UPD");
         Param<Long> limit = null;
 
@@ -1958,9 +1951,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf("LIMIT"))
             ? s5.limit(limit != null ? limit : requireParam(parseParenthesisedUnsignedIntegerOrBindVariable()))
             : s5;
-        Update<?> s7 = parseKeywordIf("RETURNING") ? s6.returning(parseSelectList()) : s6;
-
-        return s7;
+        return parseKeywordIf("RETURNING") ? s6.returning(parseSelectList()) : s6;
     }
 
     private final Map<Field<?>, Object> parseSetClauseList() {

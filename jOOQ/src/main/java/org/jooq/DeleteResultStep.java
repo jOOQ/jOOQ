@@ -76,6 +76,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface DeleteResultStep<R extends Record> extends Delete<R>, Fetchable<R> {
+public interface DeleteResultStep<R extends Record> extends ResultQuery<R> {
 
 }

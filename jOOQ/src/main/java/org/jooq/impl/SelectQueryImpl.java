@@ -832,7 +832,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    final Field<?>[] getFields(ResultSetMetaData meta) {
+    public final Field<?>[] getFields(ResultSetMetaData meta) {
         Collection<? extends Field<?>> fields = coerce();
 
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()

@@ -40,14 +40,9 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_RESTRICT;
 
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
-import org.jooq.Field;
-import org.jooq.Record;
 
 /**
  * @author Lukas Eder

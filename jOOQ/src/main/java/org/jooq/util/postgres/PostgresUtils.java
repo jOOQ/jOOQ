@@ -55,10 +55,11 @@ import org.jooq.EnumType;
 import org.jooq.Record;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+
+import org.postgresql.util.PGInterval;
 
 /**
  * A collection of utilities to cover the Postgres JDBC driver's missing
@@ -239,18 +240,18 @@ public class PostgresUtils {
     public static DayToSecond toDayToSecond(Object pgInterval) {
         boolean negative = pgInterval.toString().contains("-");
 
-        Reflect i = on(pgInterval);
-        if (negative) {
-            i.call("scale", -1);
-        }
+        PGInterval i = (PGInterval) pgInterval;
+        if (negative)
+            i.scale(-1);
 
-        Double seconds = i.call("getSeconds").get();
+        Double seconds = i.getSeconds();
         DayToSecond result = new DayToSecond(
-            i.call("getDays").get(),
-            i.call("getHours").get(),
-            i.call("getMinutes").get(),
+            i.getDays(),
+            i.getHours(),
+            i.getMinutes(),
             seconds.intValue(),
-            (int) (1000000000 * (seconds - seconds.intValue())));
+            (int) (1000000000 * (seconds - seconds.intValue()))
+        );
 
         if (negative)
             result = result.neg();
@@ -264,14 +265,11 @@ public class PostgresUtils {
     public static YearToMonth toYearToMonth(Object pgInterval) {
         boolean negative = pgInterval.toString().contains("-");
 
-        Reflect i = on(pgInterval);
-        if (negative) {
-            i.call("scale", -1);
-        }
+        PGInterval i = (PGInterval) pgInterval;
+        if (negative)
+            i.scale(-1);
 
-        YearToMonth result = new YearToMonth(
-            i.call("getYears").get(),
-            i.call("getMonths").get());
+        YearToMonth result = new YearToMonth(i.getYears(), i.getMonths());
 
         if (negative)
             result = result.neg();

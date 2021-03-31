@@ -58,6 +58,8 @@ import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.tools.jdbc.JDBCUtils;
 
+// ...
+
 /**
  * A binding that takes binary values but binds them as {@link Clob} to at the
  * JDBC level.
@@ -139,8 +141,6 @@ public class ClobBinding implements Binding<String, String> {
         Clob clob;
 
         switch (configuration.family()) {
-
-
 
 
 

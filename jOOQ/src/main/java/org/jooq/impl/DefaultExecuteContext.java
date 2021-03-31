@@ -69,6 +69,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.Insert;
 import org.jooq.Merge;
+// ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -81,6 +82,8 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.jetbrains.annotations.NotNull;
+
+// ...
 
 /**
  * A default implementation for the {@link ExecuteContext}.
@@ -294,43 +297,6 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
         log.info("Could not unwrap native Connection type. Consider implementing an org.jooq.UnwrapperProvider");
-        return result;
-    }
-    /**
-     * Get the registered connection's "target connection" if applicable.
-     * <p>
-     * This will try to unwrap any native connection if it has been wrapped with
-     * any of:
-     * <ul>
-     * <li><code>org.apache.commons.dbcp.DelegatingPreparedStatement</code></li>
-     * <li>...</li>
-     * </ul>
-     */
-    static final PreparedStatement targetPreparedStatement(Configuration configuration, PreparedStatement stmt) {
-        PreparedStatement result = stmt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        log.info("Could not unwrap native PreparedStatement type. Consider implementing an org.jooq.UnwrapperProvider");
         return result;
     }
 

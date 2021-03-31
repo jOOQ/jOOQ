@@ -74,21 +74,17 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.power;
-import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL_CAST;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
-import static org.jooq.impl.DefaultExecuteContext.targetPreparedStatement;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_BLOB;
@@ -223,6 +219,7 @@ import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -232,6 +229,11 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 
+// ...
+
+// ...
+// ...
+// ...
 // ...
 
 /**
@@ -2345,6 +2347,31 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super(dataType, converter);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         @SuppressWarnings({ "unchecked", "rawtypes" })
         static final Field<?> nan(BindingSQLContext<?> ctx, DataType<?> type) {
             switch (ctx.family()) {
@@ -2951,7 +2978,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
             else
                 throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
@@ -2989,9 +3015,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-
             else
                 throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
@@ -3014,8 +3037,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else
                 return Types.VARCHAR;
         }
-
-
 
 
 

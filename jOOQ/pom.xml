@@ -104,6 +104,18 @@
             <artifactId>jaxb-api</artifactId>
         </dependency>
         
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+
+
+
+
+
 
 
 

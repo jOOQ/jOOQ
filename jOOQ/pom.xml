@@ -79,7 +79,6 @@
         <dependency>
             <groupId>io.r2dbc</groupId>
             <artifactId>r2dbc-spi</artifactId>
-            <version>0.9.0.M1</version>
         </dependency>
 
         <dependency>

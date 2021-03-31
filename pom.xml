@@ -34,7 +34,7 @@
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.2.19</postgres.version>
-        <sqlserver.version>9.2.1.jre11</sqlserver.version>
+        <sqlserver.version>9.2.1.jre8</sqlserver.version>
         <oracle.version>21.1.0.0</oracle.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->

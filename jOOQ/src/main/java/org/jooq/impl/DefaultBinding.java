@@ -219,7 +219,6 @@ import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -1924,22 +1923,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, byte[] value) throws SQLException {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3839,22 +3822,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             ctx.output().writeString(value);
         }
 
@@ -3941,22 +3908,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect())) {
                 fallback.set0(ctx, value);
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

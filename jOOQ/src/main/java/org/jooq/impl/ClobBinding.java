@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
-import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Clob;
 import java.sql.SQLException;
@@ -53,9 +52,9 @@ import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSQLContext;
 import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.BindingSetStatementContext;
-import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Converters;
+import org.jooq.ResourceManagingScope;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 // ...
@@ -93,12 +92,12 @@ public class ClobBinding implements Binding<String, String> {
 
     @Override
     public final void set(BindingSetStatementContext<String> ctx) throws SQLException {
-        ctx.statement().setClob(ctx.index(), ctx.autoFree(newClob(ctx.configuration(), ctx.value())));
+        ctx.statement().setClob(ctx.index(), newClob(ctx, ctx.value()));
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<String> ctx) throws SQLException {
-        ctx.output().writeClob(ctx.autoFree(newClob(ctx.configuration(), ctx.value())));
+        ctx.output().writeClob(newClob(ctx, ctx.value()));
     }
 
     @Override
@@ -137,10 +136,12 @@ public class ClobBinding implements Binding<String, String> {
         }
     }
 
-    private final Clob newClob(Configuration configuration, String string) throws SQLException {
+    static final Clob newClob(ResourceManagingScope scope, String string) throws SQLException {
         Clob clob;
 
-        switch (configuration.family()) {
+        switch (scope.dialect()) {
+
+
 
 
 
@@ -156,6 +157,7 @@ public class ClobBinding implements Binding<String, String> {
             }
         }
 
+        scope.autoFree(clob);
         clob.setString(1, string);
         return clob;
     }

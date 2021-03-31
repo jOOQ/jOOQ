@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
-import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -53,9 +52,9 @@ import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSQLContext;
 import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.BindingSetStatementContext;
-import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Converters;
+import org.jooq.ResourceManagingScope;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 // ...
@@ -93,12 +92,12 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
     @Override
     public final void set(BindingSetStatementContext<byte[]> ctx) throws SQLException {
-        ctx.statement().setBlob(ctx.index(), ctx.autoFree(newBlob(ctx.configuration(), ctx.value())));
+        ctx.statement().setBlob(ctx.index(), newBlob(ctx, ctx.value()));
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<byte[]> ctx) throws SQLException {
-        ctx.output().writeBlob(ctx.autoFree(newBlob(ctx.configuration(), ctx.value())));
+        ctx.output().writeBlob(newBlob(ctx, ctx.value()));
     }
 
     @Override
@@ -137,10 +136,12 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         }
     }
 
-    private final Blob newBlob(Configuration configuration, byte[] bytes) throws SQLException {
+    static final Blob newBlob(ResourceManagingScope scope, byte[] bytes) throws SQLException {
         Blob blob;
 
-        switch (configuration.family()) {
+        switch (scope.dialect()) {
+
+
 
 
 
@@ -156,6 +157,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
             }
         }
 
+        scope.autoFree(blob);
         blob.setBytes(1, bytes);
         return blob;
     }

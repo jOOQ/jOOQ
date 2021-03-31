@@ -45,6 +45,7 @@ import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.impl.Tools.visitAll;
 import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.math.BigDecimal;
 import java.nio.ByteBuffer;
@@ -86,6 +87,7 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 
 import org.reactivestreams.Publisher;
@@ -1016,85 +1018,74 @@ final class R2DBC {
     // -------------------------------------------------------------------------
 
     static final class BlockingRecordSubscription<R extends Record> implements Subscription {
-        private final ResultQueryTrait<R>  query;
+        private final ResultQueryTrait<R>   query;
         private final Subscriber<? super R> subscriber;
-        private Cursor<R>                   c;
-        private ArrayDeque<R>               buffer;
+        private final ArrayDeque<R>         buffer;
+        private volatile Cursor<R>          c;
 
         BlockingRecordSubscription(ResultQueryTrait<R> query, Subscriber<? super R> subscriber) {
             this.query = query;
             this.subscriber = subscriber;
+            this.buffer = new ArrayDeque<>();
         }
 
         @Override
-        public final void request(long n) {
+        public final synchronized void request(long n) {
             int i = (int) Math.min(n, Integer.MAX_VALUE);
 
             try {
                 if (c == null)
                     c = query.fetchLazyNonAutoClosing();
 
-                if (buffer == null)
-                    buffer = new ArrayDeque<>();
-
                 if (buffer.size() < i)
                     buffer.addAll(c.fetchNext(i - buffer.size()));
 
                 boolean complete = buffer.size() < i;
-                while (!buffer.isEmpty()) {
+                while (!buffer.isEmpty())
                     subscriber.onNext(buffer.pollFirst());
-                }
 
-                if (complete)
-                    doComplete();
+                if (complete) {
+                    subscriber.onComplete();
+                    safeClose(c);
+                }
             }
             catch (Throwable t) {
                 subscriber.onError(t);
-                doComplete();
+                safeClose(c);
             }
-        }
-
-        private void doComplete() {
-            close();
-            subscriber.onComplete();
-        }
-
-        private void close() {
-            if (c != null)
-                c.close();
         }
 
         @Override
         public final void cancel() {
-            close();
+            safeClose(c);
         }
     }
 
     static final class BlockingRowCountSubscription implements Subscription {
         final AbstractRowCountQuery       query;
         final Subscriber<? super Integer> subscriber;
-        Integer                           rows;
+        final AtomicBoolean               executed;
 
         BlockingRowCountSubscription(AbstractRowCountQuery query, Subscriber<? super Integer> subscriber) {
             this.query = query;
             this.subscriber = subscriber;
+            this.executed = new AtomicBoolean();
         }
 
         @Override
         public void request(long n) {
             try {
-                if (rows == null)
-                    subscriber.onNext(rows = query.execute());
+                if (!executed.getAndSet(true))
+                    subscriber.onNext(query.execute());
+
+                subscriber.onComplete();
             }
             catch (Throwable t) {
                 subscriber.onError(t);
             }
-
-            subscriber.onComplete();
         }
 
         @Override
-        public void cancel() {
-        }
+        public void cancel() {}
     }
 }

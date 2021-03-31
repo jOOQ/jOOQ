@@ -289,7 +289,7 @@ final class R2DBC {
         @Override
         final void onNext0(Connection c) {
             try {
-                Rendered rendered = rendered(query);
+                Rendered rendered = rendered(query.configuration(), query);
                 Statement stmt = c.createStatement(rendered.sql);
                 new DefaultBindContext(query.configuration(), new R2DBCPreparedStatement(query.configuration(), stmt)).visit(rendered.bindValues);
 
@@ -362,7 +362,7 @@ final class R2DBC {
         final void onNext0(Connection c) {
             try {
                 batch.checkBindValues();
-                Rendered rendered = rendered(batch.query);
+                Rendered rendered = rendered(batch.configuration, batch.query);
                 Statement stmt = c.createStatement(rendered.sql);
                 Param<?>[] params = rendered.bindValues.toArray(EMPTY_PARAM);
 
@@ -476,9 +476,9 @@ final class R2DBC {
     // Internal R2DBC specific utilities
     // -------------------------------------------------------------------------
 
-    private static final Rendered rendered(Query query) {
-        DefaultRenderContext render = new DefaultRenderContext(query.configuration().derive(
-            setParamType(query.configuration().dialect(), query.configuration().settings())
+    private static final Rendered rendered(Configuration configuration, Query query) {
+        DefaultRenderContext render = new DefaultRenderContext(configuration.derive(
+            setParamType(configuration.dialect(), configuration.settings())
         ));
 
         return new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
@@ -556,6 +556,19 @@ final class R2DBC {
             }
         }
 
+        private final Class<?> type(Class<?> type) {
+
+            // [#11700] Intercept JDBC temporal types, which aren't supported by R2DBC
+            if (type == Date.class)
+                return LocalDate.class;
+            else if (type == Time.class)
+                return LocalTime.class;
+            else if (type == Timestamp.class)
+                return LocalDateTime.class;
+            else
+                return type;
+        }
+
         @Override
         public final void setNull(int parameterIndex, int sqlType) throws SQLException {
             bindNull(parameterIndex, type(sqlType));
@@ -567,7 +580,7 @@ final class R2DBC {
         }
 
         public final void setNull(int parameterIndex, DataType<?> dataType) {
-            bindNull(parameterIndex, dataType.getType());
+            bindNull(parameterIndex, type(dataType.getType()));
         }
 
         @Override

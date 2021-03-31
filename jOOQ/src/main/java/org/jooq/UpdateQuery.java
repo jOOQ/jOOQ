@@ -501,7 +501,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @NotNull @CheckReturnValue
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Result<R> getReturnedRecords();
 

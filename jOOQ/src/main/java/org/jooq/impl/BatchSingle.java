@@ -59,7 +59,13 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.impl.R2DBC.BatchSingleSubscriber;
+import org.jooq.impl.R2DBC.BatchSubscription;
 import org.jooq.tools.JooqLogger;
+
+import org.reactivestreams.Subscriber;
+
+import io.r2dbc.spi.ConnectionFactory;
 
 /**
  * @author Lukas Eder
@@ -69,13 +75,13 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID = 3793967258181493207L;
-    private static final JooqLogger          log              = JooqLogger.getLogger(BatchSingle.class);
+    private static final long        serialVersionUID = 3793967258181493207L;
+    private static final JooqLogger  log              = JooqLogger.getLogger(BatchSingle.class);
 
-    private final Query                      query;
-    private final Map<String, List<Integer>> nameToIndexMapping;
-    private final List<Object[]>             allBindValues;
-    private final int                        expectedBindValues;
+    final Query                      query;
+    final Map<String, List<Integer>> nameToIndexMapping;
+    final List<Object[]>             allBindValues;
+    final int                        expectedBindValues;
 
     public BatchSingle(Configuration configuration, Query query) {
         super(configuration);
@@ -142,6 +148,18 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     }
 
     @Override
+    public final void subscribe(Subscriber<? super Integer> subscriber) {
+        ConnectionFactory cf = configuration.connectionFactory();
+
+        if (!(cf instanceof NoConnectionFactory))
+            subscriber.onSubscribe(new BatchSubscription<>(this, subscriber, s -> new BatchSingleSubscriber(this, s)));
+
+        // TODO: [#11700] Implement this
+        else
+            throw new UnsupportedOperationException();
+    }
+
+    @Override
     public final int[] execute() {
 
         // [#4554] If no variables are bound this should be treated like a
@@ -162,7 +180,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
             return executePrepared();
     }
 
-    private final void checkBindValues() {
+    final void checkBindValues() {
 
         // [#4071] Help users debug cases where bind value counts don't match the expected number
         // [#5362] Don't do this for plain SQL queries
@@ -177,15 +195,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         ExecuteListener listener = ExecuteListeners.get(ctx);
         Connection connection = ctx.connection();
 
-        // [#1371] fetch bind variables to restore them again, later
-        // [#3940] Don't include inlined bind variables
-        // [#4062] Make sure we collect also repeated named parameters
-        ParamCollector collector = new ParamCollector(configuration, false);
-        collector.visit(query);
-        Param<?>[] params = new Param[collector.resultList.size()];
-        Iterator<Entry<String, Param<?>>> it = collector.resultList.iterator();
-        for (int i = 0; it.hasNext(); i++)
-            params[i] = it.next().getValue();
+        Param<?>[] params = extractParams();
 
         try {
             // [#8968] Keep start() event inside of lifecycle management
@@ -250,6 +260,20 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         finally {
             Tools.safeClose(listener, ctx);
         }
+    }
+
+    final Param<?>[] extractParams() {
+        // [#1371] fetch bind variables to restore them again, later
+        // [#3940] Don't include inlined bind variables
+        // [#4062] Make sure we collect also repeated named parameters
+        ParamCollector collector = new ParamCollector(configuration, false);
+        collector.visit(query);
+        Param<?>[] params = new Param[collector.resultList.size()];
+        Iterator<Entry<String, Param<?>>> it = collector.resultList.iterator();
+        for (int i = 0; it.hasNext(); i++)
+            params[i] = it.next().getValue();
+
+        return params;
     }
 
     private final int[] executeStatic() {

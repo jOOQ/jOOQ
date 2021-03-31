@@ -46,8 +46,8 @@ import org.jooq.ExecuteListener;
 import org.jooq.Query;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
-import org.jooq.impl.R2DBC.BatchMultipleSubscription;
-import org.jooq.impl.R2DBC.RowCountSubscriber;
+import org.jooq.impl.R2DBC.BatchMultipleSubscriber;
+import org.jooq.impl.R2DBC.BatchSubscription;
 
 import org.reactivestreams.Subscriber;
 
@@ -81,7 +81,7 @@ final class BatchMultiple extends AbstractBatch {
         ConnectionFactory cf = configuration.connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new BatchMultipleSubscription(this, subscriber, (t, u) -> new RowCountSubscriber(u, queries.length)));
+            subscriber.onSubscribe(new BatchSubscription<>(this, subscriber, s -> new BatchMultipleSubscriber(this, s)));
 
         // TODO: [#11700] Implement this
         else

@@ -40,7 +40,10 @@ package org.jooq.impl;
 import static org.jooq.Publisher.subscriber;
 // ...
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.impl.Tools.EMPTY_PARAM;
+import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.recordFactory;
+import static org.jooq.impl.Tools.visitAll;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigDecimal;
@@ -70,6 +73,7 @@ import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Param;
 // ...
 import org.jooq.Query;
 import org.jooq.Record;
@@ -77,6 +81,7 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultRenderContext.Rendered;
+import org.jooq.impl.R2DBC.RowCountSubscriber;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
@@ -284,17 +289,13 @@ final class R2DBC {
         @Override
         final void onNext0(Connection c) {
             try {
-                DefaultRenderContext render = new DefaultRenderContext(query.configuration().derive(
-                    setParamType(query.configuration().dialect(), query.configuration().settings())
-                ));
-
-                Rendered rendered = new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
+                Rendered rendered = rendered(query);
                 Statement stmt = c.createStatement(rendered.sql);
                 new DefaultBindContext(query.configuration(), new R2DBCPreparedStatement(query.configuration(), stmt)).visit(rendered.bindValues);
 
                 // TODO: Reuse org.jooq.impl.Tools.setFetchSize(ExecuteContext ctx, int fetchSize)
                 if (query instanceof AbstractResultQuery) {
-                    int f = SettingsTools.getFetchSize(((AbstractResultQuery<?>) query).fetchSize(), render.settings());
+                    int f = SettingsTools.getFetchSize(((AbstractResultQuery<?>) query).fetchSize(), query.configuration().settings());
                     if (f != 0) {
                         if (log.isDebugEnabled())
                             log.debug("Setting fetch size", f);
@@ -315,18 +316,15 @@ final class R2DBC {
 
     static final class BatchMultipleSubscriber extends ConnectionSubscriber<Integer> {
 
-        final BatchMultiple                                                                batch;
-        final BiFunction<BatchMultiple, AbstractSubscription<Integer>, Subscriber<Result>> resultSubscriber;
+        final BatchMultiple batch;
 
         BatchMultipleSubscriber(
             BatchMultiple batch,
-            BatchMultipleSubscription downstream,
-            BiFunction<BatchMultiple, AbstractSubscription<Integer>, Subscriber<Result>> resultSubscriber
+            BatchSubscription<BatchMultiple> downstream
         ) {
             super(downstream);
 
             this.batch = batch;
-            this.resultSubscriber = resultSubscriber;
         }
 
         @Override
@@ -337,7 +335,52 @@ final class R2DBC {
                 for (int i = 0; i < batch.queries.length; i++)
                     b = b.add(DSL.using(batch.configuration).renderInlined(batch.queries[i]));
 
-                b.execute().subscribe(resultSubscriber.apply(batch, downstream));
+                b.execute().subscribe(new RowCountSubscriber(downstream, batch.size()));
+            }
+
+            // TODO: More specific error handling
+            catch (Throwable t) {
+                onError(t);
+            }
+        }
+    }
+
+    static final class BatchSingleSubscriber extends ConnectionSubscriber<Integer> {
+
+        final BatchSingle batch;
+
+        BatchSingleSubscriber(
+            BatchSingle batch,
+            BatchSubscription<BatchSingle> downstream
+        ) {
+            super(downstream);
+
+            this.batch = batch;
+        }
+
+        @Override
+        final void onNext0(Connection c) {
+            try {
+                batch.checkBindValues();
+                Rendered rendered = rendered(batch.query);
+                Statement stmt = c.createStatement(rendered.sql);
+                Param<?>[] params = rendered.bindValues.toArray(EMPTY_PARAM);
+
+                for (Object[] bindValues : batch.allBindValues) {
+
+                    // [#1371] [#2139] Don't bind variables directly onto statement, bind them through the collected params
+                    //                 list to preserve type information
+                    // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
+                    //                 plain SQL. In that case, infer the bind value type directly from the bind value
+                    visitAll(new DefaultBindContext(batch.configuration, new R2DBCPreparedStatement(batch.query.configuration(), stmt)),
+                        (params.length > 0)
+                            ? fields(bindValues, params)
+                            : fields(bindValues));
+
+                    stmt = stmt.add();
+                }
+
+                stmt.execute().subscribe(new RowCountSubscriber(downstream, batch.size()));
             }
 
             // TODO: More specific error handling
@@ -409,24 +452,36 @@ final class R2DBC {
         }
     }
 
-    static final class BatchMultipleSubscription extends AbstractSubscription<Integer> {
+    static final class BatchSubscription<B extends AbstractBatch> extends AbstractSubscription<Integer> {
 
-        final BatchMultipleSubscriber batchMultipleSubscriber;
+        final ConnectionSubscriber<Integer> batchSubscriber;
 
-        BatchMultipleSubscription(
-            BatchMultiple batch,
+        BatchSubscription(
+            B batch,
             Subscriber<? super Integer> subscriber,
-            BiFunction<BatchMultiple, AbstractSubscription<Integer>, Subscriber<Result>> resultSubscriber
+            Function<BatchSubscription<B>, ConnectionSubscriber<Integer>> batchSubscriber
         ) {
             super(batch.configuration, subscriber);
 
-            this.batchMultipleSubscriber = new BatchMultipleSubscriber(batch, this, resultSubscriber);
+            this.batchSubscriber = batchSubscriber.apply(this);
         }
 
         @Override
-        final BatchMultipleSubscriber delegate() {
-            return batchMultipleSubscriber;
+        final ConnectionSubscriber<Integer> delegate() {
+            return batchSubscriber;
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // Internal R2DBC specific utilities
+    // -------------------------------------------------------------------------
+
+    private static final Rendered rendered(Query query) {
+        DefaultRenderContext render = new DefaultRenderContext(query.configuration().derive(
+            setParamType(query.configuration().dialect(), query.configuration().settings())
+        ));
+
+        return new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
     }
 
     // -------------------------------------------------------------------------

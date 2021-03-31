@@ -232,6 +232,8 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 
+// ...
+
 /**
  * @author Lukas Eder
  */
@@ -1309,6 +1311,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
     }
+
 
 
 

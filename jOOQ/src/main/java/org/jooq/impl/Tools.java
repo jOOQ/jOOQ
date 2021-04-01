@@ -3273,7 +3273,8 @@ final class Tools {
          * The type of guard.
          */
         static enum Guard {
-            RECORD_TOSTRING;
+            RECORD_TOSTRING,
+            SUBSCRIPTION_SYNC_RECURSION;
 
             ThreadLocal<Object> tl = new ThreadLocal<>();
         }
@@ -3292,6 +3293,13 @@ final class Tools {
              * This callback is executed if {@link #unguarded()} has already been executed on the current stack.
              */
             V guarded();
+        }
+
+        /**
+         * Run an operation using a guard.
+         */
+        static final void run(Guard guard, Runnable unguardedOperation, Runnable guardedOperation) {
+            run(guard, () -> { unguardedOperation.run(); return null; }, () -> { guardedOperation.run(); return null; });
         }
 
         /**

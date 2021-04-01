@@ -114,6 +114,9 @@ import org.jooq.tools.JooqLogger;
 
 import org.jetbrains.annotations.NotNull;
 
+import io.r2dbc.spi.ConnectionFactory;
+import io.r2dbc.spi.ConnectionFactoryMetadata;
+
 /**
  * JDBC-related utility methods.
  *
@@ -169,6 +172,51 @@ public class JDBCUtils {
                 result = dialect(url, majorVersion, minorVersion);
             }
             catch (SQLException ignore) {}
+        }
+
+        if (result == SQLDialect.DEFAULT) {
+            // If the dialect cannot be guessed from the URL, take some other
+            // measures, e.g. by querying DatabaseMetaData.getDatabaseProductName()
+        }
+
+        return result;
+    }
+
+    /**
+     * "Guess" the {@link SQLDialect} from a {@link ConnectionFactory} instance.
+     * <p>
+     * This method tries to guess the <code>SQLDialect</code> of a connection
+     * from the its {@link ConnectionFactoryMetadata} as obtained by
+     * {@link ConnectionFactory#getMetadata()}. If the dialect cannot be guessed
+     * from the URL, further actions may be implemented in the future.
+     *
+     * @return The appropriate {@link SQLDialect} or {@link SQLDialect#DEFAULT}
+     *         if no dialect could be derived from the connection. Never
+     *         <code>null</code>.
+     * @see #dialect(String)
+     */
+    @NotNull
+    public static final SQLDialect dialect(ConnectionFactory connection) {
+        SQLDialect result = SQLDialect.DEFAULT;
+
+        if (connection != null) {
+            ConnectionFactoryMetadata m = connection.getMetadata();
+            String product = m.getName().toLowerCase();
+
+            if (product.contains("h2"))
+                result = H2;
+            else if (product.contains("mariadb"))
+                result = MARIADB;
+            else if (product.contains("mysql"))
+                result = MYSQL;
+            else if (product.contains("postgres"))
+                result = POSTGRES;
+
+
+
+
+
+
         }
 
         if (result == SQLDialect.DEFAULT) {

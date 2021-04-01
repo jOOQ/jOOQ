@@ -37,6 +37,9 @@
         <sqlserver.version>9.2.1.jre8</sqlserver.version>
         <oracle.version>21.1.0.0</oracle.version>
 
+        <!-- R2DBC SPI version and some matching driver versions -->
+        <io.r2dbc.version>0.9.0.M1</io.r2dbc.version>
+
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>2.3.1</jaxb.version>
         <javax.activation.version>1.2.0</javax.activation.version>
@@ -129,10 +132,41 @@
                 <artifactId>annotations</artifactId>
                 <version>19.0.0</version>
             </dependency>
+
             <dependency>
                 <groupId>io.r2dbc</groupId>
                 <artifactId>r2dbc-spi</artifactId>
-                <version>0.9.0.M1</version>
+                <version>${io.r2dbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>3.4.4</version>
+            </dependency>
+            <dependency>
+                <groupId>io.r2dbc</groupId>
+                <artifactId>r2dbc-h2</artifactId>
+                <version>0.8.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mariadb</groupId>
+                <artifactId>r2dbc-mariadb</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.r2dbc</groupId>
+                <artifactId>r2dbc-mssql</artifactId>
+                <version>${io.r2dbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle.database.r2dbc</groupId>
+                <artifactId>oracle-r2dbc</artifactId>
+                <version>0.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>r2dbc-postgresql</artifactId>
+                <version>${io.r2dbc.version}</version>
             </dependency>
 
             <dependency>

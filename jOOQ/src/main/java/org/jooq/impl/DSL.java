@@ -422,6 +422,8 @@ import org.jooq.types.UShort;
 
 import org.jetbrains.annotations.NotNull;
 
+import io.r2dbc.spi.ConnectionFactory;
+
 /**
  * A DSL "entry point" providing implementations to the <code>org.jooq</code>
  * interfaces.
@@ -752,6 +754,46 @@ public class DSL {
     @NotNull
     public static DSLContext using(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
         return new DefaultDSLContext(connectionProvider, dialect, settings);
+    }
+
+    /**
+     * Create an executor with a custom connection factory and a dialect
+     * configured.
+     *
+     * @param connectionFactory The connection factory providing jOOQ with
+     *            R2DBC connections
+     */
+    @NotNull
+    public static DSLContext using(ConnectionFactory connectionFactory) {
+        return new DefaultDSLContext(connectionFactory, JDBCUtils.dialect(connectionFactory));
+    }
+
+    /**
+     * Create an executor with a custom connection factory and a dialect
+     * configured.
+     *
+     * @param connectionFactory The connection factory providing jOOQ with
+     *            R2DBC connections
+     * @param dialect The dialect to use with objects created from this executor
+     */
+    @NotNull
+    public static DSLContext using(ConnectionFactory connectionFactory, SQLDialect dialect) {
+        return new DefaultDSLContext(connectionFactory, dialect);
+    }
+
+    /**
+     * Create an executor with a custom connection factory, a dialect and settings
+     * configured.
+     *
+     * @param connectionFactory The connection factory providing jOOQ with
+     *            R2DBC connections
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     */
+    @NotNull
+    public static DSLContext using(ConnectionFactory connectionFactory, SQLDialect dialect, Settings settings) {
+        return new DefaultDSLContext(connectionFactory, dialect, settings);
     }
 
     /**

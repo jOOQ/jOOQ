@@ -338,6 +338,14 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         this(new DefaultConfiguration(connectionProvider, dialect, settings));
     }
 
+    public DefaultDSLContext(ConnectionFactory connectionFactory, SQLDialect dialect) {
+        this(connectionFactory, dialect, null);
+    }
+
+    public DefaultDSLContext(ConnectionFactory connectionFactory, SQLDialect dialect, Settings settings) {
+        this(new DefaultConfiguration().set(connectionFactory).set(dialect).set(settings));
+    }
+
     public DefaultDSLContext(Configuration configuration) {
         super(configuration, configuration == null ? null : configuration.data());
     }

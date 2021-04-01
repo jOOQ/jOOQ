@@ -65,6 +65,7 @@ import java.util.ArrayDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.LongAccumulator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -82,14 +83,15 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultRenderContext.Rendered;
-import org.jooq.impl.R2DBC.RowCountSubscriber;
+import org.jooq.impl.Tools.ThreadGuard;
+import org.jooq.impl.Tools.ThreadGuard.Guard;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;
-import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 
+import org.jetbrains.annotations.Nullable;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -110,12 +112,70 @@ final class R2DBC {
     private static final JooqLogger log    = JooqLogger.getLogger(R2DBC.class);
     static volatile boolean         is_0_9 = true;
 
+    // -------------------------------------------------------------------------
+    // Utilities to pass the TCK
+    // -------------------------------------------------------------------------
+
+    static abstract class AbstractSubscription<T> implements Subscription {
+
+        final AtomicBoolean         completed;
+        final AtomicLong            requested;
+        final Subscriber<? super T> subscriber;
+
+        AbstractSubscription(Subscriber<? super T> subscriber) {
+            this.completed = new AtomicBoolean();
+            this.requested = new AtomicLong();
+            this.subscriber = org.jooq.Publisher.subscriber(
+                subscriber::onSubscribe,
+                subscriber::onNext,
+                subscriber::onError,
+                () -> {
+                    completed.set(true);
+                    subscriber.onComplete();
+                }
+            );
+        }
+
+        @Override
+        public final void request(long n) {
+            if (n <= 0) {
+                subscriber.onError(new IllegalArgumentException("Rule 3.9 non-positive request signals are illegal"));
+            }
+            else if (!completed.get()) {
+                requested.accumulateAndGet(n, (x, y) -> {
+                    long r = x + y;
+
+                    // See Long::addExact
+                    if (((x ^ r) & (y ^ r)) < 0)
+                        return Long.MAX_VALUE;
+                    else
+                        return r;
+                });
+
+                ThreadGuard.run(Guard.SUBSCRIPTION_SYNC_RECURSION, this::request0, () -> {});
+            }
+        }
+
+        @Override
+        public final void cancel() {
+            if (!completed.getAndSet(true))
+                cancel0();
+        }
+
+        abstract void request0();
+        abstract void cancel0();
+    }
+
+    // -------------------------------------------------------------------------
+    // R2DBC implementations
+    // -------------------------------------------------------------------------
+
     static final class Forwarding<T> implements Subscriber<T> {
 
-        final AbstractSubscription<T> downstream;
+        final AbstractConnectionSubscription<T> downstream;
         final AtomicLong              expected;
 
-        Forwarding(AbstractSubscription<T> downstream, long expected) {
+        Forwarding(AbstractConnectionSubscription<T> downstream, long expected) {
             this.downstream = downstream;
             this.expected = new AtomicLong(expected);
         }
@@ -145,9 +205,9 @@ final class R2DBC {
 
     static abstract class AbstractResultSubscriber<T> implements Subscriber<Result> {
 
-        final AbstractSubscription<? super T> downstream;
+        final AbstractConnectionSubscription<? super T> downstream;
 
-        AbstractResultSubscriber(AbstractSubscription<? super T> downstream) {
+        AbstractResultSubscriber(AbstractConnectionSubscription<? super T> downstream) {
             this.downstream = downstream;
         }
 
@@ -164,7 +224,7 @@ final class R2DBC {
 
         final Forwarding<? super Integer> forwarding;
 
-        RowCountSubscriber(AbstractSubscription<? super Integer> downstream, long expected) {
+        RowCountSubscriber(AbstractConnectionSubscription<? super Integer> downstream, long expected) {
             super(downstream);
 
             this.forwarding = new Forwarding<>(downstream, expected);
@@ -185,7 +245,7 @@ final class R2DBC {
 
         final Q query;
 
-        ResultSubscriber(Q query, AbstractSubscription<? super R> downstream) {
+        ResultSubscriber(Q query, AbstractConnectionSubscription<? super R> downstream) {
             super(downstream);
 
             this.query = query;
@@ -242,10 +302,10 @@ final class R2DBC {
 
     static abstract class ConnectionSubscriber<T> implements Subscriber<Connection> {
 
-        final AbstractSubscription<T>     downstream;
+        final AbstractConnectionSubscription<T>     downstream;
         final AtomicReference<Connection> connection;
 
-        ConnectionSubscriber(AbstractSubscription<T> downstream) {
+        ConnectionSubscriber(AbstractConnectionSubscription<T> downstream) {
             this.downstream = downstream;
             this.connection = new AtomicReference<>();
         }
@@ -275,12 +335,12 @@ final class R2DBC {
     static final class QueryExecutionSubscriber<T, Q extends Query> extends ConnectionSubscriber<T> {
 
         final Q                                                          query;
-        final BiFunction<Q, AbstractSubscription<T>, Subscriber<Result>> resultSubscriber;
+        final BiFunction<Q, AbstractConnectionSubscription<T>, Subscriber<Result>> resultSubscriber;
 
         QueryExecutionSubscriber(
             Q query,
             QuerySubscription<T, Q> downstream,
-            BiFunction<Q, AbstractSubscription<T>, Subscriber<Result>> resultSubscriber
+            BiFunction<Q, AbstractConnectionSubscription<T>, Subscriber<Result>> resultSubscriber
         ) {
             super(downstream);
 
@@ -392,33 +452,29 @@ final class R2DBC {
         }
     }
 
-    static abstract class AbstractSubscription<T> implements Subscription {
+    static abstract class AbstractConnectionSubscription<T> extends AbstractSubscription<T> {
 
-        final Subscriber<? super T>           subscriber;
         final AtomicBoolean                   subscribed;
-        final AtomicLong                      requested;
         final Publisher<? extends Connection> connection;
 
-        AbstractSubscription(
+        AbstractConnectionSubscription(
             Configuration configuration,
             Subscriber<? super T> subscriber
         ) {
-            this.subscriber = subscriber;
+            super(subscriber);
+
             this.subscribed = new AtomicBoolean();
-            this.requested = new AtomicLong();
             this.connection = configuration.connectionFactory().create();
         }
 
         @Override
-        public final void request(long n) {
-            requested.getAndAdd(n);
-
+        final void request0() {
             if (!subscribed.getAndSet(true))
                 connection.subscribe(delegate());
         }
 
         @Override
-        public final void cancel() {
+        final void cancel0() {
             delegate().connection.updateAndGet(c -> {
 
                 // close() calls on already closed resources have no effect, so
@@ -428,20 +484,21 @@ final class R2DBC {
 
                 return null;
             });
+
             subscriber.onComplete();
         }
 
         abstract ConnectionSubscriber<T> delegate();
     }
 
-    static final class QuerySubscription<T, Q extends Query> extends AbstractSubscription<T> {
+    static final class QuerySubscription<T, Q extends Query> extends AbstractConnectionSubscription<T> {
 
         final QueryExecutionSubscriber<T, Q> queryExecutionSubscriber;
 
         QuerySubscription(
             Q query,
             Subscriber<? super T> subscriber,
-            BiFunction<Q, AbstractSubscription<T>, Subscriber<Result>> resultSubscriber
+            BiFunction<Q, AbstractConnectionSubscription<T>, Subscriber<Result>> resultSubscriber
         ) {
             super(query.configuration(), subscriber);
 
@@ -454,7 +511,7 @@ final class R2DBC {
         }
     }
 
-    static final class BatchSubscription<B extends AbstractBatch> extends AbstractSubscription<Integer> {
+    static final class BatchSubscription<B extends AbstractBatch> extends AbstractConnectionSubscription<Integer> {
 
         final ConnectionSubscriber<Integer> batchSubscriber;
 
@@ -1017,36 +1074,32 @@ final class R2DBC {
     // XXX: Legacy implementation
     // -------------------------------------------------------------------------
 
-    static final class BlockingRecordSubscription<R extends Record> implements Subscription {
+    static final class BlockingRecordSubscription<R extends Record> extends AbstractSubscription<R> {
         private final ResultQueryTrait<R>   query;
-        private final Subscriber<? super R> subscriber;
-        private final ArrayDeque<R>         buffer;
         private volatile Cursor<R>          c;
 
         BlockingRecordSubscription(ResultQueryTrait<R> query, Subscriber<? super R> subscriber) {
+            super(subscriber);
+
             this.query = query;
-            this.subscriber = subscriber;
-            this.buffer = new ArrayDeque<>();
         }
 
         @Override
-        public final synchronized void request(long n) {
-            int i = (int) Math.min(n, Integer.MAX_VALUE);
-
+        final synchronized void request0() {
             try {
                 if (c == null)
                     c = query.fetchLazyNonAutoClosing();
 
-                if (buffer.size() < i)
-                    buffer.addAll(c.fetchNext(i - buffer.size()));
+                while (requested.getAndUpdate(l -> Math.max(0, l - 1)) > 0) {
+                    R r = c.fetchNext();
 
-                boolean complete = buffer.size() < i;
-                while (!buffer.isEmpty())
-                    subscriber.onNext(buffer.pollFirst());
+                    if (r == null) {
+                        subscriber.onComplete();
+                        safeClose(c);
+                        break;
+                    }
 
-                if (complete) {
-                    subscriber.onComplete();
-                    safeClose(c);
+                    subscriber.onNext(r);
                 }
             }
             catch (Throwable t) {
@@ -1056,28 +1109,24 @@ final class R2DBC {
         }
 
         @Override
-        public final void cancel() {
+        final void cancel0() {
             safeClose(c);
         }
     }
 
-    static final class BlockingRowCountSubscription implements Subscription {
-        final AbstractRowCountQuery       query;
-        final Subscriber<? super Integer> subscriber;
-        final AtomicBoolean               executed;
+    static final class BlockingRowCountSubscription extends AbstractSubscription<Integer> {
+        final AbstractRowCountQuery query;
 
         BlockingRowCountSubscription(AbstractRowCountQuery query, Subscriber<? super Integer> subscriber) {
+            super(subscriber);
+
             this.query = query;
-            this.subscriber = subscriber;
-            this.executed = new AtomicBoolean();
         }
 
         @Override
-        public void request(long n) {
+        final void request0() {
             try {
-                if (!executed.getAndSet(true))
-                    subscriber.onNext(query.execute());
-
+                subscriber.onNext(query.execute());
                 subscriber.onComplete();
             }
             catch (Throwable t) {
@@ -1086,6 +1135,6 @@ final class R2DBC {
         }
 
         @Override
-        public void cancel() {}
+        final void cancel0() {}
     }
 }

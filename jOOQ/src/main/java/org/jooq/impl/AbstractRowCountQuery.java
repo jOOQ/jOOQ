@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import org.jooq.Configuration;
 import org.jooq.RowCountQuery;
+import org.jooq.impl.R2DBC.BlockingRowCountSubscription;
 
 /**
  * @author Lukas Eder
@@ -58,26 +59,7 @@ abstract class AbstractRowCountQuery extends AbstractQuery implements RowCountQu
 
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super Integer> subscriber) {
-        subscriber.onSubscribe(new org.reactivestreams.Subscription() {
-            Integer rows;
-
-            @Override
-            public void request(long n) {
-                try {
-                    if (rows == null)
-                        subscriber.onNext(rows = execute());
-                }
-                catch (Throwable t) {
-                    subscriber.onError(t);
-                }
-
-                subscriber.onComplete();
-            }
-
-            @Override
-            public void cancel() {
-            }
-        });
+        subscriber.onSubscribe(new BlockingRowCountSubscription(this, subscriber));
     }
 
 

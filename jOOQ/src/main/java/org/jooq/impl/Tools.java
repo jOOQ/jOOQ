@@ -3313,7 +3313,8 @@ final class Tools {
          * The type of guard.
          */
         static enum Guard {
-            RECORD_TOSTRING;
+            RECORD_TOSTRING,
+            SUBSCRIPTION_SYNC_RECURSION;
 
             ThreadLocal<Object> tl = new ThreadLocal<>();
         }
@@ -3342,6 +3343,25 @@ final class Tools {
             public V guarded() {
                 return null;
             }
+        }
+
+        /**
+         * Run an operation using a guard.
+         */
+        static final void run(Guard guard, Runnable unguardedOperation, Runnable guardedOperation) {
+            run(guard, new GuardedOperation<Void>() {
+                @Override
+                public Void unguarded() {
+                    unguardedOperation.run();
+                    return null;
+                }
+
+                @Override
+                public Void guarded() {
+                    guardedOperation.run();
+                    return null;
+                }
+            });
         }
 
         /**

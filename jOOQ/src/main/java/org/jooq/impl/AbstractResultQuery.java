@@ -51,7 +51,6 @@ import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -108,6 +107,7 @@ import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.R2DBC.BlockingRecordSubscription;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
 
@@ -357,53 +357,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super R> subscriber) {
-        subscriber.onSubscribe(new org.reactivestreams.Subscription() {
-            Cursor<R> c;
-            ArrayDeque<R> buffer;
-
-            @Override
-            public void request(long n) {
-                int i = (int) Math.min(n, Integer.MAX_VALUE);
-
-                try {
-                    if (c == null)
-                        c = fetchLazyNonAutoClosing();
-
-                    if (buffer == null)
-                        buffer = new ArrayDeque<>();
-
-                    if (buffer.size() < i)
-                        buffer.addAll(c.fetchNext(i - buffer.size()));
-
-                    boolean complete = buffer.size() < i;
-                    while (!buffer.isEmpty()) {
-                        subscriber.onNext(buffer.pollFirst());
-                    }
-
-                    if (complete)
-                        doComplete();
-                }
-                catch (Throwable t) {
-                    subscriber.onError(t);
-                    doComplete();
-                }
-            }
-
-            private void doComplete() {
-                close();
-                subscriber.onComplete();
-            }
-
-            private void close() {
-                if (c != null)
-                    c.close();
-            }
-
-            @Override
-            public void cancel() {
-                close();
-            }
-        });
+        subscriber.onSubscribe(new BlockingRecordSubscription<>(this, subscriber));
     }
 
     @Override

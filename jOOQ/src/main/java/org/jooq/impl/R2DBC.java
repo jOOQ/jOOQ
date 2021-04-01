@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+
+
 import static org.jooq.impl.Internal.subscriber;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
@@ -179,3 +181,5 @@ final class R2DBC {
         final void cancel0() {}
     }
 }
+
+

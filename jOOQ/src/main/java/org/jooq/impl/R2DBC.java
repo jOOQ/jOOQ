@@ -68,10 +68,12 @@ final class R2DBC {
         final AtomicBoolean         completed;
         final AtomicLong            requested;
         final Subscriber<? super T> subscriber;
+        final Guard                 guard;
 
         AbstractSubscription(Subscriber<? super T> subscriber) {
             this.completed = new AtomicBoolean();
             this.requested = new AtomicLong();
+            this.guard = new Guard();
             this.subscriber = subscriber(
                 subscriber::onSubscribe,
                 subscriber::onNext,
@@ -99,7 +101,7 @@ final class R2DBC {
                         return r;
                 });
 
-                ThreadGuard.run(Guard.SUBSCRIPTION_SYNC_RECURSION, this::request0, () -> {});
+                ThreadGuard.run(guard, this::request0, () -> {});
             }
         }
 

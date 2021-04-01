@@ -59,8 +59,9 @@ final class ToChar extends AbstractField<String> {
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID  = 2484479701190490450L;
-    private static final Set<SQLDialect> SUPPORT_NATIVE = SQLDialect.supportedBy(H2, POSTGRES);
+    private static final long            serialVersionUID            = 2484479701190490450L;
+    private static final Set<SQLDialect> SUPPORT_NATIVE_WITHOUT_MASK = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> SUPPORT_NATIVE_WITH_MASK    = SQLDialect.supportedBy(H2, POSTGRES);
     private final Field<?>               field;
     private final Field<String>          format;
 
@@ -73,7 +74,9 @@ final class ToChar extends AbstractField<String> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (format == null && !SUPPORT_NATIVE.contains(ctx.dialect()))
+        if (format == null && !SUPPORT_NATIVE_WITHOUT_MASK.contains(ctx.dialect()))
+            acceptCast(ctx);
+        else if (format != null && !SUPPORT_NATIVE_WITH_MASK.contains(ctx.dialect()))
             acceptCast(ctx);
         else
             acceptNative(ctx);

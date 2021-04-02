@@ -101,11 +101,14 @@ extends
 
 
 
-    private static final Set<SQLDialect> SUPPORT_NATIVE = SQLDialect.supportedBy(H2, POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE_WITHOUT_MASK = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE_WITH_MASK    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (formatMask == null && !SUPPORT_NATIVE.contains(ctx.dialect()))
+        if (formatMask == null && NO_SUPPORT_NATIVE_WITHOUT_MASK.contains(ctx.dialect()))
+            acceptCast(ctx);
+        else if (formatMask != null && NO_SUPPORT_NATIVE_WITH_MASK.contains(ctx.dialect()))
             acceptCast(ctx);
         else
             acceptNative(ctx);

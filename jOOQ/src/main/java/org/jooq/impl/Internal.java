@@ -43,6 +43,8 @@ import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Tools.nullSafe;
 
+import java.util.function.Consumer;
+
 import org.jooq.Binding;
 import org.jooq.Check;
 import org.jooq.Converter;
@@ -72,6 +74,8 @@ import org.jooq.UniqueKey;
 // ...
 
 import org.jetbrains.annotations.NotNull;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 /**
  * A utility class that grants access to internal API, to be used only by
@@ -403,5 +407,39 @@ public final class Internal {
     @Support
     static final <T> Field<T> idiv(Field<T> lhs, Field<?> rhs) {
         return new Expression<>(DIVIDE, true, lhs, nullSafe(rhs, lhs.getDataType()));
+    }
+
+    /**
+     * Create a {@link Subscriber} from a set of lambdas.
+     * <p>
+     * This is used for internal purposes and thus subject for change.
+     */
+    public static <T> Subscriber<T> subscriber(
+        Consumer<? super Subscription> subscription,
+        Consumer<? super T> onNext,
+        Consumer<? super Throwable> onError,
+        Runnable onComplete
+    ) {
+        return new Subscriber<T>() {
+            @Override
+            public void onSubscribe(Subscription s) {
+                subscription.accept(s);
+            }
+
+            @Override
+            public void onNext(T t) {
+                onNext.accept(t);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                onError.accept(t);
+            }
+
+            @Override
+            public void onComplete() {
+                onComplete.run();
+            }
+        };
     }
 }

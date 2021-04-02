@@ -3269,15 +3269,11 @@ final class Tools {
      */
     static class ThreadGuard {
 
-        /**
-         * The type of guard.
-         */
-        static enum Guard {
-            RECORD_TOSTRING,
-            SUBSCRIPTION_SYNC_RECURSION;
-
+        static class Guard {
             ThreadLocal<Object> tl = new ThreadLocal<>();
         }
+
+        static final Guard RECORD_TOSTRING = new Guard();
 
         /**
          * A guarded operation.

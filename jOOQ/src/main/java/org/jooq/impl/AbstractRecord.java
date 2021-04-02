@@ -48,7 +48,6 @@ import static org.jooq.impl.Tools.indexFail;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.resetChangedOnNotNull;
 import static org.jooq.impl.Tools.settings;
-import static org.jooq.impl.Tools.ThreadGuard.Guard.RECORD_TOSTRING;
 
 import java.io.Writer;
 import java.sql.ResultSet;
@@ -56,7 +55,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +102,6 @@ import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.Tools.ThreadGuard;
-import org.jooq.impl.Tools.ThreadGuard.GuardedOperation;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -1136,7 +1133,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public String toString() {
         // [#3900] Nested records should generate different toString() behaviour
-        return ThreadGuard.run(RECORD_TOSTRING, () -> asResult().toString(), () -> valuesRow().toString());
+        return ThreadGuard.run(ThreadGuard.RECORD_TOSTRING, () -> asResult().toString(), () -> valuesRow().toString());
     }
 
     @Override

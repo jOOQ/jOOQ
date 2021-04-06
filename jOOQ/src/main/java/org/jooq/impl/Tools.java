@@ -74,10 +74,16 @@ import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.conf.RenderDefaultNullability.IMPLICIT_NULL;
 import static org.jooq.conf.RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED;
 import static org.jooq.conf.SettingsTools.getBackslashEscaping;
-import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_GETTER;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_MEMBERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_SETTERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.DDLStatementType.ALTER_SCHEMA;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
@@ -104,13 +110,6 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_GETTER;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_MEMBERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_SETTERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
 import static org.jooq.impl.Identifiers.QUOTES;
@@ -291,6 +290,7 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.DetachedException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
@@ -1103,10 +1103,14 @@ final class Tools {
     }
 
     /**
-     * Extract the configuration from an attachable.
+     * Get an attachable's configuration or a new {@link DefaultConfiguration}
+     * if <code>null</code>.
      */
-    static final Configuration getConfiguration(Attachable attachable) {
-        return attachable.configuration();
+    static final Configuration configurationOrThrow(Attachable attachable) {
+        if (attachable.configuration() == null)
+            throw new DetachedException("No configuration attached: " + attachable);
+        else
+            return configuration(attachable.configuration());
     }
 
     /**

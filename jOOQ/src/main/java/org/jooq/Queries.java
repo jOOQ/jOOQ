@@ -52,7 +52,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Queries extends QueryPart, Attachable, Iterable<Query> {
+public interface Queries extends AttachableQueryPart, Iterable<Query> {
 
     // ------------------------------------------------------------------------
     // Access API

@@ -39,20 +39,15 @@
 package org.jooq;
 
 import java.sql.PreparedStatement;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
-import org.jooq.conf.ParamType;
-import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Any query.
@@ -62,7 +57,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface Query extends Statement, Attachable, AutoCloseable {
+public interface Query extends Statement, AttachableQueryPart, AutoCloseable {
 
     /**
      * Execute the query, if it has been created with a proper configuration.
@@ -128,112 +123,6 @@ public interface Query extends Statement, Attachable, AutoCloseable {
      * {@link #getSQL()} may not render valid SQL!
      */
     boolean isExecutable();
-
-    /**
-     * Retrieve the SQL code rendered by this Query.
-     * <p>
-     * Use this method, when you want to use jOOQ for object oriented query
-     * creation, but execute the query with some other technology, such as
-     * <ul>
-     * <li>JDBC</li>
-     * <li>Spring Templates</li>
-     * <li>JPA native queries</li>
-     * <li>etc...</li>
-     * </ul>
-     * <p>
-     * Note, this is the same as calling {@link #getSQL(boolean)}. The boolean
-     * parameter will depend on your {@link DSLContext}'s {@link Settings}:
-     * <table border="1">
-     * <tr>
-     * <th><code>StatementType</code></th>
-     * <th>boolean parameter</th>
-     * <th>effect</th>
-     * </tr>
-     * <tr>
-     * <td> {@link StatementType#PREPARED_STATEMENT}</td>
-     * <td><code>false</code> (default)</td>
-     * <td>This will render bind variables to be used with a JDBC
-     * {@link PreparedStatement}. You can extract bind values from this
-     * <code>Query</code> using {@link #getBindValues()}</td>
-     * </tr>
-     * <tr>
-     * <td> {@link StatementType#STATIC_STATEMENT}</td>
-     * <td><code>true</code></td>
-     * <td>This will inline all bind variables in a statement to be used with a
-     * JDBC {@link Statement}</td>
-     * </tr>
-     * </table>
-     * <p>
-     * [#1520] Note that the query actually being executed might not contain any
-     * bind variables, in case the number of bind variables exceeds your SQL
-     * dialect's maximum number of supported bind variables. This is not
-     * reflected by this method, which will only use the {@link Settings} to
-     * decide whether to render bind values.
-     *
-     * @see #getSQL(boolean)
-     */
-    @NotNull
-    String getSQL();
-
-    /**
-     * Retrieve the SQL code rendered by this Query.
-     * <p>
-     * [#1520] Note that the query actually being executed might not contain any
-     * bind variables, in case the number of bind variables exceeds your SQL
-     * dialect's maximum number of supported bind variables. This is not
-     * reflected by this method, which will only use <code>paramType</code>
-     * argument to decide whether to render bind values.
-     * <p>
-     * See {@link #getSQL()} for more details.
-     *
-     * @param paramType How to render parameters. This overrides values in
-     *            {@link Settings#getStatementType()}
-     * @return The generated SQL
-     */
-    @NotNull
-    String getSQL(ParamType paramType);
-
-    /**
-     * Retrieve the bind values that will be bound by this Query. This
-     * <code>List</code> cannot be modified. To modify bind values, use
-     * {@link #getParams()} instead.
-     * <p>
-     * Unlike {@link #getParams()}, which returns also inlined parameters, this
-     * returns only actual bind values that will render an actual bind value as
-     * a question mark <code>"?"</code>
-     *
-     * @see DSLContext#extractBindValues(QueryPart)
-     */
-    @NotNull
-    List<Object> getBindValues();
-
-    /**
-     * Get a <code>Map</code> of named parameters. The <code>Map</code> itself
-     * cannot be modified, but the {@link Param} elements allow for modifying
-     * bind values on an existing {@link Query}.
-     * <p>
-     * Bind values created with {@link DSL#val(Object)} will have their bind
-     * index as name.
-     *
-     * @see Param
-     * @see DSL#param(String, Object)
-     * @see DSLContext#extractParams(QueryPart)
-     */
-    @NotNull
-    Map<String, Param<?>> getParams();
-
-    /**
-     * Get a named parameter from the {@link Query}, provided its name.
-     * <p>
-     * Bind values created with {@link DSL#val(Object)} will have their bind
-     * index as name.
-     *
-     * @see Param
-     * @see DSL#param(String, Object)
-     * @see DSLContext#extractParam(QueryPart, String)
-     */
-    @Nullable
-    Param<?> getParam(String name);
 
     /**
      * Bind a new value to a named parameter.

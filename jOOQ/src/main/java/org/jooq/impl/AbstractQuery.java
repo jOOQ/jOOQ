@@ -90,12 +90,11 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQuery<R extends Record> extends AbstractQueryPart implements Query {
+abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPart implements Query {
 
     private static final long       serialVersionUID = -8046199737354507547L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
 
-    private Configuration           configuration;
     private int                     timeout;
     private QueryPoolable           poolable = QueryPoolable.DEFAULT;
     private boolean                 keepStatement;
@@ -104,26 +103,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractQueryPart impleme
     transient Rendered              rendered;
 
     AbstractQuery(Configuration configuration) {
-        this.configuration = configuration;
-    }
-
-    // -------------------------------------------------------------------------
-    // The Attachable and Attachable internal API
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final void attach(Configuration c) {
-        configuration = c;
-    }
-
-    @Override
-    public final void detach() {
-        attach(null);
-    }
-
-    @Override
-    public final Configuration configuration() {
-        return configuration;
+        super(configuration);
     }
 
     // -------------------------------------------------------------------------
@@ -141,21 +121,6 @@ abstract class AbstractQuery<R extends Record> extends AbstractQueryPart impleme
     // -------------------------------------------------------------------------
     // The Query API
     // -------------------------------------------------------------------------
-
-    @Override
-    public final List<Object> getBindValues() {
-        return create().extractBindValues(this);
-    }
-
-    @Override
-    public final Map<String, Param<?>> getParams() {
-        return create().extractParams(this);
-    }
-
-    @Override
-    public final Param<?> getParam(String name) {
-        return create().extractParam(this, name);
-    }
 
     /**
      * Subclasses may override this for covariant result types
@@ -492,7 +457,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractQueryPart impleme
     private final Rendered getSQL0(ExecuteContext ctx) {
         Rendered result;
         DefaultRenderContext render;
-        Configuration c = configuration;
+        Configuration c = configurationOrThrow();
 
         // [#3542] [#4977] Some dialects do not support bind values in DDL statements
         // [#6474] [#6929] Can this be communicated in a leaner way?
@@ -574,27 +539,4 @@ abstract class AbstractQuery<R extends Record> extends AbstractQueryPart impleme
 
 
 
-
-    @Override
-    public final String getSQL() {
-        return getSQL(getParamType(Tools.settings(configuration())));
-    }
-
-    @Override
-    public final String getSQL(ParamType paramType) {
-        switch (paramType) {
-            case INDEXED:
-                return create().render(this);
-            case INLINED:
-                return create().renderInlined(this);
-            case NAMED:
-                return create().renderNamedParams(this);
-            case NAMED_OR_INLINED:
-                return create().renderNamedOrInlinedParams(this);
-            case FORCE_INDEXED:
-                return create().renderContext().paramType(paramType).visit(this).render();
-        }
-
-        throw new IllegalArgumentException("ParamType not supported: " + paramType);
-    }
 }

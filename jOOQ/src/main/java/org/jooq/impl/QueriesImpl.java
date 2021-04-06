@@ -56,10 +56,12 @@ import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
-final class QueriesImpl extends AbstractQueryPart implements Queries {
+final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
 
     /**
      * Generated UID
@@ -67,10 +69,10 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
     private static final long                 serialVersionUID = 261452207127914269L;
 
     private final Collection<? extends Query> queries;
-    private Configuration                     configuration;
 
     QueriesImpl(Configuration configuration, Collection<? extends Query> queries) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.queries = queries;
     }
 
@@ -84,7 +86,7 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
         List<Query> list = new ArrayList<>(queries.size() + array.length);
         list.addAll(queries);
         list.addAll(Arrays.asList(array));
-        return new QueriesImpl(configuration, list);
+        return new QueriesImpl(configuration(), list);
     }
 
     @Override
@@ -94,7 +96,7 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
 
     @Override
     public final Block block() {
-        return configuration.dsl().begin(queries);
+        return configurationOrDefault().dsl().begin(queries);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -120,8 +122,9 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
 
     @Override
     public final Results fetchMany() {
-        ResultsImpl results = new ResultsImpl(configuration());
-        DSLContext ctx = configuration().dsl();
+        Configuration c = configurationOrThrow();
+        ResultsImpl results = new ResultsImpl(c);
+        DSLContext ctx = c.dsl();
 
         for (Query query : this)
             if (query instanceof ResultQuery)
@@ -134,26 +137,7 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
 
     @Override
     public final int[] executeBatch() {
-        return configuration().dsl().batch(this).execute();
-    }
-
-    // ------------------------------------------------------------------------
-    // Attachable API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final void attach(Configuration c) {
-        configuration = c;
-    }
-
-    @Override
-    public final void detach() {
-        attach(null);
-    }
-
-    @Override
-    public final Configuration configuration() {
-        return configuration;
+        return configurationOrThrow().dsl().batch(this).execute();
     }
 
     // ------------------------------------------------------------------------

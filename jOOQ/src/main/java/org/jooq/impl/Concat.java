@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.BIT_AND;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
@@ -70,6 +71,14 @@ final class Concat extends AbstractField<String> {
 
         // [#461] Type cast the concat expression, if this isn't a VARCHAR field
         Field<String>[] cast = castAllIfNeeded(arguments, String.class);
+
+        if (Boolean.TRUE.equals(ctx.settings().isRenderCoalesceToEmptyStringInConcat()) && ctx.configuration().commercial(() -> "Auto-coalescing of CONCAT arguments is available in the jOOQ 3.15 Professional Edition and jOOQ Enterprise Edition, see https://github.com/jOOQ/jOOQ/issues/11757")) {
+
+
+
+
+
+        }
 
         // If there is only one argument, return it immediately
         if (cast.length == 1) {

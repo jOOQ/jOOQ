@@ -3136,6 +3136,10 @@ final class Tools {
         return part instanceof SimpleQueryPart && ((SimpleQueryPart) part).isSimple();
     }
 
+    static final boolean isPossiblyNullable(Field<?> f) {
+        return f instanceof AbstractField && ((AbstractField<?>) f).isPossiblyNullable();
+    }
+
     static final Val<?> extractVal(Field<?> field) {
         return field instanceof Val
              ? (Val<?>) field

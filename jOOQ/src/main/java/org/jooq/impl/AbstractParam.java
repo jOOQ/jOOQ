@@ -87,6 +87,11 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         this.value = value;
     }
 
+    @Override
+    final boolean isPossiblyNullable() {
+        return !inline || value == null;
+    }
+
     /**
      * A utility method that generates a field name.
      * <p>

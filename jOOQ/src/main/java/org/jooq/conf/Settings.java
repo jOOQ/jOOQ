@@ -85,6 +85,8 @@ public class Settings
     @XmlElement(defaultValue = "IMPLICIT_NULL")
     @XmlSchemaType(name = "string")
     protected RenderDefaultNullability renderDefaultNullability = RenderDefaultNullability.IMPLICIT_NULL;
+    @XmlElement(defaultValue = "false")
+    protected Boolean renderCoalesceToEmptyStringInConcat = false;
     @XmlElement(defaultValue = "true")
     protected Boolean renderOrderByRownumberForEmulatedPagination = true;
     @XmlElement(defaultValue = "true")
@@ -698,6 +700,35 @@ public class Settings
      */
     public void setRenderDefaultNullability(RenderDefaultNullability value) {
         this.renderDefaultNullability = value;
+    }
+
+    /**
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRenderCoalesceToEmptyStringInConcat() {
+        return renderCoalesceToEmptyStringInConcat;
+    }
+
+    /**
+     * Sets the value of the renderCoalesceToEmptyStringInConcat property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRenderCoalesceToEmptyStringInConcat(Boolean value) {
+        this.renderCoalesceToEmptyStringInConcat = value;
     }
 
     /**
@@ -2829,6 +2860,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderCoalesceToEmptyStringInConcat(Boolean value) {
+        setRenderCoalesceToEmptyStringInConcat(value);
+        return this;
+    }
+
     public Settings withRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         setRenderOrderByRownumberForEmulatedPagination(value);
         return this;
@@ -3564,6 +3600,7 @@ public class Settings
         builder.append("renderScalarSubqueriesForStoredFunctions", renderScalarSubqueriesForStoredFunctions);
         builder.append("renderImplicitJoinType", renderImplicitJoinType);
         builder.append("renderDefaultNullability", renderDefaultNullability);
+        builder.append("renderCoalesceToEmptyStringInConcat", renderCoalesceToEmptyStringInConcat);
         builder.append("renderOrderByRownumberForEmulatedPagination", renderOrderByRownumberForEmulatedPagination);
         builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
         builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
@@ -3844,6 +3881,15 @@ public class Settings
             }
         } else {
             if (!renderDefaultNullability.equals(other.renderDefaultNullability)) {
+                return false;
+            }
+        }
+        if (renderCoalesceToEmptyStringInConcat == null) {
+            if (other.renderCoalesceToEmptyStringInConcat!= null) {
+                return false;
+            }
+        } else {
+            if (!renderCoalesceToEmptyStringInConcat.equals(other.renderCoalesceToEmptyStringInConcat)) {
                 return false;
             }
         }
@@ -4692,6 +4738,7 @@ public class Settings
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((renderImplicitJoinType == null)? 0 :renderImplicitJoinType.hashCode()));
         result = ((prime*result)+((renderDefaultNullability == null)? 0 :renderDefaultNullability.hashCode()));
+        result = ((prime*result)+((renderCoalesceToEmptyStringInConcat == null)? 0 :renderCoalesceToEmptyStringInConcat.hashCode()));
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
         result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));

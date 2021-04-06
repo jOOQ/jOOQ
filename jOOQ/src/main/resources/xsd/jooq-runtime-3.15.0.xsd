@@ -140,6 +140,15 @@ set to true, users can automatically profit from this feature in all SQL stateme
       <element name="renderDefaultNullability" type="jooq-runtime:RenderDefaultNullability" minOccurs="0" maxOccurs="1" default="IMPLICIT_NULL">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="renderCoalesceToEmptyStringInConcat" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether stored function calls should be wrapped in scalar subqueries.
+<p>
+Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+set to true, users can automatically profit from this feature in all SQL statements.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="renderOrderByRownumberForEmulatedPagination" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.

@@ -98,6 +98,8 @@ public final class ParserCLI {
             settings.setRenderQuotedNames(a.quoted);
         if (a.fromDialect != null)
             settings.setParseDialect(a.fromDialect);
+        if (a.renderCoalesceToEmptyStringInConcat)
+            settings.setRenderCoalesceToEmptyStringInConcat(true);
         if (a.transformAnsiJoinToTableLists)
             settings.setTransformAnsiJoinToTableLists(true);
         if (a.transformTableListsToAnsiJoin)
@@ -188,6 +190,12 @@ public final class ParserCLI {
                                 catch (IllegalArgumentException e) {
                                     invalid(arg, SQLDialect.class);
                                 }
+                            }
+                            else if ("render-coalesce-to-empty-string-in-concat".equals(flag)) {
+                                if (arg != null)
+                                    a.renderCoalesceToEmptyStringInConcat = Boolean.parseBoolean(arg.toLowerCase());
+
+                                displayRenderCoalesceToEmptyStringInConcat(a);
                             }
                             else if ("transform-ansi-join-to-table-lists".equals(flag)) {
                                 if (arg != null)
@@ -295,6 +303,10 @@ public final class ParserCLI {
 
     private static void displayFormatted(Args a) {
         System.out.println("Formatted                          : " + a.formatted);
+    }
+
+    private static void displayRenderCoalesceToEmptyStringInConcat(Args a) {
+        System.out.println("Render COALESCE(X, '') in CONCAT   : " + a.renderCoalesceToEmptyStringInConcat);
     }
 
     private static void displayTransformAnsiJoinToTablesLists(Args a) {
@@ -422,6 +434,9 @@ public final class ParserCLI {
                     throw e;
                 }
             }
+            else if ("--render-coalesce-to-empty-string-in-concat".equals(args[i])) {
+                result.renderCoalesceToEmptyStringInConcat = true;
+            }
             else if ("--transform-ansi-join-to-table-lists".equals(args[i])) {
                 result.transformAnsiJoinToTableLists = true;
             }
@@ -481,41 +496,43 @@ public final class ParserCLI {
 
     private static final void help() {
         System.out.println("Usage:");
-        System.out.println("  -f / --formatted                                              Format output SQL");
-        System.out.println("  -h / --help                                                   Display this help");
-        System.out.println("  -k / --keyword                            <RenderKeywordCase> Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
-        System.out.println("  -i / --identifier                         <RenderNameCase>    Specify the output identifier case (org.jooq.conf.RenderNameCase)");
-        System.out.println("  -Q / --quoted                             <RenderQuotedNames> Specify the output identifier quoting (org.jooq.conf.RenderQuotedNames)");
-        System.out.println("  -F / --from-dialect                       <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
-        System.out.println("  -T / --to-dialect                         <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
-        System.out.println("  -s / --sql                                <String>            Specify the input SQL string");
+        System.out.println("  -f / --formatted                                                 Format output SQL");
+        System.out.println("  -h / --help                                                      Display this help");
+        System.out.println("  -k / --keyword                               <RenderKeywordCase> Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
+        System.out.println("  -i / --identifier                            <RenderNameCase>    Specify the output identifier case (org.jooq.conf.RenderNameCase)");
+        System.out.println("  -Q / --quoted                                <RenderQuotedNames> Specify the output identifier quoting (org.jooq.conf.RenderQuotedNames)");
+        System.out.println("  -F / --from-dialect                          <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
+        System.out.println("  -T / --to-dialect                            <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
+        System.out.println("  -s / --sql                                   <String>            Specify the input SQL string");
         System.out.println("");
         System.out.println("Commercial distribution only features:");
-        System.out.println("  --transform-ansi-join-to-table-lists      <boolean>");
-        System.out.println("  --transform-rownum                        <boolean>");
-        System.out.println("  --transform-table-lists-to-ansi-join      <boolean>");
-        System.out.println("  --transform-unneeded-arithmetic           <TransformUnneededArithmeticExpressions>");
+        System.out.println("  --render-coalesce-to-empty-string-in-concat  <boolean>");
+        System.out.println("  --transform-ansi-join-to-table-lists         <boolean>");
+        System.out.println("  --transform-rownum                           <boolean>");
+        System.out.println("  --transform-table-lists-to-ansi-join         <boolean>");
+        System.out.println("  --transform-unneeded-arithmetic              <TransformUnneededArithmeticExpressions>");
         System.out.println("");
-        System.out.println("  -I / --interactive                                            Start interactive mode");
+        System.out.println("  -I / --interactive                                               Start interactive mode");
     }
 
     private static final void helpInteractive() {
         System.out.println("Usage:");
-        System.out.println("  /d  or  /display                                             Display arguments");
-        System.out.println("  /f  or  /formatted                       <boolean>           Format output SQL");
-        System.out.println("  /h  or  /help                                                Display this help");
-        System.out.println("  /k  or  /keyword                         <RenderKeywordCase> Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
-        System.out.println("  /i  or  /identifier                      <RenderNameCase>    Specify the output identifier case (org.jooq.conf.RenderNameCase)");
-        System.out.println("  /Q  or  /quoted                          <RenderQuotedNames> Specify the output identifier quoting (org.jooq.conf.RenderQuotedNames)");
-        System.out.println("  /F  or  /from-dialect                    <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
-        System.out.println("  /T  or  /to-dialect                      <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
-        System.out.println("                                           <String>            Specify the input SQL string");
+        System.out.println("  /d  or  /display                                                 Display arguments");
+        System.out.println("  /f  or  /formatted                           <boolean>           Format output SQL");
+        System.out.println("  /h  or  /help                                                    Display this help");
+        System.out.println("  /k  or  /keyword                             <RenderKeywordCase> Specify the output keyword case (org.jooq.conf.RenderKeywordCase)");
+        System.out.println("  /i  or  /identifier                          <RenderNameCase>    Specify the output identifier case (org.jooq.conf.RenderNameCase)");
+        System.out.println("  /Q  or  /quoted                              <RenderQuotedNames> Specify the output identifier quoting (org.jooq.conf.RenderQuotedNames)");
+        System.out.println("  /F  or  /from-dialect                        <SQLDialect>        Specify the input dialect (org.jooq.SQLDialect)");
+        System.out.println("  /T  or  /to-dialect                          <SQLDialect>        Specify the output dialect (org.jooq.SQLDialect)");
+        System.out.println("                                               <String>            Specify the input SQL string");
         System.out.println("");
         System.out.println("Commercial distribution only features:");
-        System.out.println("  /transform-ansi-join-to-table-lists      <boolean>");
-        System.out.println("  /transform-rownum                        <boolean>");
-        System.out.println("  /transform-table-lists-to-ansi-join      <boolean>");
-        System.out.println("  /transform-unneeded-arithmetic           <TransformUnneededArithmeticExpressions>");
+        System.out.println("  /render-coalesce-to-empty-string-in-concat   <boolean>");
+        System.out.println("  /transform-ansi-join-to-table-lists          <boolean>");
+        System.out.println("  /transform-rownum                            <boolean>");
+        System.out.println("  /transform-table-lists-to-ansi-join          <boolean>");
+        System.out.println("  /transform-unneeded-arithmetic               <TransformUnneededArithmeticExpressions>");
         System.out.println("");
         System.out.println("  /q  or  /quit                                                Quit");
         System.out.println("  /e  or  /exit                                                Also quit");
@@ -532,6 +549,7 @@ public final class ParserCLI {
         boolean                                formatted;
         boolean                                interactive;
         boolean                                done;
+        boolean                                renderCoalesceToEmptyStringInConcat;
         boolean                                transformAnsiJoinToTableLists;
         boolean                                transformRownum;
         boolean                                transformTableListsToAnsiJoin;

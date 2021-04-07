@@ -84,6 +84,7 @@ import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.configurationOrThrow;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
@@ -345,7 +346,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
     @Override
     public final int execute() {
-        SQLDialect family = configuration.family();
+        SQLDialect family = configurationOrThrow(this).family();
 
         results.clear();
         outValues.clear();

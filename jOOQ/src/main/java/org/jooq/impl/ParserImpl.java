@@ -9003,6 +9003,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else if (peek('\'')) {
                 return inline(parseDateLiteral());
             }
+
+
+
+
+
+
             else {
                 position(p);
                 return field(parseIdentifier());

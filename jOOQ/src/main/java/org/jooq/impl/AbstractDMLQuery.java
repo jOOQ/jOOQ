@@ -815,7 +815,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
     }
 
-    private final boolean nativeSupportReturning(Scope ctx) {
+    final boolean nativeSupportReturning(Scope ctx) {
         return this instanceof Insert && NATIVE_SUPPORT_INSERT_RETURNING.contains(ctx.dialect())
             || this instanceof Update && NATIVE_SUPPORT_UPDATE_RETURNING.contains(ctx.dialect())
             || this instanceof Delete && NATIVE_SUPPORT_DELETE_RETURNING.contains(ctx.dialect());

@@ -3201,6 +3201,26 @@ final class Tools {
             return null;
     }
 
+    static final AbstractResultQuery<?> abstractResultQuery(Query query) {
+        if (query instanceof AbstractResultQuery)
+            return (AbstractResultQuery<?>) query;
+        else if (query instanceof AbstractDelegatingQuery)
+            return abstractResultQuery(((AbstractDelegatingQuery<?, ?>) query).getDelegate());
+        else
+            return null;
+    }
+
+    static final AbstractDMLQuery<?> abstractDMLQuery(Query query) {
+        if (query instanceof AbstractDMLQuery)
+            return (AbstractDMLQuery<?>) query;
+        else if (query instanceof AbstractDelegatingQuery)
+            return abstractDMLQuery(((AbstractDelegatingQuery<?, ?>) query).getDelegate());
+        else if (query instanceof DMLQueryAsResultQuery)
+            return ((DMLQueryAsResultQuery<?, ?>) query).getDelegate();
+        else
+            return null;
+    }
+
     static final int degree(Select<?> select) {
 
 

@@ -40,7 +40,11 @@ package org.jooq.impl;
 // ...
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.Internal.subscriber;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
+import static org.jooq.impl.Tools.abstractDMLQuery;
+import static org.jooq.impl.Tools.abstractResultQuery;
+import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.impl.Tools.visitAll;
@@ -375,8 +379,10 @@ final class R2DBC {
                 new DefaultBindContext(query.configuration(), new R2DBCPreparedStatement(query.configuration(), stmt)).visit(rendered.bindValues);
 
                 // TODO: Reuse org.jooq.impl.Tools.setFetchSize(ExecuteContext ctx, int fetchSize)
-                if (query instanceof AbstractResultQuery) {
-                    int f = SettingsTools.getFetchSize(((AbstractResultQuery<?>) query).fetchSize(), query.configuration().settings());
+                AbstractResultQuery<?> q1 = abstractResultQuery(query);
+                if (q1 != null) {
+                    int f = SettingsTools.getFetchSize(q1.fetchSize(), query.configuration().settings());
+
                     if (f != 0) {
                         if (log.isDebugEnabled())
                             log.debug("Setting fetch size", f);
@@ -384,6 +390,10 @@ final class R2DBC {
                         stmt.fetchSize(f);
                     }
                 }
+
+                AbstractDMLQuery<?> q2 = abstractDMLQuery(query);
+                if (q2 != null && !q2.returning.isEmpty() && !q2.nativeSupportReturning(query.configuration().dsl()))
+                    stmt.returnGeneratedValues(fieldNameStrings(q2.returningResolvedAsterisks.toArray(EMPTY_FIELD)));
 
                 stmt.execute().subscribe(resultSubscriber.apply(query, downstream));
             }

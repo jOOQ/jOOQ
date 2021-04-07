@@ -93,6 +93,10 @@ implements
         this.returningResult = returningResult;
     }
 
+    final Q getDelegate() {
+        return delegate;
+    }
+
     // TODO: Refactor this coercion, share logic with AbstractResultQuery
 
     @Override

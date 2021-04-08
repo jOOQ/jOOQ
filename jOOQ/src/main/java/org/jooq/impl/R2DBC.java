@@ -358,6 +358,7 @@ final class R2DBC {
     static final class QueryExecutionSubscriber<T, Q extends Query> extends ConnectionSubscriber<T> {
 
         final Q                                                                     query;
+        final Configuration                                                         configuration;
         final BiFunction<Q, AbstractNonBlockingSubscription<T>, Subscriber<Result>> resultSubscriber;
 
         QueryExecutionSubscriber(
@@ -368,20 +369,21 @@ final class R2DBC {
             super(downstream);
 
             this.query = query;
+            this.configuration = query.configuration();
             this.resultSubscriber = resultSubscriber;
         }
 
         @Override
         final void onNext0(Connection c) {
             try {
-                Rendered rendered = rendered(query.configuration(), query);
+                Rendered rendered = rendered(configuration, query);
                 Statement stmt = c.createStatement(rendered.sql);
-                new DefaultBindContext(query.configuration(), new R2DBCPreparedStatement(query.configuration(), stmt)).visit(rendered.bindValues);
+                new DefaultBindContext(configuration, new R2DBCPreparedStatement(configuration, stmt)).visit(rendered.bindValues);
 
                 // TODO: Reuse org.jooq.impl.Tools.setFetchSize(ExecuteContext ctx, int fetchSize)
                 AbstractResultQuery<?> q1 = abstractResultQuery(query);
                 if (q1 != null) {
-                    int f = SettingsTools.getFetchSize(q1.fetchSize(), query.configuration().settings());
+                    int f = SettingsTools.getFetchSize(q1.fetchSize(), configuration.settings());
 
                     if (f != 0) {
                         if (log.isDebugEnabled())
@@ -392,7 +394,12 @@ final class R2DBC {
                 }
 
                 AbstractDMLQuery<?> q2 = abstractDMLQuery(query);
-                if (q2 != null && !q2.returning.isEmpty() && !q2.nativeSupportReturning(query.configuration().dsl()))
+                if (q2 != null
+                        && !q2.returning.isEmpty()
+
+
+
+                        && !q2.nativeSupportReturning(configuration.dsl()))
                     stmt.returnGeneratedValues(fieldNameStrings(q2.returningResolvedAsterisks.toArray(EMPTY_FIELD)));
 
                 stmt.execute().subscribe(resultSubscriber.apply(query, downstream));

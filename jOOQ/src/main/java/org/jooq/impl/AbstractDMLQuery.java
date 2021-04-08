@@ -606,9 +606,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
-
-
         {
             accept0(ctx);
         }
@@ -621,6 +618,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         ctx.data().remove(DATA_DML_TARGET_TABLE);
         ctx.scopeEnd();
     }
+
+
+
+
+
+
+
 
 
 
@@ -790,7 +794,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
 
             if (nativeSupportReturning(ctx)) {
-                boolean declareFields = ctx.declareFields();
                 boolean qualify = ctx.qualify();
                 boolean unqualify = ctx.family() == MARIADB;
 

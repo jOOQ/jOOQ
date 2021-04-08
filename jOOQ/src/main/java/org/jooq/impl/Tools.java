@@ -1166,13 +1166,6 @@ final class Tools {
     /**
      * Get a converter from a {@link ConverterProvider}.
      */
-    static final <T, U> Converter<T, U> converterOrFail(Scope scope, Class<T> tType, Class<U> uType) {
-        return converterOrFail(configuration(scope), tType, uType);
-    }
-
-    /**
-     * Get a converter from a {@link ConverterProvider}.
-     */
     static final <T, U> Converter<T, U> converterOrFail(Attachable attachable, Class<T> tType, Class<U> uType) {
         return converterOrFail(configuration(attachable), tType, uType);
     }

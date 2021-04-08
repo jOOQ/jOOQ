@@ -214,10 +214,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     // @Override
     public final void setReturning(Collection<? extends SelectFieldOrAsterisk> fields) {
         returning.clear();
-        returning.addAll(fields);
+        returning.addAll(fields.isEmpty() ? Arrays.asList(table.fields()) : fields);
 
         returningResolvedAsterisks.clear();
-        for (SelectFieldOrAsterisk f : fields)
+        for (SelectFieldOrAsterisk f : returning)
             if (f instanceof Field<?>)
                 returningResolvedAsterisks.add((Field<?>) f);
             else if (f instanceof QualifiedAsterisk)

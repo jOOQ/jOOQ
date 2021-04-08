@@ -54,6 +54,7 @@ public class Reflect {
     // Static API used as entrance points to the fluent API
     // ---------------------------------------------------------------------
 
+
     /**
      * Compile a class at runtime and reflect on it.
      * <p>
@@ -102,6 +103,7 @@ public class Reflect {
     public static Reflect compile(String name, String content, CompileOptions options) throws ReflectException {
         return onClass(Compile.compile(name, content, options));
     }
+
 
     /**
      * Wrap a class name.
@@ -980,38 +982,29 @@ public class Reflect {
      * Get a wrapper type for a primitive type, or the argument type itself, if
      * it is not a primitive type.
      */
-    public static Class<?> wrapper(Class<?> type) {
-        if (type == null) {
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> wrapper(Class<T> type) {
+        if (type == null)
             return null;
-        }
         else if (type.isPrimitive()) {
-            if (boolean.class == type) {
-                return Boolean.class;
-            }
-            else if (int.class == type) {
-                return Integer.class;
-            }
-            else if (long.class == type) {
-                return Long.class;
-            }
-            else if (short.class == type) {
-                return Short.class;
-            }
-            else if (byte.class == type) {
-                return Byte.class;
-            }
-            else if (double.class == type) {
-                return Double.class;
-            }
-            else if (float.class == type) {
-                return Float.class;
-            }
-            else if (char.class == type) {
-                return Character.class;
-            }
-            else if (void.class == type) {
-                return Void.class;
-            }
+            if (boolean.class == type)
+                return (Class<T>) Boolean.class;
+            else if (int.class == type)
+                return (Class<T>) Integer.class;
+            else if (long.class == type)
+                return (Class<T>) Long.class;
+            else if (short.class == type)
+                return (Class<T>) Short.class;
+            else if (byte.class == type)
+                return (Class<T>) Byte.class;
+            else if (double.class == type)
+                return (Class<T>) Double.class;
+            else if (float.class == type)
+                return (Class<T>) Float.class;
+            else if (char.class == type)
+                return (Class<T>) Character.class;
+            else if (void.class == type)
+                return (Class<T>) Void.class;
         }
 
         return type;

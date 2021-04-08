@@ -13,7 +13,10 @@
  */
 package org.jooq.tools.reflect;
 
+
+
 import java.util.Arrays;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -58,3 +61,4 @@ public final class CompileOptions {
         return new CompileOptions(processors, newOptions);
     }
 }
+

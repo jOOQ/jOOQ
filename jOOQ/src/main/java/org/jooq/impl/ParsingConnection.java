@@ -54,7 +54,9 @@ import java.util.Map;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
+import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.Tools.Cache;
 import org.jooq.tools.JooqLogger;
@@ -71,6 +73,9 @@ final class ParsingConnection extends DefaultConnection {
 
     ParsingConnection(Configuration configuration) {
         super(configuration.connectionProvider().acquire());
+
+        if (getDelegate() == null)
+            throw new DetachedException("ConnectionProvider did not provide a JDBC Connection");
 
         this.configuration = configuration;
     }

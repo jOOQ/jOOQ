@@ -48,6 +48,7 @@ import java.util.List;
 
 import org.jooq.Configuration;
 import org.jooq.Param;
+import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 
 import org.reactivestreams.Publisher;
@@ -72,6 +73,9 @@ final class ParsingConnectionFactory implements ConnectionFactory {
     final Configuration configuration;
 
     ParsingConnectionFactory(Configuration configuration) {
+        if (configuration.connectionFactory() instanceof NoConnectionFactory)
+            throw new DetachedException("ConnectionProvider did not provide an R2DBC ConnectionFactory");
+
         this.configuration = configuration.derive();
         this.configuration.set(setParamType(configuration.dialect(), configuration.settings()));
     }

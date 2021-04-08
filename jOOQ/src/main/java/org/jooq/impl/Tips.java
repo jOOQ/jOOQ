@@ -80,6 +80,7 @@ final class Tips {
         "jOOQ Queries extend Flow.Publisher, and can thus be used in reactive APIs. Blocking on JDBC by default, but if you configure an R2DBC ConnectionFactory, it's automatically non-blocking!",
         "A ResultQuery<R> extends Iterable<R>, so you can just foreach your queries! See: https://blog.jooq.org/2016/09/27/a-hidden-jooq-gem-foreach-loop-over-resultquery/",
         "jOOQ works even better in kotlin! https://blog.jooq.org/2017/05/18/10-nice-examples-of-writing-sql-in-kotlin-with-jooq/",
+        "Don't want tips? Use the -Dorg.jooq.no-tips=true system property",
         ""
     };
 

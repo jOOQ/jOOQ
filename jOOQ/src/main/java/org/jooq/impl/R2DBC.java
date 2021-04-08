@@ -72,6 +72,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -128,6 +129,15 @@ final class R2DBC {
         final Subscriber<? super T> subscriber;
         final Guard                 guard;
 
+        static <T> Subscription onRequest(Subscriber<? super T> s, Consumer<? super Subscriber<? super T>> onRequest) {
+            return new AbstractSubscription<T>(s) {
+                @Override
+                void request0() {
+                    onRequest.accept(subscriber);
+                }
+            };
+        }
+
         AbstractSubscription(Subscriber<? super T> subscriber) {
             this.completed = new AtomicBoolean();
             this.requested = new AtomicLong();
@@ -180,7 +190,7 @@ final class R2DBC {
         }
 
         abstract void request0();
-        abstract void cancel0(boolean cancelled);
+        void cancel0(boolean cancelled) {}
     }
 
     // -------------------------------------------------------------------------
@@ -1207,8 +1217,5 @@ final class R2DBC {
                 subscriber.onError(t);
             }
         }
-
-        @Override
-        final void cancel0(boolean cancelled) {}
     }
 }

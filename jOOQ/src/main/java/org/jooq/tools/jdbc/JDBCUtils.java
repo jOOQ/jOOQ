@@ -116,6 +116,7 @@ import org.jetbrains.annotations.NotNull;
 
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryMetadata;
+import io.r2dbc.spi.ConnectionMetadata;
 
 /**
  * JDBC-related utility methods.
@@ -187,8 +188,8 @@ public class JDBCUtils {
      * <p>
      * This method tries to guess the <code>SQLDialect</code> of a connection
      * from the its {@link ConnectionFactoryMetadata} as obtained by
-     * {@link ConnectionFactory#getMetadata()}. If the dialect cannot be guessed
-     * from the URL, further actions may be implemented in the future.
+     * {@link ConnectionFactory#getMetadata()}. If the dialect cannot be
+     * guessed, further actions may be implemented in the future.
      *
      * @return The appropriate {@link SQLDialect} or {@link SQLDialect#DEFAULT}
      *         if no dialect could be derived from the connection. Never
@@ -199,25 +200,8 @@ public class JDBCUtils {
     public static final SQLDialect dialect(ConnectionFactory connection) {
         SQLDialect result = SQLDialect.DEFAULT;
 
-        if (connection != null) {
-            ConnectionFactoryMetadata m = connection.getMetadata();
-            String product = m.getName().toLowerCase();
-
-            if (product.contains("h2"))
-                result = H2;
-            else if (product.contains("mariadb"))
-                result = MARIADB;
-            else if (product.contains("mysql"))
-                result = MYSQL;
-            else if (product.contains("postgres"))
-                result = POSTGRES;
-
-
-
-
-
-
-        }
+        if (connection != null)
+            result = dialectFromProductName(connection.getMetadata().getName());
 
         if (result == SQLDialect.DEFAULT) {
             // If the dialect cannot be guessed from the URL, take some other
@@ -225,6 +209,56 @@ public class JDBCUtils {
         }
 
         return result;
+    }
+
+    /**
+     * "Guess" the {@link SQLDialect} from an R2DBC
+     * {@link io.r2dbc.spi.Connection} instance.
+     * <p>
+     * This method tries to guess the <code>SQLDialect</code> of a connection
+     * from the its {@link ConnectionMetadata} as obtained by
+     * {@link io.r2dbc.spi.Connection#getMetadata()}. If the dialect cannot be,
+     * further actions may be implemented in the future.
+     *
+     * @return The appropriate {@link SQLDialect} or {@link SQLDialect#DEFAULT}
+     *         if no dialect could be derived from the connection. Never
+     *         <code>null</code>.
+     * @see #dialect(String)
+     */
+    @NotNull
+    public static final SQLDialect dialect(io.r2dbc.spi.Connection connection) {
+        SQLDialect result = SQLDialect.DEFAULT;
+
+        if (connection != null)
+            result = dialectFromProductName(connection.getMetadata().getDatabaseProductName());
+
+        if (result == SQLDialect.DEFAULT) {
+            // If the dialect cannot be guessed from the URL, take some other
+            // measures, e.g. by querying DatabaseMetaData.getDatabaseProductName()
+        }
+
+        return result;
+    }
+
+    private static SQLDialect dialectFromProductName(String product) {
+        String p = product.toLowerCase().replace(" ", "");
+
+        if (p.contains("h2"))
+            return H2;
+        else if (p.contains("mariadb"))
+            return MARIADB;
+        else if (p.contains("mysql"))
+            return MYSQL;
+        else if (p.contains("postgres"))
+            return POSTGRES;
+
+
+
+
+
+
+        else
+            return DEFAULT;
     }
 
     @NotNull

@@ -757,10 +757,10 @@ public class DSL {
     }
 
     /**
-     * Create an executor with a custom connection factory and a dialect
-     * configured.
+     * Create an executor with a custom R2DBC connection factory and guess the
+     * dialect from it.
      *
-     * @param connectionFactory The connection factory providing jOOQ with
+     * @param connectionFactory The R2DBC connection factory providing jOOQ with
      *            R2DBC connections
      */
     @NotNull
@@ -769,10 +769,10 @@ public class DSL {
     }
 
     /**
-     * Create an executor with a custom connection factory and a dialect
+     * Create an executor with a custom R2DBC connection factory and a dialect
      * configured.
      *
-     * @param connectionFactory The connection factory providing jOOQ with
+     * @param connectionFactory The R2DBC connection factory providing jOOQ with
      *            R2DBC connections
      * @param dialect The dialect to use with objects created from this executor
      */
@@ -782,10 +782,10 @@ public class DSL {
     }
 
     /**
-     * Create an executor with a custom connection factory, a dialect and settings
-     * configured.
+     * Create an executor with a custom R2DBC connection factory, a dialect and
+     * settings configured.
      *
-     * @param connectionFactory The connection factory providing jOOQ with
+     * @param connectionFactory The R2DBC connection factory providing jOOQ with
      *            R2DBC connections
      * @param dialect The dialect to use with objects created from this executor
      * @param settings The runtime settings to apply to objects created from
@@ -794,6 +794,42 @@ public class DSL {
     @NotNull
     public static DSLContext using(ConnectionFactory connectionFactory, SQLDialect dialect, Settings settings) {
         return new DefaultDSLContext(connectionFactory, dialect, settings);
+    }
+
+    /**
+     * Create an executor with a custom R2DBC connection and guess the dialect.
+     *
+     * @param connection The R2DBC connection
+     */
+    @NotNull
+    public static DSLContext using(io.r2dbc.spi.Connection connection) {
+        return new DefaultDSLContext(new DefaultConnectionFactory(connection), JDBCUtils.dialect(connection));
+    }
+
+    /**
+     * Create an executor with a custom R2DBC connection and a dialect
+     * configured.
+     *
+     * @param connection The R2DBC connection
+     * @param dialect The dialect to use with objects created from this executor
+     */
+    @NotNull
+    public static DSLContext using(io.r2dbc.spi.Connection connection, SQLDialect dialect) {
+        return new DefaultDSLContext(new DefaultConnectionFactory(connection), dialect);
+    }
+
+    /**
+     * Create an executor with a custom R2DBC connection, a dialect and settings
+     * configured.
+     *
+     * @param connection The R2DBC connection
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     */
+    @NotNull
+    public static DSLContext using(io.r2dbc.spi.Connection connection, SQLDialect dialect, Settings settings) {
+        return new DefaultDSLContext(new DefaultConnectionFactory(connection), dialect, settings);
     }
 
     /**

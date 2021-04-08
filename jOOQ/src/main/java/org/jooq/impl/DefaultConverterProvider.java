@@ -59,6 +59,7 @@ import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
+import org.jooq.exception.DataTypeException;
 import org.jooq.tools.Convert;
 
 import org.jetbrains.annotations.Nullable;
@@ -75,11 +76,12 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
      */
     private static final long serialVersionUID = 2937225066265868374L;
 
+    @SuppressWarnings("unchecked")
     @Nullable
     @Override
     public final <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
-        Class<?> tWrapper = wrapper(tType);
-        Class<?> uWrapper = wrapper(uType);
+        Class<T> tWrapper = (Class<T>) wrapper(tType);
+        Class<U> uWrapper = (Class<U>) wrapper(uType);
 
         // TODO: [#10071] These checks are required to be able to return null in
         //                case this implementation cannot produce a Converter.
@@ -131,6 +133,23 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
                     return Convert.convert(u, tType);
                 }
             };
+        }
+
+        // [#11762] Make sure possibly legal downcasts / upcasts are working
+        //          This is especially important if we don't know the data type
+        //          (SQLDataType.OTHER)
+        else if (tWrapper.isAssignableFrom(uWrapper)) {
+            return Converter.ofNullable(
+                tWrapper,
+                uWrapper,
+                t -> {
+                    if (uWrapper.isInstance(t))
+                        return uWrapper.cast(t);
+                    else
+                        throw new DataTypeException("Cannot cast from " + tWrapper + " (instance type: " + t.getClass() + " to " + tWrapper);
+                },
+                u -> tWrapper.cast(u)
+            );
         }
         else
             return null;

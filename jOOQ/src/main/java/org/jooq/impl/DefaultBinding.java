@@ -142,7 +142,6 @@ import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.JDBCType;
-import java.sql.NClob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -172,6 +171,7 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 // ...
 import org.jooq.Attachable;
@@ -2379,6 +2379,41 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
+        static final Double fixInfinity(
+            Scope scope,
+            ThrowingSupplier<Double, SQLException> doubleSupplier,
+            ThrowingSupplier<String, SQLException> stringSupplier
+        ) throws SQLException {
+            return fixInfinity(scope, doubleSupplier, stringSupplier, () -> Double.POSITIVE_INFINITY, () -> Double.NEGATIVE_INFINITY);
+        }
+
+        static final <T> T fixInfinity(
+            Scope scope,
+            ThrowingSupplier<T, SQLException> doubleSupplier,
+            ThrowingSupplier<String, SQLException> stringSupplier,
+            Supplier<T> positive,
+            Supplier<T> negative
+        ) throws SQLException {
+            try {
+                return doubleSupplier.get();
+            }
+            catch (SQLException e) {
+
+
+
+
+
+
+
+
+
+
+
+
+                throw e;
+            }
+        }
+
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Double value) {
 
@@ -2412,17 +2447,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Double get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), ctx.resultSet().getDouble(ctx.index()));
+            return wasNull(ctx.resultSet(), fixInfinity(ctx,
+                () -> ctx.resultSet().getDouble(ctx.index()),
+                () -> ctx.resultSet().getString(ctx.index())
+            ));
         }
 
         @Override
         final Double get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), ctx.statement().getDouble(ctx.index()));
+            return wasNull(ctx.statement(), fixInfinity(ctx,
+                () -> ctx.statement().getDouble(ctx.index()),
+                () -> ctx.statement().getString(ctx.index())
+            ));
         }
 
         @Override
         final Double get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), ctx.input().readDouble());
+            return wasNull(ctx.input(), fixInfinity(ctx,
+                () -> ctx.input().readDouble(),
+                () -> ctx.input().readString()
+            ));
         }
 
         @Override
@@ -2551,6 +2595,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super(dataType, converter);
         }
 
+        static final Float fixInfinity(
+            Scope scope,
+            ThrowingSupplier<Float, SQLException> doubleSupplier,
+            ThrowingSupplier<String, SQLException> stringSupplier
+        ) throws SQLException {
+            return DefaultDoubleBinding.fixInfinity(scope, doubleSupplier, stringSupplier, () -> Float.POSITIVE_INFINITY, () -> Float.NEGATIVE_INFINITY);
+        }
+
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Float value) {
 
@@ -2584,17 +2636,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Float get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return wasNull(ctx.resultSet(), ctx.resultSet().getFloat(ctx.index()));
+            return wasNull(ctx.resultSet(), fixInfinity(ctx,
+                () -> ctx.resultSet().getFloat(ctx.index()),
+                () -> ctx.resultSet().getString(ctx.index())
+            ));
         }
 
         @Override
         final Float get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return wasNull(ctx.statement(), ctx.statement().getFloat(ctx.index()));
+            return wasNull(ctx.statement(), fixInfinity(ctx,
+                () -> ctx.statement().getFloat(ctx.index()),
+                () -> ctx.statement().getString(ctx.index())
+            ));
         }
 
         @Override
         final Float get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return wasNull(ctx.input(), ctx.input().readFloat());
+            return wasNull(ctx.input(), fixInfinity(ctx,
+                () -> ctx.input().readFloat(),
+                () -> ctx.input().readString()
+            ));
         }
 
         @Override
@@ -3530,7 +3591,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings("unchecked")
         private static final <T> T pgFromString(Converter<?, T> converter, String string) {
-            Class<T> type = (Class<T>) Reflect.wrapper(converter.toType());
+            Class<T> type = Reflect.wrapper(converter.toType());
 
             if (string == null)
                 return null;

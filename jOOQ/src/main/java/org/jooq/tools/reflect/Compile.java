@@ -107,10 +107,13 @@ class Compile {
                 Class<?> result = null;
 
                 // This works if we have private-access to the interfaces in the class hierarchy
-                if (Reflect.CACHED_LOOKUP_CONSTRUCTOR != null) {
+
+
+
                     result = fileManager.loadAndReturnMainClass(className,
                         (name, bytes) -> Reflect.on(cl).call("defineClass", name, bytes, 0, bytes.length).get());
-                }
+
+
 
 
 

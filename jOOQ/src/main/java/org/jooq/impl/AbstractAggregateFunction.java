@@ -329,10 +329,15 @@ implements
      */
     final DataType<? extends Number> d(Context<?> ctx) {
         switch (ctx.family()) {
+
+            // [#11547] These families default to NUMERIC(*, 0) when a scale is
+            //          not provided explicitly, hence resort to using floats
+            case DERBY:
             case FIREBIRD:
             case HSQLDB:
             case SQLITE:
                 return DOUBLE;
+
             default:
                 return NUMERIC;
         }

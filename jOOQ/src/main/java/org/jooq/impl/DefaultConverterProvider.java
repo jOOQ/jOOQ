@@ -132,6 +132,10 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
                 }
             };
         }
+
+        // [#11762] Make sure possibly legal downcasts / upcasts are working
+        //          This is especially important if we don't know the data type
+        //          (SQLDataType.OTHER)
         else if (tWrapper.isAssignableFrom(uWrapper)) {
             return Converter.ofNullable(
                 tWrapper,

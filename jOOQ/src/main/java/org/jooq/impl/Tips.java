@@ -75,6 +75,11 @@ final class Tips {
         "Keyset pagination is usually a faster and more useful way to paginate than OFFSET, and jOOQ supports it out of the box via the synthetic SEEK clause: https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/select-statement/seek-clause/",
         "Want to learn more about SQL? Check out our many blog posts: https://blog.jooq.org/sql",
         "You don't *have to* map SQL results to POJOs if you're consuming XML or JSON in the end. Generate the XML or JSON directly in SQL, instead! https://blog.jooq.org/2019/11/13/stop-mapping-stuff-in-your-middleware-use-sqls-xml-or-json-operators-instead/",
+        "You can quickly navigate between child and parent records using TableRecord::fetchParent or TableRecord::parent and UpdatableRecord::fetchChildren or UpdatableRecord::children. Beware of N+1 problems, though!",
+        "A quick way to create a new Condition from a table is to just write MY_TABLE.where(condition)",
+        "jOOQ Queries extend Flow.Publisher, and can thus be used in reactive APIs. Blocking on JDBC by default, but if you configure an R2DBC ConnectionFactory, it's automatically non-blocking!",
+        "A ResultQuery<R> extends Iterable<R>, so you can just foreach your queries! See: https://blog.jooq.org/2016/09/27/a-hidden-jooq-gem-foreach-loop-over-resultquery/",
+        "jOOQ works even better in kotlin! https://blog.jooq.org/2017/05/18/10-nice-examples-of-writing-sql-in-kotlin-with-jooq/",
         ""
     };
 

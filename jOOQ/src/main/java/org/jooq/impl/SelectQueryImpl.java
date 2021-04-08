@@ -495,18 +495,38 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private final SelectQueryImpl<R> copyTo(CopyClause clause, SelectQueryImpl<R> result) {
-        return copyBetween(CopyClause.START, clause, result);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final SelectQueryImpl<R> copyTo(CopyClause clause, boolean scalarSelect, SelectQueryImpl<R> result) {
+        return copyBetween(CopyClause.START, clause, scalarSelect, result);
     }
 
-    private final SelectQueryImpl<R> copyAfter(CopyClause clause, SelectQueryImpl<R> result) {
-        return copyBetween(clause, CopyClause.END, result);
+    private final SelectQueryImpl<R> copyAfter(CopyClause clause, boolean scalarSelect, SelectQueryImpl<R> result) {
+        return copyBetween(clause, CopyClause.END, scalarSelect, result);
     }
 
-    private final SelectQueryImpl<R> copyBetween(CopyClause start, CopyClause end, SelectQueryImpl<R> result) {
+    private final SelectQueryImpl<R> copyBetween(CopyClause start, CopyClause end, boolean scalarSelect, SelectQueryImpl<R> result) {
         if (CopyClause.START.between(start, end)) {
             result.from.addAll(from);
             result.condition.setWhere(condition.getWhere());
+
+            if (scalarSelect)
+                result.select.addAll(select);
         }
 
         if (CopyClause.WHERE.between(start, end)) {
@@ -525,7 +545,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         if (CopyClause.QUALIFY.between(start, end)) {
-            result.select.addAll(select);
+            if (!scalarSelect)
+                result.select.addAll(select);
+
             result.hint = hint;
             result.distinct = distinct;
             result.distinctOn = distinctOn;
@@ -561,8 +583,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final SelectQueryImpl<R> copy(Function<? super SelectQueryImpl<R>, ? extends SelectQueryImpl<R>> finisher) {
-        return finisher.apply(copyTo(CopyClause.END, new SelectQueryImpl<>(configuration(), with)));
+        return finisher.apply(copyTo(CopyClause.END, false, new SelectQueryImpl<>(configuration(), with)));
     }
+
+
+
+
+
 
 
 

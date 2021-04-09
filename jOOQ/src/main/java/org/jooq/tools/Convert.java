@@ -432,6 +432,8 @@ public final class Convert {
      * can be converted into each other.</li>
      * <li>All <code>String</code> types can be converted into {@link URI},
      * {@link URL} and {@link File}</li>
+     * <li><code>byte[]</code> and {@link ByteBuffer} can be converted into one
+     * another</li>
      * <li><code>byte[]</code> can be converted into <code>String</code>, using
      * the platform's default charset</li>
      * <li><code>Object[]</code> can be converted into any other array type, if
@@ -570,10 +572,13 @@ public final class Convert {
                         return (U) new UUID(mostSigBits, leastSigBits);
                     }
 
+                    // [#11700] [#11772] R2DBC uses ByteBuffer instead of byte[]
+                    else if (toClass == ByteBuffer.class)
+                        return (U) ByteBuffer.wrap((byte[]) from);
+
                     // [#5569] Binary data is expected to be in JVM's default encoding
-                    else {
+                    else
                         return convert(new String((byte[]) from), toClass);
-                    }
                 }
                 else if (fromClass.isArray()) {
                     Object[] fromArray = (Object[]) from;
@@ -627,11 +632,12 @@ public final class Convert {
                         ByteBuffer b = ByteBuffer.wrap(new byte[16]);
                         b.putLong(((UUID) from).getMostSignificantBits());
                         b.putLong(((UUID) from).getLeastSignificantBits());
-                        return (U)b.array();
+                        return (U) b.array();
                     }
-                    else {
+                    else if (from instanceof ByteBuffer)
+                        return (U) ((ByteBuffer) from).array();
+                    else
                         return (U) from.toString().getBytes();
-                    }
                 }
 
                 // Various number types are converted between each other via String

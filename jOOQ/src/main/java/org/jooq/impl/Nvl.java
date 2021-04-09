@@ -88,7 +88,6 @@ final class Nvl<T> extends AbstractField<T> {
 
 
 
-
             case CUBRID:
             case DERBY:
             case IGNITE:

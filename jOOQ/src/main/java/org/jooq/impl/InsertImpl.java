@@ -60,6 +60,7 @@ import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
+import org.jooq.InsertValuesStepN;
 import org.jooq.InsertValuesStep1;
 import org.jooq.InsertValuesStep2;
 import org.jooq.InsertValuesStep3;
@@ -82,7 +83,6 @@ import org.jooq.InsertValuesStep19;
 import org.jooq.InsertValuesStep20;
 import org.jooq.InsertValuesStep21;
 import org.jooq.InsertValuesStep22;
-import org.jooq.InsertValuesStepN;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
@@ -109,8 +109,8 @@ import org.jooq.Record19;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
-import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.RowN;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.Row3;
@@ -322,6 +322,16 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final InsertImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17, T18 value18, T19 value19, T20 value20, T21 value21, T22 value22) {
         return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20, value21, value22 });
+    }
+
+    @Override
+    public final InsertImpl values(RowN values) {
+        return values(values.fields());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRows(RowN... values) {
+    	return valuesOfRows(Arrays.asList(values));
     }
 
     @Override
@@ -542,6 +552,16 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     @Override
     public final InsertImpl valuesOfRows(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... values) {
     	return valuesOfRows(Arrays.asList(values));
+    }
+
+    @Override
+    public final InsertImpl values(Record values) {
+        return values(values.intoArray());
+    }
+
+    @Override
+    public final InsertImpl valuesOfRecords(Record... values) {
+    	return valuesOfRecords(Arrays.asList(values));
     }
 
     @Override

@@ -353,6 +353,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                 case POSTGRES:
                 case SQLITE: {
+                    boolean qualify = ctx.qualify();
+
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
@@ -368,8 +370,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
                     }
                     else {
-                        boolean qualify = ctx.qualify();
-
                         ctx.sql('(');
 
                         if (onConflict != null && onConflict.size() > 0)
@@ -407,7 +407,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         ctx.formatSeparator()
                            .visit(K_WHERE)
                            .sql(' ')
-                           .visit(onConflictWhere.getWhere());
+                           .qualify(false)
+                           .visit(onConflictWhere.getWhere())
+                           .qualify(qualify);
 
                     ctx.formatSeparator()
                        .visit(K_DO_UPDATE)

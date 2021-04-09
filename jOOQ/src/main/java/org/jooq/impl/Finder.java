@@ -42,14 +42,21 @@ import java.util.function.Predicate;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 
 /**
- * A stub {@link BindContext} that acts as a collector of {@link Param}
- * {@link QueryPart}'s
+ * A {@link Context} that traverses an expression tree trying to find a specific
+ * {@link QueryPart}.
+ * <p>
+ * It is short circuiting the traversal once a result has been found, and offers
+ * an optional predicate to decide whether to enter a subtree or not (e.g. to
+ * avoid traversing subqueries, etc.)
+ * <p>
+ * It comes with the full cost of traversal and SQL transformation, using the
+ * {@link Context} API, but skips generating any SQL strings.
  *
  * @author Lukas Eder
  */
@@ -57,7 +64,14 @@ final class Finder extends AbstractBindContext {
 
     private final Predicate<? super QueryPart> find;
     private final Predicate<? super QueryPart> enter;
-    private boolean                            found;
+    private QueryPart                          found;
+
+    Finder(
+        Configuration configuration,
+        Predicate<? super QueryPart> find
+    ) {
+        this(configuration, find, q -> true);
+    }
 
     Finder(
         Configuration configuration,
@@ -72,14 +86,19 @@ final class Finder extends AbstractBindContext {
 
     @Override
     protected final void bindInternal(QueryPartInternal internal) {
-        if (found |= find.test(internal))
+        if (found != null)
             return;
+
+        if (find.test(internal)) {
+            found = internal;
+            return;
+        }
 
         if (enter.test(internal))
             super.bindInternal(internal);
     }
 
-    final boolean found() {
+    final QueryPart found() {
         return found;
     }
 

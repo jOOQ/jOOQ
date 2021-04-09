@@ -43,6 +43,8 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.tools.jdbc.JDBCUtils;
 
+import io.r2dbc.spi.ConnectionFactory;
+
 /**
  * An extension of {@link DefaultDSLContext} that implements also the
  * {@link CloseableDSLContext} contract.
@@ -62,6 +64,14 @@ public class DefaultCloseableDSLContext extends DefaultDSLContext implements Clo
         super(connectionProvider, dialect);
     }
 
+    public DefaultCloseableDSLContext(ConnectionFactory connectionFactory, SQLDialect dialect, Settings settings) {
+        super(connectionFactory, dialect, settings);
+    }
+
+    public DefaultCloseableDSLContext(ConnectionFactory connectionFactory, SQLDialect dialect) {
+        super(connectionFactory, dialect);
+    }
+
     // -------------------------------------------------------------------------
     // XXX AutoCloseable
     // -------------------------------------------------------------------------
@@ -69,6 +79,7 @@ public class DefaultCloseableDSLContext extends DefaultDSLContext implements Clo
     @Override
     public void close() {
         ConnectionProvider cp = configuration().connectionProvider();
+        ConnectionFactory cf = configuration().connectionFactory();
 
         if (cp instanceof DefaultConnectionProvider) {
             DefaultConnectionProvider dcp = (DefaultConnectionProvider) cp;
@@ -76,6 +87,15 @@ public class DefaultCloseableDSLContext extends DefaultDSLContext implements Clo
             if (dcp.finalize) {
                 JDBCUtils.safeClose(dcp.connection);
                 dcp.connection = null;
+            }
+        }
+
+        if (cf instanceof DefaultConnectionFactory) {
+            DefaultConnectionFactory dcf = (DefaultConnectionFactory) cf;
+
+            if (dcf.finalize) {
+                R2DBC.block(dcf.connection.close());
+                dcf.connection = null;
             }
         }
     }

@@ -67,6 +67,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -88,6 +90,7 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.Tools.ThreadGuard;
 import org.jooq.impl.Tools.ThreadGuard.Guard;
@@ -104,6 +107,9 @@ import org.reactivestreams.Subscription;
 import io.r2dbc.spi.Batch;
 import io.r2dbc.spi.ColumnMetadata;
 import io.r2dbc.spi.Connection;
+import io.r2dbc.spi.ConnectionFactories;
+import io.r2dbc.spi.ConnectionFactory;
+import io.r2dbc.spi.ConnectionFactoryOptions;
 import io.r2dbc.spi.Result;
 import io.r2dbc.spi.Row;
 import io.r2dbc.spi.RowMetadata;
@@ -625,6 +631,42 @@ final class R2DBC {
             return Long.MAX_VALUE;
         else
             return r;
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T> T block(Publisher<? extends T> publisher) {
+        Object complete = new Object();
+        LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<>();
+        publisher.subscribe(subscriber(s -> s.request(1), queue::add, queue::add, () -> queue.add(complete)));
+
+        try {
+            Object result = queue.take();
+
+            if (result instanceof Throwable)
+                throw new DataAccessException("Exception when blocking on publisher", (Throwable) result);
+            else if (result == complete)
+                return null;
+            else
+                return (T) result;
+        }
+        catch (InterruptedException e) {
+            throw new DataAccessException("Exception when blocking on publisher", e);
+        }
+    }
+
+    static final Connection getConnection(String url) {
+        return block(ConnectionFactories.get(url).create());
+    }
+
+    static final Connection getConnection(String url, String username, String password) {
+        return block(ConnectionFactories.get(
+            ConnectionFactoryOptions
+                .parse(url)
+                .mutate()
+                .option(ConnectionFactoryOptions.USER, username)
+                .option(ConnectionFactoryOptions.PASSWORD, password)
+                .build()
+        ).create());
     }
 
     // -------------------------------------------------------------------------

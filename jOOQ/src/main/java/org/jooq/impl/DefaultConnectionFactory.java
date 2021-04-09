@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.R2DBC.AbstractSubscription.onRequest;
 
+import org.jooq.exception.DetachedException;
+
 import org.reactivestreams.Publisher;
 
 import io.r2dbc.spi.Batch;
@@ -57,10 +59,23 @@ import io.r2dbc.spi.ValidationDepth;
  */
 final class DefaultConnectionFactory implements ConnectionFactory {
 
-    private final Connection connection;
+    Connection    connection;
+    final boolean finalize;
 
     DefaultConnectionFactory(Connection connection) {
+        this(connection, false);
+    }
+
+    DefaultConnectionFactory(Connection connection, boolean finalize) {
         this.connection = connection;
+        this.finalize = finalize;
+    }
+
+    final Connection connectionOrThrow() {
+        if (connection == null)
+            throw new DetachedException("Connection not available or already closed");
+        else
+            return connection;
     }
 
     @Override
@@ -73,18 +88,18 @@ final class DefaultConnectionFactory implements ConnectionFactory {
 
     @Override
     public final ConnectionFactoryMetadata getMetadata() {
-        return () -> connection.getMetadata().getDatabaseProductName();
+        return () -> connectionOrThrow().getMetadata().getDatabaseProductName();
     }
 
     private final class NonClosingConnection implements Connection {
         @Override
         public Publisher<Void> beginTransaction() {
-            return connection.beginTransaction();
+            return connectionOrThrow().beginTransaction();
         }
 
         @Override
         public Publisher<Void> beginTransaction(TransactionDefinition definition) {
-            return connection.beginTransaction(definition);
+            return connectionOrThrow().beginTransaction(definition);
         }
 
         @Override
@@ -94,67 +109,67 @@ final class DefaultConnectionFactory implements ConnectionFactory {
 
         @Override
         public Publisher<Void> commitTransaction() {
-            return connection.commitTransaction();
+            return connectionOrThrow().commitTransaction();
         }
 
         @Override
         public Batch createBatch() {
-            return connection.createBatch();
+            return connectionOrThrow().createBatch();
         }
 
         @Override
         public Publisher<Void> createSavepoint(String name) {
-            return connection.createSavepoint(name);
+            return connectionOrThrow().createSavepoint(name);
         }
 
         @Override
         public Statement createStatement(String sql) {
-            return connection.createStatement(sql);
+            return connectionOrThrow().createStatement(sql);
         }
 
         @Override
         public boolean isAutoCommit() {
-            return connection.isAutoCommit();
+            return connectionOrThrow().isAutoCommit();
         }
 
         @Override
         public ConnectionMetadata getMetadata() {
-            return connection.getMetadata();
+            return connectionOrThrow().getMetadata();
         }
 
         @Override
         public IsolationLevel getTransactionIsolationLevel() {
-            return connection.getTransactionIsolationLevel();
+            return connectionOrThrow().getTransactionIsolationLevel();
         }
 
         @Override
         public Publisher<Void> releaseSavepoint(String name) {
-            return connection.releaseSavepoint(name);
+            return connectionOrThrow().releaseSavepoint(name);
         }
 
         @Override
         public Publisher<Void> rollbackTransaction() {
-            return connection.rollbackTransaction();
+            return connectionOrThrow().rollbackTransaction();
         }
 
         @Override
         public Publisher<Void> rollbackTransactionToSavepoint(String name) {
-            return connection.rollbackTransactionToSavepoint(name);
+            return connectionOrThrow().rollbackTransactionToSavepoint(name);
         }
 
         @Override
         public Publisher<Void> setAutoCommit(boolean autoCommit) {
-            return connection.setAutoCommit(autoCommit);
+            return connectionOrThrow().setAutoCommit(autoCommit);
         }
 
         @Override
         public Publisher<Void> setTransactionIsolationLevel(IsolationLevel isolationLevel) {
-            return connection.setTransactionIsolationLevel(isolationLevel);
+            return connectionOrThrow().setTransactionIsolationLevel(isolationLevel);
         }
 
         @Override
         public Publisher<Boolean> validate(ValidationDepth depth) {
-            return connection.validate(depth);
+            return connectionOrThrow().validate(depth);
         }
     }
 }

@@ -509,7 +509,7 @@ public class DSL {
     }
 
     /**
-     * Create an executor from a JDBC connection URL.
+     * Create an executor from a JDBC or R2DBC connection URL.
      * <p>
      * Clients must ensure connections are closed properly by calling
      * {@link CloseableDSLContext#close()} on the resulting {@link DSLContext}.
@@ -522,6 +522,9 @@ public class DSL {
      *     // ...
      * }
      * </pre></code>
+     * <p>
+     * Both acquisition and release of JDBC and R2DBC connection URLs are
+     * blocking.
      *
      * @param url The connection URL.
      * @see DefaultConnectionProvider
@@ -529,17 +532,23 @@ public class DSL {
      */
     @NotNull
     public static CloseableDSLContext using(String url) {
-        try {
-            Connection connection = DriverManager.getConnection(url);
-            return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+        if (url.startsWith("r2dbc:")) {
+            io.r2dbc.spi.Connection connection = R2DBC.getConnection(url);
+            return new DefaultCloseableDSLContext(new DefaultConnectionFactory(connection, true), JDBCUtils.dialect(connection));
         }
-        catch (SQLException e) {
-            throw Tools.translate("Error when initialising Connection", e);
+        else {
+            try {
+                Connection connection = DriverManager.getConnection(url);
+                return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+            }
+            catch (SQLException e) {
+                throw Tools.translate("Error when initialising Connection", e);
+            }
         }
     }
 
     /**
-     * Create an executor from a JDBC connection URL.
+     * Create an executor from a JDBC or R2DBC connection URL.
      * <p>
      * Clients must ensure connections are closed properly by calling
      * {@link CloseableDSLContext#close()} on the resulting {@link DSLContext}.
@@ -552,6 +561,9 @@ public class DSL {
      *     // ...
      * }
      * </pre></code>
+     * <p>
+     * Both acquisition and release of JDBC and R2DBC connection URLs are
+     * blocking.
      *
      * @param url The connection URL.
      * @param username The connection user name.
@@ -561,12 +573,18 @@ public class DSL {
      */
     @NotNull
     public static CloseableDSLContext using(String url, String username, String password) {
-        try {
-            Connection connection = DriverManager.getConnection(url, username, password);
-            return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+        if (url.startsWith("r2dbc:")) {
+            io.r2dbc.spi.Connection connection = R2DBC.getConnection(url, username, password);
+            return new DefaultCloseableDSLContext(new DefaultConnectionFactory(connection, true), JDBCUtils.dialect(connection));
         }
-        catch (SQLException e) {
-            throw Tools.translate("Error when initialising Connection", e);
+        else {
+            try {
+                Connection connection = DriverManager.getConnection(url, username, password);
+                return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+            }
+            catch (SQLException e) {
+                throw Tools.translate("Error when initialising Connection", e);
+            }
         }
     }
 
@@ -584,6 +602,8 @@ public class DSL {
      *     // ...
      * }
      * </pre></code>
+     * <p>
+     * This API does not yet support R2DBC connection URLs.
      *
      * @param url The connection URL.
      * @param properties The connection properties.

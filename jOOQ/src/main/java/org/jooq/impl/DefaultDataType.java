@@ -671,6 +671,13 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
      * Convert a type name (using precision and scale) into a Java class
      */
     public static final DataType<?> getDataType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
+        return getDataType(dialect, t, p, s, true);
+    }
+
+    /**
+     * Convert a type name (using precision and scale) into a Java class
+     */
+    public static final DataType<?> getDataType(SQLDialect dialect, String t, int p, int s, boolean forceIntegerTypesOnZeroScaleDecimals) throws SQLDialectNotSupportedException {
         DataType<?> result = DefaultDataType.getDataType(dialect, t);
         boolean array = result.isArray();
 
@@ -678,7 +685,7 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
         if (array)
             result = result.getArrayComponentDataType();
 
-        if (result.getType() == BigDecimal.class)
+        if (forceIntegerTypesOnZeroScaleDecimals && result.getType() == BigDecimal.class)
             result = DefaultDataType.getDataType(dialect, getNumericClass(p, s));
 
         // [#10809] Use dialect only for lookup, don't report the dialect-specific type

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 // ...
 // ...
 // ...
@@ -886,7 +887,13 @@ final class MetaImpl extends AbstractMeta {
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType type = null;
                 try {
-                    type = DefaultDataType.getDataType(family(), typeName, precision, scale);
+                    type = DefaultDataType.getDataType(
+                        family(),
+                        typeName,
+                        precision,
+                        scale,
+                        !FALSE.equals(settings().isForceIntegerTypesOnZeroScaleDecimals())
+                    );
 
                     // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
                     if (isAutoIncrement)

@@ -38,6 +38,8 @@ public class Settings
 
     private final static long serialVersionUID = 31400L;
     @XmlElement(defaultValue = "true")
+    protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")
     protected Boolean renderSchema = true;
@@ -272,6 +274,30 @@ public class Settings
     @XmlElementWrapper(name = "parseSearchPath")
     @XmlElement(name = "schema")
     protected List<ParseSearchSchema> parseSearchPath;
+
+    /**
+     * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). The same behaviour is replicated in the {@link org.jooq.Meta} API. This flag allows for turning off this feature.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isForceIntegerTypesOnZeroScaleDecimals() {
+        return forceIntegerTypesOnZeroScaleDecimals;
+    }
+
+    /**
+     * Sets the value of the forceIntegerTypesOnZeroScaleDecimals property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
+        this.forceIntegerTypesOnZeroScaleDecimals = value;
+    }
 
     /**
      * Whether any catalog name should be rendered at all.
@@ -2345,6 +2371,11 @@ public class Settings
         this.parseSearchPath = parseSearchPath;
     }
 
+    public Settings withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
+        setForceIntegerTypesOnZeroScaleDecimals(value);
+        return this;
+    }
+
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
@@ -3133,6 +3164,7 @@ public class Settings
 
     @Override
     public final void appendTo(XMLBuilder builder) {
+        builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("renderCatalog", renderCatalog);
         builder.append("renderSchema", renderSchema);
         builder.append("renderMapping", renderMapping);
@@ -3251,6 +3283,15 @@ public class Settings
             return false;
         }
         Settings other = ((Settings) that);
+        if (forceIntegerTypesOnZeroScaleDecimals == null) {
+            if (other.forceIntegerTypesOnZeroScaleDecimals!= null) {
+                return false;
+            }
+        } else {
+            if (!forceIntegerTypesOnZeroScaleDecimals.equals(other.forceIntegerTypesOnZeroScaleDecimals)) {
+                return false;
+            }
+        }
         if (renderCatalog == null) {
             if (other.renderCatalog!= null) {
                 return false;
@@ -4131,6 +4172,7 @@ public class Settings
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((renderCatalog == null)? 0 :renderCatalog.hashCode()));
         result = ((prime*result)+((renderSchema == null)? 0 :renderSchema.hashCode()));
         result = ((prime*result)+((renderMapping == null)? 0 :renderMapping.hashCode()));

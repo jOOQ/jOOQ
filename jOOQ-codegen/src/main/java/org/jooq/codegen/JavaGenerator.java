@@ -2150,20 +2150,30 @@ public class JavaGenerator extends AbstractGenerator {
                     final String udtArrayElementType = isUDTArray
                         ? out.ref(database.getArray(t.getType(r).getSchema(), t.getType(r).getQualifiedUserType()).getElementType(r).getJavaType(r))
                         : isArrayOfUDTs
-                        ? out.ref(t.getType(r).getJavaType(r).replace("[]", ""))
+                        ? out.ref(getArrayBaseType(t.getType(r).getJavaType(r)))
                         : "";
 
                     if (kotlin) {
                         if (pojoArgument)
-                            if (isUDT || isArray)
-                                out.println("this.%s = value.%s",
-                                    getStrategy().getJavaMemberName(column, Mode.POJO),
-                                    getStrategy().getJavaMemberName(column, Mode.POJO));
-                            else
-                                out.println("this.%s = %s(if (value.%s == null) null else value.%s)",
+                            if (isUDTArray)
+                                out.println("this.%s = value.%s?.let { %s(it.map { it?.let { %s(it) } }) }",
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     udtType,
+                                    udtArrayElementType);
+                            else if (isArrayOfUDTs)
+                                out.println("this.%s = value.%s?.let { it.map { it?.let { %s(it) } }.toTypedArray() }",
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    udtArrayElementType);
+                            else if (isUDT || isArray)
+                                out.println("this.%s = value.%s?.let { %s(it) }",
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    udtType);
+                            else
+                                out.println("this.%s = value.%s",
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO));
                         else
                             out.println("this.%s = %s",
@@ -2174,15 +2184,29 @@ public class JavaGenerator extends AbstractGenerator {
                     // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
                     else if (scala) {
                         if (pojoArgument)
-                            if (isUDT || isArray)
-                                out.println("this.%s(value.%s)",
-                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                    getStrategy().getJavaGetterName(column, Mode.POJO));
-                            else
+                            if (isUDTArray)
+                                out.println("this.%s(if (value.%s == null) null else new %s(value.%s.stream().map { it => if (it == null) null else new %s(it) }.collect(%s.toList())))",
+                                    getStrategy().getJavaSetterName(column, Mode.POJO),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    udtType,
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    udtArrayElementType,
+                                    Collectors.class);
+                            else if (isArrayOfUDTs)
+                                out.println("this.%s(if (value.%s == null) null else value.%s.map { it => if (it == null) null else new %s(it) })",
+                                    getStrategy().getJavaSetterName(column, Mode.POJO),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    udtArrayElementType);
+                            else if (isUDT || isArray)
                                 out.println("this.%s(if (value.%s == null) null else new %s(value.%s))",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     udtType,
+                                    getStrategy().getJavaGetterName(column, Mode.POJO));
+                            else
+                                out.println("this.%s(value.%s)",
+                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO));
                         else
                             out.println("this.%s(%s)",
@@ -2192,7 +2216,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else {
                         if (pojoArgument)
                             if (isUDTArray)
-                                out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(%s::new).collect(%s.toList())));",
+                                out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(it -> it == null ? null : new %s(it)).collect(%s.toList())));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     udtType,
@@ -2200,7 +2224,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     udtArrayElementType,
                                     Collectors.class);
                             else if (isArrayOfUDTs)
-                                out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(%s::new).toArray(%s[]::new));",
+                                out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(it -> it == null ? null : new %s(it)).toArray(%s[]::new));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     Stream.class,
@@ -2230,12 +2254,13 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private boolean isArrayOfUDTs(final TypedElementDefinition<?> t, final JavaTypeResolver r) {
+
         // [#11183] TODO: Move this to DataTypeDefinition?
         String javaType = t.getType(r).getJavaType(r);
-        if (!javaType.endsWith("[]"))
+        if (!isArrayType(javaType))
             return false;
 
-        String baseType = javaType.replace("[]", "");
+        String baseType = getArrayBaseType(javaType);
         for (UDTDefinition udt : t.getDatabase().getUDTs())
             if (baseType.equals(getStrategy().getFullJavaClassName(udt, Mode.RECORD)))
                 return true;
@@ -3033,7 +3058,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala)
                 out.println("private val %s: %s[%s, %s] = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), converter, binding);
+                    scalaWhitespaceSuffix(attrId), UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), converter, binding);
             else if (kotlin)
                 out.println("%sval %s: %s<%s, %s> = %s.createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
                     visibility(), attrId, UDTField.class, recordType, attrType, UDTImpl.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), converter, binding);
@@ -8429,6 +8454,13 @@ public class JavaGenerator extends AbstractGenerator {
             return javaType.endsWith("[]");
     }
 
+    protected String getArrayBaseType(String javaType) {
+        return javaType
+            .replace("[]", "")
+            .replaceAll("^scala.Array\\[(.*?)\\]$", "$1")
+            .replaceAll("^kotlin.Array<(.*?)\\??>$", "$1");
+    }
+
     protected String getJavaType(DataTypeDefinition type, JavaWriter out) {
         return getJavaType(type, out, Mode.RECORD);
     }
@@ -8444,7 +8476,8 @@ public class JavaGenerator extends AbstractGenerator {
             type.getQualifiedUserType(),
             type.getJavaType(),
             Object.class.getName(),
-            udtMode);
+            udtMode
+        );
     }
 
     /**

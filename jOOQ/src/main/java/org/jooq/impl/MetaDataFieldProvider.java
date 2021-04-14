@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 
@@ -134,7 +135,13 @@ final class MetaDataFieldProvider implements Serializable {
                 String type = meta.getColumnTypeName(i);
 
                 try {
-                    dataType = DefaultDataType.getDataType(configuration.family(), type, precision, scale);
+                    dataType = DefaultDataType.getDataType(
+                        configuration.family(),
+                        type,
+                        precision,
+                        scale,
+                        !FALSE.equals(configuration.settings().isForceIntegerTypesOnZeroScaleDecimals())
+                    );
 
                     if (dataType.hasPrecision())
                         dataType = dataType.precision(precision);

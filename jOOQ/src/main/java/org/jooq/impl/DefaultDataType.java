@@ -673,7 +673,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     public static final <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type, DataType<T> fallbackDataType) {
 
         // Treat primitive types the same way as their respective wrapper types
-        type = (Class<T>) wrapper(type);
+        type = wrapper(type);
 
         // Recurse for arrays
         if (byte[].class != type && type.isArray()) {
@@ -743,6 +743,13 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
      * Convert a type name (using precision and scale) into a Java class
      */
     public static final DataType<?> getDataType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
+        return getDataType(dialect, t, p, s, true);
+    }
+
+    /**
+     * Convert a type name (using precision and scale) into a Java class
+     */
+    public static final DataType<?> getDataType(SQLDialect dialect, String t, int p, int s, boolean forceIntegerTypesOnZeroScaleDecimals) throws SQLDialectNotSupportedException {
         DataType<?> result = DefaultDataType.getDataType(dialect, t);
         boolean array = result.isArray();
 
@@ -750,7 +757,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         if (array)
             result = result.getArrayComponentDataType();
 
-        if (result.getType() == BigDecimal.class)
+        if (forceIntegerTypesOnZeroScaleDecimals && result.getType() == BigDecimal.class)
             result = DefaultDataType.getDataType(dialect, getNumericClass(p, s));
 
         // [#10809] Use dialect only for lookup, don't report the dialect-specific type

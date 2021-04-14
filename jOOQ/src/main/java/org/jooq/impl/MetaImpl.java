@@ -585,7 +585,8 @@ final class MetaImpl extends AbstractMeta {
                             family(),
                             record.get(3, String.class),
                             record.get(4, int.class),
-                            record.get(5, int.class)
+                            record.get(5, int.class),
+                            !FALSE.equals(settings().isForceIntegerTypesOnZeroScaleDecimals())
                         ),
                         record.get(6, Long.class),
                         record.get(7, Long.class),
@@ -1047,7 +1048,13 @@ final class MetaImpl extends AbstractMeta {
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType type = null;
                 try {
-                    type = DefaultDataType.getDataType(family(), typeName, precision, scale);
+                    type = DefaultDataType.getDataType(
+                        family(),
+                        typeName,
+                        precision,
+                        scale,
+                        !FALSE.equals(settings().isForceIntegerTypesOnZeroScaleDecimals())
+                    );
 
                     // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
                     if (isAutoIncrement)

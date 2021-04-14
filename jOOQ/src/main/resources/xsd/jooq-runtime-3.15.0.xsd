@@ -14,6 +14,10 @@
   <complexType name="Settings">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Settings that influence the way jOOQ renders SQL code.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="forceIntegerTypesOnZeroScaleDecimals" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). The same behaviour is replicated in the {@link org.jooq.Meta} API. This flag allows for turning off this feature.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    
       <element name="renderCatalog" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether any catalog name should be rendered at all.
 <p>

@@ -129,36 +129,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
     @Override
     public DataTypeDefinition getType() {
         if (type == null)
-            type = mapDefinedType(container, this, definedType, new JavaTypeResolver() {
-
-                // [#10553] TODO: This was introduced as a dummy implementation
-                //          to make [#10534] work. jOOQ-meta should not have any
-                //          such implementation
-                @Override
-                public String resolve(DataTypeDefinition type) {
-                    return "java.lang.Object";
-                }
-
-                @Override
-                public String ref(Class<?> type) {
-                    return type.getName();
-                }
-
-                @Override
-                public String ref(String type) {
-                    return type;
-                }
-
-                @Override
-                public String classLiteral(String type) {
-                    return type + ".class";
-                }
-
-                @Override
-                public String constructorCall(String type) {
-                    return "new " + type;
-                }
-            });
+            type = mapDefinedType(container, this, definedType, new DefaultJavaTypeResolver());
 
         return type;
     }

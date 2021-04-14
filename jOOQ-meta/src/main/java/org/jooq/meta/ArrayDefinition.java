@@ -48,6 +48,7 @@ public interface ArrayDefinition extends Definition {
     /**
      * The array's package. <code>null</code> if the UDT is not in a package
      */
+    @Override
     PackageDefinition getPackage();
 
     /**

@@ -275,6 +275,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     @Override
+    public final boolean isUDTArray() {
+        return isArray() && getDatabase().getArray(schema, userType).getElementType(new DefaultJavaTypeResolver()).isUDT();
+    }
+
+    @Override
     public final String getType() {
         return type;
     }

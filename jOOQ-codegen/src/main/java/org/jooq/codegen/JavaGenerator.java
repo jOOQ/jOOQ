@@ -44,10 +44,10 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.codegen.GenerationUtil.convertToIdentifier;
 import static org.jooq.codegen.Language.JAVA;
 import static org.jooq.codegen.Language.KOTLIN;
 import static org.jooq.codegen.Language.SCALA;
-import static org.jooq.codegen.GenerationUtil.convertToIdentifier;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -78,6 +78,8 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -2030,7 +2032,10 @@ public class JavaGenerator extends AbstractGenerator {
             : null;
         final int degree = columns.size();
 
-        if (degree > 0 && degree < 256) {
+        // There are some edge cases for 0-degree record types, such as Oracle's XMLTYPE
+        // While these types shouldn't have any auxiliary constructors accepting individual attributes
+        // they can still have a pojoArgument constructor
+        if (pojoArgument || degree > 0 && degree < 256) {
             List<String> arguments = new ArrayList<>(degree);
             List<String> properties = new ArrayList<>(degree);
 
@@ -2131,40 +2136,111 @@ public class JavaGenerator extends AbstractGenerator {
                                 getStrategy().getJavaMemberName(column, Mode.DEFAULT));
                 }
                 else {
-                    if (kotlin)
+                    final TypedElementDefinition<?> t = (TypedElementDefinition<?>) column;
+                    final JavaTypeResolver r = resolver(out, Mode.RECORD);
+
+                    final boolean isUDT = t.getType(r).isUDT();
+                    final boolean isArray = t.getType(r).isArray();
+                    final boolean isUDTArray = t.getType(r).isUDTArray();
+                    final boolean isArrayOfUDTs = isArrayOfUDTs(t, r);
+
+                    final String udtType = (isUDT || isArray)
+                        ? out.ref(getJavaType(((TypedElementDefinition<?>) column).getType(r), out, Mode.RECORD))
+                        : "";
+                    final String udtArrayElementType = isUDTArray
+                        ? out.ref(database.getArray(t.getType(r).getSchema(), t.getType(r).getQualifiedUserType()).getElementType(r).getJavaType(r))
+                        : isArrayOfUDTs
+                        ? out.ref(t.getType(r).getJavaType(r).replace("[]", ""))
+                        : "";
+
+                    if (kotlin) {
                         if (pojoArgument)
-                            out.println("this.%s = value.%s",
-                                getStrategy().getJavaMemberName(column, Mode.POJO),
-                                getStrategy().getJavaMemberName(column, Mode.POJO));
+                            if (isUDT || isArray)
+                                out.println("this.%s = value.%s",
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    getStrategy().getJavaMemberName(column, Mode.POJO));
+                            else
+                                out.println("this.%s = %s(if (value.%s == null) null else value.%s)",
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                                    udtType,
+                                    getStrategy().getJavaMemberName(column, Mode.POJO));
                         else
                             out.println("this.%s = %s",
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
                                 getStrategy().getJavaMemberName(column, Mode.POJO));
+                    }
 
                     // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
-                    else if (scala)
+                    else if (scala) {
                         if (pojoArgument)
-                            out.println("this.%s(value.%s)",
-                                getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                getStrategy().getJavaGetterName(column, Mode.POJO));
+                            if (isUDT || isArray)
+                                out.println("this.%s(value.%s)",
+                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO));
+                            else
+                                out.println("this.%s(if (value.%s == null) null else new %s(value.%s))",
+                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    udtType,
+                                    getStrategy().getJavaGetterName(column, Mode.POJO));
                         else
                             out.println("this.%s(%s)",
                                 getStrategy().getJavaSetterName(column, Mode.RECORD),
                                 getStrategy().getJavaMemberName(column, Mode.POJO));
-                    else
+                    }
+                    else {
                         if (pojoArgument)
-                            out.println("%s(value.%s());",
-                                getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                getStrategy().getJavaGetterName(column, Mode.POJO));
+                            if (isUDTArray)
+                                out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(%s::new).collect(%s.toList())));",
+                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    udtType,
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    udtArrayElementType,
+                                    Collectors.class);
+                            else if (isArrayOfUDTs)
+                                out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(%s::new).toArray(%s[]::new));",
+                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    Stream.class,
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    udtArrayElementType,
+                                    udtArrayElementType);
+                            else if (isUDT || isArray)
+                                out.println("%s(value.%s() == null ? null : new %s(value.%s()));",
+                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    udtType,
+                                    getStrategy().getJavaGetterName(column, Mode.POJO));
+                            else
+                                out.println("%s(value.%s());",
+                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                    getStrategy().getJavaGetterName(column, Mode.POJO));
                         else
                             out.println("%s(%s);",
                                 getStrategy().getJavaSetterName(column, Mode.RECORD),
                                 getStrategy().getJavaMemberName(column, Mode.POJO));
+                    }
                 }
             }
 
             out.println("}");
         }
+    }
+
+    private boolean isArrayOfUDTs(final TypedElementDefinition<?> t, final JavaTypeResolver r) {
+        // [#11183] TODO: Move this to DataTypeDefinition?
+        String javaType = t.getType(r).getJavaType(r);
+        if (!javaType.endsWith("[]"))
+            return false;
+
+        String baseType = javaType.replace("[]", "");
+        for (UDTDefinition udt : t.getDatabase().getUDTs())
+            if (baseType.equals(getStrategy().getFullJavaClassName(udt, Mode.RECORD)))
+                return true;
+
+        return false;
     }
 
     private String getJavaType(Definition column, JavaWriter out) {

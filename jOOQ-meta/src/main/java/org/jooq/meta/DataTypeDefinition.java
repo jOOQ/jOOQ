@@ -39,6 +39,7 @@ package org.jooq.meta;
 
 import java.util.List;
 
+// ...
 import org.jooq.Name;
 import org.jooq.meta.jaxb.ForcedType;
 
@@ -130,9 +131,16 @@ public interface DataTypeDefinition {
     boolean isUDT();
 
     /**
-     * Whether this data type represents an array.
+     * Whether this data type represents an array producing an
+     * {@link ArrayRecord}.
      */
     boolean isArray();
+
+    /**
+     * Whether this data type represens an array producing an
+     * {@link ArrayRecord} of udt types.
+     */
+    boolean isUDTArray();
 
     /**
      * Whether this data type is a NUMBER type without precision and scale.

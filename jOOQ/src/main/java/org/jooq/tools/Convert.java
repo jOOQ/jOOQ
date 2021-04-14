@@ -1146,7 +1146,8 @@ public final class Convert {
                 for (Constructor<?> constructor : toClass.getConstructors()) {
                     Class<?>[] types = constructor.getParameterTypes();
 
-                    if (types.length == 1) {
+                    // [#11183] Prevent StackOverflowError when recursing into UDT POJOs
+                    if (types.length == 1 && types[0] != toClass) {
                         try {
                             return (U) constructor.newInstance(convert(from, types[0]));
                         }
@@ -1160,7 +1161,8 @@ public final class Convert {
                 for (Constructor<?> constructor : toClass.getDeclaredConstructors()) {
                     Class<?>[] types = constructor.getParameterTypes();
 
-                    if (types.length == 1) {
+                    // [#11183] Prevent StackOverflowError when recursing into UDT POJOs
+                    if (types.length == 1 && types[0] != toClass) {
                         try {
                             return (U) accessible(constructor).newInstance(convert(from, types[0]));
                         }

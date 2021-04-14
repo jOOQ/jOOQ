@@ -41,6 +41,7 @@ package org.jooq.meta;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static java.util.Comparator.comparing;
 import static org.jooq.Log.Level.ERROR;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -49,6 +50,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
@@ -192,7 +194,7 @@ public abstract class AbstractDatabase implements Database {
     private List<SchemaMappingType>                                          configuredSchemata                   = new ArrayList<>();
     private List<CustomType>                                                 configuredCustomTypes                = new ArrayList<>();
     private List<EnumType>                                                   configuredEnumTypes                  = new ArrayList<>();
-    private List<ForcedType>                                                 configuredForcedTypes                = new ArrayList<>();
+    private List<ForcedType>                                                 configuredForcedTypes;
     private Set<ForcedType>                                                  unusedForcedTypes                    = new HashSet<>();
     private List<EmbeddableDefinitionType>                                   configuredEmbeddables                = new ArrayList<>();
     private Set<EmbeddableDefinitionType>                                    unusedEmbeddables                    = new HashSet<>();
@@ -1408,7 +1410,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<ForcedType> getConfiguredForcedTypes() {
         if (configuredForcedTypes == null)
-            configuredForcedTypes = new ArrayList<>();
+            configuredForcedTypes = new SortedList<>(new ArrayList<>(), comparing(f -> defaultIfNull(f.getPriority(), 0), (i1, i2) -> Integer.compare(i2, i1)));
 
         return configuredForcedTypes;
     }

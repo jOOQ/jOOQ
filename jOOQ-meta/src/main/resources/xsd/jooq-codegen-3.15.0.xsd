@@ -1368,6 +1368,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   <complexType name="ForcedType">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[A forced type declaration]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
+      <element name="priority" type="int" minOccurs="0" maxOccurs="1" default="0">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The priority among forced types in which to apply this one. Forced types of equal priority will be applied in the order in which they're added to the forced types list (e.g. the Maven lexical XML order)]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="name" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

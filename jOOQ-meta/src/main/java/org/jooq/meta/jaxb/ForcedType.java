@@ -30,6 +30,8 @@ public class ForcedType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31500L;
+    @XmlElement(defaultValue = "0")
+    protected Integer priority = 0;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -62,6 +64,22 @@ public class ForcedType implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "ALL")
     @XmlSchemaType(name = "string")
     protected ForcedTypeObjectType objectType = ForcedTypeObjectType.ALL;
+
+    /**
+     * The priority among forced types in which to apply this one. Forced types of equal priority will be applied in the order in which they're added to the forced types list (e.g. the Maven lexical XML order)
+     * 
+     */
+    public Integer getPriority() {
+        return priority;
+    }
+
+    /**
+     * The priority among forced types in which to apply this one. Forced types of equal priority will be applied in the order in which they're added to the forced types list (e.g. the Maven lexical XML order)
+     * 
+     */
+    public void setPriority(Integer value) {
+        this.priority = value;
+    }
 
     /**
      * The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to
@@ -348,6 +366,15 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
+     * The priority among forced types in which to apply this one. Forced types of equal priority will be applied in the order in which they're added to the forced types list (e.g. the Maven lexical XML order)
+     * 
+     */
+    public ForcedType withPriority(Integer value) {
+        setPriority(value);
+        return this;
+    }
+
+    /**
      * The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to
      * 
      */
@@ -499,6 +526,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     @Override
     public final void appendTo(XMLBuilder builder) {
+        builder.append("priority", priority);
         builder.append("name", name);
         builder.append("userType", userType);
         builder.append("converter", converter);
@@ -536,6 +564,15 @@ public class ForcedType implements Serializable, XMLAppendable
             return false;
         }
         ForcedType other = ((ForcedType) that);
+        if (priority == null) {
+            if (other.priority!= null) {
+                return false;
+            }
+        } else {
+            if (!priority.equals(other.priority)) {
+                return false;
+            }
+        }
         if (name == null) {
             if (other.name!= null) {
                 return false;
@@ -687,6 +724,7 @@ public class ForcedType implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = ((prime*result)+((priority == null)? 0 :priority.hashCode()));
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((userType == null)? 0 :userType.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));

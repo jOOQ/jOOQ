@@ -2313,7 +2313,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String name = column.getQualifiedOutputName();
         final boolean isUDT = column.getType(resolver(out)).isUDT();
         final boolean isArray = column.getType(resolver(out)).isArray();
-        final boolean isUDTArray = column.getType(resolver(out)).isArray() && database.getArray(column.getType(resolver(out)).getSchema(), column.getType(resolver(out)).getQualifiedUserType()).getElementType(resolver(out)).isUDT();
+        final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
         final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT;
 
         // We cannot have covariant setters for arrays because of type erasure
@@ -4886,7 +4886,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
         final boolean isUDT = column.getType(resolver(out)).isUDT();
-        final boolean isUDTArray = column.getType(resolver(out)).isArray() && database.getArray(column.getType(resolver(out)).getSchema(), column.getType(resolver(out)).getQualifiedUserType()).getElementType(resolver(out)).isUDT();
+        final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
         final String name = column.getQualifiedOutputName();
 
         // We cannot have covariant setters for arrays because of type erasure

@@ -2073,7 +2073,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 if (pojoArgument)
-                    out.println("%sconstructor(value: %s): this() {", visibility(), out.ref(pojoNameFull));
+                    out.println("%sconstructor(value: %s?): this() {", visibility(), out.ref(pojoNameFull));
                 else
                     out.println("%sconstructor([[%s]]): this() {", visibility(), arguments);
             }
@@ -2093,6 +2093,9 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.println();
             }
+
+            if (pojoArgument && degree > 0)
+                out.println("if (value != null) {");
 
             for (Definition column : columns) {
                 if (column instanceof EmbeddableDefinition) {
@@ -2185,7 +2188,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else if (scala) {
                         if (pojoArgument)
                             if (isUDTArray)
-                                out.println("this.%s(if (value.%s == null) null else new %s(value.%s.stream().map { it => if (it == null) null else new %s(it) }.collect(%s.toList())))",
+                                out.println("this.%s(if (value.%s == null) null else new %s(value.%s.stream().map { it => new %s(it) }.collect(%s.toList())))",
                                     getStrategy().getJavaSetterName(column, Mode.POJO),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     udtType,
@@ -2193,7 +2196,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     udtArrayElementType,
                                     Collectors.class);
                             else if (isArrayOfUDTs)
-                                out.println("this.%s(if (value.%s == null) null else value.%s.map { it => if (it == null) null else new %s(it) })",
+                                out.println("this.%s(if (value.%s == null) null else value.%s.map { it => new %s(it) })",
                                     getStrategy().getJavaSetterName(column, Mode.POJO),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
@@ -2216,7 +2219,7 @@ public class JavaGenerator extends AbstractGenerator {
                     else {
                         if (pojoArgument)
                             if (isUDTArray)
-                                out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(it -> it == null ? null : new %s(it)).collect(%s.toList())));",
+                                out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(%s::new).collect(%s.toList())));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     udtType,
@@ -2224,7 +2227,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     udtArrayElementType,
                                     Collectors.class);
                             else if (isArrayOfUDTs)
-                                out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(it -> it == null ? null : new %s(it)).toArray(%s[]::new));",
+                                out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(%s::new).toArray(%s[]::new));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     Stream.class,
@@ -2248,6 +2251,9 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                 }
             }
+
+            if (pojoArgument && degree > 0)
+                out.println("}");
 
             out.println("}");
         }

@@ -169,6 +169,7 @@ import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
 import static org.jooq.impl.Names.N_DUAL;
 import static org.jooq.impl.Names.N_LEVEL;
+import static org.jooq.impl.Names.N_ROWNUM;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
@@ -1402,6 +1403,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return limit.offset != null ? s1.offset((Param) limit.offset) : s1;
     }
+
+
+
+
+
+
+
 
 
 

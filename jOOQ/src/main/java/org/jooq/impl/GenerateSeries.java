@@ -85,28 +85,44 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
     private final Field<Integer>         from;
     private final Field<Integer>         to;
     private final Field<Integer>         step;
+    private final Name                   name;
 
     GenerateSeries(Field<Integer> from, Field<Integer> to) {
         this(from, to, null);
     }
 
     GenerateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
-        super(TableOptions.expression(), N_GENERATE_SERIES);
+        this(from, to, step, N_GENERATE_SERIES);
+    }
+
+    GenerateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step, Name name) {
+        super(TableOptions.expression(), name);
 
         this.from = from;
         this.to = to;
         this.step = step;
+        this.name = name;
+    }
+
+    @Override
+    public Table<Record1<Integer>> as(Name alias) {
+        return new TableAlias<>(new GenerateSeries(from, to, step, alias), alias);
+    }
+
+    @Override
+    public Table<Record1<Integer>> as(Name alias, Name... fieldAliases) {
+        return new TableAlias<>(new GenerateSeries(from, to, step, alias), alias, fieldAliases);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE_WITH_RECURSIVE.contains(ctx.dialect())) {
-            Field<Integer> f = DSL.field(N_GENERATE_SERIES, INTEGER);
+            Field<Integer> f = DSL.field(name, INTEGER);
             visitSubquery(
                 ctx,
-                withRecursive(N_GENERATE_SERIES, N_GENERATE_SERIES)
-                    .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(N_GENERATE_SERIES).where(f.lt(to))))
-                    .select(f).from(N_GENERATE_SERIES)
+                withRecursive(name, name)
+                    .as(select(from).unionAll(select(iadd(f, step == null ? inline(1) : step)).from(name).where(f.lt(to))))
+                    .select(f).from(name)
             );
         }
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect())) {
@@ -163,9 +179,9 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
     @Override
     public final Table<Record1<Integer>> autoAlias(Context<?> ctx) {
         if (EMULATE_WITH_RECURSIVE.contains(ctx.dialect()))
-            return as(N_GENERATE_SERIES);
+            return as(name);
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect()))
-            return as(N_GENERATE_SERIES, N_GENERATE_SERIES);
+            return as(name, name);
         else
             return null;
     }

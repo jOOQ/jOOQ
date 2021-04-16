@@ -1797,6 +1797,7 @@ final class AlterTableImpl extends AbstractDDLQuery implements
 
 
 
+
     private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
         begin(ctx, c1 -> {
 

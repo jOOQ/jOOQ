@@ -98,16 +98,21 @@ public class PgEnum extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return PgCatalog.PG_CATALOG;
+        return aliased() ? null : PgCatalog.PG_CATALOG;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
+        return Arrays.asList(Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
     }
 
+    private transient PgType _pgType;
+
     public PgType pgType() {
-        return new PgType(this, Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
+        if (_pgType == null)
+            _pgType = new PgType(this, Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
+
+        return _pgType;
     }
 
     @Override

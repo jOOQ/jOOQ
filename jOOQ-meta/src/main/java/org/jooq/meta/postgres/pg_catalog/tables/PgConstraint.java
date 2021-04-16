@@ -164,9 +164,12 @@ public class PgConstraint extends TableImpl<Record> {
     public final TableField<Record, Long[]> CONEXCLOP = createField(DSL.name("conexclop"), SQLDataType.BIGINT.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public final TableField<Record, Object> CONBIN = createField(DSL.name("conbin"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     private PgConstraint(Name alias, Table<Record> aliased) {
@@ -204,20 +207,29 @@ public class PgConstraint extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return PgCatalog.PG_CATALOG;
+        return aliased() ? null : PgCatalog.PG_CATALOG;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);
+        return Arrays.asList(Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);
     }
 
+    private transient PgNamespace _pgNamespace;
+    private transient PgClass _pgClass;
+
     public PgNamespace pgNamespace() {
-        return new PgNamespace(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE);
+        if (_pgNamespace == null)
+            _pgNamespace = new PgNamespace(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE);
+
+        return _pgNamespace;
     }
 
     public PgClass pgClass() {
-        return new PgClass(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);
+        if (_pgClass == null)
+            _pgClass = new PgClass(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);
+
+        return _pgClass;
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgCollation;
 import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
+import org.jooq.meta.postgres.pg_catalog.tables.PgDepend;
 import org.jooq.meta.postgres.pg_catalog.tables.PgDescription;
 import org.jooq.meta.postgres.pg_catalog.tables.PgEnum;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
@@ -49,6 +50,11 @@ public class Tables {
      * The table <code>pg_catalog.pg_constraint</code>.
      */
     public static final PgConstraint PG_CONSTRAINT = PgConstraint.PG_CONSTRAINT;
+
+    /**
+     * The table <code>pg_catalog.pg_depend</code>.
+     */
+    public static final PgDepend PG_DEPEND = PgDepend.PG_DEPEND;
 
     /**
      * The table <code>pg_catalog.pg_description</code>.

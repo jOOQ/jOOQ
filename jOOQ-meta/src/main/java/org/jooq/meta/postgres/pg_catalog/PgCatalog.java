@@ -15,6 +15,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgCollation;
 import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
+import org.jooq.meta.postgres.pg_catalog.tables.PgDepend;
 import org.jooq.meta.postgres.pg_catalog.tables.PgDescription;
 import org.jooq.meta.postgres.pg_catalog.tables.PgEnum;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
@@ -62,6 +63,11 @@ public class PgCatalog extends SchemaImpl {
      * The table <code>pg_catalog.pg_constraint</code>.
      */
     public final PgConstraint PG_CONSTRAINT = PgConstraint.PG_CONSTRAINT;
+
+    /**
+     * The table <code>pg_catalog.pg_depend</code>.
+     */
+    public final PgDepend PG_DEPEND = PgDepend.PG_DEPEND;
 
     /**
      * The table <code>pg_catalog.pg_description</code>.
@@ -118,12 +124,13 @@ public class PgCatalog extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
+        return Arrays.asList(
             PgAttrdef.PG_ATTRDEF,
             PgAttribute.PG_ATTRIBUTE,
             PgClass.PG_CLASS,
             PgCollation.PG_COLLATION,
             PgConstraint.PG_CONSTRAINT,
+            PgDepend.PG_DEPEND,
             PgDescription.PG_DESCRIPTION,
             PgEnum.PG_ENUM,
             PgIndex.PG_INDEX,
@@ -131,6 +138,7 @@ public class PgCatalog extends SchemaImpl {
             PgNamespace.PG_NAMESPACE,
             PgProc.PG_PROC,
             PgSequence.PG_SEQUENCE,
-            PgType.PG_TYPE);
+            PgType.PG_TYPE
+        );
     }
 }

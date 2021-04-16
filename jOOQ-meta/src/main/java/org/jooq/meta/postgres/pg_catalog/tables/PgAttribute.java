@@ -160,9 +160,12 @@ public class PgAttribute extends TableImpl<Record> {
     public final TableField<Record, String[]> ATTFDWOPTIONS = createField(DSL.name("attfdwoptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public final TableField<Record, Object> ATTMISSINGVAL = createField(DSL.name("attmissingval"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"anyarray\""), this, "");
 
     private PgAttribute(Name alias, Table<Record> aliased) {
@@ -200,7 +203,7 @@ public class PgAttribute extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return PgCatalog.PG_CATALOG;
+        return aliased() ? null : PgCatalog.PG_CATALOG;
     }
 
     @Override

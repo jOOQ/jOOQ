@@ -155,9 +155,12 @@ public class PgProc extends TableImpl<Record> {
     public final TableField<Record, String[]> PROARGNAMES = createField(DSL.name("proargnames"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public final TableField<Record, Object> PROARGDEFAULTS = createField(DSL.name("proargdefaults"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
@@ -220,7 +223,7 @@ public class PgProc extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return PgCatalog.PG_CATALOG;
+        return aliased() ? null : PgCatalog.PG_CATALOG;
     }
 
     @Override

@@ -94,7 +94,7 @@ public class PgDescription extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return PgCatalog.PG_CATALOG;
+        return aliased() ? null : PgCatalog.PG_CATALOG;
     }
 
     @Override

@@ -134,15 +134,21 @@ public class PgIndex extends TableImpl<Record> {
     public final TableField<Record, Object[]> INDOPTION = createField(DSL.name("indoption"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"int2vector\"").getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public final TableField<Record, Object> INDEXPRS = createField(DSL.name("indexprs"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public final TableField<Record, Object> INDPRED = createField(DSL.name("indpred"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     private PgIndex(Name alias, Table<Record> aliased) {
@@ -180,20 +186,29 @@ public class PgIndex extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return PgCatalog.PG_CATALOG;
+        return aliased() ? null : PgCatalog.PG_CATALOG;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_INDEX__INDEX_CLASS, Keys.PG_INDEX__TABLE_CLASS);
+        return Arrays.asList(Keys.PG_INDEX__INDEX_CLASS, Keys.PG_INDEX__TABLE_CLASS);
     }
 
+    private transient PgClass _indexClass;
+    private transient PgClass _tableClass;
+
     public PgClass indexClass() {
-        return new PgClass(this, Keys.PG_INDEX__INDEX_CLASS);
+        if (_indexClass == null)
+            _indexClass = new PgClass(this, Keys.PG_INDEX__INDEX_CLASS);
+
+        return _indexClass;
     }
 
     public PgClass tableClass() {
-        return new PgClass(this, Keys.PG_INDEX__TABLE_CLASS);
+        if (_tableClass == null)
+            _tableClass = new PgClass(this, Keys.PG_INDEX__TABLE_CLASS);
+
+        return _tableClass;
     }
 
     @Override

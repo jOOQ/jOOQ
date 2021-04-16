@@ -15,11 +15,12 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.meta.postgres.pg_catalog.tables.PgEnum;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
+import org.jooq.meta.postgres.pg_catalog.tables.PgSequence;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 
 
 /**
- * A class modelling foreign key relationships and constraints of tables in 
+ * A class modelling foreign key relationships and constraints of tables in
  * pg_catalog.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
@@ -43,5 +44,7 @@ public class Keys {
     public static final ForeignKey<Record, Record> PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE = Internal.createForeignKey(PgEnum.PG_ENUM, DSL.name("SYNTHETIC_FK_pg_enum__SYNTHETIC_PK_pg_type"), new TableField[] { PgEnum.PG_ENUM.ENUMTYPID }, Keys.SYNTHETIC_PK_PG_TYPE, new TableField[] { PgType.PG_TYPE.OID }, true);
     public static final ForeignKey<Record, Record> PG_INDEX__INDEX_CLASS = Internal.createForeignKey(PgIndex.PG_INDEX, DSL.name("INDEX_CLASS"), new TableField[] { PgIndex.PG_INDEX.INDEXRELID }, Keys.SYNTHETIC_PK_PG_CLASS, new TableField[] { PgClass.PG_CLASS.OID }, true);
     public static final ForeignKey<Record, Record> PG_INDEX__TABLE_CLASS = Internal.createForeignKey(PgIndex.PG_INDEX, DSL.name("TABLE_CLASS"), new TableField[] { PgIndex.PG_INDEX.INDRELID }, Keys.SYNTHETIC_PK_PG_CLASS, new TableField[] { PgClass.PG_CLASS.OID }, true);
+    public static final ForeignKey<Record, Record> PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_CLASS = Internal.createForeignKey(PgSequence.PG_SEQUENCE, DSL.name("SYNTHETIC_FK_pg_sequence__SYNTHETIC_PK_pg_class"), new TableField[] { PgSequence.PG_SEQUENCE.SEQRELID }, Keys.SYNTHETIC_PK_PG_CLASS, new TableField[] { PgClass.PG_CLASS.OID }, true);
+    public static final ForeignKey<Record, Record> PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_TYPE = Internal.createForeignKey(PgSequence.PG_SEQUENCE, DSL.name("SYNTHETIC_FK_pg_sequence__SYNTHETIC_PK_pg_type"), new TableField[] { PgSequence.PG_SEQUENCE.SEQTYPID }, Keys.SYNTHETIC_PK_PG_TYPE, new TableField[] { PgType.PG_TYPE.OID }, true);
     public static final ForeignKey<Record, Record> PG_TYPE__SYNTHETIC_FK_PG_TYPE__SYNTHETIC_PK_PG_NAMESPACE = Internal.createForeignKey(PgType.PG_TYPE, DSL.name("SYNTHETIC_FK_pg_type__SYNTHETIC_PK_pg_namespace"), new TableField[] { PgType.PG_TYPE.TYPNAMESPACE }, Keys.SYNTHETIC_PK_PG_NAMESPACE, new TableField[] { PgNamespace.PG_NAMESPACE.OID }, true);
 }

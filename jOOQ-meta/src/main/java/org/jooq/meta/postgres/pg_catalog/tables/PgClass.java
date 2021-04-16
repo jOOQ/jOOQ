@@ -205,9 +205,12 @@ public class PgClass extends TableImpl<Record> {
     public final TableField<Record, String[]> RELOPTIONS = createField(DSL.name("reloptions"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public final TableField<Record, Object> RELPARTBOUND = createField(DSL.name("relpartbound"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     private PgClass(Name alias, Table<Record> aliased) {
@@ -245,7 +248,7 @@ public class PgClass extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return PgCatalog.PG_CATALOG;
+        return aliased() ? null : PgCatalog.PG_CATALOG;
     }
 
     @Override
@@ -254,17 +257,17 @@ public class PgClass extends TableImpl<Record> {
     }
 
     @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_PG_CLASS);
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.asList(Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE);
     }
 
-    @Override
-    public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE);
-    }
+    private transient PgNamespace _pgNamespace;
 
     public PgNamespace pgNamespace() {
-        return new PgNamespace(this, Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE);
+        if (_pgNamespace == null)
+            _pgNamespace = new PgNamespace(this, Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE);
+
+        return _pgNamespace;
     }
 
     @Override

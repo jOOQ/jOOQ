@@ -54,7 +54,8 @@ public class FormatType extends AbstractRoutine<String> {
     }
 
     /**
-     * Set the <code>_1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
+     * Set the <code>_1</code> parameter to the function to be used with a
+     * {@link org.jooq.Select} statement
      */
     public void set__1(Field<Long> field) {
         setField(_1, field);
@@ -68,7 +69,8 @@ public class FormatType extends AbstractRoutine<String> {
     }
 
     /**
-     * Set the <code>_2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
+     * Set the <code>_2</code> parameter to the function to be used with a
+     * {@link org.jooq.Select} statement
      */
     public void set__2(Field<Integer> field) {
         setField(_2, field);

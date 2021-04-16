@@ -79,6 +79,7 @@ import static org.jooq.meta.postgres.information_schema.Tables.TABLES;
 import static org.jooq.meta.postgres.information_schema.Tables.VIEWS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CONSTRAINT;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DEPEND;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ENUM;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_INDEX;
@@ -149,6 +150,7 @@ import org.jooq.meta.hsqldb.HSQLDBDatabase;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
+import org.jooq.meta.postgres.pg_catalog.Tables;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
@@ -658,9 +660,34 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     ))
                   )
                 : noCondition())
-            .orderBy(
-                SEQUENCES.SEQUENCE_SCHEMA,
-                SEQUENCES.SEQUENCE_NAME);
+            .unionAll(is10() && getIncludeSystemSequences()
+            ?   select(
+                    inline(null, VARCHAR),
+                    PG_SEQUENCE.pgClass().pgNamespace().NSPNAME,
+                    PG_SEQUENCE.pgClass().RELNAME,
+                    PG_SEQUENCE.pgType().TYPNAME,
+
+                    // See https://github.com/postgres/postgres/blob/master/src/backend/catalog/information_schema.sql
+                    field("information_schema._pg_numeric_precision({0}, {1})", INTEGER, PG_SEQUENCE.pgType().TYPBASETYPE, PG_SEQUENCE.pgType().TYPTYPMOD),
+                    inline(0),
+                    PG_SEQUENCE.SEQSTART,
+                    PG_SEQUENCE.SEQMIN,
+                    PG_SEQUENCE.SEQMAX,
+                    PG_SEQUENCE.SEQINCREMENT,
+                    PG_SEQUENCE.SEQCYCLE,
+                    inline(null, BIGINT).as("cache"))
+                .from(PG_SEQUENCE)
+                .where(PG_SEQUENCE.pgClass().pgNamespace().NSPNAME.in(schemas))
+                .and(PG_SEQUENCE.pgClass().OID.in(
+                    select(PG_DEPEND.OBJID)
+                    .from(PG_DEPEND)
+                    .where(PG_DEPEND.DEPTYPE.eq(inline("i")))
+                    .and(PG_DEPEND.CLASSID.eq(field("'pg_class'::regclass", PG_DEPEND.CLASSID.getDataType())))
+                ))
+                // AND NOT EXISTS (SELECT 1 FROM pg_depend WHERE classid = 'pg_class'::regclass AND objid = c.oid AND deptype = 'i')
+            :   select(inline(""), inline(""), inline(""), inline(""), inline(0), inline(0), inline(0L), inline(0L), inline(0L), inline(0L), inline(false), inline(0L))
+                .where(falseCondition()))
+            .orderBy(2, 3);
     }
 
     @Override

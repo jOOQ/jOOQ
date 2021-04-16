@@ -4103,19 +4103,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return storageStep;
     }
 
-    private static final class ParseInlineConstraints {
-        final DataType<?> type;
-        final Comment     fieldComment;
-        final boolean     primary;
-        final boolean     identity;
-
-        ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity) {
-            this.type = type;
-            this.fieldComment = fieldComment;
-            this.primary = primary;
-            this.identity = identity;
-        }
-    }
+    private static final /* record */ class ParseInlineConstraints { private final DataType<?> type; private final Comment fieldComment; private final boolean primary; private final boolean identity; ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity) { this.type = type; this.fieldComment = fieldComment; this.primary = primary; this.identity = identity; } public DataType<?> type() { return type; } public Comment fieldComment() { return fieldComment; } public boolean primary() { return primary; } public boolean identity() { return identity; } @Override public boolean equals(Object o) { if (!(o instanceof ParseInlineConstraints)) return false; ParseInlineConstraints other = (ParseInlineConstraints) o; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.fieldComment, other.fieldComment)) return false; if (!java.util.Objects.equals(this.primary, other.primary)) return false; if (!java.util.Objects.equals(this.identity, other.identity)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.type, this.fieldComment, this.primary, this.identity); } @Override public String toString() { return new StringBuilder("ParseInlineConstraints[").append("type=").append(this.type).append(", fieldComment=").append(this.fieldComment).append(", primary=").append(this.primary).append(", identity=").append(this.identity).append("]").toString(); } }
 
     private final ParseInlineConstraints parseInlineConstraints(
         Name fieldName,
@@ -13345,7 +13333,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             found = resolveInTableScope(tableScope.valueIterable(), lookup.getQualifiedName(), lookup, found);
             if (found != null)
-                lookup.delegate((AbstractField) found.value);
+                lookup.delegate((AbstractField) found.value());
             else
                 retain.add(lookup);
         }
@@ -13368,11 +13356,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         for (Value<Table<?>> t : tables) {
             Value<Field<?>> f;
 
-            if (t.value instanceof JoinTable) {
+            if (t.value() instanceof JoinTable) {
                 found = resolveInTableScope(
                     asList(
-                        new Value<>(t.scopeLevel, ((JoinTable) t.value).lhs),
-                        new Value<>(t.scopeLevel, ((JoinTable) t.value).rhs)
+                        new Value<>(t.scopeLevel(), ((JoinTable) t.value()).lhs),
+                        new Value<>(t.scopeLevel(), ((JoinTable) t.value()).rhs)
                     ),
                     lookupName, lookup, found
                 );
@@ -13385,12 +13373,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 // - Test fully qualified column names vs partially qualified column names
                 Name q = lookupName.qualifier();
                 boolean x = q.qualified();
-                if (x && q.equals(t.value.getQualifiedName()) || !x && q.last().equals(t.value.getName()))
-                    if ((found = Value.of(t.scopeLevel, t.value.field(lookup.getName()))) != null)
+                if (x && q.equals(t.value().getQualifiedName()) || !x && q.last().equals(t.value().getName()))
+                    if ((found = Value.of(t.scopeLevel(), t.value().field(lookup.getName()))) != null)
                         break tableScopeLoop;
             }
-            else if ((f = Value.of(t.scopeLevel, t.value.field(lookup.getName()))) != null) {
-                if (found == null || found.scopeLevel < f.scopeLevel) {
+            else if ((f = Value.of(t.scopeLevel(), t.value().field(lookup.getName()))) != null) {
+                if (found == null || found.scopeLevel() < f.scopeLevel()) {
                     found = f;
                 }
                 else {

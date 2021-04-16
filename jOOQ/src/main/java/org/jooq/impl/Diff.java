@@ -718,17 +718,9 @@ final class Diff {
         return result.iterator();
     }
 
-    private static final class DiffResult {
-        final List<Query>           queries;
-        final Set<ForeignKey<?, ?>> droppedFks;
-
+    private static final /* record */ class DiffResult { private final List<Query> queries; private final Set<ForeignKey<?, ?>> droppedFks; DiffResult(List<Query> queries, Set<ForeignKey<?, ?>> droppedFks) { this.queries = queries; this.droppedFks = droppedFks; } public List<Query> queries() { return queries; } public Set<ForeignKey<?, ?>> droppedFks() { return droppedFks; } @Override public boolean equals(Object o) { if (!(o instanceof DiffResult)) return false; DiffResult other = (DiffResult) o; if (!java.util.Objects.equals(this.queries, other.queries)) return false; if (!java.util.Objects.equals(this.droppedFks, other.droppedFks)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.queries, this.droppedFks); }
         DiffResult() {
             this(new ArrayList<>(), new HashSet<>());
-        }
-
-        DiffResult(List<Query> queries, Set<ForeignKey<?, ?>> droppedFks) {
-            this.queries = queries;
-            this.droppedFks = droppedFks;
         }
 
         void addAll(DiffResult other) {

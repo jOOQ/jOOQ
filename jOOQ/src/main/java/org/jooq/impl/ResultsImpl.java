@@ -193,12 +193,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
         return translated;
     }
 
-    static final class ResultOrRowsImpl implements ResultOrRows {
-
-        private final Result<Record>      result;
-        private final int                 rows;
-        private final DataAccessException exception;
-
+    static final /* record */ class ResultOrRowsImpl implements ResultOrRows { private final Result<Record> result; private final int rows; private final DataAccessException exception; ResultOrRowsImpl(Result<Record> result, int rows, DataAccessException exception) { this.result = result; this.rows = rows; this.exception = exception; } public Result<Record> result() { return result; } public int rows() { return rows; } public DataAccessException exception() { return exception; } @Override public boolean equals(Object o) { if (!(o instanceof ResultOrRowsImpl)) return false; ResultOrRowsImpl other = (ResultOrRowsImpl) o; if (!java.util.Objects.equals(this.result, other.result)) return false; if (!java.util.Objects.equals(this.rows, other.rows)) return false; if (!java.util.Objects.equals(this.exception, other.exception)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.result, this.rows, this.exception); }
         ResultOrRowsImpl(Result<Record> result) {
             this(result, result != null ? result.size() : 0, null);
         }
@@ -209,63 +204,6 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
 
         ResultOrRowsImpl(DataAccessException exception) {
             this(null, 0, exception);
-        }
-
-        private ResultOrRowsImpl(Result<Record> result, int rows, DataAccessException exception) {
-            this.result = result;
-            this.rows = rows;
-            this.exception = exception;
-        }
-
-        @Override
-        public final Result<Record> result() {
-            return result;
-        }
-
-        @Override
-        public final int rows() {
-            return rows;
-        }
-
-        @Override
-        public final DataAccessException exception() {
-            return exception;
-        }
-
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int r = 1;
-            r = prime * r + ((exception == null) ? 0 : exception.hashCode());
-            r = prime * r + ((result == null) ? 0 : result.hashCode());
-            r = prime * r + rows;
-            return r;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            ResultOrRowsImpl other = (ResultOrRowsImpl) obj;
-            if (exception == null) {
-                if (other.exception != null)
-                    return false;
-            }
-            else if (!exception.equals(other.exception))
-                return false;
-            if (result == null) {
-                if (other.result != null)
-                    return false;
-            }
-            else if (!result.equals(other.result))
-                return false;
-            if (rows != other.rows)
-                return false;
-            return true;
         }
 
         @Override

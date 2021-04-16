@@ -568,6 +568,15 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>3.6.0</version>
+
+                    <!-- Required for Java 16 -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm</artifactId>
+                            <version>9.1</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -649,6 +658,15 @@
                     <configuration>
                         <testNGArtifactName>none:none</testNGArtifactName>
                     </configuration>
+
+                    <!-- Required for Java 16 -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm</artifactId>
+                            <version>9.1</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -721,7 +739,13 @@
 
 
 
+        <!-- Can't publish this on Java 17 yet. Let's see if anyone notices :)
+             Otherwise we'll remove this unpopular extension again, which keeps causing issues
         <module>jOOQ-xtend</module>
+          -->
+
+
+
 
 
 

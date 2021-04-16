@@ -5656,20 +5656,21 @@ final class Tools {
      */
     @SuppressWarnings("unchecked")
     static final <E extends Field<?>> Iterable<E> flatten(E field) {
-        // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-        return () -> {
-            Iterator<E> it = singletonList(field).iterator();
 
-            if (field.getDataType().isEmbeddable())
-                return new FlatteningIterator<E>(it) {
-                    @Override
-                    List<E> flatten(E e) {
-                        return (List<E>) Arrays.asList(embeddedFields(field));
-                    }
-                };
-            else
-                return it;
-        };
+        // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
+        Iterator<E> it1 = singletonList(field).iterator();
+
+        // [#11729] Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572873
+        Iterator<E> it2 = field.getDataType().isEmbeddable()
+            ? new FlatteningIterator<E>(it1) {
+                @Override
+                List<E> flatten(E e) {
+                    return (List<E>) Arrays.asList(embeddedFields(field));
+                }
+            }
+            : it1;
+
+        return () -> it2;
     }
 
     /**
@@ -5681,7 +5682,8 @@ final class Tools {
         final boolean removeDuplicates
     ) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-        return () -> new FlatteningIterator<E>(iterable.iterator()) {
+        // [#11729] Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572873
+        Iterator<E> it = new FlatteningIterator<E>(iterable.iterator()) {
 
 
 
@@ -5704,6 +5706,8 @@ final class Tools {
                 return Tools.flatten(e);
             }
         };
+
+        return () -> it;
     }
 
     /**
@@ -5716,7 +5720,8 @@ final class Tools {
         final boolean removeDuplicates
     ) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-        return () -> new FlatteningIterator<E>(iterable.iterator()) {
+        // [#11729] Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572873
+        Iterator<E> it = new FlatteningIterator<E>(iterable.iterator()) {
 
 
 
@@ -5743,6 +5748,8 @@ final class Tools {
                 return null;
             }
         };
+
+        return () -> it;
     }
 
     static final <T> Set<T> lazy(Set<T> set) {
@@ -5756,8 +5763,8 @@ final class Tools {
      */
     static abstract class FlatteningIterator<E> implements Iterator<E> {
         private final Iterator<E> delegate;
-        private Iterator<E> flatten;
-        private E next;
+        private Iterator<E>       flatten;
+        private E                 next;
 
         FlatteningIterator(Iterator<E> delegate) {
             this.delegate = delegate;

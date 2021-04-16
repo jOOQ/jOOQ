@@ -667,13 +667,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
     }
 
-    private static final class ConstructorCall<E> implements Callable<E> {
-        private final Constructor<? extends E> constructor;
-
-        ConstructorCall(Constructor<? extends E> constructor) {
-            this.constructor = constructor;
-        }
-
+    private static final /* record */ class ConstructorCall<E> implements Callable<E> { private final Constructor<? extends E> constructor; ConstructorCall(Constructor<? extends E> constructor) { this.constructor = constructor; } public Constructor<? extends E> constructor() { return constructor; } @Override public boolean equals(Object o) { if (!(o instanceof ConstructorCall)) return false; ConstructorCall other = (ConstructorCall) o; if (!java.util.Objects.equals(this.constructor, other.constructor)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.constructor); } @Override public String toString() { return new StringBuilder("ConstructorCall[").append("constructor=").append(this.constructor).append("]").toString(); }
         @Override
         public E call() throws Exception {
             return constructor.newInstance();

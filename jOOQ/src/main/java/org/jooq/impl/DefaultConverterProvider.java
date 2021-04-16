@@ -49,6 +49,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 
 // ...
 import org.jooq.Converter;
@@ -142,13 +143,21 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
             return Converter.ofNullable(
                 tWrapper,
                 uWrapper,
-                t -> {
-                    if (uWrapper.isInstance(t))
-                        return uWrapper.cast(t);
-                    else
-                        throw new DataTypeException("Cannot cast from " + tWrapper + " (instance type: " + t.getClass() + " to " + tWrapper);
+                new Function<T, U>() {
+                    @Override
+                    public U apply(T t) {
+                        if (uWrapper.isInstance(t))
+                            return uWrapper.cast(t);
+                        else
+                            throw new DataTypeException("Cannot cast from " + tWrapper + " (instance type: " + t.getClass() + " to " + tWrapper);
+                    }
                 },
-                u -> tWrapper.cast(u)
+                new Function<U, T>() {
+                    @Override
+                    public T apply(U u) {
+                        return tWrapper.cast(u);
+                    }
+                }
             );
         }
         else

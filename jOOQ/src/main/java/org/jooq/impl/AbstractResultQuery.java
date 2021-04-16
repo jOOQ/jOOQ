@@ -107,7 +107,6 @@ import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.R2DBC.BlockingRecordSubscription;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
 
@@ -357,7 +356,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super R> subscriber) {
-        subscriber.onSubscribe(new BlockingRecordSubscription<>(this, subscriber));
+        subscriber.onSubscribe(new R2DBC.BlockingRecordSubscription<>(this, subscriber));
     }
 
     @Override

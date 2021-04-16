@@ -446,6 +446,10 @@ IDENTITY values, and if <returnAllOnUpdatableRecord/> is active, also other valu
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether JPA annotations should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="mapRecordComponentParameterNames" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained from the {@link java.lang.Record} component names should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="mapConstructorPropertiesParameterNames" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

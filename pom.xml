@@ -650,7 +650,6 @@
                         <encoding>UTF-8</encoding>
                     </configuration>
 
-                    <!-- Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572909 -->
                     <dependencies>
                         <dependency>
                             <groupId>com.google.inject</groupId>

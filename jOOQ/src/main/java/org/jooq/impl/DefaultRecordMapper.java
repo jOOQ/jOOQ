@@ -67,6 +67,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
+// ...
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -419,6 +420,25 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 }
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // [#7324] Map immutable Kotlin classes by parameter names if kotlin-reflect is on the classpath
         if (Tools.isKotlinAvailable() && !FALSE.equals(configuration.settings().isMapConstructorParameterNamesInKotlin())) {

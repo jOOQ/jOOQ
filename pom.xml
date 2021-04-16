@@ -649,6 +649,15 @@
                     <configuration>
                         <encoding>UTF-8</encoding>
                     </configuration>
+
+                    <!-- Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572909 -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.google.inject</groupId>
+                            <artifactId>guice</artifactId>
+                            <version>5.0.1</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -739,13 +748,7 @@
 
 
 
-        <!-- Can't publish this on Java 17 yet. Let's see if anyone notices :)
-             Otherwise we'll remove this unpopular extension again, which keeps causing issues
         <module>jOOQ-xtend</module>
-          -->
-
-
-
 
 
 

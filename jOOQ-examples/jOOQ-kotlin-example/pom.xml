@@ -191,7 +191,6 @@
                     <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
                     <source>1.8</source>
                     <target>1.8</target>
-
                 </configuration>
             </plugin>
 

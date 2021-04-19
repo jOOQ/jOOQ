@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.Collections.emptyList;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -67,6 +68,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
+// ...
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -74,7 +76,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -103,6 +105,8 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This is the default implementation for <code>RecordMapper</code> types, which
@@ -300,31 +304,31 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     /**
      * The record type.
      */
-    private final Field<?>[]         fields;
-    private final RecordType<R>      rowType;
+    private final Field<?>[]               fields;
+    private final RecordType<R>            rowType;
 
     /**
      * The target type.
      */
-    private final Class<? extends E> type;
+    private final Class<? extends E>       type;
 
     /**
      * The configuration in whose context this {@link RecordMapper} operates.
      * <p>
      * This configuration can be used for caching reflection information.
      */
-    private final Configuration      configuration;
+    private final Configuration            configuration;
 
     /**
      * A delegate mapper created from type information in <code>type</code>.
      */
-    private RecordMapper<R, E>       delegate;
+    private RecordMapper<R, E>             delegate;
 
     /**
      * A set of field name prefixes that may defined the behaviour of nested
      * record mappers.
      */
-    private transient Set<String>    prefixes;
+    private transient Map<String, Integer> prefixes;
 
     /**
      * Create a new <code>DefaultRecordMapper</code>.
@@ -414,11 +418,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 ConstructorProperties properties = constructor.getAnnotation(ConstructorProperties.class);
 
                 if (properties != null) {
-                    delegate = new ImmutablePOJOMapperWithParameterNames(constructor, Arrays.asList(properties.value()), true);
+                    delegate = new ImmutablePOJOMapper(constructor, constructor.getParameterTypes(), Arrays.asList(properties.value()), true);
                     return;
                 }
             }
         }
+
+
+
 
 
 
@@ -483,7 +490,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     }
 
                     Constructor<E> javaConstructor = (Constructor<E>) accessible(this.type.getDeclaredConstructor(parameterTypes));
-                    delegate = new ImmutablePOJOMapperWithParameterNames(javaConstructor, parameterNames, true);
+                    delegate = new ImmutablePOJOMapper(javaConstructor, javaConstructor.getParameterTypes(), parameterNames, true);
                     return;
                 }
             }
@@ -508,11 +515,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         Parameter[] parameters = constructor.getParameters();
 
                         if (parameters != null && parameters.length > 0)
-                            delegate = new ImmutablePOJOMapperWithParameterNames(constructor, collectParameterNames(parameters), supportsNesting);
+                            delegate = new ImmutablePOJOMapper(constructor, parameterTypes, collectParameterNames(parameters), supportsNesting);
                     }
 
                     if (delegate == null)
-                        delegate = new ImmutablePOJOMapper(constructor, parameterTypes, supportsNesting);
+                        delegate = new ImmutablePOJOMapper(constructor, parameterTypes, emptyList(), supportsNesting);
 
                     return;
                 }
@@ -527,7 +534,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             Parameter[] parameters = constructor.getParameters();
 
             if (parameters != null && parameters.length > 0) {
-                delegate = new ImmutablePOJOMapperWithParameterNames(constructor, collectParameterNames(parameters), false);
+                delegate = new ImmutablePOJOMapper(constructor, constructor.getParameterTypes(), collectParameterNames(parameters), false);
                 return;
             }
         }
@@ -560,6 +567,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
     }
 
+    private abstract class AbstractDelegateMapper<R0 extends Record, E0> implements RecordMapper<R0, E0> {
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + " [ (" + rowType + ") -> " + type + "]";
+        }
+    }
+
     /**
      * Convert a record into an array of a given type.
      * <p>
@@ -567,7 +582,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      * may make sense to supply <code>String[]</code>, <code>Integer[]</code>
      * etc.
      */
-    private class ArrayMapper implements RecordMapper<R, E> {
+    private class ArrayMapper extends AbstractDelegateMapper<R, E> {
 
         private final E instance;
 
@@ -595,7 +610,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
     }
 
-    private class ValueTypeMapper implements RecordMapper<R, E> {
+    private class ValueTypeMapper extends AbstractDelegateMapper<R, E> {
 
         @Override
         public final E map(R record) {
@@ -612,7 +627,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      * <p>
      * This is done for types that are not instanciable
      */
-    private class ProxyMapper implements RecordMapper<R, E> {
+    private class ProxyMapper extends AbstractDelegateMapper<R, E> {
 
         private Constructor<Lookup>     constructor;
         private final MutablePOJOMapper pojomapper;
@@ -669,7 +684,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     /**
      * Convert a record into another record type.
      */
-    private class RecordToRecordMapper implements RecordMapper<R, AbstractRecord> {
+    private class RecordToRecordMapper extends AbstractDelegateMapper<R, AbstractRecord> {
 
         @Override
         public final AbstractRecord map(R record) {
@@ -699,7 +714,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      * jOOQ's understanding of a mutable POJO is a Java type that has a default
      * constructor
      */
-    private class MutablePOJOMapper implements RecordMapper<R, E> {
+    private class MutablePOJOMapper extends AbstractDelegateMapper<R, E> {
 
         private final Callable<E>                      constructor;
         private final boolean                          useAnnotations;
@@ -923,44 +938,110 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      * Convert a record into an "immutable" POJO (final fields, "matching"
      * constructor).
      */
-    private class ImmutablePOJOMapper implements RecordMapper<R, E> {
+    private class ImmutablePOJOMapper extends AbstractDelegateMapper<R, E> {
 
-        final Constructor<E>              constructor;
-        final Class<?>[]                  parameterTypes;
-        private final boolean             nested;
-        private final int[]               nonNestedIndexLookup;
-        private final NestedMappingInfo[] nestedMappingInfo;
+        final Constructor<E>                          constructor;
+        final Class<?>[]                              parameterTypes;
+        private final boolean                         nested;
+        private final NestedMappingInfo[]             nestedMappingInfo;
+        private final Integer[]                       propertyIndexes;
 
-        ImmutablePOJOMapper(Constructor<E> constructor, Class<?>[] parameterTypes, boolean supportsNesting) {
+        // For named parameter mappings where the mapping is governed by JPA annotations
+        private final List<String>                    propertyNames;
+        private final boolean                         useAnnotations;
+        private final List<java.lang.reflect.Field>[] members;
+        private final java.lang.reflect.Method[]      methods;
+
+        ImmutablePOJOMapper(Constructor<E> constructor, Class<?>[] parameterTypes, List<String> propertyNames, boolean supportsNesting) {
             int size = prefixes().size();
 
             this.constructor = accessible(constructor);
             this.parameterTypes = parameterTypes;
             this.nestedMappingInfo = new NestedMappingInfo[size];
-            this.nonNestedIndexLookup = new int[size];
+            this.propertyIndexes = new Integer[fields.length];
+            this.propertyNames = propertyNames;
+            this.useAnnotations = hasColumnAnnotations(configuration, type);
+            this.members = new List[fields.length];
+            this.methods = new Method[fields.length];
 
-            int i = -1;
+            if (propertyNames.isEmpty()) {
+                if (!supportsNesting) {
+                    for (int i = 0; i < fields.length; i++)
+                        propertyIndexes[i] = i;
+                }
+                else {
+                    for (int i = 0; i < fields.length; i++) {
+                        Field<?> field = fields[i];
+                        String name = field.getName();
+                        int dot = name.indexOf('.');
+                        propertyIndexes[i] = prefixes().get(dot > -1 ? name.substring(0, dot) : name);
+                    }
+                }
+            }
+            else {
+
+                fieldLoop:
+                for (int i = 0; i < fields.length; i++) {
+                    Field<?> field = fields[i];
+                    String name = field.getName();
+                    String nameLC = StringUtils.toCamelCaseLC(name);
+
+                    // Annotations are available and present
+                    if (useAnnotations) {
+                        members[i] = getAnnotatedMembers(configuration, type, name, false);
+                        methods[i] = getAnnotatedGetter(configuration, type, name, true);
+                    }
+
+                    // No annotations are present
+                    else {
+                        members[i] = getMatchingMembers(configuration, type, name, false);
+                        methods[i] = getMatchingGetter(configuration, type, name, true);
+                    }
+
+                    // [#3911] Liberal interpretation of the @ConstructorProperties specs:
+                    // We also accept properties that don't have a matching getter or member
+                    for (int j = 0; j < propertyNames.size(); j++) {
+                        if (name.equals(propertyNames.get(j)) || nameLC.equals(propertyNames.get(j))) {
+                            propertyIndexes[i] = j;
+                            continue fieldLoop;
+                        }
+                    }
+
+                    for (int j = 0; j < propertyNames.size(); j++) {
+                        if (name.startsWith(propertyNames.get(j) + ".")) {
+                            propertyIndexes[i] = j;
+                            continue fieldLoop;
+                        }
+                    }
+                }
+            }
+
             boolean hasNestedFields = false;
             List<Field<?>>[] nestedMappedFields = new List[size];
 
             if (supportsNesting) {
 
                 prefixLoop:
-                for (String prefix : prefixes()) {
-                    ++i;
+                for (Entry<String, Integer> entry : prefixes().entrySet()) {
+                    String prefix = entry.getKey();
+                    int i = entry.getValue();
+
+                    if (nestedMappingInfo[i] == null)
+                        nestedMappingInfo[i] = new NestedMappingInfo();
 
                     for (int j = 0; j < fields.length; j++) {
                         if (fields[j].getName().equals(prefix)) {
-                            nonNestedIndexLookup[i] = j;
+                            nestedMappingInfo[i].indexLookup.add(j);
                             continue prefixLoop;
                         }
-                        else if (fields[j].getName().startsWith(prefix + ".")) {
+                    }
+
+                    for (int j = 0; j < fields.length; j++) {
+                        if (fields[j].getName().startsWith(prefix + ".")) {
                             hasNestedFields = true;
 
                             if (nestedMappedFields[i] == null)
                                 nestedMappedFields[i] = new ArrayList<>();
-                            if (nestedMappingInfo[i] == null)
-                                nestedMappingInfo[i] = new NestedMappingInfo();
 
                             nestedMappedFields[i].add(field(
                                 name(fields[j].getName().substring(prefix.length() + 1)),
@@ -976,7 +1057,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         nestedMappingInfo[i].recordDelegate = newRecord(true, recordType(nestedMappingInfo[i].row.size()), nestedMappingInfo[i].row, configuration);
                         nestedMappingInfo[i].mappers.add(configuration
                             .recordMapperProvider()
-                            .provide((RecordType<AbstractRecord>) nestedMappingInfo[i].row.fields, parameterTypes[i]));
+                            .provide((RecordType<AbstractRecord>) nestedMappingInfo[i].row.fields, parameterTypes[propertyIndexes[i] != null ? propertyIndexes[i] : i]));
                     }
                 }
             }
@@ -1002,109 +1083,63 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 converted[i] = Reflect.initValue(parameterTypes[i]);
 
             for (int i = 0; i < record.size(); i++)
-                set(record, converted, i);
+                set(record, i, converted, propertyIndexes[i]);
 
             return converted;
         }
 
-        private final Object[] mapNested(final R record) {
-            Object[] converted = new Object[prefixes().size()];
+        final void set(Record from, int fromIndex, Object[] to, Integer toIndex) {
 
-            for (int i = 0; i < converted.length; i++) {
-                if (nestedMappingInfo[i] == null) {
-                    converted[i] = record.get(nonNestedIndexLookup[i], parameterTypes[i]);
-                }
-                else {
-                    final List<Integer> indexLookup = nestedMappingInfo[i].indexLookup;
-
-                    converted[i] = nestedMappingInfo[i].mappers.get(0).map(nestedMappingInfo[i].recordDelegate.operate(rec -> {
-                        for (int j = 0; j < indexLookup.size(); j++)
-                            rec.set(j, record.get(indexLookup.get(j)));
-
-                        return rec;
-                    }));
-                }
-            }
-
-            return converted;
-        }
-
-        void set(Record from, Object[] to, int index) {
-            to[index] = from.get(index, parameterTypes[index]);
-        }
-    }
-
-    /**
-     * Create an immutable POJO given a constructor and its associated JavaBeans
-     * {@link ConstructorProperties}
-     */
-    private class ImmutablePOJOMapperWithParameterNames extends ImmutablePOJOMapper {
-
-        private final List<String>                    propertyNames;
-        private final boolean                         useAnnotations;
-        private final List<java.lang.reflect.Field>[] members;
-        private final java.lang.reflect.Method[]      methods;
-        private final Integer[]                       propertyIndexes;
-
-        ImmutablePOJOMapperWithParameterNames(Constructor<E> constructor, List<String> propertyNames, boolean supportsNesting) {
-            super(constructor, constructor.getParameterTypes(), supportsNesting);
-
-            this.propertyNames = propertyNames;
-            this.useAnnotations = hasColumnAnnotations(configuration, type);
-            this.members = new List[fields.length];
-            this.methods = new Method[fields.length];
-            this.propertyIndexes = new Integer[fields.length];
-
-            for (int i = 0; i < fields.length; i++) {
-                Field<?> field = fields[i];
-                String name = field.getName();
-                String nameLC = StringUtils.toCamelCaseLC(name);
-
-
-                // Annotations are available and present
-                if (useAnnotations) {
-                    members[i] = getAnnotatedMembers(configuration, type, name, false);
-                    methods[i] = getAnnotatedGetter(configuration, type, name, true);
-                }
-
-                // No annotations are present
-                else {
-                    members[i] = getMatchingMembers(configuration, type, name, false);
-                    methods[i] = getMatchingGetter(configuration, type, name, true);
-                }
-
-                // [#3911] Liberal interpretation of the @ConstructorProperties specs:
-                // We also accept properties that don't have a matching getter or member
-                for (int j = 0; j < propertyNames.size(); j++) {
-                    if (name.equals(propertyNames.get(j)) || nameLC.equals(propertyNames.get(j))) {
-                        propertyIndexes[i] = j;
-                        break;
-                    }
-                }
-            }
-        }
-
-        @Override
-        void set(Record from, Object[] to, int i) {
-            if (propertyIndexes[i] != null) {
-                to[propertyIndexes[i]] = from.get(i, parameterTypes[propertyIndexes[i]]);
+            // TODO: This logic could be applicable to mapNested() as well?
+            if (toIndex != null) {
+                to[toIndex] = from.get(fromIndex, parameterTypes[toIndex]);
             }
             else {
-                for (java.lang.reflect.Field member : members[i]) {
+                for (java.lang.reflect.Field member : members[fromIndex]) {
                     int index = propertyNames.indexOf(member.getName());
 
                     if (index >= 0)
-                        to[index] = from.get(i, member.getType());
+                        to[index] = from.get(fromIndex, member.getType());
                 }
 
-                if (methods[i] != null) {
-                    String name = getPropertyName(methods[i].getName());
+                if (methods[fromIndex] != null) {
+                    String name = getPropertyName(methods[fromIndex].getName());
                     int index = propertyNames.indexOf(name);
 
                     if (index >= 0)
-                        to[index] = from.get(i, methods[i].getReturnType());
+                        to[index] = from.get(fromIndex, methods[fromIndex].getReturnType());
                 }
             }
+        }
+
+        private final Object[] mapNested(final R record) {
+            Object[] converted = new Object[parameterTypes.length];
+
+            for (int i = 0; i < nestedMappingInfo.length; i++) {
+                NestedMappingInfo info = nestedMappingInfo[i];
+                List<Integer> indexLookup = info.indexLookup;
+                Integer j = indexLookup.get(0);
+                Integer k = propertyIndexes[j];
+
+                if (k != null) {
+                    if (info.row == null)
+                        converted[k] = record.get(j, parameterTypes[k]);
+                    else
+                        converted[k] = info.mappers.get(0).map(info.recordDelegate.operate(rec -> {
+                            for (int x = 0; x < indexLookup.size(); x++)
+                                rec.set(x, record.get(indexLookup.get(x)));
+
+                            return rec;
+                        }));
+                }
+            }
+
+            return converted;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + " [ (" + rowType + ") -> " + constructor + "]";
         }
     }
 
@@ -1118,14 +1153,15 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         return attachable;
     }
 
-    private final Set<String> prefixes() {
+    private final Map<String, Integer> prefixes() {
         if (prefixes == null) {
-            prefixes = new LinkedHashSet<>();
+            prefixes = new LinkedHashMap<>();
+            int[] i = { 0 };
 
             for (Field<?> field : fields) {
                 String name = field.getName();
                 int dot = name.indexOf('.');
-                prefixes.add(dot > -1 ? name.substring(0, dot) : name);
+                prefixes.computeIfAbsent(dot > -1 ? name.substring(0, dot) : name, k -> i[0]++);
             }
         }
 
@@ -1142,5 +1178,15 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             mappers = new ArrayList<>();
             indexLookup = new ArrayList<>();
         }
+
+        @Override
+        public String toString() {
+            return "NestedMappingInfo " + indexLookup + "; (" + row + ")";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
     }
 }

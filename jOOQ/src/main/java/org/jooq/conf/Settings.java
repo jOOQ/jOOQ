@@ -198,8 +198,8 @@ public class Settings
     protected Boolean returnRecordToPojo = true;
     @XmlElement(defaultValue = "true")
     protected Boolean mapJPAAnnotations = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean mapRecordComponentParameterNames = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean mapRecordComponentParameterNames = false;
     @XmlElement(defaultValue = "true")
     protected Boolean mapConstructorPropertiesParameterNames = true;
     @XmlElement(defaultValue = "false")

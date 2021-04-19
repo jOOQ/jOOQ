@@ -568,7 +568,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateImmutablePojos() {
-        return generateImmutablePojos;
+        return generateImmutablePojos || generatePojosAsJavaRecordClasses();
     }
 
     @Override

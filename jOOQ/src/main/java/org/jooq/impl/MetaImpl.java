@@ -484,7 +484,7 @@ final class MetaImpl extends AbstractMeta {
             ukCache = new LinkedHashMap<>();
 
             dsl().resultQuery(
-                    "" +
+                    ("" +
                     "select m.tbl_name, m.sql\n" +
                     "from sqlite_master as m\n" +
                     "where m.type = 'table'\n" +
@@ -494,7 +494,7 @@ final class MetaImpl extends AbstractMeta {
                     "  where il.origin = 'u'\n" +
                     ")\n" +
                     "order by m.tbl_name\n" +
-                    ""
+                    "")
                   )
                  .fetchMap(field("tbl_name", VARCHAR), field("sql", VARCHAR))
                  .forEach((table, sql) -> {

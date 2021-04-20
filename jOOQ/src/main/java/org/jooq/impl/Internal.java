@@ -407,6 +407,8 @@ public final class Internal {
         return new Expression<>(DIVIDE, true, lhs, nullSafe(rhs, lhs.getDataType()));
     }
 
+
+
     /**
      * Create a {@link Subscriber} from a set of lambdas.
      * <p>
@@ -440,4 +442,6 @@ public final class Internal {
             }
         };
     }
+
+
 }

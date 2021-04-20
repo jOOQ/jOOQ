@@ -81,8 +81,8 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
     @Nullable
     @Override
     public final <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
-        Class<T> tWrapper = (Class<T>) wrapper(tType);
-        Class<U> uWrapper = (Class<U>) wrapper(uType);
+        final Class<T> tWrapper = (Class<T>) wrapper(tType);
+        final Class<U> uWrapper = (Class<U>) wrapper(uType);
 
         // TODO: [#10071] These checks are required to be able to return null in
         //                case this implementation cannot produce a Converter.
@@ -140,25 +140,26 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
         //          This is especially important if we don't know the data type
         //          (SQLDataType.OTHER)
         else if (tWrapper.isAssignableFrom(uWrapper)) {
-            return Converter.ofNullable(
-                tWrapper,
-                uWrapper,
-                new Function<T, U>() {
-                    @Override
-                    public U apply(T t) {
-                        if (uWrapper.isInstance(t))
-                            return uWrapper.cast(t);
-                        else
-                            throw new DataTypeException("Cannot cast from " + tWrapper + " (instance type: " + t.getClass() + " to " + tWrapper);
-                    }
-                },
-                new Function<U, T>() {
-                    @Override
-                    public T apply(U u) {
-                        return tWrapper.cast(u);
-                    }
+            return new AbstractConverter<T, U>(tWrapper, uWrapper) {
+
+                /**
+                 * Generated UID.
+                 */
+                private static final long serialVersionUID = 8011099590775678430L;
+
+                @Override
+                public U from(T t) {
+                    if (uWrapper.isInstance(t))
+                        return uWrapper.cast(t);
+                    else
+                        throw new DataTypeException("Cannot cast from " + tWrapper + " (instance type: " + t.getClass() + " to " + tWrapper);
                 }
-            );
+
+                @Override
+                public T to(U u) {
+                    return tWrapper.cast(u);
+                }
+            };
         }
         else
             return null;

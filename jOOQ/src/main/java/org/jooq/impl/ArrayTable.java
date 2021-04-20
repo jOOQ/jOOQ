@@ -82,6 +82,8 @@ final class ArrayTable extends AbstractTable<Record> {
     }
 
     ArrayTable(Field<?> array, Name alias) {
+
+        // [#7863] TODO: Possibly resolve field aliases from UDT type
         this(array, alias, new Name[] { N_COLUMN_VALUE });
     }
 
@@ -112,9 +114,8 @@ final class ArrayTable extends AbstractTable<Record> {
 
 
         // Is this case possible?
-        else {
+        else
             arrayType = Object.class;
-        }
 
         this.array = array;
         this.alias = alias;
@@ -125,13 +126,13 @@ final class ArrayTable extends AbstractTable<Record> {
     private static final FieldsImpl<Record> init(Class<?> arrayType, Name alias) {
         List<Field<?>> result = new ArrayList<>();
 
-        // [#1114] VARRAY/TABLE of OBJECT have more than one field
-        if (UDTRecord.class.isAssignableFrom(arrayType)) {
+        // [#1114] [#7863] VARRAY/TABLE of OBJECT have more than one field
+        if (Record.class.isAssignableFrom(arrayType)) {
             try {
-                UDTRecord<?> record = (UDTRecord<?>) arrayType.newInstance();
-                for (Field<?> f : record.fields()) {
+                Record record = (Record) arrayType.getConstructor().newInstance();
+
+                for (Field<?> f : record.fields())
                     result.add(DSL.field(name(alias.last(), f.getName()), f.getDataType()));
-                }
             }
             catch (Exception e) {
                 throw new DataTypeException("Bad UDT Type : " + arrayType, e);
@@ -139,9 +140,8 @@ final class ArrayTable extends AbstractTable<Record> {
         }
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
-        else {
+        else
             result.add(DSL.field(name(alias.last(), "COLUMN_VALUE"), DSL.getDataType(arrayType)));
-        }
 
         return new FieldsImpl<>(result);
     }

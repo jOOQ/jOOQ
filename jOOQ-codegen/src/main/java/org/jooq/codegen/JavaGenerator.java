@@ -42,6 +42,7 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SortOrder.DESC;
 import static org.jooq.codegen.GenerationUtil.convertToIdentifier;
@@ -104,6 +105,7 @@ import org.jooq.Parameter;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortOrder;
@@ -191,6 +193,11 @@ import org.jooq.tools.reflect.ReflectException;
 public class JavaGenerator extends AbstractGenerator {
 
     private static final JooqLogger               log                          = JooqLogger.getLogger(JavaGenerator.class);
+
+    /**
+     * Dialects that can reference tables in contexts where UDTs are expected.
+     */
+    private static final Set<SQLDialect>          SUPPORT_TABLE_AS_UDT         = SQLDialect.supportedBy(POSTGRES);
 
     /**
      * The Javadoc to be used for private constructors
@@ -8574,9 +8581,9 @@ public class JavaGenerator extends AbstractGenerator {
             type = getStrategy().getFullJavaClassName(db.getUDT(schema, u), udtMode);
         }
 
-        // [#3942] PostgreSQL treats UDTs and table types in similar ways
+        // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
-        else if (db.getDialect().family() == POSTGRES && db.getTable(schema, u) != null) {
+        else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, u) != null) {
             type = getStrategy().getFullJavaClassName(db.getTable(schema, u), udtMode);
         }
 
@@ -8642,9 +8649,9 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)));
             sb.append(".getDataType()");
         }
-        // [#3942] PostgreSQL treats UDTs and table types in similar ways
+        // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
-        else if (db.getDialect().family() == POSTGRES && db.getTable(schema, u) != null) {
+        else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, u) != null) {
             sb.append(getStrategy().getFullJavaIdentifier(db.getTable(schema, u)));
             sb.append(".getDataType()");
         }

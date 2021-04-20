@@ -4552,31 +4552,29 @@ public class JavaGenerator extends AbstractGenerator {
         if (!generateImmutablePojos() && !generatePojosAsJavaRecordClasses())
             generatePojoDefaultConstructor(tableUdtOrEmbeddable, out);
 
-        if (!kotlin) {
+        if (!kotlin && !generatePojosAsJavaRecordClasses()) {
 
             // [#1363] [#7055] copy constructor
             generatePojoCopyConstructor(tableUdtOrEmbeddable, out);
 
             // Multi-constructor
-            if (!generatePojosAsJavaRecordClasses()) {
-                generatePojoMultiConstructor(tableUdtOrEmbeddable, out);
+            generatePojoMultiConstructor(tableUdtOrEmbeddable, out);
 
-                List<? extends TypedElementDefinition<?>> elements = getTypedElements(tableUdtOrEmbeddable);
-                for (int i = 0; i < elements.size(); i++) {
-                    TypedElementDefinition<?> column = elements.get(i);
+            List<? extends TypedElementDefinition<?>> elements = getTypedElements(tableUdtOrEmbeddable);
+            for (int i = 0; i < elements.size(); i++) {
+                TypedElementDefinition<?> column = elements.get(i);
 
+                if (tableUdtOrEmbeddable instanceof TableDefinition)
+                    generatePojoGetter(column, i, out);
+                else
+                    generateUDTPojoGetter(column, i, out);
+
+                // Setter
+                if (!generateImmutablePojos())
                     if (tableUdtOrEmbeddable instanceof TableDefinition)
-                        generatePojoGetter(column, i, out);
+                        generatePojoSetter(column, i, out);
                     else
-                        generateUDTPojoGetter(column, i, out);
-
-                    // Setter
-                    if (!generateImmutablePojos())
-                        if (tableUdtOrEmbeddable instanceof TableDefinition)
-                            generatePojoSetter(column, i, out);
-                        else
-                            generateUDTPojoSetter(column, i, out);
-                }
+                        generateUDTPojoSetter(column, i, out);
             }
         }
 

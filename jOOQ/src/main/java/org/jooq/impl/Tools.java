@@ -3344,7 +3344,7 @@ final class Tools {
         /**
          * Run an operation using a guard.
          */
-        static final void run(Guard guard, Runnable unguardedOperation, Runnable guardedOperation) {
+        static final void run(Guard guard, final Runnable unguardedOperation, final Runnable guardedOperation) {
             run(guard, new GuardedOperation<Void>() {
                 @Override
                 public Void unguarded() {

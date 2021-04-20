@@ -11,6 +11,7 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
+import org.jooq.meta.firebird.rdb.tables.Rdb$functions;
 import org.jooq.meta.firebird.rdb.tables.Rdb$generators;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indices;
@@ -24,8 +25,8 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 
 
 /**
- * A class modelling foreign key relationships and constraints of tables in 
- * the default schema.
+ * A class modelling foreign key relationships and constraints of tables in the
+ * default schema.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
@@ -35,6 +36,8 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<Record> RDB$INDEX_2 = Internal.createUniqueKey(Rdb$fields.RDB$FIELDS, DSL.name("RDB$INDEX_2"), new TableField[] { Rdb$fields.RDB$FIELDS.RDB$FIELD_NAME }, true);
+    public static final UniqueKey<Record> RDB$INDEX_53 = Internal.createUniqueKey(Rdb$functions.RDB$FUNCTIONS, DSL.name("RDB$INDEX_53"), new TableField[] { Rdb$functions.RDB$FUNCTIONS.RDB$FUNCTION_ID }, true);
+    public static final UniqueKey<Record> RDB$INDEX_9 = Internal.createUniqueKey(Rdb$functions.RDB$FUNCTIONS, DSL.name("RDB$INDEX_9"), new TableField[] { Rdb$functions.RDB$FUNCTIONS.RDB$PACKAGE_NAME, Rdb$functions.RDB$FUNCTIONS.RDB$FUNCTION_NAME }, true);
     public static final UniqueKey<Record> RDB$INDEX_11 = Internal.createUniqueKey(Rdb$generators.RDB$GENERATORS, DSL.name("RDB$INDEX_11"), new TableField[] { Rdb$generators.RDB$GENERATORS.RDB$GENERATOR_NAME }, true);
     public static final UniqueKey<Record> RDB$INDEX_46 = Internal.createUniqueKey(Rdb$generators.RDB$GENERATORS, DSL.name("RDB$INDEX_46"), new TableField[] { Rdb$generators.RDB$GENERATORS.RDB$GENERATOR_ID }, true);
     public static final UniqueKey<Record> RDB$INDEX_5 = Internal.createUniqueKey(Rdb$indices.RDB$INDICES, DSL.name("RDB$INDEX_5"), new TableField[] { Rdb$indices.RDB$INDICES.RDB$INDEX_NAME }, true);

@@ -24,7 +24,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$checkConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1433691037;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>RDB$CHECK_CONSTRAINTS</code>
@@ -84,7 +84,7 @@ public class Rdb$checkConstraints extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return DefaultSchema.DEFAULT_SCHEMA;
+        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override

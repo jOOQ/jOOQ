@@ -28,7 +28,7 @@ import org.jooq.meta.firebird.rdb.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$indexSegments extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1285289609;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>RDB$INDEX_SEGMENTS</code>
@@ -98,16 +98,21 @@ public class Rdb$indexSegments extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return DefaultSchema.DEFAULT_SCHEMA;
+        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5);
+        return Arrays.asList(Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5);
     }
 
+    private transient Rdb$indices _rdb$indices;
+
     public Rdb$indices rdb$indices() {
-        return new Rdb$indices(this, Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5);
+        if (_rdb$indices == null)
+            _rdb$indices = new Rdb$indices(this, Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5);
+
+        return _rdb$indices;
     }
 
     @Override

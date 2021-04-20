@@ -6,6 +6,8 @@ package org.jooq.meta.firebird.rdb;
 
 import org.jooq.meta.firebird.rdb.tables.Rdb$checkConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
+import org.jooq.meta.firebird.rdb.tables.Rdb$functionArguments;
+import org.jooq.meta.firebird.rdb.tables.Rdb$functions;
 import org.jooq.meta.firebird.rdb.tables.Rdb$generators;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indices;
@@ -33,6 +35,16 @@ public class Tables {
      * The table <code>RDB$FIELDS</code>.
      */
     public static final Rdb$fields RDB$FIELDS = Rdb$fields.RDB$FIELDS;
+
+    /**
+     * The table <code>RDB$FUNCTION_ARGUMENTS</code>.
+     */
+    public static final Rdb$functionArguments RDB$FUNCTION_ARGUMENTS = Rdb$functionArguments.RDB$FUNCTION_ARGUMENTS;
+
+    /**
+     * The table <code>RDB$FUNCTIONS</code>.
+     */
+    public static final Rdb$functions RDB$FUNCTIONS = Rdb$functions.RDB$FUNCTIONS;
 
     /**
      * The table <code>RDB$GENERATORS</code>.

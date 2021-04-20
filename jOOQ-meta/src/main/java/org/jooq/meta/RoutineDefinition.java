@@ -48,12 +48,6 @@ import java.util.List;
 public interface RoutineDefinition extends Definition {
 
     /**
-     * @return The routine's package. <code>null</code> if the routine is not in
-     *         a package
-     */
-    PackageDefinition getPackage();
-
-    /**
      * A list of IN or INOUT parameter column definitions
      */
     List<ParameterDefinition> getInParameters();

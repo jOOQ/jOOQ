@@ -9,7 +9,6 @@ import org.jooq.Schema;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.LazySchema;
-import org.jooq.impl.LazySupplier;
 import org.jooq.impl.SQLDataType;
 
 
@@ -29,11 +28,6 @@ public class Domains {
     );
 
     private static final Schema schema() {
-        return new LazySchema(DSL.name(""), DSL.comment(""), new LazySupplier<Schema>() {
-            @Override
-            public Schema get() {
-                return DefaultSchema.DEFAULT_SCHEMA;
-            }
-        });
+        return new LazySchema(DSL.name(""), DSL.comment(""), () -> DefaultSchema.DEFAULT_SCHEMA);
     }
 }

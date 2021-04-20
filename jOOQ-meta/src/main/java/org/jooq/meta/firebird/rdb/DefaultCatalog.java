@@ -17,7 +17,7 @@ import org.jooq.impl.CatalogImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = -454478492;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>DEFAULT_CATALOG</code>
@@ -38,7 +38,8 @@ public class DefaultCatalog extends CatalogImpl {
 
     @Override
     public final List<Schema> getSchemas() {
-        return Arrays.<Schema>asList(
-            DefaultSchema.DEFAULT_SCHEMA);
+        return Arrays.asList(
+            DefaultSchema.DEFAULT_SCHEMA
+        );
     }
 }

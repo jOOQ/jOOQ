@@ -29,7 +29,7 @@ import org.jooq.meta.firebird.rdb.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$generators extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1552014164;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>RDB$GENERATORS</code>
@@ -119,12 +119,12 @@ public class Rdb$generators extends TableImpl<Record> {
 
     @Override
     public Schema getSchema() {
-        return DefaultSchema.DEFAULT_SCHEMA;
+        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.RDB$INDEX_11, Keys.RDB$INDEX_46);
+    public List<UniqueKey<Record>> getUniqueKeys() {
+        return Arrays.asList(Keys.RDB$INDEX_11, Keys.RDB$INDEX_46);
     }
 
     @Override

@@ -395,6 +395,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                     else {
                     }
 
+                case FIREBIRD:
                 case H2:
 
 

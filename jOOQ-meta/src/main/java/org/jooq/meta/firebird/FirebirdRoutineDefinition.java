@@ -37,10 +37,12 @@
  */
 package org.jooq.meta.firebird;
 
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FIELDS;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$FUNCTION_ARGUMENTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$PROCEDURE_PARAMETERS;
 
 import java.sql.SQLException;
@@ -55,7 +57,9 @@ import org.jooq.meta.InOutDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
+import org.jooq.meta.firebird.rdb.tables.Rdb$functionArguments;
 import org.jooq.meta.firebird.rdb.tables.Rdb$procedureParameters;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
@@ -63,32 +67,70 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$procedureParameters;
 public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
 
     public FirebirdRoutineDefinition(SchemaDefinition schema, String name) {
+        this(schema, name, null, null, null);
+    }
+
+    public FirebirdRoutineDefinition(SchemaDefinition schema, String name, String dataType, Number precision, Number scale) {
         super(schema, null, name, null, null, false);
+
+        if (!StringUtils.isBlank(dataType)) {
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                dataType,
+                precision,
+                precision,
+                scale,
+                null,
+                (String) null
+            );
+
+            this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
+        }
     }
 
     @Override
     protected void init0() throws SQLException {
         Rdb$procedureParameters p = RDB$PROCEDURE_PARAMETERS.as("p");
+        Rdb$functionArguments a = RDB$FUNCTION_ARGUMENTS.as("a");
         Rdb$fields f = RDB$FIELDS.as("f");
         int i = 0;
 
-        for (Record record : create()
-                .select(
-                    p.RDB$PARAMETER_NUMBER,
-                    p.RDB$PARAMETER_TYPE,
-                    p.RDB$PARAMETER_NAME.trim().as(p.RDB$PARAMETER_NAME),
-                    FIELD_TYPE(f).as("FIELD_TYPE"),
-                    CHARACTER_LENGTH(f).as("CHAR_LEN"),
-                    f.RDB$FIELD_PRECISION,
-                    FIELD_SCALE(f).as("FIELD_SCALE"),
-                    DSL.bitOr(p.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(p.RDB$NULL_FLAG),
-                    p.RDB$DEFAULT_SOURCE)
-                .from(p)
-                .leftOuterJoin(f).on(p.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
-                .where(p.RDB$PROCEDURE_NAME.eq(getName()))
-                .orderBy(
-                    p.RDB$PARAMETER_TYPE.desc(),
-                    p.RDB$PARAMETER_NUMBER.asc())) {
+        for (Record record : returnValue == null
+                ? create()
+                    .select(
+                        p.RDB$PARAMETER_NUMBER,
+                        p.RDB$PARAMETER_TYPE,
+                        p.RDB$PARAMETER_NAME.trim().as(p.RDB$PARAMETER_NAME),
+                        FIELD_TYPE(f).as("FIELD_TYPE"),
+                        CHARACTER_LENGTH(f).as("CHAR_LEN"),
+                        f.RDB$FIELD_PRECISION,
+                        FIELD_SCALE(f).as("FIELD_SCALE"),
+                        DSL.bitOr(p.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(p.RDB$NULL_FLAG),
+                        p.RDB$DEFAULT_SOURCE)
+                    .from(p)
+                    .leftOuterJoin(f).on(p.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
+                    .where(p.RDB$PROCEDURE_NAME.eq(getName()))
+                    .orderBy(
+                        p.RDB$PARAMETER_TYPE.desc(),
+                        p.RDB$PARAMETER_NUMBER.asc())
+                : create()
+                    .select(
+                        a.RDB$ARGUMENT_POSITION.as(p.RDB$PARAMETER_NUMBER),
+                        inline(0).as(p.RDB$PARAMETER_TYPE),
+                        a.RDB$ARGUMENT_NAME.trim().as(p.RDB$PARAMETER_NAME),
+                        FIELD_TYPE(f).as("FIELD_TYPE"),
+                        CHARACTER_LENGTH(f).as("CHAR_LEN"),
+                        f.RDB$FIELD_PRECISION,
+                        FIELD_SCALE(f).as("FIELD_SCALE"),
+                        DSL.bitOr(a.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(p.RDB$NULL_FLAG),
+                        a.RDB$DEFAULT_SOURCE)
+                    .from(a)
+                    .leftOuterJoin(f).on(a.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
+                    .where(a.RDB$FUNCTION_NAME.eq(getName()))
+                    .and(a.RDB$ARGUMENT_POSITION.gt(inline((short) 0)))
+                    .orderBy(a.RDB$ARGUMENT_POSITION)
+            ) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),

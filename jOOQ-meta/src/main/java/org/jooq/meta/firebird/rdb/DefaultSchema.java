@@ -13,6 +13,8 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.firebird.rdb.tables.Rdb$checkConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
+import org.jooq.meta.firebird.rdb.tables.Rdb$functionArguments;
+import org.jooq.meta.firebird.rdb.tables.Rdb$functions;
 import org.jooq.meta.firebird.rdb.tables.Rdb$generators;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indices;
@@ -31,7 +33,7 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1452293140;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>DEFAULT_SCHEMA</code>
@@ -47,6 +49,16 @@ public class DefaultSchema extends SchemaImpl {
      * The table <code>RDB$FIELDS</code>.
      */
     public final Rdb$fields RDB$FIELDS = Rdb$fields.RDB$FIELDS;
+
+    /**
+     * The table <code>RDB$FUNCTION_ARGUMENTS</code>.
+     */
+    public final Rdb$functionArguments RDB$FUNCTION_ARGUMENTS = Rdb$functionArguments.RDB$FUNCTION_ARGUMENTS;
+
+    /**
+     * The table <code>RDB$FUNCTIONS</code>.
+     */
+    public final Rdb$functions RDB$FUNCTIONS = Rdb$functions.RDB$FUNCTIONS;
 
     /**
      * The table <code>RDB$GENERATORS</code>.
@@ -113,15 +125,18 @@ public class DefaultSchema extends SchemaImpl {
 
     @Override
     public final List<Domain<?>> getDomains() {
-        return Arrays.<Domain<?>>asList(
-            Domains.RDB$PROCEDURE_PARAMETERS);
+        return Arrays.asList(
+            Domains.RDB$PROCEDURE_PARAMETERS
+        );
     }
 
     @Override
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
+        return Arrays.asList(
             Rdb$checkConstraints.RDB$CHECK_CONSTRAINTS,
             Rdb$fields.RDB$FIELDS,
+            Rdb$functionArguments.RDB$FUNCTION_ARGUMENTS,
+            Rdb$functions.RDB$FUNCTIONS,
             Rdb$generators.RDB$GENERATORS,
             Rdb$indexSegments.RDB$INDEX_SEGMENTS,
             Rdb$indices.RDB$INDICES,
@@ -131,6 +146,7 @@ public class DefaultSchema extends SchemaImpl {
             Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS,
             Rdb$relationFields.RDB$RELATION_FIELDS,
             Rdb$relations.RDB$RELATIONS,
-            Rdb$triggers.RDB$TRIGGERS);
+            Rdb$triggers.RDB$TRIGGERS
+        );
     }
 }

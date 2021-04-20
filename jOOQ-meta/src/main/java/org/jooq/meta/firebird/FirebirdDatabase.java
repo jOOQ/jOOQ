@@ -40,6 +40,7 @@ package org.jooq.meta.firebird;
 import static java.util.stream.Collectors.mapping;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.choose;
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
@@ -52,16 +53,22 @@ import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FIELDS;
-import static org.jooq.meta.firebird.rdb.Tables.RDB$GENERATORS;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$FUNCTIONS;
+import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
+import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
+import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
+import static org.jooq.meta.firebird.rdb.Tables.*;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDICES;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$PROCEDURES;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$REF_CONSTRAINTS;
-import static org.jooq.meta.firebird.rdb.Tables.*;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATIONS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATION_CONSTRAINTS;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATION_FIELDS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$TRIGGERS;
 
 import java.sql.SQLException;
@@ -84,6 +91,7 @@ import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -108,8 +116,11 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.firebird.rdb.tables.Rdb$checkConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
+import org.jooq.meta.firebird.rdb.tables.Rdb$functionArguments;
+import org.jooq.meta.firebird.rdb.tables.Rdb$functions;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indices;
+import org.jooq.meta.firebird.rdb.tables.Rdb$procedures;
 import org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
@@ -472,15 +483,49 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        Rdb$procedures p = RDB$PROCEDURES.as("p");
+        Rdb$functions fu = RDB$FUNCTIONS.as("fu");
+        Rdb$functionArguments fa = RDB$FUNCTION_ARGUMENTS.as("fa");
+        Rdb$fields fi = RDB$FIELDS.as("fi");
+
         return
-        create().select(RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim())
-                .from(RDB$PROCEDURES)
+        create().select(
+                    p.RDB$PROCEDURE_NAME.trim(),
+                    inline(null, VARCHAR).as("t"),
+                    inline(null, SMALLINT).as("p"),
+                    inline(null, SMALLINT).as("s"))
+                .from(p)
 
                 // "executable" procedures
-                .where(RDB$PROCEDURES.RDB$PROCEDURE_TYPE.eq((short) 2))
+                .where(p.RDB$PROCEDURE_TYPE.eq((short) 2))
+                .union(is30()
+                    ? select(
+                        fu.RDB$FUNCTION_NAME.trim(),
+                        FIELD_TYPE(fi).as("t"),
+                        coalesce(CHARACTER_LENGTH(fi), fi.RDB$FIELD_PRECISION).as("p"),
+                        FIELD_SCALE(fi).as("s"))
+                      .from(fu)
+
+                      // [#11784] Procedures and functions live in different
+                      // namespaces in Firebird. For now, such "overloads" are
+                      // not yet supported.
+                      .leftAntiJoin(p)
+                          .on(fu.RDB$FUNCTION_NAME.eq(p.RDB$PROCEDURE_NAME))
+                      .join(fa)
+                          .on(fu.RDB$FUNCTION_NAME.eq(fa.RDB$FUNCTION_NAME))
+                      .leftOuterJoin(fi)
+                          .on(fa.RDB$FIELD_SOURCE.eq(fi.RDB$FIELD_NAME))
+                      .where(fa.RDB$ARGUMENT_POSITION.eq(inline((short) 0)))
+                    : select(inline(""), inline(""), inline((short) 0), inline((short) 0)).where(falseCondition()))
                 .orderBy(1)
                 .collect(mapping(
-                    r -> new FirebirdRoutineDefinition(getSchemata().get(0), r.get(0, String.class)),
+                    r -> new FirebirdRoutineDefinition(
+                        getSchemata().get(0),
+                        r.get(0, String.class),
+                        r.get(1, String.class),
+                        r.get(2, Integer.class),
+                        r.get(3, Integer.class)
+                    ),
                     Collectors.<RoutineDefinition>toList()
                 ));
     }

@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 /**
  * UDT definition.
  * <p>
@@ -49,33 +46,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends Fields, Qualified {
-
-    /**
-     * Get the UDT package.
-     */
-    @Nullable
-    Package getPackage();
-
-    /**
-     * @return The record type produced by this table.
-     */
-    @NotNull
-    Class<R> getRecordType();
-
-    /**
-     * Create a new {@link Record} of this UDT's type.
-     *
-     * @see DSLContext#newRecord(UDT)
-     */
-    @NotNull
-    R newRecord();
-
-    /**
-     * The UDT's data type as known to the database.
-     */
-    @NotNull
-    DataType<R> getDataType();
+public interface UDT<R extends UDTRecord<R>> extends RecordQualifier<R> {
 
     /**
      * Whether this data type can be used from SQL statements.

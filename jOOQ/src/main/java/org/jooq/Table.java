@@ -123,7 +123,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends TableLike<R>, Qualified {
+public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R> {
 
     /**
      * Get the table type.
@@ -142,27 +142,6 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
      */
     @NotNull
     RecordType<R> recordType();
-
-    /**
-     * The record type produced by this table.
-     */
-    @NotNull
-    Class<? extends R> getRecordType();
-
-    /**
-     * The table's record type as a UDT data type, in case the underlying
-     * database supports table records as UDT records.
-     */
-    @NotNull
-    DataType<R> getDataType();
-
-    /**
-     * Create a new {@link Record} of this table's type.
-     *
-     * @see DSLContext#newRecord(Table)
-     */
-    @NotNull
-    R newRecord();
 
     /**
      * Retrieve the table's <code>IDENTITY</code> information, if available.

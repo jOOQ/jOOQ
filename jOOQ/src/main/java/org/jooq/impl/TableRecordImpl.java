@@ -51,9 +51,7 @@ import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.fieldsArray;
 import static org.jooq.impl.Tools.indexOrFail;
-import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_RETURNING_CLAUSE;
 
@@ -65,7 +63,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jooq.Configuration;
-import org.jooq.Converter;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -73,7 +70,6 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
-import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
@@ -91,7 +87,7 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord implements TableRecord<R> {
+public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualifiedRecord<R> implements TableRecord<R> {
 
     /**
      * Generated UID
@@ -100,45 +96,13 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     private static final JooqLogger      log                    = JooqLogger.getLogger(TableRecordImpl.class);
     private static final Set<SQLDialect> REFRESH_GENERATED_KEYS = SQLDialect.supportedBy(DERBY, H2, MARIADB, MYSQL);
 
-    private final Table<R>               table;
-
     public TableRecordImpl(Table<R> table) {
-        super((AbstractRow) table.fieldsRow());
-
-        this.table = table;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final <T> R with(Field<T> field, T value) {
-        return (R) super.with(field, value);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
-        return (R) super.with(field, value, converter);
+        super(table);
     }
 
     @Override
     public final Table<R> getTable() {
-        return table;
-    }
-
-    /*
-     * Subclasses may override this method
-     */
-    @Override
-    public Row fieldsRow() {
-        return fields;
-    }
-
-    /*
-     * Subclasses may override this method
-     */
-    @Override
-    public Row valuesRow() {
-        return row0(fieldsArray(intoArray(), fields.fields.fields()));
+        return (Table<R>) getQualifier();
     }
 
     @SuppressWarnings("unchecked")

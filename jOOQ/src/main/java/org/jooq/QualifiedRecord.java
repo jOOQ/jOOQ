@@ -37,20 +37,29 @@
  */
 package org.jooq;
 
+import java.sql.SQLData;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
- * An object holding data of a UDT
+ * A record that has a {@link RecordQualifier} (a {@link UDTRecord} or a
+ * {@link TableRecord}).
  *
- * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDTRecord<R extends UDTRecord<R>> extends QualifiedRecord<R> {
+public interface QualifiedRecord<R extends QualifiedRecord<R>> extends Record, SQLData {
 
     /**
-     * The UDT from which this record was read
+     * Get the {@link UDT} or {@link Table} reference.
      */
     @NotNull
-    UDT<R> getUDT();
+    RecordQualifier<R> getQualifier();
 
+    @NotNull
+    @Override
+    <T> R with(Field<T> field, T value);
+
+    @NotNull
+    @Override
+    <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

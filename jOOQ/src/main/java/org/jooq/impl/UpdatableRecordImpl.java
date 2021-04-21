@@ -429,7 +429,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // [#3359] The "fetched" flag must be set to false to enforce INSERT statements on
         // subsequent store() calls - when Settings.updatablePrimaryKeys is set.
-        return (R) Tools.newRecord(false, getTable(), configuration())
+        return Tools.newRecord(false, getTable(), configuration())
                     .operate(copy -> {
 
                         // Copy all fields. This marks them all as isChanged, which is important
@@ -440,7 +440,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                             if (!key.contains(field))
                                 copy.set((Field) field, get(field));
 
-                        return (R) copy;
+                        return copy;
                     });
     }
 

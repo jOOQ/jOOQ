@@ -51,7 +51,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface TableRecord<R extends TableRecord<R>> extends Record {
+public interface TableRecord<R extends TableRecord<R>> extends QualifiedRecord<R> {
 
     /**
      * The table from which this record was read.
@@ -126,12 +126,4 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
     @NotNull
     @Support
     <O extends UpdatableRecord<O>> Table<O> parent(ForeignKey<R, O> key);
-
-    @NotNull
-    @Override
-    <T> R with(Field<T> field, T value);
-
-    @NotNull
-    @Override
-    <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

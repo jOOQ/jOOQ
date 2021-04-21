@@ -37,20 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DefaultExecuteContext.localConfiguration;
-import static org.jooq.impl.DefaultExecuteContext.localData;
-import static org.jooq.impl.Tools.fieldsArray;
-import static org.jooq.impl.Tools.row0;
-
-import java.sql.SQLException;
-import java.sql.SQLInput;
-import java.sql.SQLOutput;
-import java.util.Map;
-
-import org.jooq.Configuration;
-import org.jooq.Converter;
-import org.jooq.Field;
-import org.jooq.Row;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 
@@ -62,88 +48,20 @@ import org.jooq.UDTRecord;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implements UDTRecord<R> {
+public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractQualifiedRecord<R> implements UDTRecord<R> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 5671315498175872799L;
-    private final UDT<R>      udt;
 
     public UDTRecordImpl(UDT<R> udt) {
-        super((AbstractRow) udt.fieldsRow());
-
-        this.udt = udt;
+        super(udt);
     }
 
     @Override
     public final UDT<R> getUDT() {
-        return udt;
-    }
-
-    /*
-     * Subclasses may override this method
-     */
-    @Override
-    public Row fieldsRow() {
-        return fields;
-    }
-
-    /*
-     * Subclasses may override this method
-     */
-    @Override
-    public Row valuesRow() {
-        return row0(fieldsArray(intoArray(), fields.fields.fields()));
-    }
-
-    @Override
-    public final String getSQLTypeName() throws SQLException {
-
-        // [#1693] This needs to return the fully qualified SQL type name, in
-        // case the connected user is not the owner of the UDT
-        Configuration configuration = localConfiguration();
-        return Tools.getMappedUDTName(configuration, this);
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
-    public final void readSQL(SQLInput stream, String typeName) throws SQLException {
-        Configuration configuration = localConfiguration();
-        Map<Object, Object> data = localData();
-        Field<?>[] f = getUDT().fields();
-
-        for (int i = 0; i < f.length; i++) {
-            Field field = f[i];
-            DefaultBindingGetSQLInputContext out = new DefaultBindingGetSQLInputContext(configuration, data, stream);
-            field.getBinding().get(out);
-            set(i, field, out.value());
-        }
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
-    public final void writeSQL(SQLOutput stream) throws SQLException {
-        Configuration configuration = localConfiguration();
-        Map<Object, Object> data = localData();
-        Field<?>[] f = getUDT().fields();
-
-        for (int i = 0; i < f.length; i++) {
-            Field field = f[i];
-            field.getBinding().set(new DefaultBindingSetSQLOutputContext(configuration, data, stream, get(i)));
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final <T> R with(Field<T> field, T value) {
-        return (R) super.with(field, value);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
-        return (R) super.with(field, value, converter);
+        return (UDT<R>) getQualifier();
     }
 
     @Override

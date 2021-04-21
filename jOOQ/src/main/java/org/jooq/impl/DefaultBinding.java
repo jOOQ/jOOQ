@@ -194,6 +194,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Param;
 // ...
+import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
@@ -505,11 +506,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     @SuppressWarnings("unchecked")
     static final Map<String, Class<?>> typeMap(Class<?> type, Configuration configuration, Map<String, Class<?>> result) {
         try {
-            if (UDTRecord.class.isAssignableFrom(type)) {
-                Class<UDTRecord<?>> t = (Class<UDTRecord<?>>) type;
+            if (QualifiedRecord.class.isAssignableFrom(type)) {
+                Class<QualifiedRecord<?>> t = (Class<QualifiedRecord<?>>) type;
                 result.put(getMappedUDTName(configuration, t), t);
-                UDTRecord<?> r = t.newInstance();
-                for (Field<?> field : r.getUDT().fields())
+                QualifiedRecord<?> r = t.getConstructor().newInstance();
+                for (Field<?> field : r.getQualifier().fields())
                     typeMap(field.getType(), configuration, result);
             }
 

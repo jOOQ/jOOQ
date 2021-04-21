@@ -257,10 +257,12 @@ import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
 import org.jooq.QualifiedAsterisk;
+import org.jooq.QualifiedRecord;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.RecordQualifier;
 import org.jooq.RecordType;
 import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
@@ -911,38 +913,30 @@ final class Tools {
     }
 
     /**
-     * Create a new record
+     * Create a new record.
      */
     static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, AbstractRow fields) {
         return newRecord(fetched, type, fields, null);
     }
 
     /**
-     * Create a new record
+     * Create a new {@link Table} or {@link UDT} record.
      */
-    @SuppressWarnings("unchecked")
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Table<R> type, Configuration configuration) {
-        return (RecordDelegate<R>) newRecord(fetched, type.getRecordType(), (AbstractRow) type.fieldsRow(), configuration);
-    }
-
-    /**
-     * Create a new UDT record
-     */
-    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(boolean fetched, UDT<R> type) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordQualifier<R> type) {
         return newRecord(fetched, type, null);
     }
 
     /**
-     * Create a new UDT record
+     * Create a new {@link Table} or {@link UDT} record.
      */
-    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(boolean fetched, UDT<R> type, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordQualifier<R> type, Configuration configuration) {
         return newRecord(fetched, type.getRecordType(), (AbstractRow) type.fieldsRow(), configuration);
     }
 
     /**
      * Create a new record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, AbstractRow fields, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<? extends R> type, AbstractRow fields, Configuration configuration) {
         return newRecord(fetched, recordFactory(type, fields), configuration);
     }
 
@@ -1031,7 +1025,7 @@ final class Tools {
      * Create a new record factory.
      */
     @SuppressWarnings({ "unchecked" })
-    static final <R extends Record> Supplier<R> recordFactory(final Class<R> type, final AbstractRow row) {
+    static final <R extends Record> Supplier<R> recordFactory(Class<? extends R> type, AbstractRow row) {
 
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
         if (type == AbstractRecord.class || type == Record.class || InternalRecord.class.isAssignableFrom(type)) {
@@ -1072,7 +1066,7 @@ final class Tools {
             try {
 
                 // [#919] Allow for accessing non-public constructors
-                final Constructor<R> constructor = Reflect.accessible(type.getDeclaredConstructor());
+                final Constructor<? extends R> constructor = Reflect.accessible(type.getDeclaredConstructor());
 
                 return () -> {
                     try {
@@ -2947,7 +2941,6 @@ final class Tools {
     /**
      * Map a {@link Catalog} according to the configured {@link org.jooq.SchemaMapping}
      */
-    @SuppressWarnings("deprecation")
     static final Catalog getMappedCatalog(Configuration configuration, Catalog catalog) {
         if (configuration != null) {
             org.jooq.SchemaMapping mapping = configuration.schemaMapping();
@@ -2962,7 +2955,6 @@ final class Tools {
     /**
      * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
      */
-    @SuppressWarnings("deprecation")
     static final Schema getMappedSchema(Configuration configuration, Schema schema) {
         if (configuration != null) {
             org.jooq.SchemaMapping mapping = configuration.schemaMapping();
@@ -2977,7 +2969,6 @@ final class Tools {
     /**
      * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
      */
-    @SuppressWarnings("deprecation")
     static final <R extends Record> Table<R> getMappedTable(Configuration configuration, Table<R> table) {
         if (configuration != null) {
             org.jooq.SchemaMapping mapping = configuration.schemaMapping();
@@ -2990,18 +2981,20 @@ final class Tools {
     }
 
     /**
-     * Map an {@link ArrayRecord} according to the configured {@link org.jooq.SchemaMapping}
+     * Map an {@link UDTRecord} according to the configured
+     * {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("unchecked")
-    static final String getMappedUDTName(Configuration configuration, Class<? extends UDTRecord<?>> type) {
-        return getMappedUDTName(configuration, Tools.newRecord(false, (Class<UDTRecord<?>>) type).operate(null));
+    static final String getMappedUDTName(Configuration configuration, Class<? extends QualifiedRecord<?>> type) {
+        return getMappedUDTName(configuration, Tools.newRecord(false, (Class<QualifiedRecord<?>>) type).operate(null));
     }
 
     /**
-     * Map an {@link ArrayRecord} according to the configured {@link org.jooq.SchemaMapping}
+     * Map an {@link UDTRecord} according to the configured
+     * {@link org.jooq.SchemaMapping}
      */
-    static final String getMappedUDTName(Configuration configuration, UDTRecord<?> record) {
-        UDT<?> udt = record.getUDT();
+    static final String getMappedUDTName(Configuration configuration, QualifiedRecord<?> record) {
+        RecordQualifier<?> udt = record.getQualifier();
         Schema mapped = getMappedSchema(configuration, udt.getSchema());
         StringBuilder sb = new StringBuilder();
 
@@ -3013,7 +3006,12 @@ final class Tools {
 
 
 
-        sb.append(record.getUDT().getName());
+        sb.append(record.getQualifier().getName());
+
+
+
+
+
         return sb.toString();
     }
 

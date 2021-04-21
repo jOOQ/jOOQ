@@ -90,6 +90,7 @@ import org.jooq.Index;
 import org.jooq.JoinType;
 // ...
 import org.jooq.Name;
+import org.jooq.Package;
 // ...
 // ...
 // ...
@@ -467,6 +468,11 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final Catalog getCatalog() {
         return getSchema() == null ? null : getSchema().getCatalog();
+    }
+
+    @Override
+    public final Package getPackage() {
+        return null;
     }
 
     @Override

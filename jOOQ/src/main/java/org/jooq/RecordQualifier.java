@@ -38,19 +38,42 @@
 package org.jooq;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 
 /**
- * An object holding data of a UDT
+ * A {@link UDT} or {@link Table}.
  *
- * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDTRecord<R extends UDTRecord<R>> extends QualifiedRecord<R> {
+public interface RecordQualifier<R extends Record> extends Qualified, Fields {
 
     /**
-     * The UDT from which this record was read
+     * Get the UDT package if this is a {@link UDT}, or <code>null</code> if it
+     * is not a UDT, or if it is a schema level UDT defined outside of a
+     * package.
+     */
+    @Nullable
+    Package getPackage();
+
+    /**
+     * The record type produced by this {@link UDT} or {@link Table}.
      */
     @NotNull
-    UDT<R> getUDT();
+    Class<? extends R> getRecordType();
+
+    /**
+     * The {@link UDT}'s or {@link Table}'s data type as known to the database.
+     */
+    @NotNull
+    DataType<R> getDataType();
+
+    /**
+     * Create a new {@link Record} of this {@link UDT}'s or {@link Table}'s type.
+     *
+     * @see DSLContext#newRecord(Table)
+     */
+    @NotNull
+    R newRecord();
 
 }

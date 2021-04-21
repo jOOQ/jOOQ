@@ -509,7 +509,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (QualifiedRecord.class.isAssignableFrom(type)) {
                 Class<QualifiedRecord<?>> t = (Class<QualifiedRecord<?>>) type;
                 result.put(getMappedUDTName(configuration, t), t);
-                QualifiedRecord<?> r = t.getConstructor().newInstance();
+                QualifiedRecord<?> r = t.getDeclaredConstructor().newInstance();
                 for (Field<?> field : r.getQualifier().fields())
                     typeMap(field.getType(), configuration, result);
             }
@@ -3531,8 +3531,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, Record value) throws SQLException {
-            if (value instanceof UDTRecord)
-                ctx.output().writeObject((UDTRecord<?>) value);
+            if (value instanceof QualifiedRecord)
+                ctx.output().writeObject((QualifiedRecord<?>) value);
             else
                 throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }

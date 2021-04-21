@@ -84,9 +84,9 @@ import org.jooq.JSONB;
 import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
+import org.jooq.QualifiedRecord;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.tools.Convert;
 import org.jooq.types.Interval;
@@ -374,7 +374,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
         else if (EnumType.class.isAssignableFrom(tType))
             return Types.VARCHAR;
-        else if (UDTRecord.class.isAssignableFrom(tType))
+        else if (QualifiedRecord.class.isAssignableFrom(tType))
             return Types.STRUCT;
         else if (Result.class.isAssignableFrom(tType)) {
             switch (configuration.family()) {
@@ -648,7 +648,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public final boolean isUDT() {
-        return UDTRecord.class.isAssignableFrom(tType0());
+        return QualifiedRecord.class.isAssignableFrom(tType0());
     }
 
     @Override

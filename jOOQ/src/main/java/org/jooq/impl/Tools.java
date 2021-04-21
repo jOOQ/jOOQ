@@ -2981,7 +2981,7 @@ final class Tools {
     }
 
     /**
-     * Map an {@link UDTRecord} according to the configured
+     * Map an {@link QualifiedRecord} according to the configured
      * {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("unchecked")
@@ -2990,7 +2990,7 @@ final class Tools {
     }
 
     /**
-     * Map an {@link UDTRecord} according to the configured
+     * Map an {@link QualifiedRecord} according to the configured
      * {@link org.jooq.SchemaMapping}
      */
     static final String getMappedUDTName(Configuration configuration, QualifiedRecord<?> record) {
@@ -5615,7 +5615,7 @@ final class Tools {
 
     private static final EmbeddableRecord<?> newInstance(Class<? extends EmbeddableRecord<?>> type) {
         try {
-            return type.getConstructor().newInstance();
+            return type.getDeclaredConstructor().newInstance();
         }
         catch (Exception e) {
             throw new MappingException("Cannot create EmbeddableRecord type", e);

@@ -92,10 +92,10 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.IdentityConverter;
@@ -197,7 +197,7 @@ public final class Convert {
         try {
             Class<?> klass = Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
 
-            jsonMapper = klass.getConstructor().newInstance();
+            jsonMapper = klass.getDeclaredConstructor().newInstance();
             jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
             log.debug("Jackson is available");
         }
@@ -207,7 +207,7 @@ public final class Convert {
             try {
                 Class<?> klass = Class.forName("com.google.gson.Gson");
 
-                jsonMapper = klass.getConstructor().newInstance();
+                jsonMapper = klass.getDeclaredConstructor().newInstance();
                 jsonReadMethod = klass.getMethod("fromJson", String.class, Class.class);
                 log.debug("Gson is available");
             }
@@ -1092,9 +1092,9 @@ public final class Convert {
                 else if (Struct.class.isAssignableFrom(fromClass)) {
                     Struct struct = (Struct) from;
 
-                    if (UDTRecord.class.isAssignableFrom(toClass)) {
+                    if (QualifiedRecord.class.isAssignableFrom(toClass)) {
                         try {
-                            UDTRecord<?> record = ((UDTRecord<?>) toClass.newInstance());
+                            QualifiedRecord<?> record = ((QualifiedRecord<?>) toClass.getDeclaredConstructor().newInstance());
                             record.from(struct.getAttributes());
                             return (U) record;
                         }

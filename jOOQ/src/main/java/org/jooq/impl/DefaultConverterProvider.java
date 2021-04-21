@@ -56,8 +56,8 @@ import org.jooq.ConverterProvider;
 import org.jooq.EnumType;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.QualifiedRecord;
 import org.jooq.Record;
-import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.Convert;
@@ -112,7 +112,7 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
             || isXML(tWrapper)
 
             || Record.class.isAssignableFrom(tWrapper)
-            || Struct.class.isAssignableFrom(tWrapper) && UDTRecord.class.isAssignableFrom(uWrapper)
+            || Struct.class.isAssignableFrom(tWrapper) && QualifiedRecord.class.isAssignableFrom(uWrapper)
         ) {
             return new AbstractConverter<T, U>(tType, uType) {
 

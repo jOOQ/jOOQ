@@ -292,6 +292,7 @@ import org.jooq.Parameter;
 import org.jooq.PlainSQL;
 import org.jooq.Privilege;
 // ...
+import org.jooq.QualifiedRecord;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -26608,10 +26609,9 @@ public class DSL {
     public static <T> Param<T> val(Object value, DataType<T> type) {
 
         // Advanced data types have dedicated constant types
-        if (value instanceof UDTRecord) {
-            return new UDTConstant((UDTRecord) value);
+        if (value instanceof QualifiedRecord) {
+            return new QualifiedRecordConstant((QualifiedRecord<?>) value);
         }
-
 
 
 

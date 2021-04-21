@@ -54,9 +54,8 @@ import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.ParamMode;
-import org.jooq.UDTRecord;
+import org.jooq.QualifiedRecord;
 import org.jooq.conf.ParamType;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -106,8 +105,8 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
              ? paramName
 
              // [#3707] Protect value.toString call for certain jOOQ types.
-             : value instanceof UDTRecord
-             ? ((UDTRecord<?>) value).getUDT().getName()
+             : value instanceof QualifiedRecord
+             ? ((QualifiedRecord<?>) value).getQualifier().getName()
 
 
 

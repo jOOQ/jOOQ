@@ -45,20 +45,20 @@ import static org.jooq.impl.Keywords.K_ROW;
 import org.jooq.BindContext;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.QualifiedRecord;
 import org.jooq.RenderContext;
-import org.jooq.UDTRecord;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
  */
-final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
+final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends AbstractParam<R> {
 
     private static final long serialVersionUID = 6807729087019209084L;
 
-    UDTConstant(R value) {
-        super(value, value.getUDT().getDataType());
+    QualifiedRecordConstant(R value) {
+        super(value, value.getQualifier().getDataType());
     }
 
     @Override
@@ -136,7 +136,7 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                 break;
 
             default: {
-                ctx.visit(value.getUDT());
+                ctx.visit(value.getQualifier());
                 break;
             }
         }

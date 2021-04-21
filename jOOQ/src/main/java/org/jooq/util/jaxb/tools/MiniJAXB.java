@@ -263,7 +263,7 @@ public final class MiniJAXB {
             }
             else if (a != null) {
                 @SuppressWarnings("unchecked")
-                XmlAdapter<Object, Object> adapter = a.value().getConstructor().newInstance();
+                XmlAdapter<Object, Object> adapter = a.value().getDeclaredConstructor().newInstance();
                 Reflect.on(result).set(childName, adapter.unmarshal(childElement.getTextContent().trim()));
             }
             else {
@@ -438,7 +438,7 @@ public final class MiniJAXB {
         // We're assuming that XJC generated objects are all in the same package
         Package pkg = klass.getPackage();
         try {
-            T defaults = klass.getConstructor().newInstance();
+            T defaults = klass.getDeclaredConstructor().newInstance();
 
             for (Method setter : klass.getMethods()) {
                 if (setter.getName().startsWith("set")) {

@@ -76,9 +76,8 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Nullability;
+import org.jooq.QualifiedRecord;
 import org.jooq.SQLDialect;
-import org.jooq.TableRecord;
-import org.jooq.UDTRecord;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.UByte;
@@ -691,12 +690,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
                 // jOOQ data types are handled here
                 try {
-                    if (UDTRecord.class.isAssignableFrom(type))
-                        return (DataType<T>) ((UDTRecord<?>) type.newInstance()).getUDT().getDataType();
 
                     // [#7174] PostgreSQL table records can be function argument types
-                    else if (TableRecord.class.isAssignableFrom(type))
-                        return (DataType<T>) ((TableRecord<?>) type.newInstance()).getTable().getDataType();
+                    if (QualifiedRecord.class.isAssignableFrom(type))
+                        return (DataType<T>) ((QualifiedRecord<?>) type.getDeclaredConstructor().newInstance()).getQualifier().getDataType();
 
 
 

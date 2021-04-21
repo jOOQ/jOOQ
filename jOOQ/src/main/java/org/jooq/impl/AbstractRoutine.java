@@ -121,8 +121,10 @@ import org.jooq.Package;
 import org.jooq.Param;
 import org.jooq.Parameter;
 // ...
+import org.jooq.QualifiedRecord;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Results;
@@ -132,7 +134,6 @@ import org.jooq.Schema;
 import org.jooq.Statement;
 import org.jooq.UDT;
 import org.jooq.UDTField;
-import org.jooq.UDTRecord;
 import org.jooq.XMLFormat;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
@@ -1096,7 +1097,6 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
-
     private final void toSQLAssign(RenderContext context) {
 
 
@@ -1443,6 +1443,16 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -129,7 +129,7 @@ final class ArrayTable extends AbstractTable<Record> {
         // [#1114] [#7863] VARRAY/TABLE of OBJECT have more than one field
         if (Record.class.isAssignableFrom(arrayType)) {
             try {
-                Record record = (Record) arrayType.getConstructor().newInstance();
+                Record record = (Record) arrayType.getDeclaredConstructor().newInstance();
 
                 for (Field<?> f : record.fields())
                     result.add(DSL.field(name(alias.last(), f.getName()), f.getDataType()));

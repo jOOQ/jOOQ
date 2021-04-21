@@ -144,7 +144,7 @@ enum ScopeMarker {
             }
 
             // Top level CTE are inserted before all other CTEs
-            else
+            else if (!Tools.isRendersSeparator(cte))
                 ctx.sql(',');
 
             ctx.formatSeparator().sql("");

@@ -2027,6 +2027,17 @@ final class Tools {
         return result;
     }
 
+    static final <T> T last(Collection<T> collection) {
+        if (collection.isEmpty())
+            return null;
+        else if (collection instanceof List)
+            return ((List<T>) collection).get(collection.size() - 1);
+
+        T last = null;
+        for (Iterator<T> it = collection.iterator(); it.hasNext(); last = it.next());
+        return last;
+    }
+
     /**
      * Reverse an array.
      */
@@ -3125,6 +3136,10 @@ final class Tools {
 
     static final boolean isSimple(QueryPart part) {
         return part instanceof SimpleQueryPart && ((SimpleQueryPart) part).isSimple();
+    }
+
+    static final boolean isRendersSeparator(QueryPart part) {
+        return part instanceof SeparatedQueryPart && ((SeparatedQueryPart) part).rendersSeparator();
     }
 
     static final boolean isPossiblyNullable(Field<?> f) {

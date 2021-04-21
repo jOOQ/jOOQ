@@ -39,6 +39,8 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.Tools.isRendersSeparator;
+import static org.jooq.impl.Tools.last;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.ArrayList;
@@ -53,7 +55,6 @@ import java.util.function.Function;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-import org.jooq.Statement;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like
@@ -61,7 +62,7 @@ import org.jooq.Statement;
  *
  * @author Lukas Eder
  */
-class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements Collection<T>, SimpleQueryPart {
+class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements Collection<T>, SimpleQueryPart, SeparatedQueryPart {
 
     private static final long        serialVersionUID = -2936922742534009564L;
     final Collection<T>              wrapped;
@@ -107,6 +108,14 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     }
 
     @Override
+    public boolean rendersSeparator() {
+        if (isEmpty())
+            return false;
+        else
+            return isRendersSeparator(last(wrapped));
+    }
+
+    @Override
     public boolean rendersContent(Context<?> ctx) {
         return !isEmpty();
     }
@@ -148,38 +157,45 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         else {
             int j = 0;
             int k = 0;
+            T prev = null;
+            
             for (T part : this) {
-                if (!rendersContent.get(j++))
-                    continue;
+                try {
+                    if (!rendersContent.get(j++))
+                        continue;
 
-                if (mapper != null)
-                    part = mapper.apply(part);
+                    if (mapper != null)
+                        part = mapper.apply(part);
 
-                if (k++ > 0) {
+                    if (k++ > 0) {
 
-                    // [#3607] Procedures and functions are not separated by comma
-                    if (!(part instanceof Statement))
-                        ctx.sql(separator);
+                        // [#3607] Procedures and functions are not separated by comma
+                        if (!(prev instanceof SeparatedQueryPart && ((SeparatedQueryPart) prev).rendersSeparator()))
+                            ctx.sql(separator);
 
-                    if (format)
-                        ctx.formatSeparator();
+                        if (format)
+                            ctx.formatSeparator();
+                        else
+                            ctx.sql(' ');
+                    }
+                    else if (indent)
+                        ctx.formatNewLine();
+
+                    if (indent) {
+                        T t = part;
+
+                        ctx.data(
+                            DATA_LIST_ALREADY_INDENTED,
+                            t instanceof QueryPartCollectionView && ((QueryPartCollectionView<?>) t).size() > 1,
+                            c -> c.visit(t)
+                        );
+                    }
                     else
-                        ctx.sql(' ');
+                        acceptElement(ctx, part);
                 }
-                else if (indent)
-                    ctx.formatNewLine();
-
-                if (indent) {
-                    T t = part;
-
-                    ctx.data(
-                        DATA_LIST_ALREADY_INDENTED,
-                        t instanceof QueryPartCollectionView && ((QueryPartCollectionView<?>) t).size() > 1,
-                        c -> c.visit(t)
-                    );
+                finally {
+                    prev = part;
                 }
-                else
-                    acceptElement(ctx, part);
             }
         }
 

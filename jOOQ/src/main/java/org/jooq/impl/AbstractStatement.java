@@ -42,7 +42,7 @@ import org.jooq.Statement;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractStatement extends AbstractQueryPart implements Statement {
+abstract class AbstractStatement extends AbstractQueryPart implements Statement, SeparatedQueryPart {
 
     /**
      * Generated UID

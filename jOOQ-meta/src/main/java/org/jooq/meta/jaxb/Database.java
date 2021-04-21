@@ -91,6 +91,8 @@ public class Database implements Serializable, XMLAppendable
     protected Boolean includeSystemCheckConstraints = false;
     @XmlElement(defaultValue = "false")
     protected Boolean includeSystemSequences = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean includeSystemUDTs = false;
     @XmlElement(defaultValue = "true")
     protected Boolean includeInvisibleColumns = true;
     @XmlElement(defaultValue = "")
@@ -915,6 +917,30 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeSystemSequences(Boolean value) {
         this.includeSystemSequences = value;
+    }
+
+    /**
+     * This flag indicates whether system generated UDTs should be included in output produced by this database
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeSystemUDTs() {
+        return includeSystemUDTs;
+    }
+
+    /**
+     * Sets the value of the includeSystemUDTs property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeSystemUDTs(Boolean value) {
+        this.includeSystemUDTs = value;
     }
 
     /**
@@ -1959,6 +1985,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withIncludeSystemUDTs(Boolean value) {
+        setIncludeSystemUDTs(value);
+        return this;
+    }
+
     public Database withIncludeInvisibleColumns(Boolean value) {
         setIncludeInvisibleColumns(value);
         return this;
@@ -2452,6 +2483,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includeSystemIndexes", includeSystemIndexes);
         builder.append("includeSystemCheckConstraints", includeSystemCheckConstraints);
         builder.append("includeSystemSequences", includeSystemSequences);
+        builder.append("includeSystemUDTs", includeSystemUDTs);
         builder.append("includeInvisibleColumns", includeInvisibleColumns);
         builder.append("recordVersionFields", recordVersionFields);
         builder.append("recordTimestampFields", recordTimestampFields);
@@ -2748,6 +2780,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeSystemSequences.equals(other.includeSystemSequences)) {
+                return false;
+            }
+        }
+        if (includeSystemUDTs == null) {
+            if (other.includeSystemUDTs!= null) {
+                return false;
+            }
+        } else {
+            if (!includeSystemUDTs.equals(other.includeSystemUDTs)) {
                 return false;
             }
         }
@@ -3100,6 +3141,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includeSystemIndexes == null)? 0 :includeSystemIndexes.hashCode()));
         result = ((prime*result)+((includeSystemCheckConstraints == null)? 0 :includeSystemCheckConstraints.hashCode()));
         result = ((prime*result)+((includeSystemSequences == null)? 0 :includeSystemSequences.hashCode()));
+        result = ((prime*result)+((includeSystemUDTs == null)? 0 :includeSystemUDTs.hashCode()));
         result = ((prime*result)+((includeInvisibleColumns == null)? 0 :includeInvisibleColumns.hashCode()));
         result = ((prime*result)+((recordVersionFields == null)? 0 :recordVersionFields.hashCode()));
         result = ((prime*result)+((recordTimestampFields == null)? 0 :recordTimestampFields.hashCode()));

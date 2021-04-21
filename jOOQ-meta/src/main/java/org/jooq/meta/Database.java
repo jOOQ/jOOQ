@@ -548,6 +548,16 @@ public interface Database extends AutoCloseable {
     boolean getIncludeSystemSequences();
 
     /**
+     * whether system generated UDTs should be included.
+     */
+    void setIncludeSystemUDTs(boolean systemUDTs);
+
+    /**
+     * whether system generated UDTs should be included.
+     */
+    boolean getIncludeSystemUDTs();
+
+    /**
      * whether indexes should be included.
      */
     void setIncludeIndexes(boolean includeIndexes);

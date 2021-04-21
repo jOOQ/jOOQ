@@ -176,6 +176,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeSystemIndexes                 = false;
     private boolean                                                          includeSystemCheckConstraints        = false;
     private boolean                                                          includeSystemSequences               = false;
+    private boolean                                                          includeSystemUDTs                    = false;
     private boolean                                                          includePrimaryKeys                   = true;
     private boolean                                                          includeUniqueKeys                    = true;
     private boolean                                                          includeForeignKeys                   = true;
@@ -1102,6 +1103,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean getIncludeSystemSequences() {
         return includeSystemSequences;
+    }
+
+    @Override
+    public final void setIncludeSystemUDTs(boolean includeSystemUDTs) {
+        this.includeSystemUDTs = includeSystemUDTs;
+    }
+
+    @Override
+    public final boolean getIncludeSystemUDTs() {
+        return includeSystemUDTs;
     }
 
     @Override

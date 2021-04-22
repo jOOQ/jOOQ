@@ -41,8 +41,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_DUAL;
 import static org.jooq.impl.Keywords.K_FROM;
-import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Names.N_COUNT;
@@ -64,6 +64,8 @@ final class Dual extends AbstractTable<Record> {
 
     private static final long          serialVersionUID = -7492790780048090156L;
     private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
+
+
 
 
 
@@ -194,20 +196,17 @@ final class Dual extends AbstractTable<Record> {
 
 
 
+
+
+
+
                 case DERBY:
                     ctx.visit(DUAL_DERBY);
                     break;
 
-                case MARIADB:
-                case MYSQL:
-
-
-
-
-
-
+                // [#11790] Default to rendering a keyword, not a name
                 default:
-                    ctx.visit(N_DUAL);
+                    ctx.visit(K_DUAL);
                     break;
             }
         }

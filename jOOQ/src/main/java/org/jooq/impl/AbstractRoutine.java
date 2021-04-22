@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
@@ -84,6 +85,7 @@ import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.configurationOrThrow;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
@@ -93,6 +95,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -131,7 +134,6 @@ import org.jooq.Results;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.Statement;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.XMLFormat;
@@ -1126,7 +1128,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
             context.sql("call ");
         }
 
-        toSQLQualifiedName(context);
+        context.visit(getQualifiedName(context));
     }
 
     private final void toSQLOutParam(RenderContext ctx, Parameter<?> parameter, int index) {
@@ -1175,15 +1177,14 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         ctx.visit(value);
     }
 
-    private final void toSQLQualifiedName(Context<?> ctx) {
+    private final Name getQualifiedName(Context<?> ctx) {
+        List<Name> list = new ArrayList<>();
+
         if (ctx.qualify()) {
             Schema mapped = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
             if (mapped != null && !"".equals(mapped.getName()))
-                ctx.visit(mapped)
-                   .sql('.');
-
-
+                list.addAll(asList(mapped.getQualifiedName().parts()));
 
 
 
@@ -1195,7 +1196,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
         }
 
-        ctx.visit(getUnqualifiedName());
+        list.add(getUnqualifiedName());
+        return DSL.name(list.toArray(EMPTY_NAME));
     }
 
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {
@@ -1725,9 +1727,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
         @SuppressWarnings("unchecked")
         RoutineField() {
-
-            // [#5997] TODO Retain quotation flag
-            super(DSL.name(AbstractRoutine.this.getName()),
+            super(AbstractRoutine.this.getQualifiedName(),
                   AbstractRoutine.this.type == null
 
                   // [#4254] PostgreSQL may have stored functions that don't
@@ -1736,7 +1736,6 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                   ? (DataType<T>) SQLDataType.RESULT
                   : AbstractRoutine.this.type);
         }
-
 
 
 
@@ -1853,11 +1852,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
-            {
-                RenderContext local = create(ctx).renderContext();
-                toSQLQualifiedName(local);
-                name = local.render();
-            }
+            name = null;
 
             for (Parameter<?> parameter : getInParameters0(ctx.configuration())) {
 
@@ -1897,7 +1892,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                     fields.add(getInValues().get(parameter));
             }
 
-            Field<?> result = function(name, returnType, fields.toArray(EMPTY_FIELD));
+            Field<?> result = function(name != null ? name(name) : AbstractRoutine.this.getQualifiedName(ctx), returnType, fields.toArray(EMPTY_FIELD));
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching
             if (TRUE.equals(settings(ctx.configuration()).isRenderScalarSubqueriesForStoredFunctions()))

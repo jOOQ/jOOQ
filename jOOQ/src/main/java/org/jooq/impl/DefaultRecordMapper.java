@@ -358,6 +358,17 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     }
 
     private final void init(E instance) {
+        Boolean debugVTFL = null;
+        Boolean debugVTCP = null;
+        Boolean debugMutable = null;
+        Boolean debugMutableConstructors = null;
+        Boolean debugCPSettings = null;
+        Boolean debugRC = null;
+        Boolean debugRCSettings = null;
+        Boolean debugKClass = null;
+        Boolean debugKSettings = null;
+        Boolean debugMatchDegreeFlat = null;
+        Boolean debugMatchDegreeNested = null;
 
         // Arrays can be mapped easily
         if (type.isArray()) {
@@ -372,7 +383,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         // [#10071] Single-field Record1 types can be mapped if there is a ConverterProvider allowing for this mapping
-        if (fields.length == 1 && Tools.converter(configuration, fields[0].getType(), type) != null) {
+        if ((debugVTFL = fields.length == 1) && (debugVTCP = Tools.converter(configuration, fields[0].getType(), type) != null)) {
             delegate = new ValueTypeMapper();
             return;
         }
@@ -397,12 +408,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             //          be a no-args constructor for other reasons, e.g. when
             //          using an immutable Kotlin data class with defaulted parameters
             //          If the no-args constructor is the only one, take it none-theless
-            if (m.isMutable() || type.getDeclaredConstructors().length <= 1) {
+            if ((debugMutable = m.isMutable()) || (debugMutableConstructors = type.getDeclaredConstructors().length <= 1)) {
                 delegate = m;
                 return;
             }
         }
-        catch (NoSuchMethodException ignore) {}
+        catch (NoSuchMethodException ignore) {
+            debugMutable = false;
+        }
 
         // [#1336] If no default constructor is present, check if there is a
         // "matching" constructor with the same number of fields as this record
@@ -413,7 +426,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#1837] [#10349] [#11123] If any java.beans.ConstructorProperties annotations are
         // present use those rather than matching constructors by the number of arguments
-        if (!FALSE.equals(configuration.settings().isMapConstructorPropertiesParameterNames())) {
+        if (debugCPSettings = !FALSE.equals(configuration.settings().isMapConstructorPropertiesParameterNames())) {
             for (Constructor<E> constructor : constructors) {
                 ConstructorProperties properties = constructor.getAnnotation(ConstructorProperties.class);
 
@@ -447,7 +460,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
 
         // [#7324] Map immutable Kotlin classes by parameter names if kotlin-reflect is on the classpath
-        if (Tools.isKotlinAvailable() && !FALSE.equals(configuration.settings().isMapConstructorParameterNamesInKotlin())) {
+        if ((debugKClass = Tools.isKotlinAvailable()) && (debugKSettings = !FALSE.equals(configuration.settings().isMapConstructorParameterNamesInKotlin()))) {
             try {
                 Reflect jvmClassMappingKt = Tools.ktJvmClassMapping();
                 Reflect kClasses = Tools.ktKClasses();
@@ -457,7 +470,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 Reflect primaryConstructor = kClasses.call("getPrimaryConstructor", klass);
 
                 // It is a Kotlin class
-                if (primaryConstructor.get() != null) {
+                if (debugKClass = primaryConstructor.get() != null) {
                     List<?> parameters = primaryConstructor.call("getParameters").get();
                     Class<?> klassType = Tools.ktKClass().type();
                     Method getJavaClass = jvmClassMappingKt.type().getMethod("getJavaClass", klassType);
@@ -509,6 +522,10 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                 // Match the first constructor by parameter length
                 if (parameterTypes.length == (supportsNesting ? prefixes().size() : fields.length)) {
+                    if (supportsNesting)
+                        debugMatchDegreeNested = true;
+                    else
+                        debugMatchDegreeFlat = true;
 
                     // [#4627] use parameter names from byte code if available
                     if (mapConstructorParameterNames) {
@@ -524,6 +541,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     return;
                 }
             }
+
+            if (supportsNesting)
+                debugMatchDegreeNested = false;
+            else
+                debugMatchDegreeFlat = false;
         }
 
         // [#4627] if there is no exact match in terms of the number of parameters,
@@ -539,7 +561,39 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-        throw new MappingException("No matching constructor found on type " + type + " for row type " + rowType);
+        throw new MappingException(
+            ("" +
+            "No DefaultRecordMapper strategy applies to type $type for row type $rowType. Attempted strategies include (in this order):\n" +
+            "- Is type an array (false)?\n" +
+            "- Is type a Stream (false)?\n" +
+            "- Does row type have only 1 column ($debugVTFL) and did ConverterProvider provide a Converter for type ($debugVTCP)?\n" +
+            "- Is type abstract (false)?\n" +
+            "- Is type a org.jooq.Record (false)?\n" +
+            "- Is type a mutable POJO (a POJO with setters or non-final members: $debugMutable) and has a no-args constructor ($debugMutableConstructors)?\n" +
+            "- Does type have a @ConstructorProperties annotated constructor (false) and is Settings.mapConstructorPropertiesParameterNames enabled ($debugCPSettings)?\n" +
+            "- Is type a java.lang.Record ($debugRC) and is Settings.mapRecordComponentParameterNames enabled ($debugRCSettings)?\n" +
+            "- Is type a kotlin class ($debugKClass) and is Settings.mapConstructorParameterNamesInKotlin enabled ($debugKSettings)?\n" +
+            "- Is there a constructor that matches row type's degrees with nested fields ($debugMatchDegreeNested) or flat fields ($debugMatchDegreeFlat)\n" +
+            "- Is Settings.mapConstructorParameterNames enabled ($debugMatchNames)\n" +
+            "").replace("$type", type.toString())
+               .replace("$rowType", rowType.toString())
+               .replace("$debugVTFL", debug(debugVTFL))
+               .replace("$debugVTCP", debug(debugVTCP))
+               .replace("$debugCPSettings", debug(debugCPSettings))
+               .replace("$debugMutableConstructors", debug(debugMutableConstructors))
+               .replace("$debugMutable", debug(debugMutable))
+               .replace("$debugRCSettings", debug(debugRCSettings))
+               .replace("$debugRC", debug(debugRC))
+               .replace("$debugKClass", debug(debugKClass))
+               .replace("$debugKSettings", debug(debugKSettings))
+               .replace("$debugMatchDegreeNested", debug(debugMatchDegreeNested))
+               .replace("$debugMatchDegreeFlat", debug(debugMatchDegreeFlat))
+               .replace("$debugMatchNames", debug(mapConstructorParameterNames))
+        );
+    }
+
+    private static final String debug(Boolean debug) {
+        return debug == null ? "check skipped" : debug.toString();
     }
 
     private List<String> collectParameterNames(Parameter[] parameters) {

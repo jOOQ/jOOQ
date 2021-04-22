@@ -44,6 +44,9 @@
         <jaxb.version>2.3.1</jaxb.version>
         <javax.activation.version>1.2.0</javax.activation.version>
 
+        <!-- Scala versions -->
+        <scala.version>2.13.5</scala.version>
+
         <!-- Kotlin versions -->
         <kotlin.version>1.3.71</kotlin.version>
 

@@ -41,6 +41,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.dataTypes;
+import static org.jooq.impl.Tools.mapToList;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -132,7 +133,7 @@ final class ParsingConnection extends DefaultConnection {
                 return new CacheValue(configuration, sql, bindValues);
             },
             CacheType.CACHE_PARSING_CONNECTION,
-            () -> Cache.key(sql, asList(dataTypes(nonNull(bindValues))))
+            () -> Cache.key(sql, mapToList(nonNull(bindValues), f -> f.getDataType()))
         ).rendered(bindValues);
 
         log.debug("Translating to", result.sql);

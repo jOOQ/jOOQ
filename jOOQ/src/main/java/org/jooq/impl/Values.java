@@ -93,9 +93,10 @@ final class Values<R extends Record> extends AbstractTable<R> {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID     = -637982217747670311L;
-    static final Set<SQLDialect>    NO_SUPPORT_VALUES    = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
-    static final Set<SQLDialect>    REQUIRE_ROWTYPE_CAST = SQLDialect.supportedBy(FIREBIRD);
+    private static final long       serialVersionUID       = -637982217747670311L;
+    static final Set<SQLDialect>    NO_SUPPORT_VALUES      = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    static final Set<SQLDialect>    REQUIRE_ROWTYPE_CAST   = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>    NO_SUPPORT_PARENTHESES = SQLDialect.supportedBy();
 
     private final Row[]             rows;
     private transient DataType<?>[] types;
@@ -157,12 +158,12 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Table<R> as(Name alias) {
-        return new TableAlias<>(this, alias, true);
+        return new TableAlias<>(this, alias, c -> !NO_SUPPORT_PARENTHESES.contains(c.dialect()));
     }
 
     @Override
     public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases, true);
+        return new TableAlias<>(this, alias, fieldAliases, c -> !NO_SUPPORT_PARENTHESES.contains(c.dialect()));
     }
 
     @Override

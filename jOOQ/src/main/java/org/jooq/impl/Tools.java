@@ -103,7 +103,6 @@ import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
-import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
@@ -218,6 +217,8 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinPool.ManagedBlocker;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
@@ -280,7 +281,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
-import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.XML;
 import org.jooq.conf.BackslashEscaping;
@@ -1212,30 +1212,7 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     static final DataType<?>[] dataTypes(Class<?>[] types) {
-        if (types == null)
-            return null;
-
-        DataType<?>[] result = new DataType<?>[types.length];
-
-        for (int i = 0; i < types.length; i++)
-            if (types[i] != null)
-                result[i] = getDataType(types[i]);
-            else
-                result[i] = getDataType(Object.class);
-
-        return result;
-    }
-
-    static final DataType<?>[] dataTypes(Field<?>[] fields) {
-        if (fields == null)
-            return null;
-
-        DataType<?>[] result = new DataType<?>[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].getDataType();
-
-        return result;
+        return map(types, t -> t != null ? getDataType(t) : getDataType(Object.class), DataType[]::new);
     }
 
     // ------------------------------------------------------------------------
@@ -1252,29 +1229,14 @@ final class Tools {
     }
 
     static final SortField<?>[] sortFields(OrderField<?>[] fields) {
-        if (fields == null)
-            return null;
-
         if (fields instanceof SortField<?>[])
             return (SortField<?>[]) fields;
-
-        SortField<?>[] result = new SortField[fields.length];
-        for (int i = 0; i < fields.length; i++)
-            result[i] = sortField(fields[i]);
-
-        return result;
+        else
+            return map(fields, o -> sortField(o), SortField[]::new);
     }
 
     static final List<SortField<?>> sortFields(Collection<? extends OrderField<?>> fields) {
-        if (fields == null)
-            return null;
-
-        int size = fields.size();
-        List<SortField<?>> result = new ArrayList<>(size);
-        for (OrderField<?> field : fields)
-            result.add(sortField(field));
-
-        return result;
+        return mapToList(fields, o -> sortField(o));
     }
 
     static final String fieldNameString(int index) {
@@ -1303,42 +1265,6 @@ final class Tools {
         return result;
     }
 
-    static final Name[] fieldNames(Field<?>[] fields) {
-        if (fields == null)
-            return null;
-
-        Name[] result = new Name[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].getUnqualifiedName();
-
-        return result;
-    }
-
-    static final List<Name> fieldNames(Collection<? extends Field<?>> fields) {
-        if (fields == null)
-            return null;
-
-        List<Name> result = new ArrayList<>(fields.size());
-
-        for (Field<?> field : fields)
-            result.add(field.getUnqualifiedName());
-
-        return result;
-    }
-
-    static final String[] fieldNameStrings(Field<?>[] fields) {
-        if (fields == null)
-            return null;
-
-        String[] result = new String[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].getName();
-
-        return result;
-    }
-
     static final Field<?>[] fields(int length) {
         return fields(length, SQLDataType.OTHER);
     }
@@ -1353,30 +1279,6 @@ final class Tools {
         return result;
     }
 
-    static final Field<?>[] unqualified(Field<?>[] fields) {
-        if (fields == null)
-            return null;
-
-        Field<?>[] result = new Field[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            result[i] = unqualified(fields[i]);
-
-        return result;
-    }
-
-    static final List<Field<?>> unqualified(Collection<? extends Field<?>> fields) {
-        if (fields == null)
-            return null;
-
-        List<Field<?>> result = new ArrayList<>(fields.size());
-
-        for (Field<?> field : fields)
-            result.add(unqualified(field));
-
-        return result;
-    }
-
     static final <T> Field<T> unqualified(Field<T> field) {
         return DSL.field(field.getUnqualifiedName(), field.getDataType());
     }
@@ -1386,28 +1288,8 @@ final class Tools {
         return i.transform(unqualified(i.getField()));
     }
 
-    static final SortField<?>[] unqualified(SortField<?>[] fields) {
-        if (fields == null)
-            return null;
-
-        SortField<?>[] result = new SortField[fields.length];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = unqualified(fields[i]);
-
-        return result;
-    }
-
     static final List<Field<?>> unaliasedFields(Collection<? extends Field<?>> fields) {
-        if (fields == null)
-            return null;
-
-        List<Field<?>> result = new ArrayList<>(fields.size());
-        int i = 0;
-        for (Field<?> field : fields)
-            result.add(DSL.field(fieldName(i++), field.getDataType()).as(field));
-
-        return result;
+        return mapToList(fields, (f, i) -> DSL.field(fieldName(i), f.getDataType()).as(f));
     }
 
     static final <R extends Record, O extends Record> ReferenceImpl<R, O> aliasedKey(ForeignKey<R, O> key, Table<R> child, Table<O> parent) {
@@ -1426,19 +1308,7 @@ final class Tools {
     }
 
     static final List<Field<?>> aliasedFields(Collection<? extends Field<?>> fields) {
-        return aliasedFields(0, fields);
-    }
-
-    static final List<Field<?>> aliasedFields(int offset, Collection<? extends Field<?>> fields) {
-        if (fields == null)
-            return null;
-
-        List<Field<?>> result = new ArrayList<>(fields.size());
-        int i = offset;
-        for (Field<?> field : fields)
-            result.add(field.as(fieldName(i++)));
-
-        return result;
+        return mapToList(fields, (f, i) -> f.as(fieldName(i)));
     }
 
     static final Field<?>[] fieldsByName(String[] fieldNames) {
@@ -1460,87 +1330,36 @@ final class Tools {
 
     @SuppressWarnings("unchecked")
     static final <R extends Record> TableField<R, ?>[] fieldsByName(Table<R> tableName, Field<?>[] fieldNames) {
-        if (fieldNames == null)
-            return null;
-
-        TableField<R, ?>[] result = new TableField[fieldNames.length];
-
         if (tableName == null)
-            for (int i = 0; i < fieldNames.length; i++)
-                result[i] = (TableField<R, ?>) DSL.field(fieldNames[i].getUnqualifiedName(), fieldNames[i].getDataType());
+            return map(fieldNames, n -> (TableField<R, ?>) DSL.field(n.getUnqualifiedName(), n.getDataType()), TableField[]::new);
         else
-            for (int i = 0; i < fieldNames.length; i++)
-                result[i] = (TableField<R, ?>) DSL.field(tableName.getQualifiedName().append(fieldNames[i].getUnqualifiedName()), fieldNames[i].getDataType());
-
-        return result;
+            return map(fieldNames, n -> (TableField<R, ?>) DSL.field(tableName.getQualifiedName().append(n.getUnqualifiedName()), n.getDataType()), TableField[]::new);
     }
 
     static final Field<?>[] fieldsByName(Name tableName, Name[] fieldNames) {
-        if (fieldNames == null)
-            return null;
-
-        Field<?>[] result = new Field[fieldNames.length];
-
         if (tableName == null)
-            for (int i = 0; i < fieldNames.length; i++)
-                result[i] = DSL.field(fieldNames[i]);
+            return map(fieldNames, n -> DSL.field(n), Field[]::new);
         else
-            for (int i = 0; i < fieldNames.length; i++)
-                result[i] = DSL.field(name(tableName, fieldNames[i]));
-
-        return result;
+            return map(fieldNames, n -> DSL.field(name(tableName, n)), Field[]::new);
     }
 
     static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
-        if (fieldNames == null)
-            return null;
-
-        Field<?>[] result = new Field[fieldNames.length];
-
         if (StringUtils.isEmpty(tableName))
-            for (int i = 0; i < fieldNames.length; i++)
-                result[i] = DSL.field(name(fieldNames[i]));
+            return map(fieldNames, n -> DSL.field(name(n)), Field[]::new);
         else
-            for (int i = 0; i < fieldNames.length; i++)
-                result[i] = DSL.field(name(tableName, fieldNames[i]));
-
-        return result;
+            return map(fieldNames, n -> DSL.field(name(tableName, n)), Field[]::new);
     }
 
     static final Field<?>[] fieldsByName(Name[] names) {
-        if (names == null)
-            return null;
-
-        Field<?>[] result = new Field[names.length];
-
-        for (int i = 0; i < names.length; i++)
-            result[i] = DSL.field(names[i]);
-
-        return result;
+        return map(names, n -> DSL.field(n), Field[]::new);
     }
 
     static final Name[] names(String[] names) {
-        if (names == null)
-            return null;
-
-        Name[] result = new Name[names.length];
-
-        for (int i = 0; i < names.length; i++)
-            result[i] = DSL.name(names[i]);
-
-        return result;
+        return map(names, n -> DSL.name(n), Name[]::new);
     }
 
     static final List<Name> names(Collection<?> names) {
-        if (names == null)
-            return null;
-
-        List<Name> result = new ArrayList<>(names.size());
-
-        for (Object o : names)
-            result.add(o instanceof Name ? (Name) o : DSL.name(String.valueOf(o)));
-
-        return result;
+        return mapToList(names, n -> n instanceof Name ? (Name) n : DSL.name(String.valueOf(n)));
     }
 
     private static final IllegalArgumentException fieldExpected(Object value) {
@@ -1833,25 +1652,14 @@ final class Tools {
 
     @SuppressWarnings("unchecked")
     static final <T> Field<T>[] fieldsArray(T[] values) {
-        if (values == null)
-            return (Field<T>[]) EMPTY_FIELD;
-
-        Field<T>[] result = new Field[values.length];
-        for (int i = 0; i < values.length; i++)
-            result[i] = field(values[i]);
-
-        return result;
+        return map(values, v -> field(v), Field[]::new);
     }
 
     static final <T> List<Field<T>> fields(Object[] values, Field<T> field) {
-        if (values == null || field == null)
+        if (field == null)
             return new ArrayList<>();
-
-        List<Field<T>> result = new ArrayList<>(values.length);
-        for (int i = 0; i < values.length; i++)
-            result.add(field(values[i], field));
-
-        return result;
+        else
+            return mapToList(values, v -> field(v, field));
     }
 
     static final List<Field<?>> fields(Object[] values, Field<?>[] fields) {
@@ -1859,16 +1667,7 @@ final class Tools {
     }
 
     static final Field<?>[] fieldsArray(Object[] values, Field<?>[] fields) {
-        if (values == null || fields == null)
-            return EMPTY_FIELD;
-
-        int length = Math.min(values.length, fields.length);
-        Field<?>[] result = new Field[length];
-
-        for (int i = 0; i < length; i++)
-            result[i] = field(values[i], fields[i]);
-
-        return result;
+        return map(values, (v, i) -> field(v, fields[i]), Field[]::new);
     }
 
     static final <T> List<Field<T>> fields(Object[] values, DataType<T> type) {
@@ -1876,26 +1675,12 @@ final class Tools {
     }
 
     static final <T> List<Field<T>> fields(Collection<?> values, DataType<T> type) {
-        if (values == null || type == null)
-            return new ArrayList<>();
-
-        List<Field<T>> result = new ArrayList<>(values.size());
-        for (Object value : values)
-            result.add(field(value, type));
-
-        return result;
+        return mapToList(values, v -> field(v, type));
     }
 
     @SuppressWarnings("unchecked")
     static final <T> Field<T>[] fieldsArray(Object[] values, DataType<T> type) {
-        if (values == null)
-            return (Field<T>[]) EMPTY_FIELD;
-
-        Field<T>[] result = new Field[values.length];
-        for (int i = 0; i < result.length; i++)
-            result[i] = field(values[i], type);
-
-        return result;
+        return map(values, v -> field(v, type), Field[]::new);
     }
 
     static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
@@ -1903,27 +1688,11 @@ final class Tools {
     }
 
     static final Field<?>[] fieldsArray(Object[] values, DataType<?>[] types) {
-        if (values == null || types == null)
-            return EMPTY_FIELD;
-
-        int length = Math.min(values.length, types.length);
-        Field<?>[] result = new Field[length];
-
-        for (int i = 0; i < length; i++)
-            result[i] = field(values[i], types[i]);
-
-        return result;
+        return map(values, (v, i) -> field(v, types[i]), Field[]::new);
     }
 
     static final <T> List<Field<T>> inline(T[] values) {
-        if (values == null)
-            return new ArrayList<>();
-
-        List<Field<T>> result = new ArrayList<>(values.length);
-        for (int i = 0; i < values.length; i++)
-            result.add(DSL.inline(values[i]));
-
-        return result;
+        return mapToList(values, v -> DSL.inline(v));
     }
 
     @SuppressWarnings("unchecked")
@@ -2016,26 +1785,112 @@ final class Tools {
         return result;
     }
 
-    static final List<JSONEntry<?>> jsonEntries(Field<?>... fields) {
-        if (fields == null)
-            return null;
+    /**
+     * Like <code>Stream.of(array).map(mapper).toArray(constructor)</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T, U> U[] map(T[] array, Function<? super T, ? extends U> mapper, IntFunction<U[]> constructor) {
+        if (array == null)
+            return constructor.apply(0);
 
-        List<JSONEntry<?>> result = new ArrayList<>(fields.length);
-        for (Field<?> field : fields)
-            result.add(jsonEntry(field));
+        U[] result = constructor.apply(array.length);
+        for (int i = 0; i < array.length; i++)
+            result[i] = mapper.apply(array[i]);
 
         return result;
     }
 
-    static final <T> T last(Collection<T> collection) {
-        if (collection.isEmpty())
-            return null;
-        else if (collection instanceof List)
-            return ((List<T>) collection).get(collection.size() - 1);
+    /**
+     * Like <code>Stream.of(array).map(mapper).toArray(constructor)</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T, U> U[] map(Collection<? extends T> collection, Function<? super T, ? extends U> mapper, IntFunction<U[]> constructor) {
+        if (collection == null)
+            return constructor.apply(0);
 
-        T last = null;
-        for (Iterator<T> it = collection.iterator(); it.hasNext(); last = it.next());
-        return last;
+        U[] result = constructor.apply(collection.size());
+        int i = 0;
+        for (T t : collection)
+            result[i++] = mapper.apply(t);
+
+        return result;
+    }
+
+    /**
+     * Like
+     * <code>Stream.of(array).zipWithIndex().map(mapper).toArray(constructor)</code>
+     * but without the entire stream pipeline.
+     */
+    static final <T, U> U[] map(T[] array, ObjIntFunction<? super T, ? extends U> mapper, IntFunction<U[]> constructor) {
+        if (array == null)
+            return constructor.apply(0);
+
+        U[] result = constructor.apply(array.length);
+        for (int i = 0; i < array.length; i++)
+            result[i] = mapper.apply(array[i], i);
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).map(mapper).toList()</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T, U> List<U> mapToList(T[] array, Function<? super T, ? extends U> mapper) {
+        if (array == null)
+            return emptyList();
+
+        List<U> result = new ArrayList<>(array.length);
+        for (T t : array)
+            result.add(mapper.apply(t));
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).map(mapper).toList()</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T, U> List<U> mapToList(Collection<? extends T> collection, Function<? super T, ? extends U> mapper) {
+        if (collection == null)
+            return emptyList();
+
+        List<U> result = new ArrayList<>(collection.size());
+        for (T t : collection)
+            result.add(mapper.apply(t));
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).zipWithIndex().map(mapper).toList()</code>
+     * but without the entire stream pipeline.
+     */
+    static final <T, U> List<U> mapToList(T[] array, ObjIntFunction<? super T, ? extends U> mapper) {
+        if (array == null)
+            return emptyList();
+
+        List<U> result = new ArrayList<>(array.length);
+        for (int i = 0; i < array.length; i++)
+            result.add(mapper.apply(array[i], i));
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).map(mapper).toList()</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T, U> List<U> mapToList(Collection<? extends T> collection, ObjIntFunction<? super T, ? extends U> mapper) {
+        if (collection == null)
+            return emptyList();
+
+        List<U> result = new ArrayList<>(collection.size());
+        int i = 0;
+        for (T t : collection)
+            result.add(mapper.apply(t, i++));
+
+        return result;
     }
 
     /**
@@ -2138,6 +1993,17 @@ final class Tools {
             return it.next();
         else
             return null;
+    }
+
+    static final <T> T last(Collection<T> collection) {
+        if (collection.isEmpty())
+            return null;
+        else if (collection instanceof List)
+            return ((List<T>) collection).get(collection.size() - 1);
+
+        T last = null;
+        for (Iterator<T> it = collection.iterator(); it.hasNext(); last = it.next());
+        return last;
     }
 
     /**
@@ -5265,16 +5131,6 @@ final class Tools {
                 return asyncResult;
             }
         };
-    }
-
-    static final String[] enumLiterals(Class<? extends EnumType> type) {
-        EnumType[] values = enums(type);
-        String[] result = new String[values.length];
-
-        for (int i = 0; i < values.length; i++)
-            result[i] = values[i].getLiteral();
-
-        return result;
     }
 
     static final <E extends EnumType> E[] enums(Class<? extends E> type) {

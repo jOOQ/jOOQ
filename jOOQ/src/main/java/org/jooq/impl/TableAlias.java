@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -63,18 +64,18 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     final FieldsImpl<R>       aliasedFields;
 
     TableAlias(Table<R> table, Name alias) {
-        this(table, alias, null, false);
+        this(table, alias, null, c -> false);
     }
 
-    TableAlias(Table<R> table, Name alias, boolean wrapInParentheses) {
+    TableAlias(Table<R> table, Name alias, Predicate<Context<?>> wrapInParentheses) {
         this(table, alias, null, wrapInParentheses);
     }
 
     TableAlias(Table<R> table, Name alias, Name[] fieldAliases) {
-        this(table, alias, fieldAliases, false);
+        this(table, alias, fieldAliases, c -> false);
     }
 
-    TableAlias(Table<R> table, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
+    TableAlias(Table<R> table, Name alias, Name[] fieldAliases, Predicate<Context<?>> wrapInParentheses) {
         super(table.getOptions(), alias, table.getSchema());
 
         this.alias = new Alias<>(table, this, alias, fieldAliases, wrapInParentheses);

@@ -52,6 +52,7 @@ import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.intersect;
+import static org.jooq.impl.Tools.mapToList;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.Tools.reverseIterable;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -59,6 +60,7 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.util.AbstractList;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -807,7 +809,7 @@ final class Interpreter {
 
         List<DataType<?>> columnTypes = query.$select() != null
             ? dataTypes(query.$select())
-            : asList(dataTypes(query.$fields()));
+            : mapToList(query.$fields(), f -> f.getDataType());
 
         newTable(table, schema, asList(query.$fields()), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
     }
@@ -957,7 +959,7 @@ final class Interpreter {
             throw notExists(table);
 
         MutableIndex existing = find(mt.indexes, index);
-        List<MutableSortField> mtf = mt.sortFields(Tools.sortFields(query.$on()));
+        List<MutableSortField> mtf = mt.sortFields(query.$on());
 
         if (existing != null) {
             if (!query.$createIndexIfNotExists())
@@ -1711,7 +1713,7 @@ final class Interpreter {
             return result;
         }
 
-        final List<MutableSortField> sortFields(List<? extends OrderField<?>> ofs) {
+        final List<MutableSortField> sortFields(Collection<? extends OrderField<?>> ofs) {
             List<MutableSortField> result = new ArrayList<>();
 
             for (OrderField<?> of : ofs) {

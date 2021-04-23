@@ -299,12 +299,12 @@ implements
 
     @Override
     public final WithImpl with(String a, String... f) {
-        return with(DSL.name(a), Tools.names(f));
+        return with(DSL.name(a), Tools.map(f, s -> DSL.name(s), Name[]::new));
     }
 
     @Override
     public final WithImpl with(String a, Collection<String> f) {
-        return with(DSL.name(a), Tools.names(f));
+        return with(DSL.name(a), Tools.map(f, s -> DSL.name(s), Name[]::new));
     }
 
     @Override

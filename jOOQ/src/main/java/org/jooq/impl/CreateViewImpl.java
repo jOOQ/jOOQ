@@ -68,6 +68,7 @@ import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Keywords.K_VIEW;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.tryCatch;
 
 import java.util.List;
@@ -81,6 +82,7 @@ import org.jooq.CreateViewAsStep;
 import org.jooq.CreateViewFinalStep;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
@@ -88,7 +90,6 @@ import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -265,7 +266,7 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
            // [#4806] CREATE VIEW doesn't accept parameters in most databases
            .visit(
                rename && !renameSupported
-             ? selectFrom(parsed().asTable(name("t"), Tools.fieldNames(f)))
+             ? selectFrom(parsed().asTable(name("t"), map(f, Field::getUnqualifiedName, Name[]::new)))
              : select,
                INLINED
            )

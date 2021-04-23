@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static java.util.function.Function.identity;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
@@ -183,6 +184,7 @@ import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.isWindow;
+import static org.jooq.impl.Tools.mapToList;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.search;
@@ -1392,7 +1394,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         DSL.select(qualify(table(name("t")), select))
            .from(copy.asTable("t"))
            .where(rn.eq(one()))
-           .orderBy(unqualified(orderBy.toArray(EMPTY_SORTFIELD)));
+           .orderBy(mapToList(orderBy, o -> unqualified(o)));
 
         if (limit.numberOfRows != null) {
             SelectLimitPercentStep<?> s2 = s1.limit((Param) limit.numberOfRows);
@@ -3211,7 +3213,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6983
                 if (ctx.family() == DERBY)
-                    ctx.visit(new SelectFieldList<>(Tools.unqualified(fields)));
+                    ctx.visit(new SelectFieldList<>(mapToList(fields, Tools::unqualified)));
                 else
                     ctx.sql('*');
 
@@ -3695,6 +3697,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final Field<?> getResolveProjection(Configuration c, Field<?> f) {
+
+
 
 
 

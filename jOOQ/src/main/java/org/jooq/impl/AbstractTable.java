@@ -996,7 +996,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final Table<R> as(Table<?> otherTable, Field<?>... otherFields) {
-        return as(otherTable.getUnqualifiedName(), Tools.fieldNames(otherFields));
+        return as(otherTable.getUnqualifiedName(), Tools.map(otherFields, Field::getUnqualifiedName, Name[]::new));
     }
 
     @Override

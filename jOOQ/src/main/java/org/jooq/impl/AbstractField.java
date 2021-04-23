@@ -635,8 +635,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
      * [#11200] Nest these constants to prevent initialisation deadlocks.
      */
     private static class BooleanValues {
-        static final List<Field<String>> TRUE_VALUES  = Tools.inline(Convert.TRUE_VALUES.toArray(EMPTY_STRING));
-        static final List<Field<String>> FALSE_VALUES = Tools.inline(Convert.FALSE_VALUES.toArray(EMPTY_STRING));
+        static final List<Field<String>> TRUE_VALUES  = Tools.mapToList(Convert.TRUE_VALUES, v -> DSL.inline(v));
+        static final List<Field<String>> FALSE_VALUES = Tools.mapToList(Convert.FALSE_VALUES, v -> DSL.inline(v));
     }
 
     @SuppressWarnings({ "unchecked" })

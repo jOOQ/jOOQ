@@ -76,6 +76,7 @@ import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.createIndex;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
@@ -99,10 +100,9 @@ import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.begin;
-import static org.jooq.impl.Tools.beginExecuteImmediate;
-import static org.jooq.impl.Tools.endExecuteImmediate;
-import static org.jooq.impl.Tools.enumLiterals;
+import static org.jooq.impl.Tools.enums;
 import static org.jooq.impl.Tools.executeImmediate;
+import static org.jooq.impl.Tools.mapToList;
 import static org.jooq.impl.Tools.storedEnumType;
 import static org.jooq.impl.Tools.tryCatch;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_SELECT_NO_DATA;
@@ -138,7 +138,6 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions.OnCommit;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -549,11 +548,12 @@ final class CreateTableImpl extends AbstractDDLQuery implements
 
                         if (EMULATE_STORED_ENUM_TYPES_AS_CHECK.contains(ctx.dialect()) || !storedEnumType(enumType)) {
                             Field<?> field = columnFields.get(i);
+                            List<Field<String>> literals = mapToList(enums(enumType.getType()), e -> inline(e.getLiteral()));
 
                             ctx.sql(',')
                                .formatSeparator()
                                .visit(DSL.constraint(table.getName() + "_" + field.getName() + "_chk")
-                                         .check(((Field) field).in(Tools.inline(enumLiterals(enumType.getType())))));
+                                         .check(((Field) field).in(literals)));
                         }
                     }
                 }

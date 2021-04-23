@@ -79,6 +79,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.mapToList;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
@@ -88,6 +89,7 @@ import static org.jooq.impl.Values.NO_SUPPORT_VALUES;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -120,13 +122,13 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     final Q                              wrapping;
     final Name                           alias;
     final Name[]                         fieldAliases;
-    final boolean                        wrapInParentheses;
+    final Predicate<Context<?>>          wrapInParentheses;
 
     Alias(Q wrapped, Q wrapping, Name alias) {
-        this(wrapped, wrapping, alias, null, false);
+        this(wrapped, wrapping, alias, null, c -> false);
     }
 
-    Alias(Q wrapped, Q wrapping, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
+    Alias(Q wrapped, Q wrapping, Name alias, Name[] fieldAliases, Predicate<Context<?>> wrapInParentheses) {
         this.wrapped = wrapped;
         this.wrapping = wrapping;
         this.alias = alias;
@@ -230,7 +232,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
                 //         See: https://github.com/h2database/h2database/issues/2532
                 if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect)) {
-                    List<Name> names = fieldNames(select);
+                    List<Name> names = mapToList(select, Field::getUnqualifiedName);
 
                     if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {
                         toSQLWrapped(context);
@@ -346,9 +348,11 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     private final void toSQLWrapped(Context<?> ctx) {
-        ctx.sql(wrapInParentheses ? "(" : "")
+        boolean wrap = wrapInParentheses.test(ctx);
+
+        ctx.sql(wrap ? "(" : "")
            .visit(wrapped)
-           .sql(wrapInParentheses ? ")" : "");
+           .sql(wrap ? ")" : "");
     }
 
     private final void toSQLDerivedColumnList(Context<?> ctx) {

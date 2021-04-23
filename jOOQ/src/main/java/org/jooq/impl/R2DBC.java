@@ -419,7 +419,7 @@ final class R2DBC {
 
 
                         && !q2.nativeSupportReturning(configuration.dsl()))
-                    stmt.returnGeneratedValues(fieldNameStrings(q2.returningResolvedAsterisks.toArray(EMPTY_FIELD)));
+                    stmt.returnGeneratedValues(Tools.map(q2.returningResolvedAsterisks, Field::getName, String[]::new));
 
                 stmt.execute().subscribe(resultSubscriber.apply(query, downstream));
             }

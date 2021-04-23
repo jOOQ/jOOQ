@@ -818,7 +818,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             // [#6375]  INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
             Table<?> t;
             if (s != null) {
-                t = s.asTable("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
+                t = s.asTable("t", Tools.map(insertMaps.fields(), Field::getName, String[]::new));
 
                 if (NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING.contains(configuration.dialect()))
                     t = selectFrom(t).asTable("t");

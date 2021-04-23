@@ -70,12 +70,12 @@ class DerivedTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Table<R> as(Name alias) {
-        return new TableAlias<>(this, alias, true);
+        return new TableAlias<>(this, alias, c -> true);
     }
 
     @Override
     public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases, true);
+        return new TableAlias<>(this, alias, fieldAliases, c -> true);
     }
 
     @Override

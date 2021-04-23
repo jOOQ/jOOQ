@@ -47,6 +47,7 @@ import static org.jooq.Operator.OR;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
@@ -351,6 +352,7 @@ import org.jooq.Row8;
 import org.jooq.Row9;
 import org.jooq.RowCountQuery;
 import org.jooq.RowN;
+import org.jooq.Rows;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -19294,7 +19296,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
-        return new JSONObject<>(SQLDataType.JSON, Tools.jsonEntries(entries));
+        return new JSONObject<>(SQLDataType.JSON, Tools.mapToList(entries, f -> jsonEntry(f)));
     }
 
     /**
@@ -19321,7 +19323,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
-        return new JSONObject<>(SQLDataType.JSONB, Tools.jsonEntries(entries));
+        return new JSONObject<>(SQLDataType.JSONB, Tools.mapToList(entries, f -> jsonEntry(f)));
     }
 
     /**
@@ -27527,6 +27529,72 @@ public class DSL {
             columns[i] = "c" + (i + 1);
 
         return new Values<Record>(rows).as("v", columns);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>1</code>.
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(val1_1),
+     *       (val2_1),
+     *       (val3_1)
+     * AS "v"("c1"  )
+     *
+     * -- Using UNION ALL
+     * SELECT val1_1 AS "c1") UNION ALL
+     * SELECT val1_1 AS "c1") UNION ALL
+     * SELECT val1_1 AS "c1")
+     * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
+     */
+    @SafeVarargs
+    @NotNull
+    @Support
+    public static <T> Table<Record1<T>> values(T... values) {
+        return values(Tools.map(values, t -> row(t), Row1[]::new));
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>1</code>.
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(val1_1),
+     *       (val2_1),
+     *       (val3_1)
+     * AS "v"("c1"  )
+     *
+     * -- Using UNION ALL
+     * SELECT val1_1 AS "c1") UNION ALL
+     * SELECT val1_1 AS "c1") UNION ALL
+     * SELECT val1_1 AS "c1")
+     * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
+     */
+    @SafeVarargs
+    @NotNull
+    @Support
+    public static <T> Table<Record1<T>> values(Field<T>... values) {
+        return values(Tools.map(values, f -> row(f), Row1[]::new));
     }
 
 

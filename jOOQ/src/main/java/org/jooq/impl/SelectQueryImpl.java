@@ -3213,7 +3213,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6983
                 if (ctx.family() == DERBY)
-                    ctx.visit(new SelectFieldList<Field<?>>(mapToList(fields, Tools::unqualified)));
+                    ctx.visit(new SelectFieldList<>(mapToList(fields, f -> Tools.unqualified(f))));
                 else
                     ctx.sql('*');
 

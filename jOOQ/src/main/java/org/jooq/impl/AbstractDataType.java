@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 import static org.jooq.impl.DSL.unquotedName;
+import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCHAR;
@@ -49,7 +50,6 @@ import static org.jooq.impl.SQLDataType.NCLOB;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.Tools.NO_SUPPORT_BINARY_TYPE_LENGTH;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Blob;
@@ -465,7 +465,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public final Class<T[]> getArrayType() {
-        return (Class<T[]>) Array.newInstance(getType(), 0).getClass();
+        return arrayType(getType());
     }
 
     @Override

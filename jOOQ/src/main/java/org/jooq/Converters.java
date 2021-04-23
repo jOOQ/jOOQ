@@ -37,13 +37,13 @@
  */
 package org.jooq;
 
+import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.tools.Convert.convertArray;
-
-import java.lang.reflect.Array;
 
 import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -124,7 +124,7 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      * Inverse a converter.
      */
     public static <T, U> Converter<U, T> inverse(final Converter<T, U> converter) {
-        
+
     	// [#11099] Allow instanceof checks on IdentityConverter for performance reasons
     	if (converter instanceof IdentityConverter)
             return (Converter<U, T>) converter;
@@ -154,10 +154,7 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
     }
 
     public static <T, U> Converter<T[], U[]> forArrays(final Converter<T, U> converter) {
-        return new AbstractConverter<T[], U[]>(
-            (Class<T[]>) Array.newInstance(converter.fromType(), 0).getClass(),
-            (Class<U[]>) Array.newInstance(converter.toType(), 0).getClass()
-        ) {
+        return new AbstractConverter<T[], U[]>(arrayType(converter.fromType()), arrayType(converter.toType())) {
 
             /**
              * Generated UID

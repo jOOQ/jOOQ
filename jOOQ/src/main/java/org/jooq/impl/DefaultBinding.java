@@ -85,6 +85,7 @@ import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
+import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_BLOB;
@@ -156,20 +157,17 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.SignStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -1136,10 +1134,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-        private final Class<?> deriveArrayTypeFromComponentType(Object[] value) {
+        private final Class<? extends Object[]> deriveArrayTypeFromComponentType(Object[] value) {
             for (Object o : value)
                 if (o != null)
-                    return java.lang.reflect.Array.newInstance(o.getClass(), 0).getClass();
+                    return arrayType(o.getClass());
 
             // PostgreSQL often defaults to using varchar as well, so we can
             // mimick this behaviour (without documenting it).

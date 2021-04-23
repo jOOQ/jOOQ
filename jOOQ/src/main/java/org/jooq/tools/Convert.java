@@ -40,6 +40,7 @@ package org.jooq.tools;
 import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
+import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 import static org.jooq.types.Unsigned.ubyte;
@@ -99,6 +100,7 @@ import org.jooq.SQLDialect;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.IdentityConverter;
+import org.jooq.impl.Internal;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
@@ -328,7 +330,7 @@ public final class Convert {
         if (from == null)
             return null;
         else if (!toClass.isArray())
-            return convertArray(from, Array.newInstance(toClass, 0).getClass());
+            return convertArray(from, arrayType(toClass));
         else if (toClass == from.getClass())
             return from;
         else {

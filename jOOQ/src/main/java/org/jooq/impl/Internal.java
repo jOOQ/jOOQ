@@ -414,7 +414,7 @@ public final class Internal {
      * <p>
      * This is used for internal purposes and thus subject for change.
      */
-    public static <T> Subscriber<T> subscriber(
+    public static final <T> Subscriber<T> subscriber(
         Consumer<? super Subscription> subscription,
         Consumer<? super T> onNext,
         Consumer<? super Throwable> onError,
@@ -441,5 +441,15 @@ public final class Internal {
                 onComplete.run();
             }
         };
+    }
+
+    @SuppressWarnings({ "unchecked", "unused" })
+    public static final <T> Class<T[]> arrayType(Class<T> type) {
+
+
+
+
+
+        return (Class<T[]>) java.lang.reflect.Array.newInstance(type, 0).getClass();
     }
 }

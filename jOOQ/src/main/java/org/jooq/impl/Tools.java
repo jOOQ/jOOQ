@@ -1362,6 +1362,10 @@ final class Tools {
         return mapToList(names, n -> n instanceof Name ? (Name) n : DSL.name(String.valueOf(n)));
     }
 
+    static final List<JSONEntry<?>> jsonEntries(Field<?>[] entries) {
+        return Tools.mapToList(entries, f -> DSL.jsonEntry(f));
+    }
+
     private static final IllegalArgumentException fieldExpected(Object value) {
         return new IllegalArgumentException("Cannot interpret argument of type " + value.getClass() + " as a Field: " + value);
     }

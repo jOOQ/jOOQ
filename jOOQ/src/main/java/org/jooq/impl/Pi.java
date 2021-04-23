@@ -94,6 +94,7 @@ extends
 
 
 
+
             case SQLITE:
                 ctx.visit(inline(Math.PI, BigDecimal.class));
                 break;

@@ -37,8 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.io.Serializable;
 
+import org.jooq.ExecuteListenerProvider;
 import org.jooq.MigrationListener;
 import org.jooq.MigrationListenerProvider;
 
@@ -68,12 +71,7 @@ public class DefaultMigrationListenerProvider implements MigrationListenerProvid
      * <code>MigrationListener</code> instances.
      */
     public static MigrationListenerProvider[] providers(MigrationListener... listeners) {
-        MigrationListenerProvider[] result = new MigrationListenerProvider[listeners.length];
-
-        for (int i = 0; i < listeners.length; i++)
-            result[i] = new DefaultMigrationListenerProvider(listeners[i]);
-
-        return result;
+        return map(listeners, DefaultMigrationListenerProvider::new, MigrationListenerProvider[]::new);
     }
 
     /**

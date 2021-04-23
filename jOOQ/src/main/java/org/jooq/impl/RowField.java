@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.pgNewRecord;
 import static org.jooq.impl.Names.N_ROW;
+import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import org.jooq.Context;
@@ -83,12 +85,8 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
             }
         }));
 
-        Field<?>[] f = new Field[row.size()];
-        for (int i = 0; i < f.length; i++)
-            f[i] = row.field(i).as(as + "." + row.field(i).getName());
-
         this.row = row;
-        this.emulatedFields = Tools.row0(f);
+        this.emulatedFields = row0(map(row.fields(), x -> x.as(as + "." + x.getName()), Field[]::new));
     }
 
     AbstractRow emulatedFields() {

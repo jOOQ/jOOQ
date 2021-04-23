@@ -84,6 +84,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
@@ -1215,32 +1216,19 @@ implements
 
         // [#5110] This is not yet supported by Derby
         if (upsertSelect != null) {
-            Row row = upsertSelect.fieldsRow();
-            List<Field<?>> v = new ArrayList<>(row.size());
-
-            for (int i = 0; i < row.size(); i++)
-                v.add(row.field(i).as("s" + (i + 1)));
 
             // [#579] TODO: Currently, this syntax may require aliasing
             // on the call-site
-            src = DSL.select(v).from(upsertSelect).asTable("src");
+            src = DSL.select(map(upsertSelect.fieldsRow().fields(), (f, i) -> f.as("s" + (i + 1)))).from(upsertSelect).asTable("src");
             srcFields = Arrays.asList(src.fields());
         }
         else if (usingSubqueries) {
-            List<Field<?>> v = new ArrayList<>(getUpsertValues().size());
-
-            for (int i = 0; i < getUpsertValues().size(); i++)
-                v.add(getUpsertValues().get(i).as("s" + (i + 1)));
-
-            src = DSL.select(v).asTable("src");
+            src = DSL.select(map(getUpsertValues(), (f, i) -> f.as("s" + (i + 1)))).asTable("src");
             srcFields = Arrays.asList(src.fields());
         }
         else {
             src = new Dual();
-            srcFields = new ArrayList<>(getUpsertValues().size());
-
-            for (int i = 0; i < getUpsertValues().size(); i++)
-                srcFields.add(getUpsertValues().get(i));
+            srcFields = map(getUpsertValues(), f -> f);
         }
 
         // The condition for the ON clause:

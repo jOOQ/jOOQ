@@ -37,8 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.io.Serializable;
 
+// ...
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
 
@@ -68,12 +71,7 @@ public class DefaultRecordListenerProvider implements RecordListenerProvider, Se
      * <code>RecordListener</code> instances.
      */
     public static RecordListenerProvider[] providers(RecordListener... listeners) {
-        RecordListenerProvider[] result = new RecordListenerProvider[listeners.length];
-
-        for (int i = 0; i < listeners.length; i++)
-            result[i] = new DefaultRecordListenerProvider(listeners[i]);
-
-        return result;
+        return map(listeners, DefaultRecordListenerProvider::new, RecordListenerProvider[]::new);
     }
 
     /**

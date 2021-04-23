@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.map;
 
 import java.sql.SQLWarning;
 import java.util.ArrayList;
@@ -272,42 +273,22 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final Field<?>[] fields(Field<?>... f) {
-        Field<?>[] result = new Field[f.length];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = field(f[i]);
-
-        return result;
+        return map(f, i -> field(i), Field[]::new);
     }
 
     @Override
     public final Field<?>[] fields(String... f) {
-        Field<?>[] result = new Field[f.length];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = field(f[i]);
-
-        return result;
+        return map(f, i -> field(i), Field[]::new);
     }
 
     @Override
     public final Field<?>[] fields(Name... f) {
-        Field<?>[] result = new Field[f.length];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = field(f[i]);
-
-        return result;
+        return map(f, i -> field(i), Field[]::new);
     }
 
     @Override
     public final Field<?>[] fields(int... f) {
-        Field<?>[] result = new Field[f.length];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = field(f[i]);
-
-        return result;
+        return map(f, i -> field(i), Field[]::new);
     }
 
     @Override
@@ -327,13 +308,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final Class<?>[] types() {
-        int size = fields.length;
-        Class<?>[] result = new Class[size];
-
-        for (int i = 0; i < size; i++)
-            result[i] = field(i).getType();
-
-        return result;
+        return Tools.map(fields, f -> f.getType(), Class[]::new);
     }
 
     @Override
@@ -353,13 +328,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final DataType<?>[] dataTypes() {
-        int size = fields.length;
-        DataType<?>[] result = new DataType[size];
-
-        for (int i = 0; i < size; i++)
-            result[i] = field(i).getDataType();
-
-        return result;
+        return map(fields, f -> f.getDataType(), DataType[]::new);
     }
 
     @Override
@@ -397,9 +366,8 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     final int[] indexesOf(String... fieldNames) {
         int[] result = new int[fieldNames.length];
 
-        for (int i = 0; i < fieldNames.length; i++) {
+        for (int i = 0; i < fieldNames.length; i++)
             result[i] = indexOrFail(this, fieldNames[i]);
-        }
 
         return result;
     }

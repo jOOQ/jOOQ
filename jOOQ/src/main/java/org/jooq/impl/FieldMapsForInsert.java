@@ -233,13 +233,9 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         Select<Record> select = null;
 
         Map<Field<?>, List<Field<?>>> v = valuesFlattened();
-        for (int row = 0; row < rows; row++) {
-            List<Field<?>> fields = new ArrayList<>(v.size());
-
-            for (List<Field<?>> list : v.values())
-                fields.add(list.get(row));
-
-            Select<Record> iteration = DSL.select(fields);
+        for (int i = 0; i < rows; i++) {
+            int row = i;
+            Select<Record> iteration = DSL.select(Tools.map(v.values(), l -> l.get(row)));
 
             if (select == null)
                 select = iteration;

@@ -150,12 +150,8 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     public final CreateViewFinalStep as(Select<? extends R> s) {
         this.select = s;
 
-        if (fieldNameFunction != null) {
-            List<Field<?>> source = s.getSelect();
-            fields = new Field[source.size()];
-            for (int i = 0; i < fields.length; i++)
-                fields[i] = fieldNameFunction.apply(source.get(i), i);
-        }
+        if (fieldNameFunction != null)
+            fields = map(s.getSelect(), fieldNameFunction::apply, Field[]::new);
 
         return this;
     }
@@ -164,13 +160,8 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     public final CreateViewFinalStep as(SQL sql) {
         this.select = DSL.resultQuery(sql);
 
-        if (fieldNameFunction != null) {
-            Select<?> s = parsed();
-            List<Field<?>> source = s.getSelect();
-            fields = new Field[source.size()];
-            for (int i = 0; i < fields.length; i++)
-                fields[i] = fieldNameFunction.apply(source.get(i), i);
-        }
+        if (fieldNameFunction != null)
+            fields = map(parsed().getSelect(), fieldNameFunction::apply, Field[]::new);
 
         return this;
     }

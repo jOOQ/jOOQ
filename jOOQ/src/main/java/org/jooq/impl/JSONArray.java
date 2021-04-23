@@ -142,12 +142,7 @@ implements
 
             case POSTGRES:
                 if (onNull == JSONOnNull.ABSENT_ON_NULL) {
-                    Row1[] rows = new Row1[fields.size()];
-
-                    int i = 0;
-                    for (Field<?> field : fields)
-                        rows[i++] = row(field);
-
+                    Row1[] rows = map(fields, f -> row(f), Row1[]::new);
                     Table<?> t = values(rows).as("t", "a");
                     Field<?> a = t.field("a");
                     ctx.visit(DSL.field(

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -128,17 +130,18 @@ implements
     final CommonTableExpression as0(Select select, Boolean materialized) {
         Select<?> s = select;
 
-        if (fieldNameFunction != null) {
-            List<Field<?>> source = s.getSelect();
-            Name[] names = new Name[source.size()];
-
-            for (int i = 0; i < names.length; i++)
-                names[i] = DSL.name(fieldNameFunction.apply(source.get(i), i));
-
-            return new CommonTableExpressionImpl(new DerivedColumnListImpl(name, names), s, materialized);
-        }
-
-        return new CommonTableExpressionImpl(this, s, materialized);
+        if (fieldNameFunction != null)
+            return new CommonTableExpressionImpl(
+                new DerivedColumnListImpl(name, map(
+                    s.getSelect(),
+                    (f, i) -> DSL.name(fieldNameFunction.apply(s.getSelect().get(i), i)),
+                    Name[]::new
+                )),
+                s,
+                materialized
+            );
+        else
+            return new CommonTableExpressionImpl(this, s, materialized);
     }
 
     @Override

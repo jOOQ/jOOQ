@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.InCondition.padded;
+import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,12 +112,7 @@ final class RowInCondition extends AbstractCondition {
 
     private final QueryPartInternal delegate(Configuration configuration) {
         if (EMULATE_IN.contains(configuration.dialect())) {
-            List<Condition> conditions = new ArrayList<>(right.size());
-
-            for (Row row : right)
-                conditions.add(new RowCondition(left, row, EQUALS));
-
-            Condition result = DSL.or(conditions);
+            Condition result = DSL.or(map(right, r -> new RowCondition(left, r, EQUALS)));
 
             if (not)
                 result = result.not();

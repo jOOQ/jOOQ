@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Tools.map;
 
 import java.util.Collection;
 import java.util.Map;
@@ -666,7 +667,7 @@ final class UpdateImpl<R extends Record>
 
     @Override
     public final UpdateImpl<R> orderBy(int... fieldIndexes) {
-        return orderBy(Tools.inline(fieldIndexes));
+        return orderBy(map(fieldIndexes, v -> DSL.inline(v)));
     }
 
     @Override

@@ -81,6 +81,7 @@ import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_OR;
 import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.AbstractList;
@@ -133,12 +134,7 @@ final class InCondition<T> extends AbstractCondition {
     }
 
     private final RowN[] rows() {
-        RowN[] result = new RowN[values.size()];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = row(embeddedFields(values.get(i)));
-
-        return result;
+        return map(values, v -> row(embeddedFields(v)), RowN[]::new);
     }
 
     private final void accept0(Context<?> ctx) {

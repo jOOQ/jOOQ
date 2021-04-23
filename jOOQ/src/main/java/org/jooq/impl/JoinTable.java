@@ -102,6 +102,7 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.search;
 import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
@@ -511,12 +512,7 @@ implements
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     final Condition usingCondition() {
-        List<Condition> conditions = new ArrayList<>(using.size());
-
-        for (Field<?> field : using)
-            conditions.add(Tools.qualify(lhs, field).eq((Field) Tools.qualify(rhs, field)));
-
-        return DSL.and(conditions);
+        return DSL.and(map(using, f -> Tools.qualify(lhs, f).eq((Field) Tools.qualify(rhs, f))));
     }
 
     private final void toSQLJoinCondition(Context<?> context, Condition c) {

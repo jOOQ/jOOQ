@@ -70,6 +70,7 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultString;
 
@@ -396,8 +397,7 @@ final class MetaImpl extends AbstractMeta {
                 }
             });
 
-            List<Table<?>> result = new ArrayList<>(tables.size());
-            for (Record table : tables) {
+            return Tools.map(tables, table -> {
                 String catalog = table.get(0, String.class);
                 String schema = table.get(1, String.class);
                 String name = table.get(2, String.class);
@@ -421,23 +421,21 @@ final class MetaImpl extends AbstractMeta {
                     : TableType.TABLE;
 
 
-                result.add(new MetaTable(
+                return new MetaTable(
                     name,
                     this,
                     getColumns(catalog, schema, name),
                     getUks(catalog, schema, name),
                     remarks,
                     tableType
-                ));
+                );
 
 //              TODO: Find a more efficient way to do this
 //              Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
 //                                                 .sortAsc("KEY_SEQ");
 //
 //              result.add(new MetaTable(name, this, columnCache.get(name)));
-            }
-
-            return result;
+            });
         }
 
         private final Result<Record> getUks(String catalog, String schema, String table) {
@@ -1183,23 +1181,14 @@ final class MetaImpl extends AbstractMeta {
 
                 // [#7377] The schema may be null instead of "" in some dialects
                 Schema schema = schemas.get(defaultString(k.get(1, String.class)));
-
                 Table<Record> fkTable = (Table<Record>) lookupTable(schema, k.get(2, String.class));
-                String fkName = k.get(3, String.class);
-                TableField<Record, ?>[] fkFields = new TableField[v.size()];
-                TableField<Record, ?>[] pkFields = new TableField[v.size()];
-
-                for (int i = 0; i < v.size(); i++) {
-                    pkFields[i] = (TableField<Record, ?>) getTable().field(v.get(i).get(3, String.class));
-                    fkFields[i] = (TableField<Record, ?>) fkTable.field(v.get(i).get(7, String.class));
-                }
 
                 references.add(new ReferenceImpl<>(
                     fkTable,
-                    name(fkName),
-                    fkFields,
+                    name(k.get(3, String.class)),
+                    map(v, f -> (TableField<Record, ?>) fkTable.field(f.get(7, String.class)), TableField[]::new),
                     this,
-                    pkFields,
+                    map(v, f -> (TableField<Record, ?>) getTable().field(f.get(3, String.class)), TableField[]::new),
                     true
                 ));
             });

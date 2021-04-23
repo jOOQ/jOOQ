@@ -124,6 +124,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.getMappedUDTName;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -1312,11 +1313,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
     }
-
-
-
-
-
 
 
 

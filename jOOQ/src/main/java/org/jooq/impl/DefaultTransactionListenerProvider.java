@@ -37,8 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.io.Serializable;
 
+import org.jooq.RecordListenerProvider;
 import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
 
@@ -68,12 +71,7 @@ public class DefaultTransactionListenerProvider implements TransactionListenerPr
      * <code>TransactionListener</code> instances.
      */
     public static TransactionListenerProvider[] providers(TransactionListener... listeners) {
-        TransactionListenerProvider[] result = new TransactionListenerProvider[listeners.length];
-
-        for (int i = 0; i < listeners.length; i++)
-            result[i] = new DefaultTransactionListenerProvider(listeners[i]);
-
-        return result;
+        return map(listeners, DefaultTransactionListenerProvider::new, TransactionListenerProvider[]::new);
     }
 
     /**

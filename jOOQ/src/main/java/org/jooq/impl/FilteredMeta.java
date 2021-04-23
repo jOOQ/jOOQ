@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -413,15 +415,14 @@ final class FilteredMeta extends AbstractMeta {
             }
         }
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         private final UniqueKey<R> key(UniqueKey<R> key) {
-            TableField<R, ?>[] fields1 = key.getFieldsArray();
-            TableField<R, ?>[] fields2 = new TableField[fields1.length];
-
-            for (int i = 0; i < fields2.length; i++)
-                fields2[i] = (TableField<R, ?>) field(fields1[i]);
-
-            return Internal.createUniqueKey(this, key.getName(), fields2, key.enforced());
+            return Internal.createUniqueKey(
+                this,
+                key.getName(),
+                map(key.getFieldsArray(), f -> (TableField) field(f), TableField[]::new),
+                key.enforced()
+            );
         }
 
         @Override

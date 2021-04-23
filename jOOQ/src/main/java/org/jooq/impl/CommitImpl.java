@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.ContentType.INCREMENT;
 import static org.jooq.ContentType.SCHEMA;
+import static org.jooq.impl.Tools.EMPTY_SOURCE;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.util.ArrayDeque;
@@ -135,12 +136,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     }
 
     private static final Collection<Source> sources(Collection<File> files) {
-        List<Source> result = new ArrayList<>();
-
-        for (File file : files)
-            result.add(Source.of(file.content()));
-
-        return result;
+        return Tools.map(files, f -> Source.of(f.content()));
     }
 
     @Override
@@ -225,10 +221,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         boolean recordingResult = false;
         boolean hasDeletions = false;
         for (Commit commit : commitHistory) {
-
-            List<File> commitFiles = new ArrayList<>();
-            for (File file : commit.delta())
-                commitFiles.add(file);
+            List<File> commitFiles = new ArrayList<>(commit.delta());
 
             // Deletions
             Iterator<File> deletions = commitFiles.iterator();
@@ -377,7 +370,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
             String commitId = newId + "-" + file.path();
 
             if (file.type() == SCHEMA)
-                to = to.commit(commitId, sources(apply(files, file, true).values()).toArray(new Source[0]));
+                to = to.commit(commitId, sources(apply(files, file, true).values()).toArray(EMPTY_SOURCE));
             else
                 to = to.apply(commitId, file.content());
         }

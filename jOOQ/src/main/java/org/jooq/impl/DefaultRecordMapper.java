@@ -80,7 +80,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -105,8 +104,6 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * This is the default implementation for <code>RecordMapper</code> types, which
@@ -1130,11 +1127,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         private final Object[] mapNonnested(R record) {
-            Object[] converted = new Object[parameterTypes.length];
 
             // [#10425] Initialise array to constructor parameter type init values
-            for (int i = 0; i < converted.length; i++)
-                converted[i] = Reflect.initValue(parameterTypes[i]);
+            Object[] converted = Tools.map(parameterTypes, c -> Reflect.initValue(c), Object[]::new);
 
             for (int i = 0; i < record.size(); i++)
                 set(record, i, converted, propertyIndexes[i]);

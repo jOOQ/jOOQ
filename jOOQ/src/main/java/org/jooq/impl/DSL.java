@@ -120,6 +120,7 @@ import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.math.BigDecimal;
@@ -10867,19 +10868,12 @@ public class DSL {
     @NotNull
     @Support
     public static <R extends Record> Table<R> table(Result<R> result) {
-        int size = result.size();
-
-        Row[] rows = new Row[size];
-        for (int i = 0; i < size; i++)
-            rows[i] = result.get(i).valuesRow();
-
-        Field<?>[] fields = result.fields();
-        String[] columns = new String[fields.length];
-        for (int i = 0; i < fields.length; i++)
-            columns[i] = fields[i].getName();
 
         // TODO [#2986] Coerce the record type upon the resulting table.
-        return (Table<R>) values0(rows).as("v", columns);
+        return (Table<R>) values0(map(result, r -> r.valuesRow(), Row[]::new)).as(
+            name("v"),
+            map(result.fields(), f -> f.getUnqualifiedName(), Name[]::new)
+        );
     }
 
     /**
@@ -12446,11 +12440,6 @@ public class DSL {
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
-
-
-
-
-
 
 
 
@@ -21974,11 +21963,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static GroupField groupingSets(Field<?>... fields) {
-        List<Field<?>>[] array = new List[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            array[i] = asList(fields[i]);
-
+        List<Field<?>>[] array = map(fields, f -> asList(f), List[]::new);
         return groupingSets(array);
     }
 
@@ -22008,11 +21993,7 @@ public class DSL {
     @NotNull
     @Support({ POSTGRES })
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
-        List<Field<?>>[] array = new List[fieldSets.length];
-
-        for (int i = 0; i < fieldSets.length; i++)
-            array[i] = Arrays.asList(fieldSets[i]);
-
+        List<Field<?>>[] array = map(fieldSets, f -> asList(f), List[]::new);
         return groupingSets(array);
     }
 

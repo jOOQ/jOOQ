@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableMap;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
@@ -72,13 +74,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -455,12 +454,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Meta meta(String... sources) {
-        Source[] s = new Source[sources.length];
-
-        for (int i = 0; i < s.length; i++)
-            s[i] = Source.of(sources[i]);
-
-        return new SourceMetaProvider(configuration(), s).provide();
+        return new SourceMetaProvider(configuration(), Tools.map(sources, s -> Source.of(s), Source[]::new)).provide();
     }
 
     @Override
@@ -737,19 +731,14 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public List<Object> extractBindValues(QueryPart part) {
         ParamCollector collector = new ParamCollector(configuration(), false);
         collector.visit(part);
-
-        List<Object> result = new ArrayList<>(collector.resultList.size());
-        for (Entry<String, Param<?>> entry : collector.resultList)
-            result.add(entry.getValue().getValue());
-
-        return Collections.unmodifiableList(result);
+        return unmodifiableList(Tools.map(collector.resultList, e -> e.getValue().getValue()));
     }
 
     @Override
     public Map<String, Param<?>> extractParams(QueryPart part) {
         ParamCollector collector = new ParamCollector(configuration(), true);
         collector.visit(part);
-        return Collections.unmodifiableMap(collector.resultFlat);
+        return unmodifiableMap(collector.resultFlat);
     }
 
     @Override
@@ -1503,15 +1492,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
         else {
             String[] firstRow = strings.get(0);
-            Field<?>[] fields = new Field[firstRow.length];
             int firstRowIndex = header ? 1 : 0;
-
-            if (header)
-                for (int i = 0; i < fields.length; i++)
-                    fields[i] = field(name(firstRow[i]), String.class);
-            else
-                for (int i = 0; i < fields.length; i++)
-                    fields[i] = field(name("COL" + (i + 1)), String.class);
+            Field<?>[] fields = header
+                ? Tools.map(firstRow, s -> field(name(s), String.class), Field[]::new)
+                : Tools.map(firstRow, (s, i) -> field(name("COL" + (i + 1)), String.class), Field[]::new);
 
             AbstractRow row = Tools.row0(fields);
             Result<Record> result = new ResultImpl<>(configuration(), row);
@@ -2807,12 +2791,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batch(String... queries) {
-        Query[] result = new Query[queries.length];
-
-        for (int i = 0; i < queries.length; i++)
-            result[i] = query(queries[i]);
-
-        return batch(result);
+        return batch(Tools.map(queries, q -> query(q), Query[]::new));
     }
 
     @Override

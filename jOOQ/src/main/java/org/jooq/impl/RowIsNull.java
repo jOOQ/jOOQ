@@ -68,6 +68,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.ArrayList;
@@ -145,12 +146,7 @@ final class RowIsNull extends AbstractCondition {
     }
 
     private final Condition condition(Field<?>[] fields) {
-        List<Condition> conditions = new ArrayList<>(fields.length);
-
-        for (Field<?> field : fields)
-            conditions.add(isNull ? field.isNull() : field.isNotNull());
-
-        return DSL.and(conditions);
+        return DSL.and(map(fields, f -> isNull ? f.isNull() : f.isNotNull()));
     }
 
     private final void acceptStandard(Context<?> ctx) {

@@ -64,6 +64,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.fieldsArray;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullSafeList;
 
@@ -635,8 +636,8 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
      * [#11200] Nest these constants to prevent initialisation deadlocks.
      */
     private static class BooleanValues {
-        static final List<Field<String>> TRUE_VALUES  = Tools.mapToList(Convert.TRUE_VALUES, v -> DSL.inline(v));
-        static final List<Field<String>> FALSE_VALUES = Tools.mapToList(Convert.FALSE_VALUES, v -> DSL.inline(v));
+        static final List<Field<String>> TRUE_VALUES  = Tools.map(Convert.TRUE_VALUES, v -> DSL.inline(v));
+        static final List<Field<String>> FALSE_VALUES = Tools.map(Convert.FALSE_VALUES, v -> DSL.inline(v));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -935,13 +936,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Condition in(Collection<?> values) {
-        Field<?>[] fields = new Field[values.size()];
-
-        Iterator<?> it = values.iterator();
-        for (int i = 0; it.hasNext(); i++)
-            fields[i] = Tools.field(it.next(), this);
-
-        return in(fields);
+        return in(map(values, (Object v) -> Tools.field(v, this), Field[]::new));
     }
 
     @Override
@@ -976,13 +971,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Condition notIn(Collection<?> values) {
-        Field<?>[] fields = new Field[values.size()];
-
-        Iterator<?> it = values.iterator();
-        for (int i = 0; it.hasNext(); i++)
-            fields[i] = Tools.field(it.next(), this);
-
-        return notIn(fields);
+        return notIn(map(values, (Object v) -> Tools.field(v, this), Field[]::new));
     }
 
     @Override

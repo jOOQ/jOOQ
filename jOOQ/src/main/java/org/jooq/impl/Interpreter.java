@@ -52,7 +52,7 @@ import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.intersect;
-import static org.jooq.impl.Tools.mapToList;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.Tools.reverseIterable;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -809,7 +809,7 @@ final class Interpreter {
 
         List<DataType<?>> columnTypes = query.$select() != null
             ? dataTypes(query.$select())
-            : mapToList(query.$fields(), f -> f.getDataType());
+            : map(query.$fields(), f -> f.getDataType());
 
         newTable(table, schema, asList(query.$fields()), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
     }
@@ -1513,12 +1513,7 @@ final class Interpreter {
 
             @Override
             public final List<Schema> getSchemas() {
-                List<Schema> result = new ArrayList<>(schemas.size());
-
-                for (MutableSchema schema : schemas)
-                    result.add(schema.interpretedSchema());
-
-                return result;
+                return map(schemas, s -> s.interpretedSchema());
             }
         }
     }
@@ -1581,32 +1576,17 @@ final class Interpreter {
 
             @Override
             public final List<Table<?>> getTables() {
-                List<Table<?>> result = new ArrayList<>(tables.size());
-
-                for (MutableTable table : tables)
-                    result.add(table.interpretedTable());
-
-                return result;
+                return map(tables, t -> t.interpretedTable());
             }
 
             @Override
             public final List<Domain<?>> getDomains() {
-                List<Domain<?>> result = new ArrayList<>(domains.size());
-
-                for (MutableDomain domain : domains)
-                    result.add(domain.interpretedDomain());
-
-                return result;
+                return map(domains, d -> d.interpretedDomain());
             }
 
             @Override
             public final List<Sequence<?>> getSequences() {
-                List<Sequence<?>> result = new ArrayList<>(sequences.size());
-
-                for (MutableSequence sequence : sequences)
-                    result.add(sequence.interpretedSequence());
-
-                return result;
+                return map(sequences, s -> s.interpretedSequence());
             }
         }
     }
@@ -1832,14 +1812,7 @@ final class Interpreter {
         }
 
         final Check<?>[] interpretedChecks() {
-            Check<?>[] result = new Check[checks.size()];
-
-            for (int i = 0; i < result.length; i++) {
-                MutableCheck c = checks.get(i);
-                result[i] = new CheckImpl<>(null, c.name(), c.condition, c.enforced);
-            }
-
-            return result;
+            return map(checks, c -> new CheckImpl<>(null, c.name(), c.condition, c.enforced), Check[]::new);
         }
 
         private final class InterpretedDomain extends DomainImpl {
@@ -1989,13 +1962,15 @@ final class Interpreter {
 
             if (result == null) {
                 MutableTable.InterpretedTable t = table.interpretedTable();
-                TableField<Record, ?>[] f = new TableField[fields.size()];
-
-                for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
 
                 // Add to map before adding bi-directionality to avoid StackOverflowErrors
-                interpretedUniqueKeys.put(qualifiedName, result = new UniqueKeyImpl<>(t, name(), f, enforced));
+                interpretedUniqueKeys.put(qualifiedName, result = new UniqueKeyImpl<>(
+                    t,
+                    name(),
+                    map(fields, f -> (TableField<Record, ?>) t.field(f.name()), TableField[]::new),
+                    enforced
+                ));
+
                 for (MutableForeignKey referencingKey : referencingKeys)
                     result.references.add((ForeignKey) referencingKey.interpretedKey());
             }
@@ -2054,20 +2029,12 @@ final class Interpreter {
                 MutableTable.InterpretedTable t = table.interpretedTable();
                 UniqueKeyImpl<Record> uk = referencedKey.interpretedKey();
 
-                TableField<Record, ?>[] ukFields = new TableField[fields.size()];
-                TableField<Record, ?>[] fkFields = new TableField[fields.size()];
-
-                for (int i = 0; i < fkFields.length; i++) {
-                    fkFields[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
-                    ukFields[i] = (TableField<Record, ?>) uk.getTable().field(referencedFields.get(i).name());
-                }
-
                 interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(
                     t,
                     name(),
-                    fkFields,
+                    map(fields, f -> (TableField<Record, ?>) t.field(f.name()), TableField[]::new),
                     uk,
-                    ukFields,
+                    map(referencedFields, f -> (TableField<Record, ?>) uk.getTable().field(f.name()), TableField[]::new),
                     enforced
                 ));
             }
@@ -2111,14 +2078,13 @@ final class Interpreter {
 
             if (result == null) {
                 Table<?> t = table.interpretedTable();
-                SortField<?>[] f = new SortField[fields.size()];
-
-                for (int i = 0; i < f.length; i++) {
-                    MutableSortField msf = fields.get(i);
-                    f[i] = t.field(msf.name()).sort(msf.sort);
-                }
-
-                interpretedIndexes.put(qualifiedName, result = new IndexImpl(name(), t, f, null, unique));
+                interpretedIndexes.put(qualifiedName, result = new IndexImpl(
+                    name(),
+                    t,
+                    map(fields, msf -> t.field(msf.name()).sort(msf.sort), SortField[]::new),
+                    null,
+                    unique
+                ));
             }
 
             return result;

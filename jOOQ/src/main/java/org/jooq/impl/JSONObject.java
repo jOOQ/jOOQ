@@ -178,13 +178,6 @@ implements
 
 
 
-
-
-
-
-
-
-
             case MARIADB: {
                 JSONEntry<?> first;
                 Name name = JSONArrayAgg.SUPPORT_JSON_MERGE_PRESERVE.contains(ctx.dialect()) ? N_JSON_MERGE_PRESERVE : N_JSON_MERGE;

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.io.Serializable;
 
 import org.jooq.ExecuteListener;
@@ -68,12 +70,7 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
      * <code>ExecuteListener</code> instances.
      */
     public static ExecuteListenerProvider[] providers(ExecuteListener... listeners) {
-        ExecuteListenerProvider[] result = new ExecuteListenerProvider[listeners.length];
-
-        for (int i = 0; i < listeners.length; i++)
-            result[i] = new DefaultExecuteListenerProvider(listeners[i]);
-
-        return result;
+        return map(listeners, DefaultExecuteListenerProvider::new, ExecuteListenerProvider[]::new);
     }
 
     /**

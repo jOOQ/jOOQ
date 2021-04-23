@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -79,11 +81,6 @@ final class Transform {
     }
 
     List<Condition> transform(List<Condition> conditions) {
-        List<Condition> result = new ArrayList<>(conditions.size());
-
-        for (Condition condition : conditions)
-            result.add(transform(condition));
-
-        return result;
+        return map(conditions, this::transform);
     }
 }

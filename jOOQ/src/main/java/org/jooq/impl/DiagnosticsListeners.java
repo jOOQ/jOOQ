@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import org.jooq.Configuration;
 import org.jooq.DiagnosticsContext;
 import org.jooq.DiagnosticsListener;
@@ -47,14 +49,10 @@ import org.jooq.DiagnosticsListenerProvider;
  */
 final class DiagnosticsListeners implements DiagnosticsListener {
 
-    final DiagnosticsListener[]     listeners;
+    final DiagnosticsListener[] listeners;
 
     DiagnosticsListeners(DiagnosticsListenerProvider[] providers) {
-        listeners = new DiagnosticsListener[providers.length];
-
-        for (int i = 0; i < listeners.length; i++)
-            listeners[i] = providers[i].provide();
-
+        listeners = map(providers, p -> p.provide(), DiagnosticsListener[]::new);
     }
 
     static final DiagnosticsListeners get(Configuration configuration) {

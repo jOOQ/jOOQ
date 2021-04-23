@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Tools.filterOne;
 import static org.jooq.impl.Tools.first;
 import static org.jooq.impl.Tools.list;
+import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -196,30 +197,17 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
      * Extract a list of values from a set of records given some fields
      */
     private static <R extends Record> List<Object> extractValues(Collection<? extends R> records, TableField<R, ?> field2) {
-        List<Object> result = new ArrayList<>(records.size());
-
-        for (R record : records)
-            result.add(record.get(field2));
-
-        return result;
+        return map(records, r -> r.get(field2));
     }
 
     /**
      * Extract a list of row value expressions from a set of records given some fields
      */
     private static <R extends Record> List<RowN> extractRows(Collection<? extends R> records, TableField<R, ?>[] fields) {
-        List<RowN> rows = new ArrayList<>(records.size());
-
-        for (R record : records) {
-            Object[] values = new Object[fields.length];
-
-            for (int i = 0; i < fields.length; i++)
-                values[i] = record.get(fields[i]);
-
-            rows.add(row(values));
-        }
-
-        return rows;
+        return map(records, r -> {
+            Object[] values = map(fields, f -> r.get(f), Object[]::new);
+            return row(values);
+        });
     }
 
     /**

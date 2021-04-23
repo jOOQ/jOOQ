@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Name.Quoted.DEFAULT;
 import static org.jooq.Name.Quoted.MIXED;
+import static org.jooq.impl.Tools.map;
 
 import org.jooq.Context;
 import org.jooq.Name;
@@ -75,13 +76,7 @@ final class QualifiedName extends AbstractName {
     }
 
     private static final UnqualifiedName[] names(String[] qualifiedName, Quoted quoted) {
-        String[] nonEmpty = nonEmpty(qualifiedName);
-        UnqualifiedName[] result = new UnqualifiedName[nonEmpty.length];
-
-        for (int i = 0; i < nonEmpty.length; i++)
-            result[i] = new UnqualifiedName(nonEmpty[i], quoted);
-
-        return result;
+        return map(nonEmpty(qualifiedName), s -> new UnqualifiedName(s, quoted), UnqualifiedName[]::new);
     }
 
     private static final UnqualifiedName[] last(Name[] qualifiedName) {
@@ -232,32 +227,17 @@ final class QualifiedName extends AbstractName {
 
     @Override
     public final Name quotedName() {
-        Name[] result = new Name[qualifiedName.length];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = qualifiedName[i].quotedName();
-
-        return new QualifiedName(result);
+        return new QualifiedName(map(qualifiedName, n -> n.quotedName(), Name[]::new));
     }
 
     @Override
     public final Name unquotedName() {
-        Name[] result = new Name[qualifiedName.length];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = qualifiedName[i].unquotedName();
-
-        return new QualifiedName(result);
+        return new QualifiedName(map(qualifiedName, n -> n.unquotedName(), Name[]::new));
     }
 
     @Override
     public final String[] getName() {
-        String[] result = new String[qualifiedName.length];
-
-        for (int i = 0; i < qualifiedName.length; i++)
-            result[i] = qualifiedName[i].last();
-
-        return result;
+        return map(qualifiedName, n -> n.last(), String[]::new);
     }
 
     @Override

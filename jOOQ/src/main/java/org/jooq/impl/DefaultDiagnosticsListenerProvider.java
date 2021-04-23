@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.io.Serializable;
 
 import org.jooq.DiagnosticsListener;
@@ -68,12 +70,7 @@ public class DefaultDiagnosticsListenerProvider implements DiagnosticsListenerPr
      * <code>DiagnosticsListener</code> instances.
      */
     public static DiagnosticsListenerProvider[] providers(DiagnosticsListener... listeners) {
-        DiagnosticsListenerProvider[] result = new DiagnosticsListenerProvider[listeners.length];
-
-        for (int i = 0; i < listeners.length; i++)
-            result[i] = new DefaultDiagnosticsListenerProvider(listeners[i]);
-
-        return result;
+        return map(listeners, DefaultDiagnosticsListenerProvider::new, DiagnosticsListenerProvider[]::new);
     }
 
     /**

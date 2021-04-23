@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,12 +67,7 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
     }
 
     final void addAll(Field<?>... fields) {
-        SortField<?>[] result = new SortField[fields.length];
-
-        for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].asc();
-
-        addAll(Arrays.asList(result));
+        addAll(Tools.map(fields, f -> f.asc()));
     }
 
     /**
@@ -100,11 +96,6 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
     }
 
     final List<Field<?>> fields() {
-        List<Field<?>> result = new ArrayList<>(size());
-
-        for (SortField<?> field : this)
-            result.add(((SortFieldImpl<?>) field).getField());
-
-        return result;
+        return Tools.map(this, f -> ((SortFieldImpl<?>) f).getField());
     }
 }

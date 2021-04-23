@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.InvocationOrder.REVERSE;
+import static org.jooq.impl.Tools.map;
 
 import java.util.Arrays;
 
@@ -54,11 +55,7 @@ class TransactionListeners implements TransactionListener {
     private final TransactionListener[] listeners;
 
     TransactionListeners(Configuration configuration) {
-        TransactionListenerProvider[] providers = configuration.transactionListenerProviders();
-        listeners = new TransactionListener[providers.length];
-
-        for (int i = 0; i < providers.length; i++)
-            listeners[i] = providers[i].provide();
+        listeners = map(configuration.transactionListenerProviders(), p -> p.provide(), TransactionListener[]::new);
     }
 
     @Override

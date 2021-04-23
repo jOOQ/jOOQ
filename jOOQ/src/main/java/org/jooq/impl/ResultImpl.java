@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.map;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
@@ -193,23 +194,13 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final List<?> getValues(int fieldIndex) {
-        List<Object> result = new ArrayList<>(size());
-
-        for (R record : this)
-            result.add(record.get(fieldIndex));
-
-        return result;
+        return Tools.map(this, r -> r.get(fieldIndex));
     }
 
     @Override
     public final <U> List<U> getValues(int fieldIndex, Class<? extends U> type) {
-        List<U> result = new ArrayList<>(size());
         Converter converter = converterOrFail(this, field(safeIndex(fieldIndex)).getType(), (Class) type);
-
-        for (R record : this)
-            result.add((U) converter.from(record.get(fieldIndex)));
-
-        return result;
+        return Tools.map(this, r -> (U) converter.from(r.get(fieldIndex)));
     }
 
     @Override
@@ -253,12 +244,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final List<Map<String, Object>> intoMaps() {
-        List<Map<String, Object>> list = new ArrayList<>(size());
-
-        for (R record : this)
-            list.add(record.intoMap());
-
-        return list;
+        return Tools.map(this, R::intoMap);
     }
 
     @Override
@@ -438,10 +424,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
         Map<List<?>, E> map = new LinkedHashMap<>();
 
         for (R record : this) {
-            List<Object> keyValueList = new ArrayList<>(keys.length);
-
-            for (Field<?> key : keys)
-                keyValueList.add(record.get(key));
+            List<Object> keyValueList = Tools.map(keys, k -> record.get(k));
 
             if (map.put(keyValueList, mapper.map(record)) != null)
                 throw new InvalidResultException("Key list " + keyValueList + " is not unique in Result for " + this);
@@ -917,14 +900,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final Object[][] intoArrays() {
-        int size = size();
-        Object[][] array = new Object[size][];
-
-        for (int i = 0; i < size; i++) {
-            array[i] = get(i).intoArray();
-        }
-
-        return array;
+        return Tools.map(this, r -> r.intoArray(), Object[][]::new);
     }
 
     @Override
@@ -1183,13 +1159,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> List<E> into(Class<? extends E> type) {
-        List<E> list = new ArrayList<>(size());
         RecordMapper<R, E> mapper = Tools.configuration(this).recordMapperProvider().provide(recordType(), type);
-
-        for (R record : this)
-            list.add(mapper.map(record));
-
-        return list;
+        return Tools.map(this, mapper::map);
     }
 
     @Override
@@ -1217,12 +1188,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> List<E> map(RecordMapper<? super R, E> mapper) {
-        List<E> result = new ArrayList<>(size());
-
-        for (R record : this)
-            result.add(mapper.map(record));
-
-        return result;
+        return Tools.map(this, mapper::map);
     }
 
     @Override

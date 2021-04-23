@@ -82,6 +82,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNameStrings;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
@@ -742,12 +743,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         All conflicting keys are considered
-        List<UniqueKey<R>> keys = table().getKeys();
-        List<List<? extends Field<?>>> result = new ArrayList<>(keys.size());
-        for (UniqueKey<R> key : keys)
-            result.add(key.getFields());
-
-        return result;
+        else
+            return map(table().getKeys(), k -> k.getFields());
     }
 
     @SuppressWarnings("unchecked")

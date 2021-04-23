@@ -195,20 +195,12 @@ implements
         if (default_ != null)
             ctx.formatSeparator().visit(K_DEFAULT).sql(' ').visit(default_);
 
-        if (constraints != null) {
-            if (ctx.family() == FIREBIRD) {
-                List<Condition> conditions = new ArrayList<>();
-
-                for (Constraint constraint : constraints)
-                    conditions.add(((ConstraintImpl) constraint).$check());
-
-                ctx.formatSeparator().visit(DSL.check(DSL.and(conditions)));
-            }
-            else {
+        if (constraints != null)
+            if (ctx.family() == FIREBIRD)
+                ctx.formatSeparator().visit(DSL.check(DSL.and(Tools.map(constraints, c -> ((ConstraintImpl) c).$check()))));
+            else
                 for (Constraint constraint : constraints)
                     ctx.formatSeparator().visit(constraint);
-            }
-        }
     }
 
 

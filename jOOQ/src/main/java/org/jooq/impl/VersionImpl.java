@@ -43,6 +43,7 @@ import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.createSchema;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
+import static org.jooq.impl.Tools.map;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -102,12 +103,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
     }
 
     private static List<Parent> wrap(Version[] parents) {
-        List<Parent> result = new ArrayList<>(parents.length);
-
-        for (Version parent : parents)
-            result.add(new Parent((VersionImpl) parent, null));
-
-        return result;
+        return map(parents, p -> new Parent((VersionImpl) p, null));
     }
 
     @Override

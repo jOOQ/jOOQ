@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import org.jooq.LoaderError;
 import org.jooq.Query;
 import org.jooq.exception.DataAccessException;
@@ -61,12 +63,8 @@ final class LoaderErrorImpl implements LoaderError {
     private static String[] strings(Object[] row) {
         if (row == null)
             return null;
-
-        String[] result = new String[row.length];
-        for (int i = 0; i < result.length; i++)
-            result[i] = row[i] == null ? null : row[i].toString();
-
-        return result;
+        else
+            return map(row, o -> o == null ? null : o.toString(), String[]::new);
     }
 
     @Override

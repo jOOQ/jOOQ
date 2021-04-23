@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.map;
 
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -1594,16 +1595,12 @@ implements
 
 
     private final List<? extends Field<?>> seekValues(Object[] values) {
-        if (getQuery() instanceof SelectQueryImpl) {
-            SelectQueryImpl<R> query = (SelectQueryImpl<R>) getQuery();
-            List<Field<?>> fields = query.getOrderBy().fields();
-            DataType<?>[] types = new DataType[fields.size()];
-
-            for (int i = 0; i < types.length; i++)
-                types[i] = fields.get(i).getDataType();
-
-            return Tools.fields(values, types);
-        }
+        if (getQuery() instanceof SelectQueryImpl)
+            return Tools.fields(values, map(
+                ((SelectQueryImpl<R>) getQuery()).getOrderBy().fields(),
+                (Field<?> f) -> f.getDataType(),
+                DataType[]::new
+            ));
         else
             return Tools.fields(values);
     }
@@ -3405,13 +3402,8 @@ implements
     }
 
     private final Object[] values(int index, R... records) {
-        Object[] array = new Object[records.length];
         Class<?> type = field(0).getType();
-
-        for (int i = 0; i < records.length; i++)
-            array[i] = records[i].get(index, type);
-
-        return array;
+        return map(records, r -> r.get(index, type), Object[]::new);
     }
 
     @Override

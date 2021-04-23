@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,14 +124,8 @@ final class RowCondition extends AbstractCondition {
         if ((comparator == EQUALS || comparator == NOT_EQUALS) &&
             (forceEmulation || EMULATE_EQ_AND_NE.contains(configuration.dialect()))) {
 
-            Field<?>[] leftFields = left.fields();
             Field<?>[] rightFields = right.fields();
-
-            List<Condition> conditions = new ArrayList<>(leftFields.length);
-            for (int i = 0; i < leftFields.length; i++)
-                conditions.add(leftFields[i].equal((Field) rightFields[i]));
-
-            Condition result = DSL.and(conditions);
+            Condition result = DSL.and(map(left.fields(), (f, i) -> f.equal((Field) rightFields[i])));
 
             if (comparator == NOT_EQUALS)
                 result = result.not();

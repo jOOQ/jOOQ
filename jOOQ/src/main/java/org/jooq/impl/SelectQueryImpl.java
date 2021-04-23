@@ -184,7 +184,7 @@ import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.isWindow;
-import static org.jooq.impl.Tools.mapToList;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.search;
@@ -1394,7 +1394,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         DSL.select(qualify(table(name("t")), select))
            .from(copy.asTable("t"))
            .where(rn.eq(one()))
-           .orderBy(mapToList(orderBy, o -> unqualified(o)));
+           .orderBy(map(orderBy, o -> unqualified(o)));
 
         if (limit.numberOfRows != null) {
             SelectLimitPercentStep<?> s2 = s1.limit((Param) limit.numberOfRows);
@@ -1590,15 +1590,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (selectAliases != null) {
                 context.data().remove(DATA_SELECT_ALIASES);
-
-                originalFields = getSelect();
-                alternativeFields = new ArrayList<>(originalFields.size());
-
-                for (int i = 0; i < originalFields.size(); i++)
-                    if (i < selectAliases.length)
-                        alternativeFields.add(originalFields.get(i).as(selectAliases[i]));
-                    else
-                        alternativeFields.add(originalFields.get(i));
+                alternativeFields = map(originalFields = getSelect(),
+                    (f, i) -> i < selectAliases.length ? f.as(selectAliases[i]) : f
+                );
             }
 
             if (TRUE.equals(renderTrailingLimit))
@@ -3213,7 +3207,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6983
                 if (ctx.family() == DERBY)
-                    ctx.visit(new SelectFieldList<>(mapToList(fields, f -> Tools.unqualified(f))));
+                    ctx.visit(new SelectFieldList<>(map(fields, f -> Tools.unqualified(f))));
                 else
                     ctx.sql('*');
 
@@ -3922,7 +3916,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addOrderBy(int... fieldIndexes) {
-        addOrderBy(Tools.inline(fieldIndexes));
+        addOrderBy(map(fieldIndexes, v -> DSL.inline(v)));
     }
 
 

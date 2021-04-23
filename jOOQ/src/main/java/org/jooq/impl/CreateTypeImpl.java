@@ -85,7 +85,7 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
 
     @Override
     public final CreateTypeFinalStep asEnum(String... v) {
-        return asEnum(Tools.mapToList(v, s -> DSL.inline(s)));
+        return asEnum(Tools.map(v, s -> DSL.inline(s)));
     }
 
     @SafeVarargs

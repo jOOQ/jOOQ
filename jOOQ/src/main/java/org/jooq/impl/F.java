@@ -80,11 +80,35 @@ interface ThrowingFunction<T, R, E extends Throwable> {
 }
 
 /**
+ * A checked exception throwing {@link IntFunction}.
+ */
+@FunctionalInterface
+interface ThrowingIntFunction<R, E extends Throwable> {
+    R apply(int t) throws E;
+}
+
+/**
  * A checked exception throwing {@link BiFunction}.
  */
 @FunctionalInterface
 interface ThrowingBiFunction<T1, T2, R, E extends Throwable> {
     R apply(T1 t1, T2 t2) throws E;
+}
+
+/**
+ * A checked exception throwing {@link IntIntFunction}.
+ */
+@FunctionalInterface
+interface ThrowingIntIntFunction<R, E extends Throwable> {
+    R apply(int i, int j) throws E;
+}
+
+/**
+ * A checked exception throwing {@link ObjIntFunction}.
+ */
+@FunctionalInterface
+interface ThrowingObjIntFunction<T, R, E extends Throwable> {
+    R apply(T t, int i) throws E;
 }
 
 /**

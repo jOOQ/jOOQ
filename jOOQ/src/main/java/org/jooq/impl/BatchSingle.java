@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
 import static org.jooq.impl.Tools.fields;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitAll;
 
 import java.sql.Connection;
@@ -268,12 +269,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         // [#4062] Make sure we collect also repeated named parameters
         ParamCollector collector = new ParamCollector(configuration, false);
         collector.visit(query);
-        Param<?>[] params = new Param[collector.resultList.size()];
-        Iterator<Entry<String, Param<?>>> it = collector.resultList.iterator();
-        for (int i = 0; it.hasNext(); i++)
-            params[i] = it.next().getValue();
-
-        return params;
+        return map(collector.resultList, e -> e.getValue(), Param[]::new);
     }
 
     private final int[] executeStatic() {

@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Tools.flatMap;
+import static org.jooq.impl.Tools.map;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -153,12 +155,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     List<Schema> getSchemas0() {
-        List<Schema> result = new ArrayList<>();
-
-        for (Catalog catalog : getCatalogs())
-            result.addAll(catalog.getSchemas());
-
-        return result;
+        return flatMap(getCatalogs(), c -> c.getSchemas());
     }
 
     @Override
@@ -187,12 +184,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     List<Table<?>> getTables0() {
-        List<Table<?>> result = new ArrayList<>();
-
-        for (Schema schema : getSchemas())
-            result.addAll(schema.getTables());
-
-        return result;
+        return flatMap(getSchemas(), s -> s.getTables());
     }
 
     @Override
@@ -221,12 +213,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     List<Domain<?>> getDomains0() {
-        List<Domain<?>> result = new ArrayList<>();
-
-        for (Schema schema : getSchemas())
-            result.addAll(schema.getDomains());
-
-        return result;
+        return flatMap(getSchemas(), s -> s.getDomains());
     }
 
     @Override
@@ -255,12 +242,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     final List<Sequence<?>> getSequences0() {
-        List<Sequence<?>> result = new ArrayList<>();
-
-        for (Schema schema : getSchemas())
-            result.addAll(schema.getSequences());
-
-        return result;
+        return flatMap(getSchemas(), s -> s.getSequences());
     }
 
     @Override
@@ -324,12 +306,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     List<UniqueKey<?>> getUniqueKeys0() {
-        List<UniqueKey<?>> result = new ArrayList<>();
-
-        for (Table<?> table : getTables())
-            result.addAll(table.getUniqueKeys());
-
-        return result;
+        return flatMap(getTables(), t -> t.getUniqueKeys());
     }
 
     @Override
@@ -358,12 +335,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     List<ForeignKey<?, ?>> getForeignKeys0() {
-        List<ForeignKey<?, ?>> result = new ArrayList<>();
-
-        for (Table<?> table : getTables())
-            result.addAll(table.getReferences());
-
-        return result;
+        return flatMap(getTables(), (Table<?> t) -> t.getReferences());
     }
 
     @Override
@@ -392,12 +364,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     List<Index> getIndexes0() {
-        List<Index> result = new ArrayList<>();
-
-        for (Table<?> table : getTables())
-            result.addAll(table.getIndexes());
-
-        return result;
+        return flatMap(getTables(), t -> t.getIndexes());
     }
 
     private final <T extends Named> List<T> get(Name name, Iterable<T> i, Map<Name, T> qualified, Map<Name, List<T>> unqualified) {
@@ -659,21 +626,18 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         return lookupKey(table, fk.getKey());
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> ForeignKey<R, ?> copyFK(Table<R> fkTable, UniqueKey<?> uk, ForeignKey<R, ?> oldFk) {
         Table<?> ukTable = uk.getTable();
 
-        TableField<R, ?>[] oldFkFields = oldFk.getFieldsArray();
-        TableField<?, ?>[] oldUkFields = oldFk.getKeyFieldsArray();
-        TableField<R, ?>[] fkFields = new TableField[oldFkFields.length];
-        TableField<?, ?>[] ukfields = new TableField[oldFkFields.length];
-
-        for (int i = 0; i < oldFkFields.length; i++) {
-            fkFields[i] = (TableField<R, ?>) fkTable.field(oldFkFields[i]);
-            ukfields[i] = (TableField<?, ?>) ukTable.field(oldUkFields[i]);
-        }
-
-        return Internal.createForeignKey(fkTable, oldFk.getQualifiedName(), fkFields, uk, (TableField[]) ukfields, oldFk.enforced());
+        return Internal.createForeignKey(
+            fkTable,
+            oldFk.getQualifiedName(),
+            map(oldFk.getFieldsArray(), f -> (TableField) fkTable.field(f), TableField[]::new),
+            uk,
+            map(oldFk.getKeyFieldsArray(), f -> (TableField) ukTable.field(f), TableField[]::new),
+            oldFk.enforced()
+        );
     }
 
     @Override

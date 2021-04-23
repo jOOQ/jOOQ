@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.io.Serializable;
 
 import org.jooq.VisitListener;
@@ -68,12 +70,7 @@ public class DefaultVisitListenerProvider implements VisitListenerProvider, Seri
      * <code>VisitListener</code> instances.
      */
     public static VisitListenerProvider[] providers(VisitListener... listeners) {
-        VisitListenerProvider[] result = new VisitListenerProvider[listeners.length];
-
-        for (int i = 0; i < listeners.length; i++)
-            result[i] = new DefaultVisitListenerProvider(listeners[i]);
-
-        return result;
+        return map(listeners, DefaultVisitListenerProvider::new, VisitListenerProvider[]::new);
     }
 
     /**

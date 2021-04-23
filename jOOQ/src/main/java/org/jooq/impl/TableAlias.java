@@ -87,18 +87,11 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final FieldsImpl<R> init(Name[] fieldAliases) {
-        Row row = this.alias.wrapped().fieldsRow();
-        int size = row.size();
-        List<Field<?>> result = new ArrayList<>(size);
-
-        for (int i = 0; i < size; i++) {
-            Field<?> field = row.field(i);
-            Name name = (fieldAliases != null && fieldAliases.length > i)
-                ? fieldAliases[i]
-                : field.getUnqualifiedName();
-
-            result.add(new TableFieldImpl(name, field.getDataType(), this, field.getCommentPart(), field.getBinding()));
-        }
+        List<Field<?>> result = Tools.map(this.alias.wrapped().fieldsRow().fields(), (f, i) -> new TableFieldImpl(
+              fieldAliases != null && fieldAliases.length > i
+            ? fieldAliases[i]
+            : f.getUnqualifiedName(), f.getDataType(), this, f.getCommentPart(), f.getBinding()
+        ));
 
         return new FieldsImpl<>(result);
     }

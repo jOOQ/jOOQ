@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.Tools.EMPTY_CHECK;
+import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -236,12 +237,7 @@ final class Snapshot extends AbstractMeta {
 
             // TODO: [#9456] This auxiliary method should not be necessary
             //               We should be able to call TableLike.fields instead.
-            TableField<R, ?>[] result = new TableField[tableFields.length];
-
-            for (int i = 0; i < tableFields.length; i++)
-                result[i] = (TableField<R, ?>) field(tableFields[i].getName());
-
-            return result;
+            return map(tableFields, f -> (TableField<R, ?>) field(f.getName()), TableField[]::new);
         }
 
         final void resolveReferences() {

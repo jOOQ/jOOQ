@@ -91,6 +91,7 @@ import static org.jooq.impl.ScopeMarker.TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.flattenCollection;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
@@ -155,6 +156,8 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.BatchedPreparedStatement;
 import org.jooq.tools.jdbc.JDBCUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -353,7 +356,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             markTopLevelCteAndAccept(ctx, c -> {});
 
         boolean previousDeclareFields = ctx.declareFields();
-
 
 
 
@@ -1245,13 +1247,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         Object... values
     ) {
         if (values != null && values.length > 0) {
-            final Field<Object> returnIdentity = (Field<Object>) returnedIdentity();
+            Field<Object> returnIdentity = (Field<Object>) returnedIdentity();
 
             if (returnIdentity != null) {
-                Object[] ids = new Object[values.length];
-
-                for (int i = 0; i < values.length; i++)
-                    ids[i] = returnIdentity.getDataType().convert(values[i]);
+                DataType<Object> type = returnIdentity.getDataType();
+                Object[] ids = map(values, v -> type.convert(v), Object[]::new);
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query

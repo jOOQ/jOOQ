@@ -61,6 +61,7 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.traverseJoins;
 
 import java.sql.Timestamp;
@@ -420,11 +421,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final Table<R> as(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
-        Field<?>[] fields = fields();
-        String[] names = new String[fields.length];
-        for (int i = 0; i < fields.length; i++)
-            names[i] = aliasFunction.apply(fields[i], i);
-        return as(alias, names);
+        return as(alias, map(fields(), (f, i) -> aliasFunction.apply(f, i), String[]::new));
     }
 
     @Override
@@ -444,11 +441,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final Table<R> as(Name alias, BiFunction<? super Field<?>, ? super Integer, ? extends Name> aliasFunction) {
-        Field<?>[] fields = fields();
-        Name[] names = new Name[fields.length];
-        for (int i = 0; i < fields.length; i++)
-            names[i] = aliasFunction.apply(fields[i], i);
-        return as(alias, names);
+        return as(alias, map(fields(), (f, i) -> aliasFunction.apply(f, i), Name[]::new));
     }
 
     // ------------------------------------------------------------------------

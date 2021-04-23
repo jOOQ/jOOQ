@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.map;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -156,12 +158,7 @@ final class CommitsImpl implements Commits {
     }
 
     private final List<File> files(CommitType commit) {
-        List<File> files = new ArrayList<>();
-
-        for (FileType file : commit.getFiles())
-            files.add(Migrations.file(file.getPath(), file.getChange() == ChangeType.DELETE ? null : file.getContent(), file.getContentType()));
-
-        return files;
+        return map(commit.getFiles(), f -> Migrations.file(f.getPath(), f.getChange() == ChangeType.DELETE ? null : f.getContent(), f.getContentType()));
     }
 
     @Override
@@ -170,19 +167,13 @@ final class CommitsImpl implements Commits {
         List<CommitType> list = new ArrayList<>();
 
         for (Commit commit : this) {
-            List<ParentType> parents = new ArrayList<>();
-            List<FileType> files = new ArrayList<>();
-
-            for (Commit parent : commit.parents())
-                parents.add(new ParentType().withId(parent.id()));
-
-            for (File file : commit.files())
-                files.add(new FileType()
-                    .withPath(file.path())
-                    .withContent(file.content())
-                    .withContentType(file.type())
-                    .withChange(file.content() == null ? ChangeType.DELETE : ChangeType.MODIFY)
-                );
+            List<ParentType> parents = map(commit.parents(), p -> new ParentType().withId(p.id()));
+            List<FileType> files = map(commit.files(), f -> new FileType()
+                .withPath(f.path())
+                .withContent(f.content())
+                .withContentType(f.type())
+                .withChange(f.content() == null ? ChangeType.DELETE : ChangeType.MODIFY)
+            );
 
             list.add(new CommitType()
                 .withId(commit.id())

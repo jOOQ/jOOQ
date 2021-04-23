@@ -277,6 +277,7 @@ import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SortField;
+import org.jooq.Source;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
@@ -342,8 +343,10 @@ final class Tools {
     static final Row[]                      EMPTY_ROW                      = {};
     static final Schema[]                   EMTPY_SCHEMA                   = {};
     static final SortField<?>[]             EMPTY_SORTFIELD                = {};
+    static final Source[]                   EMPTY_SOURCE                   = {};
     static final String[]                   EMPTY_STRING                   = {};
     static final Table<?>[]                 EMPTY_TABLE                    = {};
+    static final TableField<?, ?>[]         EMPTY_TABLE_FIELD              = {};
     static final TableRecord<?>[]           EMPTY_TABLE_RECORD             = {};
     static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD         = {};
 
@@ -879,12 +882,7 @@ final class Tools {
      * Turn a {@link Result} into a list of {@link Row}
      */
     static final List<Row> rows(Result<?> result) {
-        List<Row> rows = new ArrayList<>(result.size());
-
-        for (Record record : result)
-            rows.add(record.valuesRow());
-
-        return rows;
+        return map(result, r -> r.valuesRow());
     }
 
 
@@ -1236,7 +1234,7 @@ final class Tools {
     }
 
     static final List<SortField<?>> sortFields(Collection<? extends OrderField<?>> fields) {
-        return mapToList(fields, o -> sortField(o));
+        return Tools.map(fields, (OrderField<?> o) -> sortField(o));
     }
 
     static final String fieldNameString(int index) {
@@ -1289,7 +1287,7 @@ final class Tools {
     }
 
     static final List<Field<?>> unaliasedFields(Collection<? extends Field<?>> fields) {
-        return mapToList(fields, (f, i) -> DSL.field(fieldName(i), f.getDataType()).as(f));
+        return map(fields, (f, i) -> DSL.field(fieldName(i), f.getDataType()).as(f));
     }
 
     static final <R extends Record, O extends Record> ReferenceImpl<R, O> aliasedKey(ForeignKey<R, O> key, Table<R> child, Table<O> parent) {
@@ -1308,7 +1306,7 @@ final class Tools {
     }
 
     static final List<Field<?>> aliasedFields(Collection<? extends Field<?>> fields) {
-        return mapToList(fields, (f, i) -> f.as(fieldName(i)));
+        return map(fields, (f, i) -> f.as(fieldName(i)));
     }
 
     static final Field<?>[] fieldsByName(String[] fieldNames) {
@@ -1359,11 +1357,11 @@ final class Tools {
     }
 
     static final List<Name> names(Collection<?> names) {
-        return mapToList(names, n -> n instanceof Name ? (Name) n : DSL.name(String.valueOf(n)));
+        return map(names, n -> n instanceof Name ? (Name) n : DSL.name(String.valueOf(n)));
     }
 
     static final List<JSONEntry<?>> jsonEntries(Field<?>[] entries) {
-        return Tools.mapToList(entries, f -> DSL.jsonEntry(f));
+        return Tools.map(entries, f -> DSL.jsonEntry(f));
     }
 
     private static final IllegalArgumentException fieldExpected(Object value) {
@@ -1663,7 +1661,7 @@ final class Tools {
         if (field == null)
             return new ArrayList<>();
         else
-            return mapToList(values, v -> field(v, field));
+            return map(values, v -> field(v, field));
     }
 
     static final List<Field<?>> fields(Object[] values, Field<?>[] fields) {
@@ -1679,7 +1677,7 @@ final class Tools {
     }
 
     static final <T> List<Field<T>> fields(Collection<?> values, DataType<T> type) {
-        return mapToList(values, v -> field(v, type));
+        return map(values, v -> field(v, type));
     }
 
     @SuppressWarnings("unchecked")
@@ -1693,22 +1691,6 @@ final class Tools {
 
     static final Field<?>[] fieldsArray(Object[] values, DataType<?>[] types) {
         return map(values, (v, i) -> field(v, types[i]), Field[]::new);
-    }
-
-    static final <T> List<Field<T>> inline(T[] values) {
-        return mapToList(values, v -> DSL.inline(v));
-    }
-
-    @SuppressWarnings("unchecked")
-    static final Field<Integer>[] inline(int[] fieldIndexes) {
-        if (fieldIndexes == null)
-            return (Field<Integer>[]) EMPTY_FIELD;
-
-        Field<Integer>[] result = new Field[fieldIndexes.length];
-        for (int i = 0; i < fieldIndexes.length; i++)
-            result[i] = DSL.inline(fieldIndexes[i]);
-
-        return result;
     }
 
     static final IllegalArgumentException indexFail(Row row, Field<?> field) {
@@ -1789,11 +1771,15 @@ final class Tools {
         return result;
     }
 
+    private static final <T> List<T> newListWithCapacity(Iterable<?> it) {
+        return it instanceof Collection ? new ArrayList<>(((Collection<?>) it).size()) : new ArrayList<>();
+    }
+
     /**
      * Like <code>Stream.of(array).map(mapper).toArray(constructor)</code> but
      * without the entire stream pipeline.
      */
-    static final <T, U> U[] map(T[] array, Function<? super T, ? extends U> mapper, IntFunction<U[]> constructor) {
+    static final <T, U, E extends Exception> U[] map(T[] array, ThrowingFunction<? super T, ? extends U, E> mapper, IntFunction<U[]> constructor) throws E {
         if (array == null)
             return constructor.apply(0);
 
@@ -1808,7 +1794,22 @@ final class Tools {
      * Like <code>Stream.of(array).map(mapper).toArray(constructor)</code> but
      * without the entire stream pipeline.
      */
-    static final <T, U> U[] map(Collection<? extends T> collection, Function<? super T, ? extends U> mapper, IntFunction<U[]> constructor) {
+    static final <U, E extends Exception> U[] map(int[] array, ThrowingIntFunction<? extends U, E> mapper, IntFunction<U[]> constructor) throws E {
+        if (array == null)
+            return constructor.apply(0);
+
+        U[] result = constructor.apply(array.length);
+        for (int i = 0; i < array.length; i++)
+            result[i] = mapper.apply(array[i]);
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).map(mapper).toArray(constructor)</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T, U, E extends Exception> U[] map(Collection<? extends T> collection, ThrowingFunction<? super T, ? extends U, E> mapper, IntFunction<U[]> constructor) throws E {
         if (collection == null)
             return constructor.apply(0);
 
@@ -1825,7 +1826,7 @@ final class Tools {
      * <code>Stream.of(array).zipWithIndex().map(mapper).toArray(constructor)</code>
      * but without the entire stream pipeline.
      */
-    static final <T, U> U[] map(T[] array, ObjIntFunction<? super T, ? extends U> mapper, IntFunction<U[]> constructor) {
+    static final <T, U, E extends Exception> U[] map(T[] array, ThrowingObjIntFunction<? super T, ? extends U, E> mapper, IntFunction<U[]> constructor) throws E {
         if (array == null)
             return constructor.apply(0);
 
@@ -1837,10 +1838,43 @@ final class Tools {
     }
 
     /**
+     * Like
+     * <code>Stream.of(array).zipWithIndex().map(mapper).toArray(constructor)</code>
+     * but without the entire stream pipeline.
+     */
+    static final <U, E extends Exception> U[] map(int[] array, ThrowingIntIntFunction<? extends U, E> mapper, IntFunction<U[]> constructor) throws E {
+        if (array == null)
+            return constructor.apply(0);
+
+        U[] result = constructor.apply(array.length);
+        for (int i = 0; i < array.length; i++)
+            result[i] = mapper.apply(array[i], i);
+
+        return result;
+    }
+
+    /**
+     * Like
+     * <code>Stream.of(array).zipWithIndex().map(mapper).toArray(constructor)</code>
+     * but without the entire stream pipeline.
+     */
+    static final <T, U, E extends Exception> U[] map(Collection<? extends T> collection, ThrowingObjIntFunction<? super T, ? extends U, E> mapper, IntFunction<U[]> constructor) throws E {
+        if (collection == null)
+            return constructor.apply(0);
+
+        U[] result = constructor.apply(collection.size());
+        int i = 0;
+        for (T t : collection)
+            result[i] = mapper.apply(t, i++);
+
+        return result;
+    }
+
+    /**
      * Like <code>Stream.of(array).map(mapper).toList()</code> but
      * without the entire stream pipeline.
      */
-    static final <T, U> List<U> mapToList(T[] array, Function<? super T, ? extends U> mapper) {
+    static final <T, U, E extends Exception> List<U> map(T[] array, ThrowingFunction<? super T, ? extends U, E> mapper) throws E {
         if (array == null)
             return emptyList();
 
@@ -1855,13 +1889,43 @@ final class Tools {
      * Like <code>Stream.of(array).map(mapper).toList()</code> but
      * without the entire stream pipeline.
      */
-    static final <T, U> List<U> mapToList(Collection<? extends T> collection, Function<? super T, ? extends U> mapper) {
-        if (collection == null)
+    static final <U, E extends Exception> List<U> map(int[] array, ThrowingIntFunction<? extends U, E> mapper) throws E {
+        if (array == null)
             return emptyList();
 
-        List<U> result = new ArrayList<>(collection.size());
-        for (T t : collection)
+        List<U> result = new ArrayList<>(array.length);
+        for (int t : array)
             result.add(mapper.apply(t));
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).map(mapper).toList()</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T, U, E extends Exception> List<U> map(Iterable<? extends T> it, ThrowingFunction<? super T, ? extends U, E> mapper) throws E {
+        if (it == null)
+            return emptyList();
+
+        List<U> result = newListWithCapacity(it);
+        for (T t : it)
+            result.add(mapper.apply(t));
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).map(mapper).toList()</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T, U, E extends Exception> List<U> flatMap(Iterable<? extends T> it, ThrowingFunction<? super T, ? extends List<? extends U>, E> mapper) throws E {
+        if (it == null)
+            return emptyList();
+
+        List<U> result = newListWithCapacity(it);
+        for (T t : it)
+            result.addAll(mapper.apply(t));
 
         return result;
     }
@@ -1870,7 +1934,22 @@ final class Tools {
      * Like <code>Stream.of(array).zipWithIndex().map(mapper).toList()</code>
      * but without the entire stream pipeline.
      */
-    static final <T, U> List<U> mapToList(T[] array, ObjIntFunction<? super T, ? extends U> mapper) {
+    static final <T, U, E extends Exception> List<U> map(T[] array, ThrowingObjIntFunction<? super T, ? extends U, E> mapper) throws E {
+        if (array == null)
+            return emptyList();
+
+        List<U> result = new ArrayList<>(array.length);
+        for (int i = 0; i < array.length; i++)
+            result.add(mapper.apply(array[i], i));
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).zipWithIndex().map(mapper).toList()</code>
+     * but without the entire stream pipeline.
+     */
+    static final <U, E extends Exception> List<U> map(int[] array, ThrowingIntIntFunction<? extends U, E> mapper) throws E {
         if (array == null)
             return emptyList();
 
@@ -1885,13 +1964,13 @@ final class Tools {
      * Like <code>Stream.of(array).map(mapper).toList()</code> but
      * without the entire stream pipeline.
      */
-    static final <T, U> List<U> mapToList(Collection<? extends T> collection, ObjIntFunction<? super T, ? extends U> mapper) {
-        if (collection == null)
+    static final <T, U, E extends Exception> List<U> map(Iterable<? extends T> it, ThrowingObjIntFunction<? super T, ? extends U, E> mapper) throws E {
+        if (it == null)
             return emptyList();
 
-        List<U> result = new ArrayList<>(collection.size());
+        List<U> result = newListWithCapacity(it);
         int i = 0;
-        for (T t : collection)
+        for (T t : it)
             result.add(mapper.apply(t, i++));
 
         return result;
@@ -3757,12 +3836,7 @@ final class Tools {
         }
 
         static List<Method> methods(Collection<? extends SourceMethod> methods) {
-            List<Method> result = new ArrayList<>(methods.size());
-
-            for (SourceMethod s : methods)
-                result.add(s.method);
-
-            return result;
+            return map(methods, s -> s.method);
         }
 
         @Override
@@ -5251,21 +5325,11 @@ final class Tools {
     }
 
     static final Field<?>[] fields(OrderField<?>[] orderFields) {
-        Field<?>[] result = new Field[orderFields.length];
-
-        for (int i = 0; i < result.length; i++)
-            result[i] = field(orderFields[i]);
-
-        return result;
+        return map(orderFields, f -> field(f), Field[]::new);
     }
 
     static final List<Field<?>> fields(Collection<? extends OrderField<?>> orderFields) {
-        List<Field<?>> result = new ArrayList<>(orderFields.size());
-
-        for (OrderField<?> f : orderFields)
-            result.add(field(f));
-
-        return result;
+        return map(orderFields, (OrderField<?> f) -> field(f));
     }
 
     static final <T> Field<T> unalias(Field<T> field) {
@@ -5454,14 +5518,8 @@ final class Tools {
     }
 
     static final Row embeddedFieldsRow(Row row) {
-        if (hasEmbeddedFields(row.fields())) {
-            List<Field<?>> fields = new ArrayList<>(row.size());
-
-            for (Field<?> f : flattenCollection(Arrays.asList(row.fields()), false))
-                fields.add(f);
-
-            return row(fields);
-        }
+        if (hasEmbeddedFields(row.fields()))
+            return row(map(flattenCollection(Arrays.asList(row.fields()), false), f -> f));
         else
             return row;
     }
@@ -5964,23 +6022,15 @@ final class Tools {
     static final List<Field<?>> nullSafeList(Field<?>... fields) {
         if (fields == null)
             return asList(EMPTY_FIELD);
-
-        List<Field<?>> result = new ArrayList<>(fields.length);
-        for (Field<?> f : fields)
-            result.add(nullSafe(f));
-
-        return result;
+        else
+            return map(fields, f -> nullSafe(f));
     }
 
     static final List<Field<?>> nullSafeList(Field<?>[] fields, DataType<?> type) {
         if (fields == null)
             return asList(EMPTY_FIELD);
-
-        List<Field<?>> result = new ArrayList<>(fields.length);
-        for (Field<?> f : fields)
-            result.add(nullSafe(f, type));
-
-        return result;
+        else
+            return map(fields, f -> nullSafe(f, type));
     }
 
     @SuppressWarnings("unchecked")

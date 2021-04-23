@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.InvocationOrder.REVERSE;
+import static org.jooq.impl.Tools.map;
 
 import java.util.Arrays;
 
@@ -54,11 +55,7 @@ class MigrationListeners implements MigrationListener {
     private final MigrationListener[] listeners;
 
     MigrationListeners(Configuration configuration) {
-        MigrationListenerProvider[] providers = configuration.migrationListenerProviders();
-        listeners = new MigrationListener[providers.length];
-
-        for (int i = 0; i < providers.length; i++)
-            listeners[i] = providers[i].provide();
+        listeners = map(configuration.migrationListenerProviders(), p -> p.provide(), MigrationListener[]::new);
     }
 
     @Override

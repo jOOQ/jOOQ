@@ -52,6 +52,7 @@ import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
 import static org.jooq.impl.DSL.constraint;
+import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -253,12 +254,7 @@ final class DDL {
     }
 
     private final List<Query> alterTableAddConstraints(Table<?> table, List<Constraint> constraints) {
-        List<Query> result = new ArrayList<>(constraints.size());
-
-        for (Constraint constraint : constraints)
-            result.add(ctx.alterTable(table).add(constraint));
-
-        return result;
+        return map(constraints, c -> ctx.alterTable(table).add(c));
     }
 
     private final List<Constraint> constraints(Table<?> table) {

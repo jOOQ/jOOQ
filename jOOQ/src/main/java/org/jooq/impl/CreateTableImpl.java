@@ -102,7 +102,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.enums;
 import static org.jooq.impl.Tools.executeImmediate;
-import static org.jooq.impl.Tools.mapToList;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.storedEnumType;
 import static org.jooq.impl.Tools.tryCatch;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_SELECT_NO_DATA;
@@ -548,7 +548,7 @@ final class CreateTableImpl extends AbstractDDLQuery implements
 
                         if (EMULATE_STORED_ENUM_TYPES_AS_CHECK.contains(ctx.dialect()) || !storedEnumType(enumType)) {
                             Field<?> field = columnFields.get(i);
-                            List<Field<String>> literals = mapToList(enums(enumType.getType()), e -> inline(e.getLiteral()));
+                            List<Field<String>> literals = map(enums(enumType.getType()), e -> inline(e.getLiteral()));
 
                             ctx.sql(',')
                                .formatSeparator()

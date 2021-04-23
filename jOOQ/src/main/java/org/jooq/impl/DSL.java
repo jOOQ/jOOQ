@@ -19296,7 +19296,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
-        return new JSONObject<>(SQLDataType.JSON, Tools.mapToList(entries, f -> jsonEntry(f)));
+        return new JSONObject<>(SQLDataType.JSON, Tools.jsonEntries(entries));
     }
 
     /**
@@ -19323,7 +19323,7 @@ public class DSL {
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
-        return new JSONObject<>(SQLDataType.JSONB, Tools.mapToList(entries, f -> jsonEntry(f)));
+        return new JSONObject<>(SQLDataType.JSONB, Tools.jsonEntries(entries));
     }
 
     /**
@@ -27561,7 +27561,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Table<Record1<T>> values(T... values) {
-        return values(Tools.map(values, t -> row(t), Row1[]::new));
+        return values(Tools.<T, Row1<T>>map(values, t -> row(t), Row1[]::new));
     }
 
     /**
@@ -27594,7 +27594,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Table<Record1<T>> values(Field<T>... values) {
-        return values(Tools.map(values, f -> row(f), Row1[]::new));
+        return values(Tools.<Field<T>, Row1<T>>map(values, f -> row(f), Row1[]::new));
     }
 
 

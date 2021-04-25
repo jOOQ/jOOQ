@@ -1775,6 +1775,40 @@ final class Tools {
         return it instanceof Collection ? new ArrayList<>(((Collection<?>) it).size()) : new ArrayList<>();
     }
 
+    static final <T, E extends Exception> boolean anyMatch(T[] array, ThrowingPredicate<? super T, E> test) throws E {
+        return findAny(array, test, t -> TRUE) != null;
+    }
+
+    static final <T, E extends Exception> boolean anyMatch(Iterable<? extends T> it, ThrowingPredicate<? super T, E> test) throws E {
+        return findAny(it, test, t -> TRUE) != null;
+    }
+
+    static final <T, E extends Exception> T findAny(T[] array, ThrowingPredicate<? super T, E> test) throws E {
+        return findAny(array, test, t -> t);
+    }
+
+    static final <T, E extends Exception> T findAny(Iterable<? extends T> it, ThrowingPredicate<? super T, E> test) throws E {
+        return findAny(it, test, t -> t);
+    }
+
+    static final <T, U, E extends Exception> U findAny(T[] array, ThrowingPredicate<? super T, E> test, ThrowingFunction<? super T, ? extends U, E> function) throws E {
+        if (array != null)
+            for (T t : array)
+                if (test.test(t))
+                    return function.apply(t);
+
+        return null;
+    }
+
+    static final <T, U, E extends Exception> U findAny(Iterable<? extends T> it, ThrowingPredicate<? super T, E> test, ThrowingFunction<? super T, ? extends U, E> function) throws E {
+        if (it != null)
+            for (T t : it)
+                if (test.test(t))
+                    return function.apply(t);
+
+        return null;
+    }
+
     /**
      * Like <code>Stream.of(array).map(mapper).toArray(constructor)</code> but
      * without the entire stream pipeline.

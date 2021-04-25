@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.isRendersSeparator;
 import static org.jooq.impl.Tools.last;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
@@ -100,11 +101,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
     @Override
     public boolean isSimple() {
-        for (T e : this)
-            if (!Tools.isSimple(e))
-                return false;
-
-        return true;
+        return !anyMatch(this, e -> !Tools.isSimple(e));
     }
 
     @Override
@@ -129,7 +126,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
             rendersContent.set(i++, ((QueryPartInternal) e).rendersContent(ctx));
 
         int size = rendersContent.cardinality();
-        boolean format = ctx.format() && (size >= 2 && requireIndentation());
+        boolean format = ctx.format() && (size >= 2 && !isSimple());
         boolean previousQualify = ctx.qualify();
         boolean previousAlreadyIndented = TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
         boolean indent = format && !previousAlreadyIndented;
@@ -158,7 +155,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
             int j = 0;
             int k = 0;
             T prev = null;
-            
+
             for (T part : this) {
                 try {
                     if (!rendersContent.get(j++))
@@ -207,14 +204,6 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
         if (previousAlreadyIndented)
             ctx.data(DATA_LIST_ALREADY_INDENTED, previousAlreadyIndented);
-    }
-
-    private final boolean requireIndentation() {
-        for (T t : this)
-            if (!Tools.isSimple(t))
-                return true;
-
-        return false;
     }
 
     /**

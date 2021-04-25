@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Name.Quoted.DEFAULT;
 import static org.jooq.Name.Quoted.MIXED;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 
 import org.jooq.Context;
@@ -175,11 +176,7 @@ final class QualifiedName extends AbstractName {
 
     @Override
     public final boolean empty() {
-        for (UnqualifiedName n : qualifiedName)
-            if (!n.empty())
-                return false;
-
-        return true;
+        return !anyMatch(qualifiedName, n -> !n.empty());
     }
 
     @Override

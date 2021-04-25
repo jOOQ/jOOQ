@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_OR;
+import static org.jooq.impl.Tools.anyMatch;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -111,11 +112,7 @@ final class CombinedCondition extends AbstractCondition {
 
     @Override
     final boolean isNullable() {
-        for (Condition condition : conditions)
-            if (!(condition instanceof AbstractCondition) || ((AbstractCondition) condition).isNullable())
-                return true;
-
-        return false;
+        return anyMatch(conditions, c -> !(c instanceof AbstractCondition) || ((AbstractCondition) c).isNullable());
     }
 
     static final Condition identity(Operator operator) {

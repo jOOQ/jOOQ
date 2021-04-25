@@ -99,9 +99,11 @@ import static org.jooq.impl.Keywords.K_WITH_DATA;
 import static org.jooq.impl.Keywords.K_WITH_NO_DATA;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.enums;
 import static org.jooq.impl.Tools.executeImmediate;
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.storedEnumType;
 import static org.jooq.impl.Tools.tryCatch;
@@ -615,23 +617,15 @@ final class CreateTableImpl extends AbstractDDLQuery implements
     }
 
     private final Field<?>[] primaryKeyColumns() {
-        for (Constraint constraint : constraints)
-            if (constraint instanceof ConstraintImpl)
-                if (((ConstraintImpl) constraint).$primaryKey() != null)
-                    return ((ConstraintImpl) constraint).$primaryKey();
-
-        return null;
+        return findAny(
+            constraints,
+            c -> c instanceof ConstraintImpl && ((ConstraintImpl) c).$primaryKey() != null,
+            c -> ((ConstraintImpl) c).$primaryKey()
+        );
     }
 
     private final boolean isPrimaryKey(int i) {
-        Field<?>[] primaryKeyColumns = primaryKeyColumns();
-
-        if (primaryKeyColumns != null)
-            for (Field<?> field : primaryKeyColumns)
-                if (field.equals(columnFields.get(i)))
-                    return true;
-
-        return false;
+        return anyMatch(primaryKeyColumns(), f -> f.equals(columnFields.get(i)));
     }
 
     private final boolean matchingPrimaryKey(Constraint constraint, Field<?> identity) {

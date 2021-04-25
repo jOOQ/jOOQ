@@ -90,6 +90,8 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.ScopeMarker.TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.qualify;
@@ -721,18 +723,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     abstract void accept0(Context<?> ctx);
 
     /**
@@ -917,7 +907,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 case HSQLDB:
                 default: {
                     if (ctx.statement() == null) {
-                        List<String> names = new ArrayList<>(returningResolvedAsterisks.size());
                         RenderNameCase style = SettingsTools.getRenderNameCase(configuration().settings());
 
                         // [#2845] Field names should be passed to JDBC in the case
@@ -925,17 +914,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                         // PostgreSQL generated case-insensitive Fields (default to lower case)
                         // and wants to query HSQLDB (default to upper case), they may choose
                         // to overwrite casing using RenderNameCase.
-                        if (style == RenderNameCase.UPPER)
-                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
-                                names.add(f.getName().toUpperCase(renderLocale(configuration().settings())));
-                        else if (style == RenderNameCase.LOWER)
-                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
-                                names.add(f.getName().toLowerCase(renderLocale(configuration().settings())));
-                        else
-                            for (Field<?> f : Tools.flattenCollection(returningResolvedAsterisks, false))
-                                names.add(f.getName());
-
-                        ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(EMPTY_STRING)));
+                        ctx.statement(connection.prepareStatement(ctx.sql(), map(Tools.flattenCollection(returningResolvedAsterisks, false),
+                              style == RenderNameCase.UPPER
+                            ? f -> f.getName().toUpperCase(renderLocale(configuration().settings()))
+                            : style == RenderNameCase.LOWER
+                            ? f -> f.getName().toLowerCase(renderLocale(configuration().settings()))
+                            : f -> f.getName()
+                        ).toArray(EMPTY_STRING)));
                     }
 
                     break;
@@ -1292,14 +1277,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     }
 
     private final Field<?> returnedIdentity() {
-        if (table.getIdentity() != null)
-            return table.getIdentity().getField();
-        else
-            for (Field<?> field : returningResolvedAsterisks)
-                if (field.getDataType().identity())
-                    return field;
-
-        return null;
+        return table.getIdentity() != null
+            ? table.getIdentity().getField()
+            : findAny(returningResolvedAsterisks, f -> f.getDataType().identity());
     }
 
     public final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {

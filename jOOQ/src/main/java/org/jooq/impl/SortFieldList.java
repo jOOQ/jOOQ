@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
@@ -75,11 +76,7 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
      * all {@link SortOrder#ASC} or all {@link SortOrder#DESC}.
      */
     final boolean uniform() {
-        for (SortField<?> field : this)
-            if ((field.getOrder() == DESC) != (get(0).getOrder() == DESC))
-                return false;
-
-        return true;
+        return !anyMatch(this, f -> (f.getOrder() == DESC) != (get(0).getOrder() == DESC));
     }
 
     /**
@@ -87,15 +84,10 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
      * <code>NULLS FIRST</code> or <code>NULLS LAST</code> clause.
      */
     final boolean nulls() {
-        for (SortField<?> field : this)
-            if (((SortFieldImpl<?>) field).getNullsFirst() ||
-                ((SortFieldImpl<?>) field).getNullsLast())
-                return true;
-
-        return false;
+        return anyMatch(this, f -> ((SortFieldImpl<?>) f).getNullsFirst() || ((SortFieldImpl<?>) f).getNullsLast());
     }
 
     final List<Field<?>> fields() {
-        return Tools.map(this, f -> ((SortFieldImpl<?>) f).getField());
+        return map(this, f -> ((SortFieldImpl<?>) f).getField());
     }
 }

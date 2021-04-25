@@ -50,7 +50,9 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.dataTypes;
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.intersect;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.normaliseNameCase;
@@ -1628,12 +1630,8 @@ final class Interpreter {
         boolean hasReferencingKeys() {
             if (primaryKey != null && !primaryKey.referencingKeys.isEmpty())
                 return true;
-
-            for (MutableUniqueKey uk : uniqueKeys)
-                if (!uk.referencingKeys.isEmpty())
-                    return true;
-
-            return false;
+            else
+                return anyMatch(uniqueKeys, uk -> !uk.referencingKeys.isEmpty());
         }
 
         List<MutableForeignKey> referencingKeys() {
@@ -1704,15 +1702,10 @@ final class Interpreter {
         final MutableUniqueKey uniqueKey(List<MutableField> mrfs) {
             Set<MutableField> set = new HashSet<>(mrfs);
 
-            if (primaryKey != null)
-                if (set.equals(new HashSet<>(primaryKey.fields)))
-                    return primaryKey;
-
-            for (MutableUniqueKey mu : uniqueKeys)
-                if (set.equals(new HashSet<>(mu.fields)))
-                    return mu;
-
-            return null;
+            if (primaryKey != null && set.equals(new HashSet<>(primaryKey.fields)))
+                return primaryKey;
+            else
+                return findAny(uniqueKeys, mu -> set.equals(new HashSet<>(mu.fields)));
         }
 
         private final class InterpretedTable extends TableImpl<Record> {

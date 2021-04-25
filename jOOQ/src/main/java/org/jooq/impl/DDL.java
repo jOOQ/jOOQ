@@ -219,11 +219,7 @@ final class DDL {
         if (domain.getChecks().isEmpty())
             return s3;
 
-        List<Constraint> constraints = new ArrayList<>();
-        for (Check check : domain.getChecks())
-            constraints.add(check.constraint());
-
-        return s3.constraints(constraints);
+        return s3.constraints(map(domain.getChecks(), c -> c.constraint()));
     }
 
     final List<Query> createTableOrView(Table<?> table) {

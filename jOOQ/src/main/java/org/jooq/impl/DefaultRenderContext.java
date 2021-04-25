@@ -253,10 +253,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     void scopeStart0() {
-        for (ScopeStackElement e : scopeStack) {
+        for (ScopeStackElement e : scopeStack)
             if (e.part != e.mapped && !(e.part instanceof ScopeNestable))
                 scopeStack.set(e.part, null);
-        }
     }
 
     @Override

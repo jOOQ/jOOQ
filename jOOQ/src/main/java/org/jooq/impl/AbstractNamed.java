@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.AbstractName.NO_NAME;
+import static org.jooq.impl.Tools.findAny;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,11 +157,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     }
 
     static final <N extends Named> N find(String name, Iterable<? extends N> in) {
-        for (N n : in)
-            if (n.getName().equals(name))
-                return n;
-
-        return null;
+        return findAny(in, n -> n.getName().equals(name));
     }
 
     static final <N extends Named> N find(Name name, Iterable<? extends N> in) {
@@ -176,11 +173,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     }
 
     static final <N extends Named> N findIgnoreCase(String name, Iterable<? extends N> in) {
-        for (N n : in)
-            if (n.getName().equalsIgnoreCase(name))
-                return n;
-
-        return null;
+        return findAny(in, n -> n.getName().equalsIgnoreCase(name));
     }
 
     static final <N extends Named> N findIgnoreCase(Name name, Iterable<? extends N> in) {

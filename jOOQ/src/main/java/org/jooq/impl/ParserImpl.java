@@ -80,6 +80,8 @@ import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.aliased;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
@@ -12444,11 +12446,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final boolean parseFunctionNameIf(String... names) {
-        for (String name : names)
-            if (parseFunctionNameIf(name))
-                return true;
-
-        return false;
+        return anyMatch(names, this::parseFunctionNameIf);
     }
 
     private final boolean parseOperator(String operator) {
@@ -12528,11 +12526,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final boolean parseKeywordIf(String... keywords) {
-        for (String keyword : keywords)
-            if (parseKeywordIf(keyword))
-                return true;
-
-        return false;
+        return anyMatch(keywords, this::parseKeywordIf);
     }
 
     @Override
@@ -12553,11 +12547,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Keyword parseAndGetKeywordIf(String... keywords) {
-        for (String keyword : keywords)
-            if (parseKeywordIf(keyword))
-                return keyword(keyword.toLowerCase());
-
-        return null;
+        return findAny(keywords, this::parseKeywordIf, k -> keyword(k.toLowerCase()));
     }
 
     private final Keyword parseAndGetKeywordIf(String keyword) {
@@ -12595,11 +12585,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final boolean peekKeyword(String... keywords) {
-        for (String keyword : keywords)
-            if (peekKeyword(keyword))
-                return true;
-
-        return false;
+        return anyMatch(keywords, this::peekKeyword);
     }
 
     @Override

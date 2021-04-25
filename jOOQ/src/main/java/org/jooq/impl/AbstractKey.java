@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.anyMatch;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -97,11 +99,7 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
 
     @Override
     public final boolean nullable() {
-        for (Field<?> field : fields)
-            if (field.getDataType().nullable())
-                return true;
-
-        return false;
+        return anyMatch(fields, f -> f.getDataType().nullable());
     }
 
     @Override

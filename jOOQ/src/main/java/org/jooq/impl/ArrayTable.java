@@ -42,6 +42,7 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
+import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,15 +125,14 @@ final class ArrayTable extends AbstractTable<Record> {
     }
 
     private static final FieldsImpl<Record> init(Class<?> arrayType, Name alias) {
-        List<Field<?>> result = new ArrayList<>();
 
         // [#1114] [#7863] VARRAY/TABLE of OBJECT have more than one field
         if (Record.class.isAssignableFrom(arrayType)) {
             try {
-                Record record = (Record) arrayType.getDeclaredConstructor().newInstance();
-
-                for (Field<?> f : record.fields())
-                    result.add(DSL.field(name(alias.last(), f.getName()), f.getDataType()));
+                return new FieldsImpl<>(map(
+                    ((Record) arrayType.getDeclaredConstructor().newInstance()).fields(),
+                    f -> DSL.field(name(alias.last(), f.getName()), f.getDataType())
+                ));
             }
             catch (Exception e) {
                 throw new DataTypeException("Bad UDT Type : " + arrayType, e);
@@ -141,9 +141,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else
-            result.add(DSL.field(name(alias.last(), "COLUMN_VALUE"), DSL.getDataType(arrayType)));
-
-        return new FieldsImpl<>(result);
+            return new FieldsImpl<>(DSL.field(name(alias.last(), "COLUMN_VALUE"), DSL.getDataType(arrayType)));
     }
 
     @Override

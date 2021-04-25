@@ -81,7 +81,9 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.fieldNameStrings;
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
@@ -115,9 +117,12 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -211,14 +216,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private void onConflictOnConstraint0(Constraint constraint) {
         this.onConstraint = constraint;
 
-        if (onConstraintUniqueKey == null) {
-            for (UniqueKey<R> key : table().getKeys()) {
-                if (constraint.getName().equals(key.getName())) {
-                    onConstraintUniqueKey = key;
-                    break;
-                }
-            }
-        }
+        if (onConstraintUniqueKey == null)
+            onConstraintUniqueKey = findAny(table().getKeys(), key -> constraint.getName().equals(key.getName()));
     }
 
     @Override
@@ -702,7 +701,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
            .visit(wrap(nCopies(length, K_DEFAULT)))
            .sql(')');
     }
-
 
 
 

@@ -80,6 +80,14 @@ interface ThrowingFunction<T, R, E extends Throwable> {
 }
 
 /**
+ * A checked exception throwing {@link Predicate}.
+ */
+@FunctionalInterface
+interface ThrowingPredicate<T, E extends Throwable> {
+    boolean test(T t) throws E;
+}
+
+/**
  * A checked exception throwing {@link IntFunction}.
  */
 @FunctionalInterface

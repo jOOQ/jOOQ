@@ -123,6 +123,8 @@ import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
+import static org.jooq.impl.Tools.enums;
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
@@ -2566,17 +2568,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         static final <E extends EnumType> E getEnumType(Class<? extends E> type, String literal) {
             try {
-                E[] list = Tools.enums(type);
-
-                for (E e : list)
-                    if (e.getLiteral().equals(literal))
-                        return e;
+                return findAny(enums(type), e -> e.getLiteral().equals(literal));
             }
             catch (Exception e) {
                 throw new DataTypeException("Unknown enum literal found : " + literal);
             }
-
-            return null;
         }
     }
 

@@ -180,6 +180,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isNotEmpty;
@@ -2542,11 +2543,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean hasOuterJoins(TableList tablelist) {
-        for (Table<?> table : tablelist)
-            if (table instanceof JoinTable && hasOuterJoins((JoinTable) table))
-                return true;
-
-        return false;
+        return anyMatch(tablelist, t -> t instanceof JoinTable && hasOuterJoins((JoinTable) t));
     }
 
     private final boolean hasOuterJoins(JoinTable join) {
@@ -2564,13 +2561,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean hasInlineDerivedTables(TableList tablelist) {
-        for (Table<?> table : tablelist)
-            if (table instanceof InlineDerivedTable)
-                return true;
-            else if (table instanceof JoinTable && hasInlineDerivedTables((JoinTable) table))
-                return true;
-
-        return false;
+        return anyMatch(tablelist, t ->
+               t instanceof InlineDerivedTable
+            || t instanceof JoinTable && hasInlineDerivedTables((JoinTable) t)
+        );
     }
 
     private final boolean hasInlineDerivedTables(JoinTable join) {

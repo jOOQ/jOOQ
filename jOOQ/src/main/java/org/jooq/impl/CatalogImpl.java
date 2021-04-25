@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.CATALOG;
 import static org.jooq.Clause.CATALOG_REFERENCE;
 import static org.jooq.impl.CatalogImpl.DEFAULT_CATALOG;
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Collections;
@@ -99,12 +100,8 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
     }
 
     @Override
-    public final Schema getSchema(String schemaName) {
-        for (Schema schema : getSchemas())
-            if (schema.getName().equals(schemaName))
-                return schema;
-
-        return null;
+    public final Schema getSchema(String name) {
+        return find(name, getSchemas());
     }
 
     @Override

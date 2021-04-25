@@ -46,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * A common super type for various types that can provide a set of fields,
- * similar to a {@link Record}.
+ * similar to a {@link Table} or a {@link Record}.
  * <p>
  * Not all implementations actually <em>know</em> their fields. For example,
  * when using plain SQL templates ({@link DSL#field(String)}) or tables
@@ -58,26 +58,25 @@ import org.jetbrains.annotations.Nullable;
 public interface Fields {
 
     /**
-     * Get all fields.
+     * Get all fields known to this type.
      */
     @NotNull
     Field<?>[] fields();
 
     /**
-     * Get all fields as a {@link Row}.
+     * Get all fields known to this type as a {@link Row}.
      */
     @NotNull
     Row fieldsRow();
 
     /**
-     * Get this table's fields as a {@link Stream}, if this table knows its
-     * field references.
+     * Get all fields known to this type as a {@link Stream}.
      */
     @NotNull
     Stream<Field<?>> fieldStream();
 
     /**
-     * Get a field by field reference.
+     * Get a field known to this type by field reference.
      * <p>
      * This will return:
      * <ul>
@@ -97,7 +96,8 @@ public interface Fields {
     <T> Field<T> field(Field<T> field);
 
     /**
-     * Get a field by unqualified name.
+     * Get a field known to this type by unqualified name, or <code>null</code>
+     * if no field is known to this type by this name.
      *
      * @param name The unqualified name of the field
      */
@@ -105,7 +105,9 @@ public interface Fields {
     Field<?> field(String name);
 
     /**
-     * Get a field by unqualified name coerced to <code>type</code>.
+     * Get a field known to this type by unqualified name coerced to
+     * <code>type</code>, or <code>null</code> if no field is known to this type
+     * by this name.
      *
      * @param name The unqualified name of the field
      * @param type The type to coerce the resulting field to
@@ -114,7 +116,9 @@ public interface Fields {
     <T> Field<T> field(String name, Class<T> type);
 
     /**
-     * Get a field by unqualified name coerced to <code>dataType</code>.
+     * Get a field known to this type by unqualified name coerced to
+     * <code>dataType</code>, or <code>null</code> if no field is known to this
+     * type by this name.
      *
      * @param name The unqualified name of the field
      * @param dataType The data type to coerce the resulting field to
@@ -123,7 +127,8 @@ public interface Fields {
     <T> Field<T> field(String name, DataType<T> dataType);
 
     /**
-     * Get a field by qualified name.
+     * Get a field known to this type by qualified name, or <code>null</code> if
+     * no field is known to this type by this name.
      *
      * @param name The qualified name of the field
      */
@@ -131,7 +136,9 @@ public interface Fields {
     Field<?> field(Name name);
 
     /**
-     * Get a field by qualified name coerced to <code>type</code>.
+     * Get a field known to this type by qualified name coerced to
+     * <code>type</code>, or <code>null</code> if no field is known to this type
+     * by this name.
      *
      * @param name The qualified name of the field
      * @param type The type to coerce the resulting field to
@@ -140,7 +147,9 @@ public interface Fields {
     <T> Field<T> field(Name name, Class<T> type);
 
     /**
-     * Get a field by qualified name coerced to <code>dataType</code>.
+     * Get a field known to this type by qualified name coerced to
+     * <code>dataType</code>, or <code>null</code> if no field is known to this
+     * type by this name.
      *
      * @param name The qualified name of the field
      * @param dataType The data type to coerce the resulting field to
@@ -149,7 +158,8 @@ public interface Fields {
     <T> Field<T> field(Name name, DataType<T> dataType);
 
     /**
-     * Get a field by index.
+     * Get a field known to this type by index, or <code>null</code> if no field
+     * is available at the index.
      *
      * @param index The 0-based index of the field
      */
@@ -157,7 +167,8 @@ public interface Fields {
     Field<?> field(int index);
 
     /**
-     * Get a field by index coerced to <code>type</code>.
+     * Get a field known to this type by index coerced to <code>type</code>, or
+     * <code>null</code> if no field is available at the index.
      *
      * @param index The 0-based index of the field
      * @param type The type to coerce the resulting field to
@@ -166,7 +177,8 @@ public interface Fields {
     <T> Field<T> field(int index, Class<T> type);
 
     /**
-     * Get a field by index coerced to <code>dataType</code>.
+     * Get a field known to this type by index coerced to <code>dataType</code>,
+     * or <code>null</code> if no field is available at the index.
      *
      * @param index The 0-based index of the field
      * @param dataType The data type to coerce the resulting field to
@@ -185,7 +197,8 @@ public interface Fields {
     Field<?>[] fields(Field<?>... fields);
 
     /**
-     * Get all fields, filtering by some unqualified field names.
+     * Get all fields known to this type, filtering by some unqualified field
+     * names.
      *
      * @param names The unqualified field names to include after looking them up
      *            via {@link #field(String)}.
@@ -195,7 +208,8 @@ public interface Fields {
     Field<?>[] fields(String... names);
 
     /**
-     * Get all fields, filtering by some qualified field names.
+     * Get all fields known to this type, filtering by some qualified field
+     * names.
      *
      * @param names The qualified field names to include after looking them up
      *            via {@link #field(Name)}.
@@ -205,7 +219,7 @@ public interface Fields {
     Field<?>[] fields(Name... names);
 
     /**
-     * Get all fields, filtering by some field indexes.
+     * Get all fields known to this type, filtering by some field indexes.
      *
      * @param names The 0-based field indexes to include after looking them up
      *            via {@link #field(int)}.
@@ -219,7 +233,7 @@ public interface Fields {
      *
      * @param field The field to look for
      * @return The field's 0-based index or <code>-1</code> if the field is not
-     *         available.
+     *         known to this type.
      */
     int indexOf(Field<?> field);
 
@@ -228,7 +242,7 @@ public interface Fields {
      *
      * @param name The unqualified field name to look for
      * @return The field's 0-based index or <code>-1</code> if the field is not
-     *         available.
+     *         known to this type.
      */
     int indexOf(String name);
 
@@ -237,12 +251,12 @@ public interface Fields {
      *
      * @param name The qualified field name to look for
      * @return The field's 0-based index or <code>-1</code> if the field is not
-     *         available.
+     *         known to this type.
      */
     int indexOf(Name name);
 
     /**
-     * Get an array of field types for this type.
+     * Get an array of field types for fields known to this type.
      * <p>
      * Entries in the resulting array correspond to {@link Field#getType()} for
      * the corresponding <code>Field</code> in {@link #fields()}
@@ -251,7 +265,8 @@ public interface Fields {
     Class<?>[] types();
 
     /**
-     * Get the field type for a given field index.
+     * Get the field type for a given field index, or <code>null</code> if no
+     * field is available at the index.
      *
      * @param index The field's 0-based index
      */
@@ -259,7 +274,8 @@ public interface Fields {
     Class<?> type(int index);
 
     /**
-     * Get the field type for a given unqualified field name.
+     * Get the field type for a given unqualified field name, or
+     * <code>null</code> if no field is known to this type by this name.
      *
      * @param name The unqualified field name
      */
@@ -267,7 +283,8 @@ public interface Fields {
     Class<?> type(String name);
 
     /**
-     * Get the field type for a given qualified field name.
+     * Get the field type for a given qualified field name, or <code>null</code>
+     * if no field is known to this type by this name.
      *
      * @param name The qualified field name
      */
@@ -277,14 +294,15 @@ public interface Fields {
     /**
      * Get an array of field data types for this type.
      * <p>
-     * Entries in the resulting array correspond to {@link Field#getDataType()} for
-     * the corresponding <code>Field</code> in {@link #fields()}
+     * Entries in the resulting array correspond to {@link Field#getDataType()}
+     * for the corresponding <code>Field</code> in {@link #fields()}
      */
     @NotNull
     DataType<?>[] dataTypes();
 
     /**
-     * Get the field data type for a given field index.
+     * Get the field data type for a given field index, or <code>null</code> if
+     * no field is available at the index.
      *
      * @param index The field's 0-based index
      */
@@ -292,7 +310,8 @@ public interface Fields {
     DataType<?> dataType(int index);
 
     /**
-     * Get the field data type for a given qualified field name.
+     * Get the field data type for a given qualified field name, or
+     * <code>null</code> if no field is known to this type by this name.
      *
      * @param name The qualified field name
      */
@@ -300,7 +319,8 @@ public interface Fields {
     DataType<?> dataType(String name);
 
     /**
-     * Get the field data type for a given qualified field name.
+     * Get the field data type for a given qualified field name, or
+     * <code>null</code> if no field is known to this type by this name.
      *
      * @param name The qualified field name
      */

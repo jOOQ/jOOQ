@@ -90,12 +90,7 @@ final class Snapshot extends AbstractMeta {
 
     @Override
     final List<Catalog> getCatalogs0() throws DataAccessException {
-        List<Catalog> result = new ArrayList<>();
-
-        for (Catalog catalog : delegate.getCatalogs())
-            result.add(new SnapshotCatalog(catalog));
-
-        return result;
+        return map(delegate.getCatalogs(), SnapshotCatalog::new);
     }
 
     private class SnapshotCatalog extends CatalogImpl {
@@ -104,11 +99,7 @@ final class Snapshot extends AbstractMeta {
 
         SnapshotCatalog(Catalog catalog) {
             super(catalog.getQualifiedName(), catalog.getCommentPart());
-
-            schemas = new ArrayList<>();
-
-            for (Schema schema : catalog.getSchemas())
-                schemas.add(new SnapshotSchema(this, schema));
+            schemas = map(catalog.getSchemas(), s -> new SnapshotSchema(this, s));
         }
 
         private final void resolveReferences() {
@@ -133,19 +124,10 @@ final class Snapshot extends AbstractMeta {
         SnapshotSchema(SnapshotCatalog catalog, Schema schema) {
             super(schema.getQualifiedName(), catalog, schema.getCommentPart());
 
-            domains = new ArrayList<>();
-            tables = new ArrayList<>();
-            sequences = new ArrayList<>();
-            udts = new ArrayList<>();
-
-            for (Domain<?> domain : schema.getDomains())
-                domains.add(new SnapshotDomain<>(this, domain));
-            for (Table<?> table : schema.getTables())
-                tables.add(new SnapshotTable<>(this, table));
-            for (Sequence<?> sequence : schema.getSequences())
-                sequences.add(new SnapshotSequence<>(this, sequence));
-            for (UDT<?> udt : schema.getUDTs())
-                udts.add(new SnapshotUDT<>(this, udt));
+            domains = map(schema.getDomains(), d -> new SnapshotDomain<>(this, d));
+            tables = map(schema.getTables(), t -> new SnapshotTable<>(this, t));
+            sequences = map(schema.getSequences(), s -> new SnapshotSequence<>(this, s));
+            udts = map(schema.getUDTs(), u -> new SnapshotUDT<>(this, u));
         }
 
         final void resolveReferences() {
@@ -194,41 +176,31 @@ final class Snapshot extends AbstractMeta {
         SnapshotTable(SnapshotSchema schema, Table<R> table) {
             super(table.getQualifiedName(), schema, null, null, table.getCommentPart(), table.getOptions());
 
-            indexes = new ArrayList<>();
-            uniqueKeys = new ArrayList<>();
-            foreignKeys = new ArrayList<>();
-            checks = new ArrayList<>();
-
             for (Field<?> field : table.fields())
                 createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
 
-            for (Index index : table.getIndexes()) {
-                List<SortField<?>> indexFields = index.getFields();
-                SortField<?>[] copiedFields = new SortField[indexFields.size()];
-
-                for (int i = 0; i < indexFields.size(); i++) {
-                    SortField<?> field = indexFields.get(i);
+            indexes = map(table.getIndexes(), index -> Internal.createIndex(
+                index.getQualifiedName(), this,
+                map(index.getFields(), field -> {
 
                     // [#10804] Use this table's field reference if possible.
                     //          Otherwise (e.g. for function based indexes), use the actual field expression
                     Field<?> f = field(field.getName());
-                    copiedFields[i] = f != null ? f.sort(field.getOrder()) : field;
+                    return f != null ? f.sort(field.getOrder()) : field;
 
                     // [#9009] TODO NULLS FIRST / NULLS LAST
-                }
+                }, SortField[]::new),
+                index.getUnique()
+            ));
 
-                indexes.add(Internal.createIndex(index.getQualifiedName(), this, copiedFields, index.getUnique()));
-            }
-
-            for (UniqueKey<R> uk : table.getUniqueKeys())
-                uniqueKeys.add(Internal.createUniqueKey(this, uk.getQualifiedName(), fields(uk.getFieldsArray()), uk.enforced()));
+            uniqueKeys = map(table.getUniqueKeys(), uk -> Internal.createUniqueKey(this, uk.getQualifiedName(), fields(uk.getFieldsArray()), uk.enforced()));
 
             UniqueKey<R> pk = table.getPrimaryKey();
             if (pk != null)
                 primaryKey = Internal.createUniqueKey(this, pk.getQualifiedName(), fields(pk.getFieldsArray()), pk.enforced());
 
-            foreignKeys.addAll(table.getReferences());
-            checks.addAll(table.getChecks());
+            foreignKeys = new ArrayList<>(table.getReferences());
+            checks = new ArrayList<>(table.getChecks());
         }
 
         @SuppressWarnings("unchecked")

@@ -38,14 +38,17 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.impl.Tools.flatMap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -101,13 +104,7 @@ final class TableList extends QueryPartList<Table<?>> {
     }
 
     final List<Field<?>> fields() {
-        List<Field<?>> result = new ArrayList<>();
-
-        for (Table<?> table : this)
-            for (Field<?> field : table.fieldsRow().fields())
-                result.add(field);
-
-        return result;
+        return flatMap(this, t -> asList(t.fieldsRow().fields()));
     }
 
     /**

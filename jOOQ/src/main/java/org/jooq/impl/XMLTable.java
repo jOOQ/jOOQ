@@ -57,6 +57,7 @@ import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.Names.N_XMLTABLE;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
@@ -211,14 +212,10 @@ implements
 
     @Override
     final FieldsImpl<Record> fields0() {
-        if (fields == null) {
-            List<Field<?>> f = new ArrayList<>();
-
-            for (XMLTableColumn c : columns)
-                f.add(c.field.getDataType() == c.type ? c.field : DSL.field(c.field.getQualifiedName(), c.type));
-
-            fields = new FieldsImpl<>(f);
-        }
+        if (fields == null)
+            fields = new FieldsImpl<>(map(columns,
+                c -> c.field.getDataType() == c.type ? c.field : DSL.field(c.field.getQualifiedName(), c.type)
+            ));
 
         return fields;
     }
@@ -241,13 +238,6 @@ implements
                 break;
         }
     }
-
-
-
-
-
-
-
 
 
 

@@ -51,6 +51,7 @@ import static org.jooq.impl.Tools.getMatchingMembers;
 import static org.jooq.impl.Tools.getMatchingSetters;
 import static org.jooq.impl.Tools.getPropertyName;
 import static org.jooq.impl.Tools.hasColumnAnnotations;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.row0;
@@ -433,6 +434,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 }
             }
         }
+
 
 
 

@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.SCHEMA;
 import static org.jooq.Clause.SCHEMA_REFERENCE;
 import static org.jooq.impl.CatalogImpl.DEFAULT_CATALOG;
+import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.ArrayList;
@@ -248,12 +249,7 @@ public class SchemaImpl extends AbstractNamed implements Schema {
      */
     @Override
     public List<UniqueKey<?>> getUniqueKeys() {
-        List<UniqueKey<?>> result = new ArrayList<>();
-
-        for (Table<?> table : getTables())
-            result.addAll(table.getKeys());
-
-        return result;
+        return flatMap(getTables(), t -> t.getKeys());
     }
 
     /**
@@ -263,12 +259,7 @@ public class SchemaImpl extends AbstractNamed implements Schema {
      */
     @Override
     public List<ForeignKey<?, ?>> getForeignKeys() {
-        List<ForeignKey<?, ?>> result = new ArrayList<>();
-
-        for (Table<?> table : getTables())
-            result.addAll(table.getReferences());
-
-        return result;
+        return flatMap(getTables(), t -> t.getReferences());
     }
 
     /**
@@ -278,12 +269,7 @@ public class SchemaImpl extends AbstractNamed implements Schema {
      */
     @Override
     public List<Index> getIndexes() {
-        List<Index> result = new ArrayList<>();
-
-        for (Table<?> table : getTables())
-            result.addAll(table.getIndexes());
-
-        return result;
+        return flatMap(getTables(), t -> t.getIndexes());
     }
 
     /**

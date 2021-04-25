@@ -156,12 +156,7 @@ final class Interpreter {
 
             @Override
             final List<Catalog> getCatalogs0() throws DataAccessException {
-                List<Catalog> result = new ArrayList<>();
-
-                for (MutableCatalog catalog : catalogs.values())
-                    result.add(catalog.interpretedCatalog());
-
-                return result;
+                return map(catalogs.values(), c -> c.interpretedCatalog());
             }
         };
     }
@@ -1694,9 +1689,7 @@ final class Interpreter {
         }
 
         final List<MutableSortField> sortFields(Collection<? extends OrderField<?>> ofs) {
-            List<MutableSortField> result = new ArrayList<>();
-
-            for (OrderField<?> of : ofs) {
+            return map(ofs, (OrderField<?> of) -> {
                 SortField<?> sf = Tools.sortField(of);
                 Field<?> f = ((SortFieldImpl<?>) sf).getField();
                 MutableField mf = find(fields, f);
@@ -1704,10 +1697,8 @@ final class Interpreter {
                 if (mf == null)
                     throw new DataDefinitionException("Field does not exist in table: " + f.getQualifiedName());
 
-                result.add(new MutableSortField(mf, sf.getOrder()));
-            }
-
-            return result;
+                return new MutableSortField(mf, sf.getOrder());
+            });
         }
 
         final MutableUniqueKey uniqueKey(List<MutableField> mrfs) {
@@ -1741,42 +1732,22 @@ final class Interpreter {
 
             @Override
             public final List<UniqueKey<Record>> getUniqueKeys() {
-                List<UniqueKey<Record>> result = new ArrayList<>();
-
-                for (MutableUniqueKey uk : MutableTable.this.uniqueKeys)
-                    result.add(uk.interpretedKey());
-
-                return result;
+                return map(MutableTable.this.uniqueKeys, uk -> uk.interpretedKey());
             }
 
             @Override
             public List<ForeignKey<Record, ?>> getReferences() {
-                List<ForeignKey<Record, ?>> result = new ArrayList<>();
-
-                for (MutableForeignKey fk : MutableTable.this.foreignKeys)
-                    result.add(fk.interpretedKey());
-
-                return result;
+                return map(MutableTable.this.foreignKeys, fk -> fk.interpretedKey());
             }
 
             @Override
             public List<Check<Record>> getChecks() {
-                List<Check<Record>> result = new ArrayList<>();
-
-                for (MutableCheck c : MutableTable.this.checks)
-                    result.add(new CheckImpl<>(this, c.name(), c.condition, c.enforced));
-
-                return result;
+                return map(MutableTable.this.checks, c -> new CheckImpl<>(this, c.name(), c.condition, c.enforced));
             }
 
             @Override
             public final List<Index> getIndexes() {
-                List<Index> result = new ArrayList<>();
-
-                for (MutableIndex i : MutableTable.this.indexes)
-                    result.add(i.interpretedIndex());
-
-                return result;
+                return map(MutableTable.this.indexes, i -> i.interpretedIndex());
             }
         }
     }

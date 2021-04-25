@@ -50,7 +50,6 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
-// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -70,6 +69,7 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -100,7 +100,6 @@ import org.jooq.Meta;
 import org.jooq.Name;
 // ...
 import org.jooq.Record;
-import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -235,22 +234,12 @@ final class MetaImpl extends AbstractMeta {
 
     @Override
     final List<Schema> getSchemas0() {
-        List<Schema> result = new ArrayList<>();
-
-        for (Catalog catalog : getCatalogs())
-            result.addAll(catalog.getSchemas());
-
-        return result;
+        return flatMap(getCatalogs(), c -> c.getSchemas());
     }
 
     @Override
     final List<Table<?>> getTables0() {
-        List<Table<?>> result = new ArrayList<>();
-
-        for (Schema schema : getSchemas())
-            result.addAll(schema.getTables());
-
-        return result;
+        return flatMap(getSchemas(), s -> s.getTables());
     }
 
     @Override
@@ -573,32 +562,27 @@ final class MetaImpl extends AbstractMeta {
         @SuppressWarnings("unchecked")
         @Override
         public List<Sequence<?>> getSequences() {
-            List<Sequence<?>> list = new ArrayList<>();
-
             Result<Record> result = getSequences0();
-            if (result != null) {
-                for (Record record : result) {
-                    list.add(Internal.createSequence(
-                        record.get(2, String.class),
-                        this,
-                        (DataType<Number>) DefaultDataType.getDataType(
-                            family(),
-                            record.get(3, String.class),
-                            record.get(4, int.class),
-                            record.get(5, int.class),
-                            !FALSE.equals(settings().isForceIntegerTypesOnZeroScaleDecimals())
-                        ),
-                        record.get(6, Long.class),
-                        record.get(7, Long.class),
-                        record.get(8, Long.class),
-                        record.get(9, Long.class),
-                        record.get(10, boolean.class),
-                        record.get(11, Long.class)
-                    ));
-                }
-            }
 
-            return list;
+            return result != null
+                ? map(result, r -> Internal.createSequence(
+                    r.get(2, String.class),
+                    this,
+                    (DataType<Number>) DefaultDataType.getDataType(
+                        family(),
+                        r.get(3, String.class),
+                        r.get(4, int.class),
+                        r.get(5, int.class),
+                        !FALSE.equals(settings().isForceIntegerTypesOnZeroScaleDecimals())
+                    ),
+                    r.get(6, Long.class),
+                    r.get(7, Long.class),
+                    r.get(8, Long.class),
+                    r.get(9, Long.class),
+                    r.get(10, boolean.class),
+                    r.get(11, Long.class)
+                ))
+              : new ArrayList<>();
         }
 
         private final Result<Record> getSequences0() {

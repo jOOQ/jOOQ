@@ -90,7 +90,6 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
         this.results = new ArrayList<>();
     }
 
-
     @SuppressWarnings("unchecked")
     private static final <T> DataType<T> dataType(Map<? extends Field<?>, ? extends Field<T>> map) {
         if (map.isEmpty())

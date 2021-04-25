@@ -163,28 +163,17 @@ final class CommitsImpl implements Commits {
 
     @Override
     public final MigrationsType export() {
-        MigrationsType result = new MigrationsType();
-        List<CommitType> list = new ArrayList<>();
-
-        for (Commit commit : this) {
-            List<ParentType> parents = map(commit.parents(), p -> new ParentType().withId(p.id()));
-            List<FileType> files = map(commit.files(), f -> new FileType()
-                .withPath(f.path())
-                .withContent(f.content())
-                .withContentType(f.type())
-                .withChange(f.content() == null ? ChangeType.DELETE : ChangeType.MODIFY)
-            );
-
-            list.add(new CommitType()
-                .withId(commit.id())
-                .withMessage(commit.message())
-                .withParents(parents)
-                .withFiles(files)
-            );
-        }
-
-        result.setCommits(list);
-        return result;
+        return new MigrationsType().withCommits(map(this, commit -> new CommitType()
+            .withId(commit.id())
+            .withMessage(commit.message())
+            .withParents(map(commit.parents(), parent -> new ParentType().withId(parent.id())))
+            .withFiles(map(commit.files(), file -> new FileType()
+                .withPath(file.path())
+                .withContent(file.content())
+                .withContentType(file.type())
+                .withChange(file.content() == null ? ChangeType.DELETE : ChangeType.MODIFY)
+            ))
+        ));
     }
 
     @Override

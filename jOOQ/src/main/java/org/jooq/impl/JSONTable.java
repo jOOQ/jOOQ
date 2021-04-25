@@ -59,6 +59,7 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_JSON_TABLE;
 import static org.jooq.impl.Names.N_OPENJSON;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.ArrayList;
@@ -185,14 +186,8 @@ implements
 
     @Override
     final FieldsImpl<Record> fields0() {
-        if (fields == null) {
-            List<Field<?>> f = new ArrayList<>();
-
-            for (JSONTableColumn c : columns)
-                f.add(c.field.getDataType() == c.type ? c.field : DSL.field(c.field.getQualifiedName(), c.type));
-
-            fields = new FieldsImpl<>(f);
-        }
+        if (fields == null)
+            fields = new FieldsImpl<>(map(columns, c -> c.field.getDataType() == c.type ? c.field : DSL.field(c.field.getQualifiedName(), c.type)));
 
         return fields;
     }
@@ -221,24 +216,17 @@ implements
     }
 
     private final void acceptPostgres(Context<?> ctx) {
-        List<SelectField<?>> cols = new ArrayList<>();
-
-        for (JSONTableColumn col : columns)
-            if (col.forOrdinality)
-                cols.add(DSL.field("o").as(col.field));
-            else
-                cols.add(
-                    DSL.field("(jsonb_path_query_first(j, {0}::jsonpath)->>0)::{1}",
-                        col.path != null ? val(col.path) : inline("$." + col.field.getName()),
-                        keyword(col.type.getCastTypeName(ctx.configuration()))
-                    ).as(col.field)
-                );
-
         visitSubquery(
             ctx,
-            select(cols).from(hasOrdinality
-                    ? "jsonb_path_query({0}, {1}::jsonpath) {with} {ordinality} {as} t(j, o)"
-                    : "jsonb_path_query({0}, {1}::jsonpath) {as} t(j)",
+            select(map(columns, col -> col.forOrdinality
+                ? DSL.field("o").as(col.field)
+                : DSL.field("(jsonb_path_query_first(j, {0}::jsonpath)->>0)::{1}",
+                    col.path != null ? val(col.path) : inline("$." + col.field.getName()),
+                    keyword(col.type.getCastTypeName(ctx.configuration()))
+                  ).as(col.field)))
+            .from(hasOrdinality
+                ? "jsonb_path_query({0}, {1}::jsonpath) {with} {ordinality} {as} t(j, o)"
+                : "jsonb_path_query({0}, {1}::jsonpath) {as} t(j)",
                 json.getType() == JSONB.class ? json : json.cast(JSONB),
                 path
             )

@@ -350,8 +350,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
         Collection<Commit> p = new LinkedHashSet<>();
         for (Commit commit : commits)
-            for (Commit parent : commit.parents())
-                p.add(parent);
+            p.addAll(commit.parents());
 
         if (!p.isEmpty()) {
             List<Commit> l = new ArrayList<>(p);

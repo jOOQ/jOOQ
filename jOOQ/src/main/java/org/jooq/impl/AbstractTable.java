@@ -416,7 +416,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
-        return as(alias, Stream.of(fields()).map(aliasFunction).toArray(String[]::new));
+        return as(alias, map(fields(), f -> aliasFunction.apply(f), String[]::new));
     }
 
     @Override
@@ -436,7 +436,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final Table<R> as(Name alias, Function<? super Field<?>, ? extends Name> aliasFunction) {
-        return as(alias, Stream.of(fields()).map(aliasFunction).toArray(Name[]::new));
+        return as(alias, map(fields(), f -> aliasFunction.apply(f), Name[]::new));
     }
 
     @Override

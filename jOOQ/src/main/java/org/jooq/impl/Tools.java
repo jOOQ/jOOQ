@@ -3199,11 +3199,7 @@ final class Tools {
 
 
 
-        List<DataType<?>> result = new ArrayList<>();
-        for (Field<?> f : select.getSelect())
-            result.add(f.getDataType());
-
-        return result;
+        return map(select.getSelect(), f -> f.getDataType());
     }
 
     static final DataType<?> scalarType(Select<?> select) {
@@ -4287,9 +4283,9 @@ final class Tools {
         List<String[]> result = new ArrayList<>();
         parseTXTLine(positions, result, strings[headerLine], nullLiteral);
 
-        for (int j = dataLineStart; j < dataLineEnd; j++) {
+        for (int j = dataLineStart; j < dataLineEnd; j++)
             parseTXTLine(positions, result, strings[j], nullLiteral);
-        }
+
         return result;
     }
 
@@ -5532,11 +5528,7 @@ final class Tools {
         // [#8353] [#10522] [#10523] TODO: Factor out some of this logic and
         // reuse it for the emulation of UPDATE .. SET row = (SELECT ..)
         List<Field<?>> select = field.query.getSelect();
-        List<Field<?>> result = new ArrayList<>();
-
-        for (Field<?> f : flattenCollection(select, false))
-            result.add(f);
-
+        List<Field<?>> result = collect(flattenCollection(select, false));
         Name tableName = name("t");
         Name[] fieldNames = fieldNames(result.size());
         Table<?> t = new AliasedSelect<>(field.query, true, fieldNames).as("t");

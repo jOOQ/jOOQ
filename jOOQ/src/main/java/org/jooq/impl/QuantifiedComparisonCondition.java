@@ -73,6 +73,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.Convert.convert;
 
 import java.util.ArrayList;
@@ -156,16 +157,12 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
             accept1(ctx);
         }
         else if (query.values != null || quantifiedArray) {
-            List<Condition> conditions = new ArrayList<>();
-
-            if (query.values != null)
-                for (Field<?> value : query.values)
-                    conditions.add(comparisonCondition(comparator, (Field<String>) value));
-            else
-                for (Object value : ((Param<? extends Object[]>) query.array).getValue())
-                    conditions.add(value instanceof Field ? comparisonCondition(comparator, (Field<String>) value) : comparisonCondition(comparator, value));
-
-            ctx.visit(CombinedCondition.of(query.quantifier == Quantifier.ALL ? Operator.AND : Operator.OR, conditions));
+            ctx.visit(CombinedCondition.of(
+                query.quantifier == Quantifier.ALL ? Operator.AND : Operator.OR,
+                query.values != null
+                    ? map(query.values, v -> comparisonCondition(comparator, (Field<String>) v))
+                    : map(((Param<? extends Object[]>) query.array).getValue(), v -> v instanceof Field ? comparisonCondition(comparator, (Field<String>) v) : comparisonCondition(comparator, v))
+            ));
         }
         else if ((query.array != null || query.query != null) && emulateOperator) {
             Field<String> pattern = DSL.field(name("pattern"), VARCHAR);

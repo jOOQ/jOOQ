@@ -40,8 +40,10 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
+import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.LIKE;
 import static org.jooq.Comparator.LIKE_IGNORE_CASE;
+import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_SIMILAR_TO;
@@ -72,8 +74,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_ESCAPE;
@@ -82,6 +86,8 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullableIf;
+import static org.jooq.impl.Transformations.applyTransformationForInConditionSubqueryWithLimitToDerivedTable;
+import static org.jooq.impl.Transformations.subqueryWithLimit;
 
 import java.util.Set;
 
@@ -92,6 +98,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.LikeEscapeStep;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.conf.ParamType;
 
 /**
@@ -121,14 +128,23 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
         return this;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void accept(Context<?> ctx) {
         boolean field1Embeddable = field1.getDataType().isEmbeddable();
+        SelectQueryImpl<?> s;
 
         if (field1Embeddable && field2 instanceof ScalarSubquery)
             ctx.visit(row(embeddedFields(field1)).compare(comparator, ((ScalarSubquery<?>) field2).query));
         else if (field1Embeddable && field2.getDataType().isEmbeddable())
             ctx.visit(row(embeddedFields(field1)).compare(comparator, embeddedFields(field2)));
+        else if ((comparator == IN || comparator == NOT_IN)
+                && (s = subqueryWithLimit(field2)) != null
+                && applyTransformationForInConditionSubqueryWithLimitToDerivedTable(ctx)) {
+
+
+
+        }
         else
             accept0(ctx);
     }

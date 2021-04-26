@@ -3218,11 +3218,13 @@ final class Tools {
 
 
     @SuppressWarnings("unchecked")
-    static final <R extends Record> SelectQueryImpl<R> selectQueryImpl(Select<R> select) {
-        if (select instanceof SelectQueryImpl)
-            return (SelectQueryImpl<R>) select;
-        else if (select instanceof AbstractDelegatingQuery)
-            return ((AbstractDelegatingQuery<R, SelectQueryImpl<R>>) select).getDelegate();
+    static final <R extends Record> SelectQueryImpl<R> selectQueryImpl(QueryPart part) {
+        if (part instanceof SelectQueryImpl)
+            return (SelectQueryImpl<R>) part;
+        else if (part instanceof AbstractDelegatingQuery)
+            return ((AbstractDelegatingQuery<R, SelectQueryImpl<R>>) part).getDelegate();
+        else if (part instanceof ScalarSubquery)
+            return selectQueryImpl(((ScalarSubquery<?>) part).query);
         else
             return null;
     }

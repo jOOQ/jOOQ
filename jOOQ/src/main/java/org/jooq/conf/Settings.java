@@ -101,6 +101,9 @@ public class Settings
     protected Boolean bindOffsetTimeType = false;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
+    @XmlElement(defaultValue = "WHEN_NEEDED")
+    @XmlSchemaType(name = "string")
+    protected Transformation transformInConditionSubqueryWithLimitToDerivedTable = Transformation.WHEN_NEEDED;
     @XmlElement(defaultValue = "false")
     protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "false")
@@ -949,6 +952,30 @@ public class Settings
      */
     public void setFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         this.fetchTriggerValuesAfterSQLServerOutput = value;
+    }
+
+    /**
+     * Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
+     * <p>
+     * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Transformation getTransformInConditionSubqueryWithLimitToDerivedTable() {
+        return transformInConditionSubqueryWithLimitToDerivedTable;
+    }
+
+    /**
+     * Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
+     * <p>
+     * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setTransformInConditionSubqueryWithLimitToDerivedTable(Transformation value) {
+        this.transformInConditionSubqueryWithLimitToDerivedTable = value;
     }
 
     /**
@@ -2952,6 +2979,19 @@ public class Settings
         return this;
     }
 
+    /**
+     * Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
+     * <p>
+     * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withTransformInConditionSubqueryWithLimitToDerivedTable(Transformation value) {
+        setTransformInConditionSubqueryWithLimitToDerivedTable(value);
+        return this;
+    }
+
     public Settings withTransformAnsiJoinToTableLists(Boolean value) {
         setTransformAnsiJoinToTableLists(value);
         return this;
@@ -3670,6 +3710,7 @@ public class Settings
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
+        builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformTableListsToAnsiJoin", transformTableListsToAnsiJoin);
         builder.append("transformRownum", transformRownum);
@@ -4017,6 +4058,15 @@ public class Settings
             }
         } else {
             if (!fetchTriggerValuesAfterSQLServerOutput.equals(other.fetchTriggerValuesAfterSQLServerOutput)) {
+                return false;
+            }
+        }
+        if (transformInConditionSubqueryWithLimitToDerivedTable == null) {
+            if (other.transformInConditionSubqueryWithLimitToDerivedTable!= null) {
+                return false;
+            }
+        } else {
+            if (!transformInConditionSubqueryWithLimitToDerivedTable.equals(other.transformInConditionSubqueryWithLimitToDerivedTable)) {
                 return false;
             }
         }
@@ -4828,6 +4878,7 @@ public class Settings
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
+        result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));
         result = ((prime*result)+((transformRownum == null)? 0 :transformRownum.hashCode()));

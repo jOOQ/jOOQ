@@ -40,6 +40,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
+import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.NOT_EQUALS;
 // ...
 // ...
 // ...
@@ -67,6 +69,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
@@ -74,6 +77,8 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Transformations.applyTransformationForInConditionSubqueryWithLimitToDerivedTable;
+import static org.jooq.impl.Transformations.subqueryWithLimit;
 import static org.jooq.tools.Convert.convert;
 
 import java.util.ArrayList;
@@ -122,10 +127,20 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
         return this;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final void accept(Context<?> ctx) {
+        SelectQueryImpl<?> s;
+
         if (field.getDataType().isEmbeddable())
             ctx.visit(row(embeddedFields(field)).compare(comparator, query));
+        else if ((comparator == EQUALS || comparator == NOT_EQUALS)
+                && (s = subqueryWithLimit(query.query)) != null
+                && applyTransformationForInConditionSubqueryWithLimitToDerivedTable(ctx)) {
+
+
+
+        }
         else
             accept0(ctx);
     }

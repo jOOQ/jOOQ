@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
@@ -79,6 +80,8 @@ import static org.jooq.impl.Tools.embeddedFieldsRow;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.visitSubquery;
+import static org.jooq.impl.Transformations.applyTransformationForInConditionSubqueryWithLimitToDerivedTable;
+import static org.jooq.impl.Transformations.subqueryWithLimit;
 
 import java.util.Set;
 
@@ -224,6 +227,29 @@ final class RowSubqueryCondition extends AbstractCondition {
 
         @Override
         public final void accept(Context<?> ctx) {
+            SelectQueryImpl<?> s;
+
+            if ((comparator == IN || comparator == NOT_IN)
+                    && right != null
+                    && (s = subqueryWithLimit(right)) != null
+                    && applyTransformationForInConditionSubqueryWithLimitToDerivedTable(ctx)) {
+
+
+
+            }
+            else if ((comparator == EQUALS || comparator == NOT_EQUALS)
+                    && rightQuantified != null
+                    && (s = subqueryWithLimit(rightQuantified)) != null
+                    && applyTransformationForInConditionSubqueryWithLimitToDerivedTable(ctx)) {
+
+
+
+            }
+            else
+                accept0(ctx);
+        }
+
+        final void accept0(Context<?> ctx) {
             ctx.visit(left)
                .sql(' ')
                .visit(comparator.toKeyword())

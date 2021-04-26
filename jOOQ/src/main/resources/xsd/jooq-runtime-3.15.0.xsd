@@ -226,6 +226,14 @@ included in the <code>OUTPUT</code> clause.
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformInConditionSubqueryWithLimitToDerivedTable" type="jooq-runtime:Transformation" minOccurs="0" maxOccurs="1" default="WHEN_NEEDED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
+<p>
+This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformAnsiJoinToTableLists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform ANSI join to table lists if possible.
 <p>
@@ -1246,6 +1254,20 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
     
       <!-- Update unchanged records by setting record values to the values from the record, e.g. SET a = :a, b = :b. This is the same as calling record.changed(true) prior to updating. -->
       <enumeration value="SET_NON_PRIMARY_KEY_TO_RECORD_VALUES"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="Transformation">
+    <restriction base="string">
+    
+      <!-- Never apply the transformation -->
+      <enumeration value="NEVER"/>
+      
+      <!-- Apply the transformation when needed by a dialect -->
+      <enumeration value="WHEN_NEEDED"/>
+      
+      <!-- Always apply the transformation -->
+      <enumeration value="ALWAYS"/>
     </restriction>
   </simpleType>
   

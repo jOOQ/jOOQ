@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
@@ -425,11 +426,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
             @Override
             public boolean containsValue(Object value) {
-                for (List<Field<?>> list : values.values())
-                    if (list.get(index).equals(value))
-                        return true;
-
-                return false;
+                return anyMatch(values.values(), list -> list.get(index).equals(value));
             }
 
             @Override

@@ -43,6 +43,7 @@ import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.createSchema;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 
 import java.util.AbstractList;
@@ -206,13 +207,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
     }
 
     private final boolean forceApply() {
-        for (Parent parent : parents)
-            if (parent.queries != null)
-                return true;
-            else if (parent.version.forceApply())
-                return true;
-
-        return false;
+        return anyMatch(parents, p -> p.queries != null || p.version.forceApply());
     }
 
     @Override

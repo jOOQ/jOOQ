@@ -54,6 +54,7 @@ import java.util.concurrent.Executor;
 import javax.sql.DataSource;
 
 import org.jooq.CacheProvider;
+import org.jooq.impl.CacheType;
 import org.jooq.CharsetProvider;
 import org.jooq.CommitProvider;
 import org.jooq.Configuration;

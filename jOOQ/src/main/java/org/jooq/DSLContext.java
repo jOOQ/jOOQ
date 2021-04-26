@@ -104,7 +104,6 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.CacheType;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 import org.jooq.impl.ThreadLocalTransactionProvider;

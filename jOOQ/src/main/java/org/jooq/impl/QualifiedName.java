@@ -103,8 +103,8 @@ final class QualifiedName extends AbstractName {
         String[] result;
         int nulls = 0;
 
-        for (int i = 0; i < qualifiedName.length; i++)
-            if (StringUtils.isEmpty(qualifiedName[i]))
+        for (String name : qualifiedName)
+            if (StringUtils.isEmpty(name))
                 nulls++;
 
         if (nulls > 0) {
@@ -127,8 +127,8 @@ final class QualifiedName extends AbstractName {
         Name[] result;
         int nulls = 0;
 
-        for (int i = 0; i < names.length; i++)
-            if (names[i] == null || names[i].equals(NO_NAME))
+        for (Name name : names)
+            if (name == null || name.equals(NO_NAME))
                 nulls++;
 
         if (nulls > 0) {
@@ -154,8 +154,8 @@ final class QualifiedName extends AbstractName {
         if (ctx.qualify()) {
             String separator = "";
 
-            for (int i = 0; i < qualifiedName.length; i++) {
-                ctx.sql(separator).visit(qualifiedName[i]);
+            for (UnqualifiedName name : qualifiedName) {
+                ctx.sql(separator).visit(name);
                 separator = ".";
             }
         }

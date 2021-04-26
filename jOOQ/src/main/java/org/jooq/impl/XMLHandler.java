@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 
 import java.util.ArrayList;
@@ -154,12 +155,8 @@ final class XMLHandler extends DefaultHandler {
     private static boolean onlyValueFields(List<Field<?>> fields) {
         if (fields.size() <= 1)
             return false;
-
-        for (Field<?> field : fields)
-            if (!"value".equals(field.getName()))
-                return false;
-
-        return true;
+        else
+            return !anyMatch(fields, f -> !"value".equals(f.getName()));
     }
 
     @Override

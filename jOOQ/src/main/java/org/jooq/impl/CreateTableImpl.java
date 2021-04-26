@@ -625,7 +625,7 @@ final class CreateTableImpl extends AbstractDDLQuery implements
     }
 
     private final boolean isPrimaryKey(int i) {
-        return anyMatch(primaryKeyColumns(), f -> f.equals(columnFields.get(i)));
+        return anyMatch(primaryKeyColumns(), columnFields.get(i)::equals);
     }
 
     private final boolean matchingPrimaryKey(Constraint constraint, Field<?> identity) {

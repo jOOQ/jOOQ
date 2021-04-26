@@ -53,7 +53,6 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.findAny;
-import static org.jooq.impl.Tools.intersect;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.Tools.reverseIterable;
@@ -414,7 +413,7 @@ final class Interpreter {
 
         for (boolean check : cascade == CASCADE ? new boolean [] { false } : new boolean [] { true, false }) {
             if (table.primaryKey != null) {
-                if (intersect(table.primaryKey.fields, fields)) {
+                if (anyMatch(table.primaryKey.fields, t1 -> fields.contains(t1))) {
                     cascade(table.primaryKey, fields, check ? RESTRICT : CASCADE);
 
                     if (!check)
@@ -447,7 +446,7 @@ final class Interpreter {
         while (it2.hasNext()) {
             MutableKey key = it2.next();
 
-            if (fields == null || intersect(key.fields, fields)) {
+            if (fields == null || anyMatch(key.fields, t1 -> fields.contains(t1))) {
                 if (key instanceof MutableUniqueKey)
                     cascade((MutableUniqueKey) key, fields, check ? RESTRICT : CASCADE);
 
@@ -1856,12 +1855,8 @@ final class Interpreter {
         final boolean fieldsEquals(Field<?>[] f) {
             if (fields.size() != f.length)
                 return false;
-
-            for (int i = 0; i < fields.size(); i++)
-                if (!fields.get(i).nameEquals((UnqualifiedName) f[i].getUnqualifiedName()))
-                    return false;
-
-            return true;
+            else
+                return !anyMatch(fields, (x, i) -> !x.nameEquals((UnqualifiedName) f[i].getUnqualifiedName()));
         }
     }
 

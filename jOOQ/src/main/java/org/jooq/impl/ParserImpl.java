@@ -12446,7 +12446,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final boolean parseFunctionNameIf(String... names) {
-        return anyMatch(names, this::parseFunctionNameIf);
+        return anyMatch(names, n -> parseFunctionNameIf(n));
     }
 
     private final boolean parseOperator(String operator) {
@@ -12526,7 +12526,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final boolean parseKeywordIf(String... keywords) {
-        return anyMatch(keywords, this::parseKeywordIf);
+        return anyMatch(keywords, k -> parseKeywordIf(k));
     }
 
     @Override
@@ -12547,7 +12547,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Keyword parseAndGetKeywordIf(String... keywords) {
-        return findAny(keywords, this::parseKeywordIf, k -> keyword(k.toLowerCase()));
+        return findAny(keywords, k -> parseKeywordIf(k), k -> keyword(k.toLowerCase()));
     }
 
     private final Keyword parseAndGetKeywordIf(String keyword) {
@@ -12585,7 +12585,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final boolean peekKeyword(String... keywords) {
-        return anyMatch(keywords, this::peekKeyword);
+        return anyMatch(keywords, k -> peekKeyword(k));
     }
 
     @Override

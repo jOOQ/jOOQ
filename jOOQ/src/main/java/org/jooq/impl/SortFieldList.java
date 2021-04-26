@@ -88,6 +88,6 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
     }
 
     final List<Field<?>> fields() {
-        return map(this, f -> ((SortFieldImpl<?>) f).getField());
+        return Tools.map(this, f -> ((SortFieldImpl<?>) f).getField());
     }
 }

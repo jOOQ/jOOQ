@@ -43,6 +43,13 @@ import static java.lang.Character.isJavaIdentifierPart;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_GETTER;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_MEMBERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_SETTERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 // ...
 // ...
 // ...
@@ -77,13 +84,6 @@ import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_GETTER;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_MEMBERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_SETTERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.DDLStatementType.ALTER_SCHEMA;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
@@ -170,7 +170,6 @@ import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.io.Serializable;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -212,12 +211,10 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinPool.ManagedBlocker;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -323,32 +320,32 @@ final class Tools {
     // Empty arrays for use with Collection.toArray()
     // ------------------------------------------------------------------------
 
-    static final byte[]                     EMPTY_BYTE                     = {};
-    static final Catalog[]                  EMPTY_CATALOG                  = {};
-    static final Check<?>[]                 EMPTY_CHECK                    = {};
-    static final Clause[]                   EMPTY_CLAUSE                   = {};
-    static final Collection<?>[]            EMPTY_COLLECTION               = {};
-    static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION  = {};
-    static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER         = {};
-    static final Field<?>[]                 EMPTY_FIELD                    = {};
-    static final int[]                      EMPTY_INT                      = {};
-    static final JSONEntry<?>[]             EMPTY_JSONENTRY                = {};
-    static final Name[]                     EMPTY_NAME                     = {};
-    static final Object[]                   EMPTY_OBJECT                   = {};
-    static final Param<?>[]                 EMPTY_PARAM                    = {};
-    static final OrderField<?>[]            EMPTY_ORDERFIELD               = {};
-    static final Query[]                    EMPTY_QUERY                    = {};
-    static final QueryPart[]                EMPTY_QUERYPART                = {};
-    static final Record[]                   EMPTY_RECORD                   = {};
-    static final Row[]                      EMPTY_ROW                      = {};
-    static final Schema[]                   EMTPY_SCHEMA                   = {};
-    static final SortField<?>[]             EMPTY_SORTFIELD                = {};
-    static final Source[]                   EMPTY_SOURCE                   = {};
-    static final String[]                   EMPTY_STRING                   = {};
-    static final Table<?>[]                 EMPTY_TABLE                    = {};
-    static final TableField<?, ?>[]         EMPTY_TABLE_FIELD              = {};
-    static final TableRecord<?>[]           EMPTY_TABLE_RECORD             = {};
-    static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD         = {};
+    static final byte[]                     EMPTY_BYTE                    = {};
+    static final Catalog[]                  EMPTY_CATALOG                 = {};
+    static final Check<?>[]                 EMPTY_CHECK                   = {};
+    static final Clause[]                   EMPTY_CLAUSE                  = {};
+    static final Collection<?>[]            EMPTY_COLLECTION              = {};
+    static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION = {};
+    static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER        = {};
+    static final Field<?>[]                 EMPTY_FIELD                   = {};
+    static final int[]                      EMPTY_INT                     = {};
+    static final JSONEntry<?>[]             EMPTY_JSONENTRY               = {};
+    static final Name[]                     EMPTY_NAME                    = {};
+    static final Object[]                   EMPTY_OBJECT                  = {};
+    static final Param<?>[]                 EMPTY_PARAM                   = {};
+    static final OrderField<?>[]            EMPTY_ORDERFIELD              = {};
+    static final Query[]                    EMPTY_QUERY                   = {};
+    static final QueryPart[]                EMPTY_QUERYPART               = {};
+    static final Record[]                   EMPTY_RECORD                  = {};
+    static final Row[]                      EMPTY_ROW                     = {};
+    static final Schema[]                   EMTPY_SCHEMA                  = {};
+    static final SortField<?>[]             EMPTY_SORTFIELD               = {};
+    static final Source[]                   EMPTY_SOURCE                  = {};
+    static final String[]                   EMPTY_STRING                  = {};
+    static final Table<?>[]                 EMPTY_TABLE                   = {};
+    static final TableField<?, ?>[]         EMPTY_TABLE_FIELD             = {};
+    static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
+    static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
@@ -1779,7 +1776,15 @@ final class Tools {
         return findAny(array, test, t -> TRUE) != null;
     }
 
+    static final <T, E extends Exception> boolean anyMatch(T[] array, ThrowingIntPredicate<? super T, E> test) throws E {
+        return findAny(array, test, t -> TRUE) != null;
+    }
+
     static final <T, E extends Exception> boolean anyMatch(Iterable<? extends T> it, ThrowingPredicate<? super T, E> test) throws E {
+        return findAny(it, test, t -> TRUE) != null;
+    }
+
+    static final <T, E extends Exception> boolean anyMatch(Iterable<? extends T> it, ThrowingIntPredicate<? super T, E> test) throws E {
         return findAny(it, test, t -> TRUE) != null;
     }
 
@@ -1787,7 +1792,15 @@ final class Tools {
         return findAny(array, test, t -> t);
     }
 
+    static final <T, E extends Exception> T findAny(T[] array, ThrowingIntPredicate<? super T, E> test) throws E {
+        return findAny(array, test, t -> t);
+    }
+
     static final <T, E extends Exception> T findAny(Iterable<? extends T> it, ThrowingPredicate<? super T, E> test) throws E {
+        return findAny(it, test, t -> t);
+    }
+
+    static final <T, E extends Exception> T findAny(Iterable<? extends T> it, ThrowingIntPredicate<? super T, E> test) throws E {
         return findAny(it, test, t -> t);
     }
 
@@ -1800,11 +1813,35 @@ final class Tools {
         return null;
     }
 
+    static final <T, U, E extends Exception> U findAny(T[] array, ThrowingIntPredicate<? super T, E> test, ThrowingFunction<? super T, ? extends U, E> function) throws E {
+        if (array != null) {
+            int i = 0;
+
+            for (T t : array)
+                if (test.test(t, i++))
+                    return function.apply(t);
+        }
+
+        return null;
+    }
+
     static final <T, U, E extends Exception> U findAny(Iterable<? extends T> it, ThrowingPredicate<? super T, E> test, ThrowingFunction<? super T, ? extends U, E> function) throws E {
         if (it != null)
             for (T t : it)
                 if (test.test(t))
                     return function.apply(t);
+
+        return null;
+    }
+
+    static final <T, U, E extends Exception> U findAny(Iterable<? extends T> it, ThrowingIntPredicate<? super T, E> test, ThrowingFunction<? super T, ? extends U, E> function) throws E {
+        if (it != null) {
+            int i = 0;
+
+            for (T t : it)
+                if (test.test(t, i++))
+                    return function.apply(t);
+        }
 
         return null;
     }
@@ -3273,195 +3310,6 @@ final class Tools {
     }
 
     // ------------------------------------------------------------------------
-    // XXX: [#2965] Reflection cache
-    // ------------------------------------------------------------------------
-
-    /**
-     * This API acts as a "guard" to prevent the same code from being executed
-     * recursively within the same thread.
-     */
-    static class ThreadGuard {
-
-        static class Guard {
-            ThreadLocal<Object> tl = new ThreadLocal<>();
-        }
-
-        static final Guard RECORD_TOSTRING = new Guard();
-
-        /**
-         * A guarded operation.
-         */
-        static interface GuardedOperation<V> {
-
-            /**
-             * This callback is executed only once on the current stack.
-             */
-            V unguarded();
-
-            /**
-             * This callback is executed if {@link #unguarded()} has already been executed on the current stack.
-             */
-            V guarded();
-        }
-
-        /**
-         * Run an operation using a guard.
-         */
-        static final void run(Guard guard, Runnable unguardedOperation, Runnable guardedOperation) {
-            run(guard, () -> { unguardedOperation.run(); return null; }, () -> { guardedOperation.run(); return null; });
-        }
-
-        /**
-         * Run an operation using a guard.
-         */
-        static final <V> V run(Guard guard, Supplier<V> unguardedOperation, Supplier<V> guardedOperation) {
-            boolean unguarded = (guard.tl.get() == null);
-            if (unguarded)
-                guard.tl.set(Guard.class);
-
-            try {
-                if (unguarded)
-                    return unguardedOperation.get();
-                else
-                    return guardedOperation.get();
-            }
-            finally {
-                if (unguarded)
-                    guard.tl.remove();
-            }
-        }
-    }
-
-    /**
-     * [#2965] This is a {@link Configuration}-based cache that can cache reflection information and other things
-     */
-    static class Cache {
-
-        /**
-         * Run a cached operation in the context of a {@link Configuration}.
-         *
-         * @param configuration The configuration that may cache the outcome of
-         *            the cached operation.
-         * @param operation The expensive operation.
-         * @param type The cache type to be used.
-         * @param key The cache keys.
-         * @return The cached value or the outcome of the cached operation.
-         */
-        @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, Supplier<V> operation, CacheType type, Supplier<?> key) {
-
-            // If no configuration is provided take the default configuration that loads the default Settings
-            if (configuration == null)
-                configuration = new DefaultConfiguration();
-
-            // Shortcut caching when the relevant Settings flag isn't set.
-            if (!type.category.predicate.test(configuration.settings()))
-                return operation.get();
-
-            Object cacheOrNull = configuration.data(type);
-            if (cacheOrNull == null) {
-                synchronized (type) {
-                    cacheOrNull = configuration.data(type);
-
-                    if (cacheOrNull == null)
-                        configuration.data(type, cacheOrNull = defaultIfNull(
-                            configuration.cacheProvider().provide(new DefaultCacheContext(configuration, type)),
-                            NULL
-                        ));
-                }
-            }
-
-            if (cacheOrNull == NULL)
-                return operation.get();
-
-            // The cache is guaranteed to be thread safe by the CacheProvider
-            // contract. However since we cannot use ConcurrentHashMap.computeIfAbsent()
-            // recursively, we have to revert to double checked locking nonetheless.
-            Map<Object, Object> cache = (Map<Object, Object>) cacheOrNull;
-            Object k = key.get();
-            Object v = cache.get(k);
-            if (v == null) {
-                synchronized (cache) {
-                    v = cache.get(k);
-
-                    if (v == null)
-                        cache.put(k, (v = operation.get()) == null ? NULL : v);
-                }
-            }
-
-            return (V) (v == NULL ? null : v);
-        }
-
-        /**
-         * A <code>null</code> placeholder to be put in {@link ConcurrentHashMap}.
-         */
-        private static final Object NULL = new Object();
-
-        /**
-         * Create a single-value or multi-value key for caching.
-         */
-        static final Object key(Object key1, Object key2) {
-            return new Key2(key1, key2);
-        }
-
-        /**
-         * A 2-value key for caching.
-         */
-        private static class Key2 implements Serializable {
-
-            /**
-             * Generated UID.
-             */
-            private static final long serialVersionUID = 5822370287443922993L;
-            private final Object      key1;
-            private final Object      key2;
-
-            Key2(Object key1, Object key2) {
-                this.key1 = key1;
-                this.key2 = key2;
-            }
-
-            @Override
-            public int hashCode() {
-                final int prime = 31;
-                int result = 1;
-                result = prime * result + ((key1 == null) ? 0 : key1.hashCode());
-                result = prime * result + ((key2 == null) ? 0 : key2.hashCode());
-                return result;
-            }
-
-            @Override
-            public boolean equals(Object obj) {
-                if (this == obj)
-                    return true;
-                if (obj == null)
-                    return false;
-                if (getClass() != obj.getClass())
-                    return false;
-                Key2 other = (Key2) obj;
-                if (key1 == null) {
-                    if (other.key1 != null)
-                        return false;
-                }
-                else if (!key1.equals(other.key1))
-                    return false;
-                if (key2 == null) {
-                    if (other.key2 != null)
-                        return false;
-                }
-                else if (!key2.equals(other.key2))
-                    return false;
-                return true;
-            }
-
-            @Override
-            public String toString() {
-                return "[" + key1 + ", " + key2 + "]";
-            }
-        }
-    }
-
-    // ------------------------------------------------------------------------
     // XXX: Reflection utilities used for POJO mapping
     // ------------------------------------------------------------------------
 
@@ -3590,19 +3438,12 @@ final class Tools {
             if (type.getAnnotation(javax.persistence.Table.class) != null)
                 return true;
 
-            for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-                if (member.getAnnotation(Column.class) != null)
-                    return true;
-
-                if (member.getAnnotation(Id.class) != null)
-                    return true;
-            }
-
-            for (Method method : getInstanceMethods(type))
-                if (method.getAnnotation(Column.class) != null)
-                    return true;
-
-            return false;
+            if (anyMatch(getInstanceMembers(type), m ->
+                    m.getAnnotation(Column.class) != null
+                 || m.getAnnotation(Id.class) != null))
+                return true;
+            else
+                return anyMatch(getInstanceMethods(type), m -> m.getAnnotation(Column.class) != null);
         }, REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, () -> type);
     }
 
@@ -5241,6 +5082,7 @@ final class Tools {
         };
     }
 
+    @SuppressWarnings("unchecked")
     static final <E extends EnumType> E[] enums(Class<? extends E> type) {
 
         // Java implementation
@@ -5291,14 +5133,11 @@ final class Tools {
             return false;
 
         Set<String> names = new HashSet<>();
-        for (Field<?> field : fields)
-            if (!names.add(field.getName()))
-                return true;
-
-        return false;
+        return anyMatch(fields, f -> !names.add(f.getName()));
     }
 
     static final QueryPartList<SelectFieldOrAsterisk> qualify(final Table<?> table, Iterable<SelectFieldOrAsterisk> fields) {
+        @SuppressWarnings("serial")
         QueryPartList<SelectFieldOrAsterisk> result = new QueryPartList<SelectFieldOrAsterisk>() {
             @Override
             public final boolean rendersContent(Context<?> ctx) {
@@ -5582,19 +5421,11 @@ final class Tools {
     }
 
     static final boolean hasEmbeddedFields(Field<?>[] fields) {
-        for (Field<?> f : fields)
-            if (f.getDataType().isEmbeddable())
-                return true;
-
-        return false;
+        return anyMatch(fields, f -> f.getDataType().isEmbeddable());
     }
 
     static final boolean hasEmbeddedFields(Iterable<? extends Field<?>> fields) {
-        for (Field<?> f : fields)
-            if (f.getDataType().isEmbeddable())
-                return true;
-
-        return false;
+        return anyMatch(fields, f -> f.getDataType().isEmbeddable());
     }
 
     static final <E> List<E> collect(Iterable<E> iterable) {
@@ -5822,17 +5653,6 @@ final class Tools {
                 sb.append('.');
         }
         return sb.toString();
-    }
-
-    /**
-     * Whether the intersection of two collection is non-empty.
-     */
-    static final <T> boolean intersect(Collection<T> c1, Collection<T> c2) {
-        for (T t1 : c1)
-            if (c2.contains(t1))
-                return true;
-
-        return false;
     }
 
     /**

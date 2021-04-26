@@ -516,25 +516,12 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private boolean generateCatalogIfEmpty(CatalogDefinition catalog) {
-        if (generateEmptyCatalogs())
-            return true;
-
-        List<SchemaDefinition> schemas = catalog.getSchemata();
-        if (schemas.isEmpty())
-            return false;
-
-        for (SchemaDefinition schema : schemas)
-            if (generateSchemaIfEmpty(schema))
-                return true;
-
-        return false;
+        return generateEmptyCatalogs() || catalog.getSchemata().stream().anyMatch(this::generateSchemaIfEmpty);
     }
 
     private final boolean generateSchemaIfEmpty(SchemaDefinition schema) {
-        if (generateEmptySchemas())
-            return true;
-
-        return !database.getArrays(schema).isEmpty()
+        return generateEmptySchemas()
+               || !database.getArrays(schema).isEmpty()
                || !database.getDomains(schema).isEmpty()
                || !database.getEmbeddables(schema).isEmpty()
                || !database.getEnums(schema).isEmpty()

@@ -74,6 +74,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -1873,11 +1874,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     private boolean matches(DataTypeDefinition type, Pattern pattern) {
-        for (String matchName : type.getMatchNames())
-            if (pattern.matcher(matchName).matches())
-                return true;
-
-        return false;
+        return type.getMatchNames().stream().map(pattern::matcher).anyMatch(Matcher::matches);
     }
 
     @Override

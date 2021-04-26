@@ -47,7 +47,6 @@ import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
-import org.jooq.impl.Tools.Cache;
 
 /**
  * A default {@link RecordMapperProvider} implementation, providing a

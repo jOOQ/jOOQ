@@ -52,6 +52,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.impl.CacheType;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
@@ -59,7 +60,6 @@ import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
-import org.jooq.impl.Tools.Cache;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultConnection;
 

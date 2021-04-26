@@ -101,7 +101,6 @@ import org.jooq.XMLFormat;
 import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Tools.ThreadGuard;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;

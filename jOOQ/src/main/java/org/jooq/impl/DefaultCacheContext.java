@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import org.jooq.CacheContext;
+import org.jooq.impl.CacheType;
 import org.jooq.Configuration;
 
 /**

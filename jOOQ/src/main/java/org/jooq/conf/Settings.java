@@ -101,11 +101,14 @@ public class Settings
     protected Boolean bindOffsetTimeType = false;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "WHEN_NEEDED")
     @XmlSchemaType(name = "string")
     protected Transformation transformInConditionSubqueryWithLimitToDerivedTable = Transformation.WHEN_NEEDED;
-    @XmlElement(defaultValue = "false")
-    protected Boolean transformAnsiJoinToTableLists = false;
+    @XmlElement(defaultValue = "WHEN_NEEDED")
+    @XmlSchemaType(name = "string")
+    protected Transformation transformQualify = Transformation.WHEN_NEEDED;
     @XmlElement(defaultValue = "false")
     protected Boolean transformTableListsToAnsiJoin = false;
     @XmlElement(defaultValue = "false")
@@ -955,30 +958,6 @@ public class Settings
     }
 
     /**
-     * Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
-     * <p>
-     * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
-     * <p>
-     * This feature is available in the commercial distribution only.
-     * 
-     */
-    public Transformation getTransformInConditionSubqueryWithLimitToDerivedTable() {
-        return transformInConditionSubqueryWithLimitToDerivedTable;
-    }
-
-    /**
-     * Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
-     * <p>
-     * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
-     * <p>
-     * This feature is available in the commercial distribution only.
-     * 
-     */
-    public void setTransformInConditionSubqueryWithLimitToDerivedTable(Transformation value) {
-        this.transformInConditionSubqueryWithLimitToDerivedTable = value;
-    }
-
-    /**
      * Transform ANSI join to table lists if possible.
      * <p>
      * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
@@ -1011,6 +990,50 @@ public class Settings
      */
     public void setTransformAnsiJoinToTableLists(Boolean value) {
         this.transformAnsiJoinToTableLists = value;
+    }
+
+    /**
+     * Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
+     * <p>
+     * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Transformation getTransformInConditionSubqueryWithLimitToDerivedTable() {
+        return transformInConditionSubqueryWithLimitToDerivedTable;
+    }
+
+    /**
+     * Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
+     * <p>
+     * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setTransformInConditionSubqueryWithLimitToDerivedTable(Transformation value) {
+        this.transformInConditionSubqueryWithLimitToDerivedTable = value;
+    }
+
+    /**
+     * Transform the <code>QUALIFY</code> clause to an equivalent derived table to filter on window functions.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Transformation getTransformQualify() {
+        return transformQualify;
+    }
+
+    /**
+     * Transform the <code>QUALIFY</code> clause to an equivalent derived table to filter on window functions.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setTransformQualify(Transformation value) {
+        this.transformQualify = value;
     }
 
     /**
@@ -2979,6 +3002,11 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformAnsiJoinToTableLists(Boolean value) {
+        setTransformAnsiJoinToTableLists(value);
+        return this;
+    }
+
     /**
      * Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
      * <p>
@@ -2992,8 +3020,14 @@ public class Settings
         return this;
     }
 
-    public Settings withTransformAnsiJoinToTableLists(Boolean value) {
-        setTransformAnsiJoinToTableLists(value);
+    /**
+     * Transform the <code>QUALIFY</code> clause to an equivalent derived table to filter on window functions.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withTransformQualify(Transformation value) {
+        setTransformQualify(value);
         return this;
     }
 
@@ -3710,8 +3744,9 @@ public class Settings
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
-        builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
+        builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
+        builder.append("transformQualify", transformQualify);
         builder.append("transformTableListsToAnsiJoin", transformTableListsToAnsiJoin);
         builder.append("transformRownum", transformRownum);
         builder.append("transformUnneededArithmeticExpressions", transformUnneededArithmeticExpressions);
@@ -4061,6 +4096,15 @@ public class Settings
                 return false;
             }
         }
+        if (transformAnsiJoinToTableLists == null) {
+            if (other.transformAnsiJoinToTableLists!= null) {
+                return false;
+            }
+        } else {
+            if (!transformAnsiJoinToTableLists.equals(other.transformAnsiJoinToTableLists)) {
+                return false;
+            }
+        }
         if (transformInConditionSubqueryWithLimitToDerivedTable == null) {
             if (other.transformInConditionSubqueryWithLimitToDerivedTable!= null) {
                 return false;
@@ -4070,12 +4114,12 @@ public class Settings
                 return false;
             }
         }
-        if (transformAnsiJoinToTableLists == null) {
-            if (other.transformAnsiJoinToTableLists!= null) {
+        if (transformQualify == null) {
+            if (other.transformQualify!= null) {
                 return false;
             }
         } else {
-            if (!transformAnsiJoinToTableLists.equals(other.transformAnsiJoinToTableLists)) {
+            if (!transformQualify.equals(other.transformQualify)) {
                 return false;
             }
         }
@@ -4878,8 +4922,9 @@ public class Settings
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
-        result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
+        result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));
+        result = ((prime*result)+((transformQualify == null)? 0 :transformQualify.hashCode()));
         result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));
         result = ((prime*result)+((transformRownum == null)? 0 :transformRownum.hashCode()));
         result = ((prime*result)+((transformUnneededArithmeticExpressions == null)? 0 :transformUnneededArithmeticExpressions.hashCode()));

@@ -76,6 +76,7 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Quantifier.ALL;
+import static org.jooq.impl.Quantifier.ANY;
 import static org.jooq.impl.Tools.embeddedFieldsRow;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.fieldsByName;
@@ -108,10 +109,13 @@ final class RowSubqueryCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID             = -1806139685201770706L;
-    private static final Clause[]        CLAUSES                      = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect> SUPPORT_NATIVE               = SQLDialect.supportedBy(H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> NO_SUPPORT_NATIVE_QUANTIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
+    private static final long            serialVersionUID                           = -1806139685201770706L;
+    private static final Clause[]        CLAUSES                                    = { CONDITION, CONDITION_COMPARISON };
+    private static final Set<SQLDialect> SUPPORT_NATIVE                             = SQLDialect.supportedBy(H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED                      = SQLDialect.supportedBy(DERBY, FIREBIRD, SQLITE);
+    // See https://bugs.mysql.com/bug.php?id=103494
+    private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED_OTHER_THAN_IN_NOT_IN = SQLDialect.supportedBy(MARIADB, MYSQL);
+
 
 
 
@@ -146,22 +150,30 @@ final class RowSubqueryCondition extends AbstractCondition {
         return null;
     }
 
+    private static final boolean inOrNotIn(Comparator comparator, Quantifier quantifier) {
+        return comparator == EQUALS && quantifier == ANY
+            || comparator == NOT_EQUALS && quantifier == ALL;
+    }
+
     private final QueryPartInternal delegate(Context<?> ctx) {
 
         // [#3505] TODO: Emulate this where it is not supported
         if (rightQuantified != null) {
-            if (NO_SUPPORT_NATIVE_QUANTIFIED.contains(ctx.dialect())) {
 
-                // TODO: Handle all cases, not just the query one
-                QuantifiedSelectImpl<?> q = (QuantifiedSelectImpl<?>) rightQuantified;
+            // TODO: Handle all cases, not just the query one
+            QuantifiedSelectImpl<?> q = (QuantifiedSelectImpl<?>) rightQuantified;
+            boolean inOrNotIn = inOrNotIn(comparator, q.quantifier);
+
+            if (NO_SUPPORT_QUANTIFIED.contains(ctx.dialect()) ||
+                NO_SUPPORT_QUANTIFIED_OTHER_THAN_IN_NOT_IN.contains(ctx.dialect()) && !inOrNotIn) {
 
                 switch (comparator) {
                     case EQUALS:
                     case NOT_EQUALS: {
-                        if (comparator == NOT_EQUALS ^ q.quantifier == ALL)
-                            return emulationUsingExists(ctx, left, q.query, comparator == EQUALS ? NOT_EQUALS : EQUALS, comparator == EQUALS);
-                        else
+                        if (inOrNotIn)
                             return new RowSubqueryCondition(left, q.query, comparator == EQUALS ? IN : NOT_IN);
+                        else
+                            return emulationUsingExists(ctx, left, q.query, comparator == EQUALS ? NOT_EQUALS : EQUALS, comparator == EQUALS);
                     }
 
                     case GREATER:

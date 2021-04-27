@@ -3225,6 +3225,8 @@ final class Tools {
             return ((AbstractDelegatingQuery<R, SelectQueryImpl<R>>) part).getDelegate();
         else if (part instanceof ScalarSubquery)
             return selectQueryImpl(((ScalarSubquery<?>) part).query);
+        else if (part instanceof QuantifiedSelectImpl)
+            return selectQueryImpl(((QuantifiedSelectImpl<?>) part).query);
         else
             return null;
     }

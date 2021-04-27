@@ -37,8 +37,25 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
 import static org.jooq.conf.Transformation.WHEN_NEEDED;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -60,6 +77,7 @@ import org.jooq.conf.Transformation;
 final class Transformations {
 
     private static final Set<SQLDialect> NO_SUPPORT_IN_LIMIT = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> EMULATE_QUALIFY     = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE);
 
     static final SelectQueryImpl<?> subqueryWithLimit(QueryPart source) {
         SelectQueryImpl<?> s;
@@ -72,6 +90,15 @@ final class Transformations {
             "Settings.transformInConditionSubqueryWithLimitToDerivedTable",
             ctx.settings().getTransformInConditionSubqueryWithLimitToDerivedTable(),
             c -> NO_SUPPORT_IN_LIMIT.contains(c.dialect())
+        );
+    }
+
+    static final boolean applyTransformationForQualify(Context<?> ctx) {
+        return applyTransformation(
+            ctx,
+            "Settings.transformQualify",
+            ctx.settings().getTransformQualify(),
+            c -> EMULATE_QUALIFY.contains(c.dialect())
         );
     }
 

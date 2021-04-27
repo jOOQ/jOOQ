@@ -212,6 +212,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
+import static org.jooq.impl.Transformations.applyTransformationForQualify;
 
 import java.sql.ResultSetMetaData;
 import java.util.ArrayDeque;
@@ -306,7 +307,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect> EMULATE_QUALIFY                 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE);
+
 
 
 
@@ -1523,7 +1524,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         // [#5810] Emulate the Teradata QUALIFY clause
-        else if (qualify.hasWhere() && EMULATE_QUALIFY.contains(ctx.dialect()) && ctx.configuration().commercial(() -> "The QUALIFY clause can be emulated in the jOOQ 3.15 Professional Edition and jOOQ Enterprise Edition, see https://github.com/jOOQ/jOOQ/issues/5810")) {
+        else if (qualify.hasWhere() && applyTransformationForQualify(ctx)) {
 
 
 

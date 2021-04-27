@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -99,6 +100,8 @@ public interface InsertValuesStep7<R extends Record, T1, T2, T3, T4, T5, T6, T7>
      * <p>
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function)
      */
     @NotNull @CheckReturnValue
     @Support
@@ -110,6 +113,8 @@ public interface InsertValuesStep7<R extends Record, T1, T2, T3, T4, T5, T6, T7>
      * <p>
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
+     *
+     * @see Rows#toRowList(Function, Function, Function, Function, Function, Function, Function)
      */
     @NotNull @CheckReturnValue
     @Support

@@ -27486,6 +27486,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function...)
      */
     @NotNull
     @Support
@@ -27539,6 +27541,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function)
      */
     @SafeVarargs
     @NotNull
@@ -27572,6 +27576,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27605,6 +27611,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27638,6 +27646,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27671,6 +27681,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27704,6 +27716,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27737,6 +27751,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27770,6 +27786,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27803,6 +27821,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27836,6 +27856,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27869,6 +27891,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27902,6 +27926,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27935,6 +27961,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -27968,6 +27996,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -28001,6 +28031,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -28034,6 +28066,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -28067,6 +28101,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -28100,6 +28136,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -28133,6 +28171,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -28166,6 +28206,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -28199,6 +28241,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull
@@ -28232,6 +28276,8 @@ public class DSL {
      * <p>
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
+     *
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SafeVarargs
     @NotNull

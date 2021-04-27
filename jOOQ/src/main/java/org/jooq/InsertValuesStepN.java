@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -99,6 +100,8 @@ public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateSt
      * <p>
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
+     *
+     * @see Rows#toRowArray(Function, Function)
      */
     @NotNull @CheckReturnValue
     @Support
@@ -109,6 +112,8 @@ public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateSt
      * <p>
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
+     *
+     * @see Rows#toRowList(Function, Function)
      */
     @NotNull @CheckReturnValue
     @Support

@@ -40,6 +40,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.*;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
@@ -1432,6 +1433,8 @@ public interface Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extend
      * <li><code>IN</code> predicates on temporary tables</li>
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
+     *
+     * @see Rows#toRowList(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @NotNull
     @Support
@@ -1481,6 +1484,7 @@ public interface Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extend
      * </ul>
      *
      * @see #in(Collection)
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SuppressWarnings("unchecked")
     @NotNull
@@ -1541,6 +1545,8 @@ public interface Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extend
      * <li><code>NOT IN</code> predicates on temporary tables</li>
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
+     *
+     * @see Rows#toRowList(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @NotNull
     @Support
@@ -1591,6 +1597,7 @@ public interface Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extend
      * </ul>
      *
      * @see #notIn(Collection)
+     * @see Rows#toRowArray(Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function, Function)
      */
     @SuppressWarnings("unchecked")
     @NotNull

@@ -40,6 +40,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.*;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
@@ -1372,6 +1373,8 @@ public interface Row2<T1, T2> extends Row {
      * <li><code>IN</code> predicates on temporary tables</li>
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
+     *
+     * @see Rows#toRowList(Function, Function)
      */
     @NotNull
     @Support
@@ -1421,6 +1424,7 @@ public interface Row2<T1, T2> extends Row {
      * </ul>
      *
      * @see #in(Collection)
+     * @see Rows#toRowArray(Function, Function)
      */
     @SuppressWarnings("unchecked")
     @NotNull
@@ -1481,6 +1485,8 @@ public interface Row2<T1, T2> extends Row {
      * <li><code>NOT IN</code> predicates on temporary tables</li>
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
+     *
+     * @see Rows#toRowList(Function, Function)
      */
     @NotNull
     @Support
@@ -1531,6 +1537,7 @@ public interface Row2<T1, T2> extends Row {
      * </ul>
      *
      * @see #notIn(Collection)
+     * @see Rows#toRowArray(Function, Function)
      */
     @SuppressWarnings("unchecked")
     @NotNull

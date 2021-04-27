@@ -86,7 +86,7 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullableIf;
-import static org.jooq.impl.Transformations.applyTransformationForInConditionSubqueryWithLimitToDerivedTable;
+import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 import static org.jooq.impl.Transformations.subqueryWithLimit;
 
 import java.util.Set;
@@ -140,7 +140,7 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
             ctx.visit(row(embeddedFields(field1)).compare(comparator, embeddedFields(field2)));
         else if ((comparator == IN || comparator == NOT_IN)
                 && (s = subqueryWithLimit(field2)) != null
-                && applyTransformationForInConditionSubqueryWithLimitToDerivedTable(ctx)) {
+                && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
 
 
 

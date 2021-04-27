@@ -81,7 +81,7 @@ import static org.jooq.impl.Tools.embeddedFieldsRow;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.visitSubquery;
-import static org.jooq.impl.Transformations.applyTransformationForInConditionSubqueryWithLimitToDerivedTable;
+import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 import static org.jooq.impl.Transformations.subqueryWithLimit;
 
 import java.util.Set;
@@ -244,7 +244,7 @@ final class RowSubqueryCondition extends AbstractCondition {
             if ((comparator == IN || comparator == NOT_IN)
                     && right != null
                     && (s = subqueryWithLimit(right)) != null
-                    && applyTransformationForInConditionSubqueryWithLimitToDerivedTable(ctx)) {
+                    && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
 
 
 
@@ -252,7 +252,7 @@ final class RowSubqueryCondition extends AbstractCondition {
             else if ((comparator == EQUALS || comparator == NOT_EQUALS)
                     && rightQuantified != null
                     && (s = subqueryWithLimit(rightQuantified)) != null
-                    && applyTransformationForInConditionSubqueryWithLimitToDerivedTable(ctx)) {
+                    && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
 
 
 

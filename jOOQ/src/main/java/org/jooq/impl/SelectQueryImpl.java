@@ -212,7 +212,8 @@ import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
-import static org.jooq.impl.Transformations.applyTransformationForQualify;
+import static org.jooq.impl.Transformations.transformQualify;
+import static org.jooq.impl.Transformations.transformRownum;
 
 import java.sql.ResultSetMetaData;
 import java.util.ArrayDeque;
@@ -323,8 +324,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, POSTGRES);
     private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES);
-
-
 
 
 
@@ -1524,13 +1523,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         // [#5810] Emulate the Teradata QUALIFY clause
-        else if (qualify.hasWhere() && applyTransformationForQualify(ctx)) {
+        else if (qualify.hasWhere() && transformQualify(ctx.configuration())) {
 
 
 
         }
-
-
 
 
 

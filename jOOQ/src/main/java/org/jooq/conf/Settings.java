@@ -111,8 +111,9 @@ public class Settings
     protected Transformation transformQualify = Transformation.WHEN_NEEDED;
     @XmlElement(defaultValue = "false")
     protected Boolean transformTableListsToAnsiJoin = false;
-    @XmlElement(defaultValue = "false")
-    protected Boolean transformRownum = false;
+    @XmlElement(defaultValue = "NEVER")
+    @XmlSchemaType(name = "string")
+    protected Transformation transformRownum = Transformation.NEVER;
     @XmlElement(defaultValue = "NEVER")
     @XmlSchemaType(name = "string")
     protected TransformUnneededArithmeticExpressions transformUnneededArithmeticExpressions = TransformUnneededArithmeticExpressions.NEVER;
@@ -1078,24 +1079,23 @@ public class Settings
      * <p>
      * This feature is available in the commercial distribution only.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
      */
-    public Boolean isTransformRownum() {
+    public Transformation getTransformRownum() {
         return transformRownum;
     }
 
     /**
-     * Sets the value of the transformRownum property.
+     * Transform <code>ROWNUM</code> expressions to corresponding <code>LIMIT</code> clauses or <code>ROW_NUMBER()</code> expressions.
+     * <p>
+     * In Oracle 11g and less, <code>ROWNUM</code> filtering was the most popular way to paginate. This pseudo
+     * column is not supported in other RDBMS, and should be replaced in Oracle 12c by the FETCH clause or
+     * <code>ROW_NUMBER() OVER ()</code> filtering. This transformation allows for replacing such a filter by
+     * equivalent SQL, if possible.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
      */
-    public void setTransformRownum(Boolean value) {
+    public void setTransformRownum(Transformation value) {
         this.transformRownum = value;
     }
 
@@ -3036,7 +3036,18 @@ public class Settings
         return this;
     }
 
-    public Settings withTransformRownum(Boolean value) {
+    /**
+     * Transform <code>ROWNUM</code> expressions to corresponding <code>LIMIT</code> clauses or <code>ROW_NUMBER()</code> expressions.
+     * <p>
+     * In Oracle 11g and less, <code>ROWNUM</code> filtering was the most popular way to paginate. This pseudo
+     * column is not supported in other RDBMS, and should be replaced in Oracle 12c by the FETCH clause or
+     * <code>ROW_NUMBER() OVER ()</code> filtering. This transformation allows for replacing such a filter by
+     * equivalent SQL, if possible.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withTransformRownum(Transformation value) {
         setTransformRownum(value);
         return this;
     }

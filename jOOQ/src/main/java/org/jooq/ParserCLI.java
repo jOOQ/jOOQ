@@ -48,6 +48,7 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
+import org.jooq.conf.Transformation;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 
@@ -106,8 +107,26 @@ public final class ParserCLI {
             settings.setTransformTableListsToAnsiJoin(true);
         if (a.transformUnneededArithmetic != null)
             settings.setTransformUnneededArithmeticExpressions(a.transformUnneededArithmetic);
-        if (a.transformRownum)
+        if (a.transformQualify != null)
+            settings.setTransformRownum(a.transformQualify);
+        if (a.transformRownum != null)
             settings.setTransformRownum(a.transformRownum);
+    }
+
+    private static <E extends Enum<E>> E parseInteractive(Class<E> type, E current, Args a, String arg) {
+        E result = current;
+
+        try {
+            if (arg != null)
+                result = Enum.valueOf(type, arg.toUpperCase());
+
+            displayKeywords(a);
+        }
+        catch (IllegalArgumentException e) {
+            invalid(arg, type);
+        }
+
+        return result;
     }
 
     private static final void interactiveMode(DSLContext ctx, Args a) {
@@ -148,48 +167,16 @@ public final class ParserCLI {
                                 displayFormatted(a);
                             }
                             else if ("k".equals(flag) || "keyword".equals(flag)) {
-                                try {
-                                    if (arg != null)
-                                        a.keywords = RenderKeywordCase.valueOf(arg.toUpperCase());
-
-                                    displayKeywords(a);
-                                }
-                                catch (IllegalArgumentException e) {
-                                    invalid(arg, RenderKeywordCase.class);
-                                }
+                                a.keywords = parseInteractive(RenderKeywordCase.class, a.keywords, a, arg);
                             }
                             else if ("i".equals(flag) || "identifier".equals(flag)) {
-                                try {
-                                    if (arg != null)
-                                        a.name = RenderNameCase.valueOf(arg.toUpperCase());
-
-                                    displayIdentifiers(a);
-                                }
-                                catch (IllegalArgumentException e) {
-                                    invalid(arg, RenderNameCase.class);
-                                }
+                                a.name = parseInteractive(RenderNameCase.class, a.name, a, arg);
                             }
                             else if ("Q".equals(flag) || "quoted".equals(flag)) {
-                                try {
-                                    if (arg != null)
-                                        a.quoted = RenderQuotedNames.valueOf(arg.toUpperCase());
-
-                                    displayQuoted(a);
-                                }
-                                catch (IllegalArgumentException e) {
-                                    invalid(arg, RenderQuotedNames.class);
-                                }
+                                a.quoted = parseInteractive(RenderQuotedNames.class, a.quoted, a, arg);
                             }
                             else if ("F".equals(flag) || "from-dialect".equals(flag)) {
-                                try {
-                                    if (arg != null)
-                                        a.fromDialect = SQLDialect.valueOf(arg.toUpperCase());
-
-                                    displayFromDialect(a);
-                                }
-                                catch (IllegalArgumentException e) {
-                                    invalid(arg, SQLDialect.class);
-                                }
+                                a.fromDialect = parseInteractive(SQLDialect.class, a.fromDialect, a, arg);
                             }
                             else if ("render-coalesce-to-empty-string-in-concat".equals(flag)) {
                                 if (arg != null)
@@ -203,11 +190,11 @@ public final class ParserCLI {
 
                                 displayTransformAnsiJoinToTablesLists(a);
                             }
+                            else if ("transform-qualify".equals(flag)) {
+                                a.transformQualify = parseInteractive(Transformation.class, a.transformQualify, a, arg);
+                            }
                             else if ("transform-rownum".equals(flag)) {
-                                if (arg != null)
-                                    a.transformRownum = Boolean.parseBoolean(arg.toLowerCase());
-
-                                displayTransformRownum(a);
+                                a.transformRownum = parseInteractive(Transformation.class, a.transformRownum, a, arg);
                             }
                             else if ("transform-table-lists-to-ansi-join".equals(flag)) {
                                 if (arg != null)
@@ -216,28 +203,12 @@ public final class ParserCLI {
                                 displayTransformTableListsToAnsiJoin(a);
                             }
                             else if ("transform-unneeded-arithmetic".equals(flag)) {
-                                try {
-                                    if (arg != null)
-                                        a.transformUnneededArithmetic = TransformUnneededArithmeticExpressions.valueOf(arg.toUpperCase());
-
-                                    displayTransformUnneededArithmetic(a);
-                                }
-                                catch (IllegalArgumentException e) {
-                                    invalid(arg, TransformUnneededArithmeticExpressions.class);
-                                }
+                                a.transformUnneededArithmetic = parseInteractive(TransformUnneededArithmeticExpressions.class, a.transformUnneededArithmetic, a, arg);
                             }
 
                             // [#9144] /t maintained for backwards compatibility
                             else if ("t".equals(flag) || "T".equals(flag) || "to-dialect".equals(flag)) {
-                                try {
-                                    if (arg != null)
-                                        a.toDialect = SQLDialect.valueOf(arg.toUpperCase());
-
-                                    displayToDialect(a);
-                                }
-                                catch (IllegalArgumentException e) {
-                                    invalid(arg, SQLDialect.class);
-                                }
+                                a.toDialect = parseInteractive(SQLDialect.class, a.toDialect, a, arg);
                             }
                         }
                     }
@@ -277,6 +248,8 @@ public final class ParserCLI {
         displayIdentifiers(a);
         displayQuoted(a);
         displayTransformAnsiJoinToTablesLists(a);
+        displayTransformQualify(a);
+        displayTransformRownum(a);
         displayTransformTableListsToAnsiJoin(a);
         displayTransformUnneededArithmetic(a);
     }
@@ -311,6 +284,10 @@ public final class ParserCLI {
 
     private static void displayTransformAnsiJoinToTablesLists(Args a) {
         System.out.println("Transform ANSI join to table lists : " + a.transformAnsiJoinToTableLists);
+    }
+
+    private static void displayTransformQualify(Args a) {
+        System.out.println("Transform QUALIFY                  : " + a.transformQualify);
     }
 
     private static void displayTransformRownum(Args a) {
@@ -354,132 +331,80 @@ public final class ParserCLI {
         }
     }
 
-    private static final Args parse(String[] args) {
+    private static final <E extends Enum<E>> E parse(Class<E> type, String value) {
+        try {
+            return Enum.valueOf(type, value.toUpperCase());
+        }
+        catch (IllegalArgumentException e) {
+            invalid(value, type);
+            throw e;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final <E extends Enum<E>> Args parse(String[] args) {
         Args result = new Args();
 
-        argsLoop:
         for (int i = 0; i < args.length; i++) {
-            if ("-f".equals(args[i]) || "--formatted".equals(args[i])) {
-                result.formatted = true;
-            }
-            else if ("-k".equals(args[i]) || "--keyword".equals(args[i])) {
-                try {
-                    result.keywords = RenderKeywordCase.valueOf(args[++i].toUpperCase());
-                    continue argsLoop;
-                }
-                catch (IllegalArgumentException e) {
-                    invalid(args[i], RenderKeywordCase.class);
-                    throw e;
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Flag -k / --keyword requires <RenderKeywordCase> argument");
-                    throw e;
-                }
-            }
-            else if ("-i".equals(args[i]) || "--identifier".equals(args[i])) {
-                try {
-                    result.keywords = RenderKeywordCase.valueOf(args[++i].toUpperCase());
-                    continue argsLoop;
-                }
-                catch (IllegalArgumentException e) {
-                    invalid(args[i], RenderKeywordCase.class);
-                    throw e;
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Flag -i / --identifier requires <RenderNameCase> argument");
-                    throw e;
-                }
-            }
-            else if ("-Q".equals(args[i]) || "--quoted".equals(args[i])) {
-                try {
-                    result.quoted = RenderQuotedNames.valueOf(args[++i].toUpperCase());
-                    continue argsLoop;
-                }
-                catch (IllegalArgumentException e) {
-                    invalid(args[i], RenderQuotedNames.class);
-                    throw e;
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Flag -Q / --quoted requires <RenderQuotedNames> argument");
-                    throw e;
-                }
-            }
-            else if ("-F".equals(args[i]) || "--from-dialect".equals(args[i])) {
-                try {
-                    result.fromDialect = SQLDialect.valueOf(args[++i].toUpperCase());
-                    continue argsLoop;
-                }
-                catch (IllegalArgumentException e) {
-                    invalid(args[i], SQLDialect.class);
-                    throw e;
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Flag -F / --from-dialect requires <SQLDialect> argument");
-                    throw e;
-                }
-            }
+            Class<? extends Enum<?>> enumArgument = null;
 
-            // [#9144] -t maintained for backwards compatibility
-            else if ("-t".equals(args[i]) || "-T".equals(args[i]) || "--to-dialect".equals(args[i])) {
-                try {
-                    result.toDialect = SQLDialect.valueOf(args[++i].toUpperCase());
-                    continue argsLoop;
+            try {
+                if ("-f".equals(args[i]) || "--formatted".equals(args[i])) {
+                    result.formatted = true;
                 }
-                catch (IllegalArgumentException e) {
-                    invalid(args[i], SQLDialect.class);
-                    throw e;
+                else if ("-k".equals(args[i]) || "--keyword".equals(args[i])) {
+                    result.keywords = parse((Class<RenderKeywordCase>) (enumArgument = RenderKeywordCase.class), args[++i]);
                 }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Flag -T / --to-dialect requires <SQLDialect> argument");
-                    throw e;
+                else if ("-i".equals(args[i]) || "--identifier".equals(args[i])) {
+                    result.name = parse((Class<RenderNameCase>) (enumArgument = RenderNameCase.class), args[++i]);
                 }
-            }
-            else if ("--render-coalesce-to-empty-string-in-concat".equals(args[i])) {
-                result.renderCoalesceToEmptyStringInConcat = true;
-            }
-            else if ("--transform-ansi-join-to-table-lists".equals(args[i])) {
-                result.transformAnsiJoinToTableLists = true;
-            }
-            else if ("--transform-rownum".equals(args[i])) {
-                result.transformRownum = true;
-            }
-            else if ("--transform-table-lists-to-ansi-join".equals(args[i])) {
-                result.transformTableListsToAnsiJoin = true;
-            }
-            else if ("--transform-unneeded-arithmetic".equals(args[i])) {
-                try {
-                    result.transformUnneededArithmetic = TransformUnneededArithmeticExpressions.valueOf(args[++i].toUpperCase());
-                    continue argsLoop;
+                else if ("-Q".equals(args[i]) || "--quoted".equals(args[i])) {
+                    result.quoted = parse((Class<RenderQuotedNames>) (enumArgument = RenderQuotedNames.class), args[++i]);
                 }
-                catch (IllegalArgumentException e) {
-                    invalid(args[i], TransformUnneededArithmeticExpressions.class);
-                    throw e;
+                else if ("-F".equals(args[i]) || "--from-dialect".equals(args[i])) {
+                    result.fromDialect = parse((Class<SQLDialect>) (enumArgument = SQLDialect.class), args[++i]);
                 }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Flag --transform-unneeded-arithmetic requires <TransformUnneededArithmeticExpressions> argument");
-                    throw e;
+
+                // [#9144] -t maintained for backwards compatibility
+                else if ("-t".equals(args[i]) || "-T".equals(args[i]) || "--to-dialect".equals(args[i])) {
+                    result.toDialect = parse((Class<SQLDialect>) (enumArgument = SQLDialect.class), args[++i]);
                 }
-            }
-            else if ("-s".equals(args[i]) || "--sql".equals(args[i])) {
-                try {
+                else if ("--render-coalesce-to-empty-string-in-concat".equals(args[i])) {
+                    result.renderCoalesceToEmptyStringInConcat = true;
+                }
+                else if ("--transform-ansi-join-to-table-lists".equals(args[i])) {
+                    result.transformAnsiJoinToTableLists = true;
+                }
+                else if ("--transform-qualify".equals(args[i])) {
+                    result.transformQualify = parse((Class<Transformation>) (enumArgument = Transformation.class), args[++i]);
+                }
+                else if ("--transform-rownum".equals(args[i])) {
+                    result.transformRownum = parse((Class<Transformation>) (enumArgument = Transformation.class), args[++i]);
+                }
+                else if ("--transform-table-lists-to-ansi-join".equals(args[i])) {
+                    result.transformTableListsToAnsiJoin = true;
+                }
+                else if ("--transform-unneeded-arithmetic".equals(args[i])) {
+                    result.transformUnneededArithmetic = parse((Class<TransformUnneededArithmeticExpressions>) (enumArgument = TransformUnneededArithmeticExpressions.class), args[++i]);
+                }
+                else if ("-s".equals(args[i]) || "--sql".equals(args[i])) {
                     result.sql = args[++i];
-                    continue argsLoop;
                 }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Flag -s / --sql requires <String> argument");
-                    throw e;
+                else if ("-I".equals(args[i]) || "--interactive".equals(args[i])) {
+                    result.interactive = true;
+                }
+                else if ("-h".equals(args[i]) || "--help".equals(args[i])) {
+                    help();
+                    result.done = true;
+                }
+                else {
+                    System.out.println("Unknown flag: " + args[i] + ". Use -h or --help");
+                    throw new RuntimeException();
                 }
             }
-            else if ("-I".equals(args[i]) || "--interactive".equals(args[i])) {
-                result.interactive = true;
-            }
-            else if ("-h".equals(args[i]) || "--help".equals(args[i])) {
-                help();
-                result.done = true;
-            }
-            else {
-                System.out.println("Unknown flag: " + args[i] + ". Use -h or --help");
-                throw new RuntimeException();
+            catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Flag " + args[i - 1] + " requires <" + (enumArgument != null ? enumArgument.getName() : "Unknown") + "> argument");
+                throw e;
             }
         }
 
@@ -508,7 +433,8 @@ public final class ParserCLI {
         System.out.println("Commercial distribution only features:");
         System.out.println("  --render-coalesce-to-empty-string-in-concat  <boolean>");
         System.out.println("  --transform-ansi-join-to-table-lists         <boolean>");
-        System.out.println("  --transform-rownum                           <boolean>");
+        System.out.println("  --transform-qualify                          <Transformation>");
+        System.out.println("  --transform-rownum                           <Transformation>");
         System.out.println("  --transform-table-lists-to-ansi-join         <boolean>");
         System.out.println("  --transform-unneeded-arithmetic              <TransformUnneededArithmeticExpressions>");
         System.out.println("");
@@ -530,7 +456,8 @@ public final class ParserCLI {
         System.out.println("Commercial distribution only features:");
         System.out.println("  /render-coalesce-to-empty-string-in-concat   <boolean>");
         System.out.println("  /transform-ansi-join-to-table-lists          <boolean>");
-        System.out.println("  /transform-rownum                            <boolean>");
+        System.out.println("  /transform-qualify                           <Transformation>");
+        System.out.println("  /transform-rownum                            <Transformation>");
         System.out.println("  /transform-table-lists-to-ansi-join          <boolean>");
         System.out.println("  /transform-unneeded-arithmetic               <TransformUnneededArithmeticExpressions>");
         System.out.println("");
@@ -551,7 +478,8 @@ public final class ParserCLI {
         boolean                                done;
         boolean                                renderCoalesceToEmptyStringInConcat;
         boolean                                transformAnsiJoinToTableLists;
-        boolean                                transformRownum;
+        Transformation                         transformQualify;
+        Transformation                         transformRownum;
         boolean                                transformTableListsToAnsiJoin;
         TransformUnneededArithmeticExpressions transformUnneededArithmetic = TransformUnneededArithmeticExpressions.NEVER;
     }

@@ -77,12 +77,10 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Transformations.applyTransformationForInConditionSubqueryWithLimitToDerivedTable;
+import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 import static org.jooq.impl.Transformations.subqueryWithLimit;
 import static org.jooq.tools.Convert.convert;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.jooq.Clause;
@@ -136,7 +134,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
             ctx.visit(row(embeddedFields(field)).compare(comparator, query));
         else if ((comparator == EQUALS || comparator == NOT_EQUALS)
                 && (s = subqueryWithLimit(query.query)) != null
-                && applyTransformationForInConditionSubqueryWithLimitToDerivedTable(ctx)) {
+                && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
 
 
 

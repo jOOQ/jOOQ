@@ -40,9 +40,17 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+// ...
+// ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -52,7 +60,9 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 // ...
 // ...
@@ -63,10 +73,11 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
-import org.jooq.Select;
+import org.jooq.Scope;
 import org.jooq.conf.Transformation;
 
 /**
@@ -78,38 +89,48 @@ final class Transformations {
 
     private static final Set<SQLDialect> NO_SUPPORT_IN_LIMIT = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_QUALIFY     = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> EMULATE_ROWNUM      = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
 
     static final SelectQueryImpl<?> subqueryWithLimit(QueryPart source) {
         SelectQueryImpl<?> s;
         return (s = selectQueryImpl(source)) != null && s.getLimit().isApplicable() ? s : null;
     }
 
-    static final boolean applyTransformationForInConditionSubqueryWithLimitToDerivedTable(Context<?> ctx) {
-        return applyTransformation(
-            ctx,
+    static final boolean transformInConditionSubqueryWithLimitToDerivedTable(Configuration configuration) {
+        return transform(
+            configuration,
             "Settings.transformInConditionSubqueryWithLimitToDerivedTable",
-            ctx.settings().getTransformInConditionSubqueryWithLimitToDerivedTable(),
+            configuration.settings().getTransformInConditionSubqueryWithLimitToDerivedTable(),
             c -> NO_SUPPORT_IN_LIMIT.contains(c.dialect())
         );
     }
 
-    static final boolean applyTransformationForQualify(Context<?> ctx) {
-        return applyTransformation(
-            ctx,
+    static final boolean transformQualify(Configuration configuration) {
+        return transform(
+            configuration,
             "Settings.transformQualify",
-            ctx.settings().getTransformQualify(),
+            configuration.settings().getTransformQualify(),
             c -> EMULATE_QUALIFY.contains(c.dialect())
+        );
+    }
+
+    static final boolean transformRownum(Configuration configuration) {
+        return transform(
+            configuration,
+            "Settings.transformRownum",
+            configuration.settings().getTransformRownum(),
+            c -> EMULATE_ROWNUM.contains(c.dialect())
         );
     }
 
     /**
      * Check whether a given SQL transformation needs to be applied.
      */
-    static final boolean applyTransformation(
-        Context<?> ctx,
+    static final boolean transform(
+        Configuration configuration,
         String label,
         Transformation transformation,
-        Predicate<? super Context<?>> whenNeeded
+        Predicate<? super Configuration> whenNeeded
     ) {
         boolean result;
 
@@ -121,12 +142,12 @@ final class Transformations {
                 result = true;
                 break;
             case WHEN_NEEDED:
-                result = whenNeeded.test(ctx);
+                result = whenNeeded.test(configuration);
                 break;
             default:
                 throw new IllegalStateException("Transformation configuration not supported: " + transformation);
         }
 
-        return result && ctx.configuration().requireCommercial(() -> "SQL transformation " + label + " required. SQL transformations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+        return result && configuration.requireCommercial(() -> "SQL transformation " + label + " required. SQL transformations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
     }
 }

@@ -46,7 +46,7 @@ package org.jooq;
  * example:
  * <p>
  * <code><pre>
- * final /* record */ class Actor { private final int id; private final String firstName; private final String lastName; public Actor(int id, String firstName, String lastName) { this.id = id; this.firstName = firstName; this.lastName = lastName; } public int id() { return id; } public String firstName() { return firstName; } public String lastName() { return lastName; } @Override public boolean equals(Object o) { if (!(o instanceof Actor)) return false; Actor other = (Actor) o; if (!java.util.Objects.equals(this.id, other.id)) return false; if (!java.util.Objects.equals(this.firstName, other.firstName)) return false; if (!java.util.Objects.equals(this.lastName, other.lastName)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.id, this.firstName, this.lastName); } @Override public String toString() { return new StringBuilder("Actor[").append("id=").append(this.id).append(", firstName=").append(this.firstName).append(", lastName=").append(this.lastName).append("]").toString(); } }
+ * record Actor (int id, String firstName, String lastName) {}
  *
  * List&lt;Actor&gt; actors =
  * ctx.select(ACTOR.ID, ACTOR.FIRST_NAME, ACTOR.LAST_NAME)

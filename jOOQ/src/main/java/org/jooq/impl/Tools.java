@@ -390,12 +390,6 @@ final class Tools {
         DATA_FORCE_STATIC_STATEMENT,
 
         /**
-         * [#7312] Allow for {@link ForceSettingsSignal} to be thrown in order
-         * to override user-defined settings.
-         */
-        DATA_FORCE_SETTINGS,
-
-        /**
          * [#2665] Omit the emission of clause events by {@link QueryPart}s.
          * <p>
          * Some {@link QueryPart}s may contain further {@link QueryPart}s for whom
@@ -743,7 +737,6 @@ final class Tools {
      * {@link #consumeExceptions(Configuration, PreparedStatement, SQLException)}
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
-    static int                      maxForceSettingsAttempts           = 16;
     static int                      maxConsumedExceptions              = 256;
     static int                      maxConsumedResults                 = 65536;
 

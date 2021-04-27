@@ -45,7 +45,6 @@ import static org.jooq.ExecuteType.DDL;
 // ...
 // ...
 // ...
-import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
@@ -54,16 +53,13 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeExceptions;
-import static org.jooq.impl.Tools.maxForceSettingsAttempts;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_SETTINGS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
@@ -76,12 +72,10 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
-import org.jooq.conf.ParamType;
 import org.jooq.conf.QueryPoolable;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.tools.Ints;
@@ -461,42 +455,26 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
         // [#3542] [#4977] Some dialects do not support bind values in DDL statements
         // [#6474] [#6929] Can this be communicated in a leaner way?
-        int i = 0;
-        forceSettingsLoop:
-        for (;;) {
+        if (ctx.type() == DDL) {
+            ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+            render = new DefaultRenderContext(c);
+            result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
+        }
+        else if (executePreparedStatements(configuration().settings())) {
             try {
-                if (ctx.type() == DDL) {
-                    ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                    render = render(c);
-                    result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
-                }
-                else if (executePreparedStatements(configuration().settings())) {
-                    try {
-                        render = render(c);
-                        render.data(DATA_COUNT_BIND_VALUES, true);
-                        result = new Rendered(render.visit(this).render(), render.bindValues(), render.skipUpdateCounts());
-                    }
-                    catch (DefaultRenderContext.ForceInlineSignal e) {
-                        ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                        render = render(c);
-                        result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
-                    }
-                }
-                else {
-                    render = render(c);
-                    result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
-                }
-
-                break forceSettingsLoop;
+                render = new DefaultRenderContext(c);
+                render.data(DATA_COUNT_BIND_VALUES, true);
+                result = new Rendered(render.visit(this).render(), render.bindValues(), render.skipUpdateCounts());
             }
-            catch (ForceSettingsSignal e) {
-                if (++i >= maxForceSettingsAttempts) {
-                    log.warn("Infinite loop", "There was an infinite loop trying to render a SQL query, due to ForceSettingsSignal. Please consider reporting this bug here: https://github.com/jOOQ/jOOQ/issues/new/choose");
-                    throw new DataAccessException("Too many force settings attempts");
-                }
-
-                c = c.derive(e.settings);
+            catch (DefaultRenderContext.ForceInlineSignal e) {
+                ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                render = new DefaultRenderContext(c);
+                result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
             }
+        }
+        else {
+            render = new DefaultRenderContext(c);
+            result = new Rendered(render.paramType(INLINED).visit(this).render(), null, render.skipUpdateCounts());
         }
 
 
@@ -524,12 +502,6 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
 
         return result;
-    }
-
-    private final DefaultRenderContext render(Configuration c) {
-        DefaultRenderContext render = new DefaultRenderContext(c);
-        render.data(DATA_FORCE_SETTINGS, true);
-        return render;
     }
 
 

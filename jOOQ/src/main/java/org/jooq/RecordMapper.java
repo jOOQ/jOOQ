@@ -52,7 +52,9 @@ import org.jetbrains.annotations.Nullable;
  * The default <code>RecordMapper</code> behaviour in the context of a
  * {@link Configuration} can be overridden through that
  * <code>configuration</code>'s {@link Configuration#recordMapperProvider()}
- * SPI.
+ * SPI. Custom record mappers can be constructed using lambda expressions, using
+ * various {@link Records#mapping(Function1)},
+ * {@link Records#mapping(Function2)}, etc. utilities, and other ways.
  * <p>
  * The inverse operation is modelled by {@link RecordUnmapper}.
  *

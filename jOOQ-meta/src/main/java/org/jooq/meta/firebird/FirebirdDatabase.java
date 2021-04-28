@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.firebird;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.mapping;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.any;
@@ -74,6 +75,7 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$TRIGGERS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -660,7 +662,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#4254] RDB$GENERATORS.RDB$INITIAL_VALUE was added in Firebird 3.0 only
         if (is30 == null)
-            is30 = configuredDialectIsNotFamilyAndSupports(FIREBIRD_3_0, () -> exists(RDB$GENERATORS.RDB$INITIAL_VALUE));
+            is30 = configuredDialectIsNotFamilyAndSupports(asList(FIREBIRD), () -> exists(RDB$GENERATORS.RDB$INITIAL_VALUE));
 
         return is30;
     }

@@ -472,8 +472,8 @@ public abstract class AbstractDatabase implements Database {
      * {@link SQLDialect#POSTGRES_12} without needing to query the information
      * schema.
      */
-    protected boolean configuredDialectIsNotFamilyAndSupports(SQLDialect d, Supplier<Boolean> ifFamily) {
-        return getDialect().isFamily() ? ifFamily.get() : getDialect().supports(d);
+    protected boolean configuredDialectIsNotFamilyAndSupports(List<SQLDialect> d, Supplier<Boolean> ifFamily) {
+        return getDialect().isFamily() ? ifFamily.get() : d.stream().allMatch(getDialect()::supports);
     }
 
     @Override

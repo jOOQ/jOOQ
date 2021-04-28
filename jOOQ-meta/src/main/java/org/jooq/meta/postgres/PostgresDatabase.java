@@ -38,6 +38,7 @@
 
 package org.jooq.meta.postgres;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.Rows.toRowArray;
@@ -1000,7 +1001,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     boolean is84() {
         if (is84 == null) {
-            is84 = configuredDialectIsNotFamilyAndSupports(POSTGRES_9_3, () -> {
+            is84 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> {
 
                 // [#2916] Window functions were introduced with PostgreSQL 9.0
                 try {
@@ -1024,7 +1025,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added
         // in PostgreSQL 9.4 only
         if (is94 == null)
-            is94 = configuredDialectIsNotFamilyAndSupports(POSTGRES_9_4, () -> exists(PARAMETERS.PARAMETER_DEFAULT));
+            is94 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(PARAMETERS.PARAMETER_DEFAULT));
 
         return is94;
     }
@@ -1033,7 +1034,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#7785] pg_sequence was added in PostgreSQL 10 only
         if (is10 == null)
-            is10 = configuredDialectIsNotFamilyAndSupports(POSTGRES_10, () -> exists(PG_SEQUENCE.SEQRELID));
+            is10 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(PG_SEQUENCE.SEQRELID));
 
         return is10;
     }
@@ -1043,7 +1044,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         // [#7785] pg_proc.prokind was added in PostgreSQL 11 only, and
         //         pg_proc.proisagg was removed, incompatibly
         if (is11 == null)
-            is11 = configuredDialectIsNotFamilyAndSupports(POSTGRES_11, () -> exists(PG_PROC.PROKIND));
+            is11 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(PG_PROC.PROKIND));
 
         return is11;
     }
@@ -1052,7 +1053,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#11325] nameconcatoid was added in PostgreSQL 12 only
         if (is12 == null)
-            is12 = configuredDialectIsNotFamilyAndSupports(POSTGRES_12, () -> exists(table(select(field("nameconcatoid({0}, {1})", PG_PROC.PRONAME, oid(PG_PROC))).from(PG_PROC))));
+            is12 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(table(select(field("nameconcatoid({0}, {1})", PG_PROC.PRONAME, oid(PG_PROC))).from(PG_PROC))));
 
         return is12;
     }

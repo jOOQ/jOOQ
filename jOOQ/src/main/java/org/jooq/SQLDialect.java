@@ -938,6 +938,14 @@ public enum SQLDialect {
     }
 
     /**
+     * Whether this dialect is a versioned dialect or a family with versioned
+     * dialects.
+     */
+    public final boolean isVersioned() {
+        return family().predecessor() != family();
+    }
+
+    /**
      * The predecessor dialect.
      * <p>
      * If this is a dialect version (e.g. {@link #POSTGRES_9_4}) within a family

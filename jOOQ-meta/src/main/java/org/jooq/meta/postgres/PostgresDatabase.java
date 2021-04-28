@@ -40,6 +40,12 @@ package org.jooq.meta.postgres;
 
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.Rows.toRowArray;
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.condition;
@@ -60,7 +66,10 @@ import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
@@ -100,18 +109,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Name;
 // ...
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Record12;
 import org.jooq.Record2;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Rows;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SortOrder;
@@ -170,15 +182,15 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     private static final JooqLogger log = JooqLogger.getLogger(PostgresDatabase.class);
 
-    private static Boolean is84;
-    private static Boolean is94;
-    private static Boolean is10;
-    private static Boolean is11;
-    private static Boolean is12;
-    private static Boolean canUseRoutines;
-    private static Boolean canCastToEnumType;
-    private static Boolean canCombineArrays;
-    private static Boolean canUseTupleInPredicates;
+    private Boolean                 is84;
+    private Boolean                 is94;
+    private Boolean                 is10;
+    private Boolean                 is11;
+    private Boolean                 is12;
+    private Boolean                 canUseRoutines;
+    private Boolean                 canCastToEnumType;
+    private Boolean                 canCombineArrays;
+    private Boolean                 canUseTupleInPredicates;
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
@@ -631,7 +643,10 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+        CommonTableExpression<Record1<String>> s = name("schemas").fields("schema").as(selectFrom(values(schemas.stream().collect(toRowArray(DSL::val)))));
+
         return create()
+            .with(s)
             .select(
                 inline(null, VARCHAR).as("catalog"),
                 SEQUENCES.SEQUENCE_SCHEMA,
@@ -647,7 +662,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 SEQUENCES.CYCLE_OPTION.cast(BOOLEAN).as(SEQUENCES.CYCLE_OPTION),
                 inline(null, BIGINT).as("cache"))
             .from(SEQUENCES)
-            .where(SEQUENCES.SEQUENCE_SCHEMA.in(schemas))
+            .where(SEQUENCES.SEQUENCE_SCHEMA.in(selectFrom(s)))
             .and(!getIncludeSystemSequences()
                 ? row(SEQUENCES.SEQUENCE_SCHEMA, SEQUENCES.SEQUENCE_NAME).notIn(
                     select(COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME).concat(inline("_seq")))
@@ -677,7 +692,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     PG_SEQUENCE.SEQCYCLE,
                     inline(null, BIGINT).as("cache"))
                 .from(PG_SEQUENCE)
-                .where(PG_SEQUENCE.pgClass().pgNamespace().NSPNAME.in(schemas))
+                .where(PG_SEQUENCE.pgClass().pgNamespace().NSPNAME.in(selectFrom(s)))
                 .and(PG_SEQUENCE.pgClass().OID.in(
                     select(PG_DEPEND.OBJID)
                     .from(PG_DEPEND)
@@ -985,18 +1000,20 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     boolean is84() {
         if (is84 == null) {
+            is84 = configuredDialectIsNotFamilyAndSupports(POSTGRES_9_3, () -> {
 
-            // [#2916] Window functions were introduced with PostgreSQL 9.0
-            try {
-                create(true)
-                    .select(count().over())
-                    .fetch();
+                // [#2916] Window functions were introduced with PostgreSQL 9.0
+                try {
+                    create(true)
+                        .select(count().over())
+                        .fetch();
 
-                is84 = true;
-            }
-            catch (DataAccessException e) {
-                is84 = false;
-            }
+                    return true;
+                }
+                catch (DataAccessException e) {
+                    return false;
+                }
+            });
         }
 
         return is84;
@@ -1007,7 +1024,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added
         // in PostgreSQL 9.4 only
         if (is94 == null)
-            is94 = exists(PARAMETERS.PARAMETER_DEFAULT);
+            is94 = configuredDialectIsNotFamilyAndSupports(POSTGRES_9_4, () -> exists(PARAMETERS.PARAMETER_DEFAULT));
 
         return is94;
     }
@@ -1016,7 +1033,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#7785] pg_sequence was added in PostgreSQL 10 only
         if (is10 == null)
-            is10 = exists(PG_SEQUENCE.SEQRELID);
+            is10 = configuredDialectIsNotFamilyAndSupports(POSTGRES_10, () -> exists(PG_SEQUENCE.SEQRELID));
 
         return is10;
     }
@@ -1026,7 +1043,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         // [#7785] pg_proc.prokind was added in PostgreSQL 11 only, and
         //         pg_proc.proisagg was removed, incompatibly
         if (is11 == null)
-            is11 = exists(PG_PROC.PROKIND);
+            is11 = configuredDialectIsNotFamilyAndSupports(POSTGRES_11, () -> exists(PG_PROC.PROKIND));
 
         return is11;
     }
@@ -1035,7 +1052,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#11325] nameconcatoid was added in PostgreSQL 12 only
         if (is12 == null)
-            is12 = exists(table(select(field("nameconcatoid({0}, {1})", PG_PROC.PRONAME, oid(PG_PROC))).from(PG_PROC)));
+            is12 = configuredDialectIsNotFamilyAndSupports(POSTGRES_12, () -> exists(table(select(field("nameconcatoid({0}, {1})", PG_PROC.PRONAME, oid(PG_PROC))).from(PG_PROC))));
 
         return is12;
     }

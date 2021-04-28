@@ -38,6 +38,7 @@
 package org.jooq.meta.firebird;
 
 import static java.util.stream.Collectors.mapping;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.coalesce;
@@ -133,7 +134,7 @@ import org.jooq.util.firebird.FirebirdDataType;
  */
 public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
-    private static Boolean is30;
+    private Boolean is30;
 
     public FirebirdDatabase() {
 
@@ -659,7 +660,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#4254] RDB$GENERATORS.RDB$INITIAL_VALUE was added in Firebird 3.0 only
         if (is30 == null)
-            is30 = exists(RDB$GENERATORS.RDB$INITIAL_VALUE);
+            is30 = configuredDialectIsNotFamilyAndSupports(FIREBIRD_3_0, () -> exists(RDB$GENERATORS.RDB$INITIAL_VALUE));
 
         return is30;
     }

@@ -74,6 +74,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -300,6 +301,11 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final void setDialect(SQLDialect dialect) {
+        this.dialect = dialect;
+    }
+
+    @Override
     public final void setConnection(Connection connection) {
         this.connection = connection;
         this.statements.dslContext(create());
@@ -456,6 +462,18 @@ public abstract class AbstractDatabase implements Database {
             };
             return DSL.using(configuration.deriveAppending(newListener));
         }
+    }
+
+    /**
+     * Check if the configured dialect is versioned explicitly and supports a
+     * given dialect.
+     * <p>
+     * This can be used as an optimisation to check if a dialect supports e.g. a
+     * {@link SQLDialect#POSTGRES_12} without needing to query the information
+     * schema.
+     */
+    protected boolean configuredDialectIsNotFamilyAndSupports(SQLDialect d, Supplier<Boolean> ifFamily) {
+        return getDialect().isFamily() ? ifFamily.get() : getDialect().supports(d);
     }
 
     @Override

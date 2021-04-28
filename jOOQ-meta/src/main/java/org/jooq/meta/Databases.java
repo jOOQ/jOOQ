@@ -128,7 +128,9 @@ public class Databases {
      */
     public static final Database database(SQLDialect dialect) {
         try {
-            return databaseClass(dialect).newInstance();
+            Database result = databaseClass(dialect).getDeclaredConstructor().newInstance();
+            result.setDialect(dialect);
+            return result;
         }
         catch (Exception e) {
             throw new IllegalArgumentException("Cannot create an Database instance for " + dialect, e);

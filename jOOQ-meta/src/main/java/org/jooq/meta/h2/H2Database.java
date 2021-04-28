@@ -741,9 +741,9 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         return result;
     }
 
-    private static Boolean is1_4_197;
-    private static Boolean is1_4_198;
-    private static Boolean is1_4_201;
+    private Boolean is1_4_197;
+    private Boolean is1_4_198;
+    private Boolean is1_4_201;
 
     boolean is1_4_197() {
 

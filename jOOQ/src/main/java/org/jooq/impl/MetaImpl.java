@@ -441,7 +441,7 @@ final class MetaImpl extends AbstractMeta {
         }
 
         private final void initUks(String catalog, String schema) {
-            String sql = M_UNIQUE_KEYS.get(family());
+            String sql = M_UNIQUE_KEYS(family());
 
             if (sql != null) {
                 Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(
@@ -588,8 +588,8 @@ final class MetaImpl extends AbstractMeta {
         private final Result<Record> getSequences0() {
             if (sequenceCache == null) {
                 final String sql = TRUE.equals(settings().isMetaIncludeSystemSequences())
-                    ? M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.get(family())
-                    : M_SEQUENCES.get(family());
+                    ? M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES(family())
+                    : M_SEQUENCES(family());
 
                 if (sql != null) {
                     Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(sql, MetaSchema.this.getName()).fetch());

@@ -1149,6 +1149,11 @@ public interface Database extends AutoCloseable {
     SQLDialect getDialect();
 
     /**
+     * Set the dialect for this database.
+     */
+    void setDialect(SQLDialect dialect);
+
+    /**
      * Create the factory for this database.
      */
     DSLContext create();

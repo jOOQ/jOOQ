@@ -40,6 +40,9 @@ package org.jooq.meta.mysql;
 
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
@@ -108,8 +111,8 @@ import org.jooq.tools.csv.CSVReader;
  */
 public class MySQLDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
-    private static Boolean is8;
-    private static Boolean is8_0_16;
+    private Boolean is8;
+    private Boolean is8_0_16;
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
@@ -238,7 +241,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
         // [#6602] The mysql.proc table got removed in MySQL 8.0
         if (is8 == null)
-            is8 = !exists(PROC);
+            is8 = configuredDialectIsNotFamilyAndSupports(MYSQL_8_0, () -> !exists(PROC));
 
         return is8;
     }
@@ -247,7 +250,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
         // [#7639] The information_schema.check_constraints table was added in MySQL 8.0.16 only
         if (is8_0_16 == null)
-            is8_0_16 = exists(CHECK_CONSTRAINTS);
+            is8_0_16 = configuredDialectIsNotFamilyAndSupports(MYSQL_8_0_19, () -> exists(CHECK_CONSTRAINTS));
 
         return is8_0_16;
     }

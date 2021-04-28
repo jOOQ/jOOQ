@@ -142,6 +142,7 @@ final class Names {
     static final Name      N_EXP                    = unquotedName("exp");
     static final Name      N_EXTRACT                = unquotedName("extract");
     static final Name      N_FIELD                  = unquotedName("field");
+    static final Name      N_FORMAT                 = unquotedName("format");
     static final Name      N_FLASHBACK              = unquotedName("flashback");
     static final Name      N_FLOOR                  = unquotedName("floor");
     static final Name      N_FUNCTION               = unquotedName("function");
@@ -237,6 +238,7 @@ final class Names {
     static final Name      N_PLPGSQL                = unquotedName("plpgsql");
     static final Name      N_POSITION               = unquotedName("position");
     static final Name      N_POWER                  = unquotedName("power");
+    static final Name      N_PRINTF                 = unquotedName("printf");
     static final Name      N_PRIOR                  = unquotedName("prior");
     static final Name      N_PRODUCT                = unquotedName("product");
     static final Name      N_RADIANS                = unquotedName("radians");

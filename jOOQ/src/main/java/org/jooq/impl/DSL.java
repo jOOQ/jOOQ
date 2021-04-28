@@ -16981,28 +16981,6 @@ public class DSL {
     }
 
     /**
-     * The <code>HEX</code> function.
-     * <p>
-     * Format a number to its hex value.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static Field<String> hex(Number value) {
-        return new Hex(Tools.field(value));
-    }
-
-    /**
-     * The <code>HEX</code> function.
-     * <p>
-     * Format a number to its hex value.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static Field<String> hex(Field<? extends Number> value) {
-        return new Hex(value);
-    }
-
-    /**
      * The <code>LEFT</code> function.
      * <p>
      * Get the left outermost characters from a string.
@@ -18404,6 +18382,28 @@ public class DSL {
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(Field<String> value, Field<String> formatMask) {
         return new ToDate(value, formatMask);
+    }
+
+    /**
+     * The <code>TO_HEX</code> function.
+     * <p>
+     * Format a number to its hex value.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> toHex(Number value) {
+        return new ToHex(Tools.field(value));
+    }
+
+    /**
+     * The <code>TO_HEX</code> function.
+     * <p>
+     * Format a number to its hex value.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<String> toHex(Field<? extends Number> value) {
+        return new ToHex(value);
     }
 
     /**

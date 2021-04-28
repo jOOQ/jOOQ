@@ -7318,7 +7318,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     if (parseFunctionNameIf("HASH_MD5"))
                         return md5((Field) parseFieldParenthesised(S));
                     else if (parseFunctionNameIf("HEX"))
-                        return hex((Field) parseFieldParenthesised(N));
+                        return toHex((Field) parseFieldParenthesised(N));
 
                 break;
 
@@ -7606,7 +7606,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     else if ((field = parseFieldToCharIf()) != null)
                         return field;
                     else if (parseFunctionNameIf("TO_HEX"))
-                        return hex((Field) parseFieldParenthesised(N));
+                        return toHex((Field) parseFieldParenthesised(N));
 
                 if (N.is(type))
                     if (parseFunctionNameIf("TANH"))

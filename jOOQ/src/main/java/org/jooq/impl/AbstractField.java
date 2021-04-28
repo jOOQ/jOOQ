@@ -85,6 +85,7 @@ import org.jooq.Comment;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -184,6 +185,25 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // ------------------------------------------------------------------------
     // XXX: API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final <U> Field<U> convert(Binding<T, U> binding) {
+        return CustomField.of(getQualifiedName(), getDataType().asConvertedDataType(binding), c -> c.visit(this));
+    }
+
+    @Override
+    public final <U> Field<U> convert(Converter<T, U> converter) {
+        return CustomField.of(getQualifiedName(), getDataType().asConvertedDataType(converter), c -> c.visit(this));
+    }
+
+    @Override
+    public final <U> Field<U> convert(
+        Class<U> toType,
+        Function<? super T, ? extends U> from,
+        Function<? super U, ? extends T> to
+    ) {
+        return CustomField.of(getQualifiedName(), getDataType().asConvertedDataType(toType, from, to), c -> c.visit(this));
+    }
 
     @Override
     public final Field<T> as(String alias) {

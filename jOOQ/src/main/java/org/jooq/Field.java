@@ -78,6 +78,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.jooq.conf.Settings;
+import org.jooq.exception.MappingException;
+import org.jooq.impl.CustomField;
 import org.jooq.impl.DSL;
 import org.jooq.types.Interval;
 // ...
@@ -148,6 +150,58 @@ extends
     // ------------------------------------------------------------------------
     // API
     // ------------------------------------------------------------------------
+
+    /**
+     * Apply an ad-hoc data type {@link Binding} to this field expression.
+     * <p>
+     * Rather than attaching data type bindings at code generation time, or
+     * creating cumbersome expressions using
+     * {@link DataType#asConvertedDataType(Binding)}, this method allows for
+     * creating a derived field expression with an ad-hoc data type binding for
+     * single query usage.
+     *
+     * @param <U> The user type.
+     * @param binding The binding to be applied on any operations using this
+     *            field.
+     * @return A derived field expression using a new binding.
+     */
+    <U> Field<U> convert(Binding<T, U> binding);
+
+    /**
+     * Apply an ad-hoc data type {@link Converter} to this field expression.
+     * <p>
+     * Rather than attaching data type converters at code generation time, or
+     * creating cumbersome expressions using
+     * {@link DataType#asConvertedDataType(Converter)}, this method allows for
+     * creating a derived field expression with an ad-hoc data type converter for
+     * single query usage.
+     *
+     * @param <U> The user type.
+     * @param converter The converter to be applied on any operations using this
+     *            field.
+     * @return A derived field expression using a new converter.
+     */
+    <U> Field<U> convert(Converter<T, U> converter);
+
+    /**
+     * Apply an ad-hoc data type {@link Converter} to this field expression.
+     * <p>
+     * Rather than attaching data type converters at code generation time, or
+     * creating cumbersome expressions using
+     * {@link DataType#asConvertedDataType(Class, Function, Function)}, this
+     * method allows for creating a derived field expression with an ad-hoc data
+     * type converter for single query usage.
+     *
+     * @param <U> The user type.
+     * @param converter The converter to be applied on any operations using this
+     *            field.
+     * @return A derived field expression using a new converter.
+     */
+    <U> Field<U> convert(
+        Class<U> toType,
+        Function<? super T, ? extends U> from,
+        Function<? super U, ? extends T> to
+    );
 
     /**
      * The name of the field.

@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import java.util.function.Function;
+
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -61,7 +63,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 @FunctionalInterface
-public interface RecordMapper<R extends Record, E> {
+public interface RecordMapper<R extends Record, E> extends Function<R, E> {
 
     /**
      * Map a record into a POJO.
@@ -72,4 +74,9 @@ public interface RecordMapper<R extends Record, E> {
      */
     @Nullable
     E map(R record);
+
+    @Override
+    default E apply(R record) {
+        return map(record);
+    }
 }

@@ -12520,7 +12520,7 @@ public interface DSLContext extends Scope {
      */
     @Nullable
     @Support
-    <T> T fetchValue(Field<T> field) throws DataAccessException;
+    <T> T fetchValue(SelectField<T> field) throws DataAccessException;
 
     /**
      * Execute a {@link ResultQuery} in the context of this

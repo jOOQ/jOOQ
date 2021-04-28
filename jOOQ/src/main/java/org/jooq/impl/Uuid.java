@@ -108,6 +108,11 @@ extends
 
 
 
+
+
+
+
+
             case FIREBIRD:
                 ctx.visit(function(N_UUID_TO_CHAR, getDataType(), function(N_GEN_UUID, getDataType())));
                 break;
@@ -136,6 +141,29 @@ extends
 
 
 
+
+
+
+
+
+
+
+            case SQLITE: {
+                // See https://stackoverflow.com/a/22725697/521799
+                Field<String> u = DSL.field(name("u"), VARCHAR);
+
+                ctx.visit(DSL.field(
+                    select(
+                                DSL.substring(u, inline(1), inline(8)).concat(inline('-'))
+                        .concat(DSL.substring(u, inline(9), inline(4)).concat(inline('-')))
+                        .concat(DSL.substring(u, inline(13), inline(4)).concat(inline('-')))
+                        .concat(DSL.substring(u, inline(17), inline(4)).concat(inline('-')))
+                        .concat(DSL.substring(u, inline(21)))
+                    )
+                    .from(select(DSL.lower(function(N_HEX, VARCHAR, function(N_RANDOMBLOB, BINARY, inline(16)))).as(u)).asTable(unquotedName("t")))
+                ));
+                break;
+            }
 
 
 

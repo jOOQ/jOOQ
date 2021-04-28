@@ -146,7 +146,12 @@ final class Names {
     static final Name      N_FLOOR                  = unquotedName("floor");
     static final Name      N_FUNCTION               = unquotedName("function");
     static final Name      N_GENERATE_SERIES        = unquotedName("generate_series");
+    static final Name      N_GENERATE_UNIQUE        = unquotedName("generate_unique");
+    static final Name      N_GENERATE_UUID          = unquotedName("generate_uuid");
+    static final Name      N_GENGUID                = unquotedName("genguid");
     static final Name      N_GEN_ID                 = unquotedName("gen_id");
+    static final Name      N_GEN_RANDOM_UUID        = unquotedName("gen_random_uuid");
+    static final Name      N_GEN_UUID               = unquotedName("gen_uuid");
     static final Name      N_GETDATE                = unquotedName("getdate");
     static final Name      N_GREATEST               = unquotedName("greatest");
     static final Name      N_GROUP_CONCAT           = unquotedName("group_concat");
@@ -213,6 +218,7 @@ final class Names {
     static final Name      N_MODE                   = unquotedName("mode");
     static final Name      N_MUL                    = unquotedName("mul");
     static final Name      N_NANO100_BETWEEN        = unquotedName("nano100_between");
+    static final Name      N_NEWID                  = unquotedName("newid");
     static final Name      N_NEXTVAL                = unquotedName("nextval");
     static final Name      N_NOT                    = unquotedName("not");
     static final Name      N_NOW                    = unquotedName("now");
@@ -236,6 +242,7 @@ final class Names {
     static final Name      N_RADIANS                = unquotedName("radians");
     static final Name      N_RAND                   = unquotedName("rand");
     static final Name      N_RANDOM                 = unquotedName("random");
+    static final Name      N_RANDOM_UUID            = unquotedName("random_uuid");
     static final Name      N_RATIO_TO_REPORT        = unquotedName("ratio_to_report");
     static final Name      N_RAWTOHEX               = unquotedName("rawtohex");
     static final Name      N_REGEXP_REPLACE         = unquotedName("regexp_replace");
@@ -304,7 +311,9 @@ final class Names {
     static final Name      N_SUBSTRING_INDEX        = unquotedName("substring_index");
     static final Name      N_SYSTEM_RANGE           = unquotedName("system_range");
     static final Name      N_SYSTEM_TIME            = unquotedName("system_time");
+    static final Name      N_SYSUUID                = unquotedName("sysuuid");
     static final Name      N_SYS_CONNECT_BY_PATH    = unquotedName("sys_connect_by_path");
+    static final Name      N_SYS_GUID               = unquotedName("sys_guid");
     static final Name      N_T                      = unquotedName("t");
     static final Name      N_TAN                    = unquotedName("tan");
     static final Name      N_TANH                   = unquotedName("tanh");
@@ -314,6 +323,7 @@ final class Names {
     static final Name      N_TO_CHAR                = unquotedName("to_char");
     static final Name      N_TO_CLOB                = unquotedName("to_clob");
     static final Name      N_TO_DATE                = unquotedName("to_date");
+    static final Name      N_TO_HEX                 = unquotedName("to_hex");
     static final Name      N_TO_NUMBER              = unquotedName("to_number");
     static final Name      N_TO_TIMESTAMP           = unquotedName("to_timestamp");
     static final Name      N_TRANSLATE              = unquotedName("translate");
@@ -325,6 +335,10 @@ final class Names {
     static final Name      N_UPDATING               = unquotedName("updating");
     static final Name      N_UPPER                  = unquotedName("upper");
     static final Name      N_USER                   = unquotedName("user");
+    static final Name      N_UUID                   = unquotedName("uuid");
+    static final Name      N_UUID_GENERATE          = unquotedName("uuid_generate");
+    static final Name      N_UUID_STRING            = unquotedName("uuid_string");
+    static final Name      N_UUID_TO_CHAR           = unquotedName("uuid_to_char");
     static final Name      N_VALUE                  = unquotedName("value");
     static final Name      N_VALUES                 = unquotedName("values");
     static final Name      N_VAR                    = unquotedName("var");

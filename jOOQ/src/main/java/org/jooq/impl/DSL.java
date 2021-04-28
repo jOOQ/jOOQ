@@ -84,6 +84,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -16980,6 +16981,28 @@ public class DSL {
     }
 
     /**
+     * The <code>HEX</code> function.
+     * <p>
+     * Format a number to its hex value.
+     */
+    @NotNull
+    @Support({ MYSQL })
+    public static Field<String> hex(Number value) {
+        return new Hex(Tools.field(value));
+    }
+
+    /**
+     * The <code>HEX</code> function.
+     * <p>
+     * Format a number to its hex value.
+     */
+    @NotNull
+    @Support({ MYSQL })
+    public static Field<String> hex(Field<? extends Number> value) {
+        return new Hex(value);
+    }
+
+    /**
      * The <code>LEFT</code> function.
      * <p>
      * Get the left outermost characters from a string.
@@ -18601,6 +18624,17 @@ public class DSL {
     @Support
     public static Field<String> upper(Field<String> string) {
         return new Upper(string);
+    }
+
+    /**
+     * The <code>UUID</code> function.
+     * <p>
+     * Generate a random UUID.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<UUID> uuid() {
+        return new Uuid();
     }
 
     // -------------------------------------------------------------------------

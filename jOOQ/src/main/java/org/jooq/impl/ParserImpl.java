@@ -6843,6 +6843,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return r;
     }
 
+    private final boolean parseEmptyParens() {
+        return parse('(') && parse(')');
+    }
+
+    private final boolean parseEmptyParensIf() {
+        return parseIf('(') && parse(')') || true;
+    }
+
     // Any numeric operator of low precedence
     // See https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-PRECEDENCE
     private final FieldOrRow parseNumericOp(Type type) {
@@ -7123,13 +7131,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (S.is(type))
                     if ((field = parseFieldConcatIf()) != null)
                         return field;
-                    else if ((parseFunctionNameIf("CURRENT_CATALOG") && parse('(') && parse(')')))
+                    else if ((parseFunctionNameIf("CURRENT_CATALOG") && parseEmptyParens()))
                         return currentCatalog();
-                    else if ((parseFunctionNameIf("CURRENT_DATABASE") && parse('(') && parse(')')))
+                    else if ((parseFunctionNameIf("CURRENT_DATABASE") && parseEmptyParens()))
                         return currentCatalog();
-                    else if ((parseKeywordIf("CURRENT_SCHEMA", "CURRENT SCHEMA")) && (parseIf('(') && parse(')') || true))
+                    else if ((parseKeywordIf("CURRENT_SCHEMA", "CURRENT SCHEMA")) && parseEmptyParensIf())
                         return currentSchema();
-                    else if ((parseKeywordIf("CURRENT_USER", "CURRENT USER", "CURRENTUSER")) && (parseIf('(') && parse(')') || true))
+                    else if ((parseKeywordIf("CURRENT_USER", "CURRENT USER", "CURRENTUSER")) && parseEmptyParensIf())
                         return currentUser();
                     else if (parseFunctionNameIf("CHR", "CHAR"))
                         return chr((Field) parseFieldParenthesised(N));
@@ -7157,7 +7165,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return century(parseFieldParenthesised(D));
 
                 if (D.is(type))
-                    if ((parseKeywordIf("CURRENT_DATE") || parseKeywordIf("CURRENT DATE")) && (parseIf('(') && parse(')') || true))
+                    if ((parseKeywordIf("CURRENT_DATE") || parseKeywordIf("CURRENT DATE")) && parseEmptyParensIf())
                         return currentDate();
                     else if (parseKeywordIf("CURRENT_TIMESTAMP") || parseKeywordIf("CURRENT TIMESTAMP")) {
                         Field<Integer> precision = null;
@@ -7168,11 +7176,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                             }
                         return precision != null ? currentTimestamp(precision) : currentTimestamp();
                     }
-                    else if ((parseKeywordIf("CURRENT_TIME") || parseKeywordIf("CURRENT TIME")) && (parseIf('(') && parse(')') || true))
+                    else if ((parseKeywordIf("CURRENT_TIME") || parseKeywordIf("CURRENT TIME")) && parseEmptyParensIf())
                         return currentTime();
-                    else if (parseFunctionNameIf("CURDATE") && parse('(') && parse(')'))
+                    else if (parseFunctionNameIf("CURDATE") && parseEmptyParens())
                         return currentDate();
-                    else if (parseFunctionNameIf("CURTIME") && parse('(') && parse(')'))
+                    else if (parseFunctionNameIf("CURTIME") && parseEmptyParens())
                         return currentTime();
 
                 if ((field = parseFieldCaseIf()) != null)
@@ -7202,7 +7210,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'D':
                 if (S.is(type))
-                    if ((parseFunctionNameIf("DB_NAME") && parse('(') && parse(')')))
+                    if ((parseFunctionNameIf("DB_NAME") && parseEmptyParens()))
                         return currentCatalog();
                     else if ((parseFunctionNameIf("DBINFO") && parse('(') && parseStringLiteral("dbname") != null && parse(')')))
                         return currentCatalog();
@@ -7283,8 +7291,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'G':
                 if (D.is(type))
-                    if (parseKeywordIf("GETDATE") && parse('(') && parse(')'))
+                    if (parseKeywordIf("GETDATE") && parseEmptyParens())
                         return currentTimestamp();
+
+                if (S.is(type))
+                    if (parseFunctionNameIf("GENGUID", "GENERATE_UUID", "GEN_RANDOM_UUID") && parseEmptyParens())
+                        return uuid();
 
                 if ((field = parseFieldGreatestIf()) != null)
                     return field;
@@ -7305,6 +7317,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (S.is(type))
                     if (parseFunctionNameIf("HASH_MD5"))
                         return md5((Field) parseFieldParenthesised(S));
+                    else if (parseFunctionNameIf("HEX"))
+                        return hex((Field) parseFieldParenthesised(N));
 
                 break;
 
@@ -7420,6 +7434,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (S.is(type))
                     if (characterNext() == '\'')
                         return inline(parseStringLiteral(), NVARCHAR);
+                    else if ((field = parseFieldNewIdIf()) != null)
+                        return field;
 
                 if ((field = parseFieldNvl2If()) != null)
                     return field;
@@ -7468,7 +7484,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return field;
                     else if ((field = parseFieldPowerIf()) != null)
                         return field;
-                    else if (parseFunctionNameIf("PI") && parse('(') && parse(')'))
+                    else if (parseFunctionNameIf("PI") && parseEmptyParens())
                         return pi();
 
                 if (parseKeywordIf("PRIOR") && requireProEdition()) {
@@ -7504,6 +7520,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return field;
                     else if ((field = parseFieldRightIf()) != null)
                         return field;
+                    else if (parseFunctionNameIf("RANDOM_UUID") && parseEmptyParens())
+                        return uuid();
 
                 if (N.is(type))
                     if ((field = parseFieldRowNumberIf()) != null)
@@ -7549,6 +7567,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return currentSchema();
                     else if (parseFunctionNameIf("STRREVERSE"))
                         return reverse((Field) parseFieldParenthesised(S));
+                    else if (parseFunctionNameIf("SYSUUID") && parseEmptyParensIf())
+                        return uuid();
 
                 if (N.is(type))
                     if (parseFunctionNameIf("SECOND"))
@@ -7585,6 +7605,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return field;
                     else if ((field = parseFieldToCharIf()) != null)
                         return field;
+                    else if (parseFunctionNameIf("TO_HEX"))
+                        return hex((Field) parseFieldParenthesised(N));
 
                 if (N.is(type))
                     if (parseFunctionNameIf("TANH"))
@@ -7620,9 +7642,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'U':
                 if (S.is(type))
-                    if (parseFunctionNameIf("UPPER")
-                        || parseFunctionNameIf("UCASE"))
+                    if (parseFunctionNameIf("UPPER", "UCASE"))
                         return DSL.upper((Field) parseFieldParenthesised(S));
+                    else if (parseFunctionNameIf("UUID", "UUID_GENERATE", "UUID_STRING") && parseEmptyParens())
+                        return uuid();
 
                 if (D.is(type))
                     if (parseFunctionNameIf("UNIX_TIMESTAMP"))
@@ -7956,6 +7979,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(')');
 
             return shr((Field) x, (Field) y);
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldNewIdIf() {
+        if (parseFunctionNameIf("NEWID")) {
+            parse('(');
+            Long l = parseSignedIntegerLiteralIf();
+
+            if (l != null && l.longValue() != -1L)
+                throw expected("No argument or -1 expected");
+
+            parse(')');
+            return uuid();
         }
 
         return null;

@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import static org.jooq.Converters.notImplemented;
 import static org.jooq.Converters.nullable;
 
 import java.io.Serializable;
@@ -339,9 +340,5 @@ public interface Converter<T, U> extends Serializable {
         Function<? super U, ? extends T> to
     ) {
         return of(fromType, toType, notImplemented(), nullable(to));
-    }
-
-    private static <T, U> Function<T, U> notImplemented() {
-        return t -> { throw new DataTypeException("Conversion function not implemented"); };
     }
 }

@@ -43,6 +43,7 @@ import static org.jooq.tools.Convert.convertArray;
 import java.io.Serializable;
 import java.util.function.Function;
 
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
@@ -224,5 +225,9 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
         return f instanceof Serializable
             ? (Function<T, U> & Serializable) t -> t == null ? null
             : f.apply(t) : t -> t == null ? null : f.apply(t);
+    }
+
+    static final <T, U> Function<T, U> notImplemented() {
+        return t -> { throw new DataTypeException("Conversion function not implemented"); };
     }
 }

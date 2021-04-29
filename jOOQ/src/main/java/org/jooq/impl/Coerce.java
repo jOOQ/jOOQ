@@ -106,10 +106,14 @@ final class Coerce<T> extends AbstractField<T> {
         return field.declaresCTE();
     }
 
-    @Override
-    public final boolean declaresParameters() {
-        return field.declaresParameters();
-    }
+
+
+
+
+
+
+
+
 
     @Override
     public final boolean generatesCast() {

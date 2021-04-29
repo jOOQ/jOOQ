@@ -165,6 +165,7 @@ extends
      *            field.
      * @return A derived field expression using a new binding.
      */
+    @NotNull
     <U> Field<U> convert(Binding<T, U> binding);
 
     /**
@@ -181,6 +182,7 @@ extends
      *            field.
      * @return A derived field expression using a new converter.
      */
+    @NotNull
     <U> Field<U> convert(Converter<T, U> converter);
 
     /**
@@ -197,6 +199,7 @@ extends
      *            field.
      * @return A derived field expression using a new converter.
      */
+    @NotNull
     <U> Field<U> convert(
         Class<U> toType,
         Function<? super T, ? extends U> from,
@@ -218,6 +221,7 @@ extends
      *            using this field.
      * @return A derived field expression using a new converter.
      */
+    @NotNull
     <U> Field<U> convertFrom(Class<U> toType, Function<? super T, ? extends U> from);
 
     /**
@@ -235,6 +239,7 @@ extends
      *            using this field.
      * @return A derived field expression using a new converter.
      */
+    @NotNull
     <U> Field<U> convertTo(Class<U> toType, Function<? super U, ? extends T> to);
 
     /**

@@ -43,6 +43,7 @@ import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
 
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -105,6 +106,31 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     @Override
     public final Field<R> as(Name alias) {
         return rf().as(alias);
+    }
+
+    @Override
+    public final <U> Field<U> convert(Binding<R, U> binding) {
+        return rf().convert(binding);
+    }
+
+    @Override
+    public final <U> Field<U> convert(Converter<R, U> converter) {
+        return rf().convert(converter);
+    }
+
+    @Override
+    public final <U> Field<U> convert(Class<U> toType, Function<? super R, ? extends U> from, Function<? super U, ? extends R> to) {
+        return rf().convert(toType, from, to);
+    }
+
+    @Override
+    public final <U> Field<U> convertFrom(Class<U> toType, Function<? super R, ? extends U> from) {
+        return rf().convertFrom(toType, from);
+    }
+
+    @Override
+    public final <U> Field<U> convertTo(Class<U> toType, Function<? super U, ? extends R> to) {
+        return rf().convertTo(toType, to);
     }
 
     @Override

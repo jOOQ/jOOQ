@@ -40,6 +40,9 @@ package org.jooq;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.tools.Convert.convertArray;
 
+import java.io.Serializable;
+import java.util.function.Function;
+
 import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
@@ -215,5 +218,11 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
 
         sb.append(" ]");
         return sb.toString();
+    }
+
+    static final <T, U> Function<T, U> nullable(Function<? super T, ? extends U> f) {
+        return f instanceof Serializable
+            ? (Function<T, U> & Serializable) t -> t == null ? null
+            : f.apply(t) : t -> t == null ? null : f.apply(t);
     }
 }

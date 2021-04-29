@@ -120,14 +120,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -6052512608911220404L;
-    private static final JooqLogger log              = JooqLogger.getLogger(AbstractRecord.class);
+    private static final long                   serialVersionUID = -6052512608911220404L;
+    private static final JooqLogger             log              = JooqLogger.getLogger(AbstractRecord.class);
 
-    final AbstractRow               fields;
-    final Object[]                  values;
-    final Object[]                  originals;
-    final BitSet                    changed;
-    boolean                         fetched;
+    final AbstractRow<? extends AbstractRecord> fields;
+    final Object[]                              values;
+    final Object[]                              originals;
+    final BitSet                                changed;
+    boolean                                     fetched;
 
     /**
      * @deprecated - 3.14.5 - [#8495] [#11058] - Re-use AbstractRow reference if possible
@@ -145,10 +145,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         this(Tools.row0(fields));
     }
 
-    AbstractRecord(AbstractRow fields) {
+    AbstractRecord(AbstractRow<?> fields) {
         int size = fields.size();
 
-        this.fields = fields;
+        this.fields = (AbstractRow<? extends AbstractRecord>) fields;
         this.values = new Object[size];
         this.originals = new Object[size];
         this.changed = new BitSet(size);
@@ -843,7 +843,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<>(null));
+        return (R) Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<>(null));
     }
 
     private class TransferRecordState<R extends Record> implements ThrowingFunction<R, R, MappingException> {

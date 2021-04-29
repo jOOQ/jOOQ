@@ -204,32 +204,38 @@ extends
     );
 
     /**
-     * The name of the field.
+     * Apply an ad-hoc read-only data type {@link Converter} to this field
+     * expression.
      * <p>
-     * The name is any of these:
-     * <ul>
-     * <li>The formal name of the field, if it is a <i>physical table/view
-     * field</i></li>
-     * <li>The alias of an <i>aliased field</i></li>
-     * <li>A generated / unspecified value for any other <i>expression</i></li>
-     * <li>The name of a parameter if it is a named {@link Param}</li>
-     * </ul>
+     * Rather than attaching data type converters at code generation time, or
+     * creating cumbersome expressions using
+     * {@link DataType#asConvertedDataTypeFrom(Class, Function)}, this method
+     * allows for creating a derived field expression with an ad-hoc data type
+     * converter for single query usage.
+     *
+     * @param <U> The user type.
+     * @param converter The read-only converter to be applied on any operations
+     *            using this field.
+     * @return A derived field expression using a new converter.
      */
-    @NotNull
-    @Override
-    String getName();
+    <U> Field<U> convertFrom(Class<U> toType, Function<? super T, ? extends U> from);
 
     /**
-     * The comment given to the field.
+     * Apply an ad-hoc write-only data type {@link Converter} to this field
+     * expression.
      * <p>
-     * If this <code>Field</code> is a generated field from your database, it
-     * may provide its DDL comment through this method. All other column
-     * expressions return the empty string <code>""</code> here, never
-     * <code>null</code>.
+     * Rather than attaching data type converters at code generation time, or
+     * creating cumbersome expressions using
+     * {@link DataType#asConvertedDataTypeTo(Class, Function)}, this method
+     * allows for creating a derived field expression with an ad-hoc data type
+     * converter for single query usage.
+     *
+     * @param <U> The user type.
+     * @param converter The write-only converter to be applied on any operations
+     *            using this field.
+     * @return A derived field expression using a new converter.
      */
-    @NotNull
-    @Override
-    String getComment();
+    <U> Field<U> convertTo(Class<U> toType, Function<? super U, ? extends T> to);
 
     /**
      * Create an alias for this field.
@@ -272,6 +278,34 @@ extends
     @NotNull
     @Support
     Field<T> as(Field<?> otherField);
+
+    /**
+     * The name of the field.
+     * <p>
+     * The name is any of these:
+     * <ul>
+     * <li>The formal name of the field, if it is a <i>physical table/view
+     * field</i></li>
+     * <li>The alias of an <i>aliased field</i></li>
+     * <li>A generated / unspecified value for any other <i>expression</i></li>
+     * <li>The name of a parameter if it is a named {@link Param}</li>
+     * </ul>
+     */
+    @NotNull
+    @Override
+    String getName();
+
+    /**
+     * The comment given to the field.
+     * <p>
+     * If this <code>Field</code> is a generated field from your database, it
+     * may provide its DDL comment through this method. All other column
+     * expressions return the empty string <code>""</code> here, never
+     * <code>null</code>.
+     */
+    @NotNull
+    @Override
+    String getComment();
 
     /**
      * Create an alias for this field.

@@ -14791,287 +14791,221 @@ public class DSL {
 
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>1</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row1} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1> Field<Record1<T1>> rowField(Row1<T1> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>2</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row2} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2> Field<Record2<T1, T2>> rowField(Row2<T1, T2> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>3</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row3} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3> Field<Record3<T1, T2, T3>> rowField(Row3<T1, T2, T3> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>4</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row4} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> rowField(Row4<T1, T2, T3, T4> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>5</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row5} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> rowField(Row5<T1, T2, T3, T4, T5> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>6</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row6} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> rowField(Row6<T1, T2, T3, T4, T5, T6> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>7</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row7} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> rowField(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>8</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row8} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> rowField(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>9</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row9} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> rowField(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>10</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row10} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> rowField(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>11</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row11} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> rowField(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>12</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row12} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> rowField(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>13</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row13} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> rowField(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>14</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row14} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> rowField(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>15</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row15} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> rowField(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>16</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row16} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> rowField(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>17</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row17} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> rowField(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>18</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row18} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> rowField(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>19</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row19} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> rowField(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>20</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row20} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> rowField(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>21</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row21} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> rowField(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
         return new RowField<>(row);
     }
 
     /**
-     * EXPERIMENTAL: Turn a row value expression of degree <code>22</code> into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
+     * @deprecated - [#11812] - 3.15.0 - Use {@link Row22} as a {@link SelectField} directly, instead.
      */
     @NotNull
     @Support
+    @Deprecated
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> rowField(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
         return new RowField<>(row);
     }

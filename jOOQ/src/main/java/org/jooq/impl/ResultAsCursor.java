@@ -55,8 +55,9 @@ final class ResultAsCursor<R extends Record> extends AbstractCursor<R> {
     private final Result<R>   result;
     private int               index;
 
+    @SuppressWarnings("unchecked")
     ResultAsCursor(Result<R> result) {
-        super(result.configuration(), (AbstractRow) result.fieldsRow());
+        super(result.configuration(), (AbstractRow<R>) result.fieldsRow());
 
         this.result = result;
     }

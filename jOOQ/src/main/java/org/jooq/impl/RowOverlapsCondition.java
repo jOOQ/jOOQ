@@ -70,6 +70,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Record2;
 import org.jooq.Row2;
 import org.jooq.SQLDialect;
 
@@ -82,7 +83,6 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
      * Generated UID
      */
     private static final long            serialVersionUID              = 85887551884667824L;
-    private static final Clause[]        CLAUSES                       = { CONDITION, CONDITION_OVERLAPS };
     private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB);
 
@@ -91,8 +91,8 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
 
     @SuppressWarnings("unchecked")
     RowOverlapsCondition(Row2<T1, T2> left, Row2<T1, T2> right) {
-        this.left = (Row2<T1, T2>) ((AbstractRow) left).convertTo(right);
-        this.right = (Row2<T1, T2>) ((AbstractRow) right).convertTo(left);
+        this.left = (Row2<T1, T2>) ((AbstractRow<?>) left).convertTo(right);
+        this.right = (Row2<T1, T2>) ((AbstractRow<?>) right).convertTo(left);
     }
 
     @Override

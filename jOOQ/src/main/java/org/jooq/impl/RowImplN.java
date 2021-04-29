@@ -57,7 +57,7 @@ import org.jooq.Statement;
 /**
  * @author Lukas Eder
  */
-final class RowImplN extends AbstractRow implements RowN {
+final class RowImplN extends AbstractRow<Record> implements RowN {
 
     /**
      * Generated UID
@@ -73,7 +73,7 @@ final class RowImplN extends AbstractRow implements RowN {
     }
 
     RowImplN(FieldsImpl<?> fields) {
-        super(fields);
+        super((FieldsImpl) fields);
     }
 
     // ------------------------------------------------------------------------

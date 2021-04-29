@@ -62,7 +62,7 @@ implements TableField<R, E> {
     final Class<E>            recordType;
     final boolean             replacesFields;
     final Table<R>            table;
-    final AbstractRow         fieldsRow;
+    final AbstractRow<?>      fieldsRow;
     /**
      * @deprecated - [#11058] - 3.14.5 - This will be removed in the future.
      */

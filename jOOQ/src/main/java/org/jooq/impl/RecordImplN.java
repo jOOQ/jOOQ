@@ -58,7 +58,7 @@ final class RecordImplN extends AbstractRecord implements InternalRecord {
      */
     private static final long serialVersionUID = -2201346180421463830L;
 
-    RecordImplN(AbstractRow row) {
+    RecordImplN(AbstractRow<?> row) {
         super(row);
     }
 

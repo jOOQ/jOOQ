@@ -37,31 +37,17 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.Keywords.K_ARRAY;
-import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Names.N_ARRAY;
-import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
-
-import java.util.Collection;
-import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder

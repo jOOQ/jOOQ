@@ -76,7 +76,6 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
      */
     private static final long serialVersionUID = 2937225066265868374L;
 
-    @SuppressWarnings("unchecked")
     @Nullable
     @Override
     public final <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {

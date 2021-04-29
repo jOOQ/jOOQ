@@ -37,9 +37,12 @@
  */
 package org.jooq;
 
+import static org.jooq.Converters.nullable;
+
 import java.io.Serializable;
 import java.util.function.Function;
 
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.SQLDataType;
 
@@ -53,9 +56,11 @@ import org.jetbrains.annotations.NotNull;
  * directed, this means that the <code>Converter</code> is used
  * <ul>
  * <li>to load database types converting them to user types "FROM" the database.
- * Hence, {@link #fromType()} is the type as defined in the database.</li>
+ * Hence, {@link #fromType()} is the type as defined in the database. Think of
+ * "FROM" = "reading".</li>
  * <li>to store user types converting them to database types "TO" the database.
- * Hence, {@link #toType()} is the user-defined type</li>
+ * Think of "TO" = "writing". Hence, {@link #toType()} is the user-defined
+ * type</li>
  * </ul>
  * <p>
  * Note: In order to avoid unwanted side-effects, it is highly recommended (yet
@@ -83,7 +88,8 @@ import org.jetbrains.annotations.NotNull;
  * {@link DataType#asConvertedDataType(Binding)}, for example. Custom data types
  * can also be defined on generated code using the
  * <code>&lt;forcedType/&gt;</code> configuration, see <a href=
- * "https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/">the manual for more details</a>
+ * "https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/">the
+ * manual for more details</a>
  *
  * @author Lukas Eder
  * @param <T> The database type - i.e. any type available from
@@ -93,29 +99,29 @@ import org.jetbrains.annotations.NotNull;
 public interface Converter<T, U> extends Serializable {
 
     /**
-     * Convert a database object to a user object
+     * Read and convert a database object to a user object.
      *
-     * @param databaseObject The database object
-     * @return The user object
+     * @param databaseObject The database object.
+     * @return The user object.
      */
     U from(T databaseObject);
 
     /**
-     * Convert a user object to a database object
+     * Convert and write a user object to a database object.
      *
-     * @param userObject The user object
-     * @return The database object
+     * @param userObject The user object.
+     * @return The database object.
      */
     T to(U userObject);
 
     /**
-     * The database type
+     * The database type.
      */
     @NotNull
     Class<T> fromType();
 
     /**
-     * The user type
+     * The user type.
      */
     @NotNull
     Class<U> toType();
@@ -147,12 +153,13 @@ public interface Converter<T, U> extends Serializable {
     /**
      * Construct a new converter from functions.
      *
-     * @param <T> the database type
-     * @param <U> the user type
-     * @param fromType The database type
-     * @param toType The user type
-     * @param from A function converting from T to U
-     * @param to A function converting from U to T
+     * @param <T> the database type.
+     * @param <U> the user type.
+     * @param fromType The database type.
+     * @param toType The user type.
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @param to A function converting from U to T when writing to the database.
      * @return The converter.
      * @see Converter
      */
@@ -183,6 +190,50 @@ public interface Converter<T, U> extends Serializable {
     }
 
     /**
+     * Construct a new read-only converter from a function.
+     *
+     * @param <T> the database type
+     * @param <U> the user type
+     * @param fromType The database type
+     * @param toType The user type
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @param to A function converting from U to T when writing to the database.
+     * @return The converter.
+     * @see Converter
+     */
+    @NotNull
+    static <T, U> Converter<T, U> from(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super T, ? extends U> from
+    ) {
+        return of(fromType, toType, from, notImplemented());
+    }
+
+    /**
+     * Construct a new write-only converter from a function.
+     *
+     * @param <T> the database type
+     * @param <U> the user type
+     * @param fromType The database type
+     * @param toType The user type
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @param to A function converting from U to T when writing to the database.
+     * @return The converter.
+     * @see Converter
+     */
+    @NotNull
+    static <T, U> Converter<T, U> to(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super U, ? extends T> to
+    ) {
+        return of(fromType, toType, notImplemented(), to);
+    }
+
+    /**
      * Construct a new converter from functions.
      * <p>
      * This works like {@link Converter#of(Class, Class, Function, Function)},
@@ -205,12 +256,12 @@ public interface Converter<T, U> extends Serializable {
      * @param <U> the user type
      * @param fromType The database type
      * @param toType The user type
-     * @param from A function converting from T to U
-     * @param to A function converting from U to T
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @param to A function converting from U to T when writing to the database.
      * @return The converter.
      * @see Converter
      */
-    @SuppressWarnings("unchecked")
     @NotNull
     static <T, U> Converter<T, U> ofNullable(
         Class<T> fromType,
@@ -218,19 +269,79 @@ public interface Converter<T, U> extends Serializable {
         Function<? super T, ? extends U> from,
         Function<? super U, ? extends T> to
     ) {
-        Function<T, U> fromS;
-        Function<U, T> toS;
+        return of(fromType, toType, nullable(from), nullable(to));
+    }
 
-        if (from instanceof Serializable)
-            fromS = (Function<T, U> & Serializable) t -> t == null ? null : from.apply(t);
-        else
-            fromS = t -> t == null ? null : from.apply(t);
+    /**
+     * Construct a new read-only converter from a function.
+     * <p>
+     * This works like {@link Converter#from(Class, Class, Function)}, except
+     * that the conversion {@link Function} is decorated with a function that
+     * always returns <code>null</code> for <code>null</code> inputs.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * Converter&lt;String, Integer&gt; converter =
+     *   Converter.fromNullable(String.class, Integer.class, Integer::parseInt);
+     *
+     * // No exceptions thrown
+     * assertNull(converter.from(null));
+     * </pre></code>
+     *
+     * @param <T> the database type.
+     * @param <U> the user type.
+     * @param fromType The database type.
+     * @param toType The user type.
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @return The converter.
+     * @see Converter
+     */
+    @NotNull
+    static <T, U> Converter<T, U> fromNullable(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super T, ? extends U> from
+    ) {
+        return of(fromType, toType, nullable(from), notImplemented());
+    }
 
-        if (to instanceof Serializable)
-            toS = (Function<U, T> & Serializable) u -> u == null ? null : to.apply(u);
-        else
-            toS = u -> u == null ? null : to.apply(u);
+    /**
+     * Construct a new write-only converter from a function.
+     * <p>
+     * This works like {@link Converter#to(Class, Class, Function)}, except that
+     * the conversion {@link Function} is decorated with a function that always
+     * returns <code>null</code> for <code>null</code> inputs.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * Converter&lt;String, Integer&gt; converter =
+     *   Converter.toNullable(String.class, Integer.class, Object::toString);
+     *
+     * // No exceptions thrown
+     * assertNull(converter.to(null));
+     * </pre></code>
+     *
+     * @param <T> the database type
+     * @param <U> the user type
+     * @param fromType The database type
+     * @param toType The user type
+     * @param to A function converting from U to T when writing to the database.
+     * @return The converter.
+     * @see Converter
+     */
+    @NotNull
+    static <T, U> Converter<T, U> toNullable(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super U, ? extends T> to
+    ) {
+        return of(fromType, toType, notImplemented(), nullable(to));
+    }
 
-        return of(fromType, toType, fromS, toS);
+    private static <T, U> Function<T, U> notImplemented() {
+        return t -> { throw new DataTypeException("Conversion function not implemented"); };
     }
 }

@@ -60,7 +60,7 @@ import org.jooq.Statement;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class RowImpl7<T1, T2, T3, T4, T5, T6, T7> extends AbstractRow implements Row7<T1, T2, T3, T4, T5, T6, T7> {
+final class RowImpl7<T1, T2, T3, T4, T5, T6, T7> extends AbstractRow<Record7<T1, T2, T3, T4, T5, T6, T7>> implements Row7<T1, T2, T3, T4, T5, T6, T7> {
 
     /**
      * Generated UID
@@ -72,7 +72,7 @@ final class RowImpl7<T1, T2, T3, T4, T5, T6, T7> extends AbstractRow implements 
     }
 
     RowImpl7(FieldsImpl<?> fields) {
-        super(fields);
+        super((FieldsImpl) fields);
     }
 
     // ------------------------------------------------------------------------

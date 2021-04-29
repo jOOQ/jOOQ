@@ -41,11 +41,7 @@ package org.jooq.impl;
 import static java.util.Collections.emptyList;
 import static org.jooq.SortOrder.DESC;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.map;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Field;

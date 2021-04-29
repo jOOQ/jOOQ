@@ -59,7 +59,7 @@ final class RecordImpl2<T1, T2> extends AbstractRecord implements InternalRecord
      */
     private static final long serialVersionUID = -2201346180421463830L;
 
-    RecordImpl2(AbstractRow row) {
+    RecordImpl2(AbstractRow<?> row) {
         super(row);
     }
 

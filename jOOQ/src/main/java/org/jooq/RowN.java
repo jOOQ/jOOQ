@@ -83,7 +83,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface RowN extends Row {
+public interface RowN extends Row, SelectField<Record> {
 
     // ------------------------------------------------------------------------
     // Generic comparison predicates

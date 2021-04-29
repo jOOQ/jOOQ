@@ -3658,7 +3658,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * @return The converted {@link UDTRecord}
          */
         @SuppressWarnings("unchecked")
-        static final Record pgNewRecord(Class<?> type, AbstractRow fields, final Object object) {
+        static final Record pgNewRecord(Class<?> type, AbstractRow<Record> fields, final Object object) {
             if (object == null)
                 return null;
 
@@ -3674,7 +3674,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             //   - Temporal data
             //   - Everything else: VARCHAR
             if (fields == null && Record.class.isAssignableFrom(type))
-                fields = Tools.row0(Tools.fields(values.size(), SQLDataType.VARCHAR));
+                fields = (AbstractRow<Record>) Tools.row0(Tools.fields(values.size(), SQLDataType.VARCHAR));
 
             return Tools.newRecord(true, (Class<Record>) type, fields)
                         .operate(record -> {

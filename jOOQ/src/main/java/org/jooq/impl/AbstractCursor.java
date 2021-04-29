@@ -63,7 +63,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractResult<R> implem
      */
     private static final long serialVersionUID = 866689823212695960L;
 
-    AbstractCursor(Configuration configuration, AbstractRow row) {
+    AbstractCursor(Configuration configuration, AbstractRow<R> row) {
         super(configuration, row);
     }
 

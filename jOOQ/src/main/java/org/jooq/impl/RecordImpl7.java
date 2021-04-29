@@ -59,7 +59,7 @@ final class RecordImpl7<T1, T2, T3, T4, T5, T6, T7> extends AbstractRecord imple
      */
     private static final long serialVersionUID = -2201346180421463830L;
 
-    RecordImpl7(AbstractRow row) {
+    RecordImpl7(AbstractRow<?> row) {
         super(row);
     }
 

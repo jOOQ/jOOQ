@@ -40,11 +40,9 @@ package org.jooq.impl;
 // ...
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.Internal.subscriber;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.abstractDMLQuery;
 import static org.jooq.impl.Tools.abstractResultQuery;
-import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.recordFactory;
 import static org.jooq.impl.Tools.visitAll;
@@ -308,7 +306,7 @@ final class R2DBC {
                     // TODO: This call is duplicated from CursorImpl and related classes.
                     // Refactor this call to make sure code is re-used, especially when
                     // ExecuteListener lifecycle management is implemented
-                    RecordDelegate<AbstractRecord> delegate = Tools.newRecord(true, (Supplier<AbstractRecord>) recordFactory(query.getRecordType(), Tools.row0(fields)), query.configuration());
+                    RecordDelegate<? extends AbstractRecord> delegate = Tools.newRecord(true, (Supplier<? extends AbstractRecord>) recordFactory(query.getRecordType(), Tools.row0(fields)), query.configuration());
 
                     return (R) delegate.operate(record -> {
 

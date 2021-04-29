@@ -3660,6 +3660,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         for (SelectFieldOrAsterisk f : list)
             if (f instanceof Field<?>)
                 result.add(getResolveProjection(c, (Field<?>) f));
+            else if (f instanceof Row)
+                result.add(getResolveProjection(c, new RowField<Row, Record>((Row) f)));
             else if (f instanceof QualifiedAsterisk)
                 if (((QualifiedAsteriskImpl) f).fields.isEmpty())
                     if (resolveSupported)

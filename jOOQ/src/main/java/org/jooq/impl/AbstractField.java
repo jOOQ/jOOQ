@@ -188,12 +188,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final <U> Field<U> convert(Binding<T, U> binding) {
-        return CustomField.of(getQualifiedName(), getDataType().asConvertedDataType(binding), c -> c.visit(this));
+        return coerce(getDataType().asConvertedDataType(binding));
     }
 
     @Override
     public final <U> Field<U> convert(Converter<T, U> converter) {
-        return CustomField.of(getQualifiedName(), getDataType().asConvertedDataType(converter), c -> c.visit(this));
+        return coerce(getDataType().asConvertedDataType(converter));
     }
 
     @Override
@@ -202,7 +202,17 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         Function<? super T, ? extends U> from,
         Function<? super U, ? extends T> to
     ) {
-        return CustomField.of(getQualifiedName(), getDataType().asConvertedDataType(toType, from, to), c -> c.visit(this));
+        return coerce(getDataType().asConvertedDataType(toType, from, to));
+    }
+
+    @Override
+    public final <U> Field<U> convertFrom(Class<U> toType, Function<? super T, ? extends U> from) {
+        return coerce(getDataType().asConvertedDataTypeFrom(toType, from));
+    }
+
+    @Override
+    public final <U> Field<U> convertTo(Class<U> toType, Function<? super U, ? extends T> to) {
+        return coerce(getDataType().asConvertedDataTypeTo(toType, to));
     }
 
     @Override

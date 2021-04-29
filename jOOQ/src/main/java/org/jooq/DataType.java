@@ -74,6 +74,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.MappingException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
@@ -205,6 +206,30 @@ public interface DataType<T> extends Named {
         Function<? super U, ? extends T> to
     ) {
         return asConvertedDataType(Converter.of(getType(), toType, from, to));
+    }
+
+    /**
+     * Convenience method for converting this type to a read-only type using
+     * {@link Converter#from(Class, Class, Function)}.
+     */
+    @NotNull
+    default <U> DataType<U> asConvertedDataTypeFrom(
+        Class<U> toType,
+        Function<? super T, ? extends U> from
+    ) {
+        return asConvertedDataType(Converter.from(getType(), toType, from));
+    }
+
+    /**
+     * Convenience method for converting this type to a write-only type using
+     * {@link Converter#to(Class, Class, Function)}.
+     */
+    @NotNull
+    default <U> DataType<U> asConvertedDataTypeTo(
+        Class<U> toType,
+        Function<? super U, ? extends T> to
+    ) {
+        return asConvertedDataType(Converter.to(getType(), toType, to));
     }
 
     /**

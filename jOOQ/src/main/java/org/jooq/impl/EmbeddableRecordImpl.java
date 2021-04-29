@@ -78,7 +78,7 @@ public class EmbeddableRecordImpl<R extends EmbeddableRecord<R>> extends Abstrac
     }
 
     public EmbeddableRecordImpl(Row fields) {
-        super((AbstractRow) fields);
+        super((AbstractRow<?>) fields);
     }
 
     @SuppressWarnings("unchecked")

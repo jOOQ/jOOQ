@@ -83,7 +83,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Row3<T1, T2, T3> extends Row {
+public interface Row3<T1, T2, T3> extends Row, SelectField<Record3<T1, T2, T3>> {
 
     // ------------------------------------------------------------------------
     // Field accessors

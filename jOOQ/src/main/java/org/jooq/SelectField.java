@@ -38,7 +38,6 @@
 package org.jooq;
 
 
-
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
  * clauses.

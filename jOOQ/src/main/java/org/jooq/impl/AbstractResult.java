@@ -120,10 +120,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
      */
     private static final long serialVersionUID = -3412555195899758746L;
 
-    final AbstractRow         fields;
+    final AbstractRow<R>      fields;
     Configuration             configuration;
 
-    AbstractResult(Configuration configuration, AbstractRow row) {
+    AbstractResult(Configuration configuration, AbstractRow<R> row) {
         this.configuration = configuration;
         this.fields = row;
     }
@@ -132,9 +132,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
     // XXX: RecordType API of subtypes
     // -------------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     public final RecordType<R> recordType() {
-        return (RecordType<R>) fields.fields;
+        return fields.fields;
     }
 
     @Override
@@ -800,7 +799,13 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
     }
 
-    static final void formatJSONMap0(Record record, AbstractRow fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
+    static final void formatJSONMap0(
+        Record record,
+        AbstractRow<?> fields,
+        JSONFormat format,
+        int recordLevel,
+        Writer writer
+    ) throws java.io.IOException {
         String separator = "";
         int size = fields.size();
         boolean wrapRecords = format.wrapSingleColumnRecords() || size > 1;
@@ -836,7 +841,13 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 writer.append('}');
     }
 
-    static final void formatJSONArray0(Record record, AbstractRow fields, JSONFormat format, int recordLevel, Writer writer) throws java.io.IOException {
+    static final void formatJSONArray0(
+        Record record,
+        AbstractRow<?> fields,
+        JSONFormat format,
+        int recordLevel,
+        Writer writer
+    ) throws java.io.IOException {
         String separator = "";
 
         int size = fields.size();
@@ -936,7 +947,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         XMLFormat format,
         int recordLevel,
         Record record,
-        AbstractRow fields
+        AbstractRow<?> fields
     )
     throws java.io.IOException {
         String newline = format.newline();

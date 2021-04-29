@@ -59,10 +59,10 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -2065258332642911588L;
+    private static final long      serialVersionUID = -2065258332642911588L;
 
-    private final ROW         row;
-    private final AbstractRow emulatedFields;
+    private final ROW              row;
+    private final AbstractRow<REC> emulatedFields;
 
     RowField(ROW row) {
         this(row, N_ROW);
@@ -86,10 +86,10 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
         }));
 
         this.row = row;
-        this.emulatedFields = row0(map(row.fields(), x -> x.as(as + "." + x.getName()), Field[]::new));
+        this.emulatedFields = (AbstractRow<REC>) row0(map(row.fields(), x -> x.as(as + "." + x.getName()), Field[]::new));
     }
 
-    AbstractRow emulatedFields() {
+    AbstractRow<REC> emulatedFields() {
         return emulatedFields;
     }
 

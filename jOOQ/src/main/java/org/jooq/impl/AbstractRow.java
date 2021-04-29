@@ -43,23 +43,30 @@ import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
 
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.jooq.Binding;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
+import org.jooq.SelectField;
 
 /**
  * A common base class for the various degrees of {@link Row1}, {@link Row2},
  * etc.
  */
-abstract class AbstractRow extends AbstractQueryPart implements Row {
+abstract class AbstractRow<R extends Record> extends AbstractQueryPart implements Row, SelectField<R> {
 
     /**
      * Generated UID
@@ -67,7 +74,7 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
     private static final long     serialVersionUID = 2175082265665049629L;
     private static final Clause[] CLAUSES          = { FIELD_ROW };
 
-    final FieldsImpl<?>           fields;
+    final FieldsImpl<R>           fields;
 
     AbstractRow(Field<?>... fields) {
         this(new FieldsImpl<>(fields));
@@ -77,10 +84,68 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
         this(new FieldsImpl<>(fields));
     }
 
-    AbstractRow(FieldsImpl<?> fields) {
+    AbstractRow(FieldsImpl<R> fields) {
         super();
 
         this.fields = fields;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: SelectField API
+    // ------------------------------------------------------------------------
+
+    private final RowField<Row, R> rf() {
+        return new RowField<Row, R>(this);
+    }
+
+    @Override
+    public Converter<?, R> getConverter() {
+        return rf().getConverter();
+    }
+
+    @Override
+    public Binding<?, R> getBinding() {
+        return rf().getBinding();
+    }
+
+    @Override
+    public Class<R> getType() {
+        return rf().getType();
+    }
+
+    @Override
+    public DataType<R> getDataType() {
+        return rf().getDataType();
+    }
+
+    @Override
+    public DataType<R> getDataType(Configuration configuration) {
+        return rf().getDataType(configuration);
+    }
+
+    @Override
+    public String getName() {
+        return rf().getName();
+    }
+
+    @Override
+    public Name getQualifiedName() {
+        return rf().getQualifiedName();
+    }
+
+    @Override
+    public Name getUnqualifiedName() {
+        return rf().getUnqualifiedName();
+    }
+
+    @Override
+    public String getComment() {
+        return rf().getComment();
+    }
+
+    @Override
+    public Comment getCommentPart() {
+        return rf().getCommentPart();
     }
 
     /**

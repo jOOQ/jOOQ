@@ -903,7 +903,7 @@ final class Tools {
     /**
      * Create a new record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, AbstractRow fields) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, AbstractRow<R> fields) {
         return newRecord(fetched, type, fields, null);
     }
 
@@ -918,13 +918,13 @@ final class Tools {
      * Create a new {@link Table} or {@link UDT} record.
      */
     static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordQualifier<R> type, Configuration configuration) {
-        return newRecord(fetched, type.getRecordType(), (AbstractRow) type.fieldsRow(), configuration);
+        return newRecord(fetched, type.getRecordType(), (AbstractRow<R>) type.fieldsRow(), configuration);
     }
 
     /**
      * Create a new record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<? extends R> type, AbstractRow fields, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<? extends R> type, AbstractRow<? extends R> fields, Configuration configuration) {
         return newRecord(fetched, recordFactory(type, fields), configuration);
     }
 
@@ -935,44 +935,45 @@ final class Tools {
         return new RecordDelegate<>(configuration, factory, fetched);
     }
 
-    static final AbstractRow row0(FieldsImpl<?> fields) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    static final <R extends Record> AbstractRow<R> row0(FieldsImpl<R> fields) {
         switch (fields.size()) {
 
 
-            case 1: return new RowImpl1<>(fields);
-            case 2: return new RowImpl2<>(fields);
-            case 3: return new RowImpl3<>(fields);
-            case 4: return new RowImpl4<>(fields);
-            case 5: return new RowImpl5<>(fields);
-            case 6: return new RowImpl6<>(fields);
-            case 7: return new RowImpl7<>(fields);
-            case 8: return new RowImpl8<>(fields);
-            case 9: return new RowImpl9<>(fields);
-            case 10: return new RowImpl10<>(fields);
-            case 11: return new RowImpl11<>(fields);
-            case 12: return new RowImpl12<>(fields);
-            case 13: return new RowImpl13<>(fields);
-            case 14: return new RowImpl14<>(fields);
-            case 15: return new RowImpl15<>(fields);
-            case 16: return new RowImpl16<>(fields);
-            case 17: return new RowImpl17<>(fields);
-            case 18: return new RowImpl18<>(fields);
-            case 19: return new RowImpl19<>(fields);
-            case 20: return new RowImpl20<>(fields);
-            case 21: return new RowImpl21<>(fields);
-            case 22: return new RowImpl22<>(fields);
+            case 1: return new RowImpl1(fields);
+            case 2: return new RowImpl2(fields);
+            case 3: return new RowImpl3(fields);
+            case 4: return new RowImpl4(fields);
+            case 5: return new RowImpl5(fields);
+            case 6: return new RowImpl6(fields);
+            case 7: return new RowImpl7(fields);
+            case 8: return new RowImpl8(fields);
+            case 9: return new RowImpl9(fields);
+            case 10: return new RowImpl10(fields);
+            case 11: return new RowImpl11(fields);
+            case 12: return new RowImpl12(fields);
+            case 13: return new RowImpl13(fields);
+            case 14: return new RowImpl14(fields);
+            case 15: return new RowImpl15(fields);
+            case 16: return new RowImpl16(fields);
+            case 17: return new RowImpl17(fields);
+            case 18: return new RowImpl18(fields);
+            case 19: return new RowImpl19(fields);
+            case 20: return new RowImpl20(fields);
+            case 21: return new RowImpl21(fields);
+            case 22: return new RowImpl22(fields);
 
 
 
-            default: return new RowImplN(fields);
+            default: return (AbstractRow<R>) new RowImplN(fields);
         }
     }
 
-    static final AbstractRow row0(Collection<? extends Field<?>> fields) {
+    static final AbstractRow<?> row0(Collection<? extends Field<?>> fields) {
         return row0(fields.toArray(EMPTY_FIELD));
     }
 
-    static final AbstractRow row0(Field<?>... fields) {
+    static final AbstractRow<?> row0(Field<?>... fields) {
         return row0(new FieldsImpl<>(fields));
     }
 
@@ -1013,7 +1014,7 @@ final class Tools {
      * Create a new record factory.
      */
     @SuppressWarnings({ "unchecked" })
-    static final <R extends Record> Supplier<R> recordFactory(Class<? extends R> type, AbstractRow row) {
+    static final <R extends Record> Supplier<R> recordFactory(Class<? extends R> type, AbstractRow<? extends R> row) {
 
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
         if (type == AbstractRecord.class || type == Record.class || InternalRecord.class.isAssignableFrom(type)) {
@@ -5161,6 +5162,7 @@ final class Tools {
     static final SelectFieldOrAsterisk qualify(Table<?> table, SelectFieldOrAsterisk field) {
         if (field instanceof Field)
             return qualify(table, (Field<?>) field);
+        // [#11812] TODO: handle field instanceof Row
         else if (field instanceof Asterisk)
             return table.asterisk();
         else if (field instanceof QualifiedAsterisk)

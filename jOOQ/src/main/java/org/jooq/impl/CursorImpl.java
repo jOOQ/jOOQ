@@ -115,7 +115,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
     }
 
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows, boolean autoclosing) {
-        super(ctx.configuration(), Tools.row0(fields));
+        super(ctx.configuration(), (AbstractRow<R>) Tools.row0(fields));
 
         this.ctx = ctx;
         this.listener = (listener != null ? listener : ExecuteListeners.getAndStart(ctx));
@@ -1455,10 +1455,10 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
         private class CursorRecordInitialiser implements ThrowingFunction<AbstractRecord, AbstractRecord, SQLException> {
 
-            private final AbstractRow initialiserFields;
-            private int               offset;
+            private final AbstractRow<?> initialiserFields;
+            private int                  offset;
 
-            CursorRecordInitialiser(AbstractRow initialiserFields, int offset) {
+            CursorRecordInitialiser(AbstractRow<?> initialiserFields, int offset) {
                 this.initialiserFields = initialiserFields;
                 this.offset = offset;
             }
@@ -1514,7 +1514,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
                 try {
                     T value;
-                    AbstractRow nested = null;
+                    AbstractRow<?> nested = null;
                     Class<? extends AbstractRecord> recordType = null;
 
                     if (field instanceof RowField) {
@@ -1528,7 +1528,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     }
 
                     if (nested != null) {
-                        value = (T) Tools.newRecord(true, (Class<AbstractRecord>) recordType, nested, ((DefaultExecuteContext) ctx).originalConfiguration())
+                        value = (T) Tools.newRecord(true, (Class<AbstractRecord>) recordType, (AbstractRow<AbstractRecord>) nested, ((DefaultExecuteContext) ctx).originalConfiguration())
                                          .operate(new CursorRecordInitialiser(nested, offset + index));
 
                         offset += nested.size() - 1;

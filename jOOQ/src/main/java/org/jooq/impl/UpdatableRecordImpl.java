@@ -423,15 +423,15 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         refresh(refreshFields.toArray(EMPTY_FIELD));
     }
 
-    // Cast is needed in Java 8 it seems
-    @SuppressWarnings({ "unchecked", "rawtypes", "cast" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final R copy() {
 
         // [#3359] The "fetched" flag must be set to false to enforce INSERT statements on
         // subsequent store() calls - when Settings.updatablePrimaryKeys is set.
-        return Tools.newRecord(false, getTable(), configuration())
-                    .operate(copy -> {
+        // R vs Record casting is needed in Java 8 it seems
+        return (R) Tools.newRecord(false, (Table<Record>) (Table) getTable(), configuration())
+                    .operate((Record copy) -> {
 
                         // Copy all fields. This marks them all as isChanged, which is important
                         List<TableField<R, ?>> key = getPrimaryKey().getFields();

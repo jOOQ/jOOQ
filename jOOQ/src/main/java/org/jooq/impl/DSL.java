@@ -6415,6 +6415,15 @@ public class DSL {
     }
 
     /**
+     * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
+     */
+    @NotNull
+    @Support
+    public static ConstraintEnforcementStep primaryKey(Collection<? extends Field<?>> fields) {
+        return constraint().primaryKey(fields);
+    }
+
+    /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
@@ -6438,6 +6447,15 @@ public class DSL {
     @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStepN foreignKey(Field<?>... fields) {
+        return constraint().foreignKey(fields);
+    }
+
+    /**
+     * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @NotNull
+    @Support
+    public static ConstraintForeignKeyReferencesStepN foreignKey(Collection<? extends Field<?>> fields) {
         return constraint().foreignKey(fields);
     }
 
@@ -7063,6 +7081,15 @@ public class DSL {
     @NotNull
     @Support
     public static ConstraintEnforcementStep unique(Field<?>... fields) {
+        return constraint().unique(fields);
+    }
+
+    /**
+     * Create an unnamed (system named) <code>UNIQUE</code> constraint.
+     */
+    @NotNull
+    @Support
+    public static ConstraintEnforcementStep unique(Collection<? extends Field<?>> fields) {
         return constraint().unique(fields);
     }
 

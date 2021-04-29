@@ -68,9 +68,12 @@ import static org.jooq.impl.Keywords.K_REFERENCES;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.jooq.Clause;
@@ -334,6 +337,11 @@ implements
     }
 
     @Override
+    public final ConstraintImpl unique(Collection<? extends Field<?>> fields) {
+        return unique(fields.toArray(EMPTY_FIELD));
+    }
+
+    @Override
     public final ConstraintImpl check(Condition condition) {
         check = condition;
         return this;
@@ -356,6 +364,11 @@ implements
     }
 
     @Override
+    public final ConstraintImpl primaryKey(Collection<? extends Field<?>> fields) {
+        return primaryKey(fields.toArray(EMPTY_FIELD));
+    }
+
+    @Override
     public final ConstraintImpl foreignKey(String... fields) {
         return foreignKey(fieldsByName(fields));
     }
@@ -372,6 +385,11 @@ implements
     }
 
     @Override
+    public final ConstraintImpl foreignKey(Collection<? extends Field<?>> fields) {
+        return foreignKey(fields.toArray(EMPTY_FIELD));
+    }
+
+    @Override
     public final ConstraintImpl references(String table) {
         return references(table(name(table)), EMPTY_FIELD);
     }
@@ -379,6 +397,11 @@ implements
     @Override
     public final ConstraintImpl references(String table, String... fields) {
         return references(table(name(table)), fieldsByName(fields));
+    }
+
+    @Override
+    public final ConstraintImpl references(String table, Collection<? extends String> fields) {
+        return references(table, fields.toArray(EMPTY_STRING));
     }
 
     @Override
@@ -392,6 +415,11 @@ implements
     }
 
     @Override
+    public final ConstraintImpl references(Name table, Collection<? extends Name> fields) {
+        return references(table, fields.toArray(EMPTY_NAME));
+    }
+
+    @Override
     public final ConstraintImpl references(Table table) {
         return references(table, EMPTY_FIELD);
     }
@@ -401,6 +429,11 @@ implements
         referencesTable = table;
         references = fields;
         return this;
+    }
+
+    @Override
+    public final ConstraintImpl references(Table<?> table, Collection<? extends Field<?>> fields) {
+        return references(table, fields.toArray(EMPTY_FIELD));
     }
 
     @Override

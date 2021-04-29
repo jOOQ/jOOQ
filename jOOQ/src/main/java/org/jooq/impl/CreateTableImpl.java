@@ -310,6 +310,11 @@ final class CreateTableImpl extends AbstractDDLQuery implements
     }
 
     @Override
+    public final CreateTableConstraintStep primaryKey(Collection<? extends Field<?>> fields) {
+        return constraint(DSL.primaryKey(fields));
+    }
+
+    @Override
     public final CreateTableConstraintStep unique(String... fields) {
         return constraint(DSL.unique(fields));
     }
@@ -321,6 +326,11 @@ final class CreateTableImpl extends AbstractDDLQuery implements
 
     @Override
     public final CreateTableConstraintStep unique(Field<?>... fields) {
+        return constraint(DSL.unique(fields));
+    }
+
+    @Override
+    public final CreateTableConstraintStep unique(Collection<? extends Field<?>> fields) {
         return constraint(DSL.unique(fields));
     }
 

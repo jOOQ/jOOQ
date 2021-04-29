@@ -146,6 +146,17 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
     CreateTableConstraintStep primaryKey(Field<?>... fields);
 
     /**
+     * Convenience method to add an unnamed (system named)
+     * <code>PRIMARY KEY</code> constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#primaryKey(Field...)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    CreateTableConstraintStep primaryKey(Collection<? extends Field<?>> fields);
+
+    /**
      * Convenience method to add an unnamed (system named) <code>UNIQUE</code>
      * constraint to the table.
      * <p>
@@ -177,6 +188,17 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
     @NotNull @CheckReturnValue
     @Support
     CreateTableConstraintStep unique(Field<?>... fields);
+
+    /**
+     * Convenience method to add an unnamed (system named) <code>UNIQUE</code>
+     * constraint to the table.
+     * <p>
+     * This does the same as adding {@link DSL#unique(Field...)} via
+     * {@link #constraint(Constraint)} explicitly.
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    CreateTableConstraintStep unique(Collection<? extends Field<?>> fields);
 
     /**
      * Convenience method to add an unnamed (system named) <code>CHECK</code>

@@ -66,6 +66,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
+import java.util.Collection;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -116,6 +118,13 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
     ConstraintEnforcementStep primaryKey(Field<?>... fields);
 
     /**
+     * Create a <code>PRIMARY KEY</code> constraint.
+     */
+    @NotNull
+    @Support
+    ConstraintEnforcementStep primaryKey(Collection<? extends Field<?>> fields);
+
+    /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
@@ -135,6 +144,13 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
     @NotNull
     @Support
     ConstraintForeignKeyReferencesStepN foreignKey(Field<?>... fields);
+
+    /**
+     * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
+     */
+    @NotNull
+    @Support
+    ConstraintForeignKeyReferencesStepN foreignKey(Collection<? extends Field<?>> fields);
 
 
 
@@ -622,6 +638,13 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
     @NotNull
     @Support
     ConstraintEnforcementStep unique(Field<?>... fields);
+
+    /**
+     * Create a <code>UNIQUE</code> constraint.
+     */
+    @NotNull
+    @Support
+    ConstraintEnforcementStep unique(Collection<? extends Field<?>> fields);
 
     /**
      * Create a <code>CHECK</code> constraint.

@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import java.util.Collection;
 
 /**
  * The step in the {@link Constraint} construction DSL API that allows for
@@ -61,6 +62,12 @@ public interface ConstraintForeignKeyReferencesStepN {
 
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
+     */
+    ConstraintForeignKeyOnStep references(String table, Collection<? extends String> fields);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
      * implicitly referencing the primary key.
      */
     ConstraintForeignKeyOnStep references(Name table);
@@ -73,6 +80,12 @@ public interface ConstraintForeignKeyReferencesStepN {
 
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
+     */
+    ConstraintForeignKeyOnStep references(Name table, Collection<? extends Name> fields);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
      * implicitly referencing the primary key.
      */
     ConstraintForeignKeyOnStep references(Table<?> table);
@@ -82,4 +95,10 @@ public interface ConstraintForeignKeyReferencesStepN {
      * referencing a key by column names.
      */
     ConstraintForeignKeyOnStep references(Table<?> table, Field<?>... fields);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
+     * referencing a key by column names.
+     */
+    ConstraintForeignKeyOnStep references(Table<?> table, Collection<? extends Field<?>> fields);
 }

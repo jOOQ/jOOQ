@@ -4226,7 +4226,11 @@ public class JavaGenerator extends AbstractGenerator {
             else if (kotlin)
                 out.println("o.%s", getStrategy().getJavaMemberName(keyColumns.get(0), Mode.POJO));
             else
-                out.println("return object.%s();", getStrategy().getJavaGetterName(keyColumns.get(0), Mode.POJO));
+                out.println("return object.%s();",
+                    generatePojosAsJavaRecordClasses()
+                    ? getStrategy().getJavaMemberName(keyColumns.get(0), Mode.POJO)
+                    : getStrategy().getJavaGetterName(keyColumns.get(0), Mode.POJO)
+                );
         }
 
         // [#2574] This should be replaced by a call to a method on the target table's Key type

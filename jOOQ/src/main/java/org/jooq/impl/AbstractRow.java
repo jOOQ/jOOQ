@@ -43,7 +43,6 @@ import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
 
 import java.util.Collection;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -99,52 +98,67 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public Converter<?, R> getConverter() {
+    public final Field<R> as(String alias) {
+        return rf().as(alias);
+    }
+
+    @Override
+    public final Field<R> as(Name alias) {
+        return rf().as(alias);
+    }
+
+    @Override
+    public final Field<R> as(Field<?> otherField) {
+        return rf().as(otherField);
+    }
+
+    @Override
+    public final Converter<?, R> getConverter() {
         return rf().getConverter();
     }
 
     @Override
-    public Binding<?, R> getBinding() {
+    public final Binding<?, R> getBinding() {
         return rf().getBinding();
     }
 
     @Override
-    public Class<R> getType() {
+    public final Class<R> getType() {
         return rf().getType();
     }
 
     @Override
-    public DataType<R> getDataType() {
+    public final DataType<R> getDataType() {
         return rf().getDataType();
     }
 
     @Override
-    public DataType<R> getDataType(Configuration configuration) {
+    public final DataType<R> getDataType(Configuration configuration) {
         return rf().getDataType(configuration);
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return rf().getName();
     }
 
     @Override
-    public Name getQualifiedName() {
+    public final Name getQualifiedName() {
         return rf().getQualifiedName();
     }
 
     @Override
-    public Name getUnqualifiedName() {
+    public final Name getUnqualifiedName() {
         return rf().getUnqualifiedName();
     }
 
     @Override
-    public String getComment() {
+    public final String getComment() {
         return rf().getComment();
     }
 
     @Override
-    public Comment getCommentPart() {
+    public final Comment getCommentPart() {
         return rf().getCommentPart();
     }
 

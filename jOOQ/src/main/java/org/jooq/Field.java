@@ -243,48 +243,6 @@ extends
     <U> Field<U> convertTo(Class<U> toType, Function<? super U, ? extends T> to);
 
     /**
-     * Create an alias for this field.
-     * <p>
-     * Note that the case-sensitivity of the returned field depends on
-     * {@link Settings#getRenderQuotedNames()}. By default, field aliases are
-     * quoted, and thus case-sensitive in many SQL dialects!
-     *
-     * @param alias The alias name
-     * @return The field alias
-     */
-    @NotNull
-    @Support
-    Field<T> as(String alias);
-
-    /**
-     * Create an alias for this field.
-     * <p>
-     * Note that the case-sensitivity of the returned field depends on
-     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
-     * field aliases are quoted, and thus case-sensitive in many SQL dialects -
-     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
-     * <p>
-     * If the argument {@link Name#getName()} is qualified, then the
-     * {@link Name#last()} part will be used.
-     *
-     * @param alias The alias name
-     * @return The field alias
-     */
-    @NotNull
-    @Support
-    Field<T> as(Name alias);
-
-    /**
-     * Create an alias for this field based on another field's name.
-     *
-     * @param otherField The other field whose name this field is aliased with.
-     * @return The field alias.
-     */
-    @NotNull
-    @Support
-    Field<T> as(Field<?> otherField);
-
-    /**
      * The name of the field.
      * <p>
      * The name is any of these:

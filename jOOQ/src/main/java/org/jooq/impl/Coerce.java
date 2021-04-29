@@ -37,9 +37,11 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 
 /**
  * @author Lukas Eder
@@ -49,18 +51,68 @@ final class Coerce<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -6776617606751542856L;
+    private static final long      serialVersionUID = -6776617606751542856L;
 
-    private final Field<?>    field;
+    private final AbstractField<?> field;
 
     public Coerce(Field<?> field, DataType<T> type) {
         super(field.getQualifiedName(), type);
 
-        this.field = (field instanceof Coerce) ? ((Coerce<?>) field).field : field;
+        this.field = (field instanceof Coerce) ? ((Coerce<?>) field).field : (AbstractField<?>) field;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(field);
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return field.clauses(ctx);
+    }
+
+    @Override
+    boolean isPossiblyNullable() {
+        return field.isPossiblyNullable();
+    }
+
+    @Override
+    public final Field<T> as(Name alias) {
+        return field.as(alias).coerce(getDataType());
+    }
+
+    @Override
+    public final boolean rendersContent(Context<?> ctx) {
+        return field.rendersContent(ctx);
+    }
+
+    @Override
+    public final boolean declaresFields() {
+        return field.declaresFields();
+    }
+
+    @Override
+    public final boolean declaresTables() {
+        return field.declaresTables();
+    }
+
+    @Override
+    public final boolean declaresWindows() {
+        return field.declaresWindows();
+    }
+
+    @Override
+    public final boolean declaresCTE() {
+        return field.declaresCTE();
+    }
+
+    @Override
+    public final boolean declaresParameters() {
+        return field.declaresParameters();
+    }
+
+    @Override
+    public final boolean generatesCast() {
+        return field.generatesCast();
     }
 }

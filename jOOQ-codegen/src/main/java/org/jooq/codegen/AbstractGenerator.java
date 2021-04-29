@@ -598,7 +598,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateImmutableInterfaces() {
-        return generateImmutableInterfaces || (generateInterfaces && generateImmutablePojos);
+        return generateImmutableInterfaces || (generateInterfaces && (generateImmutablePojos || generatePojosAsJavaRecordClasses));
     }
 
     @Override

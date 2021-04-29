@@ -4550,22 +4550,25 @@ public class JavaGenerator extends AbstractGenerator {
         if (!generateImmutablePojos() && !generatePojosAsJavaRecordClasses())
             generatePojoDefaultConstructor(tableUdtOrEmbeddable, out);
 
-        if (!kotlin && !generatePojosAsJavaRecordClasses()) {
+        if (!kotlin) {
+            if (!generatePojosAsJavaRecordClasses()) {
 
-            // [#1363] [#7055] copy constructor
-            generatePojoCopyConstructor(tableUdtOrEmbeddable, out);
+                // [#1363] [#7055] copy constructor
+                generatePojoCopyConstructor(tableUdtOrEmbeddable, out);
 
-            // Multi-constructor
-            generatePojoMultiConstructor(tableUdtOrEmbeddable, out);
+                // Multi-constructor
+                generatePojoMultiConstructor(tableUdtOrEmbeddable, out);
+            }
 
             List<? extends TypedElementDefinition<?>> elements = getTypedElements(tableUdtOrEmbeddable);
             for (int i = 0; i < elements.size(); i++) {
                 TypedElementDefinition<?> column = elements.get(i);
 
-                if (tableUdtOrEmbeddable instanceof TableDefinition)
-                    generatePojoGetter(column, i, out);
-                else
-                    generateUDTPojoGetter(column, i, out);
+                if (!generatePojosAsJavaRecordClasses() || generateInterfaces())
+                    if (tableUdtOrEmbeddable instanceof TableDefinition)
+                        generatePojoGetter(column, i, out);
+                    else
+                        generateUDTPojoGetter(column, i, out);
 
                 // Setter
                 if (!generateImmutablePojos())

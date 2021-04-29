@@ -11726,7 +11726,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(DataType<T> type) {
-        return new SQLField<>(type, K_DEFAULT);
+        return new Default<T>(type);
     }
 
     /**
@@ -11736,7 +11736,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(Field<T> field) {
-        return new SQLField<>(field.getDataType(), K_DEFAULT);
+        return default_(field.getDataType());
     }
 
     /**

@@ -132,6 +132,7 @@ final class Names {
     static final Name      N_DAYS_BETWEEN           = unquotedName("days_between");
     static final Name      N_DB_NAME                = unquotedName("db_name");
     static final Name      N_DECODE                 = unquotedName("decode");
+    static final Name      N_DEFAULT                = unquotedName("default");
     static final Name      N_DEGREES                = unquotedName("degrees");
     static final Name      N_DELETING               = unquotedName("deleting");
     static final Name      N_DIGITS                 = unquotedName("digits");

@@ -1771,7 +1771,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Field<?>[] fields = null;
 
         if (parseIf('(')) {
-            fields = parseList(',', c -> parseFieldName()).toArray(EMPTY_FIELD);
+            fields = parseList(',', c -> parseField()).toArray(EMPTY_FIELD);
             parse(')');
         }
 
@@ -1779,11 +1779,23 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         InsertReturningStep<?> returning;
 
         try {
-            if (parseKeywordIf("VALUES")) {
+            // [#11821] The Teradata INSERT INTO t (1, 2) syntax can be recognised:
+            //          When there are non-references fields
+            boolean hasExpressions = anyMatch(fields, f -> !(f instanceof TableField));
+
+            if (hasExpressions || parseKeywordIf("VALUES")) {
                 List<List<Field<?>>> allValues = new ArrayList<>();
+
+                if (hasExpressions) {
+                    allValues.add(asList(fields));
+                    fields = null;
+                }
 
                 valuesLoop:
                 do {
+                    if (hasExpressions && !parseIf(','))
+                        break valuesLoop;
+
                     parse('(');
 
                     // [#6936] MySQL treats an empty VALUES() clause as the same thing as the standard DEFAULT VALUES
@@ -7255,6 +7267,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 if ((field = parseFieldDecodeIf()) != null)
                     return field;
+                else if (parseKeywordIf("DEFAULT"))
+                    return default_();
 
                 break;
 

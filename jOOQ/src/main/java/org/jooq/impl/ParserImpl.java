@@ -265,6 +265,7 @@ import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Sequence;
 import org.jooq.SortField;
@@ -6602,7 +6603,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             else {
                 Name alias = null;
-                Field<?> field = null;
+                SelectField<?> field = null;
 
 
 
@@ -6618,7 +6619,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 if (field == null) {
-                    field = parseField();
+                    field = parseSelectField();
 
                     if (parseKeywordIf("AS"))
                         alias = parseIdentifier(true);
@@ -6670,6 +6671,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     @Override
     public final Field<?> parseField() {
         return parseField(null);
+    }
+
+    private final SelectField<?> parseSelectField() {
+        return (SelectField<?>) parseFieldOrRow();
     }
 
     private final FieldOrRow parseFieldOrRow() {

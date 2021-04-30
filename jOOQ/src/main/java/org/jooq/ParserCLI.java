@@ -113,14 +113,14 @@ public final class ParserCLI {
             settings.setTransformRownum(a.transformRownum);
     }
 
-    private static <E extends Enum<E>> E parseInteractive(Class<E> type, E current, Args a, String arg) {
+    private static final <E extends Enum<E>> E parseInteractive(Class<E> type, E current, String arg, Runnable onSuccess) {
         E result = current;
 
         try {
             if (arg != null)
                 result = Enum.valueOf(type, arg.toUpperCase());
 
-            displayKeywords(a);
+            onSuccess.run();
         }
         catch (IllegalArgumentException e) {
             invalid(arg, type);
@@ -167,16 +167,16 @@ public final class ParserCLI {
                                 displayFormatted(a);
                             }
                             else if ("k".equals(flag) || "keyword".equals(flag)) {
-                                a.keywords = parseInteractive(RenderKeywordCase.class, a.keywords, a, arg);
+                                a.keywords = parseInteractive(RenderKeywordCase.class, a.keywords, arg, () -> displayKeywords(a));
                             }
                             else if ("i".equals(flag) || "identifier".equals(flag)) {
-                                a.name = parseInteractive(RenderNameCase.class, a.name, a, arg);
+                                a.name = parseInteractive(RenderNameCase.class, a.name, arg, () -> displayIdentifiers(a));
                             }
                             else if ("Q".equals(flag) || "quoted".equals(flag)) {
-                                a.quoted = parseInteractive(RenderQuotedNames.class, a.quoted, a, arg);
+                                a.quoted = parseInteractive(RenderQuotedNames.class, a.quoted, arg, () -> displayQuoted(a));
                             }
                             else if ("F".equals(flag) || "from-dialect".equals(flag)) {
-                                a.fromDialect = parseInteractive(SQLDialect.class, a.fromDialect, a, arg);
+                                a.fromDialect = parseInteractive(SQLDialect.class, a.fromDialect, arg, () -> displayFromDialect(a));
                             }
                             else if ("render-coalesce-to-empty-string-in-concat".equals(flag)) {
                                 if (arg != null)
@@ -191,10 +191,10 @@ public final class ParserCLI {
                                 displayTransformAnsiJoinToTablesLists(a);
                             }
                             else if ("transform-qualify".equals(flag)) {
-                                a.transformQualify = parseInteractive(Transformation.class, a.transformQualify, a, arg);
+                                a.transformQualify = parseInteractive(Transformation.class, a.transformQualify, arg, () -> displayTransformQualify(a));
                             }
                             else if ("transform-rownum".equals(flag)) {
-                                a.transformRownum = parseInteractive(Transformation.class, a.transformRownum, a, arg);
+                                a.transformRownum = parseInteractive(Transformation.class, a.transformRownum, arg, () -> displayTransformRownum(a));
                             }
                             else if ("transform-table-lists-to-ansi-join".equals(flag)) {
                                 if (arg != null)
@@ -203,12 +203,12 @@ public final class ParserCLI {
                                 displayTransformTableListsToAnsiJoin(a);
                             }
                             else if ("transform-unneeded-arithmetic".equals(flag)) {
-                                a.transformUnneededArithmetic = parseInteractive(TransformUnneededArithmeticExpressions.class, a.transformUnneededArithmetic, a, arg);
+                                a.transformUnneededArithmetic = parseInteractive(TransformUnneededArithmeticExpressions.class, a.transformUnneededArithmetic, arg, () -> displayTransformUnneededArithmetic(a));
                             }
 
                             // [#9144] /t maintained for backwards compatibility
                             else if ("t".equals(flag) || "T".equals(flag) || "to-dialect".equals(flag)) {
-                                a.toDialect = parseInteractive(SQLDialect.class, a.toDialect, a, arg);
+                                a.toDialect = parseInteractive(SQLDialect.class, a.toDialect, arg, () -> displayToDialect(a));
                             }
                         }
                     }

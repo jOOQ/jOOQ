@@ -47,9 +47,11 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function2;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record2;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row2;
@@ -74,6 +76,20 @@ final class RowImpl2<T1, T2> extends AbstractRow<Record2<T1, T2>> implements Row
 
     RowImpl2(FieldsImpl<?> fields) {
         super((FieldsImpl) fields);
+    }
+
+    // ------------------------------------------------------------------------
+    // Mapping convenience methods
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final <U> Field<U> mapping(Function2<? super T1, ? super T2, ? extends U> function) {
+        return rf().convertFrom(Records.mapping(function));
+    }
+
+    @Override
+    public final <U> Field<U> mapping(Class<U> uType, Function2<? super T1, ? super T2, ? extends U> function) {
+        return rf().convertFrom(uType, Records.mapping(function));
     }
 
     // ------------------------------------------------------------------------

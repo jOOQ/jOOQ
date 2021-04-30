@@ -47,9 +47,11 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Function13;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record13;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row13;
@@ -74,6 +76,20 @@ final class RowImpl13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ex
 
     RowImpl13(FieldsImpl<?> fields) {
         super((FieldsImpl) fields);
+    }
+
+    // ------------------------------------------------------------------------
+    // Mapping convenience methods
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final <U> Field<U> mapping(Function13<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? extends U> function) {
+        return rf().convertFrom(Records.mapping(function));
+    }
+
+    @Override
+    public final <U> Field<U> mapping(Class<U> uType, Function13<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? extends U> function) {
+        return rf().convertFrom(uType, Records.mapping(function));
     }
 
     // ------------------------------------------------------------------------

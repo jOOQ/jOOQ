@@ -93,10 +93,24 @@ public interface Row3<T1, T2, T3> extends Row, SelectField<Record3<T1, T2, T3>> 
      * A convenience method to define a local {@link Record3} to custom type
      * {@link RecordMapper} that can be used when projecting {@link Row} types in
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * EXPERIMENTAL. Unlike {@link #mapping(Class, Function3)}, this method
+     * attempts to work without an explicit {@link Class} reference for the underlying
+     * {@link Converter#toType()}. There may be some edge cases where this doesn't
+     * work. Please report any bugs here:
+     * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
      */
-    default <U> Field<U> mapping(Class<U> uType, Function3<? super T1, ? super T2, ? super T3, ? extends U> function) {
-        return convertFrom(uType, Records.mapping(function));
-    }
+    @NotNull
+    @Internal
+    <U> Field<U> mapping(Function3<? super T1, ? super T2, ? super T3, ? extends U> function);
+
+    /**
+     * A convenience method to define a local {@link Record3} to custom type
+     * {@link RecordMapper} that can be used when projecting {@link Row} types in
+     * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     */
+    @NotNull
+    <U> Field<U> mapping(Class<U> uType, Function3<? super T1, ? super T2, ? super T3, ? extends U> function);
 
     // ------------------------------------------------------------------------
     // Field accessors

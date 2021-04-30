@@ -73,8 +73,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
+import org.jooq.Converters.UnknownType;
 import org.jooq.exception.DataTypeException;
-import org.jooq.exception.MappingException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
@@ -221,6 +221,24 @@ public interface DataType<T> extends Named {
     }
 
     /**
+     * Convenience method for converting this type to a read-only type using
+     * {@link Converter#from(Class, Class, Function)}.
+     * <p>
+     * EXPERIMENTAL. Unlike {@link #asConvertedDataTypeFrom(Class, Function)},
+     * this method attempts to work without an explicit {@link Class} reference
+     * for the underlying {@link Converter#toType()}. There may be some edge
+     * cases where this doesn't work. Please report any bugs here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
+     */
+    @SuppressWarnings("unchecked")
+    @NotNull
+    default <U> DataType<U> asConvertedDataTypeFrom(
+        Function<? super T, ? extends U> from
+    ) {
+        return asConvertedDataType(Converter.from(getType(), (Class<U>) UnknownType.class, from));
+    }
+
+    /**
      * Convenience method for converting this type to a write-only type using
      * {@link Converter#to(Class, Class, Function)}.
      */
@@ -230,6 +248,24 @@ public interface DataType<T> extends Named {
         Function<? super U, ? extends T> to
     ) {
         return asConvertedDataType(Converter.to(getType(), toType, to));
+    }
+
+    /**
+     * Convenience method for converting this type to a write-only type using
+     * {@link Converter#to(Class, Class, Function)}.
+     * <p>
+     * EXPERIMENTAL. Unlike {@link #asConvertedDataTypeTo(Class, Function)},
+     * this method attempts to work without an explicit {@link Class} reference
+     * for the underlying {@link Converter#toType()}. There may be some edge
+     * cases where this doesn't work. Please report any bugs here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
+     */
+    @SuppressWarnings("unchecked")
+    @NotNull
+    default <U> DataType<U> asConvertedDataTypeTo(
+        Function<? super U, ? extends T> to
+    ) {
+        return asConvertedDataType(Converter.to(getType(), (Class<U>) UnknownType.class, to));
     }
 
     /**

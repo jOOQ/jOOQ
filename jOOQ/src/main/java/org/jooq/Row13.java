@@ -93,10 +93,24 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * A convenience method to define a local {@link Record13} to custom type
      * {@link RecordMapper} that can be used when projecting {@link Row} types in
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     * <p>
+     * EXPERIMENTAL. Unlike {@link #mapping(Class, Function13)}, this method
+     * attempts to work without an explicit {@link Class} reference for the underlying
+     * {@link Converter#toType()}. There may be some edge cases where this doesn't
+     * work. Please report any bugs here:
+     * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
      */
-    default <U> Field<U> mapping(Class<U> uType, Function13<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? extends U> function) {
-        return convertFrom(uType, Records.mapping(function));
-    }
+    @NotNull
+    @Internal
+    <U> Field<U> mapping(Function13<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? extends U> function);
+
+    /**
+     * A convenience method to define a local {@link Record13} to custom type
+     * {@link RecordMapper} that can be used when projecting {@link Row} types in
+     * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     */
+    @NotNull
+    <U> Field<U> mapping(Class<U> uType, Function13<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? extends U> function);
 
     // ------------------------------------------------------------------------
     // Field accessors

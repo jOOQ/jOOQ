@@ -48,6 +48,7 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.RowN;

@@ -211,8 +211,18 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
+    public final <U> Field<U> convertFrom(Function<? super T, ? extends U> from) {
+        return coerce(getDataType().asConvertedDataTypeFrom(from));
+    }
+
+    @Override
     public final <U> Field<U> convertTo(Class<U> toType, Function<? super U, ? extends T> to) {
         return coerce(getDataType().asConvertedDataTypeTo(toType, to));
+    }
+
+    @Override
+    public final <U> Field<U> convertTo(Function<? super U, ? extends T> to) {
+        return coerce(getDataType().asConvertedDataTypeTo(to));
     }
 
     @Override

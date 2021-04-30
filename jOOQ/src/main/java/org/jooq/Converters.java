@@ -228,8 +228,14 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
     }
 
     static final <T, U> Function<T, U> notImplemented() {
-        return t -> {
-            throw new DataTypeException("Conversion function not implemented");
-        };
+        return t -> { throw new DataTypeException("Conversion function not implemented"); };
     }
+
+    /**
+     * An unknown type that is used when users do not provide any explicit user
+     * type {@link Class} reference e.g. in
+     * {@link DataType#asConvertedDataTypeFrom(Function)} or
+     * {@link DataType#asConvertedDataTypeTo(Function)}
+     */
+    static final class UnknownType {}
 }

@@ -5162,13 +5162,13 @@ final class Tools {
     static final SelectFieldOrAsterisk qualify(Table<?> table, SelectFieldOrAsterisk field) {
         if (field instanceof Field)
             return qualify(table, (Field<?>) field);
-        // [#11812] TODO: handle field instanceof Row
         else if (field instanceof Asterisk)
             return table.asterisk();
         else if (field instanceof QualifiedAsterisk)
             return table.asterisk();
+        // [#11812] TODO: handle field instanceof Row
         else
-            throw new IllegalArgumentException("Unsupported field : " + field);
+            throw new UnsupportedOperationException("Unsupported field : " + field);
     }
 
     static final <T> Field<T> qualify(Table<?> table, Field<T> field) {
@@ -5387,7 +5387,7 @@ final class Tools {
 
     static final Row embeddedFieldsRow(Row row) {
         if (hasEmbeddedFields(row.fields()))
-            return row(map(flattenCollection(Arrays.asList(row.fields()), false), f -> f));
+            return row(map(flattenCollection(Arrays.asList(row.fields()), false, false), f -> f));
         else
             return row;
     }
@@ -5400,7 +5400,7 @@ final class Tools {
         // [#8353] [#10522] [#10523] TODO: Factor out some of this logic and
         // reuse it for the emulation of UPDATE .. SET row = (SELECT ..)
         List<Field<?>> select = field.query.getSelect();
-        List<Field<?>> result = collect(flattenCollection(select, false));
+        List<Field<?>> result = collect(flattenCollection(select, false, false));
         Name tableName = name("t");
         Name[] fieldNames = fieldNames(result.size());
         Table<?> t = new AliasedSelect<>(field.query, true, fieldNames).as("t");
@@ -5449,12 +5449,7 @@ final class Tools {
 
         // [#11729] Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572873
         Iterator<E> it2 = field.getDataType().isEmbeddable()
-            ? new FlatteningIterator<E>(it1) {
-                @Override
-                List<E> flatten(E e) {
-                    return (List<E>) Arrays.asList(embeddedFields(field));
-                }
-            }
+            ? new FlatteningIterator<E>(it1, (e, duplicates) -> (List<E>) Arrays.asList(embeddedFields(field)))
             : it1;
 
         return () -> it2;
@@ -5464,20 +5459,13 @@ final class Tools {
      * Flatten out {@link EmbeddableTableField} elements contained in an
      * ordinary iterable.
      */
-    static final <E extends Field<?>> Iterable<E> flattenCollection(
-        final Iterable<E> iterable,
-        final boolean removeDuplicates
+    static final Iterable<Field<?>> flattenCollection(
+        final Iterable<? extends Field<?>> iterable,
+        final boolean removeDuplicates,
+        final boolean flattenRowFields
     ) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-        // [#11729] Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572873
-        Iterator<E> it = new FlatteningIterator<E>(iterable.iterator()) {
-
-
-
-
-            @SuppressWarnings("unchecked")
-            @Override
-            Iterable<E> flatten(E e) {
+        return () -> new FlatteningIterator<>(iterable.iterator(), (e, duplicates) -> {
 
 
 
@@ -5490,11 +5478,20 @@ final class Tools {
 
 
 
-                return Tools.flatten(e);
+
+            // TODO [#10525] Should embedded records be emulated as RowField?
+            if (flattenRowFields && e instanceof RowField) {
+                List<Field<?>> result = new ArrayList<>();
+
+                for (Field<?> field : ((RowField<?, ?>) e).row().fields())
+                    if (duplicates.test(field))
+                        result.add(field);
+
+                return result;
             }
-        };
 
-        return () -> it;
+            return Tools.flatten(e);
+        });
     }
 
     /**
@@ -5502,41 +5499,31 @@ final class Tools {
      * set iterable, making sure no duplicate keys resulting from overlapping
      * embeddables will be produced.
      */
-    static final <E extends Entry<Field<?>, Field<?>>> Iterable<E> flattenEntrySet(
-        final Iterable<E> iterable,
+    static final Iterable<Entry<Field<?>, Field<?>>> flattenEntrySet(
+        final Iterable<Entry<Field<?>, Field<?>>> iterable,
         final boolean removeDuplicates
     ) {
         // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
         // [#11729] Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=572873
-        Iterator<E> it = new FlatteningIterator<E>(iterable.iterator()) {
+        return () -> new FlatteningIterator<>(iterable.iterator(), (e, duplicates) -> {
+            if (e.getKey() instanceof EmbeddableTableField) {
+                List<Entry<Field<?>, Field<?>>> result = new ArrayList<>();
+                Field<?>[] keys = embeddedFields(e.getKey());
+                Field<?>[] values = embeddedFields(e.getValue());
+
+                for (int i = 0; i < keys.length; i++)
 
 
 
+                        result.add(new SimpleImmutableEntry<Field<?>, Field<?>>(
+                            keys[i], values[i]
+                        ));
 
-            @SuppressWarnings("unchecked")
-            @Override
-            List<E> flatten(E e) {
-                if (e.getKey() instanceof EmbeddableTableField) {
-                    List<E> result = new ArrayList<>();
-                    Field<?>[] keys = embeddedFields(e.getKey());
-                    Field<?>[] values = embeddedFields(e.getValue());
-
-                    for (int i = 0; i < keys.length; i++)
-
-
-
-                            result.add((E) new SimpleImmutableEntry<Field<?>, Field<?>>(
-                                keys[i], values[i]
-                            ));
-
-                    return result;
-                }
-
-                return null;
+                return result;
             }
-        };
 
-        return () -> it;
+            return null;
+        });
     }
 
     static final <T> Set<T> lazy(Set<T> set) {
@@ -5548,16 +5535,19 @@ final class Tools {
      * iterators with a default implementation for {@link Iterator#remove()} for
      * convenience in the Java 6 build.
      */
-    static abstract class FlatteningIterator<E> implements Iterator<E> {
-        private final Iterator<E> delegate;
-        private Iterator<E>       flatten;
-        private E                 next;
+    static final class FlatteningIterator<E> implements Iterator<E> {
+        private final Iterator<? extends E>                                           delegate;
+        private final BiFunction<? super E, Predicate<Object>, ? extends Iterable<E>> flattener;
+        private final Predicate<Object>                                               checkDuplicates;
+        private Iterator<E>                                                           flatten;
+        private E                                                                     next;
+        private Set<Object>                                                           duplicates;
 
-        FlatteningIterator(Iterator<E> delegate) {
+        FlatteningIterator(Iterator<? extends E> delegate, BiFunction<? super E, Predicate<Object>, ? extends Iterable<E>> flattener) {
             this.delegate = delegate;
+            this.flattener = flattener;
+            this.checkDuplicates = e -> (duplicates = lazy(duplicates)).add(e);
         }
-
-        abstract Iterable<E> flatten(E e);
 
         private final void move() {
             if (next == null) {
@@ -5574,7 +5564,7 @@ final class Tools {
                 if (delegate.hasNext()) {
                     next = delegate.next();
 
-                    Iterable<E> flattened = flatten(next);
+                    Iterable<E> flattened = flattener.apply(next, checkDuplicates);
                     if (flattened == null)
                         return;
 

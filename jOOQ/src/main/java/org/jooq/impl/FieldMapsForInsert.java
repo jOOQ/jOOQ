@@ -518,7 +518,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         }
 
         // [#989] Avoid qualifying fields in INSERT field declaration
-        ctx.sql(" (").visit(new QueryPartCollectionView<>(collect(flattenCollection(values.keySet(), true))).qualify(false)).sql(')');
+        ctx.sql(" (").visit(new QueryPartCollectionView<>(collect(flattenCollection(values.keySet(), true, true))).qualify(false)).sql(')');
     }
 
     final Map<Field<?>, List<Field<?>>> valuesFlattened() {

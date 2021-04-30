@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.impl.RowField.NO_NATIVE_SUPPORT;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.embeddedRecordType;
 import static org.jooq.impl.Tools.recordFactory;
@@ -1517,10 +1518,9 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     AbstractRow<?> nested = null;
                     Class<? extends AbstractRecord> recordType = null;
 
-                    if (field instanceof RowField) {
+                    if (field instanceof RowField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
                         nested = ((RowField<?, ?>) field).emulatedFields();
-                        // TODO: [#4695] Calculate the correct Record[B] type
-                        recordType = RecordImplN.class;
+                        recordType = Tools.recordType(nested.size());
                     }
                     else if (field.getDataType().isEmbeddable()) {
                         nested = Tools.row0(embeddedFields(field));

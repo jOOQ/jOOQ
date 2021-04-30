@@ -37,12 +37,43 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Converter.fromNullable;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.pgNewRecord;
+import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
+
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -50,6 +81,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -59,7 +91,9 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     /**
      * Generated UID
      */
-    private static final long      serialVersionUID = -2065258332642911588L;
+    private static final long      serialVersionUID  = -2065258332642911588L;
+
+    static final Set<SQLDialect>   NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     private final ROW              row;
     private final AbstractRow<REC> emulatedFields;
@@ -68,22 +102,12 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
         this(row, N_ROW);
     }
 
-    @SuppressWarnings({ "serial", "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     RowField(final ROW row, Name as) {
-        super(as, (DataType) SQLDataType.RECORD, CommentImpl.NO_COMMENT, binding(new AbstractConverter<Object, REC>(
-                Object.class, (Class<REC>) Tools.recordType(row.size())
-        ) {
-            @Override
-            public REC from(final Object t) {
-                // So far, this is only supported for PostgreSQL
-                return (REC) (t == null ? null : pgNewRecord(Record.class, (AbstractRow) row, t));
-            }
-
-            @Override
-            public Object to(REC u) {
-                throw new UnsupportedOperationException("Converting from nested records to bind values is not yet supported");
-            }
-        }));
+        super(as, (DataType) SQLDataType.RECORD, CommentImpl.NO_COMMENT, binding(fromNullable(
+            // So far, this is only supported for PostgreSQL
+            Object.class, (Class<REC>) Tools.recordType(row.size()), t -> (REC) pgNewRecord(Record.class, (AbstractRow) row, t)
+        )));
 
         this.row = row;
         this.emulatedFields = (AbstractRow<REC>) row0(map(row.fields(), x -> x.as(as + "." + x.getName()), Field[]::new));
@@ -93,10 +117,25 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
         return emulatedFields;
     }
 
+    ROW row() {
+        return row;
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
-        if (ctx.declareFields())
-            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields.fields.fields)));
+        if (ctx.declareFields()) {
+            if (NO_NATIVE_SUPPORT.contains(ctx.dialect()))
+                ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields.fields.fields)));
+
+
+
+
+
+            // [#11812] RowField is mainly used for projections, in case of which an
+            //          explicit ROW keyword helps disambiguate (1) from ROW(1)
+            else
+                ctx.visit(K_ROW).sql(' ').visit(row);
+        }
         else
             ctx.visit(row);
     }

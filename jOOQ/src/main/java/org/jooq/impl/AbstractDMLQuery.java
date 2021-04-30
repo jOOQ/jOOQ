@@ -141,6 +141,7 @@ import org.jooq.Param;
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
@@ -236,8 +237,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 returningResolvedAsterisks.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
             else if (f instanceof Asterisk)
                 returningResolvedAsterisks.addAll(Arrays.asList(table.fields()));
+            else if (f instanceof Row)
+                returningResolvedAsterisks.add(new RowField<>((Row) f));
             else
-                throw new AssertionError("Type not supported: " + f);
+                throw new UnsupportedOperationException("Type not supported: " + f);
     }
 
     // @Override
@@ -914,7 +917,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                         // PostgreSQL generated case-insensitive Fields (default to lower case)
                         // and wants to query HSQLDB (default to upper case), they may choose
                         // to overwrite casing using RenderNameCase.
-                        ctx.statement(connection.prepareStatement(ctx.sql(), map(Tools.flattenCollection(returningResolvedAsterisks, false),
+                        ctx.statement(connection.prepareStatement(ctx.sql(), map(flattenCollection(returningResolvedAsterisks, false, true),
                               style == RenderNameCase.UPPER
                             ? f -> f.getName().toUpperCase(renderLocale(configuration().settings()))
                             : style == RenderNameCase.LOWER

@@ -228,6 +228,8 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
     }
 
     static final <T, U> Function<T, U> notImplemented() {
-        return t -> { throw new DataTypeException("Conversion function not implemented"); };
+        return t -> {
+            throw new DataTypeException("Conversion function not implemented");
+        };
     }
 }

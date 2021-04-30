@@ -54,6 +54,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.Statement;
 
 /**
@@ -67,8 +68,8 @@ final class RowImpl3<T1, T2, T3> extends AbstractRow<Record3<T1, T2, T3>> implem
      */
     private static final long serialVersionUID = -929427349071556318L;
 
-    RowImpl3(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
-        super(t1, t2, t3);
+    RowImpl3(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
+        super(field1, field2, field3);
     }
 
     RowImpl3(FieldsImpl<?> fields) {

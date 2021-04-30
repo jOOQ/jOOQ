@@ -86,6 +86,19 @@ import org.jetbrains.annotations.NotNull;
 public interface Row4<T1, T2, T3, T4> extends Row, SelectField<Record4<T1, T2, T3, T4>> {
 
     // ------------------------------------------------------------------------
+    // Mapping convenience methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * A convenience method to define a local {@link Record4} to custom type
+     * {@link RecordMapper} that can be used when projecting {@link Row} types in
+     * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     */
+    default <U> Field<U> mapping(Class<U> uType, Function4<? super T1, ? super T2, ? super T3, ? super T4, ? extends U> function) {
+        return convertFrom(uType, Records.mapping(function));
+    }
+
+    // ------------------------------------------------------------------------
     // Field accessors
     // ------------------------------------------------------------------------
 

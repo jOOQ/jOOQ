@@ -37,9 +37,7 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An intermediate DSL type for the construction of a <code>BETWEEN</code>

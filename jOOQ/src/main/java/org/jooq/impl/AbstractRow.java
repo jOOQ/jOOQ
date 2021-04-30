@@ -76,11 +76,11 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
 
     final FieldsImpl<R>           fields;
 
-    AbstractRow(Field<?>... fields) {
+    AbstractRow(SelectField<?>... fields) {
         this(new FieldsImpl<>(fields));
     }
 
-    AbstractRow(Collection<? extends Field<?>> fields) {
+    AbstractRow(Collection<? extends SelectField<?>> fields) {
         this(new FieldsImpl<>(fields));
     }
 

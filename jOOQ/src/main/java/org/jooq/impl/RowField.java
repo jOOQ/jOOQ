@@ -123,21 +123,17 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ctx.declareFields()) {
-            if (NO_NATIVE_SUPPORT.contains(ctx.dialect()))
-                ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields.fields.fields)));
+        if (ctx.declareFields() && NO_NATIVE_SUPPORT.contains(ctx.dialect()))
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields.fields.fields)));
 
 
 
 
 
-            // [#11812] RowField is mainly used for projections, in case of which an
-            //          explicit ROW keyword helps disambiguate (1) from ROW(1)
-            else
-                ctx.visit(K_ROW).sql(' ').visit(row);
-        }
+        // [#11812] RowField is mainly used for projections, in case of which an
+        //          explicit ROW keyword helps disambiguate (1) from ROW(1)
         else
-            ctx.visit(row);
+            ctx.visit(K_ROW).sql(' ').visit(row);
     }
 
     @Override

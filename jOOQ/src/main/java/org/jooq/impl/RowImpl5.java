@@ -54,6 +54,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row5;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.Statement;
 
 /**
@@ -67,8 +68,8 @@ final class RowImpl5<T1, T2, T3, T4, T5> extends AbstractRow<Record5<T1, T2, T3,
      */
     private static final long serialVersionUID = -929427349071556318L;
 
-    RowImpl5(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
-        super(t1, t2, t3, t4, t5);
+    RowImpl5(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) {
+        super(field1, field2, field3, field4, field5);
     }
 
     RowImpl5(FieldsImpl<?> fields) {

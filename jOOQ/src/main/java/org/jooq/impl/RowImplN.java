@@ -52,6 +52,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.RowN;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.Statement;
 
 /**
@@ -64,11 +65,11 @@ final class RowImplN extends AbstractRow<Record> implements RowN {
      */
     private static final long serialVersionUID = -929427349071556318L;
 
-    RowImplN(Field<?>... values) {
-        super(values);
+    RowImplN(SelectField<?>... fields) {
+        super(fields);
     }
 
-    RowImplN(Collection<? extends Field<?>> fields) {
+    RowImplN(Collection<? extends SelectField<?>> fields) {
         super(fields);
     }
 

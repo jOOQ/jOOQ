@@ -86,6 +86,19 @@ import org.jetbrains.annotations.NotNull;
 public interface Row1<T1> extends Row, SelectField<Record1<T1>> {
 
     // ------------------------------------------------------------------------
+    // Mapping convenience methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * A convenience method to define a local {@link Record1} to custom type
+     * {@link RecordMapper} that can be used when projecting {@link Row} types in
+     * <code>SELECT</code> or <code>RETURNING</code> clauses.
+     */
+    default <U> Field<U> mapping(Class<U> uType, Function1<? super T1, ? extends U> function) {
+        return convertFrom(uType, Records.mapping(function));
+    }
+
+    // ------------------------------------------------------------------------
     // Field accessors
     // ------------------------------------------------------------------------
 

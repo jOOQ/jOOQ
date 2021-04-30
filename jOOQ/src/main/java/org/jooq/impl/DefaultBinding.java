@@ -3631,7 +3631,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             else if (EnumType.class.isAssignableFrom(type))
                 return (T) DefaultEnumTypeBinding.getEnumType((Class<EnumType>) type, string);
-            else if (Record.class.isAssignableFrom(type))
+            else if (Record.class.isAssignableFrom(type) && !InternalRecord.class.isAssignableFrom(type))
                 return (T) pgNewRecord(type, null, string);
             else if (type == Object.class)
                 return (T) string;

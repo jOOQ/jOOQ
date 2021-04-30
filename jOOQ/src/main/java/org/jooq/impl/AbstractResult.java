@@ -61,6 +61,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.xml.bind.DatatypeConverter;
@@ -84,6 +85,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONFormat;
 import org.jooq.Name;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.Result;
@@ -1487,7 +1489,14 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             formatted += ((EnumType) value).getLiteral();
         }
         else if (value instanceof Record) {
-            formatted += ((Record) value).valuesRow().toString();
+            formatted += Arrays
+                .stream(((Record) value).valuesRow().fields())
+                .map(f -> format0(f, false, visual))
+                .collect(Collectors.joining(", ", "(", ")"));
+        }
+        // [#6080] Support formatting of nested ROWs
+        else if (value instanceof Param) {
+            formatted += format0(((Param<?>) value).getValue(), false, visual);
         }
 
         // [#5238] Oracle DATE is really a TIMESTAMP(0)...

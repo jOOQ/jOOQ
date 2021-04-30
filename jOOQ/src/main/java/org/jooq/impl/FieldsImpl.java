@@ -57,11 +57,11 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.Row;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.tools.JooqLogger;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple wrapper for <code>Field[]</code>, providing some useful lookup
@@ -75,12 +75,16 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     private static final JooqLogger log              = JooqLogger.getLogger(FieldsImpl.class);
     Field<?>[]                      fields;
 
-    FieldsImpl(Field<?>... fields) {
-        this.fields = fields;
+    FieldsImpl(SelectField<?>... fields) {
+        this.fields = Tools.map(fields, toField(), Field<?>[]::new);
     }
 
-    FieldsImpl(Collection<? extends Field<?>> fields) {
-        this.fields = fields.toArray(EMPTY_FIELD);
+    FieldsImpl(Collection<? extends SelectField<?>> fields) {
+        this.fields = Tools.map(fields, toField(), Field<?>[]::new);
+    }
+
+    private static final ThrowingFunction<SelectField<?>, Field<?>, RuntimeException> toField() {
+        return f -> f instanceof Row ? new RowField<>((Row) f) : (Field<?>) f;
     }
 
     @Override

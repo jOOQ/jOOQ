@@ -54,11 +54,6 @@ import org.jooq.ExecuteListener;
  */
 public final class CallbackExecuteListener implements ExecuteListener {
 
-    /**
-     * Generated UID
-     */
-    private static final long         serialVersionUID = -4135358887698253754L;
-
     private final ExecuteEventHandler onStart;
     private final ExecuteEventHandler onEnd;
     private final ExecuteEventHandler onRenderStart;

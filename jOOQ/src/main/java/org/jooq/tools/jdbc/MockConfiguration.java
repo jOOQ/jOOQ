@@ -83,13 +83,7 @@ import io.r2dbc.spi.ConnectionFactory;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public class MockConfiguration extends AbstractConfiguration {
-
-    /**
-     * Generated UID
-     */
-    private static final long      serialVersionUID = 2600901130544049995L;
 
     private final Configuration    delegate;
     private final MockDataProvider provider;

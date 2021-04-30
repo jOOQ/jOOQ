@@ -77,8 +77,6 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  */
 abstract class AbstractMeta extends AbstractScope implements Meta, Serializable {
 
-    private static final long                 serialVersionUID = 910484713008245977L;
-
     // [#9010] TODO: Allow for opting out of this cache
     private Map<Name, Catalog>                cachedCatalogs;
     private Map<Name, Schema>                 cachedQualifiedSchemas;

@@ -38,7 +38,6 @@
 
 package org.jooq.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -48,7 +47,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -58,10 +56,8 @@ import org.jooq.UniqueKey;
  */
 final class TableAlias<R extends Record> extends AbstractTable<R> {
 
-    private static final long serialVersionUID = -8417114874567698325L;
-
-    final Alias<Table<R>>     alias;
-    final FieldsImpl<R>       aliasedFields;
+    final Alias<Table<R>> alias;
+    final FieldsImpl<R>   aliasedFields;
 
     TableAlias(Table<R> table, Name alias) {
         this(table, alias, null, c -> false);

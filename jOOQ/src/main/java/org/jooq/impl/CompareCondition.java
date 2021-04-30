@@ -106,7 +106,6 @@ import org.jooq.conf.ParamType;
  */
 final class CompareCondition extends AbstractCondition implements LikeEscapeStep {
 
-    private static final long            serialVersionUID      = -747240442279619486L;
     private static final Clause[]        CLAUSES               = { CONDITION, CONDITION_COMPARISON };
     private static final Set<SQLDialect> REQUIRES_CAST_ON_LIKE = SQLDialect.supportedBy(DERBY, POSTGRES);
     private static final Set<SQLDialect> NO_SUPPORT_ILIKE      = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);

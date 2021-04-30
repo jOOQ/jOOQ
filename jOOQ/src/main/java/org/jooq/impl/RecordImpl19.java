@@ -54,11 +54,6 @@ import org.jooq.Record19;
 @SuppressWarnings({ "unchecked" })
 final class RecordImpl19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> extends AbstractRecord implements InternalRecord, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -2201346180421463830L;
-
     RecordImpl19(AbstractRow<?> row) {
         super(row);
     }

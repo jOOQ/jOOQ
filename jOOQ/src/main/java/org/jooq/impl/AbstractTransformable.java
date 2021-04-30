@@ -47,11 +47,6 @@ import org.jooq.impl.Tools.DataExtendedKey;
 
 abstract class AbstractTransformable<T> extends AbstractField<T> implements Transformable<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -8997030984376104110L;
-
     AbstractTransformable(Name name, DataType<T> type) {
         super(name, type);
     }

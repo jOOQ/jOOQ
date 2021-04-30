@@ -59,7 +59,6 @@ final class DropTypeImpl extends AbstractDDLQuery implements
     // Cascading interface implementations for CREATE TYPE behaviour
     DropTypeStep {
 
-    private static final long         serialVersionUID = -5018375056147329888L;
     private final QueryPartList<Name> type;
     private final boolean             ifExists;
     private boolean                   cascade;

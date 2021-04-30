@@ -54,9 +54,7 @@ import org.jooq.TableOptions;
  */
 class DerivedTable<R extends Record> extends AbstractTable<R> {
 
-    private static final long serialVersionUID = 6272398035926615668L;
-
-    private final Select<R>   query;
+    private final Select<R> query;
 
     DerivedTable(Select<R> query) {
         super(TableOptions.expression(), N_SELECT);

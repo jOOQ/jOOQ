@@ -97,11 +97,6 @@ final class DeleteImpl<R extends Record>
     // Cascading interface implementations for Delete behaviour
     DeleteUsingStep<R>,
     DeleteConditionStep<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 2747566322757517382L;
     private boolean           returningResult;
 
     DeleteImpl(Configuration configuration, WithImpl with, Table<R> table) {

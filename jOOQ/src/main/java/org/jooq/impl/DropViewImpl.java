@@ -68,8 +68,6 @@ implements
     DropViewFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Table<?> view;
     private final boolean  dropViewIfExists;
 

@@ -55,11 +55,6 @@ import org.jooq.Record;
  */
 final class SQLResultQuery extends AbstractResultQuery<Record> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1740879770879469220L;
-
     private final QueryPart   delegate;
 
     SQLResultQuery(Configuration configuration, QueryPart delegate) {

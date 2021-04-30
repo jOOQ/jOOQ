@@ -49,11 +49,6 @@ import org.jooq.TableOptions;
  * @author Lukas Eder
  */
 final class Lateral<R extends Record> extends AbstractTable<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -3665347156501299297L;
     private final Table<R>    table;
 
     Lateral(Table<R> table) {

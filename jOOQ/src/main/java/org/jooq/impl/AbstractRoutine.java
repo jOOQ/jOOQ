@@ -153,11 +153,6 @@ import org.jooq.tools.reflect.Reflect;
  */
 @org.jooq.Internal
 public abstract class AbstractRoutine<T> extends AbstractNamed implements Routine<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                 serialVersionUID                   = 6330037113167106443L;
     private static final Clause[]             CLAUSES                            = { FIELD, FIELD_FUNCTION };
 
 
@@ -1720,11 +1715,6 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
      */
     private class RoutineField extends AbstractField<T> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -5730297947647252624L;
-
         @SuppressWarnings("unchecked")
         RoutineField() {
             super(AbstractRoutine.this.getQualifiedName(),
@@ -1736,11 +1726,6 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                   ? (DataType<T>) SQLDataType.RESULT
                   : AbstractRoutine.this.type);
         }
-
-
-
-
-
 
 
 

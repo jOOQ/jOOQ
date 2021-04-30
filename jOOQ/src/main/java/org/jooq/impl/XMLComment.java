@@ -66,8 +66,6 @@ extends
     AbstractField<XML>
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Field<String> comment;
 
     Xmlcomment(

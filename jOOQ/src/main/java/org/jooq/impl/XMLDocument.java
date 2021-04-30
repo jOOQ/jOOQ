@@ -48,11 +48,6 @@ import org.jooq.XML;
  */
 final class XMLDocument extends AbstractField<XML> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 4505809303211506197L;
-
     private final Field<XML>  content;
 
     XMLDocument(Field<XML> content) {

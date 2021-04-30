@@ -60,8 +60,7 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  */
 final class TableMetaImpl extends AbstractMeta {
 
-    private static final long serialVersionUID = 2910000827304539796L;
-    private final Table<?>[]  tables;
+    private final Table<?>[] tables;
 
     TableMetaImpl(Configuration configuration, Table<?>[] tables) {
         super(configuration);

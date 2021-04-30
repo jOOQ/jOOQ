@@ -80,14 +80,10 @@ import org.jooq.tools.StringUtils;
  */
 public final class YearToSecond extends Number implements Interval, Comparable<YearToSecond> {
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = 6051372712676019640L;
-    private static final Pattern PATTERN          = Pattern.compile("^([+-])?(\\d+)-(\\d+) ([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
+    private static final Pattern PATTERN = Pattern.compile("^([+-])?(\\d+)-(\\d+) ([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
 
-    private final YearToMonth yearToMonth;
-    private final DayToSecond dayToSecond;
+    private final YearToMonth    yearToMonth;
+    private final DayToSecond    dayToSecond;
 
     public YearToSecond(YearToMonth yearToMonth, DayToSecond dayToSecond) {
         this.yearToMonth = yearToMonth == null ? new YearToMonth() : yearToMonth;

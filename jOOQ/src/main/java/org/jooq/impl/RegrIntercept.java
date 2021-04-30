@@ -67,8 +67,6 @@ extends
     DefaultAggregateFunction<BigDecimal>
 {
 
-    private static final long serialVersionUID = 1L;
-
     RegrIntercept(
         Field<? extends Number> y,
         Field<? extends Number> x

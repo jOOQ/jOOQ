@@ -51,8 +51,7 @@ import org.jooq.Field;
 
 final class NotField extends AbstractField<Boolean> {
 
-    private static final long     serialVersionUID = 2921001862882237932L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_NOT };
+    private static final Clause[] CLAUSES = { CONDITION, CONDITION_NOT };
 
     private final Field<Boolean>  field;
 

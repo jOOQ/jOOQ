@@ -56,11 +56,6 @@ import org.jooq.TransactionListenerProvider;
 public class DefaultTransactionListenerProvider implements TransactionListenerProvider, Serializable {
 
     /**
-     * Generated UID.
-     */
-    private static final long     serialVersionUID = -2122007794302549679L;
-
-    /**
      * The delegate listener.
      */
     private final TransactionListener listener;

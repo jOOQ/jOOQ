@@ -63,7 +63,6 @@ import org.jooq.tools.StringUtils;
  */
 final class Val<T> extends AbstractParam<T> {
 
-    private static final long                                serialVersionUID = 6807729087019209084L;
     private static final JooqLogger                          log              = JooqLogger.getLogger(Val.class);
     private static final ConcurrentHashMap<Class<?>, Object> legacyWarnings   = new ConcurrentHashMap<>();
 

@@ -47,9 +47,7 @@ import org.jooq.TableOptions;
  */
 final class SQLTable extends AbstractTable<Record> {
 
-    private static final long serialVersionUID = -5122023013463718796L;
-
-    private final QueryPart   delegate;
+    private final QueryPart delegate;
 
     SQLTable(QueryPart delegate) {
         super(TableOptions.expression(), DSL.name(delegate.toString()));

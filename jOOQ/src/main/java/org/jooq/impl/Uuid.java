@@ -67,8 +67,6 @@ extends
     AbstractField<UUID>
 {
 
-    private static final long serialVersionUID = 1L;
-
     Uuid() {
         super(
             N_UUID,

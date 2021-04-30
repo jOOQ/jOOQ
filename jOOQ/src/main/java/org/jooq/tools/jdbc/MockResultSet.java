@@ -83,11 +83,6 @@ import org.jooq.tools.StringUtils;
  */
 public class MockResultSet extends JDBC41ResultSet implements ResultSet, Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = -2292216936424437750L;
-
     private final int               maxRows;
     Result<?>                       result;
     private final int               size;
@@ -198,7 +193,6 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         return cal.getTimeInMillis();
     }
 
-    @SuppressWarnings("deprecation")
     private Timestamp withTZ(Timestamp timestamp, Calendar cal) {
         if (timestamp == null)
             return null;
@@ -218,7 +212,6 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         return r;
     }
 
-    @SuppressWarnings("deprecation")
     private Time withTZ(Time time, Calendar cal) {
         if (time == null)
             return null;
@@ -231,7 +224,6 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         return new Time(getMillis(cal, 1970, 0, 1, hour, minute, second, millis));
     }
 
-    @SuppressWarnings("deprecation")
     private Date withTZ(Date date, Calendar cal) {
         if (date == null)
             return null;

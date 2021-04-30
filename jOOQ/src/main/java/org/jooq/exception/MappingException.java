@@ -63,11 +63,6 @@ import org.jooq.ResultQuery;
 public class MappingException extends DataAccessException {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6460945824599280420L;
-
-    /**
      * Constructor for MappingException.
      *
      * @param message the detail message

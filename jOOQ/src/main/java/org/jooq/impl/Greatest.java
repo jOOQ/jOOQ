@@ -50,11 +50,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class Greatest<T> extends AbstractField<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
     private final Field<?>[]  args;
 
     Greatest(DataType<T> type, Field<?>... args) {

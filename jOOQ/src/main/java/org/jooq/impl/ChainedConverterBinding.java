@@ -57,11 +57,6 @@ import org.jooq.Converters;
  */
 class ChainedConverterBinding<T, U1, U2> implements Binding<T, U2> {
 
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = -5120352678786683423L;
-
     private final Binding<T, U1>    delegate;
     private final Converter<U1, U2> suffix;
     private final Converter<T, U2>  chained;

@@ -97,11 +97,6 @@ import org.jooq.types.UNumber;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID               = 4155588654449505119L;
     static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
     AbstractDataType(Name name, Comment comment) {

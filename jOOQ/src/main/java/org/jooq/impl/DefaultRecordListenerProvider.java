@@ -56,11 +56,6 @@ import org.jooq.RecordListenerProvider;
 public class DefaultRecordListenerProvider implements RecordListenerProvider, Serializable {
 
     /**
-     * Generated UID.
-     */
-    private static final long    serialVersionUID = -2122007794302549679L;
-
-    /**
      * The delegate list.
      */
     private final RecordListener listener;

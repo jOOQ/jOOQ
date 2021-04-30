@@ -57,7 +57,6 @@ import org.jooq.Select;
  */
 final class ScalarSubquery<T> extends AbstractField<T> {
 
-    private static final long    serialVersionUID                   = 3463144434073231750L;
     static final Set<SQLDialect> NO_SUPPORT_WITH_IN_SCALAR_SUBQUERY = SQLDialect.supportedBy(HSQLDB);
     final Select<?>              query;
 

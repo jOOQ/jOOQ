@@ -61,11 +61,6 @@ import org.jooq.UDT;
  */
 abstract class AbstractQualifiedRecord<R extends QualifiedRecord<R>> extends AbstractRecord implements QualifiedRecord<R> {
 
-    /**
-     * Generated UID
-     */
-
-    private static final long        serialVersionUID = 6031695690614716816L;
     private final RecordQualifier<R> qualifier;
 
     public AbstractQualifiedRecord(RecordQualifier<R> qualifier) {

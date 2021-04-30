@@ -69,8 +69,6 @@ import org.jooq.Statement;
  */
 final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T> {
 
-    private static final long serialVersionUID = -5277225593751085577L;
-
     private final ParamMode   paramMode;
     private final boolean     isDefaulted;
     private final boolean     isUnnamed;

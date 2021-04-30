@@ -50,11 +50,6 @@ import org.jooq.Field;
  */
 final class NullIf<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 409629290052619844L;
-
     private final Field<T>    arg1;
     private final Field<T>    arg2;
 

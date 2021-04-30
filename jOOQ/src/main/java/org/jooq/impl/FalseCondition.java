@@ -51,9 +51,8 @@ import org.jooq.False;
  */
 final class FalseCondition extends AbstractCondition implements False {
 
-    private static final long     serialVersionUID = -3972466479081463547L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
-    static final FalseCondition   INSTANCE         = new FalseCondition();
+    private static final Clause[] CLAUSES  = { CONDITION, CONDITION_COMPARISON };
+    static final FalseCondition   INSTANCE = new FalseCondition();
 
     @Override
     final boolean isNullable() {

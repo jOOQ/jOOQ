@@ -47,11 +47,6 @@ import org.jooq.Name;
  */
 final class Intern implements Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 6455756912567274014L;
-
     // Some temp variables for String interning
     int[]      internIndexes;
     Field<?>[] internFields;

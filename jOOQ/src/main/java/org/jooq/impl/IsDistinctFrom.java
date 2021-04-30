@@ -83,11 +83,6 @@ import org.jooq.SQLDialect;
  */
 final class IsDistinctFrom<T> extends AbstractCondition {
 
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID            = 4568269684824736461L;
     private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CUBRID, DERBY);
     private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 

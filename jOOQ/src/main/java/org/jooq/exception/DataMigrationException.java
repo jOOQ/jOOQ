@@ -47,11 +47,6 @@ import org.jooq.Migration;
 public class DataMigrationException extends DataAccessException {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6460945824599280420L;
-
-    /**
      * Constructor for DataMigrationException.
      *
      * @param message the detail message

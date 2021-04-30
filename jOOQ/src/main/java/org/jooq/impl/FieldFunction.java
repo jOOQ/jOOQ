@@ -55,11 +55,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class FieldFunction<T> extends AbstractField<Integer> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                 serialVersionUID = 2328293840567996891L;
     private final QueryPartListView<Field<?>> arguments;
 
     FieldFunction(Field<T> field, Field<T>[] arguments) {

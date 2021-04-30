@@ -123,11 +123,7 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractTable<R extends Record> extends AbstractNamed implements Table<R> {
 
-    /**
-     * Generated UID
-     */
     private static final JooqLogger  log              = JooqLogger.getLogger(AbstractTable.class);
-    private static final long        serialVersionUID = 3155496238969274871L;
     private static final Clause[]    CLAUSES          = { TABLE };
 
     private final TableOptions       options;

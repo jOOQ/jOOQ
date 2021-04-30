@@ -51,11 +51,6 @@ import org.jooq.Table;
  */
 final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 162853300137140844L;
-
     final Table<R>            table;
     final Condition           condition;
     final boolean             enforced;

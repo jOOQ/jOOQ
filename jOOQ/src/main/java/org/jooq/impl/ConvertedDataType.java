@@ -55,11 +55,6 @@ import org.jooq.SQLDialect;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
-    /**
-     * Generated UID
-     */
-    private static final long           serialVersionUID = -2321926692580974126L;
-
     private final AbstractDataTypeX<T>  delegate;
     private final Binding<? super T, U> binding;
 

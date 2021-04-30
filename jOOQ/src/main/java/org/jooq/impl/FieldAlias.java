@@ -48,7 +48,6 @@ import org.jooq.Name;
  */
 final class FieldAlias<T> extends AbstractField<T> {
 
-    private static final long     serialVersionUID = -85277321749681553L;
     private final Alias<Field<T>> alias;
 
     FieldAlias(Field<T> field, Name alias) {

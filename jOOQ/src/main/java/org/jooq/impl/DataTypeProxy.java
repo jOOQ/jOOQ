@@ -57,11 +57,6 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 final class DataTypeProxy<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -5283787691586689803L;
     private AbstractDataType<T> type;
     private final Integer       overridePrecision;
     private final Integer       overrideScale;

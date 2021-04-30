@@ -103,11 +103,6 @@ implements
     WindowRowsAndStep<T>,
     WindowExcludeStep<T>
 {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID                            = 2524547974085497171L;
     private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE          = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE);
 
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB);

@@ -52,7 +52,6 @@ import org.jooq.Table;
  */
 final class QualifiedAsteriskImpl extends AbstractQueryPart implements QualifiedAsterisk {
 
-    private static final long     serialVersionUID = 4509166418833560865L;
     private final Table<?>        table;
     final QueryPartList<Field<?>> fields;
 

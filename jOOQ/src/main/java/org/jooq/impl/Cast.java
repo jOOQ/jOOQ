@@ -70,11 +70,6 @@ import org.jooq.RenderContext.CastMode;
  */
 final class Cast<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6776617606751542856L;
-
     private final Field<?>    field;
 
     public Cast(Field<?> field, DataType<T> type) {
@@ -179,22 +174,7 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
-
-
-
-
-
-
-
-
-
-
     private final class CastDerby extends CastNative<T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -8737153188122391258L;
 
         CastDerby() {
             super(field, Cast.this.getDataType());
@@ -314,22 +294,7 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
-
-
-
-
-
-
-
-
-
-
     static class CastNative<T> extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -8497561014419483312L;
         private final QueryPart   expression;
         private final DataType<T> type;
         private final Keyword     typeAsKeyword;

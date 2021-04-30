@@ -68,11 +68,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class CurrentTimestamp<T> extends AbstractField<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID     = -7273879239726265322L;
     private static final Set<SQLDialect> NO_SUPPORT_PRECISION = SQLDialect.supportedBy(CUBRID, DERBY, SQLITE);
 
     private final Field<Integer>         precision;

@@ -71,11 +71,6 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class DefaultConverterProvider implements ConverterProvider, Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 2937225066265868374L;
-
     @Nullable
     @Override
     public final <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
@@ -114,11 +109,6 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
             || Struct.class.isAssignableFrom(tWrapper) && QualifiedRecord.class.isAssignableFrom(uWrapper)
         ) {
             return new AbstractConverter<T, U>(tType, uType) {
-
-                /**
-                 * Generated UID.
-                 */
-                private static final long serialVersionUID = 8011099590775678430L;
 
                 @Override
                 public U from(T t) {

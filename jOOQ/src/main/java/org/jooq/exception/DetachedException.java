@@ -50,11 +50,6 @@ import org.jooq.UpdatableRecord;
 public class DetachedException extends DataAccessException {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6460945824599280420L;
-
-    /**
      * Constructor for DetachedException.
      *
      * @param message the detail message

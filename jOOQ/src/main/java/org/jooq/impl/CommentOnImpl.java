@@ -69,8 +69,6 @@ implements
     CommentOnFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Table<?> table;
     private final boolean  isView;
     private final Field<?> field;

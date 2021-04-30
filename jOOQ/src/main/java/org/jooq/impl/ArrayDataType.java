@@ -51,11 +51,6 @@ import org.jooq.Nullability;
  */
 final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 7883229760246533448L;
-
     final DataType<T>         elementType;
 
     public ArrayDataType(DataType<T> elementType) {

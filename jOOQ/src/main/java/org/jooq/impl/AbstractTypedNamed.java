@@ -51,7 +51,6 @@ import org.jooq.Typed;
  */
 abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
 
-    private static final long serialVersionUID = 4569512766643813958L;
     private final DataType<T> type;
 
     AbstractTypedNamed(Name name, Comment comment, DataType<T> type) {

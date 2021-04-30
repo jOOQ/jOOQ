@@ -166,11 +166,6 @@ implements
 
     WithStep
 {
-
-    /**
-     * Generated UID
-     */
-    private static final long                                               serialVersionUID     = -1813359431778402705L;
     private static final Clause[]                                           CLAUSES              = { WITH };
 
 

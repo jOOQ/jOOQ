@@ -58,11 +58,6 @@ import org.jooq.types.UNumber;
 public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
 
     /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -6859273409631070434L;
-
-    /**
      * The result set reference.
      */
     private final MockResultSet rs;

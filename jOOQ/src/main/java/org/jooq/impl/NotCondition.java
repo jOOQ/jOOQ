@@ -47,8 +47,7 @@ import org.jooq.Context;
 
 final class NotCondition extends AbstractCondition {
 
-    private static final long     serialVersionUID = 2921001862882237932L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_NOT };
+    private static final Clause[] CLAUSES = { CONDITION, CONDITION_NOT };
 
     final Condition               condition;
 

@@ -88,11 +88,6 @@ import org.jooq.tools.JooqLogger;
  */
 @org.jooq.Internal
 public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualifiedRecord<R> implements TableRecord<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID       = 3216746611562261641L;
     private static final JooqLogger      log                    = JooqLogger.getLogger(TableRecordImpl.class);
     private static final Set<SQLDialect> REFRESH_GENERATED_KEYS = SQLDialect.supportedBy(DERBY, H2, MARIADB, MYSQL);
 

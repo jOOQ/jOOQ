@@ -48,11 +48,6 @@ import org.jooq.Field;
  */
 final class RegexpReplace extends AbstractField<String> {
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -1659917024582732223L;
-
     private final Field<String> field;
     private final Field<String> pattern;
     private final Field<String> replacement;

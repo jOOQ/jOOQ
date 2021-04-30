@@ -105,11 +105,6 @@ import org.jooq.impl.Tools.BooleanDataKey;
  * @author Lukas Eder
  */
 final class RowSubqueryCondition extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID                           = -1806139685201770706L;
     private static final Clause[]        CLAUSES                                    = { CONDITION, CONDITION_COMPARISON };
     private static final Set<SQLDialect> SUPPORT_NATIVE                             = SQLDialect.supportedBy(H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED                      = SQLDialect.supportedBy(DERBY, FIREBIRD, SQLITE);
@@ -231,11 +226,6 @@ final class RowSubqueryCondition extends AbstractCondition {
     }
 
     private class Native extends AbstractCondition {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -1552476981094856727L;
 
         @Override
         public final void accept(Context<?> ctx) {

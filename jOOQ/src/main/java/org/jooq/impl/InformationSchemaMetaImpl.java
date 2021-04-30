@@ -81,10 +81,6 @@ import org.jooq.util.xml.jaxb.TableConstraint;
  */
 final class InformationSchemaMetaImpl extends AbstractMeta {
 
-    private static final long                                   serialVersionUID = -1623783405104005307L;
-
-    private final InformationSchema                             source;
-
     private final List<Catalog>                                 catalogs;
     private final Map<Name, Catalog>                            catalogsByName;
     private final List<Schema>                                  schemas;
@@ -106,7 +102,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     InformationSchemaMetaImpl(Configuration configuration, InformationSchema source) {
         super(configuration);
 
-        this.source = source;
         this.catalogs = new ArrayList<>();
         this.catalogsByName = new HashMap<>();
         this.schemas = new ArrayList<>();
@@ -592,11 +587,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
     private final class InformationSchemaCatalog extends CatalogImpl {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 87038321849045492L;
-
         InformationSchemaCatalog(String name, String comment) {
             super(name, comment);
         }
@@ -608,11 +598,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     }
 
     private final class InformationSchemaSchema extends SchemaImpl {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 7290709749127378187L;
 
         InformationSchemaSchema(String name, Catalog catalog, String comment) {
             super(name, catalog, comment);
@@ -635,11 +620,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     }
 
     private static final class InformationSchemaTable extends TableImpl<Record> {
-
-        /**
-         * Generated UID
-         */
-        private static final long              serialVersionUID = 4314110578549768267L;
 
         UniqueKey<Record>                      primaryKey;
         final List<UniqueKey<Record>>          uniqueKeys       = new ArrayList<>();
@@ -679,22 +659,12 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
     private static final class InformationSchemaDomain<T> extends DomainImpl<T> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -6334830117626566343L;
-
         InformationSchemaDomain(Schema schema, Name name, DataType<T> type, Check<?>[] checks) {
             super(schema, name, type, checks);
         }
     }
 
     private static final class InformationSchemaSequence<N extends Number> extends SequenceImpl<N> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -1246697252597049756L;
 
         InformationSchemaSequence(String name, Schema schema, DataType<N> type, Number startWith, Number incrementBy, Number minvalue, Number maxvalue, Boolean cycle, Number cache) {
             super(DSL.name(name),

@@ -60,11 +60,6 @@ import org.jooq.Field;
 
 final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V, T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = -3817194006479624228L;
-
     private final Field<V>       value;
     private final List<Field<V>> compareValues;
     private final List<Field<T>> results;

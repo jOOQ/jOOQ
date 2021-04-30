@@ -511,11 +511,6 @@ public final class Convert {
      */
     private static class ConvertAll<U> implements Converter<Object, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long        serialVersionUID = 2508560107067092501L;
-
         private final Class<? extends U> toClass;
 
         ConvertAll(Class<? extends U> toClass) {

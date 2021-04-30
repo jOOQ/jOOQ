@@ -61,11 +61,6 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class Converters<T, U> extends AbstractConverter<T, U> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -4307758248063822630L;
-
     final Converter[] chain;
 
     /**
@@ -135,11 +130,6 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
         else
             return new AbstractConverter<U, T>(converter.toType(), converter.fromType()) {
 
-                /**
-                 * Generated UID
-                 */
-                private static final long serialVersionUID = -4307758248063822630L;
-
                 @Override
                 public T from(U u) {
                     return converter.to(u);
@@ -160,11 +150,7 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
     public static <T, U> Converter<T[], U[]> forArrays(final Converter<T, U> converter) {
         return new AbstractConverter<T[], U[]>(arrayType(converter.fromType()), arrayType(converter.toType())) {
 
-            /**
-             * Generated UID
-             */
-            private static final long     serialVersionUID = -4307758248063822630L;
-            private final Converter<U, T> inverse          = Converters.inverse(converter);
+            private final Converter<U, T> inverse = Converters.inverse(converter);
 
             @Override
             public U[] from(T[] t) {

@@ -62,11 +62,6 @@ import org.jooq.Select;
  */
 final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseConditionStep<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = -1735676153683257465L;
-
     private final List<Condition> conditions;
     private final List<Field<T>>  results;
     private Field<T>              else_;
@@ -193,17 +188,7 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
 
 
 
-
-
-
-
-
     private class Native extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 7850713333675233736L;
 
         @Override
         public final void accept(Context<?> ctx) {

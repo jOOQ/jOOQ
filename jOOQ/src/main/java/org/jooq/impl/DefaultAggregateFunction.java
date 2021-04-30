@@ -59,8 +59,6 @@ import org.jooq.Name;
  */
 class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
 
-    private static final long serialVersionUID = 347252741712134044L;
-
     // -------------------------------------------------------------------------
     // XXX Constructors
     // -------------------------------------------------------------------------

@@ -52,11 +52,6 @@ import org.jooq.Nullability;
  */
 abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 4155588654449505119L;
-
     AbstractDataTypeX(Name name, Comment comment) {
         super(name, comment);
     }

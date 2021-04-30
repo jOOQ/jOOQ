@@ -45,11 +45,6 @@ import org.jooq.QueryPart;
 import org.jooq.SQL;
 
 final class SQLConcatenationImpl extends AbstractQueryPart implements SQL {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = -7514156096865122018L;
     private static final Clause[] CLAUSES          = { TEMPLATE };
     private final QueryPart[]     input;
 

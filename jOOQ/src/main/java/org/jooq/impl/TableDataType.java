@@ -46,11 +46,6 @@ import org.jooq.Table;
  */
 final class TableDataType<R extends Record> extends DefaultDataType<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 3262508265391094581L;
-
     @SuppressWarnings("unchecked")
     TableDataType(Table<R> table) {
         super(SQLDialect.DEFAULT, (Class<R>) table.getRecordType(), Tools.asString(table.getQualifiedName()));

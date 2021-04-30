@@ -108,7 +108,6 @@ import org.jooq.conf.RenderOptionalKeyword;
  */
 final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
-    private static final long            serialVersionUID                      = -2456848365524191614L;
     private static final Clause[]        CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
     private static final Clause[]        CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };

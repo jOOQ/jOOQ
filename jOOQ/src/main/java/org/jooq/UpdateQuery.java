@@ -72,7 +72,6 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The record type of the table being updated
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionProvider, Update<R> {
 
 

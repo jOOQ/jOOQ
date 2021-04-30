@@ -71,8 +71,6 @@ implements
     CreateDomainFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Domain<?>                        domain;
     private final boolean                          createDomainIfNotExists;
     private       DataType<T>                      dataType;

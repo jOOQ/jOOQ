@@ -51,11 +51,6 @@ import org.jooq.Context;
  */
 final class CommonTableExpressionList extends QueryPartList<CommonTableExpression<?>> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 4284724883554582081L;
-
     @Override
     public void accept(Context<?> ctx) {
         markTopLevelCteAndAccept(ctx, c -> super.accept(c));

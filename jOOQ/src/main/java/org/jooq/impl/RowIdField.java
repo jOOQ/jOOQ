@@ -47,11 +47,6 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 final class RowIdField extends AbstractField<RowId> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1514220224208896376L;
     private final Table<?>    table;
 
     RowIdField(Table<?> table) {

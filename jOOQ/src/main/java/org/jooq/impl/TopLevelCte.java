@@ -48,11 +48,6 @@ import org.jooq.impl.ScopeMarker.ScopeContent;
  */
 final class TopLevelCte extends QueryPartList<QueryPart> implements ScopeContent {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 9211135511038680791L;
-
     @Override
     public void accept(Context<?> ctx) {
         markTopLevelCteAndAccept(ctx, c -> super.accept(c));

@@ -53,11 +53,6 @@ import org.reactivestreams.Subscriber;
  * @author Lukas Eder
  */
 abstract class AbstractBatch implements Batch {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 5898924458502836002L;
     final Configuration       configuration;
     final DSLContext          dsl;
 

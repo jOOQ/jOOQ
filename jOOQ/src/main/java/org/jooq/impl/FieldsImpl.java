@@ -71,7 +71,6 @@ import org.jooq.tools.JooqLogger;
  */
 final class FieldsImpl<R extends Record> extends AbstractQueryPart implements RecordType<R> {
 
-    private static final long       serialVersionUID = -6911012275707591576L;
     private static final JooqLogger log              = JooqLogger.getLogger(FieldsImpl.class);
     Field<?>[]                      fields;
 

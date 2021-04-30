@@ -84,11 +84,6 @@ import org.jooq.SQLDialect;
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 final class RowCondition extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID  = -1806139685201770706L;
     private static final Clause[]        CLAUSES           = { CONDITION, CONDITION_COMPARISON };
     private static final Set<SQLDialect> EMULATE_EQ_AND_NE = SQLDialect.supportedBy(DERBY, FIREBIRD);
     private static final Set<SQLDialect> EMULATE_RANGES    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
@@ -199,11 +194,6 @@ final class RowCondition extends AbstractCondition {
     }
 
     private class Native extends AbstractCondition {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -2977241780111574353L;
 
         @Override
         public final void accept(Context<?> ctx) {

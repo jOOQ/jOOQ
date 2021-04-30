@@ -50,9 +50,8 @@ import org.jooq.Field;
  */
 final class CollatedField extends AbstractField<String> {
 
-    private static final long serialVersionUID = -3996395622492844215L;
-    private final Field<?>    field;
-    private final Collation   collation;
+    private final Field<?>  field;
+    private final Collation collation;
 
     CollatedField(Field<?> field, Collation collation) {
         super(field.getQualifiedName(), type(field), field.getCommentPart(), binding(field));

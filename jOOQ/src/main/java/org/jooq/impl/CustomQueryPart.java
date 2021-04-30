@@ -71,11 +71,6 @@ import org.jooq.QueryPart;
  * @author Lukas Eder
  */
 public abstract class CustomQueryPart extends AbstractQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = -3439681086987884991L;
     private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomQueryPart() {
@@ -84,7 +79,6 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
     /**
      * Create a {@link CustomQueryPart} from a lambda expression.
      */
-    @SuppressWarnings("serial")
     public static final CustomQueryPart of(Consumer<? super Context<?>> consumer) {
         return new CustomQueryPart() {
             @Override

@@ -46,11 +46,6 @@ import org.jooq.UniqueKey;
  */
 final class CountTable extends DefaultAggregateFunction<Integer> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 7292087943334025737L;
-
     private final Table<?>    table;
 
     CountTable(Table<?> table, boolean distinct) {

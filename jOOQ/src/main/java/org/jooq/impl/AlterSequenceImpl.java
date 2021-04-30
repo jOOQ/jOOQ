@@ -70,8 +70,6 @@ implements
     AlterSequenceFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Sequence<T> sequence;
     private final boolean     alterSequenceIfExists;
     private       Sequence<?> renameTo;

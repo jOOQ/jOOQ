@@ -57,11 +57,6 @@ import org.jooq.WindowSpecificationRowsStep;
  */
 final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition {
 
-    /**
-     * Generated UID
-     */
-    private static final long         serialVersionUID = -7779419148766154430L;
-
     private final Name                name;
     private final WindowSpecification window;
 

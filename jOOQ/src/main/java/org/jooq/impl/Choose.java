@@ -54,9 +54,8 @@ import org.jooq.Field;
  */
 final class Choose<T> extends AbstractField<T> {
 
-    private static final long serialVersionUID = 4861196545079661438L;
-    private Field<Integer>    index;
-    private Field<T>[]        values;
+    private Field<Integer> index;
+    private Field<T>[]     values;
 
     Choose(Field<Integer> index, Field<T>[] values) {
         super(N_CHOOSE, dataType(values));

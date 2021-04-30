@@ -71,8 +71,6 @@ implements
     AlterDomainFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Domain<T>  domain;
     private final boolean    alterDomainIfExists;
     private       Constraint addConstraint;

@@ -85,11 +85,6 @@ extends AbstractTable<Record>
 implements
     XMLTablePassingStep,
     XMLTableColumnPathStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long                   serialVersionUID = -4881363881968319258L;
     private final Field<String>                 xpath;
     private final Field<XML>                    passing;
     private final XMLPassingMechanism           passingMechanism;
@@ -308,11 +303,6 @@ implements
     }
 
     private static class XMLTableColumn extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 783627375014050176L;
 
         final Field<?>            field;
         final DataType<?>         type;

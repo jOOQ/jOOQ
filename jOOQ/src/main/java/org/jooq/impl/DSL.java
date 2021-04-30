@@ -478,7 +478,7 @@ import io.r2dbc.spi.ConnectionFactory;
  * @see DSLContext
  * @author Lukas Eder
  */
-@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class DSL {
 
     // -------------------------------------------------------------------------
@@ -25225,7 +25225,6 @@ public class DSL {
      *
      * @see #val(Object)
      */
-    @SuppressWarnings("deprecation")
     @NotNull
     @Support
     public static <T> Param<T> inline(T value) {
@@ -26066,7 +26065,6 @@ public class DSL {
      *
      * @see #val(Object, Class)
      */
-    @SuppressWarnings("deprecation")
     @NotNull
     @Support
     public static <T> Param<T> inline(Object value, Class<T> type) {
@@ -26090,7 +26088,6 @@ public class DSL {
      *
      * @see #val(Object, Field)
      */
-    @SuppressWarnings("deprecation")
     @NotNull
     @Support
     public static <T> Param<T> inline(Object value, Field<T> field) {
@@ -26114,7 +26111,6 @@ public class DSL {
      *
      * @see #val(Object, DataType)
      */
-    @SuppressWarnings("deprecation")
     @NotNull
     @Support
     public static <T> Param<T> inline(Object value, DataType<T> type) {
@@ -26616,7 +26612,6 @@ public class DSL {
      * @param dataType The coercion data type
      * @return The most specific data type
      */
-    @SuppressWarnings("deprecation")
     private static <T> DataType<T> mostSpecific(T value, DataType<T> dataType) {
 
         // [#3888] With custom data type conversion, users may wish to

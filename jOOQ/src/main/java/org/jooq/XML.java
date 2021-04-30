@@ -53,8 +53,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class XML implements Serializable {
 
-    private static final long serialVersionUID = 9067511945508834073L;
-    private final String      data;
+    private final String data;
 
     private XML(String data) {
         this.data = String.valueOf(data);

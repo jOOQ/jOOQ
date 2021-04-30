@@ -166,11 +166,6 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery {
-
-    /**
-     * Generated UID
-     */
-    private static final long                    serialVersionUID                 = -7438014075226919192L;
     private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
 
     private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE  = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL);

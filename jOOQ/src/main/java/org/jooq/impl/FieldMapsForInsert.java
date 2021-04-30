@@ -82,11 +82,6 @@ import org.jooq.impl.AbstractStoreQuery.UnknownField;
  * @author Lukas Eder
  */
 final class FieldMapsForInsert extends AbstractQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID = -6227074228534414225L;
     private static final Set<SQLDialect> CASTS_NEEDED     = SQLDialect.supportedBy(POSTGRES);
 
     final Table<?>                       table;

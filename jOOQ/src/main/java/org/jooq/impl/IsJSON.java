@@ -54,11 +54,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class IsJSON extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 5667086904534664235L;
     private final Field<?>    field;
     private final boolean     isJSON;
 

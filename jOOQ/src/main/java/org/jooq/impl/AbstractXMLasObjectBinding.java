@@ -69,11 +69,6 @@ import org.jooq.XML;
 public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
 
 
-    /**
-     * Generated UID
-     */
-    private static final long          serialVersionUID = -2153155338260706262L;
-
     private final Converter<XML, T> converter;
 
     protected AbstractXMLasObjectBinding(final Class<T> theType) {
@@ -86,11 +81,6 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
     }
 
     private static final class XMLasObjectConverter<T> implements Converter<XML, T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -2153155338260706262L;
 
         Class<T>                  type;
         XmlRootElement            root;

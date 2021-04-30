@@ -93,7 +93,6 @@ import org.jooq.SQLDialect;
  */
 final class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T> {
 
-    private static final long            serialVersionUID              = -4666251100802237878L;
     private static final Clause[]        CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
     private static final Clause[]        CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
     private static final Clause[]        CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
@@ -164,11 +163,6 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     }
 
     private class Native extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 2915703568738921575L;
 
         @Override
         public final void accept(Context<?> ctx) {

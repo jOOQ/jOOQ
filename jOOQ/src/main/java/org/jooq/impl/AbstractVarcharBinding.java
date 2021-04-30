@@ -56,11 +56,6 @@ import org.jooq.BindingSetStatementContext;
  */
 abstract class AbstractVarcharBinding<T> implements Binding<Object, T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -2153155338260706262L;
-
     @Override
     public final void sql(BindingSQLContext<T> ctx) throws SQLException {
         ctx.render().visit(DSL.val(ctx.convert(converter()).value()));

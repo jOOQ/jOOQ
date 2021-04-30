@@ -296,11 +296,6 @@ import io.r2dbc.spi.ConnectionFactory;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class DefaultDSLContext extends AbstractScope implements DSLContext, Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 2681360188806309513L;
-
     // -------------------------------------------------------------------------
     // XXX Constructors
     // -------------------------------------------------------------------------

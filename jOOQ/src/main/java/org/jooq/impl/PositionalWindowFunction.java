@@ -51,11 +51,6 @@ import org.jooq.Name;
  * @author Lukas Eder
  */
 final class PositionalWindowFunction<T> extends AbstractWindowFunction<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID = -7318928420486422195L;
     private final PositionalFunctionType functionType;
     private final Field<T>               arg;
     private final Field<Integer>         offset;

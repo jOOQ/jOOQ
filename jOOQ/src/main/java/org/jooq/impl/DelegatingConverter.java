@@ -44,11 +44,6 @@ import org.jooq.Converter;
  */
 public class DelegatingConverter<T, U> extends AbstractConverter<T, U> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 3739249904977790727L;
-
     private final Converter<T, U> delegate;
 
     public DelegatingConverter(Converter<T, U> delegate) {

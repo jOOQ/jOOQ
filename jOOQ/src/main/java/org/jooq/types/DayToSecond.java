@@ -81,16 +81,12 @@ import org.jooq.tools.StringUtils;
  */
 public final class DayToSecond extends Number implements Interval, Comparable<DayToSecond> {
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = -3853596481984643811L;
-    private static final Pattern PATTERN_DTS      = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
-    private static final Pattern PATTERN_DTM      = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+):(\\d+)()()$");
-    private static final Pattern PATTERN_DTH      = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+)()()()$");
-    private static final Pattern PATTERN_HTS      = Pattern.compile("^([+-])?()(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
-    private static final Pattern PATTERN_HTM      = Pattern.compile("^([+-])?()(\\d+):(\\d+)()()$");
-    private static final Pattern PATTERN_MTS      = Pattern.compile("^([+-])?()()(\\d+):(\\d+)(?:\\.(\\d+))?$");
+    private static final Pattern PATTERN_DTS = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
+    private static final Pattern PATTERN_DTM = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+):(\\d+)()()$");
+    private static final Pattern PATTERN_DTH = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+)()()()$");
+    private static final Pattern PATTERN_HTS = Pattern.compile("^([+-])?()(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
+    private static final Pattern PATTERN_HTM = Pattern.compile("^([+-])?()(\\d+):(\\d+)()()$");
+    private static final Pattern PATTERN_MTS = Pattern.compile("^([+-])?()()(\\d+):(\\d+)(?:\\.(\\d+))?$");
 
     private final boolean        negative;
     private final int            days;

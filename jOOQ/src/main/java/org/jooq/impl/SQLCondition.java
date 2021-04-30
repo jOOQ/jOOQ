@@ -43,11 +43,6 @@ import org.jooq.QueryPart;
 
 final class SQLCondition extends AbstractCondition {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7661748411414898501L;
-
     private final QueryPart   delegate;
 
     SQLCondition(QueryPart delegate) {

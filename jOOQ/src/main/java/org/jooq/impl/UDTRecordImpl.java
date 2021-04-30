@@ -50,11 +50,6 @@ import org.jooq.UDTRecord;
 @org.jooq.Internal
 public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractQualifiedRecord<R> implements UDTRecord<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 5671315498175872799L;
-
     public UDTRecordImpl(UDT<R> udt) {
         super(udt);
     }

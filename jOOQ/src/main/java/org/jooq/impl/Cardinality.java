@@ -47,11 +47,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class Cardinality extends AbstractField<Integer> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 2503480426872240632L;
     private final Field<?>    arg;
 
     Cardinality(Field<? extends Object[]> arg) {

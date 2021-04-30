@@ -86,8 +86,7 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPart implements Query {
 
-    private static final long       serialVersionUID = -8046199737354507547L;
-    private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
+    private static final JooqLogger log      = JooqLogger.getLogger(AbstractQuery.class);
 
     private int                     timeout;
     private QueryPoolable           poolable = QueryPoolable.DEFAULT;

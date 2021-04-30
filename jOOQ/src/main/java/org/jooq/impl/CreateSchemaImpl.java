@@ -68,8 +68,6 @@ implements
     CreateSchemaFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Schema  schema;
     private final boolean createSchemaIfNotExists;
 

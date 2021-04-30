@@ -144,7 +144,6 @@ import org.jooq.util.sqlite.SQLiteDataType;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public final class SQLDataType {
 
     // -------------------------------------------------------------------------

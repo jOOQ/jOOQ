@@ -49,11 +49,6 @@ import org.jooq.Name;
  */
 final class Function<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -2034096213592995420L;
-
     private final QueryPartList<Field<?>> arguments;
 
     Function(String name, DataType<T> type, Field<?>... arguments) {

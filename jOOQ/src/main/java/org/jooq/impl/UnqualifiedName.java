@@ -54,11 +54,6 @@ import org.jooq.tools.StringUtils;
  */
 final class UnqualifiedName extends AbstractName {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 8562325639223483938L;
-
     private final String      name;
     private final Quoted      quoted;
 

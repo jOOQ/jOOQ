@@ -244,11 +244,6 @@ import org.jooq.util.postgres.PostgresUtils;
 public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final JooqLogger              log                       = JooqLogger.getLogger(DefaultBinding.class);
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID          = -198499389344950496L;
     private static final Set<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = SQLDialect.supportedBy(MYSQL);
 
     // Taken from org.postgresql.PGStatement 9223372036825200000
@@ -449,11 +444,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else {
             theBinding = new Binding<T, U>() {
 
-                /**
-                 * Generated UID
-                 */
-                private static final long serialVersionUID = 8912340791845209886L;
-
                 final Converter<T, U>     theConverter     = Converters.of(binding.converter(), converter);
 
                 @Override
@@ -615,11 +605,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // -----------------------------------------------------------------------------------------------------------------
 
     abstract static class AbstractBinding<T, U> implements org.jooq.Binding<T, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long    serialVersionUID                    = -7965247586545864991L;
         static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB);
         static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES);
         static final Set<SQLDialect> NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES);
@@ -1007,11 +992,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DelegatingBinding<X, T, U> extends AbstractBinding<X, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long           serialVersionUID = 9222783475194108822L;
-
         private final Converter<T, X>       delegatingConverter;
         private final AbstractBinding<T, U> delegatingBinding;
 
@@ -1074,11 +1054,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultArrayBinding<U> extends AbstractBinding<Object[], U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID    = 6875984626674331432L;
         private static final Set<SQLDialect> REQUIRES_ARRAY_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultArrayBinding(DataType<Object[]> dataType, Converter<Object[], U> converter) {
@@ -1491,17 +1466,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-
-
-
     static final class DefaultBigDecimalBinding<U> extends AbstractBinding<BigDecimal, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID = -8912971184035434281L;
         private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supportedBy(SQLITE);
 
         DefaultBigDecimalBinding(DataType<BigDecimal> dataType, Converter<BigDecimal, U> converter) {
@@ -1553,11 +1518,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultBigIntegerBinding<U> extends AbstractBinding<BigInteger, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID = -3857031689661809421L;
         private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supportedBy(SQLITE);
 
         DefaultBigIntegerBinding(DataType<BigInteger> dataType, Converter<BigInteger, U> converter) {
@@ -1613,11 +1573,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultBlobBinding<U> extends AbstractBinding<Blob, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -4605427469676162501L;
-
         DefaultBlobBinding(DataType<Blob> dataType, Converter<Blob, U> converter) {
             super(dataType, converter);
         }
@@ -1668,11 +1623,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultBooleanBinding<U> extends AbstractBinding<Boolean, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID   = -533762957890251203L;
         private static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supportedBy(FIREBIRD, SQLITE);
 
 
@@ -1792,11 +1742,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultByteBinding<U> extends AbstractBinding<Byte, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -7328193812163714614L;
-
         DefaultByteBinding(DataType<Byte> dataType, Converter<Byte, U> converter) {
             super(dataType, converter);
         }
@@ -1843,11 +1788,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultBytesBinding<U> extends AbstractBinding<byte[], U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID           = -727202499908007757L;
         private static final Set<SQLDialect> INLINE_AS_X_APOS           = SQLDialect.supportedBy(H2, HSQLDB, MARIADB, MYSQL, SQLITE);
         private static final Set<SQLDialect> REQUIRE_BYTEA_CAST         = SQLDialect.supportedBy(POSTGRES);
 
@@ -1986,11 +1926,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultClobBinding<U> extends AbstractBinding<Clob, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -3890447233590678873L;
-
         DefaultClobBinding(DataType<Clob> dataType, Converter<Clob, U> converter) {
             super(dataType, converter);
         }
@@ -2027,11 +1962,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultDateBinding<U> extends AbstractBinding<Date, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID         = -4797649501187223237L;
         private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
         DefaultDateBinding(DataType<Date> dataType, Converter<Date, U> converter) {
@@ -2216,11 +2146,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultDayToSecondBinding<U> extends AbstractBinding<DayToSecond, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID           = 4378118707359663541L;
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL_SYNTAX = SQLDialect.supportedBy(POSTGRES);
         private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL  = SQLDialect.supportedBy(H2);
 
@@ -2317,11 +2242,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultDoubleBinding<U> extends AbstractBinding<Double, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long    serialVersionUID      = -615723070592774059L;
         static final Set<SQLDialect> REQUIRES_LITERAL_CAST = SQLDialect.supportedBy(H2);
 
         DefaultDoubleBinding(DataType<Double> dataType, Converter<Double, U> converter) {
@@ -2481,11 +2401,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultEnumTypeBinding<U> extends AbstractBinding<EnumType, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID  = -5858761464381778695L;
         private static final Set<SQLDialect> REQUIRE_ENUM_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultEnumTypeBinding(DataType<EnumType> dataType, Converter<EnumType, U> converter) {
@@ -2578,11 +2493,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultFloatBinding<U> extends AbstractBinding<Float, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID = -2468794191255859536L;
-
         DefaultFloatBinding(DataType<Float> dataType, Converter<Float, U> converter) {
             super(dataType, converter);
         }
@@ -2665,11 +2575,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultIntegerBinding<U> extends AbstractBinding<Integer, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 1356528214897599147L;
-
         DefaultIntegerBinding(DataType<Integer> dataType, Converter<Integer, U> converter) {
             super(dataType, converter);
         }
@@ -2716,11 +2621,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultLongBinding<U> extends AbstractBinding<Long, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 7360911614219750448L;
 
         DefaultLongBinding(DataType<Long> dataType, Converter<Long, U> converter) {
             super(dataType, converter);
@@ -2945,11 +2845,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultOffsetDateTimeBinding<U> extends AbstractBinding<OffsetDateTime, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 2775682497765456476L;
-
         DefaultOffsetDateTimeBinding(DataType<OffsetDateTime> dataType, Converter<OffsetDateTime, U> converter) {
             super(dataType, converter);
         }
@@ -3131,11 +3026,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultOffsetTimeBinding<U> extends AbstractBinding<OffsetTime, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 8991629916239335071L;
-
         DefaultOffsetTimeBinding(DataType<OffsetTime> dataType, Converter<OffsetTime, U> converter) {
             super(dataType, converter);
         }
@@ -3240,11 +3130,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultInstantBinding<U> extends AbstractBinding<Instant, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long                               serialVersionUID = -1850495302106551527L;
-
         private static final Converter<OffsetDateTime, Instant> CONVERTER        = Converter.ofNullable(
             OffsetDateTime.class,
             Instant.class,
@@ -3297,11 +3182,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultOtherBinding<U> extends AbstractBinding<Object, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -650741489151706822L;
 
         DefaultOtherBinding(DataType<Object> dataType, Converter<Object, U> converter) {
             super(dataType, converter);
@@ -3397,11 +3277,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultRowIdBinding<U> extends AbstractBinding<RowId, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 5929968691245507756L;
-
         DefaultRowIdBinding(DataType<RowId> dataType, Converter<RowId, U> converter) {
             super(dataType, converter);
         }
@@ -3438,11 +3313,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultRecordBinding<U> extends AbstractBinding<Record, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID    = 2547994476924120818L;
         private static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultRecordBinding(DataType<Record> dataType, Converter<Record, U> converter) {
@@ -3729,11 +3599,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultResultBinding<U> extends AbstractBinding<Result<?>, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -2148875780733374224L;
-
         DefaultResultBinding(DataType<Result<?>> dataType, Converter<Result<?>, U> converter) {
             super(dataType, converter);
         }
@@ -3779,11 +3644,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultShortBinding<U> extends AbstractBinding<Short, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 8935720621737085226L;
 
         DefaultShortBinding(DataType<Short> dataType, Converter<Short, U> converter) {
             super(dataType, converter);
@@ -3831,11 +3691,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultStringBinding<U> extends AbstractBinding<String, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 4232459541239942932L;
 
         DefaultStringBinding(DataType<String> dataType, Converter<String, U> converter) {
             super(dataType, converter);
@@ -3906,11 +3761,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultNStringBinding<U> extends AbstractBinding<String, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long             serialVersionUID = 4232459541239942932L;
         private final DefaultStringBinding<U> fallback;
 
         DefaultNStringBinding(DataType<String> dataType, Converter<String, U> converter) {
@@ -3996,11 +3846,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultTimeBinding<U> extends AbstractBinding<Time, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -2563220967846617288L;
 
         DefaultTimeBinding(DataType<Time> dataType, Converter<Time, U> converter) {
             super(dataType, converter);
@@ -4104,11 +3949,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultTimestampBinding<U> extends AbstractBinding<Timestamp, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID         = 289387167549159015L;
         private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
         DefaultTimestampBinding(DataType<Timestamp> dataType, Converter<Timestamp, U> converter) {
@@ -4206,11 +4046,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultUUIDBinding<U> extends AbstractBinding<UUID, U> {
-
-        /**
-         * Generated UUID
-         */
-        private static final long serialVersionUID = -6616291625634347383L;
 
         DefaultUUIDBinding(DataType<UUID> dataType, Converter<UUID, U> converter) {
             super(dataType, converter);
@@ -4330,11 +4165,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultJSONBinding<U> extends AbstractBinding<JSON, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 3430629127218407737L;
-
         DefaultJSONBinding(DataType<JSON> dataType, Converter<JSON, U> converter) {
             super(dataType, converter);
         }
@@ -4390,11 +4220,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultJSONBBinding<U> extends AbstractBinding<JSONB, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long              serialVersionUID = 3430629127218407737L;
         private static final Set<SQLDialect>   EMULATE_AS_BLOB  = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, SQLITE);
 
         DefaultJSONBBinding(DataType<JSONB> dataType, Converter<JSONB, U> converter) {
@@ -4495,11 +4320,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultXMLBinding<U> extends AbstractBinding<XML, U> {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 3430629127218407737L;
-
         DefaultXMLBinding(DataType<XML> dataType, Converter<XML, U> converter) {
             super(dataType, converter);
         }
@@ -4539,11 +4359,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultYearToSecondBinding<U> extends AbstractBinding<YearToSecond, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID    = 6417965474063152673L;
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(POSTGRES);
 
         DefaultYearToSecondBinding(DataType<YearToSecond> dataType, Converter<YearToSecond, U> converter) {
@@ -4602,11 +4417,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultYearToMonthBinding<U> extends AbstractBinding<YearToMonth, U> {
-
-        /**
-         * Generated UID
-         */
-        private static final long            serialVersionUID          = 6417965474063152673L;
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES);
         private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2);
 

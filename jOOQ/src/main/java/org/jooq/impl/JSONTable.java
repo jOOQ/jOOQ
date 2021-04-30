@@ -86,11 +86,6 @@ final class JSONTable
 extends AbstractTable<Record>
 implements
     JSONTableColumnPathStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long                    serialVersionUID     = -4881363881968319258L;
     private static final Set<SQLDialect>         REQUIRES_COLUMN_PATH = SQLDialect.supportedBy(MYSQL);
 
 
@@ -298,11 +293,6 @@ implements
     }
 
     private static class JSONTableColumn extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 783627375014050176L;
 
         final Field<?>            field;
         final DataType<?>         type;

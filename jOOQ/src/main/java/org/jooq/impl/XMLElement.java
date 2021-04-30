@@ -55,11 +55,6 @@ import org.jooq.XMLAttributes;
  * @author Lukas Eder
  */
 final class XMLElement extends AbstractField<XML> {
-
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = 4505809303211506197L;
     private final Name                    elementName;
     private final XMLAttributes           attributes;
     private final QueryPartList<Field<?>> content;

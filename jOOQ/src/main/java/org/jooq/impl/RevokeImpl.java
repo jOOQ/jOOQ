@@ -70,8 +70,6 @@ implements
     RevokeFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Collection<? extends Privilege> privileges;
     private final boolean                         revokeGrantOptionFor;
     private       Table<?>                        on;

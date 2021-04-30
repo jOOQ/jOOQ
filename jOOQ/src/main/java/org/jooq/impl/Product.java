@@ -63,11 +63,6 @@ import org.jooq.Field;
  */
 final class Product extends AbstractAggregateFunction<BigDecimal> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1027749554935573353L;
-
     Product(boolean distinct, Field<?>... arguments) {
         super(distinct, N_PRODUCT, NUMERIC, arguments);
     }

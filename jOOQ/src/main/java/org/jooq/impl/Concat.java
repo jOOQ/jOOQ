@@ -53,11 +53,6 @@ import org.jooq.Field;
  */
 final class Concat extends AbstractField<String> {
 
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = -7273879239726265322L;
-
     private final        Field<?>[] arguments;
 
     Concat(Field<?>... arguments) {

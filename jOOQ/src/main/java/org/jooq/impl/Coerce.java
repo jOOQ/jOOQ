@@ -48,11 +48,6 @@ import org.jooq.Name;
  */
 final class Coerce<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long      serialVersionUID = -6776617606751542856L;
-
     private final AbstractField<?> field;
 
     public Coerce(Field<?> field, DataType<T> type) {

@@ -49,11 +49,6 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 final class TableComparison<R extends Record> extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 7033304130029726093L;
     private final Table<R>    lhs;
     private final Table<R>    rhs;
     private final Comparator  comparator;

@@ -134,7 +134,6 @@ implements
     /**
      * Extracted method for type-safety
      */
-    @SuppressWarnings("deprecation")
     private final <T> void selfJoin(org.jooq.ConditionProvider selfJoin, Table<?> outer, Table<?> inner, Field<T> field) {
         Field<T> outerField = outer.field(field);
         Field<T> innerField = inner.field(field);

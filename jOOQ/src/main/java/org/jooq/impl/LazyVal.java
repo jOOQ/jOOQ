@@ -53,7 +53,6 @@ import org.jooq.conf.ParamType;
  */
 final class LazyVal<T> extends AbstractParamX<T> {
 
-    private static final long           serialVersionUID = 1258437916133900173L;
     private final Field<T>              field;
     private transient AbstractParamX<T> delegate;
 

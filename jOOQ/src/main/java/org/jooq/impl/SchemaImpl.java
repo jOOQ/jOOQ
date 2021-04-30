@@ -74,9 +74,8 @@ import org.jooq.tools.StringUtils;
 @org.jooq.Internal
 public class SchemaImpl extends AbstractNamed implements Schema {
 
-    private static final long     serialVersionUID = -8101463810207566546L;
-    private static final Clause[] CLAUSES          = { SCHEMA, SCHEMA_REFERENCE };
-    static final Schema           DEFAULT_SCHEMA   = new SchemaImpl("");
+    private static final Clause[] CLAUSES        = { SCHEMA, SCHEMA_REFERENCE };
+    static final Schema           DEFAULT_SCHEMA = new SchemaImpl("");
 
     private Catalog               catalog;
 

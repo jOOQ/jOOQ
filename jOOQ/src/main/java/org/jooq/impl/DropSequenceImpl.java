@@ -68,8 +68,6 @@ implements
     DropSequenceFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Sequence<?> sequence;
     private final boolean     dropSequenceIfExists;
 

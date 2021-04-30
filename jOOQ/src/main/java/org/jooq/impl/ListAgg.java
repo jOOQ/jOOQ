@@ -79,11 +79,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class ListAgg extends DefaultAggregateFunction<String> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID             = -1760389929938136896L;
     private static final Set<SQLDialect> SUPPORT_GROUP_CONCAT         = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> SUPPORT_STRING_AGG           = SQLDialect.supportedBy(POSTGRES);
 

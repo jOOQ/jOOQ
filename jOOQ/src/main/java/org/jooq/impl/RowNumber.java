@@ -49,11 +49,6 @@ import org.jooq.Context;
  */
 final class RowNumber extends AbstractWindowFunction<Integer> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7318928420486422195L;
-
     RowNumber() {
         super(N_ROW_NUMBER, INTEGER.notNull());
     }

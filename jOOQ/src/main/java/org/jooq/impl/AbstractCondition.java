@@ -54,11 +54,6 @@ import org.jooq.Select;
  * @author Lukas Eder
  */
 abstract class AbstractCondition extends AbstractQueryPart implements Condition {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = -6683692251799468624L;
     private static final Clause[] CLAUSES          = { CONDITION };
 
     AbstractCondition() {}

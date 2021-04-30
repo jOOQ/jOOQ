@@ -57,11 +57,6 @@ import org.jooq.Schema;
  * @author Lukas Eder
  */
 class DomainImpl<T> extends AbstractNamed implements Domain<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 162853300137140844L;
     private final Schema      schema;
     private final Check<?>[]  checks;
     private final DataType<T> type;

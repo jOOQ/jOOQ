@@ -64,11 +64,6 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 1311856649676227970L;
     private static final Clause[]   CLAUSES          = { FIELD, FIELD_VALUE };
 
     private final String            paramName;

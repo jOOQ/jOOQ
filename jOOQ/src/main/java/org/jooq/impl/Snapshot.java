@@ -71,8 +71,7 @@ import org.jooq.exception.DataAccessException;
  */
 final class Snapshot extends AbstractMeta {
 
-    private static final long serialVersionUID = 5561057000510740144L;
-    private Meta              delegate;
+    private Meta delegate;
 
     Snapshot(Meta meta) {
         super(meta.configuration());
@@ -94,7 +93,6 @@ final class Snapshot extends AbstractMeta {
     }
 
     private class SnapshotCatalog extends CatalogImpl {
-        private static final long          serialVersionUID = 7979890261252183486L;
         private final List<SnapshotSchema> schemas;
 
         SnapshotCatalog(Catalog catalog) {
@@ -114,7 +112,6 @@ final class Snapshot extends AbstractMeta {
     }
 
     private class SnapshotSchema extends SchemaImpl {
-        private static final long               serialVersionUID = -95755926444275258L;
 
         private final List<SnapshotDomain<?>>   domains;
         private final List<SnapshotTable<?>>    tables;
@@ -157,16 +154,12 @@ final class Snapshot extends AbstractMeta {
     }
 
     private class SnapshotDomain<T> extends DomainImpl<T> {
-        private static final long serialVersionUID = -1607062195966296849L;
-
         SnapshotDomain(SnapshotSchema schema, Domain<T> domain) {
             super(schema, domain.getQualifiedName(), domain.getDataType(), domain.getChecks().toArray(EMPTY_CHECK));
         }
     }
 
     private class SnapshotTable<R extends Record> extends TableImpl<R> {
-        private static final long serialVersionUID = -6070726881709997500L;
-
         private final List<Index>            indexes;
         private final List<UniqueKey<R>>     uniqueKeys;
         private UniqueKey<R>                 primaryKey;
@@ -257,8 +250,6 @@ final class Snapshot extends AbstractMeta {
     }
 
     private class SnapshotSequence<T extends Number> extends SequenceImpl<T> {
-        private static final long serialVersionUID = -1607062195966296849L;
-
         SnapshotSequence(SnapshotSchema schema, Sequence<T> sequence) {
             super(
                 sequence.getQualifiedName(),
@@ -276,8 +267,6 @@ final class Snapshot extends AbstractMeta {
     }
 
     private class SnapshotUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
-        private static final long serialVersionUID = -5732449514562314202L;
-
         SnapshotUDT(SnapshotSchema schema, UDT<R> udt) {
             super(udt.getName(), schema, udt.getPackage(), udt.isSynthetic());
         }

@@ -54,11 +54,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class Contains<T> extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 6146303086487338550L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
     private final Field<T>        lhs;
@@ -111,11 +106,6 @@ final class Contains<T> extends AbstractCondition {
      * The Postgres array contains operator
      */
     private class PostgresArrayContains extends AbstractCondition {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 8083622843635168388L;
 
         @Override
         public final void accept(Context<?> ctx) {

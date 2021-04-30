@@ -178,11 +178,6 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     InsertOnConflictWhereIndexPredicateStep<R>,
     InsertOnConflictConditionStep<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 4222898879771679107L;
-
     private final Table<R>    into;
     private Field<?>[]        fields;
     private boolean           onDuplicateKeyUpdate;

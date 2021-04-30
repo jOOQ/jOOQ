@@ -46,11 +46,6 @@ import org.jooq.TableField;
  * @author Lukas Eder
  */
 final class IdentityImpl<R extends Record, T> implements Identity<R, T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 162853300137140844L;
     static final IdentityImpl<?, ?> NULL             = new IdentityImpl<>(null, null);
 
     private final Table<R>          table;

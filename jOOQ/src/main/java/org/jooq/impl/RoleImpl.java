@@ -51,11 +51,6 @@ import org.jooq.Role;
  * @author Timur Shaidullin
  */
 final class RoleImpl extends AbstractNamed implements Role {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = -1169436492818811877L;
     private static final Clause[] CLAUSES          = { ROLE };
 
     RoleImpl(Name name) {

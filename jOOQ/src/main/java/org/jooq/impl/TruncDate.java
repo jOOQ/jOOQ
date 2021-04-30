@@ -55,11 +55,6 @@ import org.jooq.Field;
  */
 final class TruncDate<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -4617792768119885313L;
-
     private final Field<T>    date;
     private final DatePart    part;
 

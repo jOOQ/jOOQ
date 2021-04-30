@@ -288,5 +288,3 @@ package org.jooq.impl;
 
 
 
-
-

@@ -88,11 +88,6 @@ import org.jooq.SQLDialect;
  */
 final class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> {
 
-    /**
-     * Generated UID
-     */
-    private static final long      serialVersionUID  = -2065258332642911588L;
-
     static final Set<SQLDialect>   NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     private final ROW              row;

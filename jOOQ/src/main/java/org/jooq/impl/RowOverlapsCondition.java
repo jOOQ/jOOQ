@@ -78,11 +78,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID              = 85887551884667824L;
     private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB);
 

@@ -81,11 +81,6 @@ import org.jooq.Select;
  * @author Lukas Eder
  */
 final class RowIsDistinctFrom extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID            = 4568269684824736461L;
     private static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CUBRID, DERBY);
 
     // An emulation may be required only for the version where a subquery is used

@@ -100,7 +100,6 @@ import org.jooq.SQLDialect;
  */
 final class InCondition<T> extends AbstractCondition {
 
-    private static final long            serialVersionUID       = -1653924248576930761L;
     private static final int             IN_LIMIT               = 1000;
     private static final Clause[]        CLAUSES_IN             = { CONDITION, CONDITION_IN };
     private static final Clause[]        CLAUSES_IN_NOT         = { CONDITION, CONDITION_NOT_IN };

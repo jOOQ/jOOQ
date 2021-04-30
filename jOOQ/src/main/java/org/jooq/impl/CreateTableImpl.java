@@ -149,11 +149,6 @@ final class CreateTableImpl extends AbstractDDLQuery implements
     // Cascading interface implementations for CREATE TABLE behaviour
     CreateTableWithDataStep,
     CreateTableColumnStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID                   = 8904572826501186329L;
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS           = SQLDialect.supportedBy(DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_WITH_DATA               = SQLDialect.supportedBy(H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES       = SQLDialect.supportedBy(H2);

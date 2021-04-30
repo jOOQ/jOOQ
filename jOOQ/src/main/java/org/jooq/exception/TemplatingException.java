@@ -50,11 +50,6 @@ import org.jooq.SQL;
  */
 public class TemplatingException extends DataAccessException {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -3984254040787669866L;
-
     public TemplatingException(String message) {
         super(message);
     }

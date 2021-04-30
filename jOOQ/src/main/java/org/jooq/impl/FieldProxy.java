@@ -54,11 +54,6 @@ import org.jooq.TableField;
 @SuppressWarnings("unchecked")
 final class FieldProxy<T> extends AbstractField<T> implements TableField<Record, T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 8311876498583467760L;
-
     private AbstractField<T>  delegate;
     private int               position;
 

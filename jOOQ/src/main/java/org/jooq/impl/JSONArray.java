@@ -69,8 +69,6 @@ implements
     JSONArrayReturningStep<T>
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final DataType<T>                    type;
     private final Collection<? extends Field<?>> fields;
     private       JSONOnNull                     onNull;

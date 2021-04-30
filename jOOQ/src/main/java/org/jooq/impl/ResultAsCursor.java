@@ -47,11 +47,6 @@ import org.jooq.Result;
  * @author Lukas Eder
  */
 final class ResultAsCursor<R extends Record> extends AbstractCursor<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 3711590697891578695L;
     private final Result<R>   result;
     private int               index;
 

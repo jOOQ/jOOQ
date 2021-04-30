@@ -49,11 +49,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class Coalesce<T> extends AbstractField<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -4546488210418866103L;
     private final Field<T>[]  fields;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -52,11 +52,6 @@ abstract class AbstractQueryPartMap<K extends QueryPart, V extends QueryPart>
 extends AbstractQueryPart
 implements Map<K, V> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -8751499214223081415L;
-
     private final Map<K, V> map;
 
     AbstractQueryPartMap() {

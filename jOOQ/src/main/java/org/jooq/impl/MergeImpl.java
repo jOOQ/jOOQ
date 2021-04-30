@@ -245,11 +245,6 @@ implements
 
 
     MergeNotMatchedValuesStepN<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID                        = -8835479296876774391L;
     private static final Clause[]        CLAUSES                                 = { MERGE };
 
 
@@ -1740,11 +1735,6 @@ implements
 
     private final class MatchedClause implements Serializable {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -7885112480794078253L;
-
         FieldMapForUpdate         updateMap;
         boolean                   delete;
         Condition                 condition;
@@ -1765,11 +1755,6 @@ implements
     }
 
     private final class NotMatchedClause implements Serializable {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -7885112480794078253L;
 
         FieldMapsForInsert        insertMap;
         Condition                 condition;

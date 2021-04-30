@@ -51,11 +51,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class ArrayGet<T> extends AbstractField<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = 1852008882778358276L;
     private final Field<T[]>     field;
     private final Field<Integer> index;
 
@@ -85,11 +80,6 @@ final class ArrayGet<T> extends AbstractField<T> {
     }
 
     private class Standard extends AbstractField<T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 7727869539823288556L;
 
         Standard() {
             super(ArrayGet.this.getQualifiedName(), ArrayGet.this.getDataType());

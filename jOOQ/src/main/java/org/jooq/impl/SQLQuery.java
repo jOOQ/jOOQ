@@ -48,11 +48,6 @@ import org.jooq.QueryPartInternal;
  */
 final class SQLQuery extends AbstractRowCountQuery {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1740879770879469220L;
-
     private final QueryPart   delegate;
 
     SQLQuery(Configuration configuration, QueryPart delegate) {

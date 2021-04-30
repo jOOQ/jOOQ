@@ -55,11 +55,6 @@ import org.jooq.ExecuteListenerProvider;
 public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, Serializable {
 
     /**
-     * Generated UID.
-     */
-    private static final long     serialVersionUID = -2122007794302549679L;
-
-    /**
      * The delegate listener.
      */
     private final ExecuteListener listener;

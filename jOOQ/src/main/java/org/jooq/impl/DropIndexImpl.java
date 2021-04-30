@@ -70,8 +70,6 @@ implements
     DropIndexFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Index    index;
     private final boolean  dropIndexIfExists;
     private       Table<?> on;

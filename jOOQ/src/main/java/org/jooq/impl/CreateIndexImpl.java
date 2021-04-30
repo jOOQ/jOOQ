@@ -71,8 +71,6 @@ implements
     CreateIndexFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Boolean                             unique;
     private final Index                               index;
     private final boolean                             createIndexIfNotExists;

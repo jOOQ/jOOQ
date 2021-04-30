@@ -60,11 +60,6 @@ import org.jooq.impl.Tools.BooleanDataKey;
  */
 final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implements QuantifiedSelect<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = -1224570388944748450L;
-
     final Quantifier                quantifier;
     final Select<R>                 query;
     final Field<? extends Object[]> array;

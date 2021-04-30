@@ -69,11 +69,6 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 final class MetaDataFieldProvider implements Serializable {
-
-    /**
-     * Generated UID
-     */
-    private static final long        serialVersionUID = -8482521025536063609L;
     private static final JooqLogger  log              = JooqLogger.getLogger(MetaDataFieldProvider.class);
 
     private final FieldsImpl<Record> fields;

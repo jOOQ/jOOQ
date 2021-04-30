@@ -49,11 +49,6 @@ import org.jooq.conf.SettingsTools;
  */
 final class KeywordImpl extends AbstractQueryPart implements Keyword {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 9137269798087732005L;
-
     private final String      asIs;
 
     private       String      lower;

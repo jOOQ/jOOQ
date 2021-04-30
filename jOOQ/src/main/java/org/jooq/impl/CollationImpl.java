@@ -53,8 +53,6 @@ import org.jooq.SQLDialect;
  */
 final class CollationImpl extends AbstractQueryPart implements Collation {
 
-    private static final long                serialVersionUID        = 21679143762776222L;
-
 
 
 

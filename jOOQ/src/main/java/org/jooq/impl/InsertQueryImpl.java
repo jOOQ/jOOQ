@@ -129,7 +129,6 @@ import org.jetbrains.annotations.NotNull;
  */
 final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
-    private static final long            serialVersionUID                              = 4466005417945353842L;
     private static final Clause[]        CLAUSES                                       = { INSERT };
     private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);

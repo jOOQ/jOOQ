@@ -55,7 +55,6 @@ import org.jooq.Field;
  */
 final class IsNull extends AbstractCondition {
 
-    private static final long     serialVersionUID = -747240442279619486L;
     private static final Clause[] CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
     private static final Clause[] CLAUSES_NULL_NOT = { CONDITION, CONDITION_IS_NOT_NULL };
 

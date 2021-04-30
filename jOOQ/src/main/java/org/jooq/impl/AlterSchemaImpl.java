@@ -69,8 +69,6 @@ implements
     AlterSchemaFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Schema  schema;
     private final boolean alterSchemaIfExists;
     private       Schema  renameTo;

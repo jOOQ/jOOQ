@@ -84,11 +84,6 @@ implements
     AggregateFunction<T>,
     OrderedAggregateFunction<T>,
     ArrayAggOrderByStep<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID     = -8613744948308064895L;
     static final Set<SQLDialect>  SUPPORT_FILTER       = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, SQLITE);
     static final Set<SQLDialect>  SUPPORT_DISTINCT_RVE = SQLDialect.supportedBy(H2, POSTGRES);
 

@@ -173,11 +173,6 @@ public interface Converter<T, U> extends Serializable {
     ) {
         return new AbstractConverter<T, U>(fromType, toType) {
 
-            /**
-             * Generated UID
-             */
-            private static final long serialVersionUID = 8782437631959970693L;
-
             @Override
             public final U from(T t) {
                 return from.apply(t);

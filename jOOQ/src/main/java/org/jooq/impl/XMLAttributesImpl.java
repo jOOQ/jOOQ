@@ -51,11 +51,6 @@ import org.jooq.XMLAttributes;
  */
 final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes {
 
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 1887555231334164185L;
-
     final SelectFieldList<Field<?>> attributes;
 
     XMLAttributesImpl(Collection<? extends Field<?>> attributes) {

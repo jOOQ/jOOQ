@@ -59,11 +59,6 @@ import org.jooq.Context;
  * @author Lukas Eder
  */
 public abstract class CustomCondition extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = -3439681086987884991L;
     private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomCondition() {}
@@ -71,7 +66,6 @@ public abstract class CustomCondition extends AbstractCondition {
     /**
      * Create a {@link CustomCondition} from a lambda expression.
      */
-    @SuppressWarnings("serial")
     public static final CustomCondition of(Consumer<? super Context<?>> consumer) {
         return new CustomCondition() {
             @Override

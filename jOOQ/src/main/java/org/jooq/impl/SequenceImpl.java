@@ -81,11 +81,6 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  */
 @org.jooq.Internal
 public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implements Sequence<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long         serialVersionUID = 6224349401603636427L;
     private static final Clause[]     CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
     private final boolean             nameIsPlainSQL;
@@ -208,11 +203,6 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
     }
 
     private static class SequenceFunction<T extends Number> extends AbstractField<T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long     serialVersionUID = 2292275568395094887L;
         private final SequenceMethod  method;
         private final SequenceImpl<T> sequence;
 

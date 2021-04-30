@@ -55,11 +55,6 @@ import org.jooq.Schema;
 @Internal
 public final class LazyCatalog extends AbstractNamed implements Catalog {
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -2260128711891951254L;
-
     final LazySupplier<Catalog> supplier;
     transient Catalog           catalog;
 

@@ -67,11 +67,6 @@ import org.jooq.SelectField;
  * etc.
  */
 abstract class AbstractRow<R extends Record> extends AbstractQueryPart implements Row, SelectField<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 2175082265665049629L;
     private static final Clause[] CLAUSES          = { FIELD_ROW };
 
     final FieldsImpl<R>           fields;

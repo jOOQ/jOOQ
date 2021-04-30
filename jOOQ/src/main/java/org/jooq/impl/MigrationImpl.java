@@ -458,8 +458,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
     @SuppressWarnings({ "all", "unchecked", "rawtypes" })
     static class JooqMigrationsChangelog extends TableImpl<JooqMigrationsChangelogRecord> {
 
-        private static final long serialVersionUID = 1147896779;
-
         /**
          * The reference instance of <code>JOOQ_MIGRATIONS_CHANGELOG</code>
          */
@@ -558,8 +556,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
      */
     @SuppressWarnings({ "all", "unchecked", "rawtypes" })
     static class JooqMigrationsChangelogRecord extends UpdatableRecordImpl<JooqMigrationsChangelogRecord> {
-
-        private static final long serialVersionUID = 2016380678;
 
         /**
          * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.ID</code>. The database version ID.

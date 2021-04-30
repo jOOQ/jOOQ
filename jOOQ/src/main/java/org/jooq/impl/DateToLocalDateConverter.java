@@ -52,11 +52,6 @@ import org.jooq.Converter;
 @Deprecated
 public final class DateToLocalDateConverter extends AbstractConverter<Date, LocalDate> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6914493125390333501L;
-
     public DateToLocalDateConverter() {
         super(Date.class, LocalDate.class);
     }

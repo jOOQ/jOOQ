@@ -66,8 +66,6 @@ extends
     AbstractDDLQuery
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Name     name;
     private final Param<?> value;
     private final boolean  setLocal;

@@ -60,11 +60,6 @@ import org.jooq.exception.DataAccessException;
  */
 final class BatchCRUD extends AbstractBatch {
 
-    /**
-     * Generated UID
-     */
-    private static final long      serialVersionUID = -2935544935267715011L;
-
     private final TableRecord<?>[] records;
     private final Action           action;
 
@@ -250,11 +245,6 @@ final class BatchCRUD extends AbstractBatch {
      */
     private static class QueryCollector extends DefaultExecuteListener {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 7399239846062763212L;
-
         @Override
         public void renderEnd(ExecuteContext ctx) {
             throw new QueryCollectorSignal(ctx.sql(), ctx.query());
@@ -268,11 +258,6 @@ final class BatchCRUD extends AbstractBatch {
      * execution, and return generated SQL back to batch execution.
      */
     private static class QueryCollectorSignal extends ControlFlowSignal {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -9047250761846931903L;
         private final String      sql;
         private final Query       query;
 

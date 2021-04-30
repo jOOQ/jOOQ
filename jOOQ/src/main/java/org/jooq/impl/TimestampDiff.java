@@ -57,11 +57,6 @@ import org.jooq.types.DayToSecond;
  */
 final class TimestampDiff extends AbstractField<DayToSecond> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -4813228000332771961L;
-
     private final Field<?>    timestamp1;
     private final Field<?>    timestamp2;
 

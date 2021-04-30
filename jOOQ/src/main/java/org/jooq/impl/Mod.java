@@ -49,11 +49,6 @@ import org.jooq.Field;
  */
 final class Mod<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -7273879239726265322L;
-
     private final Field<T>                arg1;
     private final Field<? extends Number> arg2;
 

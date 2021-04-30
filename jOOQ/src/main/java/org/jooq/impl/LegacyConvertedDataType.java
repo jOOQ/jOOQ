@@ -52,11 +52,6 @@ import org.jooq.Field;
 @Deprecated
 final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
 
-    /**
-     * Generated UID
-     */
-    private static final long           serialVersionUID = -2321926692580974126L;
-
     private final DataType<T>           delegate;
 
     @SuppressWarnings("unchecked")

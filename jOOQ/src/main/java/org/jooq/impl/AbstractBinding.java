@@ -81,11 +81,6 @@ import org.jooq.conf.ParamType;
 public abstract class AbstractBinding<T, U> implements Binding<T, U> {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 2172557061592118398L;
-
-    /**
      * A convenient base implementation that handles the {@link ParamType}
      * setting and delegates to {@link #sqlInline(BindingSQLContext)} or
      * {@link #sqlBind(BindingSQLContext)} respectively.

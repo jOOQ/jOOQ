@@ -69,8 +69,6 @@ implements
     DropSchemaFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Schema  schema;
     private final boolean dropSchemaIfExists;
     private       Cascade cascade;

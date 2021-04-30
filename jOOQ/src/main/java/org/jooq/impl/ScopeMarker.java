@@ -180,11 +180,6 @@ enum ScopeMarker {
     }
 
     static class Marker implements QueryPartInternal {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -324624641766418109L;
         private final String marker;
 
         Marker(String marker) {

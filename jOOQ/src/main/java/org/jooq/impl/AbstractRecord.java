@@ -116,11 +116,6 @@ import org.xml.sax.SAXException;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 abstract class AbstractRecord extends AbstractStore implements Record {
-
-    /**
-     * Generated UID
-     */
-    private static final long                   serialVersionUID = -6052512608911220404L;
     private static final JooqLogger             log              = JooqLogger.getLogger(AbstractRecord.class);
 
     final AbstractRow<? extends AbstractRecord> fields;

@@ -61,11 +61,6 @@ import org.jooq.tools.jdbc.JDBCUtils;
  * @author Lukas Eder
  */
 final class FetchServerOutputListener extends DefaultExecuteListener {
-
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 2256982126025931878L;
     private static final JooqLogger log              = JooqLogger.getLogger(FetchServerOutputListener.class);
 
     @Override

@@ -55,11 +55,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class JSONReturning extends AbstractQueryPart implements SimpleQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID     = 3121287280045911346L;
     static final Set<SQLDialect> NO_SUPPORT_RETURNING = SQLDialect.supportedBy(H2, MARIADB, MYSQL, POSTGRES);
     final DataType<?>            type;
 

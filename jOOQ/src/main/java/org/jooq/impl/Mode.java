@@ -55,11 +55,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class Mode<T> extends DefaultAggregateFunction<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID           = 5204073215694477981L;
     private static final Set<SQLDialect> EMULATE_AS_ORDERED_SET_AGG = SQLDialect.supportedBy(H2, POSTGRES);
 
     Mode(Field<T> arg) {

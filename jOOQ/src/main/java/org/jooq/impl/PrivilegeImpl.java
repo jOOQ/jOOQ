@@ -48,11 +48,6 @@ import org.jooq.Privilege;
  * @author Timur Shaidullin
  */
 final class PrivilegeImpl extends AbstractQueryPart implements Privilege, SimpleQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = -3106268610481536038L;
     private static final Clause[] CLAUSES          = { PRIVILEGE };
     private final Keyword         privilege;
 

@@ -53,11 +53,6 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  */
 final class FunctionTable<R extends Record> extends AbstractTable<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = 2380426377794577041L;
-
     private final Field<?>       function;
 
     FunctionTable(Field<?> function) {

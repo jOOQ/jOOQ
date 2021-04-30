@@ -86,7 +86,6 @@ import org.jooq.tools.StringUtils;
 @org.jooq.Internal
 public class TableImpl<R extends Record> extends AbstractTable<R> implements ScopeMappable, ScopeNestable, SimpleQueryPart {
 
-    private static final long            serialVersionUID                  = 261033315221985068L;
     private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };
     private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS    = SQLDialect.supportedBy(HSQLDB, POSTGRES);

@@ -69,11 +69,6 @@ import org.jooq.SortOrder;
 
 final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, SimpleQueryPart {
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID = 1223739398544155873L;
-
     // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
     private static final Set<SQLDialect> NO_SUPPORT_NULLS = SQLDialect.supportedUntil(CUBRID, MARIADB, MYSQL);
 

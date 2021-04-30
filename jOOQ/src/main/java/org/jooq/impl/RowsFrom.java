@@ -55,11 +55,6 @@ import org.jooq.TableOptions;
  */
 final class RowsFrom extends AbstractTable<Record> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 693765524746506586L;
-
     private final TableList   tables;
 
     RowsFrom(Table<?>... tables) {

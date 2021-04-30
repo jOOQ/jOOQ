@@ -68,8 +68,6 @@ implements
     CreateDatabaseFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Catalog database;
     private final boolean createDatabaseIfNotExists;
 

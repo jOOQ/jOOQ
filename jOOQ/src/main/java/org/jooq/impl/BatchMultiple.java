@@ -58,11 +58,6 @@ import io.r2dbc.spi.ConnectionFactory;
  */
 final class BatchMultiple extends AbstractBatch {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7337667281292354043L;
-
     final Query[]             queries;
 
     public BatchMultiple(Configuration configuration, Query... queries) {

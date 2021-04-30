@@ -69,8 +69,6 @@ implements
     AlterViewFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Table<?> view;
     private final boolean  alterViewIfExists;
     private       Comment  comment;

@@ -48,11 +48,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class BitCount extends AbstractField<Integer> {
-
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = 7624782102883057433L;
     private final        Field<?>         field;
 
     BitCount(Field<?> field) {

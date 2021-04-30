@@ -57,8 +57,7 @@ import org.jooq.conf.ParamType;
 @Deprecated
 final class ConvertedVal<T> extends AbstractParamX<T> {
 
-    private static final long serialVersionUID = 1258437916133900173L;
-    final AbstractParamX<?>   delegate;
+    final AbstractParamX<?> delegate;
 
     ConvertedVal(AbstractParamX<?> delegate, DataType<T> type) {
         super(delegate.getUnqualifiedName(), type);

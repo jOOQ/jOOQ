@@ -53,8 +53,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class JSONB implements Serializable {
 
-    private static final long serialVersionUID = 860591239448066408L;
-    private final String      data;
+    private final String data;
 
     private JSONB(String data) {
         this.data = String.valueOf(data);

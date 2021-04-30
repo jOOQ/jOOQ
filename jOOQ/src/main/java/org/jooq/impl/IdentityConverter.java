@@ -40,9 +40,7 @@ package org.jooq.impl;
 import org.jooq.Converter;
 
 public final class IdentityConverter<T> implements Converter<T, T> {
-    private static final long serialVersionUID = -8331976721627671263L;
-
-    private final Class<T>    type;
+    private final Class<T> type;
 
     public IdentityConverter(Class<T> type) {
         this.type = type;

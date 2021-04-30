@@ -50,11 +50,6 @@ import java.util.Map;
  */
 public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6094337837408829491L;
-
     private final Map<T, U>   lookup;
     private final EnumType    enumType;
 

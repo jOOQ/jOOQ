@@ -106,11 +106,6 @@ implements
 
     DerivedColumnList {
 
-    /**
-     * Gemerated UID
-     */
-    private static final long                                             serialVersionUID = -369633206858851863L;
-
     final Name                                                            name;
     final Name[]                                                          fieldNames;
     final BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction;

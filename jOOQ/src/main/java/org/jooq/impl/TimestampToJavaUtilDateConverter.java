@@ -43,11 +43,6 @@ import java.sql.Timestamp;
  * @author Lukas Eder
  */
 final class TimestampToJavaUtilDateConverter extends AbstractConverter<Timestamp, java.util.Date> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                     serialVersionUID = 1L;
     static final TimestampToJavaUtilDateConverter INSTANCE         = new TimestampToJavaUtilDateConverter();
 
     private TimestampToJavaUtilDateConverter () {

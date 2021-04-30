@@ -71,8 +71,6 @@ implements
     Truncate<R>
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Table<R> table;
     private       Boolean  restartIdentity;
     private       Cascade  cascade;

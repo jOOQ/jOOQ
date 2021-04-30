@@ -56,11 +56,6 @@ import org.jooq.Schema;
 @org.jooq.Internal
 public class PackageImpl extends AbstractNamed implements Package {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 7466890004995197675L;
-
     private Schema            schema;
 
     public PackageImpl(String name, Schema schema) {

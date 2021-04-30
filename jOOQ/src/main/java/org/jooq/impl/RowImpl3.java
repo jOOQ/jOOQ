@@ -65,11 +65,6 @@ import org.jooq.Statement;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class RowImpl3<T1, T2, T3> extends AbstractRow<Record3<T1, T2, T3>> implements Row3<T1, T2, T3> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -929427349071556318L;
-
     RowImpl3(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
         super(field1, field2, field3);
     }

@@ -980,11 +980,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
      */
     class ForceInlineSignal extends ControlFlowSignal {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -9131368742983295195L;
-
         public ForceInlineSignal() {
             if (log.isDebugEnabled())
                 log.debug("Re-render query", "Forcing bind variable inlining as " + configuration().dialect() + " does not support " + peekIndex() + " bind variables (or more) in a single query");

@@ -48,11 +48,6 @@ import org.jooq.DataType;
  */
 final class Default<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 4970683544086849863L;
-
     Default(DataType<T> type) {
         super(N_DEFAULT, type);
     }

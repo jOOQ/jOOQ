@@ -69,11 +69,6 @@ import org.jooq.UniqueKey;
  */
 final class FilteredMeta extends AbstractMeta {
 
-    /**
-     * Generated UID
-     */
-    private static final long                         serialVersionUID = 2589476339574534267L;
-
     private final AbstractMeta                        meta;
     private final Predicate<? super Catalog>          catalogFilter;
     private final Predicate<? super Schema>           schemaFilter;
@@ -282,7 +277,6 @@ final class FilteredMeta extends AbstractMeta {
     }
 
     private class FilteredCatalog extends CatalogImpl {
-        private static final long      serialVersionUID = 7979890261252183486L;
 
         private final Catalog          delegate;
         private transient List<Schema> schemas;
@@ -308,8 +302,6 @@ final class FilteredMeta extends AbstractMeta {
     }
 
     private class FilteredSchema extends SchemaImpl {
-        private static final long serialVersionUID = -95755926444275258L;
-
         private final Schema                delegate;
         private transient List<Domain<?>>   domains;
         private transient List<Table<?>>    tables;
@@ -370,8 +362,6 @@ final class FilteredMeta extends AbstractMeta {
     }
 
     private class FilteredTable<R extends Record> extends TableImpl<R> {
-        private static final long serialVersionUID = -6070726881709997500L;
-
         private final Table<R>                   delegate;
         private transient List<Index>            indexes;
         private transient UniqueKey<R>           primaryKey;

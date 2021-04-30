@@ -70,11 +70,6 @@ import org.jooq.conf.ParamType;
  * @author Lukas Eder
  */
 final class GenerateSeries extends AbstractTable<Record1<Integer>> implements AutoAliasTable<Record1<Integer>> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID       = 2385574114457239818L;
     private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
 

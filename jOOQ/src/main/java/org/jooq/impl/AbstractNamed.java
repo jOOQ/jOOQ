@@ -54,9 +54,8 @@ import org.jooq.tools.StringUtils;
  */
 abstract class AbstractNamed extends AbstractQueryPart implements Named {
 
-    private static final long serialVersionUID = 4569512766643813958L;
-    private final Name        name;
-    private final Comment     comment;
+    private final Name    name;
+    private final Comment comment;
 
     AbstractNamed(Name name, Comment comment) {
         this.name = name == null ? AbstractName.NO_NAME : name;

@@ -60,8 +60,7 @@ import org.jooq.tools.StringUtils;
  */
 class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T>, SimpleQueryPart {
 
-    private static final long     serialVersionUID = -2211214195583539735L;
-    private static final Clause[] CLAUSES          = { FIELD, FIELD_REFERENCE };
+    private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };
 
     private final Table<R>        table;
 

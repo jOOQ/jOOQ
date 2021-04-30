@@ -46,14 +46,9 @@ import org.jooq.impl.SchemaImpl;
  *
  * @author Lukas Eder
  */
-class RenamedSchema extends SchemaImpl {
+final class RenamedSchema extends SchemaImpl {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -3579885830845728730L;
-
-    private final Schema      delegate;
+    private final Schema delegate;
 
     RenamedSchema(Catalog catalog, Schema delegate, String rename) {
         super(rename, catalog);

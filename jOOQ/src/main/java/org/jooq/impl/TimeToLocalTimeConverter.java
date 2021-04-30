@@ -52,11 +52,6 @@ import org.jooq.Converter;
 @Deprecated
 public final class TimeToLocalTimeConverter extends AbstractConverter<Time, LocalTime> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6914493125390333501L;
-
     public TimeToLocalTimeConverter() {
         super(Time.class, LocalTime.class);
     }

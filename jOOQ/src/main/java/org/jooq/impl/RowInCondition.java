@@ -78,11 +78,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class RowInCondition extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long                  serialVersionUID = -1806139685201770706L;
     private static final Clause[]              CLAUSES_IN       = { CONDITION, CONDITION_IN };
     private static final Clause[]              CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
 
@@ -125,11 +120,6 @@ final class RowInCondition extends AbstractCondition {
     }
 
     private class Native extends AbstractCondition {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -7019193803316281371L;
 
         @Override
         public final void accept(Context<?> ctx) {

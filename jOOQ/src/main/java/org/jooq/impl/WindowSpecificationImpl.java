@@ -94,11 +94,6 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     WindowSpecificationExcludeStep
     {
 
-
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID      = 2996016924769376361L;
     private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
 
     private final WindowDefinitionImpl    windowDefinition;

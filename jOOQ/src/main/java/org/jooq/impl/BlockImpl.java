@@ -100,11 +100,6 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 final class BlockImpl extends AbstractRowCountQuery implements Block {
-
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID                  = 6881305779639901498L;
     private static final Set<SQLDialect>  REQUIRES_EXECUTE_IMMEDIATE_ON_DDL = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT           = SQLDialect.supportedBy(POSTGRES);
 

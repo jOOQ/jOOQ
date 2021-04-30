@@ -73,11 +73,6 @@ final class JSONObjectAgg<J>
 extends AbstractAggregateFunction<J>
 implements JSONObjectAggNullStep<J> {
 
-    /**
-     * Generated UID
-     */
-    private static final long  serialVersionUID = 1772007627336725780L;
-
     private final JSONEntry<?> entry;
     private JSONOnNull         onNull;
     private DataType<?>        returning;

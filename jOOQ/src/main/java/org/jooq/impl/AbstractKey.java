@@ -61,11 +61,6 @@ import org.jooq.UniqueKey;
  */
 abstract class AbstractKey<R extends Record> extends AbstractNamed implements Key<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long        serialVersionUID = 8176874459141379340L;
-
     private final Table<R>           table;
     private final TableField<R, ?>[] fields;
     private final boolean            enforced;

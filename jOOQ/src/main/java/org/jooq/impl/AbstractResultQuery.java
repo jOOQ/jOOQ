@@ -75,11 +75,6 @@ import org.jooq.tools.jdbc.MockResultSet;
  * @author Lukas Eder
  */
 abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> implements ResultQueryTrait<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long              serialVersionUID                  = -5588344253566055707L;
     private static final JooqLogger        log                               = JooqLogger.getLogger(AbstractResultQuery.class);
 
     private static final Set<SQLDialect>   REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES);

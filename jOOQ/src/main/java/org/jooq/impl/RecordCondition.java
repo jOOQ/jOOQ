@@ -47,11 +47,6 @@ import org.jooq.Record;
  */
 final class RecordCondition extends AbstractCondition {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 56430809227808954L;
-
     private final Record      record;
 
     RecordCondition(Record record) {

@@ -72,11 +72,6 @@ import org.jooq.Name;
  */
 final class DateDiff<T> extends AbstractField<Integer> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -4813228000332771961L;
-
     private final DatePart    part;
     private final Field<T>    startDate;
     private final Field<T>    endDate;

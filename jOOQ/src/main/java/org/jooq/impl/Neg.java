@@ -61,11 +61,6 @@ import org.jooq.tools.Convert;
  */
 final class Neg<T> extends AbstractTransformable<T> {
 
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID = 7624782102883057433L;
     private static final Set<SQLDialect> EMULATE_BIT_NOT  = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> SUPPORT_BIT_NOT  = SQLDialect.supportedBy(H2);
 

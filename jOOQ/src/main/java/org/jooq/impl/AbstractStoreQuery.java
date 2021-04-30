@@ -54,11 +54,6 @@ import org.jooq.Table;
  */
 abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> implements StoreQuery<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 6864591335823160569L;
-
     AbstractStoreQuery(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
     }
@@ -104,11 +99,6 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
     }
 
     static class UnknownField<T> extends AbstractField<T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -8950654583203020935L;
         private final int         index;
 
         @SuppressWarnings({ "rawtypes", "unchecked" })

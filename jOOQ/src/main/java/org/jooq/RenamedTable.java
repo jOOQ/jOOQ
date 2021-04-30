@@ -48,11 +48,6 @@ import org.jooq.impl.TableImpl;
  */
 class RenamedTable<R extends Record> extends TableImpl<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -309012919785933903L;
-
     RenamedTable(Schema schema, Table<R> delegate, String rename) {
         super(name(rename), schema);
 

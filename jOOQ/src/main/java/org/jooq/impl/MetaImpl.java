@@ -130,7 +130,6 @@ import org.jooq.tools.StringUtils;
  */
 final class MetaImpl extends AbstractMeta {
 
-    private static final long            serialVersionUID                 = 3582980783173033809L;
     private static final JooqLogger      log                              = JooqLogger.getLogger(MetaImpl.class);
     private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
@@ -258,11 +257,6 @@ final class MetaImpl extends AbstractMeta {
 
     private final class MetaCatalog extends CatalogImpl {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -2821093577201327275L;
-
         MetaCatalog(String name) {
             super(name);
         }
@@ -318,11 +312,6 @@ final class MetaImpl extends AbstractMeta {
     }
 
     private final class MetaSchema extends SchemaImpl {
-
-        /**
-         * Generated UID
-         */
-        private static final long                            serialVersionUID = -2621899850912554198L;
         private transient volatile Map<Name, Result<Record>> columnCache;
         private transient volatile Map<Name, Result<Record>> ukCache;
         private transient volatile Map<Name, Result<Record>> sequenceCache;
@@ -660,11 +649,6 @@ final class MetaImpl extends AbstractMeta {
     };
 
     private final class MetaTable extends TableImpl<Record> {
-
-        /**
-         * Generated UID
-         */
-        private static final long    serialVersionUID = 4843841667753000233L;
         private final Result<Record> uks;
 
         MetaTable(String name, Schema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
@@ -1100,11 +1084,6 @@ final class MetaImpl extends AbstractMeta {
     }
 
     private final class MetaUniqueKey extends AbstractKey<Record> implements UniqueKey<Record> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 6997258619475953490L;
         private final boolean     isPrimary;
 
         MetaUniqueKey(Table<Record> table, String name, TableField<Record, ?>[] fields, boolean isPrimary) {

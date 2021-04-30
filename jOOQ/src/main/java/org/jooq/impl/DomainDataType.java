@@ -48,11 +48,6 @@ import org.jooq.Domain;
  */
 final class DomainDataType<T> extends DefaultDataType<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6943059152215232010L;
-
     private final Domain<T>   domain;
     private final DataType<T> baseType;
 

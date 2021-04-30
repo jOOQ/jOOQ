@@ -49,11 +49,6 @@ abstract class AbstractDelegatingDMLQuery<R extends Record, Q extends AbstractDM
     extends AbstractDelegatingQuery<R, Q>
     implements RowCountQuery {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 6710523592699040547L;
-
     AbstractDelegatingDMLQuery(Q delegate) {
         super(delegate);
     }

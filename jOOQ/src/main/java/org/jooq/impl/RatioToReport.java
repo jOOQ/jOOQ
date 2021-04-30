@@ -53,11 +53,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
-
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = 7292087943334025737L;
     private final Field<? extends Number> field;
 
     RatioToReport(Field<? extends Number> field) {

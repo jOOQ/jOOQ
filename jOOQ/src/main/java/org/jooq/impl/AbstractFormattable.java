@@ -64,11 +64,6 @@ import org.xml.sax.SAXException;
  */
 abstract class AbstractFormattable implements Formattable, Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 8634798716074039885L;
-
     @Override
     public final String format() {
         return format(TXTFormat.DEFAULT);

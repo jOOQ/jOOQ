@@ -57,11 +57,6 @@ import org.jooq.TableField;
 public class EmbeddableRecordImpl<R extends EmbeddableRecord<R>> extends AbstractRecord implements EmbeddableRecord<R> {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -1260149220986944763L;
-
-    /**
      * @deprecated - [#11058] - 3.14.5 - Please re-generate your code.
      */
     @Deprecated

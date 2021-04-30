@@ -70,8 +70,6 @@ implements
     AlterTypeFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Name          type;
     private       Name          renameTo;
     private       Schema        setSchema;

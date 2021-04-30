@@ -150,11 +150,6 @@ implements
     TableOptionalOnStep<Record>,
     TablePartitionByStep<Record>,
     TableOnConditionStep<Record> {
-
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID           = 8377996833996498178L;
     private static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
 
 

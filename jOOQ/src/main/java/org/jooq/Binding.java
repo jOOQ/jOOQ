@@ -265,11 +265,6 @@ public interface Binding<T, U> extends Serializable {
     ) {
         return new Binding<T, U>() {
 
-            /**
-             * Generated UID
-             */
-            private static final long serialVersionUID = -7780201518613974266L;
-
             @Override
             public final Converter<T, U> converter() {
                 return converter;

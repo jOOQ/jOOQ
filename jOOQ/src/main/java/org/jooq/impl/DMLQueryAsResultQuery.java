@@ -78,11 +78,6 @@ implements
     DeleteResultStep<R>,
     UpdateResultStep<R>,
     InsertResultStep<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long              serialVersionUID = 1544514683289794225L;
     private final Q                        delegate;
     private final boolean                  returningResult;
     private Table<?>                       coerceTable;

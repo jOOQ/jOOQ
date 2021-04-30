@@ -723,11 +723,6 @@ final class LoaderImpl<R extends Record> implements
 
     private static final class CachedPSListener extends DefaultExecuteListener implements AutoCloseable {
 
-        /**
-         * Generated UID
-         */
-        private static final long   serialVersionUID = 1374352882405299310L;
-
         final Map<String, CachedPS> map              = new HashMap<>();
 
         @Override

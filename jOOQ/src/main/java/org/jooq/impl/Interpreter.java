@@ -153,7 +153,6 @@ final class Interpreter {
         applyDelayedForeignKeys();
 
         return new AbstractMeta(configuration) {
-            private static final long serialVersionUID = 2052806256506059701L;
 
             @Override
             final List<Catalog> getCatalogs0() throws DataAccessException {

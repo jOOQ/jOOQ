@@ -125,11 +125,6 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
 final class Expression<T> extends AbstractTransformable<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID       = -5522799070693019771L;
     private static final Set<SQLDialect> SUPPORT_BIT_AND        = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect> SUPPORT_BIT_OR_XOR     = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect> EMULATE_BIT_XOR        = SQLDialect.supportedBy(SQLITE);
@@ -354,11 +349,6 @@ final class Expression<T> extends AbstractTransformable<T> {
      * Return the expression to be rendered when the RHS is an interval type
      */
     private static class DateExpression<T> extends AbstractField<T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long        serialVersionUID = 3160679741902222262L;
 
         private final Field<T>           lhs;
         private final ExpressionOperator operator;
@@ -854,11 +844,6 @@ final class Expression<T> extends AbstractTransformable<T> {
     }
 
     private static class DefaultExpression<T> extends AbstractField<T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long        serialVersionUID = -5105004317793995419L;
 
         private final Field<T>           lhs;
         private final ExpressionOperator operator;

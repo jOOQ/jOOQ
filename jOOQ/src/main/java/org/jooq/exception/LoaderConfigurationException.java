@@ -48,11 +48,6 @@ import org.jooq.Loader;
 public class LoaderConfigurationException extends DataAccessException {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1070990582126075536L;
-
-    /**
      * Constructor for LoaderConfigurationException.
      *
      * @param message the detail message

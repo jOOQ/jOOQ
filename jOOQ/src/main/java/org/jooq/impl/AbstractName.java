@@ -55,11 +55,6 @@ import org.jooq.WindowSpecification;
  * @author Lukas Eder
  */
 abstract class AbstractName extends AbstractQueryPart implements Name, SimpleQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = 8562325639223483938L;
     static final UnqualifiedName NO_NAME          = new UnqualifiedName("");
 
     @Override

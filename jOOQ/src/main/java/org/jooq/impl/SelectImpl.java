@@ -221,11 +221,6 @@ implements
     SelectForUpdateOfStep<R> {
 
     /**
-     * Generated UID
-     */
-    private static final long                 serialVersionUID = -5425308887382166448L;
-
-    /**
      * A temporary member holding a join table
      */
     private transient TableLike<?>            joinTable;

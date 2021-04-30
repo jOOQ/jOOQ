@@ -105,11 +105,6 @@ import io.r2dbc.spi.ConnectionFactory;
  */
 public class DefaultConfiguration extends AbstractConfiguration {
 
-    /**
-     * Serial version UID
-     */
-    private static final long                           serialVersionUID = 4296981040491238190L;
-
     // Configuration objects
     private SQLDialect                                  dialect;
     private Settings                                    settings;

@@ -75,11 +75,6 @@ implements
     JSONValueOnStep<J>,
     JSONValueDefaultStep<J> {
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID      = 1772007627336725780L;
-
 
 
 

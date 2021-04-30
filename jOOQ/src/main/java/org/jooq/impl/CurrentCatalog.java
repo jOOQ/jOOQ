@@ -66,8 +66,6 @@ extends
     AbstractField<String>
 {
 
-    private static final long serialVersionUID = 1L;
-
     CurrentCatalog() {
         super(
             N_CURRENT_CATALOG,

@@ -72,20 +72,10 @@ import org.xml.sax.SAXException;
  */
 public class XMLasDOMBinding extends AbstractXMLBinding<Node> {
 
-    /**
-     * Generated UID
-     */
-    private static final long          serialVersionUID = -2153155338260706262L;
-
     private final Converter<XML, Node> converter;
 
     public XMLasDOMBinding() {
         this.converter = new AbstractConverter<XML, Node>(XML.class, Node.class) {
-
-            /**
-             * Generated UID
-             */
-            private static final long serialVersionUID = -2153155338260706262L;
 
             @Override
             public Node from(XML t) {

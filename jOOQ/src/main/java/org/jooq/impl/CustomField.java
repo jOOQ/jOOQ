@@ -62,11 +62,6 @@ import org.jooq.Name;
  * @author Lukas Eder
  */
 public abstract class CustomField<T> extends AbstractField<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = -1778024624798672262L;
     private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomField(String name, DataType<T> type) {
@@ -87,7 +82,6 @@ public abstract class CustomField<T> extends AbstractField<T> {
     /**
      * Create a {@link CustomField} from a lambda expression.
      */
-    @SuppressWarnings("serial")
     public static final <T> CustomField<T> of(Name name, DataType<T> type, Consumer<? super Context<?>> consumer) {
         return new CustomField<T>(name, type) {
             @Override

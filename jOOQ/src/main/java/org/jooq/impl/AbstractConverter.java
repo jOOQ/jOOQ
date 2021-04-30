@@ -44,11 +44,6 @@ import org.jooq.Converter;
  */
 public abstract class AbstractConverter<T, U> implements Converter<T, U> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 3739249904977790727L;
-
     private final Class<T>    fromType;
     private final Class<U>    toType;
 

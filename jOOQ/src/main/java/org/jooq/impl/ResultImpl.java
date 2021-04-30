@@ -104,11 +104,6 @@ import org.jooq.tools.jdbc.MockResultSet;
 @SuppressWarnings({"rawtypes", "unchecked" })
 final class ResultImpl<R extends Record> extends AbstractResult<R> implements Result<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 6416154375799578362L;
-
     private final List<R>     records;
 
     ResultImpl(Configuration configuration, Collection<? extends Field<?>> fields) {

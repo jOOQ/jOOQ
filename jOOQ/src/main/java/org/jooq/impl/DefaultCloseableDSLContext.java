@@ -51,11 +51,6 @@ import io.r2dbc.spi.ConnectionFactory;
  */
 public class DefaultCloseableDSLContext extends DefaultDSLContext implements CloseableDSLContext {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6315025485115195218L;
-
     public DefaultCloseableDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
         super(connectionProvider, dialect, settings);
     }

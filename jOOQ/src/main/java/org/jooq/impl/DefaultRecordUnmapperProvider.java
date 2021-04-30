@@ -53,11 +53,6 @@ import org.jooq.RecordUnmapperProvider;
  */
 public class DefaultRecordUnmapperProvider implements RecordUnmapperProvider, Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -5333521849740568028L;
-
     private final Configuration configuration;
 
     public DefaultRecordUnmapperProvider() {

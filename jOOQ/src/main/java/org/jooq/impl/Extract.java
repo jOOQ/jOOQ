@@ -83,10 +83,8 @@ import org.jooq.Keyword;
  */
 final class Extract extends AbstractField<Integer> {
 
-    private static final long serialVersionUID = 3748640920856031034L;
-
-    private final Field<?>    field;
-    private final DatePart    datePart;
+    private final Field<?> field;
+    private final DatePart datePart;
 
     Extract(Field<?> field, DatePart datePart) {
         super(N_EXTRACT, INTEGER);

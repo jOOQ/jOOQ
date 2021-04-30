@@ -71,7 +71,6 @@ import org.jooq.True;
  */
 final class TrueCondition extends AbstractCondition implements True {
 
-    private static final long     serialVersionUID   = 775364624704563687L;
     private static final Clause[] CLAUSES            = { CONDITION, CONDITION_COMPARISON };
     static final TrueCondition    INSTANCE           = new TrueCondition();
     static final Set<SQLDialect>  NO_SUPPORT_BOOLEAN = SQLDialect.supportedBy(FIREBIRD, SQLITE);

@@ -89,11 +89,6 @@ import org.jooq.Table;
  */
 final class RowIsNull extends AbstractCondition {
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID   = -1806139685201770706L;
-
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
     private static final Set<SQLDialect> EMULATE_NULL_ROW   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);

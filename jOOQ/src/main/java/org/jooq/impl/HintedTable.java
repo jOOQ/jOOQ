@@ -48,11 +48,6 @@ import org.jooq.Table;
  */
 final class HintedTable<R extends Record> extends AbstractTable<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long         serialVersionUID = -3905775637768497535L;
-
     private final AbstractTable<R>    delegate;
     private final Keyword             keywords;
     private final QueryPartList<Name> arguments;

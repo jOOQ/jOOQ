@@ -56,11 +56,6 @@ import org.jooq.MigrationListenerProvider;
 public class DefaultMigrationListenerProvider implements MigrationListenerProvider, Serializable {
 
     /**
-     * Generated UID.
-     */
-    private static final long     serialVersionUID = -2122007794302549679L;
-
-    /**
      * The delegate listener.
      */
     private final MigrationListener listener;

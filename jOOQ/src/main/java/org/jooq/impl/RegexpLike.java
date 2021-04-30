@@ -51,11 +51,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class RegexpLike extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 3162855665213654276L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
     private final Field<?>        search;

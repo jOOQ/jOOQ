@@ -54,11 +54,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class JSONNull extends AbstractQueryPart implements SimpleQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID          = 3121287280045911346L;
     static final Set<SQLDialect> NO_SUPPORT_ABSENT_ON_NULL = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     final JSONOnNull             type;

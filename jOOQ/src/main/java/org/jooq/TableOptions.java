@@ -54,10 +54,6 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class TableOptions implements Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long         serialVersionUID    = -4840043541516260827L;
     private static final TableOptions C_EXPRESSION        = new TableOptions(TableType.EXPRESSION);
     private static final TableOptions C_FUNCTION          = new TableOptions(TableType.FUNCTION);
     private static final TableOptions C_MATERIALIZED_VIEW = materializedView(null);

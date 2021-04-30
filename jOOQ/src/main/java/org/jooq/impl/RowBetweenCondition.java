@@ -163,19 +163,18 @@ implements
     BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
     BetweenAndStepN {
 
-    private static final long                serialVersionUID              = -4666251100802237878L;
-    private static final Clause[]            CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
-    private static final Clause[]            CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
-    private static final Clause[]            CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
-    private static final Clause[]            CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
-    private static final Set<SQLDialect>     NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect>     EMULATE_BETWEEN               = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL);
+    private static final Clause[]        CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
+    private static final Clause[]        CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
+    private static final Clause[]        CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
+    private static final Clause[]        CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
+    private static final Set<SQLDialect> NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_BETWEEN               = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL);
 
-    private final boolean                    symmetric;
-    private final boolean                    not;
-    private final Row                        row;
-    private final Row                        minValue;
-    private Row                              maxValue;
+    private final boolean                symmetric;
+    private final boolean                not;
+    private final Row                    row;
+    private final Row                    minValue;
+    private Row                          maxValue;
 
     RowBetweenCondition(Row row, Row minValue, boolean not, boolean symmetric) {
         this.row = row;
@@ -719,11 +718,6 @@ implements
     }
 
     private class Native extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 2915703568738921575L;
 
         @Override
         public final void accept(Context<?> context) {

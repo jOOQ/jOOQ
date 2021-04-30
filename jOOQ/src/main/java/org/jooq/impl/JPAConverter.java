@@ -59,11 +59,6 @@ import org.jooq.tools.reflect.Reflect;
  * @author Lukas Eder
  */
 public final class JPAConverter<T, U> extends AbstractConverter<T, U> {
-
-    /**
-     * Generated UID
-     */
-    private static final long              serialVersionUID = -8359212595180862077L;
     private static final JooqLogger        log              = JooqLogger.getLogger(JPAConverter.class);
 
     private final AttributeConverter<U, T> delegate;

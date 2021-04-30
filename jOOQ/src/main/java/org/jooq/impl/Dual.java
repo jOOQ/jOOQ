@@ -65,8 +65,7 @@ import org.jooq.TableOptions;
  */
 final class Dual extends AbstractTable<Record> {
 
-    private static final long          serialVersionUID = -7492790780048090156L;
-    private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
+    private static final Table<Record> FORCED_DUAL    = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
 
 
 
@@ -80,10 +79,9 @@ final class Dual extends AbstractTable<Record> {
 
 
 
-    private static final Name          DUAL_FIREBIRD    = DSL.unquotedName("RDB$DATABASE");
-    private static final Name          DUAL_CUBRID      = DSL.unquotedName("db_root");
-    private static final Name          DUAL_DERBY       = DSL.unquotedName("SYSIBM", "SYSDUMMY1");
-    private static final Name          DUAL_HSQLDB      = DSL.unquotedName("INFORMATION_SCHEMA", "SYSTEM_USERS");
+    private static final Name          DUAL_FIREBIRD  = DSL.unquotedName("RDB$DATABASE");
+    private static final Name          DUAL_CUBRID    = DSL.unquotedName("db_root");
+    private static final Name          DUAL_DERBY     = DSL.unquotedName("SYSIBM", "SYSDUMMY1");
 
     private final boolean              force;
 

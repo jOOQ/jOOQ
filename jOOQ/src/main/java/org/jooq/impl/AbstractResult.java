@@ -117,11 +117,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 abstract class AbstractResult<R extends Record> extends AbstractFormattable implements Fields, Iterable<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -3412555195899758746L;
-
     final AbstractRow<R>      fields;
     Configuration             configuration;
 

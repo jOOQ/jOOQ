@@ -61,11 +61,6 @@ import org.jooq.TableOptions;
  */
 final class ArrayTableEmulation extends AbstractTable<Record> {
 
-    /**
-     * Generated UID
-     */
-    private static final long        serialVersionUID = 2392515064450536343L;
-
     private final Object[]           array;
     private final FieldsImpl<Record> field;
     private final Name               alias;

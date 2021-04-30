@@ -66,11 +66,6 @@ import org.jooq.exception.DetachedException;
  */
 final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> implements ForeignKey<R, O> {
 
-    /**
-     * Generated UID
-     */
-    private static final long        serialVersionUID = 3636724364192618701L;
-
     private final UniqueKey<O>       uk;
     private final TableField<O, ?>[] ukFields;
 

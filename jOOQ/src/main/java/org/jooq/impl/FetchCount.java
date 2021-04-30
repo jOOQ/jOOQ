@@ -54,11 +54,6 @@ import org.jooq.Select;
  */
 final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -1093806354311260458L;
-
     private final Field<?>[]  count            = { count().as("c") };
     private final Select<?>   query;
 

@@ -53,11 +53,6 @@ import io.r2dbc.spi.ConnectionFactory;
  */
 abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements RowCountQuery {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 516654856465466162L;
-
     AbstractRowCountQuery(Configuration configuration) {
         super(configuration);
     }

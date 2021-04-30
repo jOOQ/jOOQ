@@ -49,11 +49,6 @@ import org.jooq.XML;
  * @author Lukas Eder
  */
 final class XMLConcat extends AbstractField<XML> {
-
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = 4505809303211506197L;
     private final QueryPartList<Field<?>> args;
 
     XMLConcat(Collection<? extends Field<?>> args) {

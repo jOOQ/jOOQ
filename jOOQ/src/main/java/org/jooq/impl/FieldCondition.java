@@ -47,11 +47,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class FieldCondition extends AbstractCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -9170915951443879057L;
     final Field<Boolean>      field;
 
     FieldCondition(Field<Boolean> field) {

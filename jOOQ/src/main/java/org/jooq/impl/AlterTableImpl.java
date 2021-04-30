@@ -215,11 +215,6 @@ final class AlterTableImpl extends AbstractDDLQuery implements
     AlterTableRenameColumnToStep,
     AlterTableRenameIndexToStep,
     AlterTableRenameConstraintToStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long                serialVersionUID                      = 8904572826501186329L;
     private static final Clause[]            CLAUSES                               = { ALTER_TABLE };
     private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);

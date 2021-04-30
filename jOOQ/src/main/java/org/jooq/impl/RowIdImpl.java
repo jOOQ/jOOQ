@@ -43,11 +43,6 @@ import org.jooq.RowId;
  * @author Lukas Eder
  */
 final class RowIdImpl implements RowId {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 3821958475070819582L;
     private final Object      value;
 
     RowIdImpl(Object value) {

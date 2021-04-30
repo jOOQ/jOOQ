@@ -60,11 +60,6 @@ import org.jooq.UpdatableRecord;
 public class ControlFlowSignal extends RuntimeException {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -3269663230218616147L;
-
-    /**
      * Create a new <code>ControlFlowException</code>.
      */
     public ControlFlowSignal() {}

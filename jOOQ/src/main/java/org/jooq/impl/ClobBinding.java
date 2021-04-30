@@ -70,11 +70,6 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 public class ClobBinding implements Binding<String, String> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 358789452467943117L;
-
     @Override
     public final Converter<String, String> converter() {
         return Converters.identity(String.class);

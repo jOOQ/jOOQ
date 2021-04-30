@@ -60,11 +60,9 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("serial")
 final class CatalogMetaImpl extends AbstractMeta {
 
-    private static final long    serialVersionUID = 7582210274970452691L;
-    private final Catalog[]      catalogs;
+    private final Catalog[] catalogs;
 
     private CatalogMetaImpl(Configuration configuration, Catalog[] catalogs) {
         super(configuration);

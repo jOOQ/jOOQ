@@ -64,7 +64,6 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
     CreateTypeStep,
     CreateTypeFinalStep {
 
-    private static final long serialVersionUID = -5018375056147329888L;
     private final Name        type;
     private QueryPartList<?>  values;
 

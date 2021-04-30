@@ -54,11 +54,6 @@ import org.jooq.Field;
  */
 final class ContainsIgnoreCase extends AbstractCondition {
 
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 1795491010886118843L;
-
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
     private final Field<?>        lhs;

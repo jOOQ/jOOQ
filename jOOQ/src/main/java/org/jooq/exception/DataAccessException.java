@@ -51,11 +51,6 @@ import java.sql.SQLException;
 public class DataAccessException extends RuntimeException {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID   = 491834858363345767L;
-
-    /**
      * Constructor for DataAccessException.
      *
      * @param message the detail message

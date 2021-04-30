@@ -66,8 +66,6 @@ extends
     AbstractField<T>
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Field<T>                date;
     private final Field<? extends Number> interval;
     private final DatePart                datePart;

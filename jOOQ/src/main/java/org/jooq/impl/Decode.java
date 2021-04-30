@@ -54,11 +54,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class Decode<T, Z> extends AbstractField<Z> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID = -7273879239726265322L;
     private static final Set<SQLDialect> EMULATE_DISTINCT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
 
 

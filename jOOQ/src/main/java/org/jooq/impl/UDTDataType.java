@@ -46,11 +46,6 @@ import org.jooq.UDTRecord;
  */
 final class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 3262508265391094581L;
-
     @SuppressWarnings("unchecked")
     UDTDataType(UDT<R> udt) {
         super(SQLDialect.DEFAULT, (Class<R>) udt.getRecordType(), Tools.asString(udt.getQualifiedName()));

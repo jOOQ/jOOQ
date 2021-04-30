@@ -50,11 +50,6 @@ import org.jooq.Field;
  */
 final class ConstantSortField<T> extends CustomField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -3927999794575046959L;
-
     ConstantSortField(Field<T> field) {
         super(field.getUnqualifiedName(), field.getDataType());
     }

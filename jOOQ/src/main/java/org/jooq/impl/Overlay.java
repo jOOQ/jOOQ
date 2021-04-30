@@ -66,8 +66,6 @@ extends
     AbstractField<String>
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Field<String>           in;
     private final Field<String>           placing;
     private final Field<? extends Number> startIndex;

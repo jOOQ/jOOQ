@@ -46,11 +46,6 @@ import java.util.Map;
  * @author Lukas Eder
  */
 final class LRUCache<K, V> extends LinkedHashMap<K, V> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -3241467274560581024L;
     private final int         size;
 
     LRUCache(int size) {

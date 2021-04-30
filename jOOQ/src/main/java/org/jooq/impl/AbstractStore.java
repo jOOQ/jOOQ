@@ -56,11 +56,6 @@ import org.jooq.Record;
  */
 abstract class AbstractStore extends AbstractFormattable implements Attachable {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -2989496800221194411L;
-
     private Configuration     configuration;
 
     AbstractStore() {

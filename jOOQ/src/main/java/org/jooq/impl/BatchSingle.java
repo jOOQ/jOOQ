@@ -72,11 +72,6 @@ import io.r2dbc.spi.ConnectionFactory;
  * @author Lukas Eder
  */
 final class BatchSingle extends AbstractBatch implements BatchBindStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long        serialVersionUID = 3793967258181493207L;
     private static final JooqLogger  log              = JooqLogger.getLogger(BatchSingle.class);
 
     final Query                      query;

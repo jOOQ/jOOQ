@@ -44,9 +44,4 @@ import org.jooq.Statement;
  */
 abstract class AbstractStatement extends AbstractQueryPart implements Statement, SeparatedQueryPart {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6403569303307721909L;
-
 }

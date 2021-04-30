@@ -63,11 +63,6 @@ import org.jetbrains.annotations.NotNull;
  */
 final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
 
-    /**
-     * Generated UID
-     */
-    private static final long                 serialVersionUID = 261452207127914269L;
-
     private final Collection<? extends Query> queries;
 
     QueriesImpl(Configuration configuration, Collection<? extends Query> queries) {

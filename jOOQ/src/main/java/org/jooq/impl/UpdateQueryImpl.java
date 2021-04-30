@@ -158,7 +158,6 @@ import org.jooq.UpdateQuery;
  */
 final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R> {
 
-    private static final long            serialVersionUID          = -660460731970074719L;
     private static final Clause[]        CLAUSES                   = { UPDATE };
 
 

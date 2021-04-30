@@ -65,7 +65,6 @@ import org.jooq.QueryPartInternal;
  */
 class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart implements Collection<T>, SimpleQueryPart, SeparatedQueryPart {
 
-    private static final long        serialVersionUID = -2936922742534009564L;
     final Collection<T>              wrapped;
     Boolean                          qualify;
     String                           separator;

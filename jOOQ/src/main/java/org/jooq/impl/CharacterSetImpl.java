@@ -46,8 +46,7 @@ import org.jooq.Name;
  */
 final class CharacterSetImpl extends AbstractQueryPart implements CharacterSet {
 
-    private static final long serialVersionUID = -3727429817107930766L;
-    private final Name        name;
+    private final Name name;
 
     CharacterSetImpl(Name name) {
         this.name = name;

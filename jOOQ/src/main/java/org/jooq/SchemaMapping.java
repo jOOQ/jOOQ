@@ -88,10 +88,6 @@ import org.jetbrains.annotations.Nullable;
 @Deprecated
 public class SchemaMapping implements Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long                        serialVersionUID  = 8269660159338710470L;
     private static final JooqLogger                  log               = JooqLogger.getLogger(SchemaMapping.class);
     private static volatile boolean                  loggedDeprecation = false;
 

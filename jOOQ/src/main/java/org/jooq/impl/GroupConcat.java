@@ -57,11 +57,6 @@ final class GroupConcat
 extends AbstractAggregateFunction<String>
 implements GroupConcatOrderByStep {
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -6884415527559632960L;
-
     private final Field<?>      field;
     private final SortFieldList orderBy;
     private String              separator;

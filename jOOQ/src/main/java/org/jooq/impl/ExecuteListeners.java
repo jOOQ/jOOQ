@@ -59,11 +59,6 @@ import org.jooq.tools.LoggerListener;
  * @author Lukas Eder
  */
 final class ExecuteListeners implements ExecuteListener {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID       = 7399239846062763212L;
     private static final ExecuteListener EMPTY_LISTENER         = new DefaultExecuteListener();
     private static final JooqLogger      LOGGER_LISTENER_LOGGER = JooqLogger.getLogger(LoggerListener.class);
 

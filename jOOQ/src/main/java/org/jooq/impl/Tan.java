@@ -67,8 +67,6 @@ extends
     AbstractField<BigDecimal>
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Field<? extends Number> number;
 
     Tan(

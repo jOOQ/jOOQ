@@ -71,8 +71,6 @@ implements
     GrantFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Collection<? extends Privilege> privileges;
     private       Table<?>                        on;
     private       Role                            to;

@@ -66,8 +66,6 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractQueryPart implements QueryPartInternal {
 
-    private static final long serialVersionUID = 2078114876079493107L;
-
     // -------------------------------------------------------------------------
     // [#1544] The deprecated Attachable and Attachable internal API
     // -------------------------------------------------------------------------

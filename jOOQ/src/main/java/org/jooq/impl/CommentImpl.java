@@ -46,11 +46,6 @@ import org.jooq.Context;
  * @author Lukas Eder
  */
 final class CommentImpl extends AbstractQueryPart implements Comment {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -5034168783226853829L;
     static final CommentImpl  NO_COMMENT       = new CommentImpl("");
     private final String      comment;
 

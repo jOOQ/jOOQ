@@ -67,11 +67,6 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  */
 public abstract class AbstractConfiguration implements Configuration {
-
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 4192586780235493065L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractConfiguration.class);
 
     @Override

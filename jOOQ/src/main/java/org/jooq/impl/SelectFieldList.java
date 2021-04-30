@@ -46,8 +46,6 @@ import org.jooq.SelectFieldOrAsterisk;
  */
 final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartList<F> {
 
-    private static final long serialVersionUID = 8850104968428500798L;
-
     SelectFieldList() {
         super();
     }

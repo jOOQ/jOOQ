@@ -87,11 +87,6 @@ import org.jooq.tools.StringUtils;
  */
 @org.jooq.Internal
 public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID      = -1012420583600561579L;
     private static final JooqLogger      log                   = JooqLogger.getLogger(UpdatableRecordImpl.class);
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE = SQLDialect.supportedBy(SQLITE);
 

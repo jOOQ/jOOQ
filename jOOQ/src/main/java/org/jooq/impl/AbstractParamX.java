@@ -49,11 +49,6 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  */
 abstract class AbstractParamX<T> extends AbstractField<T> implements Param<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 1311856649676227970L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractParam.class);
 
     AbstractParamX(Name name, DataType<T> type) {

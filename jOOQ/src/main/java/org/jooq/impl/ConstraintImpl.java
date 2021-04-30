@@ -148,11 +148,6 @@ implements
 
 
 {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID             = 1018023703769802616L;
     private static final Clause[]        CLAUSES                      = { CONSTRAINT };
     private static final Set<SQLDialect> NO_SUPPORT_PK                = SQLDialect.supportedBy();
     private static final Set<SQLDialect> NO_SUPPORT_UK                = SQLDialect.supportedBy(IGNITE);

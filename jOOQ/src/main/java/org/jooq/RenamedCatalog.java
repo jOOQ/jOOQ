@@ -46,11 +46,9 @@ import org.jooq.impl.CatalogImpl;
  *
  * @author Knut Wannheden
  */
-class RenamedCatalog extends CatalogImpl {
+final class RenamedCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = 8732065374174695141L;
-
-    private final Catalog     delegate;
+    private final Catalog delegate;
 
     RenamedCatalog(Catalog delegate, String rename) {
         super(rename, delegate.getComment());
@@ -59,7 +57,7 @@ class RenamedCatalog extends CatalogImpl {
     }
 
     @Override
-    public List<Schema> getSchemas() {
+    public final List<Schema> getSchemas() {
         return delegate.getSchemas();
     }
 }

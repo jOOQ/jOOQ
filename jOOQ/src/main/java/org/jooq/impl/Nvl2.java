@@ -51,11 +51,6 @@ import org.jooq.Field;
  */
 final class Nvl2<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
-
     private final Field<?>    arg1;
     private final Field<T>    arg2;
     private final Field<T>    arg3;

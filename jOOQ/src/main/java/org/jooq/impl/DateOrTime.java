@@ -54,11 +54,6 @@ import org.jooq.Keyword;
  */
 final class DateOrTime<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6729613078727690134L;
-
     private final Field<?>    field;
 
     DateOrTime(Field<?> field, DataType<T> dataType) {

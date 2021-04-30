@@ -55,8 +55,6 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  */
 final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends AbstractParam<R> {
 
-    private static final long serialVersionUID = 6807729087019209084L;
-
     QualifiedRecordConstant(R value) {
         super(value, value.getQualifier().getDataType());
     }

@@ -51,11 +51,6 @@ import org.jooq.Context;
  * @author Lukas Eder
  */
 final class NullStatement extends AbstractStatement {
-
-    /**
-     * Generated UID
-     */
-    private static final long  serialVersionUID = -1065054646570980726L;
     static final NullStatement INSTANCE         = new NullStatement();
 
     @Override

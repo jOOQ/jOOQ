@@ -47,11 +47,6 @@ import org.jooq.Field;
  */
 final class MapCondition extends AbstractCondition {
 
-    /**
-     * Generated UID
-     */
-    private static final long      serialVersionUID = 6320436041406801993L;
-
     private final Map<Field<?>, ?> map;
 
     MapCondition(Map<Field<?>, ?> map) {

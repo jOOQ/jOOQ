@@ -52,11 +52,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class BoolAnd extends DefaultAggregateFunction<Boolean> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID = 7292087943334025737L;
     private static final Set<SQLDialect> EMULATE          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     private final Condition              condition;

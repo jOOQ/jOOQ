@@ -98,11 +98,6 @@ import org.jooq.types.UShort;
 @org.jooq.Internal
 public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long                                   serialVersionUID  = 4155588654449505119L;
-
     private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION    = SQLDialect.supportedBy(HSQLDB, MARIADB);
     private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
 

@@ -47,11 +47,6 @@ import org.jooq.Context;
  * @author Lukas Eder
  */
 final class ConditionAsField extends AbstractField<Boolean> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -5921673852489483721L;
     final Condition           condition;
 
     ConditionAsField(Condition condition) {

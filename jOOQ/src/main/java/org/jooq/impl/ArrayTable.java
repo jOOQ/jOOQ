@@ -68,11 +68,6 @@ import org.jooq.util.h2.H2DataType;
  */
 final class ArrayTable extends AbstractTable<Record> {
 
-    /**
-     * Generated UID
-     */
-    private static final long        serialVersionUID = 2380426377794577041L;
-
     private final Field<?>           array;
     private final FieldsImpl<Record> field;
     private final Name               alias;
@@ -211,11 +206,6 @@ final class ArrayTable extends AbstractTable<Record> {
 
     private class PostgresHSQLDBTable extends DialectArrayTable {
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 6989279597964488457L;
-
         @Override
         public final void accept(Context<?> ctx) {
             ctx.visit(K_UNNEST).sql('(').visit(array).sql(")");
@@ -223,11 +213,6 @@ final class ArrayTable extends AbstractTable<Record> {
     }
 
     private class H2ArrayTable extends DialectArrayTable {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 8679404596822098711L;
 
         @Override
         public final void accept(Context<?> ctx) {
@@ -258,17 +243,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
 
 
-
-
-
-
-
     private abstract class DialectArrayTable extends AbstractTable<Record> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 2662639259338694177L;
 
         DialectArrayTable() {
             super(TableOptions.expression(), alias);

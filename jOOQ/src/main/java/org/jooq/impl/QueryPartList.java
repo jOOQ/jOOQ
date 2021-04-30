@@ -51,8 +51,6 @@ import org.jooq.QueryPart;
  */
 class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
 
-    private static final long serialVersionUID = -2936922742534009564L;
-
     QueryPartList() {
         this((Collection<T>) null);
     }

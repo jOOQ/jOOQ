@@ -54,11 +54,6 @@ import org.jooq.UniqueKey;
  */
 final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKey<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = 162853300137140844L;
-
     final List<ForeignKey<?, R>> references;
 
     UniqueKeyImpl(Table<R> table, TableField<R, ?>[] fields, boolean enforced) {

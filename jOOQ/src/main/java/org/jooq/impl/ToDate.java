@@ -67,8 +67,6 @@ extends
     AbstractField<Date>
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Field<String> value;
     private final Field<String> formatMask;
 

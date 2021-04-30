@@ -122,11 +122,5 @@ final class Cache {
     /**
      * A 2-value key for caching.
      */
-    private static final /* record */ class Key2 implements Serializable { private final Object key1; private final Object key2; public Key2(Object key1, Object key2) { this.key1 = key1; this.key2 = key2; } public Object key1() { return key1; } public Object key2() { return key2; } @Override public boolean equals(Object o) { if (!(o instanceof Key2)) return false; Key2 other = (Key2) o; if (!java.util.Objects.equals(this.key1, other.key1)) return false; if (!java.util.Objects.equals(this.key2, other.key2)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.key1, this.key2); } @Override public String toString() { return new StringBuilder("Key2[").append("key1=").append(this.key1).append(", key2=").append(this.key2).append("]").toString(); }
-
-        /**
-         * Generated UID.
-         */
-        private static final long serialVersionUID = 5822370287443922993L;
-    }
+    private static final /* record */ class Key2 implements Serializable { private final Object key1; private final Object key2; public Key2(Object key1, Object key2) { this.key1 = key1; this.key2 = key2; } public Object key1() { return key1; } public Object key2() { return key2; } @Override public boolean equals(Object o) { if (!(o instanceof Key2)) return false; Key2 other = (Key2) o; if (!java.util.Objects.equals(this.key1, other.key1)) return false; if (!java.util.Objects.equals(this.key2, other.key2)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.key1, this.key2); } @Override public String toString() { return new StringBuilder("Key2[").append("key1=").append(this.key1).append(", key2=").append(this.key2).append("]").toString(); } }
 }

@@ -68,11 +68,6 @@ import org.jooq.impl.Cast.CastNative;
  */
 public class DateAsTimestampBinding implements Binding<Timestamp, Timestamp> {
 
-    /**
-     * Generated UID
-     */
-    private static final long                     serialVersionUID = -7730882831126647188L;
-
     private final Converter<Timestamp, Timestamp> converter;
     private final Binding<Timestamp, Timestamp>   delegate;
 

@@ -48,11 +48,6 @@ import org.jooq.exception.SQLStateSubclass;
  * @author Lukas Eder
  */
 public final class ParserException extends DataAccessException {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -724913199583039157L;
     private final String      sql;
     private int               position;
     private int               line;

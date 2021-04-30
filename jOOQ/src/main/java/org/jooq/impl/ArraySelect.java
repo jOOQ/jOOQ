@@ -54,11 +54,6 @@ import org.jooq.Table;
  */
 final class ArraySelect<T> extends AbstractField<T[]> {
 
-    /**
-     * Generated UID
-     */
-    private static final long                  serialVersionUID = -6629785423729163857L;
-
     private final Select<? extends Record1<T>> select;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

@@ -63,11 +63,6 @@ import org.jooq.UniqueKey;
 @Internal
 public final class LazySchema extends AbstractNamed implements Schema {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -2260128711891951254L;
-
     final LazySupplier<Schema> supplier;
     transient Schema           schema;
 

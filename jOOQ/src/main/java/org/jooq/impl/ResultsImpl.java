@@ -53,11 +53,6 @@ import org.jooq.exception.DataAccessException;
  */
 final class ResultsImpl extends AbstractList<Result<Record>> implements Results {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1744826140354980500L;
-
     private Configuration     configuration;
     final List<ResultOrRows>  resultsOrRows;
 

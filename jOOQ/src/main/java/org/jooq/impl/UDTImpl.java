@@ -64,8 +64,6 @@ import org.jooq.UDTRecord;
 @org.jooq.Internal
 public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UDT<R> {
 
-    private static final long     serialVersionUID = -2208672099190913126L;
-
     private final Schema          schema;
     private final FieldsImpl<R>   fields;
     private final Package         pkg;

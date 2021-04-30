@@ -48,11 +48,6 @@ import org.jooq.FieldOrRow;
  * @author Lukas Eder
  */
 final class Rollup extends AbstractField<Object> {
-
-    /**
-     * Generated UID
-     */
-    private static final long         serialVersionUID = -5820608758939548704L;
     private QueryPartList<FieldOrRow> arguments;
 
     Rollup(FieldOrRow... arguments) {
@@ -78,11 +73,6 @@ final class Rollup extends AbstractField<Object> {
     }
 
     final class MySQLWithRollup extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 2814185308000330197L;
 
         @Override
         public final void accept(Context<?> ctx) {

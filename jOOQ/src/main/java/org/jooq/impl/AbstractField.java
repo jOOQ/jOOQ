@@ -107,11 +107,6 @@ import org.jooq.tools.Convert;
  * @author Lukas Eder
  */
 abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T>, ScopeMappable {
-
-    /**
-     * Generated UID
-     */
-    private static final long                serialVersionUID = 2884811923648354905L;
     private static final Clause[]            CLAUSES          = { FIELD };
 
     AbstractField(Name name, DataType<T> type) {

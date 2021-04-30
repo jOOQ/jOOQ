@@ -50,11 +50,6 @@ import org.jooq.ExecutorProvider;
  */
 public class DefaultExecutorProvider implements ExecutorProvider, Serializable {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -5333521849740568028L;
-
     @Override
     public final Executor provide() {
         return new DefaultExecutor();

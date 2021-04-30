@@ -58,11 +58,6 @@ import org.jooq.Table;
  */
 abstract class AbstractCursor<R extends Record> extends AbstractResult<R> implements Cursor<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 866689823212695960L;
-
     AbstractCursor(Configuration configuration, AbstractRow<R> row) {
         super(configuration, row);
     }

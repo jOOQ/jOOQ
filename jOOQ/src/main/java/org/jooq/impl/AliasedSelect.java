@@ -61,11 +61,9 @@ import org.jooq.TableOptions;
  */
 final class AliasedSelect<R extends Record> extends AbstractTable<R> {
 
-    private static final long serialVersionUID = 6763689261249123076L;
-
-    private final Select<R>   query;
-    private final boolean     subquery;
-    private final Name[]      aliases;
+    private final Select<R> query;
+    private final boolean   subquery;
+    private final Name[]    aliases;
 
     AliasedSelect(Select<R> query, boolean subquery) {
         this(query, subquery, Tools.fieldNames(Tools.degree(query)));

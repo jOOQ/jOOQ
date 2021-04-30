@@ -100,11 +100,6 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     CreateViewAsStep<R>,
     CreateViewFinalStep {
 
-
-    /**
-     * Generated UID
-     */
-    private static final long                                                       serialVersionUID         = 8904572826501186329L;
     private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
     private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, MYSQL, POSTGRES);
 

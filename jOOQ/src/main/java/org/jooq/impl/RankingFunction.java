@@ -64,11 +64,6 @@ import org.jooq.WindowSpecification;
  */
 final class RankingFunction<T> extends AbstractWindowFunction<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID     = -7318928420486422195L;
-
 
 
 

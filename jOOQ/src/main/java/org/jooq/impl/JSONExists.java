@@ -64,11 +64,6 @@ import org.jooq.conf.ParamType;
  */
 final class JSONExists extends AbstractCondition implements JSONExistsOnStep {
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = 1772007627336725780L;
-
     private final Field<?>      json;
     private final Field<String> path;
 

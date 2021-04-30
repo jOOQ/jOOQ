@@ -55,9 +55,7 @@ import org.jetbrains.annotations.NotNull;
  */
 abstract class AbstractAttachableQueryPart extends AbstractQueryPart implements AttachableQueryPart {
 
-    private static final long serialVersionUID = -8046199737354507547L;
-
-    private Configuration     configuration;
+    private Configuration configuration;
 
     AbstractAttachableQueryPart(Configuration configuration) {
         this.configuration = configuration;

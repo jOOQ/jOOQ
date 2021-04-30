@@ -50,11 +50,6 @@ import org.jooq.RecordListener;
  */
 public class DefaultRecordListener implements RecordListener {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -1072071094115362262L;
-
     @Override
     public void storeStart(RecordContext ctx) {}
 

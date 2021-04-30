@@ -76,11 +76,6 @@ import org.jooq.tools.Convert;
  * @author Lukas Eder
  */
 final class Limit extends AbstractQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long           serialVersionUID  = 2053741242981425602L;
     private static final Param<Integer> ZERO              = zero();
     private static final Param<Integer> ONE               = one();
     private static final Param<Integer> MAX               = DSL.inline(Integer.MAX_VALUE);

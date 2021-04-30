@@ -208,8 +208,7 @@ final class DiagnosticsConnection extends DefaultConnection {
 
     // See https://stackoverflow.com/a/1953516/521799
     static class LRU<V> extends LinkedHashMap<String, V> {
-        private static final long serialVersionUID = 5287799057535876982L;
-        private final int         size;
+        private final int size;
 
         LRU(int size) {
             super(size + 1, 1.0f, true);

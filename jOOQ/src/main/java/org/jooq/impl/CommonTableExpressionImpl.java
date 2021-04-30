@@ -65,11 +65,6 @@ import org.jooq.impl.Tools.DataKey;
  */
 final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> implements CommonTableExpression<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID     = 2520235151216758958L;
-
     private static final Set<SQLDialect> SUPPORT_MATERIALIZED = SQLDialect.supportedBy(POSTGRES);
 
 

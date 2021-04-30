@@ -47,11 +47,6 @@ package org.jooq.exception;
 public class DataTypeException extends DataAccessException {
 
     /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6460945824599280420L;
-
-    /**
      * Constructor for DataTypeException.
      *
      * @param message the detail message

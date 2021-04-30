@@ -69,8 +69,6 @@ implements
     AlterDatabaseFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Catalog database;
     private final boolean alterDatabaseIfExists;
     private       Catalog renameTo;

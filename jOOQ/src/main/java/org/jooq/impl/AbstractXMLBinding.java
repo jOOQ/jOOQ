@@ -59,11 +59,6 @@ import org.jooq.XML;
  */
 abstract class AbstractXMLBinding<T> implements Binding<XML, T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -2153155338260706262L;
-
     @Override
     public final void sql(BindingSQLContext<T> ctx) throws SQLException {
         ctx.render().visit(DSL.val(ctx.convert(converter()).value()));

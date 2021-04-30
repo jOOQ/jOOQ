@@ -64,7 +64,6 @@ import org.jetbrains.annotations.Nullable;
  * @param <R> The record type of the table being deleted from
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete<R> {
 
     /**

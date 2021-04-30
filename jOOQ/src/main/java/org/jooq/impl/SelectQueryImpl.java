@@ -291,11 +291,6 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implements SelectQuery<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID                = 1646393178384872967L;
     private static final JooqLogger      log                             = JooqLogger.getLogger(SelectQueryImpl.class);
     private static final Clause[]        CLAUSES                         = { SELECT };
     static final Set<SQLDialect>         EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);

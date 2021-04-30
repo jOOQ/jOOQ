@@ -47,11 +47,6 @@ import org.jooq.Field;
  */
 final class ArrayAgg<T> extends DefaultAggregateFunction<T[]> {
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID  = 8039163610536383826L;
-
     ArrayAgg(boolean distinct, Field<T> arg) {
         super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);
     }

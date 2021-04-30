@@ -66,8 +66,6 @@ extends
     AbstractField<T>
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Field<T>       field;
     private final Field<T>       low;
     private final Field<T>       high;

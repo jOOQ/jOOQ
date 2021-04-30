@@ -59,11 +59,6 @@ import org.jooq.XMLQueryPassingStep;
  * @author Lukas Eder
  */
 final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long         serialVersionUID = -4881363881968319258L;
     private final Field<String>       xpath;
     private final Field<XML>          passing;
     private final XMLPassingMechanism passingMechanism;

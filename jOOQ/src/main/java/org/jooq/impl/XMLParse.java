@@ -54,11 +54,6 @@ import org.jooq.XML;
  * @author Lukas Eder
  */
 final class XMLParse extends AbstractField<XML> {
-
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 4505809303211506197L;
     private final Field<String>     content;
     private final DocumentOrContent documentOrContent;
 

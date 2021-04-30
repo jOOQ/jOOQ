@@ -86,11 +86,6 @@ import org.jooq.impl.Tools.DataExtendedKey;
  * @author Lukas Eder
  */
 final class ForLock extends AbstractQueryPart {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID                = 5315134153342265917L;
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE_QUALIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
     private static final Set<SQLDialect> NO_SUPPORT_STANDARD_FOR_SHARE   = SQLDialect.supportedUntil(MARIADB);
 

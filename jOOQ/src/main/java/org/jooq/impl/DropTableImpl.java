@@ -69,8 +69,6 @@ implements
     DropTableFinalStep
 {
 
-    private static final long serialVersionUID = 1L;
-
     private final Boolean  temporary;
     private final Table<?> table;
     private final boolean  dropTableIfExists;

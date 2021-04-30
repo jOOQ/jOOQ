@@ -55,11 +55,6 @@ import org.jooq.conf.ParamType;
 abstract class AbstractDelegatingQuery<R extends Record, Q extends Query>
     extends AbstractQueryPart
     implements Query {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 6710523592699040547L;
     private final Q           delegate;
 
     AbstractDelegatingQuery(Q delegate) {

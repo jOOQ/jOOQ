@@ -50,11 +50,6 @@ import org.jooq.Name;
  */
 final class Iif<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 409629290052619844L;
-
     private final Condition   condition;
     private final Field<T>    ifTrue;
     private final Field<T>    ifFalse;

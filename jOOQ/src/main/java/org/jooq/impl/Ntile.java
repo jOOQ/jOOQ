@@ -47,11 +47,6 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class Ntile extends AbstractWindowFunction<Integer> {
-
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID = -7318928420486422195L;
     private final Field<Integer> tiles;
 
     Ntile(Field<Integer> tiles) {

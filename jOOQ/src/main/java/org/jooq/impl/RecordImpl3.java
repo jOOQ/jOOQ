@@ -54,11 +54,6 @@ import org.jooq.Record3;
 @SuppressWarnings({ "unchecked" })
 final class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRecord, Record3<T1, T2, T3> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -2201346180421463830L;
-
     RecordImpl3(AbstractRow<?> row) {
         super(row);
     }

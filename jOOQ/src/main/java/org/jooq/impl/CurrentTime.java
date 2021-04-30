@@ -52,11 +52,6 @@ import org.jooq.DataType;
  */
 final class CurrentTime<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
-
     CurrentTime(DataType<T> type) {
         super(N_CURRENT_TIME, type);
     }

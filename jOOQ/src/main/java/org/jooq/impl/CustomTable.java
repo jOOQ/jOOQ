@@ -76,11 +76,6 @@ import org.jooq.UniqueKey;
  */
 public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 4300737872863697213L;
-
     protected CustomTable(Name name) {
         super(name);
     }

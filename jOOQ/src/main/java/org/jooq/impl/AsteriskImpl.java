@@ -56,11 +56,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
-
-    /**
-     * Generated UI
-     */
-    private static final long     serialVersionUID                = 6298415939984684260L;
     static final AsteriskImpl     INSTANCE                        = new AsteriskImpl(new QueryPartList<>());
     static final Set<SQLDialect>  SUPPORT_NATIVE_EXCEPT           = SQLDialect.supportedBy(H2);
     static final Set<SQLDialect>  NO_SUPPORT_UNQUALIFIED_COMBINED = SQLDialect.supportedBy(FIREBIRD);

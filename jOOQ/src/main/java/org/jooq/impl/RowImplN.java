@@ -61,11 +61,6 @@ import org.jooq.Statement;
  */
 final class RowImplN extends AbstractRow<Record> implements RowN {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -929427349071556318L;
-
     RowImplN(SelectField<?>... fields) {
         super(fields);
     }

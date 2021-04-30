@@ -64,11 +64,6 @@ import org.jooq.ExecuteListenerProvider;
  */
 public class StopWatchListener implements ExecuteListener {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 7399239846062763212L;
-
     private final StopWatch watch = new StopWatch();
 
     @Override

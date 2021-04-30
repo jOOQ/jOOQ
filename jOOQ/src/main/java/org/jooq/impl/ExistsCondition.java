@@ -52,8 +52,7 @@ import org.jooq.Select;
  */
 final class ExistsCondition extends AbstractCondition {
 
-    private static final long     serialVersionUID   = 5678338161136603292L;
-    private static final Clause[] CLAUSES_EXISTS     = { CONDITION, CONDITION_EXISTS };
+    private static final Clause[] CLAUSES_EXISTS = { CONDITION, CONDITION_EXISTS };
 
     private final Select<?>       query;
 

@@ -92,7 +92,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvider {
 
     /**

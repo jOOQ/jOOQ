@@ -51,11 +51,6 @@ import org.jooq.User;
  * @author Timur Shaidullin
  */
 final class UserImpl extends AbstractNamed implements User {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 1169948119720063466L;
     private static final Clause[] CLAUSES          = { USER };
 
     UserImpl(Name name) {

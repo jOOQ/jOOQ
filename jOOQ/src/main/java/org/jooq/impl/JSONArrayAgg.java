@@ -78,11 +78,6 @@ import org.jooq.SQLDialect;
 final class JSONArrayAgg<J>
 extends AbstractAggregateFunction<J>
 implements JSONArrayAggOrderByStep<J> {
-
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID            = 1772007627336725780L;
     static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT   = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect> SUPPORT_JSON_MERGE_PRESERVE = SQLDialect.supportedBy(MARIADB, MYSQL);
 

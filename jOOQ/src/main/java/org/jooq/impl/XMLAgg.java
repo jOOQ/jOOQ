@@ -52,11 +52,6 @@ import org.jooq.XMLAggOrderByStep;
  */
 final class XMLAgg extends AbstractAggregateFunction<XML> implements XMLAggOrderByStep<XML> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1772007627336725780L;
-
     XMLAgg(Field<XML> arg) {
         super(false, N_XMLAGG, SQLDataType.XML, arg);
     }

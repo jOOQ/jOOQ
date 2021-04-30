@@ -59,10 +59,8 @@ import org.jooq.Table;
  */
 final class UniqueCondition extends AbstractCondition {
 
-    private static final long serialVersionUID = -5560973283201522844L;
-
-    private final Select<?>   query;
-    private final boolean     unique;
+    private final Select<?> query;
+    private final boolean   unique;
 
     UniqueCondition(Select<?> query, boolean unique) {
         this.query = query;

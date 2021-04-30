@@ -68,11 +68,6 @@ import org.jooq.Select;
  * @author Lukas Eder
  */
 final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, JSONEntryValueStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = 6734093632906565848L;
     private final Field<String> key;
     private final Field<T>      value;
 

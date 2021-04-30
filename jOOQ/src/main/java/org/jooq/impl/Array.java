@@ -58,11 +58,6 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class Array<T> extends AbstractField<T[]> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID = -6629785423729163857L;
     private static final Set<SQLDialect> REQUIRES_CAST    = SQLDialect.supportedBy(POSTGRES);
 
     private final FieldsImpl<Record>     fields;

@@ -128,11 +128,6 @@ final class UpdateImpl<R extends Record>
     UpdateSetFirstStep<R>,
     UpdateSetMoreStep<R>,
     UpdateConditionStep<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -2444876472650065331L;
     private boolean           returningResult;
 
     UpdateImpl(Configuration configuration, WithImpl with, Table<R> table) {

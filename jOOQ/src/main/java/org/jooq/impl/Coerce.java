@@ -48,7 +48,7 @@ import org.jooq.Name;
  */
 final class Coerce<T> extends AbstractField<T> {
 
-    private final AbstractField<?> field;
+    final AbstractField<?> field;
 
     public Coerce(Field<?> field, DataType<T> type) {
         super(field.getQualifiedName(), type);

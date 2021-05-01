@@ -102,7 +102,7 @@ public interface Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extend
      */
     @NotNull
     @Internal
-    <U> Field<U> mapping(Function12<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? extends U> function);
+    <U> SelectField<U> mapping(Function12<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? extends U> function);
 
     /**
      * A convenience method to define a local {@link Record12} to custom type
@@ -110,7 +110,7 @@ public interface Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extend
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
      */
     @NotNull
-    <U> Field<U> mapping(Class<U> uType, Function12<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? extends U> function);
+    <U> SelectField<U> mapping(Class<U> uType, Function12<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? extends U> function);
 
     // ------------------------------------------------------------------------
     // Field accessors

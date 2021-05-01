@@ -71,6 +71,7 @@ import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 import org.jooq.BindingGetResultSetContext;
+import org.jooq.Converter;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
@@ -1518,23 +1519,33 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     AbstractRow<?> nested = null;
                     Class<? extends AbstractRecord> recordType = null;
 
-                    if (field instanceof RowField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
-                        nested = ((RowField<?, ?>) field).emulatedFields();
+                    // [#7100] TODO: This should be transparent to the CursorImpl
+                    //         RowField may have a Row[N].mapping(...) applied
+                    Field<?> f = field instanceof Coerce ? ((Coerce<?>) field).field : field;
+
+                    if (f instanceof RowField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
+                        nested = ((RowField<?, ?>) f).emulatedFields();
                         recordType = Tools.recordType(nested.size());
                     }
-                    else if (field.getDataType().isEmbeddable()) {
-                        nested = Tools.row0(embeddedFields(field));
-                        recordType = embeddedRecordType(field);
+                    else if (f.getDataType().isEmbeddable()) {
+                        nested = Tools.row0(embeddedFields(f));
+                        recordType = embeddedRecordType(f);
                     }
 
+                    int nestedOffset = offset + index;
                     if (nested != null) {
+                        CursorRecordInitialiser operation = new CursorRecordInitialiser(nested, nestedOffset);
                         value = (T) Tools.newRecord(true, (Class<AbstractRecord>) recordType, (AbstractRow<AbstractRecord>) nested, ((DefaultExecuteContext) ctx).originalConfiguration())
-                                         .operate(new CursorRecordInitialiser(nested, offset + index));
+                                         .operate(operation);
 
-                        offset += nested.size() - 1;
+                        // [#7100] TODO: Is there a more elegant way to do this?
+                        if (f != field)
+                            value = ((Converter<Object, T>) field.getConverter()).from(value);
+
+                        offset += operation.offset - nestedOffset + nested.size() - 1;
                     }
                     else {
-                        rsContext.index(offset + index + 1);
+                        rsContext.index(nestedOffset + 1);
                         field.getBinding().get((BindingGetResultSetContext<T>) rsContext);
                         value = (T) rsContext.value();
                     }

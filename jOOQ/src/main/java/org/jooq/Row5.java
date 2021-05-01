@@ -102,7 +102,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row, SelectField<Record5<T1, T
      */
     @NotNull
     @Internal
-    <U> Field<U> mapping(Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function);
+    <U> SelectField<U> mapping(Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function);
 
     /**
      * A convenience method to define a local {@link Record5} to custom type
@@ -110,7 +110,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row, SelectField<Record5<T1, T
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
      */
     @NotNull
-    <U> Field<U> mapping(Class<U> uType, Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function);
+    <U> SelectField<U> mapping(Class<U> uType, Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function);
 
     // ------------------------------------------------------------------------
     // Field accessors

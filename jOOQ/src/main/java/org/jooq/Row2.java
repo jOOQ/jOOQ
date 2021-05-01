@@ -102,7 +102,7 @@ public interface Row2<T1, T2> extends Row, SelectField<Record2<T1, T2>> {
      */
     @NotNull
     @Internal
-    <U> Field<U> mapping(Function2<? super T1, ? super T2, ? extends U> function);
+    <U> SelectField<U> mapping(Function2<? super T1, ? super T2, ? extends U> function);
 
     /**
      * A convenience method to define a local {@link Record2} to custom type
@@ -110,7 +110,7 @@ public interface Row2<T1, T2> extends Row, SelectField<Record2<T1, T2>> {
      * <code>SELECT</code> or <code>RETURNING</code> clauses.
      */
     @NotNull
-    <U> Field<U> mapping(Class<U> uType, Function2<? super T1, ? super T2, ? extends U> function);
+    <U> SelectField<U> mapping(Class<U> uType, Function2<? super T1, ? super T2, ? extends U> function);
 
     // ------------------------------------------------------------------------
     // Field accessors

@@ -100,12 +100,21 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     @SuppressWarnings({ "unchecked", "rawtypes" })
     RowField(final ROW row, Name as) {
         super(as, (DataType) SQLDataType.RECORD, CommentImpl.NO_COMMENT, binding(fromNullable(
-            // So far, this is only supported for PostgreSQL
-            Object.class, (Class<REC>) Tools.recordType(row.size()), t -> (REC) pgNewRecord(Record.class, (AbstractRow) row, t)
+            Object.class,
+            (Class<REC>) Tools.recordType(row.size()),
+
+            // [#7100] In non-PostgreSQL style dialects, RowField is emulated,
+            // and at conversion time, we already have a synthetic Record[N],
+            // so no further conversion is required.
+            t -> (REC) (
+                  t instanceof InternalRecord
+                ? t
+                : pgNewRecord(Record.class, (AbstractRow) row, t)
+            )
         )));
 
         this.row = row;
-        this.emulatedFields = (AbstractRow<REC>) row0(map(row.fields(), x -> x.as(as + "." + x.getName()), Field[]::new));
+        this.emulatedFields = (AbstractRow<REC>) row0(map(row.fields(), x -> x.as(as.unquotedName() + "." + x.getName()), Field[]::new));
     }
 
     AbstractRow<REC> emulatedFields() {
@@ -118,7 +127,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ctx.declareFields() && NO_NATIVE_SUPPORT.contains(ctx.dialect()))
+        if (NO_NATIVE_SUPPORT.contains(ctx.dialect()))
             ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields.fields.fields)));
 
 

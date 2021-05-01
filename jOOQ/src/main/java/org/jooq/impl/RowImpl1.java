@@ -78,12 +78,12 @@ final class RowImpl1<T1> extends AbstractRow<Record1<T1>> implements Row1<T1> {
     // ------------------------------------------------------------------------
 
     @Override
-    public final <U> Field<U> mapping(Function1<? super T1, ? extends U> function) {
+    public final <U> SelectField<U> mapping(Function1<? super T1, ? extends U> function) {
         return rf().convertFrom(Records.mapping(function));
     }
 
     @Override
-    public final <U> Field<U> mapping(Class<U> uType, Function1<? super T1, ? extends U> function) {
+    public final <U> SelectField<U> mapping(Class<U> uType, Function1<? super T1, ? extends U> function) {
         return rf().convertFrom(uType, Records.mapping(function));
     }
 

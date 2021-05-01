@@ -78,12 +78,12 @@ final class RowImpl5<T1, T2, T3, T4, T5> extends AbstractRow<Record5<T1, T2, T3,
     // ------------------------------------------------------------------------
 
     @Override
-    public final <U> Field<U> mapping(Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function) {
+    public final <U> SelectField<U> mapping(Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function) {
         return rf().convertFrom(Records.mapping(function));
     }
 
     @Override
-    public final <U> Field<U> mapping(Class<U> uType, Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function) {
+    public final <U> SelectField<U> mapping(Class<U> uType, Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function) {
         return rf().convertFrom(uType, Records.mapping(function));
     }
 

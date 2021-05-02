@@ -68,7 +68,7 @@ public final class Records {
         Function1<? super T1, ? extends U> function
     ) {
         return r -> function.apply(r.value1());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record2} to a user type
@@ -78,7 +78,7 @@ public final class Records {
         Function2<? super T1, ? super T2, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record3} to a user type
@@ -88,7 +88,7 @@ public final class Records {
         Function3<? super T1, ? super T2, ? super T3, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record4} to a user type
@@ -98,7 +98,7 @@ public final class Records {
         Function4<? super T1, ? super T2, ? super T3, ? super T4, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record5} to a user type
@@ -108,7 +108,7 @@ public final class Records {
         Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record6} to a user type
@@ -118,7 +118,7 @@ public final class Records {
         Function6<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record7} to a user type
@@ -128,7 +128,7 @@ public final class Records {
         Function7<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record8} to a user type
@@ -138,7 +138,7 @@ public final class Records {
         Function8<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record9} to a user type
@@ -148,7 +148,7 @@ public final class Records {
         Function9<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record10} to a user type
@@ -158,7 +158,7 @@ public final class Records {
         Function10<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record11} to a user type
@@ -168,7 +168,7 @@ public final class Records {
         Function11<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record12} to a user type
@@ -178,7 +178,7 @@ public final class Records {
         Function12<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record13} to a user type
@@ -188,7 +188,7 @@ public final class Records {
         Function13<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record14} to a user type
@@ -198,7 +198,7 @@ public final class Records {
         Function14<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record15} to a user type
@@ -208,7 +208,7 @@ public final class Records {
         Function15<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record16} to a user type
@@ -218,7 +218,7 @@ public final class Records {
         Function16<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record17} to a user type
@@ -228,7 +228,7 @@ public final class Records {
         Function17<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record18} to a user type
@@ -238,7 +238,7 @@ public final class Records {
         Function18<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record19} to a user type
@@ -248,7 +248,7 @@ public final class Records {
         Function19<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record20} to a user type
@@ -258,7 +258,7 @@ public final class Records {
         Function20<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record21} to a user type
@@ -268,7 +268,7 @@ public final class Records {
         Function21<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? super T21, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20(), r.value21());
-    }            
+    }
 
     /**
      * Create a {@link RecordMapper} that can map from {@link Record22} to a user type
@@ -278,7 +278,7 @@ public final class Records {
         Function22<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? super T21, ? super T22, ? extends U> function
     ) {
         return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20(), r.value21(), r.value22());
-    }            
+    }
 
 
 }

@@ -8476,19 +8476,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Field<?> parseArrayValueConstructorIf() {
         if (parseKeywordIf("ARRAY")) {
-            parse('[');
+            if (parseIf('[')) {
+                List<Field<?>> fields;
 
-            List<Field<?>> fields;
-            if (parseIf(']')) {
-                fields = emptyList();
-            }
-            else {
-                fields = parseList(',', ParseContext::parseField);
-                parse(']');
-            }
+                if (parseIf(']')) {
+                    fields = emptyList();
+                }
+                else {
+                    fields = parseList(',', ParseContext::parseField);
+                    parse(']');
+                }
 
-            // Prevent "wrong" javac method bind
-            return DSL.array((Collection) fields);
+                // Prevent "wrong" javac method bind
+                return DSL.array((Collection) fields);
+            }
+            else if (parseIf('(')) {
+                SelectQueryImpl select = parseWithOrSelect(1);
+                parse(')');
+
+                return DSL.array(select);
+            }
+            else
+                throw expected("[", "(");
         }
 
         return null;

@@ -283,6 +283,8 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
  * other <code>SELECT</code> statement in <code>UNION</code>s and similar

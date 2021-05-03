@@ -232,6 +232,8 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 
+import org.jetbrains.annotations.Nullable;
+
 // ...
 
 // ...
@@ -3430,12 +3432,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 render.sql("::").visit(((TableRecord<?>) value).getTable().getQualifiedName());
         }
 
-        private static final <T> T pgFromString(Class<T> type, String string) {
-            return pgFromString(Converters.identity(type), string);
-        }
-
         @SuppressWarnings("unchecked")
-        private static final <T> T pgFromString(Converter<?, T> converter, String string) {
+        private static final <T> T pgFromString(Field<T> field, String string) {
+            Converter<?, T> converter = field.getConverter();
             Class<T> type = Reflect.wrapper(converter.toType());
 
             if (string == null)
@@ -3495,7 +3494,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (type == UUID.class)
                 return (T) UUID.fromString(string);
             else if (type.isArray())
-                return (T) pgNewArray(type, string);
+                return (T) pgNewArray(field, type, string);
 
 
 
@@ -3506,7 +3505,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#11812] UDTRecords/TableRecords or InternalRecords that don't have an explicit converter
                     && (!InternalRecord.class.isAssignableFrom(type) || type == converter.fromType()))
-                return (T) pgNewRecord(type, null, string);
+                return (T) pgNewRecord(type, (AbstractRow<?>) field.getDataType().getRow(), string);
             else if (type == Object.class)
                 return (T) string;
 
@@ -3514,7 +3513,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             //                 which would cause a StackOverflowError, here!
             else if (type != converter.fromType()) {
                 Converter<Object, T> c = (Converter<Object, T>) converter;
-                return c.from(pgFromString(c.fromType(), string));
+                return c.from(pgFromString(field("converted_field", ((ConvertedDataType<?, ?>) field.getDataType()).delegate), string));
             }
 
             throw new UnsupportedOperationException("Class " + type + " is not supported");
@@ -3532,7 +3531,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * @return The converted {@link UDTRecord}
          */
         @SuppressWarnings("unchecked")
-        static final Record pgNewRecord(Class<?> type, AbstractRow<Record> fields, final Object object) {
+        static final Record pgNewRecord(Class<?> type, AbstractRow<?> fields, final Object object) {
             if (object == null)
                 return null;
 
@@ -3548,9 +3547,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             //   - Temporal data
             //   - Everything else: VARCHAR
             if (fields == null && Record.class.isAssignableFrom(type))
-                fields = (AbstractRow<Record>) Tools.row0(Tools.fields(values.size(), SQLDataType.VARCHAR));
+                fields = Tools.row0(Tools.fields(values.size(), SQLDataType.VARCHAR));
 
-            return Tools.newRecord(true, (Class<Record>) type, fields)
+            return Tools.newRecord(true, (Class<Record>) type, (AbstractRow<Record>) fields)
                         .operate(record -> {
                             Row row = record.fieldsRow();
 
@@ -3562,7 +3561,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private static final <T> void pgSetValue(Record record, Field<T> field, String value) {
-            record.set(field, pgFromString(field.getConverter(), value));
+            record.set(field, pgFromString(field, value));
         }
 
         /**
@@ -3574,21 +3573,24 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * @param string A String representation of an array
          * @return The converted array
          */
-        private static final Object[] pgNewArray(Class<?> type, String string) {
+        private static final Object[] pgNewArray(Field<?> field, Class<?> type, String string) {
             if (string == null)
                 return null;
 
             try {
-                Class<?> component = type.getComponentType();
-
                 return Tools.map(
                     toPGArray(string),
-                    v -> pgFromString(component, v),
-                    size -> (Object[]) java.lang.reflect.Array.newInstance(component, size)
+                    v -> pgFromString(field("array_element", field.getDataType().getArrayComponentDataType()), v),
+                    size -> (Object[]) java.lang.reflect.Array.newInstance(type.getComponentType(), size)
                 );
             }
             catch (Exception e) {
-                throw new DataTypeException("Error while creating array", e);
+
+                // [#11823]
+                if (type.getComponentType().getSimpleName().equals("UnknownType"))
+                    throw new DataTypeException("Error while creating array for UnknownType. Please provide an explicit Class<U> type to your converter, see https://github.com/jOOQ/jOOQ/issues/11823", e);
+                else
+                    throw new DataTypeException("Error while creating array", e);
             }
         }
     }

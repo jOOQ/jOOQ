@@ -37,34 +37,41 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.recordType;
+
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
-import org.jooq.Configuration;
-import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Nullability;
+import org.jooq.Record;
+import org.jooq.RecordType;
+import org.jooq.Row;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for anonymous array data types
  *
  * @author Lukas Eder
  */
-final class ArrayDataType<T> extends DefaultDataType<T[]> {
+final class RecordDataType<R extends Record> extends DefaultDataType<R> {
 
-    final DataType<T> elementType;
+    final Row row;
 
-    public ArrayDataType(DataType<T> elementType) {
-        super(null, elementType.getArrayType(), elementType.getTypeName(), elementType.getCastTypeName());
+    @SuppressWarnings("unchecked")
+    public RecordDataType(Row row) {
+        // [#11829] TODO: Implement this correctly for UDTRecord, TableRecord, and EmbeddableRecord
+        super(null, (Class<R>) recordType(row.size()), "record", "record");
 
-        this.elementType = elementType;
+        this.row = row;
     }
 
     /**
      * [#3225] Performant constructor for creating derived types.
      */
-    ArrayDataType(
-        AbstractDataType<T[]> t,
-        DataType<T> elementType,
+    RecordDataType(
+        DefaultDataType<R> t,
+        Row row,
         Integer precision,
         Integer scale,
         Integer length,
@@ -72,16 +79,16 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Collation collation,
         CharacterSet characterSet,
         boolean identity,
-        Field<T[]> defaultValue
+        Field<R> defaultValue
     ) {
         super(t, precision, scale, length, nullability, collation, characterSet, identity, defaultValue);
 
-        this.elementType = elementType;
+        this.row = row;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    DefaultDataType<T[]> construct(
+    DefaultDataType<R> construct(
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
@@ -90,11 +97,11 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
-        Field<T[]> newDefaultValue
+        Field<R> newDefaultValue
     ) {
-        return new ArrayDataType<>(
+        return new RecordDataType<>(
             this,
-            (AbstractDataType<T>) elementType,
+            row,
             newPrecision,
             newScale,
             newLength,
@@ -107,44 +114,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     }
 
     @Override
-    public final String getTypeName(Configuration configuration) {
-        String typeName = elementType.getTypeName(configuration);
-        return getArrayType(configuration, typeName);
-    }
-
-    @Override
-    public final String getCastTypeName(Configuration configuration) {
-        String castTypeName = elementType.getCastTypeName(configuration);
-        return getArrayType(configuration, castTypeName);
-    }
-
-    @Override
-    public final Class<?> getArrayComponentType() {
-        return elementType.getType();
-    }
-
-    @Override
-    public final DataType<?> getArrayComponentDataType() {
-        return elementType;
-    }
-
-
-    private static String getArrayType(Configuration configuration, String dataType) {
-        switch (configuration.family()) {
-
-            case HSQLDB:
-                return dataType + " array";
-
-
-
-            case POSTGRES:
-                return dataType + "[]";
-            case H2:
-                return "array";
-
-            // Default implementation is needed for hash-codes and toString()
-            default:
-                return dataType + "[]";
-        }
+    public final Row getRow() {
+        return row;
     }
 }

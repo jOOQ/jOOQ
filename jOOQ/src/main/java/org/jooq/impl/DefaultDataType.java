@@ -360,7 +360,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
      * [#3225] Performant constructor for creating derived types.
      */
     DefaultDataType(
-        DefaultDataType<T> t,
+        AbstractDataType<T> t,
         Integer precision,
         Integer scale,
         Integer length,
@@ -372,14 +372,14 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     ) {
         super(t.getQualifiedName(), NO_COMMENT);
 
-        this.dialect = t.dialect;
-        this.sqlDataType = t.sqlDataType;
-        this.uType = t.uType;
-        this.tType = t.tType;
-        this.typeName = t.typeName;
-        this.castTypeName = t.castTypeName;
-        this.castTypePrefix = t.castTypePrefix;
-        this.castTypeSuffix = t.castTypeSuffix;
+        this.dialect = t.getDialect();
+        this.sqlDataType = t.getSQLDataType();
+        this.uType = t.uType0();
+        this.tType = t.tType0();
+        this.typeName = t.typeName0();
+        this.castTypeName = t.castTypeName0();
+        this.castTypePrefix = t.castTypePrefix0();
+        this.castTypeSuffix = t.castTypeSuffix0();
 
         this.nullability = nullability;
         this.collation = collation;
@@ -392,9 +392,9 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         // [#10362] User bindings and/or converters need to be retained
         this.binding =
-            t.binding instanceof org.jooq.impl.DefaultBinding.AbstractBinding
-          ? binding(this, (Converter<T, T>) t.binding.converter())
-          : t.binding;
+            t.getBinding() instanceof org.jooq.impl.DefaultBinding.AbstractBinding
+          ? binding(this, (Converter<T, T>) t.getBinding().converter())
+          : t.getBinding();
     }
 
     private static final Integer integerPrecision(Class<?> type, Integer precision) {
@@ -526,6 +526,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     @Override
     final Class<?> tType0() {
         return tType;
+    }
+
+    @Override
+    final Class<T> uType0() {
+        return uType;
     }
 
     @Override

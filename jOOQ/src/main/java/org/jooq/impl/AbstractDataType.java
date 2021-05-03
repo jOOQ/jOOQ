@@ -85,12 +85,16 @@ import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.QualifiedRecord;
+import org.jooq.RecordType;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
 import org.jooq.tools.Convert;
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -478,6 +482,11 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         return null;
     }
 
+    @Override
+    public /* non-final */ Row getRow() {
+        return null;
+    }
+
 
 
 
@@ -647,6 +656,11 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
+    public final boolean isRecord() {
+        return Record.class.isAssignableFrom(tType0());
+    }
+
+    @Override
     public final boolean isEnum() {
         return EnumType.class.isAssignableFrom(tType0());
     }
@@ -676,6 +690,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     abstract String castTypeSuffix0();
     abstract String castTypeName0();
     abstract Class<?> tType0();
+    abstract Class<T> uType0();
     abstract Integer precision0();
     abstract Integer scale0();
     abstract Integer length0();

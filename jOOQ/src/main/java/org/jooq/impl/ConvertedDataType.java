@@ -45,6 +45,8 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Nullability;
+import org.jooq.RecordType;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 
 /**
@@ -55,8 +57,8 @@ import org.jooq.SQLDialect;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
-    private final AbstractDataTypeX<T>  delegate;
-    private final Binding<? super T, U> binding;
+    final AbstractDataTypeX<T>  delegate;
+    final Binding<? super T, U> binding;
 
     ConvertedDataType(AbstractDataTypeX<T> delegate, Binding<? super T, U> binding) {
         super(delegate.getQualifiedName(), delegate.getCommentPart());
@@ -90,6 +92,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             newIdentity,
             (Field) newDefaultValue
         ).asConvertedDataType(binding);
+    }
+
+    @Override
+    public final Row getRow() {
+        return delegate.getRow();
     }
 
     @Override
@@ -165,6 +172,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     final Class<?> tType0() {
         return delegate.tType0();
+    }
+
+    @Override
+    final Class<U> uType0() {
+        return binding.converter().toType();
     }
 
     @Override

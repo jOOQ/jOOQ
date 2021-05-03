@@ -75,6 +75,7 @@ import java.util.function.Function;
 
 import org.jooq.Converters.UnknownType;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
@@ -147,6 +148,13 @@ public interface DataType<T> extends Named {
      */
     @Nullable
     Domain<T> getDomain();
+
+    /**
+     * Get the nested record's {@link Row} definition, if this is a
+     * {@link #isRecord()}, or <code>NULL</code> otherwise.
+     */
+    @Nullable
+    Row getRow();
 
     /**
      * Retrieve the Java type associated with ARRAYs of this data type.
@@ -888,6 +896,15 @@ public interface DataType<T> extends Named {
      * Whether this data type is a UDT type.
      */
     boolean isUDT();
+
+    /**
+     * Whether this data type is a nested record type.
+     * <p>
+     * This is true for anonymous, structural nested record types constructed
+     * with {@link DSL#row(SelectField...)} or for nominal nested record types,
+     * such as {@link #isUDT()} or {@link #isEmbeddable()}.
+     */
+    boolean isRecord();
 
     /**
      * Whether this data type is an enum type.

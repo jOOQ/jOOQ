@@ -76,7 +76,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import java.util.Set;
 
 import org.jooq.Context;
-import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -99,7 +98,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     RowField(final ROW row, Name as) {
-        super(as, (DataType) SQLDataType.RECORD, CommentImpl.NO_COMMENT, binding(fromNullable(
+        super(as, new RecordDataType<>(row), CommentImpl.NO_COMMENT, binding(fromNullable(
             Object.class,
             (Class<REC>) Tools.recordType(row.size()),
 

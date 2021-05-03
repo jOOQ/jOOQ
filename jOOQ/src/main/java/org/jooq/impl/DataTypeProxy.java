@@ -259,6 +259,11 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     }
 
     @Override
+    final Class<T> uType0() {
+        return type.uType0();
+    }
+
+    @Override
     final Integer precision0() {
         return defaultIfNull(overridePrecision, type.precision0());
     }

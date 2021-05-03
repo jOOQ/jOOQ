@@ -99,6 +99,12 @@ public interface Row1<T1> extends Row, SelectField<Record1<T1>> {
      * {@link Converter#toType()}. There may be some edge cases where this doesn't
      * work. Please report any bugs here:
      * <a href="https://github.com/jOOQ/jOOQ/issues/new/choose">https://github.com/jOOQ/jOOQ/issues/new/choose</a>
+     * <p>
+     * Known issues include:
+     * <p>
+     * <ul>
+     * <li>When nesting rows in arrays, the class literal is required for reflective array creation.</li>
+     * </ul>
      */
     @NotNull
     @Internal

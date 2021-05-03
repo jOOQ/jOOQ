@@ -85,6 +85,7 @@ import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.QualifiedRecord;
+import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;

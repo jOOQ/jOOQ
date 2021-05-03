@@ -133,6 +133,7 @@ import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.jooq.tools.reflect.Reflect.onClass;
+import static org.jooq.util.postgres.PostgresUtils.toPGArray;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
@@ -3501,7 +3502,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             else if (EnumType.class.isAssignableFrom(type))
                 return (T) DefaultEnumTypeBinding.getEnumType((Class<EnumType>) type, string);
-            else if (Record.class.isAssignableFrom(type) && !InternalRecord.class.isAssignableFrom(type))
+            else if (Record.class.isAssignableFrom(type)
+
+            // [#11812] UDTRecords/TableRecords or InternalRecords that don't have an explicit converter
+                    && (!InternalRecord.class.isAssignableFrom(type) || type == converter.fromType()))
                 return (T) pgNewRecord(type, null, string);
             else if (type == Object.class)
                 return (T) string;
@@ -3571,25 +3575,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * @return The converted array
          */
         private static final Object[] pgNewArray(Class<?> type, String string) {
-            if (string == null) {
+            if (string == null)
                 return null;
-            }
 
             try {
                 Class<?> component = type.getComponentType();
-                List<String> values = PostgresUtils.toPGArray(string);
 
-                if (values.isEmpty()) {
-                    return (Object[]) java.lang.reflect.Array.newInstance(component, 0);
-                }
-                else {
-                    Object[] result = (Object[]) java.lang.reflect.Array.newInstance(component, values.size());
-
-                    for (int i = 0; i < values.size(); i++)
-                        result[i] = pgFromString(type.getComponentType(), values.get(i));
-
-                    return result;
-                }
+                return Tools.map(
+                    toPGArray(string),
+                    v -> pgFromString(component, v),
+                    size -> (Object[]) java.lang.reflect.Array.newInstance(component, size)
+                );
             }
             catch (Exception e) {
                 throw new DataTypeException("Error while creating array", e);

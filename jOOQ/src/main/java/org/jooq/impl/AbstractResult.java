@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static java.util.stream.Collectors.joining;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.XMLFormat.RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE;
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -1474,20 +1475,20 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             formatted += DatatypeConverter.printBase64Binary((byte[]) value);
         }
         else if (value.getClass().isArray()) {
-            // [#6545] Nested arrays
-            if (value.getClass().getComponentType().isArray())
-                formatted += Arrays.deepToString((Object[]) value);
-            else
-                formatted += Arrays.toString((Object[]) value);
+            // [#6545] Nested arrays are handled recursively
+            formatted += Arrays.stream((Object[]) value).map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
         }
         else if (value instanceof EnumType) {
             formatted += ((EnumType) value).getLiteral();
+        }
+        else if (value instanceof List) {
+            formatted += ((List<?>) value).stream().map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
         }
         else if (value instanceof Record) {
             formatted += Arrays
                 .stream(((Record) value).valuesRow().fields())
                 .map(f -> format0(f, false, visual))
-                .collect(Collectors.joining(", ", "(", ")"));
+                .collect(joining(", ", "(", ")"));
         }
         // [#6080] Support formatting of nested ROWs
         else if (value instanceof Param) {

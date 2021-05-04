@@ -75,6 +75,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Set;
 
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -90,7 +91,6 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     static final Set<SQLDialect>   NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     private final ROW              row;
-    private final AbstractRow<REC> emulatedFields;
 
     RowField(ROW row) {
         this(row, N_ROW);
@@ -113,11 +113,11 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
         )));
 
         this.row = row;
-        this.emulatedFields = (AbstractRow<REC>) row0(map(row.fields(), x -> x.as(as.unquotedName() + "." + x.getName()), Field[]::new));
     }
 
-    AbstractRow<REC> emulatedFields() {
-        return emulatedFields;
+    @SuppressWarnings("unchecked")
+    AbstractRow<REC> emulatedFields(Configuration configuration) {
+        return (AbstractRow<REC>) row0(map(row.fields(), x -> x.as(getUnqualifiedName().unquotedName() + configuration.settings().getNamePathSeparator() + x.getName()), Field[]::new));
     }
 
     ROW row() {
@@ -127,7 +127,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     @Override
     public final void accept(Context<?> ctx) {
         if (NO_NATIVE_SUPPORT.contains(ctx.dialect()))
-            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields.fields.fields)));
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields(ctx.configuration()).fields.fields)));
 
 
 

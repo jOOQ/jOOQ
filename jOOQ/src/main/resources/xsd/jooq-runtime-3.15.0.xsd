@@ -195,6 +195,21 @@ When this setting is set to <code>true</code> the queries combined with set oper
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="namePathSeparator" type="string" minOccurs="0" maxOccurs="1" default=".">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The character(s) to be used as a separator in paths encoded in a {@link Name}
+<p>
+A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
+<p>
+<code><pre>
+SELECT 
+  a.first_name AS "book.author.firstName"
+  a.last_name AS "book.author.lastName"
+FROM ...
+</pre></code>
+<p>
+Not all dialects support "." in identifiers. This setting allows for specifying an alternative String to use as separator, e.g. "__".]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="bindOffsetDateTimeType" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetDateTime} should be bound natively to JDBC.
 <p>

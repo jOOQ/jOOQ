@@ -95,6 +95,8 @@ public class Settings
     protected Boolean renderOutputForSQLServerReturningClause = true;
     @XmlElement(defaultValue = "false")
     protected Boolean renderParenthesisAroundSetOperationQueries = false;
+    @XmlElement(defaultValue = ".")
+    protected String namePathSeparator = ".";
     @XmlElement(defaultValue = "false")
     protected Boolean bindOffsetDateTimeType = false;
     @XmlElement(defaultValue = "false")
@@ -865,6 +867,44 @@ public class Settings
      */
     public void setRenderParenthesisAroundSetOperationQueries(Boolean value) {
         this.renderParenthesisAroundSetOperationQueries = value;
+    }
+
+    /**
+     * The character(s) to be used as a separator in paths encoded in a {@link Name}
+     * <p>
+     * A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
+     * <p>
+     * <code><pre>
+     * SELECT 
+     *   a.first_name AS "book.author.firstName"
+     *   a.last_name AS "book.author.lastName"
+     * FROM ...
+     * </pre></code>
+     * <p>
+     * Not all dialects support "." in identifiers. This setting allows for specifying an alternative String to use as separator, e.g. "__".
+     * 
+     */
+    public String getNamePathSeparator() {
+        return namePathSeparator;
+    }
+
+    /**
+     * The character(s) to be used as a separator in paths encoded in a {@link Name}
+     * <p>
+     * A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
+     * <p>
+     * <code><pre>
+     * SELECT 
+     *   a.first_name AS "book.author.firstName"
+     *   a.last_name AS "book.author.lastName"
+     * FROM ...
+     * </pre></code>
+     * <p>
+     * Not all dialects support "." in identifiers. This setting allows for specifying an alternative String to use as separator, e.g. "__".
+     * 
+     */
+    public void setNamePathSeparator(String value) {
+        this.namePathSeparator = value;
     }
 
     /**
@@ -2987,6 +3027,26 @@ public class Settings
         return this;
     }
 
+    /**
+     * The character(s) to be used as a separator in paths encoded in a {@link Name}
+     * <p>
+     * A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
+     * <p>
+     * <code><pre>
+     * SELECT 
+     *   a.first_name AS "book.author.firstName"
+     *   a.last_name AS "book.author.lastName"
+     * FROM ...
+     * </pre></code>
+     * <p>
+     * Not all dialects support "." in identifiers. This setting allows for specifying an alternative String to use as separator, e.g. "__".
+     * 
+     */
+    public Settings withNamePathSeparator(String value) {
+        setNamePathSeparator(value);
+        return this;
+    }
+
     public Settings withBindOffsetDateTimeType(Boolean value) {
         setBindOffsetDateTimeType(value);
         return this;
@@ -3752,6 +3812,7 @@ public class Settings
         builder.append("renderOrderByRownumberForEmulatedPagination", renderOrderByRownumberForEmulatedPagination);
         builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
         builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
+        builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
@@ -4077,6 +4138,15 @@ public class Settings
             }
         } else {
             if (!renderParenthesisAroundSetOperationQueries.equals(other.renderParenthesisAroundSetOperationQueries)) {
+                return false;
+            }
+        }
+        if (namePathSeparator == null) {
+            if (other.namePathSeparator!= null) {
+                return false;
+            }
+        } else {
+            if (!namePathSeparator.equals(other.namePathSeparator)) {
                 return false;
             }
         }
@@ -4930,6 +5000,7 @@ public class Settings
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
         result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));
+        result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));

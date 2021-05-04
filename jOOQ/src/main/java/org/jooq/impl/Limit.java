@@ -301,12 +301,6 @@ final class Limit extends AbstractQueryPart {
 
 
 
-
-
-
-
-
-
             default: {
                 acceptDefault(ctx, castMode);
                 break;

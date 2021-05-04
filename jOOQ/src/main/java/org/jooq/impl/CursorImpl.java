@@ -1524,7 +1524,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     Field<?> f = field instanceof Coerce ? ((Coerce<?>) field).field : field;
 
                     if (f instanceof RowField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
-                        nested = ((RowField<?, ?>) f).emulatedFields();
+                        nested = ((RowField<?, ?>) f).emulatedFields(configuration);
                         recordType = Tools.recordType(nested.size());
                     }
                     else if (f.getDataType().isEmbeddable()) {

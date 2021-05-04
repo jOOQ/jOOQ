@@ -316,6 +316,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      * This configuration can be used for caching reflection information.
      */
     private final Configuration            configuration;
+    private final String                   namePathSeparator;
 
     /**
      * A delegate mapper created from type information in <code>type</code>.
@@ -351,6 +352,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         this.fields = rowType.fields();
         this.type = type;
         this.configuration = configuration != null ? configuration : new DefaultConfiguration();
+        this.namePathSeparator = this.configuration.settings().getNamePathSeparator();
 
         init(instance);
     }
@@ -798,11 +800,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                 // No annotations are present
                 else {
-                    int dot = name.indexOf('.');
+                    int separator = name.indexOf(namePathSeparator);
 
                     // A nested mapping is applied
-                    if (dot > -1) {
-                        String prefix = name.substring(0, dot);
+                    if (separator > -1) {
+                        String prefix = name.substring(0, separator);
 
                         if (nestedMappedFields == null)
                             nestedMappedFields = new HashMap<>();
@@ -1026,8 +1028,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     for (int i = 0; i < fields.length; i++) {
                         Field<?> field = fields[i];
                         String name = field.getName();
-                        int dot = name.indexOf('.');
-                        propertyIndexes[i] = prefixes().get(dot > -1 ? name.substring(0, dot) : name);
+                        int separator = name.indexOf(namePathSeparator);
+                        propertyIndexes[i] = prefixes().get(separator > -1 ? name.substring(0, separator) : name);
                     }
                 }
             }
@@ -1061,7 +1063,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     }
 
                     for (int j = 0; j < propertyNames.size(); j++) {
-                        if (name.startsWith(propertyNames.get(j) + ".")) {
+                        if (name.startsWith(propertyNames.get(j) + namePathSeparator)) {
                             propertyIndexes[i] = j;
                             continue fieldLoop;
                         }
@@ -1090,7 +1092,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     }
 
                     for (int j = 0; j < fields.length; j++) {
-                        if (fields[j].getName().startsWith(prefix + ".")) {
+                        if (fields[j].getName().startsWith(prefix + namePathSeparator)) {
                             hasNestedFields = true;
 
                             if (nestedMappedFields[i] == null)
@@ -1211,8 +1213,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             for (Field<?> field : fields) {
                 String name = field.getName();
-                int dot = name.indexOf('.');
-                prefixes.computeIfAbsent(dot > -1 ? name.substring(0, dot) : name, k -> i[0]++);
+                int separator = name.indexOf(namePathSeparator);
+                prefixes.computeIfAbsent(separator > -1 ? name.substring(0, separator) : name, k -> i[0]++);
             }
         }
 

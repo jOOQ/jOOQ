@@ -6841,9 +6841,34 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final FieldOrRow parseCollated(Type type) {
         FieldOrRow r = parseNumericOp(type);
 
-        if (S.is(type) && r instanceof Field)
-            if (parseKeywordIf("COLLATE"))
-                r = ((Field) r).collate(parseCollation());
+        if (r instanceof Field) {
+            if (S.is(type))
+                if (parseKeywordIf("COLLATE"))
+                    r = ((Field) r).collate(parseCollation());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
 
         return r;
     }
@@ -7002,7 +7027,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         // [#7171] Only identifier based field expressions could have been functions
         //         E.g. 'abc' ('xyz') may be some other type of syntax, e.g. from Db2 SIGNAL statements
+        int p = position();
         if (r instanceof TableField && parseIf('('))
+
+
+
+
+
+
             throw exception("Unknown function");
 
         while (parseIf("::"))
@@ -10894,11 +10926,26 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return sequence(name.qualifier()).currval();
         }
 
+        unknownFunctions:
         if (dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && peek('(') && !peekTokens('(', '+', ')')) {
+            int p = position();
             List<Field<?>> arguments;
 
             parse('(');
             if (!parseIf(')')) {
+
+
+
+
+
+
+
+
+
+
+
+
+
                 arguments = parseList(',', ParseContext::parseField);
                 parse(')');
             }
@@ -10907,7 +10954,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return function(name, Object.class, arguments.toArray(EMPTY_FIELD));
         }
-        else {
 
 
 
@@ -10917,8 +10963,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-            return lookupField(name);
-        }
+
+        return lookupField(name);
     }
 
     private final TableField<?, ?> parseFieldName() {
@@ -11109,26 +11155,33 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final DataType<?> parseDataType() {
-        DataType<?> result = parseDataTypePrefix();
-        boolean array = false;
+        return parseDataTypeIf(true);
+    }
 
-        if (parseKeywordIf("ARRAY"))
-            array = true;
+    private final DataType<?> parseDataTypeIf(boolean parseUnknownTypes) {
+        DataType<?> result = parseDataTypePrefixIf(parseUnknownTypes);
 
-        if (parseIf('[')) {
-            parseUnsignedIntegerLiteralIf();
-            parse(']');
+        if (result != null) {
+            boolean array = false;
 
-            array = true;
+            if (parseKeywordIf("ARRAY"))
+                array = true;
+
+            if (parseIf('[')) {
+                parseUnsignedIntegerLiteralIf();
+                parse(']');
+
+                array = true;
+            }
+
+            if (array)
+                result = result.getArrayDataType();
         }
-
-        if (array)
-            result = result.getArrayDataType();
 
         return result;
     }
 
-    private final DataType<?> parseDataTypePrefix() {
+    private final DataType<?> parseDataTypePrefixIf(boolean parseUnknownTypes) {
         char character = characterUpper();
 
         if (character == '[' || character == '"' || character == '`')
@@ -11374,7 +11427,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
         }
 
-        return new DefaultDataType(dsl.dialect(), Object.class, parseName());
+        if (parseUnknownTypes)
+            return new DefaultDataType(dsl.dialect(), Object.class, parseName());
+        else
+            return null;
     }
 
     private final void parseDataTypeIdentityArgsIf() {

@@ -323,6 +323,8 @@ import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -10192,6 +10194,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             over = filter = parseJSONArrayAggFunctionIf();
         if (filter == null && !basic)
             over = filter = parseJSONObjectAggFunctionIf();
+        if (filter == null)
+            over = parseCountIfIf();
 
         if (filter == null && over == null)
             if (!basic)
@@ -10826,6 +10830,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return count(asterisk);
             else
                 return count(fields[0]);
+        }
+
+        return null;
+    }
+
+    private final WindowBeforeOverStep<Integer> parseCountIfIf() {
+        if (parseFunctionNameIf("COUNTIF", "COUNT_IF")) {
+            parse('(');
+            Condition condition = parseCondition();
+            parse(')');
+            return count().filterWhere(condition);
         }
 
         return null;

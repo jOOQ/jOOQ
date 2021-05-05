@@ -41,6 +41,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.name;

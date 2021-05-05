@@ -1482,6 +1482,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, BigDecimal value) throws SQLException {
             if (BIND_AS_STRING.contains(ctx.dialect()))
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -1533,6 +1543,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, BigInteger value) throws SQLException {
             if (BIND_AS_STRING.contains(ctx.dialect()))
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -1578,6 +1598,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultBlobBinding(DataType<Blob> dataType, Converter<Blob, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -1683,6 +1713,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
+
+
+
+
                 default:
                     ctx.statement().setBoolean(ctx.index(), value);
                     break;
@@ -1691,6 +1729,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
 
 
 
@@ -1750,6 +1790,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Byte value) {
             ctx.render().sql(value);
         }
@@ -1800,6 +1850,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultBytesBinding(DataType<byte[]> dataType, Converter<byte[], U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -1934,6 +1994,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, Clob value) throws SQLException {
             ctx.statement().setClob(ctx.index(), value);
         }
@@ -1969,6 +2039,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultDateBinding(DataType<Date> dataType, Converter<Date, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -2336,6 +2416,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Double value) {
 
             // [#5249] [#6912] [#8063] [#11701] Special inlining of special floating point values
@@ -2509,6 +2599,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Float value) {
 
             // [#5249] [#6912] [#8063] [#11701] Special inlining of special floating point values
@@ -2583,6 +2683,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Integer value) {
             ctx.render().sql(value);
         }
@@ -2627,6 +2737,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultLongBinding(DataType<Long> dataType, Converter<Long, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -2853,6 +2973,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, OffsetDateTime value) {
             SQLDialect family = ctx.family();
 
@@ -3034,6 +3164,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, OffsetTime value) {
 
             switch (ctx.family()) {
@@ -3149,6 +3289,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+            delegate.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Instant value) throws SQLException {
             delegate.sqlInline0(ctx, CONVERTER.to(value));
         }
@@ -3204,6 +3349,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+            switch (ctx.family()) {
 
 
 
@@ -3219,8 +3365,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            // [#729] In the absence of the correct JDBC type, try setObject
-            ctx.statement().setObject(ctx.index(), null);
+
+
+
+
+                // [#729] In the absence of the correct JDBC type, try setObject
+                default:
+                    ctx.statement().setObject(ctx.index(), null);
+                    break;
+            }
         }
 
         @Override
@@ -3648,6 +3801,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Short value) {
             ctx.render().sql(value);
         }
@@ -3692,6 +3855,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultStringBinding(DataType<String> dataType, Converter<String, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -3765,6 +3938,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super(dataType, converter);
 
             this.fallback = new DefaultStringBinding<>(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -3847,6 +4030,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultTimeBinding(DataType<Time> dataType, Converter<Time, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -3954,6 +4147,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Timestamp value) {
 
             // The SQLite JDBC driver does not implement the escape syntax
@@ -4047,6 +4250,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultUUIDBinding(DataType<UUID> dataType, Converter<UUID, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -4168,6 +4381,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
+        }
+
+        @Override
         void sqlInline0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
             super.sqlInline0(ctx, value);
 
@@ -4222,6 +4445,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultJSONBBinding(DataType<JSONB> dataType, Converter<JSONB, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override
@@ -4320,6 +4553,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultXMLBinding(DataType<XML> dataType, Converter<XML, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
+            super.setNull0(ctx);
         }
 
         @Override

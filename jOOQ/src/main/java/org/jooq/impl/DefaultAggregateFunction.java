@@ -131,8 +131,4 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
         acceptArguments0(ctx);
         ctx.sql(')');
     }
-
-    /* non-final */ void acceptFunctionName(Context<?> ctx) {
-        ctx.visit(getQualifiedName());
-    }
 }

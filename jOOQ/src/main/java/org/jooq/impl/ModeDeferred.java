@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Names.N_MODE;
+
 import org.jooq.AggregateFilterStep;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -57,6 +59,6 @@ final class ModeDeferred implements OrderedAggregateFunctionOfDeferredType {
             ? ((AbstractField<T>) field).getDataType()
             : (DataType<T>) SQLDataType.NUMERIC;
 
-        return new DefaultAggregateFunction<>("mode", type).withinGroupOrderBy(field);
+        return new DefaultAggregateFunction<>(N_MODE, type).withinGroupOrderBy(field);
     }
 }

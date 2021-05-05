@@ -40,9 +40,11 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.condition;
@@ -52,6 +54,7 @@ import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_FILTER;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -84,6 +87,10 @@ implements
     AggregateFunction<T>,
     OrderedAggregateFunction<T>,
     ArrayAggOrderByStep<T> {
+
+
+
+
     static final Set<SQLDialect>  SUPPORT_FILTER       = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, SQLITE);
     static final Set<SQLDialect>  SUPPORT_DISTINCT_RVE = SQLDialect.supportedBy(H2, POSTGRES);
 
@@ -110,6 +117,23 @@ implements
     // XXX QueryPart API
     // -------------------------------------------------------------------------
 
+    /* non-final */ void acceptFunctionName(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ctx.visit(getQualifiedName());
+    }
+
     final void acceptArguments0(Context<?> ctx) {
         acceptArguments1(ctx, arguments);
     }
@@ -134,9 +158,22 @@ implements
     final void acceptArguments2(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
         if (filter == null || SUPPORT_FILTER.contains(ctx.dialect()))
             ctx.visit(args);
+
+
+
+
         else
             ctx.visit(args.map(arg -> DSL.when(filter, arg == ASTERISK ? one() : arg)));
     }
+
+
+
+
+
+
+
+
+
 
     final void acceptFilterClause(Context<?> ctx) {
         acceptFilterClause(ctx, filter);

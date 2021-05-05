@@ -98,8 +98,19 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
+import static org.jooq.impl.Names.N_AVG;
+import static org.jooq.impl.Names.N_COUNT;
+import static org.jooq.impl.Names.N_CUME_DIST;
+import static org.jooq.impl.Names.N_DENSE_RANK;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
+import static org.jooq.impl.Names.N_MAX;
+import static org.jooq.impl.Names.N_MIN;
+import static org.jooq.impl.Names.N_PERCENTILE_CONT;
+import static org.jooq.impl.Names.N_PERCENTILE_DISC;
+import static org.jooq.impl.Names.N_PERCENT_RANK;
+import static org.jooq.impl.Names.N_RANK;
+import static org.jooq.impl.Names.N_SUM;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_VALUE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.FIRST_VALUE;
@@ -23298,7 +23309,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<Integer> count(Field<?> field) {
-        return new DefaultAggregateFunction<>("count", SQLDataType.INTEGER, Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(N_COUNT, SQLDataType.INTEGER, Tools.nullSafe(field));
     }
 
     /**
@@ -23307,7 +23318,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<Integer> count(SelectFieldOrAsterisk field) {
-        return new DefaultAggregateFunction<>("count", SQLDataType.INTEGER, field("{0}", field));
+        return new DefaultAggregateFunction<>(N_COUNT, SQLDataType.INTEGER, field("{0}", field));
     }
 
     /**
@@ -23329,7 +23340,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
-        return new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, Tools.nullSafe(field));
     }
 
     /**
@@ -23338,7 +23349,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
-        return new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, field("{0}", field));
+        return new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, field("{0}", field));
     }
 
     /**
@@ -23367,7 +23378,7 @@ public class DSL {
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         fields = Tools.nullSafe(fields);
-        return fields.length == 0 ? countDistinct(asterisk()) : new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, fields);
+        return fields.length == 0 ? countDistinct(asterisk()) : new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -23641,7 +23652,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> max(Field<T> field) {
-        return new DefaultAggregateFunction<>("max", Tools.nullSafeDataType(field), Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(N_MAX, Tools.nullSafeDataType(field), Tools.nullSafe(field));
     }
 
     /**
@@ -23650,7 +23661,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
-        return new DefaultAggregateFunction<>(true, "max", Tools.nullSafeDataType(field), Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(true, N_MAX, Tools.nullSafeDataType(field), Tools.nullSafe(field));
     }
 
     /**
@@ -23659,7 +23670,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> min(Field<T> field) {
-        return new DefaultAggregateFunction<>("min", Tools.nullSafeDataType(field), Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(N_MIN, Tools.nullSafeDataType(field), Tools.nullSafe(field));
     }
 
     /**
@@ -23668,7 +23679,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
-        return new DefaultAggregateFunction<>(true, "min", Tools.nullSafeDataType(field), Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(true, N_MIN, Tools.nullSafeDataType(field), Tools.nullSafe(field));
     }
 
     /**
@@ -23677,7 +23688,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>("sum", SQLDataType.NUMERIC, Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(N_SUM, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     /**
@@ -23686,7 +23697,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(true, "sum", SQLDataType.NUMERIC, Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(true, N_SUM, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     /**
@@ -23733,7 +23744,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>("avg", SQLDataType.NUMERIC, Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(N_AVG, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     /**
@@ -23742,7 +23753,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(true, "avg", SQLDataType.NUMERIC, Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(true, N_AVG, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     /**
@@ -23907,7 +23918,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
-        return new DefaultAggregateFunction<>("rank", SQLDataType.INTEGER, fields);
+        return new DefaultAggregateFunction<>(N_RANK, SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -23917,7 +23928,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> rank(Collection<? extends Field<?>> fields) {
-        return new DefaultAggregateFunction<>("rank", SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
+        return new DefaultAggregateFunction<>(N_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
     }
 
     /**
@@ -23927,7 +23938,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
-        return new DefaultAggregateFunction<>("dense_rank", SQLDataType.INTEGER, fields);
+        return new DefaultAggregateFunction<>(N_DENSE_RANK, SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -23937,7 +23948,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> denseRank(Collection<? extends Field<?>> fields) {
-        return new DefaultAggregateFunction<>("dense_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
+        return new DefaultAggregateFunction<>(N_DENSE_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
     }
 
     /**
@@ -23947,7 +23958,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
-        return new DefaultAggregateFunction<>("percent_rank", SQLDataType.INTEGER, fields);
+        return new DefaultAggregateFunction<>(N_PERCENT_RANK, SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -23957,7 +23968,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> percentRank(Collection<? extends Field<?>> fields) {
-        return new DefaultAggregateFunction<>("percent_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
+        return new DefaultAggregateFunction<>(N_PERCENT_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
     }
 
     /**
@@ -23967,7 +23978,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
-        return new DefaultAggregateFunction<>("cume_dist", SQLDataType.NUMERIC, fields);
+        return new DefaultAggregateFunction<>(N_CUME_DIST, SQLDataType.NUMERIC, fields);
     }
 
     /**
@@ -23977,7 +23988,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
-        return new DefaultAggregateFunction<>("cume_dist", SQLDataType.NUMERIC, fields.toArray(EMPTY_FIELD));
+        return new DefaultAggregateFunction<>(N_CUME_DIST, SQLDataType.NUMERIC, fields.toArray(EMPTY_FIELD));
     }
 
     /**
@@ -24007,7 +24018,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>("percentile_cont", SQLDataType.NUMERIC, Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(N_PERCENTILE_CONT, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     /**
@@ -24037,7 +24048,7 @@ public class DSL {
     @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>("percentile_disc", SQLDataType.NUMERIC, Tools.nullSafe(field));
+        return new DefaultAggregateFunction<>(N_PERCENTILE_DISC, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     // -------------------------------------------------------------------------

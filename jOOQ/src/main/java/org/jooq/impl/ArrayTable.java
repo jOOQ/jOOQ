@@ -89,9 +89,8 @@ final class ArrayTable extends AbstractTable<Record> {
 
         Class<?> arrayType;
 
-        // TODO [#523] Solve this in a more object-oriented way...
         if (array.getDataType().getType().isArray()) {
-            arrayType = array.getDataType().getType().getComponentType();
+            arrayType = array.getDataType().getArrayComponentType();
         }
 
 
@@ -181,6 +180,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
             // [#756] These dialects need special care when aliasing unnested
             // arrays
+
 
 
             case HSQLDB:

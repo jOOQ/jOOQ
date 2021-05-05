@@ -12332,21 +12332,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-        if (parseIf("="))
+        if (parseIf("=") || parseKeywordIf("EQ"))
             return Comparator.EQUALS;
-        else if (parseIf("!=") || parseIf("<>") || parseIf("^="))
+        else if (parseIf("!=") || parseIf("<>") || parseIf("^=") || parseKeywordIf("NE"))
             return Comparator.NOT_EQUALS;
-        else if (parseIf(">="))
+        else if (parseIf(">=") || parseKeywordIf("GE"))
             return Comparator.GREATER_OR_EQUAL;
-        else if (parseIf(">"))
+        else if (parseIf(">") || parseKeywordIf("GT"))
             return Comparator.GREATER;
 
         // MySQL DISTINCT operator
         else if (parseIf("<=>"))
             return Comparator.IS_NOT_DISTINCT_FROM;
-        else if (parseIf("<="))
+        else if (parseIf("<=") || parseKeywordIf("LE"))
             return Comparator.LESS_OR_EQUAL;
-        else if (parseIf("<"))
+        else if (parseIf("<") || parseKeywordIf("LT"))
             return Comparator.LESS;
 
         return null;

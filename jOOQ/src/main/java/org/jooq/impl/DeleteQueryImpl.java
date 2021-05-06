@@ -143,6 +143,10 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
         return condition.hasWhere();
     }
 
+    final TableList getUsing() {
+        return using;
+    }
+
     @Override
     public final void addUsing(Collection<? extends TableLike<?>> f) {
         for (TableLike<?> provider : f)

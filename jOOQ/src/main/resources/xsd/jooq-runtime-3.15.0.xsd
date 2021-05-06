@@ -129,6 +129,10 @@ providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> 
       <element name="renderOptionalOuterKeyword" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="renderImplicitWindowRange" type="jooq-runtime:RenderImplicitWindowRange" minOccurs="0" maxOccurs="1" default="OFF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render an explicit window <code>RANGE</code> clause when an implicit clause is applied.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="renderScalarSubqueriesForStoredFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether stored function calls should be wrapped in scalar subqueries.
@@ -633,6 +637,17 @@ providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> 
 
       <element name="parseWithMetaLookups" type="jooq-runtime:ParseWithMetaLookups" minOccurs="0" maxOccurs="1" default="OFF">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseAppendMissingTableReferences" type="jooq-runtime:Transformation" minOccurs="0" maxOccurs="1" default="WHEN_NEEDED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform the parsed SQL to append missing table references to the query's <code>FROM</code> or <code>USING</code> clause, if applicable.
+<p>
+Teradata (and possibly others) allow for referencing tables that are not listed in the <code>FROM</code>
+clause, such as <code>SELECT t.* FROM t WHERE t.i = u.i</code>. This transformation is executed in the
+parser, to produce <code>SELECT t.* FROM t, u WHERE t.i = u.i</code>, instead. By default, it is active
+when the input dialect supports this syntax.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="parseSearchPath" type="jooq-runtime:ParseSearchSchemata" minOccurs="0" maxOccurs="1">
@@ -1168,6 +1183,26 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <!-- The default applies for optional keywords. -->
       <enumeration value="DEFAULT"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="RenderImplicitWindowRange">
+    <restriction base="string">
+    
+      <!-- Implicit RANGE clause will not be generated explicitly. The RDBMS's implicit behaviour is used -->
+      <enumeration value="OFF"/>
+      
+      <!-- Implicit RANGE clause is generated as ROWS UNBOUNDED PRECEDING -->
+      <enumeration value="ROWS_UNBOUNDED_PRECEDING"/>
+
+      <!-- Implicit RANGE clause is generated as ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING -->
+      <enumeration value="ROWS_ALL"/>
+
+      <!-- Implicit RANGE clause is generated as RANGE UNBOUNDED PRECEDING -->
+      <enumeration value="RANGE_UNBOUNDED_PRECEDING"/>
+
+      <!-- Implicit RANGE clause is generated as RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING -->
+      <enumeration value="RANGE_ALL"/>
     </restriction>
   </simpleType>
   

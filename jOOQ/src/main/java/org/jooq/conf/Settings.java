@@ -79,6 +79,9 @@ public class Settings
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected RenderOptionalKeyword renderOptionalOuterKeyword = RenderOptionalKeyword.DEFAULT;
+    @XmlElement(defaultValue = "OFF")
+    @XmlSchemaType(name = "string")
+    protected RenderImplicitWindowRange renderImplicitWindowRange = RenderImplicitWindowRange.OFF;
     @XmlElement(defaultValue = "false")
     protected Boolean renderScalarSubqueriesForStoredFunctions = false;
     @XmlElement(defaultValue = "DEFAULT")
@@ -288,6 +291,9 @@ public class Settings
     @XmlElement(defaultValue = "OFF")
     @XmlSchemaType(name = "string")
     protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.OFF;
+    @XmlElement(defaultValue = "WHEN_NEEDED")
+    @XmlSchemaType(name = "string")
+    protected Transformation parseAppendMissingTableReferences = Transformation.WHEN_NEEDED;
     @XmlElement(defaultValue = "false")
     protected Boolean parseSetCommands = false;
     @XmlElement(defaultValue = "IGNORE")
@@ -678,6 +684,22 @@ public class Settings
      */
     public void setRenderOptionalOuterKeyword(RenderOptionalKeyword value) {
         this.renderOptionalOuterKeyword = value;
+    }
+
+    /**
+     * Whether to render an explicit window <code>RANGE</code> clause when an implicit clause is applied.
+     * 
+     */
+    public RenderImplicitWindowRange getRenderImplicitWindowRange() {
+        return renderImplicitWindowRange;
+    }
+
+    /**
+     * Whether to render an explicit window <code>RANGE</code> clause when an implicit clause is applied.
+     * 
+     */
+    public void setRenderImplicitWindowRange(RenderImplicitWindowRange value) {
+        this.renderImplicitWindowRange = value;
     }
 
     /**
@@ -2629,6 +2651,36 @@ public class Settings
     }
 
     /**
+     * Transform the parsed SQL to append missing table references to the query's <code>FROM</code> or <code>USING</code> clause, if applicable.
+     * <p>
+     * Teradata (and possibly others) allow for referencing tables that are not listed in the <code>FROM</code>
+     * clause, such as <code>SELECT t.* FROM t WHERE t.i = u.i</code>. This transformation is executed in the
+     * parser, to produce <code>SELECT t.* FROM t, u WHERE t.i = u.i</code>, instead. By default, it is active
+     * when the input dialect supports this syntax.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Transformation getParseAppendMissingTableReferences() {
+        return parseAppendMissingTableReferences;
+    }
+
+    /**
+     * Transform the parsed SQL to append missing table references to the query's <code>FROM</code> or <code>USING</code> clause, if applicable.
+     * <p>
+     * Teradata (and possibly others) allow for referencing tables that are not listed in the <code>FROM</code>
+     * clause, such as <code>SELECT t.* FROM t WHERE t.i = u.i</code>. This transformation is executed in the
+     * parser, to produce <code>SELECT t.* FROM t, u WHERE t.i = u.i</code>, instead. By default, it is active
+     * when the input dialect supports this syntax.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setParseAppendMissingTableReferences(Transformation value) {
+        this.parseAppendMissingTableReferences = value;
+    }
+
+    /**
      * [#9780] Whether commands of the type <code>SET key = value</code> should be parsed rather than ignored.
      * 
      * @return
@@ -2981,6 +3033,15 @@ public class Settings
      */
     public Settings withRenderOptionalOuterKeyword(RenderOptionalKeyword value) {
         setRenderOptionalOuterKeyword(value);
+        return this;
+    }
+
+    /**
+     * Whether to render an explicit window <code>RANGE</code> clause when an implicit clause is applied.
+     * 
+     */
+    public Settings withRenderImplicitWindowRange(RenderImplicitWindowRange value) {
+        setRenderImplicitWindowRange(value);
         return this;
     }
 
@@ -3667,6 +3728,22 @@ public class Settings
         return this;
     }
 
+    /**
+     * Transform the parsed SQL to append missing table references to the query's <code>FROM</code> or <code>USING</code> clause, if applicable.
+     * <p>
+     * Teradata (and possibly others) allow for referencing tables that are not listed in the <code>FROM</code>
+     * clause, such as <code>SELECT t.* FROM t WHERE t.i = u.i</code>. This transformation is executed in the
+     * parser, to produce <code>SELECT t.* FROM t, u WHERE t.i = u.i</code>, instead. By default, it is active
+     * when the input dialect supports this syntax.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withParseAppendMissingTableReferences(Transformation value) {
+        setParseAppendMissingTableReferences(value);
+        return this;
+    }
+
     public Settings withParseSetCommands(Boolean value) {
         setParseSetCommands(value);
         return this;
@@ -3805,6 +3882,7 @@ public class Settings
         builder.append("renderOptionalAsKeywordForFieldAliases", renderOptionalAsKeywordForFieldAliases);
         builder.append("renderOptionalInnerKeyword", renderOptionalInnerKeyword);
         builder.append("renderOptionalOuterKeyword", renderOptionalOuterKeyword);
+        builder.append("renderImplicitWindowRange", renderImplicitWindowRange);
         builder.append("renderScalarSubqueriesForStoredFunctions", renderScalarSubqueriesForStoredFunctions);
         builder.append("renderImplicitJoinType", renderImplicitJoinType);
         builder.append("renderDefaultNullability", renderDefaultNullability);
@@ -3893,6 +3971,7 @@ public class Settings
         builder.append("parseNamedParamPrefix", parseNamedParamPrefix);
         builder.append("parseNameCase", parseNameCase);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
+        builder.append("parseAppendMissingTableReferences", parseAppendMissingTableReferences);
         builder.append("parseSetCommands", parseSetCommands);
         builder.append("parseUnsupportedSyntax", parseUnsupportedSyntax);
         builder.append("parseUnknownFunctions", parseUnknownFunctions);
@@ -4075,6 +4154,15 @@ public class Settings
             }
         } else {
             if (!renderOptionalOuterKeyword.equals(other.renderOptionalOuterKeyword)) {
+                return false;
+            }
+        }
+        if (renderImplicitWindowRange == null) {
+            if (other.renderImplicitWindowRange!= null) {
+                return false;
+            }
+        } else {
+            if (!renderImplicitWindowRange.equals(other.renderImplicitWindowRange)) {
                 return false;
             }
         }
@@ -4870,6 +4958,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseAppendMissingTableReferences == null) {
+            if (other.parseAppendMissingTableReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!parseAppendMissingTableReferences.equals(other.parseAppendMissingTableReferences)) {
+                return false;
+            }
+        }
         if (parseSetCommands == null) {
             if (other.parseSetCommands!= null) {
                 return false;
@@ -4993,6 +5090,7 @@ public class Settings
         result = ((prime*result)+((renderOptionalAsKeywordForFieldAliases == null)? 0 :renderOptionalAsKeywordForFieldAliases.hashCode()));
         result = ((prime*result)+((renderOptionalInnerKeyword == null)? 0 :renderOptionalInnerKeyword.hashCode()));
         result = ((prime*result)+((renderOptionalOuterKeyword == null)? 0 :renderOptionalOuterKeyword.hashCode()));
+        result = ((prime*result)+((renderImplicitWindowRange == null)? 0 :renderImplicitWindowRange.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((renderImplicitJoinType == null)? 0 :renderImplicitJoinType.hashCode()));
         result = ((prime*result)+((renderDefaultNullability == null)? 0 :renderDefaultNullability.hashCode()));
@@ -5081,6 +5179,7 @@ public class Settings
         result = ((prime*result)+((parseNamedParamPrefix == null)? 0 :parseNamedParamPrefix.hashCode()));
         result = ((prime*result)+((parseNameCase == null)? 0 :parseNameCase.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
+        result = ((prime*result)+((parseAppendMissingTableReferences == null)? 0 :parseAppendMissingTableReferences.hashCode()));
         result = ((prime*result)+((parseSetCommands == null)? 0 :parseSetCommands.hashCode()));
         result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));
         result = ((prime*result)+((parseUnknownFunctions == null)? 0 :parseUnknownFunctions.hashCode()));

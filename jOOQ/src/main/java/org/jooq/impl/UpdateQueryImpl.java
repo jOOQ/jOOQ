@@ -521,6 +521,10 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return condition.hasWhere();
     }
 
+    final TableList getFrom() {
+        return from;
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final void accept0(Context<?> ctx) {

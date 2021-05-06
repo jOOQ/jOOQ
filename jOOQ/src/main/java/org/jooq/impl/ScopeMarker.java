@@ -41,15 +41,14 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_DECLARE;
-import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
+import static org.jooq.impl.WithImpl.acceptWithRecursive;
 
 import org.jooq.Clause;
 import org.jooq.Context;
 // ...
 import org.jooq.QueryPartInternal;
-import org.jooq.SQLDialect;
 import org.jooq.Statement;
 import org.jooq.impl.AbstractContext.ScopeStackElement;
 import org.jooq.impl.Tools.DataExtendedKey;
@@ -124,7 +123,7 @@ enum ScopeMarker {
             boolean noWith = afterLast != null && beforeFirst.positions[0] == afterLast.positions[0];
 
             if (noWith) {
-                ctx.visit(K_WITH);
+                acceptWithRecursive(ctx, cte.recursive);
 
                 if (single)
                     ctx.formatIndentStart()

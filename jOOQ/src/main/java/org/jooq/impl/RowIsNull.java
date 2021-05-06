@@ -64,6 +64,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
@@ -71,8 +72,6 @@ import static org.jooq.impl.Keywords.K_IS_NULL;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.jooq.Clause;

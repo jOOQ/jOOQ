@@ -48,6 +48,8 @@ import org.jooq.impl.ScopeMarker.ScopeContent;
  */
 final class TopLevelCte extends QueryPartList<QueryPart> implements ScopeContent {
 
+    boolean recursive;
+
     @Override
     public void accept(Context<?> ctx) {
         markTopLevelCteAndAccept(ctx, c -> super.accept(c));

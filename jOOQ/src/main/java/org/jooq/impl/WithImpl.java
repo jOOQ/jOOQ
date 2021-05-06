@@ -43,6 +43,7 @@ import static org.jooq.Clause.WITH;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -125,7 +126,6 @@ import org.jooq.WithAsStep7;
 import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
-import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * This type models an intermediary DSL construction step, which leads towards
@@ -219,14 +219,8 @@ implements
 
 
 
-            ctx.visit(K_WITH);
 
-            if (recursive
-
-
-
-            )
-                ctx.sql(' ').visit(K_RECURSIVE);
+            acceptWithRecursive(ctx, recursive);
 
             ctx.data(DATA_LIST_ALREADY_INDENTED, true, c1 ->
                 c1.formatIndentStart()
@@ -236,6 +230,17 @@ implements
                   .formatSeparator()
             );
         }
+    }
+
+    static final void acceptWithRecursive(Context<?> ctx, boolean recursive) {
+        ctx.visit(K_WITH);
+
+        if (recursive
+
+
+
+        )
+            ctx.sql(' ').visit(K_RECURSIVE);
     }
 
     @Override

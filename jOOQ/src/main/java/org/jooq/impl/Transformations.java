@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
@@ -74,10 +75,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import org.jooq.Configuration;
-import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
-import org.jooq.Scope;
 import org.jooq.conf.Transformation;
 
 /**
@@ -87,9 +86,10 @@ import org.jooq.conf.Transformation;
  */
 final class Transformations {
 
-    private static final Set<SQLDialect> NO_SUPPORT_IN_LIMIT = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> EMULATE_QUALIFY     = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> EMULATE_ROWNUM      = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_IN_LIMIT              = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> SUPPORT_MISSING_TABLE_REFERENCES = SQLDialect.supportedBy();
+    private static final Set<SQLDialect> EMULATE_QUALIFY                  = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> EMULATE_ROWNUM                   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
 
     static final SelectQueryImpl<?> subqueryWithLimit(QueryPart source) {
         SelectQueryImpl<?> s;
@@ -120,6 +120,15 @@ final class Transformations {
             "Settings.transformRownum",
             configuration.settings().getTransformRownum(),
             c -> EMULATE_ROWNUM.contains(c.dialect())
+        );
+    }
+
+    static final boolean transformAppendMissingTableReferences(Configuration configuration) {
+        return transform(
+            configuration,
+            "Settings.transformAppendMissingTableReferences",
+            configuration.settings().getParseAppendMissingTableReferences(),
+            c -> SUPPORT_MISSING_TABLE_REFERENCES.contains(c.settings().getParseDialect())
         );
     }
 

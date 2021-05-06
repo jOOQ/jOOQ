@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Tools.map;
 
@@ -76,6 +77,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -85,9 +87,14 @@ import org.jooq.SQLDialect;
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 final class RowCondition extends AbstractCondition {
-    private static final Clause[]        CLAUSES           = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect> EMULATE_EQ_AND_NE = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    private static final Set<SQLDialect> EMULATE_RANGES    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Clause[]        CLAUSES            = { CONDITION, CONDITION_COMPARISON };
+
+
+
+
+
+    private static final Set<SQLDialect> EMULATE_EQ_AND_NE  = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> EMULATE_RANGES     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
 
     private final Row                    left;
     private final Row                    right;
@@ -116,6 +123,12 @@ final class RowCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
+
+
+
+
+
+
         // Regular comparison predicate emulation
         if ((comparator == EQUALS || comparator == NOT_EQUALS) &&
             (forceEmulation || EMULATE_EQ_AND_NE.contains(configuration.dialect()))) {

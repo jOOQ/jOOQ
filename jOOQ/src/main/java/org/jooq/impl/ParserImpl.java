@@ -81,8 +81,12 @@ import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.deleteQueryImpl;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.normaliseNameCase;
+import static org.jooq.impl.Tools.selectQueryImpl;
+import static org.jooq.impl.Tools.updateQueryImpl;
+import static org.jooq.impl.Transformations.transformAppendMissingTableReferences;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -666,25 +670,26 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         scopeStart();
         boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
+        Query result = null;
         try {
             switch (characterUpper()) {
                 case 'A':
                     if (!parseResultQuery && peekKeyword("ALTER"))
-                        return metaLookupsForceIgnore(true).parseAlter();
+                        return result = metaLookupsForceIgnore(true).parseAlter();
 
                     break;
 
                 case 'B':
                     if (!parseResultQuery && peekKeyword("BEGIN"))
-                        return parseBlock(false);
+                        return result = parseBlock(false);
 
                     break;
 
                 case 'C':
                     if (!parseResultQuery && peekKeyword("CREATE"))
-                        return metaLookupsForceIgnore(true).parseCreate();
+                        return result = metaLookupsForceIgnore(true).parseCreate();
                     else if (!parseResultQuery && peekKeyword("COMMENT ON"))
-                        return metaLookupsForceIgnore(true).parseCommentOn();
+                        return result = metaLookupsForceIgnore(true).parseCommentOn();
                     else if (peekKeyword("CALL") && requireProEdition())
 
 
@@ -699,21 +704,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 case 'D':
                     if (!parseResultQuery && peekKeyword("DECLARE") && requireProEdition())
-                        return parseBlock(true);
+                        return result = parseBlock(true);
                     else if (!parseResultQuery && (peekKeyword("DELETE") || peekKeyword("DEL")))
-                        return parseDelete(null);
+                        return result = parseDelete(null);
                     else if (!parseResultQuery && peekKeyword("DROP"))
-                        return metaLookupsForceIgnore(true).parseDrop();
+                        return result = metaLookupsForceIgnore(true).parseDrop();
                     else if (!parseResultQuery && peekKeyword("DO"))
-                        return parseDo();
+                        return result = parseDo();
 
                     break;
 
                 case 'E':
                     if (!parseResultQuery && peekKeyword("EXECUTE BLOCK AS"))
-                        return parseBlock(true);
+                        return result = parseBlock(true);
                     else if (!parseResultQuery && peekKeyword("EXEC"))
-                        return parseExec();
+                        return result = parseExec();
                     else if (peekKeyword("EXECUTE PROCEDURE") && requireProEdition())
 
 
@@ -724,13 +729,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 case 'G':
                     if (!parseResultQuery && peekKeyword("GRANT"))
-                        return metaLookupsForceIgnore(true).parseGrant();
+                        return result = metaLookupsForceIgnore(true).parseGrant();
 
                     break;
 
                 case 'I':
                     if (!parseResultQuery && (peekKeyword("INSERT") || peekKeyword("INS")))
-                        return parseInsert(null);
+                        return result = parseInsert(null);
 
                     break;
 
@@ -742,21 +747,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 case 'M':
                     if (!parseResultQuery && peekKeyword("MERGE"))
-                        return parseMerge(null);
+                        return result = parseMerge(null);
 
                     break;
 
                 case 'O':
                     if (!parseResultQuery && peekKeyword("OPEN"))
-                        return parseOpen();
+                        return result = parseOpen();
 
                     break;
 
                 case 'R':
                     if (!parseResultQuery && peekKeyword("RENAME"))
-                        return metaLookupsForceIgnore(true).parseRename();
+                        return result = metaLookupsForceIgnore(true).parseRename();
                     else if (!parseResultQuery && peekKeyword("REVOKE"))
-                        return metaLookupsForceIgnore(true).parseRevoke();
+                        return result = metaLookupsForceIgnore(true).parseRevoke();
                     else if (parseKeywordIf("REPLACE"))
                         throw notImplemented("REPLACE");
                     else if (parseKeywordIf("ROLLBACK"))
@@ -766,9 +771,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 case 'S':
                     if (peekSelect(false))
-                        return parseSelect();
+                        return result = parseSelect();
                     else if (!parseResultQuery && peekKeyword("SET"))
-                        return parseSet();
+                        return result = parseSet();
                     else if (parseKeywordIf("SAVEPOINT"))
                         throw notImplemented("SAVEPOINT");
 
@@ -776,17 +781,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 case 'T':
                     if (!parseSelect && peekKeyword("TABLE"))
-                        return parseSelect();
+                        return result = parseSelect();
                     else if (!parseResultQuery && peekKeyword("TRUNCATE"))
-                        return parseTruncate();
+                        return result = parseTruncate();
 
                     break;
 
                 case 'U':
                     if (!parseResultQuery && (peekKeyword("UPDATE") || peekKeyword("UPD")))
-                        return parseUpdate(null);
+                        return result = parseUpdate(null);
                     else if (!parseResultQuery && peekKeyword("USE"))
-                        return parseUse();
+                        return result = parseUse();
                     else if (parseKeywordIf("UPSERT"))
                         throw notImplemented("UPSERT");
 
@@ -794,11 +799,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 case 'V':
                     if (!parseSelect && peekKeyword("VALUES"))
-                        return parseSelect();
+                        return result = parseSelect();
 
                 case 'W':
                     if (peekKeyword("WITH"))
-                        return parseWith(parseSelect);
+                        return result = parseWith(parseSelect);
 
                     break;
 
@@ -806,9 +811,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                     // TODO are there other possible statement types?
                     if (peekKeyword("WITH", false, true, false))
-                        return parseWith(true);
+                        return result = parseWith(true);
                     else
-                        return parseSelect();
+                        return result = parseSelect();
 
                 case '{':
                     if (peekKeyword("{ CALL") && requireProEdition())
@@ -832,7 +837,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             throw e;
         }
         finally {
-            scopeEnd();
+            scopeEnd(result);
             scopeResolve();
             metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
         }
@@ -1065,7 +1070,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.setForUpdateSkipLocked();
         }
 
-        scopeEnd();
+        scopeEnd(result);
         return result;
     }
 
@@ -1150,16 +1155,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final SelectQueryImpl<Record> parseQueryExpressionBody(Integer degree, WithImpl with, SelectQueryImpl<Record> prefix) {
         SelectQueryImpl<Record> lhs = parseQueryTerm(degree, with, prefix);
+        SelectQueryImpl<Record> local = lhs;
 
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(false)) != null) {
-            scopeEnd();
+            scopeEnd(local);
             scopeStart();
 
             if (degree == null)
                 degree = Tools.degree(lhs);
 
-            SelectQueryImpl<Record> rhs = degreeCheck(degree, parseQueryTerm(degree, null, null));
+            SelectQueryImpl<Record> rhs = local = degreeCheck(degree, parseQueryTerm(degree, null, null));
             switch (combine) {
                 case UNION:
                     lhs = lhs.union(rhs);
@@ -1183,16 +1189,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final SelectQueryImpl<Record> parseQueryTerm(Integer degree, WithImpl with, SelectQueryImpl<Record> prefix) {
         SelectQueryImpl<Record> lhs = prefix != null ? prefix : parseQueryPrimary(degree, with);
+        SelectQueryImpl<Record> local = lhs;
 
         CombineOperator combine;
         while ((combine = parseCombineOperatorIf(true)) != null) {
-            scopeEnd();
+            scopeEnd(local);
             scopeStart();
 
             if (degree == null)
                 degree = Tools.degree(lhs);
 
-            SelectQueryImpl<Record> rhs = degreeCheck(degree, parseQueryPrimary(degree, null));
+            SelectQueryImpl<Record> rhs = local = degreeCheck(degree, parseQueryPrimary(degree, null));
             switch (combine) {
                 case INTERSECT:
                     lhs = lhs.intersect(rhs);
@@ -1833,7 +1840,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 // [#10954] These are moved into the INSERT .. SELECT clause handling. They should not be necessary here
                 //          either, but it seems we currently don't correctly implement nesting scopes?
-                scopeEnd();
+                scopeEnd(null);
                 scopeStart();
 
                 Select<?> select = parseWithOrSelect();
@@ -1908,7 +1915,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return returning;
         }
         finally {
-            scopeEnd();
+            scopeEnd(((InsertImpl) s1).getDelegate());
         }
     }
 
@@ -13155,6 +13162,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return parseDialect().family();
     }
 
+    private final ParseWithMetaLookups metaLookups() {
+        if (metaLookupsForceIgnore())
+            return ParseWithMetaLookups.OFF;
+
+
+
+
+
+
+        else
+            return this.metaLookups;
+    }
+
     private final boolean metaLookupsForceIgnore() {
         return this.metaLookupsForceIgnore;
     }
@@ -13436,7 +13456,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         lookupFields.setAll(null);
     }
 
-    private final void scopeEnd() {
+    private final void scopeEnd(Query scopeOwner) {
         List<FieldProxy<?>> retain = new ArrayList<>();
 
         for (FieldProxy<?> lookup : lookupFields) {
@@ -13455,10 +13475,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
 
             found = resolveInTableScope(tableScope.valueIterable(), lookup.getQualifiedName(), lookup, found);
-            if (found != null)
+
+            if (found != null && !(found.value() instanceof FieldProxy)) {
                 lookup.delegate((AbstractField) found.value());
-            else
+            }
+            else {
+                lookup.scopeOwner(scopeOwner);
                 retain.add(lookup);
+            }
         }
 
         lookupFields.scopeEnd();
@@ -13499,6 +13523,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (x && q.equals(t.value().getQualifiedName()) || !x && q.last().equals(t.value().getName()))
                     if ((found = Value.of(t.scopeLevel(), t.value().field(lookup.getName()))) != null)
                         break tableScopeLoop;
+
+
+
+
+
+
+
+
             }
             else if ((f = Value.of(t.scopeLevel(), t.value().field(lookup.getName()))) != null) {
                 if (found == null || found.scopeLevel() < f.scopeLevel()) {
@@ -13524,9 +13556,41 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final void unknownField(FieldProxy<?> field) {
-        if (!scopeClear && !metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE) {
-            position(field.position());
-            throw exception("Unknown field identifier");
+        if (!scopeClear) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if (metaLookups() == THROW_ON_FAILURE) {
+                position(field.position());
+                throw exception("Unknown field identifier");
+            }
         }
     }
 
@@ -13548,14 +13612,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return tables.get(0);
         }
 
-        if (!metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE)
+        if (metaLookups() == THROW_ON_FAILURE)
             throw exception("Unknown table identifier");
 
         return table(name);
     }
 
     private final Field<?> lookupField(Name name) {
-        if (metaLookups == ParseWithMetaLookups.OFF)
+        if (metaLookups() == ParseWithMetaLookups.OFF || lookupFields.scopeLevel() < 0)
             return field(name);
 
         FieldProxy<?> field = lookupFields.get(name);

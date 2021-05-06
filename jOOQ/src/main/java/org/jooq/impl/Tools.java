@@ -3211,12 +3211,12 @@ final class Tools {
 
 
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> SelectQueryImpl<R> selectQueryImpl(QueryPart part) {
         if (part instanceof SelectQueryImpl)
             return (SelectQueryImpl<R>) part;
-        else if (part instanceof AbstractDelegatingQuery)
-            return ((AbstractDelegatingQuery<R, SelectQueryImpl<R>>) part).getDelegate();
+        else if (part instanceof SelectImpl)
+            return (SelectQueryImpl<R>) ((SelectImpl) part).getDelegate();
         else if (part instanceof ScalarSubquery)
             return selectQueryImpl(((ScalarSubquery<?>) part).query);
         else if (part instanceof QuantifiedSelectImpl)
@@ -3234,11 +3234,29 @@ final class Tools {
             return null;
     }
 
+    static final UpdateQueryImpl<?> updateQueryImpl(Query query) {
+        AbstractDMLQuery<?> result = abstractDMLQuery(query);
+
+        if (result instanceof UpdateQueryImpl)
+            return (UpdateQueryImpl<?>) result;
+        else
+            return null;
+    }
+
+    static final DeleteQueryImpl<?> deleteQueryImpl(Query query) {
+        AbstractDMLQuery<?> result = abstractDMLQuery(query);
+
+        if (result instanceof DeleteQueryImpl)
+            return (DeleteQueryImpl<?>) result;
+        else
+            return null;
+    }
+
     static final AbstractDMLQuery<?> abstractDMLQuery(Query query) {
         if (query instanceof AbstractDMLQuery)
             return (AbstractDMLQuery<?>) query;
-        else if (query instanceof AbstractDelegatingQuery)
-            return abstractDMLQuery(((AbstractDelegatingQuery<?, ?>) query).getDelegate());
+        else if (query instanceof AbstractDelegatingDMLQuery)
+            return abstractDMLQuery(((AbstractDelegatingDMLQuery<?, ?>) query).getDelegate());
         else if (query instanceof DMLQueryAsResultQuery)
             return ((DMLQueryAsResultQuery<?, ?>) query).getDelegate();
         else

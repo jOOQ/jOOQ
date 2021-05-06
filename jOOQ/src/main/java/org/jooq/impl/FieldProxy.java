@@ -41,6 +41,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -54,8 +55,26 @@ import org.jooq.TableField;
 @SuppressWarnings("unchecked")
 final class FieldProxy<T> extends AbstractField<T> implements TableField<Record, T> {
 
-    private AbstractField<T>  delegate;
-    private int               position;
+    /**
+     * The resolved field after a successful meta lookup.
+     */
+    private AbstractField<T> delegate;
+
+    /**
+     * The position in the parsed SQL string where this field proxy was
+     * encountered.
+     */
+    private int              position;
+
+    /**
+     * The scope owner that produced this field proxy.
+     */
+    Query                    scopeOwner;
+
+    /**
+     * Whether this FieldProxy could be resolved at some scope level.
+     */
+    boolean                  resolved;
 
     FieldProxy(AbstractField<T> delegate, int position) {
         super(
@@ -69,14 +88,27 @@ final class FieldProxy<T> extends AbstractField<T> implements TableField<Record,
         this.position = position;
     }
 
-    int position() {
+    final int position() {
         return position;
     }
 
-    void delegate(AbstractField<T> newDelegate) {
+    final void delegate(AbstractField<T> newDelegate) {
+        resolve();
         this.delegate = newDelegate;
 
         ((DataTypeProxy<T>) getDataType()).type((AbstractDataType<T>) newDelegate.getDataType());
+    }
+
+    final FieldProxy<T> resolve() {
+        this.resolved = true;
+        this.scopeOwner = null;
+
+        return this;
+    }
+
+    final void scopeOwner(Query query) {
+        if (!resolved && scopeOwner == null)
+            scopeOwner = query;
     }
 
     @Override

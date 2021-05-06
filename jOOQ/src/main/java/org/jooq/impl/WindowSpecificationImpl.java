@@ -66,6 +66,7 @@ import static org.jooq.impl.WindowSpecificationImpl.Exclude.TIES;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.GROUPS;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.RANGE;
 import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.ROWS;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -81,6 +82,7 @@ import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationPartitionByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
+import org.jooq.conf.RenderImplicitWindowRange;
 import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
@@ -149,7 +151,11 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
         boolean hasWindowDefinitions = windowDefinition != null;
         boolean hasPartitionBy = !partitionBy.isEmpty();
         boolean hasOrderBy = !o.isEmpty();
-        boolean hasFrame = frameStart != null;
+        boolean hasFrame = frameStart != null
+
+
+
+        ;
 
         int clauses = 0;
 
@@ -199,17 +205,53 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             if (hasWindowDefinitions || hasPartitionBy || hasOrderBy)
                 ctx.formatSeparator();
 
-            ctx.visit(frameUnits.keyword).sql(' ');
+            FrameUnits u = frameUnits;
+            Integer s = frameStart;
+            Integer e = frameEnd;
 
-            if (frameEnd != null) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ctx.visit(u.keyword).sql(' ');
+
+            if (e != null) {
                 ctx.visit(K_BETWEEN).sql(' ');
-                toSQLRows(ctx, frameStart);
+                toSQLRows(ctx, s);
 
                 ctx.sql(' ').visit(K_AND).sql(' ');
-                toSQLRows(ctx, frameEnd);
+                toSQLRows(ctx, e);
             }
             else {
-                toSQLRows(ctx, frameStart);
+                toSQLRows(ctx, s);
             }
 
             if (exclude != null)

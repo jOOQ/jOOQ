@@ -320,6 +320,7 @@ final class Keywords {
     static final Keyword K_PLACING                          = keyword("placing");
     static final Keyword K_POSITION                         = keyword("position");
     static final Keyword K_PRECEDING                        = keyword("preceding");
+    static final Keyword K_PRESERVE                         = keyword("preserve");
     static final Keyword K_PREVIOUS_VALUE_FOR               = keyword("previous value for");
     static final Keyword K_PRIMARY_KEY                      = keyword("primary key");
     static final Keyword K_PRIOR                            = keyword("prior");
@@ -431,6 +432,7 @@ final class Keywords {
     static final Keyword K_WHEN                             = keyword("when");
     static final Keyword K_WHERE                            = keyword("where");
     static final Keyword K_WHILE                            = keyword("while");
+    static final Keyword K_WHITESPACE                       = keyword("whitespace");
     static final Keyword K_WINDOW                           = keyword("window");
     static final Keyword K_WITH                             = keyword("with");
     static final Keyword K_WITHIN_GROUP                     = keyword("within group");

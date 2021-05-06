@@ -1557,8 +1557,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
         else
-            ctx.data(DATA_TRANSFORM_ROWNUM_TO_LIMIT, null, c -> accept0(c));
+            accept0(ctx);
     }
 
     final void accept0(Context<?> context) {
@@ -3044,9 +3045,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         ;
     }
-
-
-
 
 
 

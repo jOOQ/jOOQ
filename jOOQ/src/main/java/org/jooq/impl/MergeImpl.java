@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
@@ -169,6 +170,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UniqueKey;
+import org.jooq.conf.ParamType;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 
@@ -1458,6 +1460,7 @@ implements
             if (usingDual) {
                 switch (c2.family()) {
                     case DERBY:
+
                         c2.visit(new Dual());
                         break;
                     default:

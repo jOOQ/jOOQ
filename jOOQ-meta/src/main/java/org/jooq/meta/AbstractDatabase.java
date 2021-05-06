@@ -351,7 +351,7 @@ public abstract class AbstractDatabase implements Database {
         //         cases where quoting would have been necessary were found in
         //         integration tests, or when looking for identifiers matching
         //         [A-Za-z_$#][A-Za-z0-9_$#]+ in generated jOOQ-meta code.
-        configuration.settings().setRenderQuotedNames(RenderQuotedNames.NEVER);
+        configuration.settings().setRenderQuotedNames(getRenderQuotedNames());
 
         if (muteExceptions) {
             return DSL.using(configuration);
@@ -462,6 +462,13 @@ public abstract class AbstractDatabase implements Database {
             };
             return DSL.using(configuration.deriveAppending(newListener));
         }
+    }
+
+    /**
+     * Subclasses may override this.
+     */
+    protected RenderQuotedNames getRenderQuotedNames() {
+        return RenderQuotedNames.NEVER;
     }
 
     /**

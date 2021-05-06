@@ -59,8 +59,6 @@ final class ConditionAsField extends AbstractField<Boolean> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-            // Some databases don't accept predicates where column expressions
-            // are expected.
 
 
 

@@ -39,11 +39,21 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
+import static org.jooq.SQLDialect.H2;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 // ...
 import static org.jooq.impl.DSL.field;
@@ -59,6 +69,7 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
+import static org.jooq.impl.Tools.DataExtendedKey.DATA_WINDOW_FUNCTION;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.CURRENT_ROW;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.GROUP;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.NO_OTHERS;
@@ -76,6 +87,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.OrderField;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationFinalStep;
@@ -84,6 +96,7 @@ import org.jooq.WindowSpecificationPartitionByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.conf.RenderImplicitWindowRange;
 import org.jooq.impl.Tools.BooleanDataKey;
+import org.jooq.impl.Tools.DataExtendedKey;
 
 /**
  * @author Lukas Eder
@@ -96,7 +109,19 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     WindowSpecificationExcludeStep
     {
 
-    private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
+    private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE                       = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
+
+    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB);
+    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2, MARIADB);
+    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST = SQLDialect.supportedBy(MARIADB);
+
+
+
+
+
+
+
 
     private final WindowDefinitionImpl    windowDefinition;
     private final QueryPartList<Field<?>> partitionBy;
@@ -133,25 +158,42 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     public final void accept(Context<?> ctx) {
         SortFieldList o = orderBy;
 
-        // [#8414] [#8593] [#11021] Some RDBMS require ORDER BY in some window functions
-        if (o.isEmpty() && TRUE.equals(ctx.data(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY))) {
-            Field<Integer> constant;
+        // [#8414] [#8593] [#11021] [#11851] Some RDBMS require ORDER BY in some window functions
+        AbstractWindowFunction<?> w = (AbstractWindowFunction<?>) ctx.data(DATA_WINDOW_FUNCTION);
+
+        if (o.isEmpty()) {
+            boolean ordered =
+                    w instanceof Ntile && REQUIRES_ORDER_BY_IN_NTILE.contains(ctx.dialect())
+                 || w instanceof PositionalWindowFunction && ((PositionalWindowFunction<?>) w).isLeadOrLag() && REQUIRES_ORDER_BY_IN_LEAD_LAG.contains(ctx.dialect())
+                 || w instanceof RankingFunction && ((RankingFunction<?>) w).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK.contains(ctx.dialect())
+                 || w instanceof RankingFunction && !((RankingFunction<?>) w).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST.contains(ctx.dialect())
+
+
+
+
+            ;
+
+            if (ordered) {
+                Field<Integer> constant;
 
 
 
 
 
 
-            constant = field(select(one()));
+                constant = field(select(one()));
 
-            o = new SortFieldList();
-            o.add(constant.sortDefault());
+                o = new SortFieldList();
+                o.add(constant.sortDefault());
+            }
         }
 
         boolean hasWindowDefinitions = windowDefinition != null;
         boolean hasPartitionBy = !partitionBy.isEmpty();
         boolean hasOrderBy = !o.isEmpty();
         boolean hasFrame = frameStart != null
+
+
 
 
 

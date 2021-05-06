@@ -90,6 +90,7 @@ import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
 import org.jooq.WindowSpecification;
 import org.jooq.impl.Tools.BooleanDataKey;
+import org.jooq.impl.Tools.DataExtendedKey;
 
 /**
  * @author Lukas Eder
@@ -104,18 +105,6 @@ implements
     WindowExcludeStep<T>
 {
     private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE          = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE);
-
-    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB);
-    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(H2);
-    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2, MARIADB);
-    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST = SQLDialect.supportedBy(MARIADB);
-
-
-
-
-
-
-
 
     // Other attributes
     WindowSpecificationImpl              windowSpecification;
@@ -179,22 +168,11 @@ implements
         if (window == null)
             return;
 
-        Boolean ordered =
-               this instanceof Ntile && REQUIRES_ORDER_BY_IN_NTILE.contains(ctx.dialect())
-            || this instanceof PositionalWindowFunction && ((PositionalWindowFunction<?>) this).isLeadOrLag() && REQUIRES_ORDER_BY_IN_LEAD_LAG.contains(ctx.dialect())
-            || this instanceof RankingFunction && ((RankingFunction<?>) this).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK.contains(ctx.dialect())
-            || this instanceof RankingFunction && !((RankingFunction<?>) this).isRankOrDenseRank() && REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST.contains(ctx.dialect())
-
-
-
-
-        ;
-
         ctx.sql(' ')
            .visit(K_OVER)
            .sql(' ');
 
-        ctx.data(BooleanDataKey.DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY, ordered, c -> c.visit(window));
+        ctx.data(DataExtendedKey.DATA_WINDOW_FUNCTION, this, c -> c.visit(window));
     }
 
 

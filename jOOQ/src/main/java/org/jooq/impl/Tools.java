@@ -280,6 +280,7 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UpdatableRecord;
+import org.jooq.WindowSpecification;
 import org.jooq.XML;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.ParseNameCase;
@@ -505,12 +506,6 @@ final class Tools {
         DATA_EMULATE_BULK_INSERT_RETURNING,
 
         /**
-         * [#1535] We're currently generating the window specification of a
-         * window function that requires an ORDER BY clause.
-         */
-        DATA_WINDOW_FUNCTION_REQUIRES_ORDER_BY,
-
-        /**
          * [#9925] In some cases the <code>AS</code> keyword is required for aliasing, e.g. XML.
          */
         DATA_AS_REQUIRED
@@ -699,7 +694,14 @@ final class Tools {
         /**
          * [#9017] We've already transformed ROWNUM expressions to LIMIT.
          */
-        DATA_TRANSFORM_ROWNUM_TO_LIMIT
+        DATA_TRANSFORM_ROWNUM_TO_LIMIT,
+
+        /**
+         * [#1535] [#11851] The window function object that uses a
+         * {@link WindowSpecification}.
+         */
+        DATA_WINDOW_FUNCTION,
+
     }
 
     // ------------------------------------------------------------------------

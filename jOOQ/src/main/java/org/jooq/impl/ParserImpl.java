@@ -690,6 +690,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return result = metaLookupsForceIgnore(true).parseCreate();
                     else if (!parseResultQuery && peekKeyword("COMMENT ON"))
                         return result = metaLookupsForceIgnore(true).parseCommentOn();
+                    else if (!parseResultQuery && parseKeywordIf("CT"))
+                        return result = metaLookupsForceIgnore(true).parseCreateTable(false);
+                    else if (!parseResultQuery && parseKeywordIf("CV"))
+                        return result = metaLookupsForceIgnore(true).parseCreateView(false);
                     else if (peekKeyword("CALL") && requireProEdition())
 
 

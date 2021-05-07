@@ -2703,9 +2703,6 @@ public abstract class AbstractDatabase implements Database {
         if (getIncludeUniqueKeys())
             onError(ERROR, "Error while fetching unique keys", () -> loadUniqueKeys(result));
 
-        if (getIncludeForeignKeys())
-            onError(ERROR, "Error while fetching foreign keys", () -> loadForeignKeys(result));
-
         if (getIncludeCheckConstraints())
             onError(ERROR, "Error while fetching check constraints", () -> loadCheckConstraints(result));
 
@@ -2716,6 +2713,13 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+
+
+
+
+        if (getIncludeForeignKeys())
+            onError(ERROR, "Error while fetching foreign keys", () -> loadForeignKeys(result));
 
 
 

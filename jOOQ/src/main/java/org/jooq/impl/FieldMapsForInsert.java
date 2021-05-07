@@ -175,7 +175,6 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
 
 
-
                 case FIREBIRD: {
                     ctx.formatSeparator()
                        .start(INSERT_SELECT)

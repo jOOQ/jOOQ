@@ -42,6 +42,8 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 
+import java.util.function.BiFunction;
+
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -179,5 +181,16 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     @Override
     public /* non-final */ Condition not() {
         return new NotCondition(this);
+    }
+
+    static final Condition unwrapNot(Condition c, BiFunction<? super Condition, ? super Boolean, ? extends Condition> function) {
+        boolean not = false;
+
+        while (c instanceof NotCondition) {
+            c = ((NotCondition) c).condition;
+            not = !not;
+        }
+
+        return function.apply(c, not);
     }
 }

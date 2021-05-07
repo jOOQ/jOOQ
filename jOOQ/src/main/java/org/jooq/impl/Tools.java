@@ -73,6 +73,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -4082,9 +4083,16 @@ final class Tools {
             log.warn("Maximum consumed results reached: " + maxConsumedResults + ". This is probably a bug. Please report to https://github.com/jOOQ/jOOQ/issues/new");
 
         // Call this only when there was at least one ResultSet.
-        // Otherwise, this call is not supported by ojdbc or CUBRID [#4440]
-        if (anyResults && ctx.family() != CUBRID)
+        if (anyResults) {
+
+
+
+
+
+
+
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
+        }
 
         // [#6413] For consistency reasons, any exceptions that have been placed in ResultOrRow elements must
         //         be linked, just as if they were collected using ThrowExceptions == THROW_ALL

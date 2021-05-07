@@ -43,6 +43,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
@@ -53,7 +54,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CONTENT;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_SEPARATOR;
 import static org.jooq.impl.Names.N_CONCAT;
@@ -65,6 +69,8 @@ import static org.jooq.impl.Names.N_SUBSTR;
 import static org.jooq.impl.Names.N_XMLAGG;
 import static org.jooq.impl.Names.N_XMLSERIALIZE;
 import static org.jooq.impl.Names.N_XMLTEXT;
+import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.Set;
@@ -73,6 +79,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.XML;
 // ...
 
 /**
@@ -116,10 +123,8 @@ final class ListAgg extends DefaultAggregateFunction<String> {
 
 
 
-
-        else {
+        else
             super.accept(ctx);
-        }
     }
 
     /**
@@ -175,16 +180,6 @@ final class ListAgg extends DefaultAggregateFunction<String> {
         acceptOrderBy(ctx);
         ctx.sql(')');
     }
-
-
-
-
-
-
-
-
-
-
 
 
 

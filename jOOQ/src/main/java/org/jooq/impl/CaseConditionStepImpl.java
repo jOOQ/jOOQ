@@ -37,6 +37,10 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.impl.AbstractCondition.unwrapNot;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
@@ -201,8 +205,20 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
                 if (i > 0)
                     ctx.formatSeparator();
 
-                ctx.visit(K_WHEN).sql(' ').visit(conditions.get(i)).sql(' ')
-                   .visit(K_THEN).sql(' ').visit(results.get(i));
+                Condition c = conditions.get(i);
+                Field<T> r = results.get(i);
+
+
+
+
+
+
+
+
+
+
+                ctx.visit(K_WHEN).sql(' ').visit(c).sql(' ')
+                   .visit(K_THEN).sql(' ').visit(r);
             }
 
             if (else_ != null)

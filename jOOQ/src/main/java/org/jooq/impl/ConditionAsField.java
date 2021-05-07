@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.not;
+import static org.jooq.impl.DSL.select;
 
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -69,16 +70,7 @@ final class ConditionAsField extends AbstractField<Boolean> {
 
             case CUBRID:
             case FIREBIRD:
-
-                // [#10179] Avoid 3VL when not necessary
-                if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
-                    ctx.visit(DSL.when(condition, inline(true))
-                                 .else_(inline(false)));
-
-                // [#3206] Implement 3VL if necessary or unknown
-                else
-                    ctx.visit(DSL.when(condition, inline(true))
-                                 .when(not(condition), inline(false)));
+                acceptCase(ctx);
                 break;
 
             // Other dialects can inline predicates in column expression contexts
@@ -86,5 +78,18 @@ final class ConditionAsField extends AbstractField<Boolean> {
                 ctx.sql('(').visit(condition).sql(')');
                 break;
         }
+    }
+
+    private final void acceptCase(Context<?> ctx) {
+
+        // [#10179] Avoid 3VL when not necessary
+        if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
+            ctx.visit(DSL.when(condition, inline(true))
+                         .else_(inline(false)));
+
+        // [#3206] Implement 3VL if necessary or unknown
+        else
+            ctx.visit(DSL.when(condition, inline(true))
+                         .when(not(condition), inline(false)));
     }
 }

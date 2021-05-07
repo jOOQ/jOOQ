@@ -68,12 +68,14 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
 // ...
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
@@ -84,10 +86,12 @@ import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -166,6 +170,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+
+
     private static final Set<SQLDialect> SUPPORT_RVE_SET           = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES);
     private static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE    = SQLDialect.supportedBy(POSTGRES);
 
@@ -199,6 +205,11 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
 
+
+    @Override
+    public final void addValues(RowN row, RowN value) {
+        addValues0(row, value);
+    }
 
     @Override
     public final <T1> void addValues(Row1<T1> row, Row1<T1> value) {
@@ -311,8 +322,8 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
-    public final void addValues(RowN row, RowN value) {
-        addValues0(row, value);
+    public final void addValues(RowN row, Select<? extends Record> select) {
+        addValues0(row, select);
     }
 
     @Override
@@ -422,11 +433,6 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> void addValues(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select) {
-        addValues0(row, select);
-    }
-
-    @Override
-    public final void addValues(RowN row, Select<?> select) {
         addValues0(row, select);
     }
 
@@ -552,14 +558,6 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-
-
-
-
-
-
-
-
         ctx.formatSeparator()
            .start(UPDATE_SET)
            .visit(K_SET)
@@ -584,6 +582,24 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                    .visit(map)
                    .formatIndentEnd();
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             else {
                 ctx.start(UPDATE_SET_ASSIGNMENT)
                    .formatIndentStart()
@@ -645,14 +661,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
             default:
-                ctx.start(UPDATE_FROM);
-
-                if (!from.isEmpty())
-                    ctx.formatSeparator()
-                       .visit(K_FROM).sql(' ')
-                       .declareTables(true, c -> c.visit(from));
-
-                ctx.end(UPDATE_FROM);
+                acceptFrom(ctx);
                 break;
         }
 
@@ -705,6 +714,28 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         ctx.start(UPDATE_RETURNING);
         toSQLReturning(ctx);
         ctx.end(UPDATE_RETURNING);
+    }
+
+    private final void acceptFrom(Context<?> ctx) {
+        ctx.start(UPDATE_FROM);
+
+        TableList f;
+
+
+
+
+
+
+
+
+        f = from;
+
+        if (!f.isEmpty())
+            ctx.formatSeparator()
+               .visit(K_FROM).sql(' ')
+               .declareTables(true, c -> c.visit(f));
+
+        ctx.end(UPDATE_FROM);
     }
 
     @Override

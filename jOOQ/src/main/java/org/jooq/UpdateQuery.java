@@ -80,6 +80,12 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support
+    void addValues(RowN row, RowN value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support
     <T1> void addValues(Row1<T1> row, Row1<T1> value);
 
     /**
@@ -211,8 +217,8 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support
-    void addValues(RowN row, RowN value);
+    @Support({ H2, HSQLDB, POSTGRES })
+    void addValues(RowN row, Select<? extends Record> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
@@ -345,12 +351,6 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Support({ H2, HSQLDB, POSTGRES })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> void addValues(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select);
-
-    /**
-     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
-     */
-    @Support({ H2, HSQLDB, POSTGRES })
-    void addValues(RowN row, Select<?> select);
 
 
 

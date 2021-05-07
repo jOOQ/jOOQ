@@ -37,15 +37,7 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.*;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -64,6 +56,18 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is emulated using a subquery for the <code>value</code>, where row
+     * value expressions on the right hand side aren't supported, or with an
+     * ordinary SET clause, where row value expressions on the left hand side
+     * aren't supported.
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    UpdateFromStep<R> set(RowN row, RowN value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
@@ -331,15 +335,10 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
-     * <p>
-     * This is emulated using a subquery for the <code>value</code>, where row
-     * value expressions on the right hand side aren't supported, or with an
-     * ordinary SET clause, where row value expressions on the left hand side
-     * aren't supported.
      */
     @NotNull @CheckReturnValue
-    @Support
-    UpdateFromStep<R> set(RowN row, RowN value);
+    @Support({ H2, HSQLDB, POSTGRES })
+    UpdateFromStep<R> set(RowN row, Select<? extends Record> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
@@ -494,12 +493,5 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, POSTGRES })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateFromStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select);
-
-    /**
-     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, HSQLDB, POSTGRES })
-    UpdateFromStep<R> set(RowN row, Select<?> select);
 
 }

@@ -421,6 +421,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Field)}
+     * <p>
+     * If the argument {@link Field} is the same as the one you've provided to
+     * {@link DSLContext#select(SelectField)}, then you could also just call
+     * {@link #collect(Collector)} with {@link Records#toList()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -1919,6 +1923,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * are non-unique.
      * <p>
      * The resulting map is iteration order preserving.
+     * <p>
+     * If the argument {@link Field}s are the same as the ones you've provided
+     * to {@link DSLContext#select(SelectField, SelectField)}, then you could
+     * also just call {@link #collect(Collector)} with {@link Records#toMap()}.
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -2947,6 +2955,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * keys in the result set.
      * <p>
      * The resulting map is iteration order preserving.
+     * <p>
+     * If the argument {@link Field}s are the same as the ones you've provided
+     * to {@link DSLContext#select(SelectField, SelectField)}, then you could
+     * also just call {@link #collect(Collector)} with
+     * {@link Records#toGroups()}.
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -4088,6 +4101,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field from the generated
      * result.
+     * <p>
+     * If the argument {@link Field}s are the same as the ones you've provided
+     * to {@link DSLContext#select(SelectField)}, then you could also just call
+     * {@link #collect(Collector)} with {@link Records#toSet()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query

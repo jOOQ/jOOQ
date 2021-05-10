@@ -49,6 +49,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 import org.jooq.tools.JooqLogger;
@@ -438,51 +439,5 @@ public class DefaultRelations implements Relations {
     /**
      * A simple local wrapper for a key definition (table + key name)
      */
-    private static class Key {
-        final TableDefinition table;
-        final String keyName;
-
-        Key(TableDefinition table, String keyName) {
-            this.table = table;
-            this.keyName = keyName;
-        }
-
-        @Override
-        public String toString() {
-            return "Key [table=" + table + ", keyName=" + keyName + "]";
-        }
-
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + ((keyName == null) ? 0 : keyName.hashCode());
-            result = prime * result + ((table == null) ? 0 : table.hashCode());
-            return result;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            Key other = (Key) obj;
-            if (keyName == null) {
-                if (other.keyName != null)
-                    return false;
-            }
-            else if (!keyName.equals(other.keyName))
-                return false;
-            if (table == null) {
-                if (other.table != null)
-                    return false;
-            }
-            else if (!table.equals(other.table))
-                return false;
-            return true;
-        }
-    }
+    private static final /* record */ class Key { private final TableDefinition table; private final String keyName; public Key(TableDefinition table, String keyName) { this.table = table; this.keyName = keyName; } public TableDefinition table() { return table; } public String keyName() { return keyName; } @Override public boolean equals(Object o) { if (!(o instanceof Key)) return false; Key other = (Key) o; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.keyName, other.keyName)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.table, this.keyName); } @Override public String toString() { return new StringBuilder("Key[").append("table=").append(this.table).append(", keyName=").append(this.keyName).append("]").toString(); } }
 }

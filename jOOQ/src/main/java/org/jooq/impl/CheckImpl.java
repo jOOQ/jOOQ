@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import java.util.Objects;
+
 import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Constraint;
@@ -100,8 +102,7 @@ final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((condition == null) ? 0 : condition.hashCode());
-        result = prime * result + ((table == null) ? 0 : table.hashCode());
+        result = prime * result + Objects.hash(getQualifiedName(), condition, table);
         return result;
     }
 
@@ -114,21 +115,9 @@ final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R
         if (getClass() != obj.getClass())
             return false;
         CheckImpl<?> other = (CheckImpl<?>) obj;
-        if (!getQualifiedName().equals(other.getQualifiedName()))
-            return false;
-        if (condition == null) {
-            if (other.condition != null)
-                return false;
-        }
-        else if (!condition.equals(other.condition))
-            return false;
-        if (table == null) {
-            if (other.table != null)
-                return false;
-        }
-        else if (!table.equals(other.table))
-            return false;
-        return true;
+        return Objects.equals(getQualifiedName(), other.getQualifiedName())
+            && Objects.equals(condition, other.condition)
+            && Objects.equals(table, other.table);
     }
 
     @Override

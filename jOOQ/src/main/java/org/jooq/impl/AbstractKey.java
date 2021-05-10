@@ -41,6 +41,7 @@ import static org.jooq.impl.Tools.anyMatch;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
@@ -120,11 +121,7 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + getQualifiedName().hashCode();
-        result = prime * result + ((table == null) ? 0 : table.hashCode());
-        return result;
+        return Objects.hash(getQualifiedName(), table);
     }
 
     @Override

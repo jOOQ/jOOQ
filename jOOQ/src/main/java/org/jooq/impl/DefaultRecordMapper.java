@@ -377,8 +377,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         if (Stream.class.isAssignableFrom(type)) {
-            RecordMapper<R, Object[]> local = configuration.recordMapperProvider().provide(rowType, Object[].class);
-            delegate = r -> (E) Stream.of(local.map(r));
+            delegate = r -> (E) Stream.of(rowType.mapper(configuration, Object[].class).map(r));
             return;
         }
 
@@ -837,14 +836,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     nestedMappingInfo.recordDelegate = newRecord(true, recordType(nestedMappingInfo.row.size()), nestedMappingInfo.row, configuration);
 
                     for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true))
-                        nestedMappingInfo.mappers.add(configuration
-                            .recordMapperProvider()
-                            .provide((RecordType<AbstractRecord>) nestedMappingInfo.row.fields, member.getType()));
+                        nestedMappingInfo.mappers.add(
+                            nestedMappingInfo.row.fields.mapper(configuration, member.getType())
+                        );
 
                     for (Method method : getMatchingSetters(configuration, type, prefix, true))
-                        nestedMappingInfo.mappers.add(configuration
-                            .recordMapperProvider()
-                            .provide((RecordType<AbstractRecord>) nestedMappingInfo.row.fields, method.getParameterTypes()[0]));
+                        nestedMappingInfo.mappers.add(
+                            nestedMappingInfo.row.fields.mapper(configuration, method.getParameterTypes()[0])
+                        );
                 });
             }
         }
@@ -1110,9 +1109,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     if (nestedMappedFields[i] != null) {
                         nestedMappingInfo[i].row = row0(nestedMappedFields[i].toArray(EMPTY_FIELD));
                         nestedMappingInfo[i].recordDelegate = newRecord(true, recordType(nestedMappingInfo[i].row.size()), nestedMappingInfo[i].row, configuration);
-                        nestedMappingInfo[i].mappers.add(configuration
-                            .recordMapperProvider()
-                            .provide((RecordType<AbstractRecord>) nestedMappingInfo[i].row.fields, parameterTypes[propertyIndexes[i] != null ? propertyIndexes[i] : i]));
+                        nestedMappingInfo[i].mappers.add(
+                            nestedMappingInfo[i].row.fields.mapper(configuration, parameterTypes[propertyIndexes[i] != null ? propertyIndexes[i] : i])
+                        );
                     }
                 }
             }

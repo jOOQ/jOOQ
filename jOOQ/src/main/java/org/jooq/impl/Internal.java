@@ -43,6 +43,7 @@ import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Tools.nullSafe;
 
+import java.lang.reflect.Array;
 import java.util.function.Consumer;
 
 import org.jooq.Binding;
@@ -61,6 +62,7 @@ import org.jooq.ParamMode;
 import org.jooq.Parameter;
 // ...
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -443,6 +445,10 @@ public final class Internal {
         };
     }
 
+    /**
+     * JDK agnostic abstraction over {@link Class#arrayType()} and
+     * {@link Array#newInstance(Class, int)}.
+     */
     @SuppressWarnings({ "unchecked", "unused" })
     public static final <T> Class<T[]> arrayType(Class<T> type) {
 
@@ -450,6 +456,13 @@ public final class Internal {
 
 
 
-        return (Class<T[]>) java.lang.reflect.Array.newInstance(type, 0).getClass();
+        return (Class<T[]>) Array.newInstance(type, 0).getClass();
+    }
+
+    /**
+     * Create an empty result from a {@link Record} using its row type.
+     */
+    public static final <R extends Record> Result<R> result(R record) {
+        return new ResultImpl<>(Tools.configuration(record), ((AbstractRecord) record).fields);
     }
 }

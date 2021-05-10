@@ -43,6 +43,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
@@ -309,6 +311,14 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * Whether there are any records contained in this <code>Result</code>.
      */
     boolean isNotEmpty();
+
+    /**
+     * Collect all records of this result.
+     * <p>
+     * This is the same as calling {@link Stream#collect(Collector)} on
+     * {@link #stream()}.
+     */
+    <X, A> X collect(Collector<? super R, A, X> collector);
 
     /**
      * Return the generated result as a list of name/value maps.

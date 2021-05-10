@@ -37,6 +37,19 @@
  */
 package org.jooq;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import org.jooq.exception.InvalidResultException;
+import org.jooq.impl.Internal;
+
 /**
  * Common utilities related to {@link Record} types and constructing
  * {@link RecordMapper}.
@@ -57,6 +70,328 @@ package org.jooq;
  * @author Lukas Eder
  */
 public final class Records {
+
+    /**
+     * Create a collector that can collect {@link Record1} resulting from a
+     * single column {@link ResultQuery} into a {@link List} of that column's
+     * type.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * List&lt;String&gt; titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toList());
+     * </pre></code>
+     * <p>
+     * This is the same as the following, but allows for omitting repeating the
+     * <code>BOOK.TITLE</code> column:
+     * <p>
+     * <code><pre>
+     * List&lt;String&gt; titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetch(BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <E, R extends Record1<E>> Collector<R, ?, List<E>> toList() {
+        return Collectors.mapping(Record1::value1, Collectors.toCollection(ArrayList::new));
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into a {@link List} of a mapped type.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * List&lt;String&gt; titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toList(r -&gt; r.get(BOOK.TITLE)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * List&lt;String&gt; titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetch(BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <E, R extends Record> Collector<R, ?, List<E>> toList(Function<? super R, ? extends E> function) {
+        return Collectors.mapping(function, Collectors.toCollection(ArrayList::new));
+    }
+
+    /**
+     * Create a collector that can collect {@link Record1} resulting from a
+     * single column {@link ResultQuery} into a {@link Set} of that column's
+     * type.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Set&lt;String&gt; titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toSet());
+     * </pre></code>
+     * <p>
+     * This is the same as the following, but allows for omitting repeating the
+     * <code>BOOK.TITLE</code> column:
+     * <p>
+     * <code><pre>
+     * List&lt;String&gt; titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchSet(BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <E, R extends Record1<E>> Collector<R, ?, Set<E>> toSet() {
+        return toSet(Record1::value1);
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into a {@link Set} of a mapped type.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Set&lt;String&gt; titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toSet(r -&gt; r.get(BOOK.TITLE)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * List&lt;String&gt; titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchSet(BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <E, R extends Record> Collector<R, ?, Set<E>> toSet(Function<? super R, ? extends E> function) {
+        return Collectors.mapping(function, Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    /**
+     * Create a collector that can collect {@link Record2} resulting from a
+     * 2-column {@link ResultQuery} into a {@link Map} using the first column as
+     * key and the second column as value.
+     * <p>
+     * Collection throws {@link InvalidResultException} if a key is encountered
+     * more than once.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, String&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toMap());
+     * </pre></code>
+     * <p>
+     * This is the same as the following, but allows for omitting repeating the
+     * <code>BOOK.ID</code> and <code>BOOK.TITLE</code> columns:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, String&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchMap(BOOK.ID, BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <K, V, R extends Record2<K, V>> Collector<R, ?, Map<K, V>> toMap() {
+        return toMap(Record2::value1, Record2::value2);
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into a {@link Map} using the result of the argument
+     * {@link RecordMapper} as key and the record itself as value.
+     * <p>
+     * Collection throws {@link InvalidResultException} if a key is encountered
+     * more than once.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, Record2&lt;Integer, String&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toMap(r -&gt; r.get(BOOK.ID)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, Record2&lt;Integer, String&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchMap(BOOK.ID);
+     * </pre></code>
+     */
+    public static final <K, R extends Record> Collector<R, ?, Map<K, R>> toMap(Function<? super R, ? extends K> keyMapper) {
+        return toMap(keyMapper, r -> r);
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into a {@link Map} using the result of the argument
+     * {@link RecordMapper} as key and the result of another argument
+     * {@link RecordMapper} as value.
+     * <p>
+     * Collection throws {@link InvalidResultException} if a key is encountered
+     * more than once.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, String&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toMap(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, String&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchMap(BOOK.ID, BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <K, V, R extends Record> Collector<R, ?, Map<K, V>> toMap(
+        Function<? super R, ? extends K> keyMapper,
+        Function<? super R, ? extends V> valueMapper
+    ) {
+        return Collectors.toMap(
+            keyMapper,
+            valueMapper,
+            (k1, k2) -> {
+                throw new InvalidResultException("Key " + k1 + " is not unique in Result");
+            },
+            LinkedHashMap::new
+        );
+    }
+
+    /**
+     * Create a collector that can collect {@link Record2} resulting from a
+     * 2-column {@link ResultQuery} into a {@link Map} using the first column as
+     * key collecting values of the second column into a list of values.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, List&lt;String&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toGroups());
+     * </pre></code>
+     * <p>
+     * This is the same as the following, but allows for omitting repeating the
+     * <code>BOOK.ID</code> and <code>BOOK.TITLE</code> columns:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, List&lt;String&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchGroups(BOOK.ID, BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <K, V, R extends Record2<K, V>> Collector<R, ?, Map<K, List<V>>> toGroups() {
+        return toGroups(Record2::value1, Record2::value2);
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into a {@link Map} using the result of the argument
+     * {@link RecordMapper} as key collecting the records themselves into a list
+     * of values.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, List&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toGroups(r -&gt; r.get(BOOK.ID)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, List&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchGroups(BOOK.ID);
+     * </pre></code>
+     */
+    @SuppressWarnings("unchecked")
+    public static final <K, R extends Record> Collector<R, ?, Map<K, Result<R>>> toGroups(Function<? super R, ? extends K> keyMapper) {
+        return Collectors.groupingBy(
+            keyMapper,
+            LinkedHashMap::new,
+            Collector.<R, Result<R>[], Result<R>>of(
+                () -> new Result[1],
+                (x, r) -> {
+                    if (x[0] == null)
+                        x[0] = Internal.result(r);
+
+                    x[0].add(r);
+                },
+                (r1, r2) -> {
+                    r1[0].addAll(r2[0]);
+                    return r1;
+                },
+                r -> r[0]
+            )
+        );
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into a {@link Map} using the result of the argument
+     * {@link RecordMapper} as key collecting the result of another argument
+     * {@link RecordMapper} into a list of values.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, List&lt;String&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(toGroups(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, List&lt;String&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchGroups(BOOK.ID, BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <K, V, R extends Record> Collector<R, ?, Map<K, List<V>>> toGroups(
+        Function<? super R, ? extends K> keyMapper,
+        Function<? super R, ? extends V> valueMapper
+    ) {
+        return Collectors.groupingBy(
+            keyMapper,
+            LinkedHashMap::new,
+            Collectors.mapping(
+                valueMapper,
+                Collectors.toList()
+            )
+        );
+    }
 
 
 

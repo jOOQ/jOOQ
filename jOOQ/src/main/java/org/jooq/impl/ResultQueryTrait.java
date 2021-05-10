@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Records.toGroups;
+import static org.jooq.Records.toMap;
+import static org.jooq.Records.toSet;
 import static org.jooq.impl.Tools.blocking;
 
 import java.lang.reflect.Array;
@@ -52,13 +55,14 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
-// ...
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
+import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.Field;
+import org.jooq.Mappable;
 import org.jooq.Name;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
@@ -86,6 +90,7 @@ import org.jooq.Record8;
 import org.jooq.Record9;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
@@ -105,7 +110,7 @@ import io.r2dbc.spi.ConnectionFactory;
  *
  * @author Lukas Eder
  */
-interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQuery<R> {
+interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQuery<R>, Mappable<R> {
 
     @Override
     default ResultQuery<Record> coerce(Field<?>... fields) {
@@ -782,82 +787,82 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <K> Map<K, R> fetchMap(Field<K> key) {
-        return fetch().intoMap(key);
+        return collect(toMap(mapper(key)));
     }
 
     @Override
     default Map<?, R> fetchMap(int keyFieldIndex) {
-        return fetch().intoMap(keyFieldIndex);
+        return collect(toMap(mapper(keyFieldIndex)));
     }
 
     @Override
     default Map<?, R> fetchMap(String keyFieldName) {
-        return fetch().intoMap(keyFieldName);
+        return collect(toMap(mapper(keyFieldName)));
     }
 
     @Override
     default Map<?, R> fetchMap(Name keyFieldName) {
-        return fetch().intoMap(keyFieldName);
+        return collect(toMap(mapper(keyFieldName)));
     }
 
     @Override
     default <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) {
-        return fetch().intoMap(key, value);
+        return collect(toMap(mapper(key), mapper(value)));
     }
 
     @Override
     default Map<?, ?> fetchMap(int keyFieldIndex, int valueFieldIndex) {
-        return fetch().intoMap(keyFieldIndex, valueFieldIndex);
+        return collect(toMap(mapper(keyFieldIndex), mapper(valueFieldIndex)));
     }
 
     @Override
     default Map<?, ?> fetchMap(String keyFieldName, String valueFieldName) {
-        return fetch().intoMap(keyFieldName, valueFieldName);
+        return collect(toMap(mapper(keyFieldName), mapper(valueFieldName)));
     }
 
     @Override
     default Map<?, ?> fetchMap(Name keyFieldName, Name valueFieldName) {
-        return fetch().intoMap(keyFieldName, valueFieldName);
+        return collect(toMap(mapper(keyFieldName), mapper(valueFieldName)));
     }
 
     @Override
     default <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) {
-        return fetch().intoMap(key, type);
+        return collect(toMap(mapper(key), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<?, E> fetchMap(int keyFieldIndex, Class<? extends E> type) {
-        return fetch().intoMap(keyFieldIndex, type);
+        return collect(toMap(mapper(keyFieldIndex), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<?, E> fetchMap(String keyFieldName, Class<? extends E> type) {
-        return fetch().intoMap(keyFieldName, type);
+        return collect(toMap(mapper(keyFieldName), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<?, E> fetchMap(Name keyFieldName, Class<? extends E> type) {
-        return fetch().intoMap(keyFieldName, type);
+        return collect(toMap(mapper(keyFieldName), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <K, E> Map<K, E> fetchMap(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(key, mapper);
+        return collect(toMap(mapper(key), mapper));
     }
 
     @Override
     default <E> Map<?, E> fetchMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(keyFieldIndex, mapper);
+        return collect(toMap(mapper(keyFieldIndex), mapper));
     }
 
     @Override
     default <E> Map<?, E> fetchMap(String keyFieldName, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(keyFieldName, mapper);
+        return collect(toMap(mapper(keyFieldName), mapper));
     }
 
     @Override
     default <E> Map<?, E> fetchMap(Name keyFieldName, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(keyFieldName, mapper);
+        return collect(toMap(mapper(keyFieldName), mapper));
     }
 
     @Override
@@ -942,52 +947,52 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <K> Map<K, R> fetchMap(Class<? extends K> keyType) {
-        return fetch().intoMap(keyType);
+        return collect(toMap(mapper(Tools.configuration(this), keyType)));
     }
 
     @Override
     default <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, Class<? extends V> valueType) {
-        return fetch().intoMap(keyType, valueType);
+        return collect(toMap(mapper(Tools.configuration(this), keyType), mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     default <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return fetch().intoMap(keyType, valueMapper);
+        return collect(toMap(mapper(Tools.configuration(this), keyType), valueMapper));
     }
 
     @Override
     default <K> Map<K, R> fetchMap(RecordMapper<? super R, K> keyMapper) {
-        return fetch().intoMap(keyMapper);
+        return collect(toMap(keyMapper));
     }
 
     @Override
     default <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return fetch().intoMap(keyMapper, valueType);
+        return collect(toMap(keyMapper, mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     default <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
-        return fetch().intoMap(keyMapper, valueMapper);
+        return collect(toMap(keyMapper, valueMapper));
     }
 
     @Override
     default <S extends Record> Map<S, R> fetchMap(Table<S> table) {
-        return fetch().intoMap(table);
+        return collect(toMap(mapper(table)));
     }
 
     @Override
     default <S extends Record, T extends Record> Map<S, T> fetchMap(Table<S> keyTable, Table<T> valueTable) {
-        return fetch().intoMap(keyTable, valueTable);
+        return collect(toMap(mapper(keyTable), mapper(valueTable)));
     }
 
     @Override
     default <E, S extends Record> Map<S, E> fetchMap(Table<S> table, Class<? extends E> type) {
-        return fetch().intoMap(table, type);
+        return collect(toMap(mapper(table), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E, S extends Record> Map<S, E> fetchMap(Table<S> table, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(table, mapper);
+        return collect(toMap(mapper(table), mapper));
     }
 
     @Override
@@ -997,82 +1002,82 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <K> Map<K, Result<R>> fetchGroups(Field<K> key) {
-        return fetch().intoGroups(key);
+        return collect(toGroups(mapper(key)));
     }
 
     @Override
     default Map<?, Result<R>> fetchGroups(int keyFieldIndex) {
-        return fetch().intoGroups(keyFieldIndex);
+        return collect(toGroups(mapper(keyFieldIndex)));
     }
 
     @Override
     default Map<?, Result<R>> fetchGroups(String keyFieldName) {
-        return fetch().intoGroups(keyFieldName);
+        return collect(toGroups(mapper(keyFieldName)));
     }
 
     @Override
     default Map<?, Result<R>> fetchGroups(Name keyFieldName) {
-        return fetch().intoGroups(keyFieldName);
+        return collect(toGroups(mapper(keyFieldName)));
     }
 
     @Override
     default <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) {
-        return fetch().intoGroups(key, value);
+        return collect(toGroups(mapper(key), mapper(value)));
     }
 
     @Override
     default Map<?, List<?>> fetchGroups(int keyFieldIndex, int valueFieldIndex) {
-        return fetch().intoGroups(keyFieldIndex, valueFieldIndex);
+        return (Map) collect(toGroups(mapper(keyFieldIndex), mapper(valueFieldIndex)));
     }
 
     @Override
     default Map<?, List<?>> fetchGroups(String keyFieldName, String valueFieldName) {
-        return fetch().intoGroups(keyFieldName, valueFieldName);
+        return (Map) collect(toGroups(mapper(keyFieldName), mapper(valueFieldName)));
     }
 
     @Override
     default Map<?, List<?>> fetchGroups(Name keyFieldName, Name valueFieldName) {
-        return fetch().intoGroups(keyFieldName, valueFieldName);
+        return (Map) collect(toGroups(mapper(keyFieldName), mapper(valueFieldName)));
     }
 
     @Override
     default <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
-        return fetch().intoGroups(key, type);
+        return collect(toGroups(mapper(key), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, Class<? extends E> type) {
-        return fetch().intoGroups(keyFieldIndex, type);
+        return collect(toGroups(mapper(keyFieldIndex), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<?, List<E>> fetchGroups(String keyFieldName, Class<? extends E> type) {
-        return fetch().intoGroups(keyFieldName, type);
+        return collect(toGroups(mapper(keyFieldName), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<?, List<E>> fetchGroups(Name keyFieldName, Class<? extends E> type) {
-        return fetch().intoGroups(keyFieldName, type);
+        return collect(toGroups(mapper(keyFieldName), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return fetch().intoGroups(key, mapper);
+        return collect(toGroups(mapper(key), mapper));
     }
 
     @Override
     default <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        return fetch().intoGroups(keyFieldIndex, mapper);
+        return collect(toGroups(mapper(keyFieldIndex), mapper));
     }
 
     @Override
     default <E> Map<?, List<E>> fetchGroups(String keyFieldName, RecordMapper<? super R, E> mapper) {
-        return fetch().intoGroups(keyFieldName, mapper);
+        return collect(toGroups(mapper(keyFieldName), mapper));
     }
 
     @Override
     default <E> Map<?, List<E>> fetchGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) {
-        return fetch().intoGroups(keyFieldName, mapper);
+        return collect(toGroups(mapper(keyFieldName), mapper));
     }
 
     @Override
@@ -1157,52 +1162,53 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <K> Map<K, Result<R>> fetchGroups(Class<? extends K> keyType) {
-        return fetch().intoGroups(keyType);
+        return collect(toGroups(mapper(Tools.configuration(this), keyType)));
     }
 
     @Override
     default <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, Class<? extends V> valueType) {
-        return fetch().intoGroups(keyType, valueType);
+        return collect(toGroups(mapper(Tools.configuration(this), keyType), mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     default <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return fetch().intoGroups(keyType, valueMapper);
+        return collect(toGroups(mapper(Tools.configuration(this), keyType), valueMapper));
     }
 
     @Override
     default <K> Map<K, Result<R>> fetchGroups(RecordMapper<? super R, K> keyMapper) {
-        return fetch().intoGroups(keyMapper);
+        return collect(toGroups(keyMapper));
     }
 
     @Override
     default <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return fetch().intoGroups(keyMapper, valueType);
+        return collect(toGroups(keyMapper, mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     default <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
-        return fetch().intoGroups(keyMapper, valueMapper);
+        return collect(toGroups(keyMapper, valueMapper));
     }
 
     @Override
     default <S extends Record> Map<S, Result<R>> fetchGroups(Table<S> table) {
-        return fetch().intoGroups(table);
+        return collect(toGroups(mapper(table)));
     }
 
     @Override
     default <S extends Record, T extends Record> Map<S, Result<T>> fetchGroups(Table<S> keyTable, Table<T> valueTable) {
+        // [#9288] TODO: Can't use collect(toGroups(recordType().mapper(keyTable), recordType().mapper(valueTable))) yet
         return fetch().intoGroups(keyTable, valueTable);
     }
 
     @Override
     default <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, Class<? extends E> type) {
-        return fetch().intoGroups(table, type);
+        return collect(toGroups(mapper(table), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, RecordMapper<? super R, E> mapper) {
-        return fetch().intoGroups(table, mapper);
+        return collect(toGroups(mapper(table), mapper));
     }
 
     @Override
@@ -1293,66 +1299,74 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <E> Set<E> fetchSet(RecordMapper<? super R, E> mapper) {
-        return fetch().intoSet(mapper);
+        return collect(toSet(mapper));
     }
 
     @Override
     default Set<?> fetchSet(int fieldIndex) {
-        return fetch().intoSet(fieldIndex);
+        return collect(toSet(mapper(fieldIndex)));
     }
 
     @Override
     default <U> Set<U> fetchSet(int fieldIndex, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return fetch().intoSet(fieldIndex, type);
     }
 
     @Override
     default <U> Set<U> fetchSet(int fieldIndex, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return fetch().intoSet(fieldIndex, converter);
     }
 
     @Override
     default Set<?> fetchSet(String fieldName) {
-        return fetch().intoSet(fieldName);
+        return collect(toSet(mapper(fieldName)));
     }
 
     @Override
     default <U> Set<U> fetchSet(String fieldName, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return fetch().intoSet(fieldName, type);
     }
 
     @Override
     default <U> Set<U> fetchSet(String fieldName, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return fetch().intoSet(fieldName, converter);
     }
 
     @Override
     default Set<?> fetchSet(Name fieldName) {
-        return fetch().intoSet(fieldName);
+        return collect(toSet(mapper(fieldName)));
     }
 
     @Override
     default <U> Set<U> fetchSet(Name fieldName, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return fetch().intoSet(fieldName, type);
     }
 
     @Override
     default <U> Set<U> fetchSet(Name fieldName, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return fetch().intoSet(fieldName, converter);
     }
 
     @Override
     default <T> Set<T> fetchSet(Field<T> field) {
-        return fetch().intoSet(field);
+        return collect(toSet(mapper(field)));
     }
 
     @Override
     default <U> Set<U> fetchSet(Field<?> field, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return fetch().intoSet(field, type);
     }
 
     @Override
     default <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return fetch().intoSet(field, converter);
     }
     @Override
@@ -1386,5 +1400,36 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
         }
 
         return false;
+    }
+
+
+    @Override
+    default RecordMapper<R, ?> mapper(int fieldIndex) {
+        return new DelayedRecordMapper<>(t -> t.mapper(fieldIndex));
+    }
+
+    @Override
+    default RecordMapper<R, ?> mapper(String fieldName) {
+        return new DelayedRecordMapper<>(t -> t.mapper(fieldName));
+    }
+
+    @Override
+    default RecordMapper<R, ?> mapper(Name fieldName) {
+        return new DelayedRecordMapper<>(t -> t.mapper(fieldName));
+    }
+
+    @Override
+    default <T> RecordMapper<R, T> mapper(Field<T> field) {
+        return new DelayedRecordMapper<>(t -> t.mapper(field));
+    }
+
+    @Override
+    default <S extends Record> RecordMapper<R, S> mapper(Table<S> table) {
+        return new DelayedRecordMapper<>(t -> t.mapper(table));
+    }
+
+    @Override
+    default <E> RecordMapper<R, E> mapper(Configuration configuration, Class<? extends E> type) {
+        return new DelayedRecordMapper<>(t -> t.mapper(configuration, type));
     }
 }

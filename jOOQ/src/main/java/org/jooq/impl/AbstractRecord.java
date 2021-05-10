@@ -804,7 +804,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <E> E into(Class<? extends E> type) {
-        return (E) Tools.configuration(this).recordMapperProvider().provide((FieldsImpl) fields.fields, type).map(this);
+        return (E) ((FieldsImpl) fields.fields).mapper(Tools.configuration(this), type).map(this);
     }
 
     // [#10191] Java and Kotlin can produce overloads for this method despite

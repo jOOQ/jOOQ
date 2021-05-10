@@ -56,7 +56,6 @@ import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -247,6 +246,7 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.Fields;
 import org.jooq.ForeignKey;
 import org.jooq.JSON;
 import org.jooq.JSONB;
@@ -262,7 +262,6 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.RecordQualifier;
-import org.jooq.RecordType;
 import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.Result;
@@ -1687,11 +1686,11 @@ final class Tools {
         return map(values, (v, i) -> field(v, types[i]), Field[]::new);
     }
 
-    static final IllegalArgumentException indexFail(Row row, Field<?> field) {
+    static final IllegalArgumentException indexFail(Fields row, Field<?> field) {
         return new IllegalArgumentException("Field (" + field + ") is not contained in Row " + row);
     }
 
-    static final int indexOrFail(Row row, Field<?> field) {
+    static final int indexOrFail(Fields row, Field<?> field) {
         int result = row.indexOf(field);
 
         if (result < 0)
@@ -1700,11 +1699,11 @@ final class Tools {
         return result;
     }
 
-    static final IllegalArgumentException indexFail(Row row, String fieldName) {
+    static final IllegalArgumentException indexFail(Fields row, String fieldName) {
         throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
     }
 
-    static final int indexOrFail(Row row, String fieldName) {
+    static final int indexOrFail(Fields row, String fieldName) {
         int result = row.indexOf(fieldName);
 
         if (result < 0)
@@ -1713,54 +1712,15 @@ final class Tools {
         return result;
     }
 
-    static final IllegalArgumentException indexFail(Row row, Name fieldName) {
+    static final IllegalArgumentException indexFail(Fields row, Name fieldName) {
         throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
     }
 
-    static final int indexOrFail(Row row, Name fieldName) {
+    static final int indexOrFail(Fields row, Name fieldName) {
         int result = row.indexOf(fieldName);
 
         if (result < 0)
             throw indexFail(row, fieldName);
-
-        return result;
-    }
-
-    /**
-     * A utility method that fails with an exception if
-     * {@link RecordType#indexOf(Field)} doesn't return any index.
-     */
-    static final int indexOrFail(RecordType<?> row, Field<?> field) {
-        int result = row.indexOf(field);
-
-        if (result < 0)
-            throw new IllegalArgumentException("Field (" + field + ") is not contained in RecordType " + row);
-
-        return result;
-    }
-
-    /**
-     * A utility method that fails with an exception if
-     * {@link RecordType#indexOf(String)} doesn't return any index.
-     */
-    static final int indexOrFail(RecordType<?> row, String fieldName) {
-        int result = row.indexOf(fieldName);
-
-        if (result < 0)
-            throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in RecordType " + row);
-
-        return result;
-    }
-
-    /**
-     * A utility method that fails with an exception if
-     * {@link RecordType#indexOf(Name)} doesn't return any index.
-     */
-    static final int indexOrFail(RecordType<?> row, Name fieldName) {
-        int result = row.indexOf(fieldName);
-
-        if (result < 0)
-            throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in RecordType " + row);
 
         return result;
     }

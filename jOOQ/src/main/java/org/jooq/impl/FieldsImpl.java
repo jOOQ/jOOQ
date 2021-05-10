@@ -50,11 +50,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.RecordMapper;
 import org.jooq.RecordType;
 import org.jooq.Row;
 import org.jooq.SelectField;
@@ -89,6 +91,36 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     @Override
     public final int size() {
         return fields.length;
+    }
+
+    @Override
+    public final RecordMapper<R, ?> mapper(int fieldIndex) {
+        return r -> r.get(fieldIndex);
+    }
+
+    @Override
+    public final RecordMapper<R, ?> mapper(String fieldName) {
+        return mapper(field(fieldName));
+    }
+
+    @Override
+    public final RecordMapper<R, ?> mapper(Name fieldName) {
+        return mapper(field(fieldName));
+    }
+
+    @Override
+    public final <T> RecordMapper<R, T> mapper(Field<T> field) {
+        return (RecordMapper<R, T>) mapper(indexOrFail(fieldsRow(), field));
+    }
+
+    @Override
+    public final <S extends Record> RecordMapper<R, S> mapper(Table<S> table) {
+        return r -> r.into(table);
+    }
+
+    @Override
+    public final <E> RecordMapper<R, E> mapper(Configuration configuration, Class<? extends E> type) {
+        return configuration.recordMapperProvider().provide(this, type);
     }
 
     @Override

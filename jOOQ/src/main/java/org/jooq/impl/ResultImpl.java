@@ -38,15 +38,17 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Records.toGroups;
+import static org.jooq.Records.toList;
+import static org.jooq.Records.toMap;
+import static org.jooq.Records.toSet;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.indexOrFail;
-import static org.jooq.impl.Tools.map;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,6 +59,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
 
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -88,6 +91,7 @@ import org.jooq.Record8;
 import org.jooq.Record9;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.TXTFormat;
 import org.jooq.Table;
@@ -148,6 +152,11 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     // -------------------------------------------------------------------------
 
     @Override
+    public final <X, A> X collect(Collector<? super R, A, X> collector) {
+        return stream().collect(collector);
+    }
+
+    @Override
     public final boolean isEmpty() {
         return records.isEmpty();
     }
@@ -174,62 +183,70 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <T> List<T> getValues(Field<T> field) {
-        return (List<T>) getValues(indexOrFail(fieldsRow(), field));
+        return collect(toList(recordType().mapper(field)));
     }
 
     @Override
     public final <U> List<U> getValues(Field<?> field, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return getValues(indexOrFail(fieldsRow(), field), type);
     }
 
     @Override
     public final <T, U> List<U> getValues(Field<T> field, Converter<? super T, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return Convert.convert(getValues(field), converter);
     }
 
     @Override
     public final List<?> getValues(int fieldIndex) {
-        return Tools.map(this, r -> r.get(fieldIndex));
+        return collect(toList(recordType().mapper(fieldIndex)));
     }
 
     @Override
     public final <U> List<U> getValues(int fieldIndex, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         Converter converter = converterOrFail(this, field(safeIndex(fieldIndex)).getType(), (Class) type);
         return Tools.map(this, r -> (U) converter.from(r.get(fieldIndex)));
     }
 
     @Override
     public final <U> List<U> getValues(int fieldIndex, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return Convert.convert(getValues(fieldIndex), converter);
     }
 
     @Override
     public final List<?> getValues(String fieldName) {
-        return getValues(field(fieldName));
+        return collect(toList(recordType().mapper(fieldName)));
     }
 
     @Override
     public final <U> List<U> getValues(String fieldName, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return getValues(indexOrFail(fieldsRow(), fieldName), type);
     }
 
     @Override
     public final <U> List<U> getValues(String fieldName, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return Convert.convert(getValues(fieldName), converter);
     }
 
     @Override
     public final List<?> getValues(Name fieldName) {
-        return getValues(field(fieldName));
+        return collect(toList(recordType().mapper(fieldName)));
     }
 
     @Override
     public final <U> List<U> getValues(Name fieldName, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return getValues(indexOrFail(fieldsRow(), fieldName), type);
     }
 
     @Override
     public final <U> List<U> getValues(Name fieldName, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return Convert.convert(getValues(fieldName), converter);
     }
 
@@ -244,65 +261,42 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <K> Map<K, R> intoMap(Field<K> key) {
-        return intoMap0(indexOrFail(fieldsRow(), key));
+        return collect(toMap(recordType().mapper(key)));
     }
 
     @Override
     public final Map<?, R> intoMap(int keyFieldIndex) {
-        return intoMap0(keyFieldIndex);
+        return collect(toMap(recordType().mapper(keyFieldIndex)));
     }
 
     @Override
     public final Map<?, R> intoMap(String keyFieldName) {
-        return intoMap(field(keyFieldName));
+        return collect(toMap(recordType().mapper(keyFieldName)));
     }
 
     @Override
     public final Map<?, R> intoMap(Name keyFieldName) {
-        return intoMap(field(keyFieldName));
-    }
-
-    private final <K> Map<K, R> intoMap0(int kIndex) {
-        Map<K, R> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            if (map.put((K) record.get(kIndex), record) != null)
-                throw new InvalidResultException("Key " + record.get(kIndex) + " is not unique in Result for " + this);
-
-        return map;
+        return collect(toMap(recordType().mapper(keyFieldName)));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value) {
-        int kIndex = indexOrFail(fieldsRow(), key);
-        int vIndex = indexOrFail(fieldsRow(), value);
-
-        return intoMap0(kIndex, vIndex);
+        return collect(toMap(recordType().mapper(key), recordType().mapper(value)));
     }
 
     @Override
     public final Map<?, ?> intoMap(int keyFieldIndex, int valueFieldIndex) {
-        return intoMap0(keyFieldIndex, valueFieldIndex);
+        return collect(toMap(recordType().mapper(keyFieldIndex), recordType().mapper(valueFieldIndex)));
     }
 
     @Override
     public final Map<?, ?> intoMap(String keyFieldName, String valueFieldName) {
-        return intoMap(field(keyFieldName), field(valueFieldName));
+        return collect(toMap(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
     }
 
     @Override
     public final Map<?, ?> intoMap(Name keyFieldName, Name valueFieldName) {
-        return intoMap(field(keyFieldName), field(valueFieldName));
-    }
-
-    private final <K, V> Map<K, V> intoMap0(int kIndex, int vIndex) {
-        Map<K, V> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            if (map.put((K) record.get(kIndex), (V) record.get(vIndex)) != null)
-                throw new InvalidResultException("Key " + record.get(kIndex) + " is not unique in Result for " + this);
-
-        return map;
+        return collect(toMap(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
     }
 
     @Override
@@ -393,7 +387,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
-        return intoMap(keys, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return intoMap(keys, recordType().mapper(Tools.configuration(this), type));
     }
 
     @Override
@@ -430,262 +424,172 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <K> Map<K, R> intoMap(Class<? extends K> keyType) {
-        return intoMap(Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType));
+        return collect(toMap(recordType().mapper(Tools.configuration(this), keyType)));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Class<? extends K> keyType, Class<? extends V> valueType) {
-        return intoMap(
-            Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType),
-            Tools.configuration(this).recordMapperProvider().provide(recordType(), valueType)
-        );
+        return collect(toMap(recordType().mapper(Tools.configuration(this), keyType), recordType().mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return intoMap(Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType), valueMapper);
+        return collect(toMap(recordType().mapper(Tools.configuration(this), keyType), valueMapper));
     }
 
     @Override
     public final <K> Map<K, R> intoMap(RecordMapper<? super R, K> keyMapper) {
-        Map<K, R> map = new LinkedHashMap<>();
-
-        for (R record : this) {
-            K key = keyMapper.map(record);
-
-            if (map.put(key, record) != null)
-                throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
-        }
-
-        return map;
+        return collect(toMap(keyMapper));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return intoMap(keyMapper, Tools.configuration(this).recordMapperProvider().provide(recordType(), valueType));
+        return collect(toMap(keyMapper, recordType().mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
-        Map<K, V> map = new LinkedHashMap<>();
-
-        for (R record : this) {
-            K key = keyMapper.map(record);
-            V value = valueMapper.map(record);
-
-            if (map.put(key, value) != null)
-                throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
-        }
-
-        return map;
+        return collect(toMap(keyMapper, valueMapper));
     }
 
     @Override
     public final <S extends Record> Map<S, R> intoMap(Table<S> table) {
-        Map<S, R> map = new LinkedHashMap<>();
-
-        for (R record : this) {
-            S key = record.into(table);
-
-            if (map.put(key, record) != null)
-                throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
-        }
-
-        return map;
+        return collect(toMap(recordType().mapper(table)));
     }
 
     @Override
     public final <S extends Record, T extends Record> Map<S, T> intoMap(Table<S> keyTable, Table<T> valueTable) {
-        Map<S, T> map = new LinkedHashMap<>();
-
-        for (R record : this) {
-            S key = record.into(keyTable);
-            T value = record.into(valueTable);
-
-            if (map.put(key, value) != null)
-                throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
-        }
-
-        return map;
+        return collect(toMap(recordType().mapper(keyTable), recordType().mapper(valueTable)));
     }
 
     @Override
     public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, Class<? extends E> type) {
-        return intoMap(table, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toMap(recordType().mapper(table), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, RecordMapper<? super R, E> mapper) {
-        Map<S, E> map = new LinkedHashMap<>();
-
-        for (R record : this) {
-            S key = record.into(table);
-
-            if (map.put(key, mapper.map(record)) != null)
-                throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
-        }
-
-        return map;
+        return collect(toMap(recordType().mapper(table), mapper));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(int keyFieldIndex, Class<? extends E> type) {
-        return intoMap(keyFieldIndex, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toMap(recordType().mapper(keyFieldIndex), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(String keyFieldName, Class<? extends E> type) {
-        return intoMap(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toMap(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(Name keyFieldName, Class<? extends E> type) {
-        return intoMap(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toMap(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
-        return intoMap(key, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toMap(recordType().mapper(key), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        return intoMap0(keyFieldIndex, mapper);
+        return collect(toMap(recordType().mapper(keyFieldIndex), mapper));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(String keyFieldName, RecordMapper<? super R, E> mapper) {
-        return intoMap(field(keyFieldName), mapper);
+        return collect(toMap(recordType().mapper(keyFieldName), mapper));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(Name keyFieldName, RecordMapper<? super R, E> mapper) {
-        return intoMap(field(keyFieldName), mapper);
+        return collect(toMap(recordType().mapper(keyFieldName), mapper));
     }
 
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return intoMap0(indexOrFail(fieldsRow(), key), mapper);
-    }
-
-    private final <K, E> Map<K, E> intoMap0(int kIndex, RecordMapper<? super R, E> mapper) {
-        Map<K, E> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            if (map.put((K) record.get(kIndex), mapper.map(record)) != null)
-                throw new InvalidResultException("Key " + record.get(kIndex) + " is not unique in Result for " + this);
-
-        return map;
+        return collect(toMap(recordType().mapper(key), mapper));
     }
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
-        return intoGroups0(indexOrFail(fieldsRow(), key));
+        return collect(toGroups(recordType().mapper(key)));
     }
 
     @Override
     public final Map<?, Result<R>> intoGroups(int keyFieldIndex) {
-        return intoGroups0(keyFieldIndex);
+        return collect(toGroups(recordType().mapper(keyFieldIndex)));
     }
 
     @Override
     public final Map<?, Result<R>> intoGroups(String keyFieldName) {
-        return intoGroups(field(keyFieldName));
+        return collect(toGroups(recordType().mapper(keyFieldName)));
     }
 
     @Override
     public final Map<?, Result<R>> intoGroups(Name keyFieldName) {
-        return intoGroups(field(keyFieldName));
-    }
-
-    private final <K> Map<K, Result<R>> intoGroups0(int keyFieldIndex) {
-        Map<K, Result<R>> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            map.computeIfAbsent((K) record.get(keyFieldIndex), v -> new ResultImpl<>(configuration, fields)).add(record);
-
-        return map;
+        return collect(toGroups(recordType().mapper(keyFieldName)));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) {
-        int kIndex = indexOrFail(fieldsRow(), key);
-        int vIndex = indexOrFail(fieldsRow(), value);
-
-        return intoGroups0(kIndex, vIndex);
+        return collect(toGroups(recordType().mapper(key), recordType().mapper(value)));
     }
 
     @Override
     public final Map<?, List<?>> intoGroups(int keyFieldIndex, int valueFieldIndex) {
-        return (Map) intoGroups0(keyFieldIndex, valueFieldIndex);
+        return (Map) collect(toGroups(recordType().mapper(keyFieldIndex), recordType().mapper(valueFieldIndex)));
     }
 
     @Override
     public final Map<?, List<?>> intoGroups(String keyFieldName, String valueFieldName) {
-        return (Map) intoGroups(field(keyFieldName), field(valueFieldName));
+        return (Map) collect(toGroups(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
     }
 
     @Override
     public final Map<?, List<?>> intoGroups(Name keyFieldName, Name valueFieldName) {
-        return (Map) intoGroups(field(keyFieldName), field(valueFieldName));
-    }
-
-    private final <K, V> Map<K, List<V>> intoGroups0(int kIndex, int vIndex) {
-        Map<K, List<V>> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            map.computeIfAbsent((K) record.get(kIndex), k -> new ArrayList<>()).add((V) record.get(vIndex));
-
-        return map;
+        return (Map) collect(toGroups(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(int keyFieldIndex, Class<? extends E> type) {
-        return intoGroups(keyFieldIndex, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toGroups(recordType().mapper(keyFieldIndex), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(String keyFieldName, Class<? extends E> type) {
-        return intoGroups(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toGroups(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(Name keyFieldName, Class<? extends E> type) {
-        return intoGroups(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toGroups(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
-        return intoGroups(key, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toGroups(recordType().mapper(key), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return intoGroups0(indexOrFail(fieldsRow(), key), mapper);
+        return collect(toGroups(recordType().mapper(key), mapper));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        return intoGroups0(keyFieldIndex, mapper);
+        return collect(toGroups(recordType().mapper(keyFieldIndex), mapper));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(String keyFieldName, RecordMapper<? super R, E> mapper) {
-        return intoGroups(field(keyFieldName), mapper);
+        return collect(toGroups(recordType().mapper(keyFieldName), mapper));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) {
-        return intoGroups(field(keyFieldName), mapper);
-    }
-
-    private final <K, E> Map<K, List<E>> intoGroups0(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        Map<K, List<E>> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            map.computeIfAbsent((K) record.get(keyFieldIndex), k -> new ArrayList<>()).add(mapper.map(record));
-
-        return map;
+        return collect(toGroups(recordType().mapper(keyFieldName), mapper));
     }
 
     @Override
@@ -714,7 +618,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
             for (Field<?> field : keysRow.fields.fields)
                 Tools.copyValue(key, field, record, field);
 
-            map.computeIfAbsent(key, k -> new ResultImpl<>(configuration(), this.fields)).add(record);
+            map.computeIfAbsent(key, k -> new ResultImpl<>(Tools.configuration(this), this.fields)).add(record);
         }
 
         return map;
@@ -751,7 +655,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
             for (Field<?> field : valuesRow.fields.fields)
                 Tools.copyValue(value, field, record, field);
 
-            map.computeIfAbsent(key, k -> new ResultImpl<>(configuration(), valuesRow)).add(value);
+            map.computeIfAbsent(key, k -> new ResultImpl<>(Tools.configuration(this), valuesRow)).add(value);
         }
 
         return map;
@@ -759,22 +663,22 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, Class<? extends E> type) {
-        return intoGroups(keyFieldIndexes, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return intoGroups(keyFieldIndexes, recordType().mapper(Tools.configuration(this), type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, Class<? extends E> type) {
-        return intoGroups(keyFieldNames, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return intoGroups(keyFieldNames, recordType().mapper(Tools.configuration(this), type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) {
-        return intoGroups(keyFieldNames, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return intoGroups(keyFieldNames, recordType().mapper(Tools.configuration(this), type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
-        return intoGroups(keys, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return intoGroups(keys, recordType().mapper(Tools.configuration(this), type));
     }
 
     @Override
@@ -811,80 +715,58 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Class<? extends K> keyType) {
-        return intoGroups(Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType));
+        return collect(toGroups(recordType().mapper(Tools.configuration(this), keyType)));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, Class<? extends V> valueType) {
-        return intoGroups(
-            Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType),
-            Tools.configuration(this).recordMapperProvider().provide(recordType(), valueType)
-        );
+        return collect(toGroups(recordType().mapper(Tools.configuration(this), keyType), recordType().mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return intoGroups(Tools.configuration(this).recordMapperProvider().provide(recordType(), keyType), valueMapper);
+        return collect(toGroups(recordType().mapper(Tools.configuration(this), keyType), valueMapper));
     }
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(RecordMapper<? super R, K> keyMapper) {
-        Map<K, Result<R>> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            map.computeIfAbsent(keyMapper.map(record), k -> new ResultImpl<>(configuration(), fields)).add(record);
-
-        return map;
+        return collect(toGroups(keyMapper));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return intoGroups(keyMapper, Tools.configuration(this).recordMapperProvider().provide(recordType(), valueType));
+        return collect(toGroups(keyMapper, recordType().mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
-        Map<K, List<V>> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            map.computeIfAbsent(keyMapper.map(record), k -> new ArrayList<>()).add(valueMapper.map(record));
-
-        return map;
+        return collect(toGroups(keyMapper, valueMapper));
     }
 
     @Override
     public final <S extends Record> Map<S, Result<R>> intoGroups(Table<S> table) {
-        Map<S, Result<R>> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            map.computeIfAbsent(record.into(table), k -> new ResultImpl<>(configuration(), this.fields)).add(record);
-
-        return map;
+        return collect(toGroups(recordType().mapper(table)));
     }
 
     @Override
     public final <S extends Record, T extends Record> Map<S, Result<T>> intoGroups(Table<S> keyTable, Table<T> valueTable) {
+        // [#9288] TODO: Can't use collect(toGroups(recordType().mapper(keyTable), recordType().mapper(valueTable))) yet
         Map<S, Result<T>> map = new LinkedHashMap<>();
 
         for (R record : this)
-            map.computeIfAbsent(record.into(keyTable), k -> DSL.using(configuration()).newResult(valueTable)).add(record.into(valueTable));
+            map.computeIfAbsent(record.into(keyTable), k -> DSL.using(Tools.configuration(this)).newResult(valueTable)).add(record.into(valueTable));
 
         return map;
     }
 
     @Override
     public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, Class<? extends E> type) {
-        return intoGroups(table, Tools.configuration(this).recordMapperProvider().provide(recordType(), type));
+        return collect(toGroups(recordType().mapper(table), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, RecordMapper<? super R, E> mapper) {
-        Map<S, List<E>> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            map.computeIfAbsent(record.into(table), k -> new ArrayList<>()).add(mapper.map(record));
-
-        return map;
+        return collect(toGroups(recordType().mapper(table), mapper));
     }
 
     @Override
@@ -960,71 +842,74 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> Set<E> intoSet(RecordMapper<? super R, E> mapper) {
-        Set<E> result = new LinkedHashSet<>();
-
-        for (R record : this)
-            result.add(mapper.map(record));
-
-        return result;
+        return collect(toSet(mapper));
     }
 
     @Override
     public final Set<?> intoSet(int fieldIndex) {
-        return new LinkedHashSet<>(getValues(fieldIndex));
+        return collect(toSet(recordType().mapper(fieldIndex)));
     }
 
     @Override
     public final <U> Set<U> intoSet(int fieldIndex, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return new LinkedHashSet<>(getValues(fieldIndex, type));
     }
 
     @Override
     public final <U> Set<U> intoSet(int fieldIndex, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return new LinkedHashSet<>(getValues(fieldIndex, converter));
     }
 
     @Override
     public final Set<?> intoSet(String fieldName) {
-        return new LinkedHashSet<>(getValues(fieldName));
+        return collect(toSet(recordType().mapper(fieldName)));
     }
 
     @Override
     public final <U> Set<U> intoSet(String fieldName, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return new LinkedHashSet<>(getValues(fieldName, type));
     }
 
     @Override
     public final <U> Set<U> intoSet(String fieldName, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return new LinkedHashSet<>(getValues(fieldName, converter));
     }
 
     @Override
     public final Set<?> intoSet(Name fieldName) {
-        return new LinkedHashSet<>(getValues(fieldName));
+        return collect(toSet(recordType().mapper(fieldName)));
     }
 
     @Override
     public final <U> Set<U> intoSet(Name fieldName, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return new LinkedHashSet<>(getValues(fieldName, type));
     }
 
     @Override
     public final <U> Set<U> intoSet(Name fieldName, Converter<?, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return new LinkedHashSet<>(getValues(fieldName, converter));
     }
 
     @Override
     public final <T> Set<T> intoSet(Field<T> field) {
-        return new LinkedHashSet<>(getValues(field));
+        return collect(toSet(recordType().mapper(field)));
     }
 
     @Override
     public final <U> Set<U> intoSet(Field<?> field, Class<? extends U> type) {
+        // [#9288] TODO: Refactor this
         return new LinkedHashSet<>(getValues(field, type));
     }
 
     @Override
     public final <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, ? extends U> converter) {
+        // [#9288] TODO: Refactor this
         return new LinkedHashSet<>(getValues(field, converter));
     }
 
@@ -1154,13 +1039,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> List<E> into(Class<? extends E> type) {
-        RecordMapper<R, E> mapper = Tools.configuration(this).recordMapperProvider().provide(recordType(), type);
-        return Tools.map(this, mapper::map);
+        return Tools.map(this, recordType().mapper(Tools.configuration(this), type)::map);
     }
 
     @Override
     public final <Z extends Record> Result<Z> into(Table<Z> table) {
-        Result<Z> list = new ResultImpl<>(configuration(), (AbstractRow) table.fieldsRow());
+        Result<Z> list = new ResultImpl<>(Tools.configuration(this), (AbstractRow) table.fieldsRow());
 
         for (R record : this)
             list.add(record.into(table));

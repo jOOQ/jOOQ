@@ -35,29 +35,37 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.impl;
 
-import org.jooq.impl.DefaultRecordMapper;
+import java.util.function.Function;
+
+import org.jooq.Record;
+import org.jooq.RecordMapper;
+import org.jooq.RecordType;
 
 /**
- * A record type for {@link Table}, {@link Cursor}, {@link Result} and other
- * objects.
- * <p>
- * This type differs from {@link Row} in several ways:
- * <ul>
- * <li>It is generic using <code>&lt;R&gt;</code></li>
- * <li>It is not repeated for degrees 1 to 22, such as {@link Row1} ..
- * {@link RowN}</li>
- * <li>It is not part of the DSL</li>
- * </ul>
+ * A {@link RecordMapper} implementation offering access to a delegate record
+ * mapper whose initialisation is delayed until the first record, e.g. for
+ * {@link ResultQuery} implementations whose {@link RecordType} is unknown prior
+ * to execution.
  *
  * @author Lukas Eder
  */
-public interface RecordType<R extends Record> extends Fields, Mappable<R> {
+final class DelayedRecordMapper<R extends Record, E> implements RecordMapper<R, E> {
 
-    /**
-     * Get the degree of this record type.
-     */
-    int size();
+    final Function<RecordType<R>, RecordMapper<R, E>> init;
+    RecordMapper<R, E>                                delegate;
 
+    DelayedRecordMapper(Function<RecordType<R>, RecordMapper<R, E>> init) {
+        this.init = init;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final E map(R record) {
+        if (delegate == null)
+            delegate = init.apply((RecordType<R>) ((AbstractRecord) record).fields.fields);
+
+        return delegate.map(record);
+    }
 }

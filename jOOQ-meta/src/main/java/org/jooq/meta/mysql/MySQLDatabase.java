@@ -41,9 +41,9 @@ package org.jooq.meta.mysql;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.Records.mapping;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
-import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
@@ -75,6 +75,7 @@ import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -458,55 +459,51 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<>();
 
-        Result<Record5<String, String, String, String, String>> records = create()
-            .select(
-                COLUMNS.TABLE_SCHEMA,
-                COLUMNS.COLUMN_COMMENT,
-                COLUMNS.TABLE_NAME,
-                COLUMNS.COLUMN_NAME,
-                COLUMNS.COLUMN_TYPE)
-            .from(COLUMNS)
-            .where(
-                COLUMNS.COLUMN_TYPE.like("enum(%)").and(
-                COLUMNS.TABLE_SCHEMA.in(workaroundFor5213(getInputSchemata()))))
-            .orderBy(
-                COLUMNS.TABLE_SCHEMA.asc(),
-                COLUMNS.TABLE_NAME.asc(),
-                COLUMNS.COLUMN_NAME.asc())
-            .fetch();
+        final /* record */ class R { private final String schema; private final String table; private final String column; private final String type; private final String comment; public R(String schema, String table, String column, String type, String comment) { this.schema = schema; this.table = table; this.column = column; this.type = type; this.comment = comment; } public String schema() { return schema; } public String table() { return table; } public String column() { return column; } public String type() { return type; } public String comment() { return comment; } @Override public boolean equals(Object o) { if (!(o instanceof R)) return false; R other = (R) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.column, other.column)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.comment, other.comment)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.column, this.type, this.comment); } @Override public String toString() { return new StringBuilder("R[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", column=").append(this.column).append(", type=").append(this.type).append(", comment=").append(this.comment).append("]").toString(); } }
 
-        for (Record record : records) {
-            SchemaDefinition schema = getSchema(record.get(COLUMNS.TABLE_SCHEMA));
+        for (R r : create()
+                .select(
+                    COLUMNS.TABLE_SCHEMA,
+                    COLUMNS.TABLE_NAME,
+                    COLUMNS.COLUMN_NAME,
+                    COLUMNS.COLUMN_TYPE,
+                    COLUMNS.COLUMN_COMMENT)
+                .from(COLUMNS)
+                .where(
+                    COLUMNS.COLUMN_TYPE.like("enum(%)").and(
+                    COLUMNS.TABLE_SCHEMA.in(workaroundFor5213(getInputSchemata()))))
+                .orderBy(
+                    COLUMNS.TABLE_SCHEMA.asc(),
+                    COLUMNS.TABLE_NAME.asc(),
+                    COLUMNS.COLUMN_NAME.asc())
+                .fetch(mapping(R::new))
+        ) {
+            SchemaDefinition schema = getSchema(r.schema);
 
-            String comment = record.get(COLUMNS.COLUMN_COMMENT);
-            String table = record.get(COLUMNS.TABLE_NAME);
-            String column = record.get(COLUMNS.COLUMN_NAME);
-            String name = table + "_" + column;
-            String columnType = record.get(COLUMNS.COLUMN_TYPE);
+            String name = r.table + "_" + r.column;
 
             // [#1237] Don't generate enum classes for columns in MySQL tables
             // that are excluded from code generation
-            TableDefinition tableDefinition = getTable(schema, table);
+            TableDefinition tableDefinition = getTable(schema, r.table);
             if (tableDefinition != null) {
-                ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
+                ColumnDefinition columnDefinition = tableDefinition.getColumn(r.column);
 
                 if (columnDefinition != null) {
 
                     // [#1137] Avoid generating enum classes for enum types that
                     // are explicitly forced to another type
                     if (getConfiguredForcedType(columnDefinition, columnDefinition.getType()) == null) {
-                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, comment);
+                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, r.comment);
 
                         CSVReader reader = new CSVReader(
-                            new StringReader(columnType.replaceAll("(^enum\\()|(\\)$)", ""))
+                            new StringReader(r.type.replaceAll("(^enum\\()|(\\)$)", ""))
                            ,','  // Separator
                            ,'\'' // Quote character
                            ,true // Strict quotes
                         );
 
-                        for (String string : reader.next()) {
+                        for (String string : reader.next())
                             definition.addLiteral(string);
-                        }
 
                         result.add(definition);
                     }

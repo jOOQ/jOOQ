@@ -41,6 +41,7 @@ package org.jooq.meta.postgres;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.Records.mapping;
 import static org.jooq.Rows.toRowArray;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -122,6 +123,7 @@ import org.jooq.Record12;
 import org.jooq.Record2;
 import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Rows;
@@ -740,6 +742,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         return result;
     }
 
+    static final /* record */ class Identifier { private final String schema; private final String name; public Identifier(String schema, String name) { this.schema = schema; this.name = name; } public String schema() { return schema; } public String name() { return name; } @Override public boolean equals(Object o) { if (!(o instanceof Identifier)) return false; Identifier other = (Identifier) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.name, other.name)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.name); } @Override public String toString() { return new StringBuilder("Identifier[").append("schema=").append(this.schema).append(", name=").append(this.name).append("]").toString(); } }
+
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<>();
@@ -750,26 +754,22 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             // [#2707] Fetch all enum type names first, in order to be able to
             // perform enumlabel::[typname] casts in the subsequent query for
             // cross-version compatible enum literal ordering
-            Result<Record2<String, String>> types = create()
-                .select(
-                    PG_TYPE.pgNamespace().NSPNAME,
-                    PG_TYPE.TYPNAME)
-                .from(PG_TYPE)
-                .where(PG_TYPE.pgNamespace().NSPNAME.in(getInputSchemata()))
-                .and(oid(PG_TYPE).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
-                .orderBy(
-                    PG_TYPE.pgNamespace().NSPNAME,
-                    PG_TYPE.TYPNAME)
-                .fetch();
-
-            for (Record2<String, String> type : types) {
-                String nspname = type.get(PG_TYPE.pgNamespace().NSPNAME);
-                String typname = type.get(PG_TYPE.TYPNAME);
-
+            for (Identifier type : create()
+                    .select(
+                        PG_TYPE.pgNamespace().NSPNAME,
+                        PG_TYPE.TYPNAME)
+                    .from(PG_TYPE)
+                    .where(PG_TYPE.pgNamespace().NSPNAME.in(getInputSchemata()))
+                    .and(oid(PG_TYPE).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
+                    .orderBy(
+                        PG_TYPE.pgNamespace().NSPNAME,
+                        PG_TYPE.TYPNAME)
+                    .fetch(mapping(Identifier::new))) {
                 DefaultEnumDefinition definition = null;
-                for (String label : enumLabels(nspname, typname)) {
-                    SchemaDefinition schema = getSchema(nspname);
-                    String typeName = String.valueOf(typname);
+
+                for (String label : enumLabels(type.schema, type.name)) {
+                    SchemaDefinition schema = getSchema(type.schema);
+                    String typeName = String.valueOf(type.name);
 
                     if (definition == null || !definition.getName().equals(typeName)) {
                         definition = new DefaultEnumDefinition(schema, typeName, null);
@@ -894,7 +894,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#2736] This table is unavailable in Amazon Redshift
         if (exists(ATTRIBUTES)) {
-            for (Record record : create()
+            for (Identifier udt : create()
                     .selectDistinct(
                         ATTRIBUTES.UDT_SCHEMA,
                         ATTRIBUTES.UDT_NAME)
@@ -903,12 +903,12 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     .orderBy(
                         ATTRIBUTES.UDT_SCHEMA,
                         ATTRIBUTES.UDT_NAME)
-                    .fetch()) {
+                    .fetch(mapping(Identifier::new))) {
 
-                SchemaDefinition schema = getSchema(record.get(ATTRIBUTES.UDT_SCHEMA));
-                String name = record.get(ATTRIBUTES.UDT_NAME);
+                SchemaDefinition schema = getSchema(udt.schema);
 
-                result.add(new PostgresUDTDefinition(schema, name, null));
+                if (schema != null)
+                    result.add(new PostgresUDTDefinition(schema, udt.name, null));
             }
         }
 
@@ -1181,6 +1181,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 .where(PG_ENUM.pgType().pgNamespace().NSPNAME.eq(nspname))
                 .and(PG_ENUM.pgType().TYPNAME.eq(typname))
                 .orderBy(orderBy)
-                .fetch(PG_ENUM.ENUMLABEL);
+                .collect(Records.toList());
     }
 }

@@ -38,6 +38,7 @@
 
 package org.jooq.meta.cubrid;
 
+import static org.jooq.Records.toList;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -58,6 +59,7 @@ import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record3;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -135,7 +137,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
                     .selectDistinct(DB_INDEX.CLASS_NAME)
                     .from(DB_INDEX)
                     .where(DB_INDEX.IS_FOREIGN_KEY.isTrue())
-                    .fetch(DB_INDEX.CLASS_NAME)) {
+                    .collect(toList())) {
 
                 for (Record record : create().fetch(meta.getImportedKeys(null, null, table))) {
                     String foreignKeyName =

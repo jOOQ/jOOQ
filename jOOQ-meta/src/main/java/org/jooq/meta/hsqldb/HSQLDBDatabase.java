@@ -40,6 +40,7 @@ package org.jooq.meta.hsqldb;
 
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.Records.mapping;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -78,6 +79,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record6;
+import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -385,10 +387,7 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
         return
         create().select(SCHEMATA.SCHEMA_NAME)
                 .from(SCHEMATA)
-                .collect(mapping(
-                    r -> new SchemaDefinition(this, r.value1(), ""),
-                    toList()
-                ));
+                .fetch(mapping(s -> new SchemaDefinition(this, s, "")));
     }
 
     @Override

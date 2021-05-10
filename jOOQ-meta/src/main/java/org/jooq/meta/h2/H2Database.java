@@ -37,8 +37,7 @@
  */
 package org.jooq.meta.h2;
 
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
+import static org.jooq.Records.mapping;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -73,7 +72,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -398,17 +396,9 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
         return
-        create().select(
-                    SCHEMATA.SCHEMA_NAME,
-                    SCHEMATA.REMARKS)
+        create().select(SCHEMATA.SCHEMA_NAME, SCHEMATA.REMARKS)
                 .from(SCHEMATA)
-                .collect(mapping(
-                    r -> new SchemaDefinition(this,
-                        r.get(SCHEMATA.SCHEMA_NAME),
-                        r.get(SCHEMATA.REMARKS)
-                    ),
-                    toList()
-                ));
+                .fetch(mapping((s, r) -> new SchemaDefinition(this, s, r)));
     }
 
     @Override
@@ -473,12 +463,14 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 
-        for (Record record : create().select(
+        final /* record */ class R { private final String schema; private final String table; private final TableType type; private final String comment; private final String source; public R(String schema, String table, TableType type, String comment, String source) { this.schema = schema; this.table = table; this.type = type; this.comment = comment; this.source = source; } public String schema() { return schema; } public String table() { return table; } public TableType type() { return type; } public String comment() { return comment; } public String source() { return source; } @Override public boolean equals(Object o) { if (!(o instanceof R)) return false; R other = (R) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.comment, other.comment)) return false; if (!java.util.Objects.equals(this.source, other.source)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.type, this.comment, this.source); } @Override public String toString() { return new StringBuilder("R[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", type=").append(this.type).append(", comment=").append(this.comment).append(", source=").append(this.source).append("]").toString(); } }
+
+        for (R r : create().select(
                     TABLES.TABLE_SCHEMA,
                     TABLES.TABLE_NAME,
                     when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                        .when(TABLES.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.TEMPORARY.name()))
-                       .else_(inline(TableType.TABLE.name())).as("table_type"),
+                       .else_(inline(TableType.TABLE.name())).convertFrom(TableType::valueOf).as("table_type"),
                     TABLES.REMARKS,
                     VIEWS.VIEW_DEFINITION)
                 .from(TABLES)
@@ -488,19 +480,13 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
                 .orderBy(
                     TABLES.TABLE_SCHEMA,
-                    TABLES.TABLE_NAME)) {
+                    TABLES.TABLE_NAME)
+                .fetch(mapping(R::new))) {
 
-            SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(r.schema);
 
-            if (schema != null) {
-                String name = record.get(TABLES.TABLE_NAME);
-                String comment = record.get(TABLES.REMARKS);
-                TableType tableType = record.get("table_type", TableType.class);
-                String source = record.get(VIEWS.VIEW_DEFINITION);
-
-                H2TableDefinition table = new H2TableDefinition(schema, name, comment, tableType, source);
-                result.add(table);
-            }
+            if (schema != null)
+                result.add(new H2TableDefinition(schema, r.table, r.comment, r.type, r.source));
         }
 
         return result;
@@ -580,8 +566,10 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     private void getInlineEnums(List<EnumDefinition> result) {
 
+        final /* record */ class R { private final String schema; private final String table; private final String column; private final String type; public R(String schema, String table, String column, String type) { this.schema = schema; this.table = table; this.column = column; this.type = type; } public String schema() { return schema; } public String table() { return table; } public String column() { return column; } public String type() { return type; } @Override public boolean equals(Object o) { if (!(o instanceof R)) return false; R other = (R) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.column, other.column)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.column, this.type); } @Override public String toString() { return new StringBuilder("R[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", column=").append(this.column).append(", type=").append(this.type).append("]").toString(); } }
+
         enumLoop:
-        for (Record record : create()
+        for (R r : create()
                 .select(
                     COLUMNS.TABLE_SCHEMA,
                     COLUMNS.TABLE_NAME,
@@ -594,22 +582,20 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 .orderBy(
                     COLUMNS.TABLE_SCHEMA.asc(),
                     COLUMNS.TABLE_NAME.asc(),
-                    COLUMNS.COLUMN_NAME.asc())) {
+                    COLUMNS.COLUMN_NAME.asc())
+                .fetch(mapping(R::new))) {
 
-            SchemaDefinition schema = getSchema(record.get(COLUMNS.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(r.schema);
             if (schema == null)
                 continue enumLoop;
 
-            String table = record.get(COLUMNS.TABLE_NAME);
-            String column = record.get(COLUMNS.COLUMN_NAME);
-            String name = table + "_" + column;
-            String columnType = record.get(COLUMNS.COLUMN_TYPE);
+            String name = r.table + "_" + r.column;
 
             // [#1237] Don't generate enum classes for columns in MySQL tables
             // that are excluded from code generation
-            TableDefinition tableDefinition = getTable(schema, table);
+            TableDefinition tableDefinition = getTable(schema, r.table);
             if (tableDefinition != null) {
-                ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
+                ColumnDefinition columnDefinition = tableDefinition.getColumn(r.column);
 
                 if (columnDefinition != null) {
 
@@ -619,7 +605,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                         DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "");
 
                         CSVReader reader = new CSVReader(
-                            new StringReader(columnType.replaceAll("(^enum\\()|(\\).*$)", ""))
+                            new StringReader(r.type.replaceAll("(^enum\\()|(\\).*$)", ""))
                            ,','  // Separator
                            ,'\'' // Quote character
                            ,true // Strict quotes
@@ -637,8 +623,10 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     private void getDomainEnums(List<EnumDefinition> result) {
 
+        final /* record */ class R { private final String schema; private final String name; private final String sql; public R(String schema, String name, String sql) { this.schema = schema; this.name = name; this.sql = sql; } public String schema() { return schema; } public String name() { return name; } public String sql() { return sql; } @Override public boolean equals(Object o) { if (!(o instanceof R)) return false; R other = (R) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.name, other.name)) return false; if (!java.util.Objects.equals(this.sql, other.sql)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.name, this.sql); } @Override public String toString() { return new StringBuilder("R[").append("schema=").append(this.schema).append(", name=").append(this.name).append(", sql=").append(this.sql).append("]").toString(); } }
+
         enumLoop:
-        for (Record record : create()
+        for (R r : create()
                 .select(
                     DOMAINS.DOMAIN_SCHEMA,
                     DOMAINS.DOMAIN_NAME,
@@ -648,19 +636,17 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 .and(DOMAINS.DOMAIN_SCHEMA.in(getInputSchemata()))
                 .orderBy(
                     DOMAINS.DOMAIN_SCHEMA,
-                    DOMAINS.DOMAIN_NAME)) {
+                    DOMAINS.DOMAIN_NAME)
+                .fetch(mapping(R::new))) {
 
-            SchemaDefinition schema = getSchema(record.get(DOMAINS.DOMAIN_SCHEMA));
+            SchemaDefinition schema = getSchema(r.schema);
             if (schema == null)
                 continue enumLoop;
 
-            String name = record.get(DOMAINS.DOMAIN_NAME);
-            String sql = record.get(DOMAINS.SQL);
-
-            DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "");
+            DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, r.name, "");
 
             CSVReader reader = new CSVReader(
-                new StringReader(sql.replaceAll("(?i:(^.*as enum\\()|(\\).*$))", ""))
+                new StringReader(r.sql.replaceAll("(?i:(^.*as enum\\()|(\\).*$))", ""))
                ,','  // Separator
                ,'\'' // Quote character
                ,true // Strict quotes

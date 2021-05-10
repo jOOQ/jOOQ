@@ -111,7 +111,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
      * using Spring. It is not exposed in the public API.
      */
     public /* non-final */ void setConfiguration(Configuration configuration) {
-        this.mapper = table.recordType().mapper(this.configuration = Tools.configuration(configuration), type);
+        this.mapper = ((FieldsImpl<R>) table.recordType()).mapper(this.configuration = Tools.configuration(configuration), type);
     }
 
     public final DSLContext ctx() {

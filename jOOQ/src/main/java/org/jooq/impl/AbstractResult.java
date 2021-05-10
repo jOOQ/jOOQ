@@ -130,7 +130,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
     // XXX: RecordType API of subtypes
     // -------------------------------------------------------------------------
 
-    public final RecordType<R> recordType() {
+    public final FieldsImpl<R> recordType() {
         return fields.fields;
     }
 

@@ -377,7 +377,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         if (Stream.class.isAssignableFrom(type)) {
-            delegate = r -> (E) Stream.of(rowType.mapper(configuration, Object[].class).map(r));
+            delegate = r -> (E) Stream.of(((FieldsImpl<R>) rowType).mapper(configuration, Object[].class).map(r));
             return;
         }
 

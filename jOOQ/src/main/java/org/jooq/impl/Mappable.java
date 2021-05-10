@@ -35,9 +35,15 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.impl;
 
-import org.jooq.impl.DefaultRecordMapper;
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.Name;
+import org.jooq.Record;
+import org.jooq.RecordMapper;
+import org.jooq.RecordQualifier;
+import org.jooq.Table;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,7 +52,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Mappable<R extends Record> {
+interface Mappable<R extends Record> {
 
     /**
      * Create a record mapper that extracts a value by field index.

@@ -71,7 +71,7 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-final class FieldsImpl<R extends Record> extends AbstractQueryPart implements RecordType<R> {
+final class FieldsImpl<R extends Record> extends AbstractQueryPart implements RecordType<R>, Mappable<R> {
 
     private static final JooqLogger log              = JooqLogger.getLogger(FieldsImpl.class);
     Field<?>[]                      fields;
@@ -84,14 +84,9 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         this.fields = Tools.map(fields, toField(), Field<?>[]::new);
     }
 
-    private static final ThrowingFunction<SelectField<?>, Field<?>, RuntimeException> toField() {
-        return f -> f instanceof Row ? new RowField<>((Row) f) : (Field<?>) f;
-    }
-
-    @Override
-    public final int size() {
-        return fields.length;
-    }
+    // -------------------------------------------------------------------------
+    // Mappable API
+    // -------------------------------------------------------------------------
 
     @Override
     public final RecordMapper<R, ?> mapper(int fieldIndex) {
@@ -121,6 +116,19 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     @Override
     public final <E> RecordMapper<R, E> mapper(Configuration configuration, Class<? extends E> type) {
         return configuration.recordMapperProvider().provide(this, type);
+    }
+
+    // -------------------------------------------------------------------------
+    // RecordType API
+    // -------------------------------------------------------------------------
+
+    private static final ThrowingFunction<SelectField<?>, Field<?>, RuntimeException> toField() {
+        return f -> f instanceof Row ? new RowField<>((Row) f) : (Field<?>) f;
+    }
+
+    @Override
+    public final int size() {
+        return fields.length;
     }
 
     @Override

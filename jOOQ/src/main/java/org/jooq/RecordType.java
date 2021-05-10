@@ -53,7 +53,7 @@ import org.jooq.impl.DefaultRecordMapper;
  *
  * @author Lukas Eder
  */
-public interface RecordType<R extends Record> extends Fields, Mappable<R> {
+public interface RecordType<R extends Record> extends Fields {
 
     /**
      * Get the degree of this record type.

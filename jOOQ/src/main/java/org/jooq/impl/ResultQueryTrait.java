@@ -62,7 +62,6 @@ import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.Field;
-import org.jooq.Mappable;
 import org.jooq.Name;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;

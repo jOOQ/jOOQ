@@ -42,7 +42,6 @@ package org.jooq;
 import static org.jooq.SQLDialect.POSTGRES;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -339,7 +338,13 @@ public final class TableOptions implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(onCommit, select, source, type);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((onCommit == null) ? 0 : onCommit.hashCode());
+        result = prime * result + ((select == null) ? 0 : select.hashCode());
+        result = prime * result + ((source == null) ? 0 : source.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        return result;
     }
 
     @Override
@@ -351,10 +356,23 @@ public final class TableOptions implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         TableOptions other = (TableOptions) obj;
-        return onCommit == other.onCommit
-            && Objects.equals(select, other.select)
-            && Objects.equals(source, other.source)
-            && type == other.type;
+        if (onCommit != other.onCommit)
+            return false;
+        if (select == null) {
+            if (other.select != null)
+                return false;
+        }
+        else if (!select.equals(other.select))
+            return false;
+        if (source == null) {
+            if (other.source != null)
+                return false;
+        }
+        else if (!source.equals(other.source))
+            return false;
+        if (type != other.type)
+            return false;
+        return true;
     }
 
     @Override

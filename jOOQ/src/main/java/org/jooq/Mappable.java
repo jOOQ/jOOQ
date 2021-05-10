@@ -39,6 +39,8 @@ package org.jooq;
 
 import org.jooq.impl.DefaultRecordMapper;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A type producing records that can be mapped.
  *
@@ -49,27 +51,32 @@ public interface Mappable<R extends Record> {
     /**
      * Create a record mapper that extracts a value by field index.
      */
+    @NotNull
     RecordMapper<R, ?> mapper(int fieldIndex);
 
     /**
      * Create a record mapper that extracts a value by field name.
      */
+    @NotNull
     RecordMapper<R, ?> mapper(String fieldName);
 
     /**
      * Create a record mapper that extracts a value by field name.
      */
+    @NotNull
     RecordMapper<R, ?> mapper(Name fieldName);
 
     /**
      * Create a record mapper that extracts a value by field reference.
      */
+    @NotNull
     <T> RecordMapper<R, T> mapper(Field<T> field);
 
     /**
      * Create a record mapper that maps records to a new
      * {@link RecordQualifier#getRecordType()}.
      */
+    @NotNull
     <S extends Record> RecordMapper<R, S> mapper(Table<S> table);
 
     /**
@@ -77,6 +84,7 @@ public interface Mappable<R extends Record> {
      * configured {@link Configuration#recordMapperProvider()} (the
      * {@link DefaultRecordMapper}, by default).
      */
+    @NotNull
     <E> RecordMapper<R, E> mapper(Configuration configuration, Class<? extends E> type);
 
 }

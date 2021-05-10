@@ -47,7 +47,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import org.jooq.Name;
@@ -388,7 +387,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, userType);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((userType == null) ? 0 : userType.hashCode());
+        return result;
     }
 
     @Override

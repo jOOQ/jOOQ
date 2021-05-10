@@ -209,7 +209,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ForkJoinPool;
@@ -3692,7 +3691,10 @@ final class Tools {
 
         @Override
         public int hashCode() {
-            return Objects.hashCode(method);
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((method == null) ? 0 : method.getName().hashCode());
+            return result;
         }
 
         @Override

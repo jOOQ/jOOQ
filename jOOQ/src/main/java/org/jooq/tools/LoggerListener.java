@@ -37,6 +37,7 @@
  */
 package org.jooq.tools;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -57,12 +58,16 @@ import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Routine;
 import org.jooq.TXTFormat;
 import org.jooq.VisitContext;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultVisitListener;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
@@ -72,7 +77,9 @@ import org.jooq.impl.DefaultVisitListener;
  */
 public class LoggerListener extends DefaultExecuteListener {
 
-    private static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
+    private static final JooqLogger log       = JooqLogger.getLogger(LoggerListener.class);
+    private static final String     BUFFER    = "org.jooq.tools.LoggerListener.BUFFER";
+    private static final String     DO_BUFFER = "org.jooq.tools.LoggerListener.DO_BUFFER";
 
     @Override
     public void renderEnd(ExecuteContext ctx) {
@@ -126,23 +133,70 @@ public class LoggerListener extends DefaultExecuteListener {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void recordEnd(ExecuteContext ctx) {
         if (log.isTraceEnabled() && ctx.record() != null)
             logMultiline("Record fetched", ctx.record().toString(), Level.FINER);
+
+        // [#10019] Buffer the first few records
+        if (log.isDebugEnabled() && ctx.record() != null && !FALSE.equals(ctx.data(DO_BUFFER))) {
+            Result<Record> buffer = (Result<Record>) ctx.data(BUFFER);
+
+            if (buffer == null)
+                ctx.data(BUFFER, buffer = ctx.dsl().newResult(ctx.record().fields()));
+
+            if (buffer.size() < maxRows())
+                buffer.add(ctx.record());
+        }
+    }
+
+    @Override
+    public void resultStart(ExecuteContext ctx) {
+
+        // [#10019] Don't buffer any records if it isn't needed
+        ctx.data(DO_BUFFER, false);
     }
 
     @Override
     public void resultEnd(ExecuteContext ctx) {
-        if (ctx.result() != null) {
-            if (log.isTraceEnabled())
-                logMultiline("Fetched result", ctx.result().format(TXTFormat.DEFAULT.maxRows(500).maxColWidth(500)), Level.FINE);
-            else if (log.isDebugEnabled())
-                logMultiline("Fetched result", ctx.result().format(TXTFormat.DEFAULT.maxRows(5).maxColWidth(50)), Level.FINE);
-
-            if (log.isDebugEnabled())
-                log.debug("Fetched row(s)", ctx.result().size());
+        if (ctx.result() != null && log.isDebugEnabled()) {
+            log(ctx.result());
+            log.debug("Fetched row(s)", ctx.result().size());
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void fetchEnd(ExecuteContext ctx) {
+        Result<Record> buffer = (Result<Record>) ctx.data(BUFFER);
+
+        if (buffer != null && !buffer.isEmpty()) {
+            log(buffer);
+            log.debug("Fetched row(s)", buffer.size() + (buffer.size() < maxRows() ? "" : " (or more)"));
+        }
+    }
+
+    private void log(Result<?> result) {
+        logMultiline("Fetched result", result.format(TXTFormat.DEFAULT.maxRows(maxRows()).maxColWidth(maxColWidth())), Level.FINE);
+    }
+
+    private int maxRows() {
+        if (log.isTraceEnabled())
+            return 500;
+        else if (log.isDebugEnabled())
+            return 5;
+        else
+            return 0;
+    }
+
+    private int maxColWidth() {
+        if (log.isTraceEnabled())
+            return 500;
+        else if (log.isDebugEnabled())
+            return 50;
+        else
+            return 0;
     }
 
     @Override

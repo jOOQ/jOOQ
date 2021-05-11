@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.h2.information_schema.Tables.CONSTRAINTS;
@@ -66,6 +67,7 @@ import static org.jooq.meta.h2.information_schema.Tables.TYPE_INFO;
 import static org.jooq.meta.h2.information_schema.Tables.VIEWS;
 
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,6 +90,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -402,7 +405,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     }
 
     @Override
-    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         return create()
             .select(
                 inline(null, VARCHAR).as("catalog"),
@@ -413,8 +416,8 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 inline(null, INTEGER).as("scale"),
                 inline(null, BIGINT).as("start_value"),
                 nullif(SEQUENCES.INCREMENT, inline(1L)).as(SEQUENCES.INCREMENT),
-                nullif(SEQUENCES.MIN_VALUE, inline(1L)).as(SEQUENCES.MIN_VALUE),
-                nullif(SEQUENCES.MAX_VALUE, inline(DEFAULT_SEQUENCE_MAXVALUE)).as(SEQUENCES.MAX_VALUE),
+                nullif(SEQUENCES.MIN_VALUE, inline(1L)).coerce(NUMERIC).as(SEQUENCES.MIN_VALUE),
+                nullif(SEQUENCES.MAX_VALUE, inline(DEFAULT_SEQUENCE_MAXVALUE)).coerce(NUMERIC).as(SEQUENCES.MAX_VALUE),
                 SEQUENCES.IS_CYCLE,
                 nullif(SEQUENCES.CACHE, inline(DEFAULT_SEQUENCE_CACHE)).as(SEQUENCES.CACHE)
             )

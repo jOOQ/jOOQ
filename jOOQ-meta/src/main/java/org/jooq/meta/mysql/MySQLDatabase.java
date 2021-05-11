@@ -63,6 +63,7 @@ import static org.jooq.meta.mysql.information_schema.Tables.VIEWS;
 import static org.jooq.meta.mysql.mysql.Tables.PROC;
 
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -408,7 +409,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
     }
 
     @Override
-    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         return null;
     }
 

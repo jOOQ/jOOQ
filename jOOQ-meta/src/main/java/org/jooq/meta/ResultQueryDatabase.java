@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import org.jooq.Internal;
@@ -111,5 +113,5 @@ public interface ResultQueryDatabase extends Database {
      * </ol>
      */
     @Internal
-    ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas);
+    ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas);
 }

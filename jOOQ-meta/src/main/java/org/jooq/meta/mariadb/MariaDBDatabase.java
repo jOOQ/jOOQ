@@ -46,6 +46,7 @@ import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.meta.mysql.information_schema.Tables.TABLES;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class MariaDBDatabase extends MySQLDatabase {
     }
 
     @Override
-    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
 
         // [#10844] [#10854] TODO We need a way to create a dynamic FROM clause in order to group the below sequences in a single one
         return null;

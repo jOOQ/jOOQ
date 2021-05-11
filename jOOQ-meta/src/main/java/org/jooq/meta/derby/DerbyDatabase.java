@@ -53,6 +53,7 @@ import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.derby.sys.Tables.SYSCHECKS;
 import static org.jooq.meta.derby.sys.Tables.SYSCONGLOMERATES;
@@ -63,6 +64,7 @@ import static org.jooq.meta.derby.sys.Tables.SYSSEQUENCES;
 import static org.jooq.meta.derby.sys.Tables.SYSTABLES;
 import static org.jooq.meta.derby.sys.Tables.SYSVIEWS;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -350,7 +352,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
     }
 
     @Override
-    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         return create().select(
                     inline(null, VARCHAR).cast(VARCHAR).as("catalog"),
                     SYSSEQUENCES.sysschemas().SCHEMANAME,
@@ -364,12 +366,12 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                         .when(inline("SMALLINT"), inline((long) Short.MIN_VALUE))
                         .when(inline("INTEGER"), inline((long) Integer.MIN_VALUE))
                         .when(inline("BIGINT"), inline(Long.MIN_VALUE))
-                    ).as(SYSSEQUENCES.MINIMUMVALUE),
+                    ).coerce(NUMERIC).as(SYSSEQUENCES.MINIMUMVALUE),
                     nullif(SYSSEQUENCES.MAXIMUMVALUE, case_(cast(SYSSEQUENCES.SEQUENCEDATATYPE, VARCHAR))
                         .when(inline("SMALLINT"), inline((long) Short.MAX_VALUE))
                         .when(inline("INTEGER"), inline((long) Integer.MAX_VALUE))
                         .when(inline("BIGINT"), inline(Long.MAX_VALUE))
-                    ).as(SYSSEQUENCES.MAXIMUMVALUE),
+                    ).coerce(NUMERIC).as(SYSSEQUENCES.MAXIMUMVALUE),
                     field(SYSSEQUENCES.CYCLEOPTION.eq(inline("Y"))).as(SYSSEQUENCES.CYCLEOPTION),
                     inline(null, BIGINT).cast(BIGINT).as("cache")
                 )

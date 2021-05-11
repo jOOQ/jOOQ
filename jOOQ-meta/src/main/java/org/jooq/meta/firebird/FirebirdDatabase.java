@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
@@ -73,6 +74,7 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATION_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATION_FIELDS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$TRIGGERS;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -383,7 +385,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
-    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         return create()
             .select(
                 inline(null, VARCHAR).as("catalog"),
@@ -399,8 +401,8 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 (is30()
                     ? nullif(RDB$GENERATORS.RDB$GENERATOR_INCREMENT, inline(1))
                     : inline(1)).coerce(BIGINT).as(RDB$GENERATORS.RDB$GENERATOR_INCREMENT),
-                inline(null, BIGINT).as("min_value"),
-                inline(null, BIGINT).as("max_value"),
+                inline(null, NUMERIC).as("min_value"),
+                inline(null, NUMERIC).as("max_value"),
                 inline(null, BOOLEAN).as("cycle"),
                 inline(null, BIGINT).as("cache")
             )

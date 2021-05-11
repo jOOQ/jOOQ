@@ -77,6 +77,7 @@ import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DECIMAL_INTEGER;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.meta.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
@@ -103,6 +104,7 @@ import static org.jooq.util.postgres.PostgresDSL.array;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 import static org.jooq.util.postgres.PostgresDSL.oid;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -645,7 +647,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
-    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, Long, Long, Boolean, Long>> sequences(List<String> schemas) {
+    public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         CommonTableExpression<Record1<String>> s = name("schemas").fields("schema").as(selectFrom(values(schemas.stream().collect(toRowArray(DSL::val)))));
 
         return create()
@@ -659,9 +661,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 SEQUENCES.NUMERIC_SCALE,
                 nullif(SEQUENCES.START_VALUE.cast(BIGINT), inline(1L)).as(SEQUENCES.START_VALUE),
                 nullif(SEQUENCES.INCREMENT.cast(BIGINT), inline(1L)).as(SEQUENCES.INCREMENT),
-                nullif(SEQUENCES.MINIMUM_VALUE.cast(BIGINT), inline(1L)).as(SEQUENCES.MINIMUM_VALUE),
+                nullif(SEQUENCES.MINIMUM_VALUE.cast(BIGINT), inline(1L)).coerce(NUMERIC).as(SEQUENCES.MINIMUM_VALUE),
                 nullif(SEQUENCES.MAXIMUM_VALUE.cast(DECIMAL_INTEGER),
-                    power(cast(inline(2L), DECIMAL_INTEGER), cast(SEQUENCES.NUMERIC_PRECISION.minus(inline(1L)), DECIMAL_INTEGER)).minus(inline(1L))).coerce(BIGINT).as(SEQUENCES.MAXIMUM_VALUE),
+                    power(cast(inline(2L), DECIMAL_INTEGER), cast(SEQUENCES.NUMERIC_PRECISION.minus(inline(1L)), DECIMAL_INTEGER)).minus(inline(1L))).coerce(NUMERIC).as(SEQUENCES.MAXIMUM_VALUE),
                 SEQUENCES.CYCLE_OPTION.cast(BOOLEAN).as(SEQUENCES.CYCLE_OPTION),
                 inline(null, BIGINT).as("cache"))
             .from(SEQUENCES)
@@ -689,9 +691,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     field("information_schema._pg_numeric_precision({0}, {1})", INTEGER, PG_SEQUENCE.pgType().TYPBASETYPE, PG_SEQUENCE.pgType().TYPTYPMOD),
                     inline(0),
                     PG_SEQUENCE.SEQSTART,
-                    PG_SEQUENCE.SEQMIN,
-                    PG_SEQUENCE.SEQMAX,
                     PG_SEQUENCE.SEQINCREMENT,
+                    PG_SEQUENCE.SEQMIN.coerce(NUMERIC),
+                    PG_SEQUENCE.SEQMAX.coerce(NUMERIC),
                     PG_SEQUENCE.SEQCYCLE,
                     inline(null, BIGINT).as("cache"))
                 .from(PG_SEQUENCE)
@@ -703,7 +705,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     .and(PG_DEPEND.CLASSID.eq(field("'pg_class'::regclass", PG_DEPEND.CLASSID.getDataType())))
                 ))
                 // AND NOT EXISTS (SELECT 1 FROM pg_depend WHERE classid = 'pg_class'::regclass AND objid = c.oid AND deptype = 'i')
-            :   select(inline(""), inline(""), inline(""), inline(""), inline(0), inline(0), inline(0L), inline(0L), inline(0L), inline(0L), inline(false), inline(0L))
+            :   select(inline(""), inline(""), inline(""), inline(""), inline(0), inline(0), inline(0L), inline(0L), inline(BigDecimal.ZERO), inline(BigDecimal.ZERO), inline(false), inline(0L))
                 .where(falseCondition()))
             .orderBy(2, 3);
     }

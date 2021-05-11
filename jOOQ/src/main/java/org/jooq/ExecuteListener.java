@@ -44,6 +44,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.EventListener;
+import java.util.stream.Collector;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
@@ -51,6 +52,8 @@ import org.jooq.impl.CallbackExecuteListener;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.tools.LoggerListener;
+
+import org.reactivestreams.Subscriber;
 
 /**
  * An event listener for {@link Query}, {@link Routine}, or {@link ResultSet}
@@ -197,9 +200,9 @@ import org.jooq.tools.LoggerListener;
  * </tr>
  * <tr>
  * <td>{@link #resultStart(ExecuteContext)}</td>
- * <td>Yes, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
- * <td>Yes, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
- * <td>Yes, 1x</td>
+ * <td>Maybe, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
+ * <td>Maybe, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
+ * <td>Maybe, 1x</td>
  * <td>No</td>
  * <td>No</td>
  * <td>No</td>
@@ -225,9 +228,9 @@ import org.jooq.tools.LoggerListener;
  * </tr>
  * <tr>
  * <td>{@link #resultEnd(ExecuteContext)}</td>
- * <td>Yes, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
- * <td>Yes, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
- * <td>Yes, 1x</td>
+ * <td>Maybe, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
+ * <td>Maybe, 1x (Nx for {@link Cursor#fetchNext(int)}</td>
+ * <td>Maybe, 1x</td>
  * <td>No</td>
  * <td>No</td>
  * <td>No</td>
@@ -718,7 +721,8 @@ public interface ExecuteListener extends EventListener, Serializable {
     void outEnd(ExecuteContext ctx);
 
     /**
-     * Called before fetching data from a <code>ResultSet</code>.
+     * Called before fetching data from a <code>ResultSet</code> into a
+     * {@link Result} type.
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
@@ -768,8 +772,21 @@ public interface ExecuteListener extends EventListener, Serializable {
      * {@link ResultQuery#fetchMany()}, this is called several times, once per
      * <code>ResultSet</code>
      * <p>
-     * Note that this method is not called when executing queries that do not
-     * return a result, or when executing routines.
+     * <h3>Executions without {@link Result}</h3>
+     * <p>
+     * Not all types of execution produce results of type {@link Result}. For
+     * example, these do not:
+     * <ul>
+     * <li>{@link ResultQuery#iterator()}</li>
+     * <li>{@link ResultQuery#stream()}</li>
+     * <li>{@link ResultQuery#collect(Collector)}</li>
+     * <li>{@link Publisher#subscribe(Subscriber)}</li>
+     * </ul>
+     * In any of these cases, no {@link #fetchStart(ExecuteContext)} event is
+     * fired.
+     * <p>
+     * Note that this method is also not called when executing queries that do
+     * not return a result, or when executing routines.
      */
     void fetchStart(ExecuteContext ctx);
 
@@ -1013,8 +1030,21 @@ public interface ExecuteListener extends EventListener, Serializable {
      * {@link ResultQuery#fetchMany()}, this is called several times, once per
      * <code>ResultSet</code>
      * <p>
-     * Note that this method is not called when executing queries that do not
-     * return a result, or when executing routines.
+     * <h3>Executions without {@link Result}</h3>
+     * <p>
+     * Not all types of execution produce results of type {@link Result}. For
+     * example, these do not:
+     * <ul>
+     * <li>{@link ResultQuery#iterator()}</li>
+     * <li>{@link ResultQuery#stream()}</li>
+     * <li>{@link ResultQuery#collect(Collector)}</li>
+     * <li>{@link Publisher#subscribe(Subscriber)}</li>
+     * </ul>
+     * In any of these cases, no {@link #fetchEnd(ExecuteContext)} event is
+     * fired.
+     * <p>
+     * Note that this method is also not called when executing queries that do
+     * not return a result, or when executing routines.
      */
     void fetchEnd(ExecuteContext ctx);
 

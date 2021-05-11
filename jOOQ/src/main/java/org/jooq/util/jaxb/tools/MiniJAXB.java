@@ -37,6 +37,8 @@
  */
 package org.jooq.util.jaxb.tools;
 
+import static java.util.Arrays.asList;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -55,6 +57,7 @@ import java.lang.reflect.ParameterizedType;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -65,6 +68,7 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.bind.annotation.XmlType;
@@ -243,6 +247,7 @@ public final class MiniJAXB {
             XmlElementWrapper w = child.getAnnotation(XmlElementWrapper.class);
             XmlElement e = child.getAnnotation(XmlElement.class);
             XmlJavaTypeAdapter a = child.getAnnotation(XmlJavaTypeAdapter.class);
+            XmlList l = child.getAnnotation(XmlList.class);
 
             String childName = child.getName();
             Class<?> childType = child.getType();
@@ -251,6 +256,10 @@ public final class MiniJAXB {
                 List<Object> list = new ArrayList<Object>();
                 unmarshalList0(list, childElement, e.name(), (Class<?>) ((ParameterizedType) child.getGenericType()).getActualTypeArguments()[0], fieldsByClass);
                 Reflect.on(result).set(childName, list);
+            }
+            else if (List.class.isAssignableFrom(childType) && l != null) {
+                List<Object> list = new ArrayList<Object>(asList(childElement.getTextContent().split(" +")));
+                Reflect.on(result).set(childName, Convert.convert(list, (Class<?>) ((ParameterizedType) child.getGenericType()).getActualTypeArguments()[0]));
             }
             else if (childType.getAnnotation(XmlEnum.class) != null) {
                 Reflect.on(result).set(childName, Reflect.onClass(childType).call("fromValue", childElement.getTextContent().trim()));

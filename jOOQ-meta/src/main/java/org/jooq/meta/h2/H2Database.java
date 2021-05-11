@@ -459,13 +459,13 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         return result;
     }
 
+    static final /* record */ class TableRecord { private final String schema; private final String table; private final TableType type; private final String comment; private final String source; public TableRecord(String schema, String table, TableType type, String comment, String source) { this.schema = schema; this.table = table; this.type = type; this.comment = comment; this.source = source; } public String schema() { return schema; } public String table() { return table; } public TableType type() { return type; } public String comment() { return comment; } public String source() { return source; } @Override public boolean equals(Object o) { if (!(o instanceof TableRecord)) return false; TableRecord other = (TableRecord) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.comment, other.comment)) return false; if (!java.util.Objects.equals(this.source, other.source)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.type, this.comment, this.source); } @Override public String toString() { return new StringBuilder("TableRecord[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", type=").append(this.type).append(", comment=").append(this.comment).append(", source=").append(this.source).append("]").toString(); } }
+
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 
-        final /* record */ class R { private final String schema; private final String table; private final TableType type; private final String comment; private final String source; public R(String schema, String table, TableType type, String comment, String source) { this.schema = schema; this.table = table; this.type = type; this.comment = comment; this.source = source; } public String schema() { return schema; } public String table() { return table; } public TableType type() { return type; } public String comment() { return comment; } public String source() { return source; } @Override public boolean equals(Object o) { if (!(o instanceof R)) return false; R other = (R) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.comment, other.comment)) return false; if (!java.util.Objects.equals(this.source, other.source)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.type, this.comment, this.source); } @Override public String toString() { return new StringBuilder("R[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", type=").append(this.type).append(", comment=").append(this.comment).append(", source=").append(this.source).append("]").toString(); } }
-
-        for (R r : create().select(
+        for (TableRecord r : create().select(
                     TABLES.TABLE_SCHEMA,
                     TABLES.TABLE_NAME,
                     when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
@@ -481,7 +481,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 .orderBy(
                     TABLES.TABLE_SCHEMA,
                     TABLES.TABLE_NAME)
-                .fetch(mapping(R::new))) {
+                .fetch(mapping(TableRecord::new))) {
 
             SchemaDefinition schema = getSchema(r.schema);
 
@@ -564,12 +564,12 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         return result;
     }
 
+    static final /* record */ class EnumRecord { private final String schema; private final String table; private final String column; private final String type; public EnumRecord(String schema, String table, String column, String type) { this.schema = schema; this.table = table; this.column = column; this.type = type; } public String schema() { return schema; } public String table() { return table; } public String column() { return column; } public String type() { return type; } @Override public boolean equals(Object o) { if (!(o instanceof EnumRecord)) return false; EnumRecord other = (EnumRecord) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.column, other.column)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.column, this.type); } @Override public String toString() { return new StringBuilder("EnumRecord[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", column=").append(this.column).append(", type=").append(this.type).append("]").toString(); } }
+
     private void getInlineEnums(List<EnumDefinition> result) {
 
-        final /* record */ class R { private final String schema; private final String table; private final String column; private final String type; public R(String schema, String table, String column, String type) { this.schema = schema; this.table = table; this.column = column; this.type = type; } public String schema() { return schema; } public String table() { return table; } public String column() { return column; } public String type() { return type; } @Override public boolean equals(Object o) { if (!(o instanceof R)) return false; R other = (R) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.column, other.column)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.column, this.type); } @Override public String toString() { return new StringBuilder("R[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", column=").append(this.column).append(", type=").append(this.type).append("]").toString(); } }
-
         enumLoop:
-        for (R r : create()
+        for (EnumRecord r : create()
                 .select(
                     COLUMNS.TABLE_SCHEMA,
                     COLUMNS.TABLE_NAME,
@@ -583,7 +583,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                     COLUMNS.TABLE_SCHEMA.asc(),
                     COLUMNS.TABLE_NAME.asc(),
                     COLUMNS.COLUMN_NAME.asc())
-                .fetch(mapping(R::new))) {
+                .fetch(mapping(EnumRecord::new))) {
 
             SchemaDefinition schema = getSchema(r.schema);
             if (schema == null)
@@ -621,12 +621,12 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         }
     }
 
+    static final /* record */ class DomainRecord { private final String schema; private final String name; private final String sql; public DomainRecord(String schema, String name, String sql) { this.schema = schema; this.name = name; this.sql = sql; } public String schema() { return schema; } public String name() { return name; } public String sql() { return sql; } @Override public boolean equals(Object o) { if (!(o instanceof DomainRecord)) return false; DomainRecord other = (DomainRecord) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.name, other.name)) return false; if (!java.util.Objects.equals(this.sql, other.sql)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.name, this.sql); } @Override public String toString() { return new StringBuilder("DomainRecord[").append("schema=").append(this.schema).append(", name=").append(this.name).append(", sql=").append(this.sql).append("]").toString(); } }
+
     private void getDomainEnums(List<EnumDefinition> result) {
 
-        final /* record */ class R { private final String schema; private final String name; private final String sql; public R(String schema, String name, String sql) { this.schema = schema; this.name = name; this.sql = sql; } public String schema() { return schema; } public String name() { return name; } public String sql() { return sql; } @Override public boolean equals(Object o) { if (!(o instanceof R)) return false; R other = (R) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.name, other.name)) return false; if (!java.util.Objects.equals(this.sql, other.sql)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.name, this.sql); } @Override public String toString() { return new StringBuilder("R[").append("schema=").append(this.schema).append(", name=").append(this.name).append(", sql=").append(this.sql).append("]").toString(); } }
-
         enumLoop:
-        for (R r : create()
+        for (DomainRecord r : create()
                 .select(
                     DOMAINS.DOMAIN_SCHEMA,
                     DOMAINS.DOMAIN_NAME,
@@ -637,7 +637,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 .orderBy(
                     DOMAINS.DOMAIN_SCHEMA,
                     DOMAINS.DOMAIN_NAME)
-                .fetch(mapping(R::new))) {
+                .fetch(mapping(DomainRecord::new))) {
 
             SchemaDefinition schema = getSchema(r.schema);
             if (schema == null)

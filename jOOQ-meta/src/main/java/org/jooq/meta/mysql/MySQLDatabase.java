@@ -455,13 +455,13 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
         return result;
     }
 
+    static final /* record */ class ColumnRecord { private final String schema; private final String table; private final String column; private final String type; private final String comment; public ColumnRecord(String schema, String table, String column, String type, String comment) { this.schema = schema; this.table = table; this.column = column; this.type = type; this.comment = comment; } public String schema() { return schema; } public String table() { return table; } public String column() { return column; } public String type() { return type; } public String comment() { return comment; } @Override public boolean equals(Object o) { if (!(o instanceof ColumnRecord)) return false; ColumnRecord other = (ColumnRecord) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.column, other.column)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.comment, other.comment)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.column, this.type, this.comment); } @Override public String toString() { return new StringBuilder("ColumnRecord[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", column=").append(this.column).append(", type=").append(this.type).append(", comment=").append(this.comment).append("]").toString(); } }
+
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<>();
 
-        final /* record */ class R { private final String schema; private final String table; private final String column; private final String type; private final String comment; public R(String schema, String table, String column, String type, String comment) { this.schema = schema; this.table = table; this.column = column; this.type = type; this.comment = comment; } public String schema() { return schema; } public String table() { return table; } public String column() { return column; } public String type() { return type; } public String comment() { return comment; } @Override public boolean equals(Object o) { if (!(o instanceof R)) return false; R other = (R) o; if (!java.util.Objects.equals(this.schema, other.schema)) return false; if (!java.util.Objects.equals(this.table, other.table)) return false; if (!java.util.Objects.equals(this.column, other.column)) return false; if (!java.util.Objects.equals(this.type, other.type)) return false; if (!java.util.Objects.equals(this.comment, other.comment)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.schema, this.table, this.column, this.type, this.comment); } @Override public String toString() { return new StringBuilder("R[").append("schema=").append(this.schema).append(", table=").append(this.table).append(", column=").append(this.column).append(", type=").append(this.type).append(", comment=").append(this.comment).append("]").toString(); } }
-
-        for (R r : create()
+        for (ColumnRecord r : create()
                 .select(
                     COLUMNS.TABLE_SCHEMA,
                     COLUMNS.TABLE_NAME,
@@ -476,7 +476,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                     COLUMNS.TABLE_SCHEMA.asc(),
                     COLUMNS.TABLE_NAME.asc(),
                     COLUMNS.COLUMN_NAME.asc())
-                .fetch(mapping(R::new))
+                .fetch(mapping(ColumnRecord::new))
         ) {
             SchemaDefinition schema = getSchema(r.schema);
 

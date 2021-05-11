@@ -39,6 +39,7 @@
 package org.jooq.meta.mysql;
 
 import static java.util.Arrays.asList;
+// ...
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
@@ -107,9 +108,17 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
             // [#7719]
             boolean displayWidths = getDatabase().integerDisplayWidths();
 
+            columnTypeFix:
             if (unsigned || displayWidths) {
                 if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
-                    Matcher matcher = COLUMN_TYPE.matcher(record.get(COLUMNS.COLUMN_TYPE).toLowerCase());
+                    String columnType = record.get(COLUMNS.COLUMN_TYPE).toLowerCase();
+
+
+
+
+
+
+                    Matcher matcher = COLUMN_TYPE.matcher(columnType);
 
                     if (matcher.find()) {
                         String mType = matcher.group(1);

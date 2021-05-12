@@ -815,10 +815,10 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 ? select
                 : insertMaps.insertSelect();
 
-            // [#8937] With DEFAULT VALUES, there is no SELECT. We don't support
-            //         this yet, but we also mustn't produce invalid SQL
+            // [#8937] With DEFAULT VALUES, there is no SELECT. Create one from
+            //         known DEFAULT expressions, or use NULL.
             if (s == null)
-                s = select(map(f, DSL::NULL));
+                s = select(map(f, x -> x.getDataType().defaulted() ? x.getDataType().default_() : DSL.NULL(x)));
 
             // [#6375]  INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
             Table<?> t = s.asTable("t", map(f, Field::getName, String[]::new));

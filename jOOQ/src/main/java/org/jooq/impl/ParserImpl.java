@@ -108,6 +108,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -2022,10 +2023,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             table = parseTableName();
         }
 
-        TableLike<?> usingTable = (table != null ? table : using);
-        if (parseKeywordIf("AS") || !peekKeyword("ON"))
-            usingTable = usingTable.asTable(parseIdentifier());
-
+        TableLike<?> usingTable = parseCorrelationNameIf(table != null ? table : using, () -> peekKeyword("ON"));
         parseKeyword("ON");
         Condition on = parseCondition();
         boolean update = false;
@@ -6330,26 +6328,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         // TODO UNPIVOT
-
-        Name alias = null;
-        List<Name> columnAliases = null;
-
-        if (parseKeywordIf("AS"))
-            alias = parseIdentifier();
-        else if (!peekKeyword(KEYWORDS_IN_FROM) && !peekKeyword(KEYWORDS_IN_STATEMENTS))
-            alias = parseIdentifierIf();
-
-        if (alias != null) {
-            if (parseIf('(')) {
-                columnAliases = parseIdentifiers();
-                parse(')');
-            }
-
-            if (columnAliases != null)
-                result = t(result, true).as(alias, columnAliases.toArray(EMPTY_NAME));
-            else
-                result = t(result, true).as(alias);
-        }
+        result = parseCorrelationNameIf(result, () -> peekKeyword(KEYWORDS_IN_FROM) || peekKeyword(KEYWORDS_IN_STATEMENTS));
 
         int p = position();
         if (parseKeywordIf("WITH")) {
@@ -6368,6 +6347,30 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return t(result);
+    }
+
+    private final TableLike<?> parseCorrelationNameIf(TableLike<?> result, BooleanSupplier forbiddenKeywords) {
+        Name alias = null;
+        List<Name> columnAliases = null;
+
+        if (parseKeywordIf("AS"))
+            alias = parseIdentifier();
+        else if (!forbiddenKeywords.getAsBoolean())
+            alias = parseIdentifierIf();
+
+        if (alias != null) {
+            if (parseIf('(')) {
+                columnAliases = parseIdentifiers();
+                parse(')');
+            }
+
+            if (columnAliases != null)
+                result = t(result, true).as(alias, columnAliases.toArray(EMPTY_NAME));
+            else
+                result = t(result, true).as(alias);
+        }
+
+        return result;
     }
 
 

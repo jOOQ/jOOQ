@@ -69,6 +69,8 @@ public interface CreateDomainDefaultStep<T> extends CreateDomainConstraintStep {
 
     /**
      * Add the <code>DEFAULT_</code> clause to the <code>CREATE DOMAIN</code> statement.
+     *
+     * @param default_ is wrapped as {@link org.jooq.impl.DSL#val(T)}.
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     @NotNull @CheckReturnValue

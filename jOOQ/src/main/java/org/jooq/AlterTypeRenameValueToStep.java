@@ -69,6 +69,8 @@ public interface AlterTypeRenameValueToStep {
 
     /**
      * Add the <code>TO</code> clause to the <code>ALTER TYPE</code> statement.
+     *
+     * @param renameValueTo is wrapped as {@link org.jooq.impl.DSL#val(T)}.
      */
     @Support({ POSTGRES })
     @NotNull @CheckReturnValue

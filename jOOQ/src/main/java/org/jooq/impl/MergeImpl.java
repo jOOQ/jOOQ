@@ -48,6 +48,7 @@ import static org.jooq.Clause.MERGE_USING;
 import static org.jooq.Clause.MERGE_VALUES;
 import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...

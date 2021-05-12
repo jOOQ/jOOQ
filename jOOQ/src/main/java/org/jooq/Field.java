@@ -107,7 +107,8 @@ import org.jetbrains.annotations.Nullable;
  * <li><code>ORDER BY</code> clause, e.g. through
  * {@link SelectOrderByStep#orderBy(OrderField)} (every {@link Field} is a
  * subtype of {@link OrderField})</li>
- * <li>When creating a {@link Condition}, e.g. through {@link Field#eq(Field)}</li>
+ * <li>When creating a {@link Condition}, e.g. through
+ * {@link Field#eq(Field)}</li>
  * <li>As a function argument, e.g. through {@link DSL#abs(Field)}</li>
  * <li>Many more...</li>
  * </ul>
@@ -133,7 +134,11 @@ import org.jetbrains.annotations.Nullable;
  * references.</li>
  * <li>{@link DSL#field(Condition)} for predicates as fields.</li>
  * <li>{@link DSL#field(Select)} for correlated subqueries.</li>
- * <li>Fields referenced from generated tables</li>
+ * <li>{@link TableField} referenced from generated tables</li>
+ * <li>{@link DSL#val(Object)} and overloads to create bind variables
+ * explicitly</li>
+ * <li>{@link DSL#inline(Object)} and overloads to create inline values
+ * (constants, literals) explicitly</li>
  * </ul>
  *
  * @param <T> The field type

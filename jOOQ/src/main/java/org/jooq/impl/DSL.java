@@ -23295,6 +23295,17 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>ANY_VALUE</code> function.
+     * <p>
+     * Get any arbitrary value from the group.
+     */
+    @NotNull
+    @Support
+    public static <T> AggregateFunction<T> anyValue(Field<T> value) {
+        return new AnyValue(value);
+    }
+
+    /**
      * Get the count(*) function.
      */
     @NotNull

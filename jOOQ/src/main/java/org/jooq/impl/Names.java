@@ -62,6 +62,7 @@ final class Names {
     static final Name N_ADD_SECONDS            = unquotedName("add_seconds");
     static final Name N_ADD_YEARS              = unquotedName("add_years");
     static final Name N_ANY                    = unquotedName("any");
+    static final Name N_ANY_VALUE              = unquotedName("any_value");
     static final Name N_ARRAY                  = unquotedName("array");
     static final Name N_ARRAY_AGG              = unquotedName("array_agg");
     static final Name N_ARRAY_GET              = unquotedName("array_get");

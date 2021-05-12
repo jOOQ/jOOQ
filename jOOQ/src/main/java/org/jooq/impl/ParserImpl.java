@@ -10809,6 +10809,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parse(')');
 
         switch (operation) {
+            case ANY_VALUE:
+                return anyValue(arg);
             case AVG:
                 return distinct ? avgDistinct(arg) : avg(arg);
             case MAX:
@@ -12310,6 +12312,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'A':
                 if (parseFunctionNameIf("ANY"))
                     return ComputationalOperation.ANY;
+                else if (parseFunctionNameIf("ANY_VALUE"))
+                    return ComputationalOperation.ANY_VALUE;
                 else if (parseFunctionNameIf("AVG"))
                     return ComputationalOperation.AVG;
 
@@ -12965,6 +12969,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private static enum ComputationalOperation {
+        ANY_VALUE,
         AVG,
         MAX,
         MIN,

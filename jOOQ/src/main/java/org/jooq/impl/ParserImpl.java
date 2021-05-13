@@ -9027,6 +9027,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
+    private final boolean parseIntervalPrecisionKeywordIf(String keyword) {
+        if (parseKeywordIf(keyword)) {
+            if (parseIf('(')) {
+                parseUnsignedIntegerLiteral();
+                parse(')');
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     private final Interval parseIntervalLiteral() {
         Interval result = parsePostgresIntervalLiteralIf();
         if (result != null)
@@ -9035,41 +9048,41 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         String string = parseStringLiteral();
         String message = "Illegal interval literal";
 
-        if (parseKeywordIf("YEAR"))
-            if (parseKeywordIf("TO") && parseKeyword("MONTH"))
+        if (parseIntervalPrecisionKeywordIf("YEAR"))
+            if (parseKeywordIf("TO") && parseIntervalPrecisionKeywordIf("MONTH"))
                 return requireNotNull(YearToMonth.yearToMonth(string), message);
             else
                 return requireNotNull(YearToMonth.year(string), message);
-        else if (parseKeywordIf("MONTH"))
+        else if (parseIntervalPrecisionKeywordIf("MONTH"))
             return requireNotNull(YearToMonth.month(string), message);
-        else if (parseKeywordIf("DAY"))
+        else if (parseIntervalPrecisionKeywordIf("DAY"))
             if (parseKeywordIf("TO"))
-                if (parseKeywordIf("SECOND"))
+                if (parseIntervalPrecisionKeywordIf("SECOND"))
                     return requireNotNull(DayToSecond.dayToSecond(string), message);
-                else if (parseKeywordIf("MINUTE"))
+                else if (parseIntervalPrecisionKeywordIf("MINUTE"))
                     return requireNotNull(DayToSecond.dayToMinute(string), message);
-                else if (parseKeywordIf("HOUR"))
+                else if (parseIntervalPrecisionKeywordIf("HOUR"))
                     return requireNotNull(DayToSecond.dayToHour(string), message);
                 else
                     throw expected("HOUR", "MINUTE", "SECOND");
             else
                 return requireNotNull(DayToSecond.day(string), message);
-        else if (parseKeywordIf("HOUR"))
+        else if (parseIntervalPrecisionKeywordIf("HOUR"))
             if (parseKeywordIf("TO"))
-                if (parseKeywordIf("SECOND"))
+                if (parseIntervalPrecisionKeywordIf("SECOND"))
                     return requireNotNull(DayToSecond.hourToSecond(string), message);
-                else if (parseKeywordIf("MINUTE"))
+                else if (parseIntervalPrecisionKeywordIf("MINUTE"))
                     return requireNotNull(DayToSecond.hourToMinute(string), message);
                 else
                     throw expected("MINUTE", "SECOND");
             else
                 return requireNotNull(DayToSecond.hour(string), message);
-        else if (parseKeywordIf("MINUTE"))
-            if (parseKeywordIf("TO") && parseKeyword("SECOND"))
+        else if (parseIntervalPrecisionKeywordIf("MINUTE"))
+            if (parseKeywordIf("TO") && parseIntervalPrecisionKeywordIf("SECOND"))
                 return requireNotNull(DayToSecond.minuteToSecond(string), message);
             else
                 return requireNotNull(DayToSecond.minute(string), message);
-        else if (parseKeywordIf("SECOND"))
+        else if (parseIntervalPrecisionKeywordIf("SECOND"))
             return requireNotNull(DayToSecond.second(string), message);
 
         DayToSecond ds = DayToSecond.valueOf(string);

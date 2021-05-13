@@ -90,6 +90,7 @@ import static org.jooq.impl.Keywords.K_INTERVAL;
 import static org.jooq.impl.Keywords.K_MILLISECOND;
 import static org.jooq.impl.Keywords.K_MONTH;
 import static org.jooq.impl.Keywords.K_SECOND;
+import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_YEAR_MONTH;
 import static org.jooq.impl.Keywords.K_YEAR_TO_MONTH;
 import static org.jooq.impl.Names.N_ADD_DAYS;
@@ -477,6 +478,24 @@ final class Expression<T> extends AbstractTransformable<T> {
                     ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(interval).sql(')');
                     break;
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

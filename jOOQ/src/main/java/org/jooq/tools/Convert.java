@@ -77,8 +77,10 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -149,6 +151,11 @@ public final class Convert {
     private static final Method JSON_READ_METHOD;
 
     /**
+     * The Jackson ObjectMapper::writeValueToString or Gson::toJson method, if available.
+     */
+    private static final Method JSON_WRITE_METHOD;
+
+    /**
      * Whether a JAXB implementation is available.
      */
     private static final boolean JAXB_AVAILABLE;
@@ -192,6 +199,7 @@ public final class Convert {
 
         Object jsonMapper = null;
         Method jsonReadMethod = null;
+        Method jsonWriteMethod = null;
         boolean jaxbAvailable = false;
 
         try {
@@ -199,6 +207,7 @@ public final class Convert {
 
             jsonMapper = klass.getConstructor().newInstance();
             jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
+            jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
             log.debug("Jackson is available");
         }
         catch (Exception e1) {
@@ -209,6 +218,7 @@ public final class Convert {
 
                 jsonMapper = klass.getConstructor().newInstance();
                 jsonReadMethod = klass.getMethod("fromJson", String.class, Class.class);
+                jsonWriteMethod = klass.getMethod("toJson", Object.class);
                 log.debug("Gson is available");
             }
             catch (Exception e2) {
@@ -218,6 +228,7 @@ public final class Convert {
 
         JSON_MAPPER = jsonMapper;
         JSON_READ_METHOD = jsonReadMethod;
+        JSON_WRITE_METHOD = jsonWriteMethod;
 
         try {
             JAXB.marshal(new InformationSchema(), new StringWriter());
@@ -1081,6 +1092,17 @@ public final class Convert {
                 else if (fromClass == JSONB.class && JSON_MAPPER != null) {
                     try {
                         return (U) JSON_READ_METHOD.invoke(JSON_MAPPER, ((JSONB) from).data(), toClass);
+                    }
+                    catch (Exception e) {
+                        throw new DataTypeException("Error while mapping JSON to POJO using Jackson", e);
+                    }
+                }
+
+                // [#11213] Workaround for a problem when Jackson or Gson do not know
+                //          the generic List<X> type because toClass has its generics erased
+                else if (Map.class.isAssignableFrom(fromClass) && JSON_MAPPER != null) {
+                    try {
+                        return (U) JSON_READ_METHOD.invoke(JSON_MAPPER, JSON_WRITE_METHOD.invoke(JSON_MAPPER, from), toClass);
                     }
                     catch (Exception e) {
                         throw new DataTypeException("Error while mapping JSON to POJO using Jackson", e);

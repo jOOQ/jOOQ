@@ -80,10 +80,8 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
@@ -123,8 +121,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Lukas Eder
  */
@@ -133,6 +129,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private static final Clause[]        CLAUSES                                       = { INSERT };
     private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
+    private static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
 
     private final FieldMapForUpdate      updateMap;
     private final FieldMapsForInsert     insertMaps;
@@ -805,31 +802,39 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             || onConstraint != null
             || !table().getKeys().isEmpty()) {
 
-            Collection<Field<?>> f = insertMaps.fields().isEmpty()
-                ? asList(table().fields())
-                : insertMaps.fields();
+            Table<?> t = null;
+            Collection<Field<?>> f = null;
 
-            // [#10461]          Multi row inserts need to be emulated using select
-            // [#11770] [#11880] Single row inserts also do, in some dialects
-            Select<?> s = select != null
-                ? select
-                : insertMaps.insertSelect();
+            if (!NO_SUPPORT_SUBQUERY_IN_MERGE_USING.contains(configuration.dialect())) {
+                f = insertMaps.fields().isEmpty()
+                    ? asList(table().fields())
+                    : insertMaps.fields();
 
-            // [#8937] With DEFAULT VALUES, there is no SELECT. Create one from
-            //         known DEFAULT expressions, or use NULL.
-            if (s == null)
-                s = select(map(f, x -> x.getDataType().defaulted() ? x.getDataType().default_() : DSL.NULL(x)));
+                // [#10461]          Multi row inserts need to be emulated using select
+                // [#11770] [#11880] Single row inserts also do, in some dialects
+                Select<?> s = select != null
+                    ? select
+                    : insertMaps.insertSelect();
 
-            // [#6375]  INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
-            Table<?> t = s.asTable("t", map(f, Field::getName, String[]::new));
+                // [#8937] With DEFAULT VALUES, there is no SELECT. Create one from
+                //         known DEFAULT expressions, or use NULL.
+                if (s == null)
+                    s = select(map(f, x -> x.getDataType().defaulted() ? x.getDataType().default_() : DSL.NULL(x)));
 
-            if (NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING.contains(configuration.dialect()))
-                t = selectFrom(t).asTable("t");
+                // [#6375]  INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
+                t = s.asTable("t", map(f, Field::getName, String[]::new));
 
-            MergeOnConditionStep<R> on = configuration.dsl()
-                .mergeInto(table())
-                .using(t)
-                .on(matchByConflictingKeys(configuration, t));
+                if (NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING.contains(configuration.dialect()))
+                    t = selectFrom(t).asTable("t");
+            }
+
+            MergeOnConditionStep<R> on = t != null
+                ? configuration.dsl().mergeInto(table())
+                                     .using(t)
+                                     .on(matchByConflictingKeys(configuration, t))
+                : configuration.dsl().mergeInto(table())
+                                     .usingDual()
+                                     .on(matchByConflictingKeys(configuration, insertMaps.lastMap()));
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             //         not with ON DUPLICATE KEY IGNORE
@@ -839,9 +844,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     ? on.whenMatchedAnd(condition.getWhere()).thenUpdate().set(updateMap)
                     : on.whenMatchedThenUpdate().set(updateMap);
 
-            return notMatched
-                .whenNotMatchedThenInsert(f)
-                .values(t.fields());
+            return t != null
+                ? notMatched.whenNotMatchedThenInsert(f).values(t.fields())
+                : notMatched.whenNotMatchedThenInsert(insertMaps.fields()).values(insertMaps.lastMap().values());
         }
         else
             throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table());

@@ -40,6 +40,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -64,8 +65,11 @@ import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
+import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_PROCEDURE;
+import static org.jooq.impl.Keywords.K_THEN;
+import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Tools.decrement;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.toplevel;
@@ -93,8 +97,6 @@ import org.jooq.Statement;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.impl.Tools.DataExtendedKey;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -217,6 +219,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
                 break;
             }
+
 
 
 
@@ -364,9 +367,9 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
             {
-                begin(ctx);
+                begin(ctx, topLevel);
                 scopeDeclarations(ctx, c -> accept1(c));
-                end(ctx);
+                end(ctx, topLevel);
             }
         }
         else
@@ -500,9 +503,14 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
-    private static final void begin(Context<?> ctx) {
+    private static final void begin(Context<?> ctx, boolean topLevel) {
         if (ctx.family() == H2)
             ctx.sql('{');
+
+
+
+
+
         else
             ctx.visit(K_BEGIN);
 
@@ -514,12 +522,17 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
         ctx.formatIndentStart();
     }
 
-    private static final void end(Context<?> ctx) {
+    private static final void end(Context<?> ctx, boolean topLevel) {
         ctx.formatIndentEnd()
            .formatSeparator();
 
         if (ctx.family() == H2)
             ctx.sql('}');
+
+
+
+
+
         else
             ctx.visit(K_END);
 

@@ -943,7 +943,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             else {
                 Object value = record.get(index, mType);
 
-                // [#3082] [#10910] Try mapping nested collection types
+                // [#3082] [#10910] [#11213] Try mapping nested collection types
                 Object list = tryConvertToList(value, mType, member.getGenericType());
                 if (list != null)
                     member.set(result, list);

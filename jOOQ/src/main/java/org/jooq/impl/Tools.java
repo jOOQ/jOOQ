@@ -215,6 +215,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinPool.ManagedBlocker;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -2019,6 +2020,39 @@ final class Tools {
         }
 
         return array;
+    }
+
+    static final <T, U> Iterator<U> iterator(final T[] array, Function<? super T, ? extends U> mapper) {
+        return new Iterator<U>() {
+            final Iterator<T> delegate = Arrays.asList(array).iterator();
+
+            @Override
+            public boolean hasNext() {
+                return delegate.hasNext();
+            }
+
+            @Override
+            public U next() {
+                return mapper.apply(delegate.next());
+            }
+        };
+    }
+
+    static final <T, U> Iterator<U> iterator(final T[] array, ObjIntFunction<? super T, ? extends U> mapper) {
+        return new Iterator<U>() {
+            final ListIterator<T> delegate = Arrays.asList(array).listIterator();
+
+            @Override
+            public boolean hasNext() {
+                return delegate.hasNext();
+            }
+
+            @Override
+            public U next() {
+                int i = delegate.nextIndex();
+                return mapper.apply(delegate.next(), i);
+            }
+        };
     }
 
     /**

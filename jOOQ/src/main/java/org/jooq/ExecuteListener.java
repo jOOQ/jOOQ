@@ -772,21 +772,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * {@link ResultQuery#fetchMany()}, this is called several times, once per
      * <code>ResultSet</code>
      * <p>
-     * <h3>Executions without {@link Result}</h3>
-     * <p>
-     * Not all types of execution produce results of type {@link Result}. For
-     * example, these do not:
-     * <ul>
-     * <li>{@link ResultQuery#iterator()}</li>
-     * <li>{@link ResultQuery#stream()}</li>
-     * <li>{@link ResultQuery#collect(Collector)}</li>
-     * <li>{@link Publisher#subscribe(Subscriber)}</li>
-     * </ul>
-     * In any of these cases, no {@link #fetchStart(ExecuteContext)} event is
-     * fired.
-     * <p>
-     * Note that this method is also not called when executing queries that do
-     * not return a result, or when executing routines.
+     * Note that this method is not called when executing queries that do not
+     * return a result, or when executing routines.
      */
     void fetchStart(ExecuteContext ctx);
 
@@ -831,9 +818,27 @@ public interface ExecuteListener extends EventListener, Serializable {
      * emitted.</li>
      * </ul>
      * <p>
-     * Note that this method is not called when executing queries that do not
-     * return a result, or when executing routines. This is also not called when
-     * fetching single records, with {@link Cursor#fetchNext()} for instance.
+     * <h3>Executions without {@link Result}</h3>
+     * <p>
+     * Not all types of execution produce results of type {@link Result}. For
+     * example, these do not:
+     * <ul>
+     * <li>{@link ResultQuery#iterator()}</li>
+     * <li>{@link ResultQuery#stream()}</li>
+     * <li>{@link ResultQuery#collect(Collector)} (including all
+     * {@link Collector} based fetches, such as e.g. a
+     * {@link ResultQuery#fetchMap(Field, Field)},
+     * {@link ResultQuery#fetchGroups(Field, Field)},
+     * {@link ResultQuery#fetchSet(Field)}, and all the overloads)</li>
+     * <li>{@link Publisher#subscribe(Subscriber)}</li>
+     * </ul>
+     * In any of these cases, no {@link #resultStart(ExecuteContext)} event is
+     * fired.
+     * <p>
+     * Note that this method is also not called when executing queries that do
+     * not return a result, or when executing routines. This is also not called
+     * when fetching single records, with {@link Cursor#fetchNext()} for
+     * instance.
      */
     void resultStart(ExecuteContext ctx);
 
@@ -972,9 +977,27 @@ public interface ExecuteListener extends EventListener, Serializable {
      * emitted.</li>
      * </ul>
      * <p>
-     * Note that this method is not called when executing queries that do not
-     * return a result, or when executing routines. This is also not called when
-     * fetching single records, with {@link Cursor#fetchNext()} for instance.
+     * <h3>Executions without {@link Result}</h3>
+     * <p>
+     * Not all types of execution produce results of type {@link Result}. For
+     * example, these do not:
+     * <ul>
+     * <li>{@link ResultQuery#iterator()}</li>
+     * <li>{@link ResultQuery#stream()}</li>
+     * <li>{@link ResultQuery#collect(Collector)} (including all
+     * {@link Collector} based fetches, such as e.g. a
+     * {@link ResultQuery#fetchMap(Field, Field)},
+     * {@link ResultQuery#fetchGroups(Field, Field)},
+     * {@link ResultQuery#fetchSet(Field)}, and all the overloads)</li>
+     * <li>{@link Publisher#subscribe(Subscriber)}</li>
+     * </ul>
+     * In any of these cases, no {@link #resultEnd(ExecuteContext)} event is
+     * fired.
+     * <p>
+     * Note that this method is also not called when executing queries that do
+     * not return a result, or when executing routines. This is also not called
+     * when fetching single records, with {@link Cursor#fetchNext()} for
+     * instance.
      */
     void resultEnd(ExecuteContext ctx);
 
@@ -1030,21 +1053,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * {@link ResultQuery#fetchMany()}, this is called several times, once per
      * <code>ResultSet</code>
      * <p>
-     * <h3>Executions without {@link Result}</h3>
-     * <p>
-     * Not all types of execution produce results of type {@link Result}. For
-     * example, these do not:
-     * <ul>
-     * <li>{@link ResultQuery#iterator()}</li>
-     * <li>{@link ResultQuery#stream()}</li>
-     * <li>{@link ResultQuery#collect(Collector)}</li>
-     * <li>{@link Publisher#subscribe(Subscriber)}</li>
-     * </ul>
-     * In any of these cases, no {@link #fetchEnd(ExecuteContext)} event is
-     * fired.
-     * <p>
-     * Note that this method is also not called when executing queries that do
-     * not return a result, or when executing routines.
+     * Note that this method is not called when executing queries that do not
+     * return a result, or when executing routines.
      */
     void fetchEnd(ExecuteContext ctx);
 

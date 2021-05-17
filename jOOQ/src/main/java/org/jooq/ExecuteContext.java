@@ -43,6 +43,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.stream.Collector;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
@@ -271,7 +272,10 @@ public interface ExecuteContext extends Scope {
 
     /**
      * The last result that was fetched from the result set, or
-     * <code>null</code> if no result has been fetched.
+     * <code>null</code> if no result has been fetched, including when results
+     * do not need to be buffered in a {@link Result} type, such as all
+     * {@link ResultQuery#collect(Collector)} or {@link ResultQuery#iterator()}
+     * based fetches.
      */
     @Nullable
     Result<?> result();

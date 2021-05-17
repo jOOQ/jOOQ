@@ -38,10 +38,7 @@
 
 package org.jooq.impl;
 
-import static org.jooq.Records.toGroups;
-import static org.jooq.Records.toList;
-import static org.jooq.Records.toMap;
-import static org.jooq.Records.toSet;
+import static org.jooq.Records.intoList;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.indexOrFail;
@@ -183,7 +180,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <T> List<T> getValues(Field<T> field) {
-        return collect(toList(recordType().mapper(field)));
+        return collect(intoList(recordType().mapper(field)));
     }
 
     @Override
@@ -200,7 +197,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final List<?> getValues(int fieldIndex) {
-        return collect(toList(recordType().mapper(fieldIndex)));
+        return collect(intoList(recordType().mapper(fieldIndex)));
     }
 
     @Override
@@ -218,7 +215,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final List<?> getValues(String fieldName) {
-        return collect(toList(recordType().mapper(fieldName)));
+        return collect(intoList(recordType().mapper(fieldName)));
     }
 
     @Override
@@ -235,7 +232,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final List<?> getValues(Name fieldName) {
-        return collect(toList(recordType().mapper(fieldName)));
+        return collect(intoList(recordType().mapper(fieldName)));
     }
 
     @Override
@@ -261,42 +258,42 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <K> Map<K, R> intoMap(Field<K> key) {
-        return collect(toMap(recordType().mapper(key)));
+        return collect(Records.intoMap(recordType().mapper(key)));
     }
 
     @Override
     public final Map<?, R> intoMap(int keyFieldIndex) {
-        return collect(toMap(recordType().mapper(keyFieldIndex)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldIndex)));
     }
 
     @Override
     public final Map<?, R> intoMap(String keyFieldName) {
-        return collect(toMap(recordType().mapper(keyFieldName)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldName)));
     }
 
     @Override
     public final Map<?, R> intoMap(Name keyFieldName) {
-        return collect(toMap(recordType().mapper(keyFieldName)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldName)));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value) {
-        return collect(toMap(recordType().mapper(key), recordType().mapper(value)));
+        return collect(Records.intoMap(recordType().mapper(key), recordType().mapper(value)));
     }
 
     @Override
     public final Map<?, ?> intoMap(int keyFieldIndex, int valueFieldIndex) {
-        return collect(toMap(recordType().mapper(keyFieldIndex), recordType().mapper(valueFieldIndex)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldIndex), recordType().mapper(valueFieldIndex)));
     }
 
     @Override
     public final Map<?, ?> intoMap(String keyFieldName, String valueFieldName) {
-        return collect(toMap(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
     }
 
     @Override
     public final Map<?, ?> intoMap(Name keyFieldName, Name valueFieldName) {
-        return collect(toMap(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
     }
 
     @Override
@@ -424,172 +421,172 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <K> Map<K, R> intoMap(Class<? extends K> keyType) {
-        return collect(toMap(recordType().mapper(Tools.configuration(this), keyType)));
+        return collect(Records.intoMap(recordType().mapper(Tools.configuration(this), keyType)));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Class<? extends K> keyType, Class<? extends V> valueType) {
-        return collect(toMap(recordType().mapper(Tools.configuration(this), keyType), recordType().mapper(Tools.configuration(this), valueType)));
+        return collect(Records.intoMap(recordType().mapper(Tools.configuration(this), keyType), recordType().mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return collect(toMap(recordType().mapper(Tools.configuration(this), keyType), valueMapper));
+        return collect(Records.intoMap(recordType().mapper(Tools.configuration(this), keyType), valueMapper));
     }
 
     @Override
     public final <K> Map<K, R> intoMap(RecordMapper<? super R, K> keyMapper) {
-        return collect(toMap(keyMapper));
+        return collect(Records.intoMap(keyMapper));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return collect(toMap(keyMapper, recordType().mapper(Tools.configuration(this), valueType)));
+        return collect(Records.intoMap(keyMapper, recordType().mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
-        return collect(toMap(keyMapper, valueMapper));
+        return collect(Records.intoMap(keyMapper, valueMapper));
     }
 
     @Override
     public final <S extends Record> Map<S, R> intoMap(Table<S> table) {
-        return collect(toMap(recordType().mapper(table)));
+        return collect(Records.intoMap(recordType().mapper(table)));
     }
 
     @Override
     public final <S extends Record, T extends Record> Map<S, T> intoMap(Table<S> keyTable, Table<T> valueTable) {
-        return collect(toMap(recordType().mapper(keyTable), recordType().mapper(valueTable)));
+        return collect(Records.intoMap(recordType().mapper(keyTable), recordType().mapper(valueTable)));
     }
 
     @Override
     public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, Class<? extends E> type) {
-        return collect(toMap(recordType().mapper(table), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoMap(recordType().mapper(table), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, RecordMapper<? super R, E> mapper) {
-        return collect(toMap(recordType().mapper(table), mapper));
+        return collect(Records.intoMap(recordType().mapper(table), mapper));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(int keyFieldIndex, Class<? extends E> type) {
-        return collect(toMap(recordType().mapper(keyFieldIndex), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldIndex), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(String keyFieldName, Class<? extends E> type) {
-        return collect(toMap(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(Name keyFieldName, Class<? extends E> type) {
-        return collect(toMap(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoMap(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
-        return collect(toMap(recordType().mapper(key), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoMap(recordType().mapper(key), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        return collect(toMap(recordType().mapper(keyFieldIndex), mapper));
+        return collect(Records.intoMap(recordType().mapper(keyFieldIndex), mapper));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(String keyFieldName, RecordMapper<? super R, E> mapper) {
-        return collect(toMap(recordType().mapper(keyFieldName), mapper));
+        return collect(Records.intoMap(recordType().mapper(keyFieldName), mapper));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(Name keyFieldName, RecordMapper<? super R, E> mapper) {
-        return collect(toMap(recordType().mapper(keyFieldName), mapper));
+        return collect(Records.intoMap(recordType().mapper(keyFieldName), mapper));
     }
 
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return collect(toMap(recordType().mapper(key), mapper));
+        return collect(Records.intoMap(recordType().mapper(key), mapper));
     }
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
-        return collect(toGroups(recordType().mapper(key)));
+        return collect(Records.intoGroups(recordType().mapper(key)));
     }
 
     @Override
     public final Map<?, Result<R>> intoGroups(int keyFieldIndex) {
-        return collect(toGroups(recordType().mapper(keyFieldIndex)));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldIndex)));
     }
 
     @Override
     public final Map<?, Result<R>> intoGroups(String keyFieldName) {
-        return collect(toGroups(recordType().mapper(keyFieldName)));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldName)));
     }
 
     @Override
     public final Map<?, Result<R>> intoGroups(Name keyFieldName) {
-        return collect(toGroups(recordType().mapper(keyFieldName)));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldName)));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) {
-        return collect(toGroups(recordType().mapper(key), recordType().mapper(value)));
+        return collect(Records.intoGroups(recordType().mapper(key), recordType().mapper(value)));
     }
 
     @Override
     public final Map<?, List<?>> intoGroups(int keyFieldIndex, int valueFieldIndex) {
-        return (Map) collect(toGroups(recordType().mapper(keyFieldIndex), recordType().mapper(valueFieldIndex)));
+        return (Map) collect(Records.intoGroups(recordType().mapper(keyFieldIndex), recordType().mapper(valueFieldIndex)));
     }
 
     @Override
     public final Map<?, List<?>> intoGroups(String keyFieldName, String valueFieldName) {
-        return (Map) collect(toGroups(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
+        return (Map) collect(Records.intoGroups(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
     }
 
     @Override
     public final Map<?, List<?>> intoGroups(Name keyFieldName, Name valueFieldName) {
-        return (Map) collect(toGroups(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
+        return (Map) collect(Records.intoGroups(recordType().mapper(keyFieldName), recordType().mapper(valueFieldName)));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(int keyFieldIndex, Class<? extends E> type) {
-        return collect(toGroups(recordType().mapper(keyFieldIndex), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldIndex), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(String keyFieldName, Class<? extends E> type) {
-        return collect(toGroups(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(Name keyFieldName, Class<? extends E> type) {
-        return collect(toGroups(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldName), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
-        return collect(toGroups(recordType().mapper(key), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoGroups(recordType().mapper(key), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return collect(toGroups(recordType().mapper(key), mapper));
+        return collect(Records.intoGroups(recordType().mapper(key), mapper));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        return collect(toGroups(recordType().mapper(keyFieldIndex), mapper));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldIndex), mapper));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(String keyFieldName, RecordMapper<? super R, E> mapper) {
-        return collect(toGroups(recordType().mapper(keyFieldName), mapper));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldName), mapper));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) {
-        return collect(toGroups(recordType().mapper(keyFieldName), mapper));
+        return collect(Records.intoGroups(recordType().mapper(keyFieldName), mapper));
     }
 
     @Override
@@ -715,42 +712,42 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Class<? extends K> keyType) {
-        return collect(toGroups(recordType().mapper(Tools.configuration(this), keyType)));
+        return collect(Records.intoGroups(recordType().mapper(Tools.configuration(this), keyType)));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, Class<? extends V> valueType) {
-        return collect(toGroups(recordType().mapper(Tools.configuration(this), keyType), recordType().mapper(Tools.configuration(this), valueType)));
+        return collect(Records.intoGroups(recordType().mapper(Tools.configuration(this), keyType), recordType().mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return collect(toGroups(recordType().mapper(Tools.configuration(this), keyType), valueMapper));
+        return collect(Records.intoGroups(recordType().mapper(Tools.configuration(this), keyType), valueMapper));
     }
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(RecordMapper<? super R, K> keyMapper) {
-        return collect(toGroups(keyMapper));
+        return collect(Records.intoGroups(keyMapper));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return collect(toGroups(keyMapper, recordType().mapper(Tools.configuration(this), valueType)));
+        return collect(Records.intoGroups(keyMapper, recordType().mapper(Tools.configuration(this), valueType)));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
-        return collect(toGroups(keyMapper, valueMapper));
+        return collect(Records.intoGroups(keyMapper, valueMapper));
     }
 
     @Override
     public final <S extends Record> Map<S, Result<R>> intoGroups(Table<S> table) {
-        return collect(toGroups(recordType().mapper(table)));
+        return collect(Records.intoGroups(recordType().mapper(table)));
     }
 
     @Override
     public final <S extends Record, T extends Record> Map<S, Result<T>> intoGroups(Table<S> keyTable, Table<T> valueTable) {
-        // [#9288] TODO: Can't use collect(toGroups(recordType().mapper(keyTable), recordType().mapper(valueTable))) yet
+        // [#9288] TODO: Can't use collect(Records.intoGroups(recordType().mapper(keyTable), recordType().mapper(valueTable))) yet
         Map<S, Result<T>> map = new LinkedHashMap<>();
 
         for (R record : this)
@@ -761,12 +758,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, Class<? extends E> type) {
-        return collect(toGroups(recordType().mapper(table), recordType().mapper(Tools.configuration(this), type)));
+        return collect(Records.intoGroups(recordType().mapper(table), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, RecordMapper<? super R, E> mapper) {
-        return collect(toGroups(recordType().mapper(table), mapper));
+        return collect(Records.intoGroups(recordType().mapper(table), mapper));
     }
 
     @Override
@@ -842,12 +839,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> Set<E> intoSet(RecordMapper<? super R, E> mapper) {
-        return collect(toSet(mapper));
+        return collect(Records.intoSet(mapper));
     }
 
     @Override
     public final Set<?> intoSet(int fieldIndex) {
-        return collect(toSet(recordType().mapper(fieldIndex)));
+        return collect(Records.intoSet(recordType().mapper(fieldIndex)));
     }
 
     @Override
@@ -864,7 +861,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final Set<?> intoSet(String fieldName) {
-        return collect(toSet(recordType().mapper(fieldName)));
+        return collect(Records.intoSet(recordType().mapper(fieldName)));
     }
 
     @Override
@@ -881,7 +878,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final Set<?> intoSet(Name fieldName) {
-        return collect(toSet(recordType().mapper(fieldName)));
+        return collect(Records.intoSet(recordType().mapper(fieldName)));
     }
 
     @Override
@@ -898,7 +895,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <T> Set<T> intoSet(Field<T> field) {
-        return collect(toSet(recordType().mapper(field)));
+        return collect(Records.intoSet(recordType().mapper(field)));
     }
 
     @Override

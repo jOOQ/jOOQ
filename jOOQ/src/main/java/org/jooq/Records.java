@@ -95,7 +95,7 @@ public final class Records {
      *    .fetch(BOOK.TITLE);
      * </pre></code>
      */
-    public static final <E, R extends Record1<E>> Collector<R, ?, List<E>> toList() {
+    public static final <E, R extends Record1<E>> Collector<R, ?, List<E>> intoList() {
         return Collectors.mapping(Record1::value1, Collectors.toCollection(ArrayList::new));
     }
 
@@ -121,7 +121,7 @@ public final class Records {
      *    .fetch(BOOK.TITLE);
      * </pre></code>
      */
-    public static final <E, R extends Record> Collector<R, ?, List<E>> toList(Function<? super R, ? extends E> function) {
+    public static final <E, R extends Record> Collector<R, ?, List<E>> intoList(Function<? super R, ? extends E> function) {
         return Collectors.mapping(function, Collectors.toCollection(ArrayList::new));
     }
 
@@ -149,8 +149,8 @@ public final class Records {
      *    .fetchSet(BOOK.TITLE);
      * </pre></code>
      */
-    public static final <E, R extends Record1<E>> Collector<R, ?, Set<E>> toSet() {
-        return toSet(Record1::value1);
+    public static final <E, R extends Record1<E>> Collector<R, ?, Set<E>> intoSet() {
+        return intoSet(Record1::value1);
     }
 
     /**
@@ -175,7 +175,7 @@ public final class Records {
      *    .fetchSet(BOOK.TITLE);
      * </pre></code>
      */
-    public static final <E, R extends Record> Collector<R, ?, Set<E>> toSet(Function<? super R, ? extends E> function) {
+    public static final <E, R extends Record> Collector<R, ?, Set<E>> intoSet(Function<? super R, ? extends E> function) {
         return Collectors.mapping(function, Collectors.toCollection(LinkedHashSet::new));
     }
 
@@ -206,8 +206,8 @@ public final class Records {
      *    .fetchMap(BOOK.ID, BOOK.TITLE);
      * </pre></code>
      */
-    public static final <K, V, R extends Record2<K, V>> Collector<R, ?, Map<K, V>> toMap() {
-        return toMap(Record2::value1, Record2::value2);
+    public static final <K, V, R extends Record2<K, V>> Collector<R, ?, Map<K, V>> intoMap() {
+        return intoMap(Record2::value1, Record2::value2);
     }
 
     /**
@@ -236,8 +236,8 @@ public final class Records {
      *    .fetchMap(BOOK.ID);
      * </pre></code>
      */
-    public static final <K, R extends Record> Collector<R, ?, Map<K, R>> toMap(Function<? super R, ? extends K> keyMapper) {
-        return toMap(keyMapper, r -> r);
+    public static final <K, R extends Record> Collector<R, ?, Map<K, R>> intoMap(Function<? super R, ? extends K> keyMapper) {
+        return intoMap(keyMapper, r -> r);
     }
 
     /**
@@ -267,7 +267,7 @@ public final class Records {
      *    .fetchMap(BOOK.ID, BOOK.TITLE);
      * </pre></code>
      */
-    public static final <K, V, R extends Record> Collector<R, ?, Map<K, V>> toMap(
+    public static final <K, V, R extends Record> Collector<R, ?, Map<K, V>> intoMap(
         Function<? super R, ? extends K> keyMapper,
         Function<? super R, ? extends V> valueMapper
     ) {
@@ -305,8 +305,8 @@ public final class Records {
      *    .fetchGroups(BOOK.ID, BOOK.TITLE);
      * </pre></code>
      */
-    public static final <K, V, R extends Record2<K, V>> Collector<R, ?, Map<K, List<V>>> toGroups() {
-        return toGroups(Record2::value1, Record2::value2);
+    public static final <K, V, R extends Record2<K, V>> Collector<R, ?, Map<K, List<V>>> intoGroups() {
+        return intoGroups(Record2::value1, Record2::value2);
     }
 
     /**
@@ -334,7 +334,7 @@ public final class Records {
      * </pre></code>
      */
     @SuppressWarnings("unchecked")
-    public static final <K, R extends Record> Collector<R, ?, Map<K, Result<R>>> toGroups(Function<? super R, ? extends K> keyMapper) {
+    public static final <K, R extends Record> Collector<R, ?, Map<K, Result<R>>> intoGroups(Function<? super R, ? extends K> keyMapper) {
         return Collectors.groupingBy(
             keyMapper,
             LinkedHashMap::new,
@@ -379,7 +379,7 @@ public final class Records {
      *    .fetchGroups(BOOK.ID, BOOK.TITLE);
      * </pre></code>
      */
-    public static final <K, V, R extends Record> Collector<R, ?, Map<K, List<V>>> toGroups(
+    public static final <K, V, R extends Record> Collector<R, ?, Map<K, List<V>>> intoGroups(
         Function<? super R, ? extends K> keyMapper,
         Function<? super R, ? extends V> valueMapper
     ) {

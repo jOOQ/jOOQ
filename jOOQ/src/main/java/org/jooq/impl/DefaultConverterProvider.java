@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.io.File;
@@ -107,6 +108,14 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
 
             || Record.class.isAssignableFrom(tWrapper)
             || Struct.class.isAssignableFrom(tWrapper) && QualifiedRecord.class.isAssignableFrom(uWrapper)
+
+            // [#10229] Any type A can be converted into its wrapper B if a constructor B(A) exists.
+            || findAny(uWrapper.getDeclaredConstructors(), c -> {
+                Class<?>[] types = c.getParameterTypes();
+
+                // [#11183] Prevent StackOverflowError when recursing into UDT POJOs
+                return types.length == 1 && types[0] != uWrapper && provide(tType, types[0]) != null;
+            }) != null
         ) {
             return new AbstractConverter<T, U>(tType, uType) {
 

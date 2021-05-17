@@ -41,6 +41,7 @@ package org.jooq.meta.postgres;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.Records.intoList;
 import static org.jooq.Records.mapping;
 import static org.jooq.Rows.toRowArray;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -1183,6 +1184,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 .where(PG_ENUM.pgType().pgNamespace().NSPNAME.eq(nspname))
                 .and(PG_ENUM.pgType().TYPNAME.eq(typname))
                 .orderBy(orderBy)
-                .collect(Records.toList());
+                .collect(intoList());
     }
 }

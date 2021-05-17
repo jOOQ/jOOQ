@@ -338,6 +338,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
         ;
 
         if (wrapInBeginEnd) {
+            boolean topLevel = ctx.scopeLevel() == -1;
 
 
 

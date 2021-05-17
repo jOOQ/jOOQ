@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeResultSets;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
@@ -58,6 +59,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Spliterator;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -65,8 +67,10 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 // ...
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -108,6 +112,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockResultSet;
 
 /**
@@ -371,7 +376,21 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Stream<R> fetchStream() {
-        return Stream.of(1).flatMap(i -> fetchLazy().stream());
+        AtomicReference<Cursor<R>> r = new AtomicReference<>();
+
+        // [#11895] Don't use the Stream.of(1).flatMap(i -> fetchLazy().stream())
+        //          trick, because flatMap() will consume the entire result set
+        return StreamSupport.stream(
+            () -> {
+                Cursor<R> c = fetchLazy();
+                r.set(c);
+                return c.spliterator();
+            },
+            Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.ORDERED,
+            false
+        ).onClose(() -> {
+            safeClose(r.get());
+        });
     }
 
     @Override

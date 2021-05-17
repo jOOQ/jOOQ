@@ -42,6 +42,7 @@ import static org.jooq.Records.intoList;
 import static org.jooq.Records.intoMap;
 import static org.jooq.Records.intoSet;
 import static org.jooq.impl.Tools.blocking;
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
@@ -53,11 +54,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Spliterator;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -99,6 +103,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.R2DBC.BlockingRecordSubscription;
 import org.jooq.impl.R2DBC.QuerySubscription;
 import org.jooq.impl.R2DBC.ResultSubscriber;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.reactivestreams.Subscriber;
 
@@ -293,7 +298,21 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default Stream<R> fetchStream() {
-        return Stream.of(1).flatMap(i -> fetchLazy().stream());
+        AtomicReference<Cursor<R>> r = new AtomicReference<>();
+
+        // [#11895] Don't use the Stream.of(1).flatMap(i -> fetchLazy().stream())
+        //          trick, because flatMap() will consume the entire result set
+        return StreamSupport.stream(
+            () -> {
+                Cursor<R> c = fetchLazy();
+                r.set(c);
+                return c.spliterator();
+            },
+            Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.ORDERED,
+            false
+        ).onClose(() -> {
+            safeClose(r.get());
+        });
     }
 
     @Override

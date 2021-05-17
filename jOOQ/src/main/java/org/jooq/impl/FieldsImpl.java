@@ -97,7 +97,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final <U> RecordMapper<R, U> mapper(int fieldIndex, Configuration configuration, Class<? extends U> type) {
-        return mapper(fieldIndex, configuration.converterProvider().provide(field(fieldIndex).getType(), type));
+        return mapper(fieldIndex, converterOrFail(configuration, field(fieldIndex).getType(), type));
     }
 
     @Override

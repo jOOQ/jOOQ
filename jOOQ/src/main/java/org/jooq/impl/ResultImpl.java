@@ -1203,7 +1203,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
         }
     }
 
-    final int safeIndex(int index) {
+    private final int safeIndex(int index) {
         if (index >= 0 && index < fields.size())
             return index;
 

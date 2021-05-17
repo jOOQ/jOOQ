@@ -97,7 +97,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final <U> RecordMapper<R, U> mapper(int fieldIndex, Configuration configuration, Class<? extends U> type) {
-        return mapper(fieldIndex, converterOrFail(configuration, field(fieldIndex).getType(), type));
+        return mapper(fieldIndex, converterOrFail(configuration, fields[safeIndex(fieldIndex)].getType(), type));
     }
 
     @Override
@@ -330,6 +330,13 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
             return fields[index];
 
         return null;
+    }
+
+    final int safeIndex(int index) {
+        if (index >= 0 && index < fields.length)
+            return index;
+
+        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fields);
     }
 
     @Override

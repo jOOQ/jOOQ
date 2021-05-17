@@ -185,14 +185,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <U> List<U> getValues(Field<?> field, Class<? extends U> type) {
-        // [#9288] TODO: Refactor this
-        return getValues(indexOrFail(fieldsRow(), field), type);
+        return collect(intoList(recordType().mapper(field, Tools.configuration(this), type)));
     }
 
     @Override
     public final <T, U> List<U> getValues(Field<T> field, Converter<? super T, ? extends U> converter) {
-        // [#9288] TODO: Refactor this
-        return Convert.convert(getValues(field), converter);
+        return collect(intoList(recordType().mapper(field, converter)));
     }
 
     @Override
@@ -202,15 +200,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <U> List<U> getValues(int fieldIndex, Class<? extends U> type) {
-        // [#9288] TODO: Refactor this
-        Converter converter = converterOrFail(this, field(safeIndex(fieldIndex)).getType(), (Class) type);
-        return Tools.map(this, r -> (U) converter.from(r.get(fieldIndex)));
+        return collect(intoList(recordType().mapper(fieldIndex, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> List<U> getValues(int fieldIndex, Converter<?, ? extends U> converter) {
-        // [#9288] TODO: Refactor this
-        return Convert.convert(getValues(fieldIndex), converter);
+        return collect(intoList(recordType().mapper(fieldIndex, converter)));
     }
 
     @Override
@@ -220,14 +215,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <U> List<U> getValues(String fieldName, Class<? extends U> type) {
-        // [#9288] TODO: Refactor this
-        return getValues(indexOrFail(fieldsRow(), fieldName), type);
+        return collect(intoList(recordType().mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> List<U> getValues(String fieldName, Converter<?, ? extends U> converter) {
-        // [#9288] TODO: Refactor this
-        return Convert.convert(getValues(fieldName), converter);
+        return collect(intoList(recordType().mapper(fieldName, converter)));
     }
 
     @Override
@@ -237,14 +230,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <U> List<U> getValues(Name fieldName, Class<? extends U> type) {
-        // [#9288] TODO: Refactor this
-        return getValues(indexOrFail(fieldsRow(), fieldName), type);
+        return collect(intoList(recordType().mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> List<U> getValues(Name fieldName, Converter<?, ? extends U> converter) {
-        // [#9288] TODO: Refactor this
-        return Convert.convert(getValues(fieldName), converter);
+        return collect(intoList(recordType().mapper(fieldName, converter)));
     }
 
     final void addRecord(R record) {
@@ -849,14 +840,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <U> Set<U> intoSet(int fieldIndex, Class<? extends U> type) {
-        // [#9288] TODO: Refactor this
-        return new LinkedHashSet<>(getValues(fieldIndex, type));
+        return collect(Records.intoSet(recordType().mapper(fieldIndex, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> Set<U> intoSet(int fieldIndex, Converter<?, ? extends U> converter) {
-        // [#9288] TODO: Refactor this
-        return new LinkedHashSet<>(getValues(fieldIndex, converter));
+        return collect(Records.intoSet(recordType().mapper(fieldIndex, converter)));
     }
 
     @Override
@@ -866,14 +855,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <U> Set<U> intoSet(String fieldName, Class<? extends U> type) {
-        // [#9288] TODO: Refactor this
-        return new LinkedHashSet<>(getValues(fieldName, type));
+        return collect(Records.intoSet(recordType().mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> Set<U> intoSet(String fieldName, Converter<?, ? extends U> converter) {
-        // [#9288] TODO: Refactor this
-        return new LinkedHashSet<>(getValues(fieldName, converter));
+        return collect(Records.intoSet(recordType().mapper(fieldName, converter)));
     }
 
     @Override
@@ -883,14 +870,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <U> Set<U> intoSet(Name fieldName, Class<? extends U> type) {
-        // [#9288] TODO: Refactor this
-        return new LinkedHashSet<>(getValues(fieldName, type));
+        return collect(Records.intoSet(recordType().mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> Set<U> intoSet(Name fieldName, Converter<?, ? extends U> converter) {
-        // [#9288] TODO: Refactor this
-        return new LinkedHashSet<>(getValues(fieldName, converter));
+        return collect(Records.intoSet(recordType().mapper(fieldName, converter)));
     }
 
     @Override
@@ -900,14 +885,12 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <U> Set<U> intoSet(Field<?> field, Class<? extends U> type) {
-        // [#9288] TODO: Refactor this
-        return new LinkedHashSet<>(getValues(field, type));
+        return collect(Records.intoSet(recordType().mapper(field, Tools.configuration(this), type)));
     }
 
     @Override
     public final <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, ? extends U> converter) {
-        // [#9288] TODO: Refactor this
-        return new LinkedHashSet<>(getValues(field, converter));
+        return collect(Records.intoSet(recordType().mapper(field, converter)));
     }
 
     @Override

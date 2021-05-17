@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -61,10 +62,38 @@ interface Mappable<R extends Record> {
     RecordMapper<R, ?> mapper(int fieldIndex);
 
     /**
+     * Create a record mapper that extracts a value by field index and converts
+     * it using the {@link Configuration#converterProvider()}.
+     */
+    @NotNull
+    <U> RecordMapper<R, U> mapper(int fieldIndex, Configuration configuration, Class<? extends U> type);
+
+    /**
+     * Create a record mapper that extracts a value by field index and converts
+     * it using a {@link Converter}.
+     */
+    @NotNull
+    <U> RecordMapper<R, U> mapper(int fieldIndex, Converter<?, ? extends U> converter);
+
+    /**
      * Create a record mapper that extracts a value by field name.
      */
     @NotNull
     RecordMapper<R, ?> mapper(String fieldName);
+
+    /**
+     * Create a record mapper that extracts a value by field name and converts
+     * it using the {@link Configuration#converterProvider()}.
+     */
+    @NotNull
+    <U> RecordMapper<R, U> mapper(String fieldName, Configuration configuration, Class<? extends U> type);
+
+    /**
+     * Create a record mapper that extracts a value by field name and converts
+     * it using a {@link Converter}.
+     */
+    @NotNull
+    <U> RecordMapper<R, U> mapper(String fieldName, Converter<?, ? extends U> converter);
 
     /**
      * Create a record mapper that extracts a value by field name.
@@ -73,10 +102,38 @@ interface Mappable<R extends Record> {
     RecordMapper<R, ?> mapper(Name fieldName);
 
     /**
+     * Create a record mapper that extracts a value by field name and converts
+     * it using the {@link Configuration#converterProvider()}.
+     */
+    @NotNull
+    <U> RecordMapper<R, U> mapper(Name fieldName, Configuration configuration, Class<? extends U> type);
+
+    /**
+     * Create a record mapper that extracts a value by field name and converts
+     * it using a {@link Converter}.
+     */
+    @NotNull
+    <U> RecordMapper<R, U> mapper(Name fieldName, Converter<?, ? extends U> converter);
+
+    /**
      * Create a record mapper that extracts a value by field reference.
      */
     @NotNull
     <T> RecordMapper<R, T> mapper(Field<T> field);
+
+    /**
+     * Create a record mapper that extracts a value by field reference and converts
+     * it using the {@link Configuration#converterProvider()}.
+     */
+    @NotNull
+    <U> RecordMapper<R, U> mapper(Field<?> field, Configuration configuration, Class<? extends U> type);
+
+    /**
+     * Create a record mapper that extracts a value by field reference and
+     * converts it using a {@link Converter}.
+     */
+    @NotNull
+    <T, U> RecordMapper<R, U> mapper(Field<T> field, Converter<? super T, ? extends U> converter);
 
     /**
      * Create a record mapper that maps records to a new

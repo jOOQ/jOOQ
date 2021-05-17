@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.map;
 
@@ -52,6 +53,7 @@ import java.util.stream.Stream;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -94,8 +96,28 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     }
 
     @Override
+    public final <U> RecordMapper<R, U> mapper(int fieldIndex, Configuration configuration, Class<? extends U> type) {
+        return mapper(fieldIndex, configuration.converterProvider().provide(field(fieldIndex).getType(), type));
+    }
+
+    @Override
+    public final <U> RecordMapper<R, U> mapper(int fieldIndex, Converter<?, ? extends U> converter) {
+        return r -> r.get(fieldIndex, converter);
+    }
+
+    @Override
     public final RecordMapper<R, ?> mapper(String fieldName) {
         return mapper(field(fieldName));
+    }
+
+    @Override
+    public final <U> RecordMapper<R, U> mapper(String fieldName, Configuration configuration, Class<? extends U> type) {
+        return mapper(fieldName, converterOrFail(configuration, field(fieldName).getType(), type));
+    }
+
+    @Override
+    public final <U> RecordMapper<R, U> mapper(String fieldName, Converter<?, ? extends U> converter) {
+        return r -> r.get(fieldName, converter);
     }
 
     @Override
@@ -104,8 +126,31 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     }
 
     @Override
+    public final <U> RecordMapper<R, U> mapper(Name fieldName, Configuration configuration, Class<? extends U> type) {
+        return mapper(fieldName, converterOrFail(configuration, field(fieldName).getType(), type));
+    }
+
+    @Override
+    public final <U> RecordMapper<R, U> mapper(Name fieldName, Converter<?, ? extends U> converter) {
+        return r -> r.get(fieldName, converter);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public final <T> RecordMapper<R, T> mapper(Field<T> field) {
         return (RecordMapper<R, T>) mapper(indexOrFail(fieldsRow(), field));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final <U> RecordMapper<R, U> mapper(Field<?> field, Configuration configuration, Class<? extends U> type) {
+        return mapper(field, (Converter) converterOrFail(configuration, field.getType(), type));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T, U> RecordMapper<R, U> mapper(Field<T> field, Converter<? super T, ? extends U> converter) {
+        return (RecordMapper<R, U>) mapper(indexOrFail(fieldsRow(), field), converter);
     }
 
     @Override

@@ -14829,6 +14829,16 @@ public class DSL {
 
 
     /**
+     * @deprecated - [#11812] - 3.15.0 - Use {@link RowN} as a {@link SelectField} directly, instead.
+     */
+    @NotNull
+    @Support
+    @Deprecated
+    public static  Field<Record> rowField(RowN row) {
+        return new RowField<>(row);
+    }
+
+    /**
      * @deprecated - [#11812] - 3.15.0 - Use {@link Row1} as a {@link SelectField} directly, instead.
      */
     @NotNull
@@ -15049,19 +15059,6 @@ public class DSL {
     }
 
 
-
-    /**
-     * EXPERIMENTAL: Turn a row value expression of arbitrary degree into a {@code Field}.
-     * <p>
-     * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be emulated on all databases. See relevant row
-     * value expression method Javadocs for details.
-     */
-    @NotNull
-    @Support
-    public static Field<Record> rowField(RowN row) {
-        return new RowField<>(row);
-    }
 
     /**
      * Transform a subquery into a correlated subquery.

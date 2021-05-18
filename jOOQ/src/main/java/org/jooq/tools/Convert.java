@@ -611,7 +611,10 @@ public final class Convert {
                 }
 
                 // [#3062] Default collections if no specific collection type was requested
-                else if (Collection.class.isAssignableFrom(fromClass) ) {
+                else if (Collection.class.isAssignableFrom(fromClass)
+                    
+                    && (toClass == java.sql.Array.class || toClass.isArray())
+                ) {
                     Object[] fromArray = ((Collection<?>) from).toArray();
 
                     // [#3443] [#10704] Conversion from Object[] to JDBC Array

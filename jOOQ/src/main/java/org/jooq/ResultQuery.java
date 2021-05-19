@@ -151,6 +151,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * In order to keep open {@link ResultSet}s and fetch records lazily, use
      * {@link #fetchLazy()} instead and then operate on {@link Cursor}.
+     * <p>
+     * This method is not affected by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -353,6 +356,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * ... with the exception of allowing client code to ignore the need for
      * managing resources, which are handled inside of the
      * <code>collect()</code> method.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @param collector The collector that collects all records and accumulates
      *            them into a result type.
@@ -422,12 +430,14 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field from the generated
      * result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(Field, Class)}
-     * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -440,8 +450,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field from the generated
      * result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(Field, Converter)}
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -454,8 +466,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field index from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(int)}
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -467,12 +481,14 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field index from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(int, Class)}
-     * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -485,8 +501,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field index from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(int, Converter)}
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -499,8 +517,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(String)}
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -512,12 +532,14 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(String, Class)}
-     * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -530,8 +552,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(String, Converter)}
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -544,8 +568,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(Name)}
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -557,12 +583,14 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(Name, Class)}
-     * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -575,8 +603,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
-     * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(Name, Converter)}
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -1784,6 +1814,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return the generated result as a list of name/value
      * maps.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -1806,6 +1841,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -1834,6 +1874,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field. Client code must assure that this
@@ -1859,6 +1904,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -1886,6 +1936,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field. Client code must assure that this
@@ -1907,6 +1962,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field, Field)} instead, if your keys
      * are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      * <p>
@@ -1937,6 +1997,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(int, int)} instead, if your keys are
      * non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field. Client code must assure that this
@@ -1959,6 +2024,16 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the key turns out to be non-unique in the
      * result set. Use {@link #fetchGroups(String, String)} instead, if your keys
      * are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -1983,6 +2058,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(Name, Name)} instead, if your keys
      * are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field. Client code must assure that this
@@ -2006,6 +2086,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(Field[])} instead, if your keys are
      * non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
@@ -2027,6 +2112,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(int[])} instead, if your keys are
      * non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2050,6 +2140,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(String[])} instead, if your keys are
      * non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
@@ -2072,6 +2167,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(Name[])} instead, if your keys are
      * non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
@@ -2093,6 +2193,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Field[], Field[])} instead, if your
      * keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2117,6 +2222,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(int[], int[])} instead, if your keys
      * are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. Client code must assure that keys are
@@ -2139,6 +2249,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the keys turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(String[], String[])} instead, if your
      * keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2163,6 +2278,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(Name[], Name[])} instead, if your
      * keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
@@ -2185,6 +2305,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Field[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2213,6 +2338,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(int[], Class)} instead, if
      * your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. Client code must assure that keys are
@@ -2239,6 +2369,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(String[], Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2267,6 +2402,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(Name[], Class)} instead, if
      * your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
@@ -2293,6 +2433,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Field[], RecordMapper)}
      * instead, if your keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2321,6 +2466,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(int[], RecordMapper)} instead,
      * if your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. Client code must assure that keys are
@@ -2348,6 +2498,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(String[], RecordMapper)}
      * instead, if your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
@@ -2374,6 +2529,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Name[], RecordMapper)}
      * instead, if your keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2406,6 +2566,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(Class)} instead, if your keys
      * are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
@@ -2433,6 +2598,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Class, Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2463,6 +2633,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(Class, RecordMapper)} instead,
      * if your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
@@ -2492,6 +2667,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(RecordMapper)} instead, if
      * your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
@@ -2518,6 +2698,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(RecordMapper, Class)} instead,
      * if your keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2547,6 +2732,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(RecordMapper, RecordMapper)}
      * instead, if your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
@@ -2571,6 +2761,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * non-unique in the result set. Use {@link #fetchGroups(Table)} instead, if
      * your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param table The key table. Client code must assure that keys are unique
@@ -2592,6 +2787,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An {@link InvalidResultException} is thrown, if the keys turn out to be
      * non-unique in the result set. Use {@link #fetchGroups(Table, Table)}
      * instead, if your keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2615,6 +2815,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
      * in the result set. Use {@link #fetchGroups(Table, Class)} instead, if
      * your keys are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2642,6 +2847,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * in the result set. Use {@link #fetchGroups(Table, RecordMapper)} instead,
      * if your keys are non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param table The key table. Client code must assure that keys are unique
@@ -2668,6 +2878,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(Field, Class)} instead, if your key
      * is non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param key The key. Client code must assure that key is unique in the
@@ -2690,6 +2905,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(int, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2714,6 +2934,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(String, Class)} instead, if your key
      * is non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
@@ -2736,6 +2961,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2760,6 +2990,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(Field, Class)} instead, if your key
      * is non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param key The key. Client code must assure that key is unique in the
@@ -2782,6 +3017,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(int, Class)} instead, if your key is
      * non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2806,6 +3046,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result set. Use {@link #fetchGroups(String, Class)} instead, if your key
      * is non-unique.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key. Client code must assure that key is unique
@@ -2828,6 +3073,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * An exception is thrown, if the key turn out to be non-unique in the
      * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key
      * is non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2855,6 +3105,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param <K> The key's generic field type
@@ -2878,6 +3133,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field index.
@@ -2899,6 +3159,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -2922,6 +3187,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * by default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
@@ -2939,6 +3209,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Field, Field)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      * <p>
@@ -2966,6 +3241,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(int, int)}, this method allows for non-unique
      * keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field index.
@@ -2984,6 +3264,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(String, String)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3004,6 +3289,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(Name, Name)}, this method allows for
      * non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
@@ -3022,6 +3312,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Field[])}, this method allows for non-unique keys
      * in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3043,6 +3338,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(int[])}, this method allows for non-unique keys
      * in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys used for result grouping. If this is
@@ -3062,6 +3362,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(String[])}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3083,6 +3388,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(Name[])}, this method allows for non-unique
      * keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys used for result grouping. If this is
@@ -3102,6 +3412,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Field[], Field[])}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3124,6 +3439,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(int[], int[])}, this method allows for non-unique
      * keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys used for result grouping. If this is
@@ -3144,6 +3464,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(String[], String[])}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3166,6 +3491,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(Name[], Name[])}, this method allows for
      * non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys used for result grouping. If this is
@@ -3186,6 +3516,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Field[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3210,6 +3545,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(int[], Class)}, this method allows for
      * non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
@@ -3232,6 +3572,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(String[], Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3256,6 +3601,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(Name[], Class)}, this method allows for
      * non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
@@ -3278,6 +3628,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Field[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3302,6 +3657,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(int[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
@@ -3325,6 +3685,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(String[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
@@ -3347,6 +3712,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Name[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3375,6 +3745,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(Class)}, this method allows for non-unique keys
      * in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
@@ -3398,6 +3773,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Class, Class)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3424,6 +3804,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(Class, RecordMapper)}, this method allows for
      * non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
@@ -3449,6 +3834,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(RecordMapper, RecordMapper)}, this method allows
      * for non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
@@ -3471,6 +3861,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(RecordMapper, Class)}, this method allows for
      * non-unique keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3496,6 +3891,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(RecordMapper, RecordMapper)}, this method allows
      * for non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyMapper The key mapper.
@@ -3516,6 +3916,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(Table)}, this method allows for non-unique keys
      * in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param table The key table. May not be <code>null</code>.
@@ -3533,6 +3938,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Table, Table)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3552,6 +3962,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * <p>
      * Unlike {@link #fetchMap(Table, Class)}, this method allows for non-unique
      * keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3575,6 +3990,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Unlike {@link #fetchMap(Table, RecordMapper)}, this method allows for
      * non-unique keys in the result set.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param table The key table. May not be <code>null</code>.
@@ -3593,6 +4013,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3615,6 +4040,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field index.
@@ -3633,6 +4063,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3653,6 +4088,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Return a {@link Map} with results grouped by the given key and mapped
      * into the given entity type.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
@@ -3671,6 +4111,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3693,6 +4138,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldIndex The key field index.
@@ -3712,6 +4162,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
      * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
      * The resulting map is iteration order preserving.
      *
      * @param keyFieldName The key field name.
@@ -3730,6 +4185,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      * <p>
      * The resulting map is iteration order preserving.
      *
@@ -3965,6 +4425,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
 
     /**
      * Fetch results into a custom mapper callback.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @param mapper The mapper callback
      * @return The result. This will never be <code>null</code>.
@@ -3976,6 +4441,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field index from the
      * generated result.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -3991,6 +4461,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4002,6 +4477,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field index from the
      * generated result.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4013,6 +4493,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field name from the
      * generated result.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4028,6 +4513,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4039,6 +4529,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field name from the
      * generated result.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4050,6 +4545,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field name from the
      * generated result.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4065,6 +4565,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4076,6 +4581,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field name from the
      * generated result.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4091,6 +4601,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * If the argument {@link Field}s are the same as the ones you've provided
      * to {@link DSLContext#select(SelectField)}, then you could also just call
      * {@link #collect(Collector)} with {@link Records#toSet()}.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4106,6 +4621,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4117,6 +4637,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field from the generated
      * result.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -4128,8 +4653,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * This is the same as calling <code>fetch().into(type)</code>. See
-     * {@link Record#into(Class)} for more details
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -4153,6 +4680,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * The result and its contained records are attached to the original
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
@@ -4183,6 +4715,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
 
     /**
      * Fetch results into a custom mapper callback.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
      *
      * @param mapper The mapper callback
      * @return The result. This will never be <code>null</code>.

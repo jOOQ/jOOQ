@@ -76,6 +76,12 @@ interface Mappable<R extends Record> {
     <U> RecordMapper<R, U> mapper(int fieldIndex, Converter<?, ? extends U> converter);
 
     /**
+     * Create a record mapper that extracts values by field index.
+     */
+    @NotNull
+    RecordMapper<R, Record> mapper(int[] fieldIndexes);
+
+    /**
      * Create a record mapper that extracts a value by field name.
      */
     @NotNull
@@ -94,6 +100,12 @@ interface Mappable<R extends Record> {
      */
     @NotNull
     <U> RecordMapper<R, U> mapper(String fieldName, Converter<?, ? extends U> converter);
+
+    /**
+     * Create a record mapper that extracts values by field name.
+     */
+    @NotNull
+    RecordMapper<R, Record> mapper(String[] fieldNames);
 
     /**
      * Create a record mapper that extracts a value by field name.
@@ -116,6 +128,12 @@ interface Mappable<R extends Record> {
     <U> RecordMapper<R, U> mapper(Name fieldName, Converter<?, ? extends U> converter);
 
     /**
+     * Create a record mapper that extracts values by field name.
+     */
+    @NotNull
+    RecordMapper<R, Record> mapper(Name[] fieldNames);
+
+    /**
      * Create a record mapper that extracts a value by field reference.
      */
     @NotNull
@@ -134,6 +152,12 @@ interface Mappable<R extends Record> {
      */
     @NotNull
     <T, U> RecordMapper<R, U> mapper(Field<T> field, Converter<? super T, ? extends U> converter);
+
+    /**
+     * Create a record mapper that extracts values by field reference.
+     */
+    @NotNull
+    RecordMapper<R, Record> mapper(Field<?>[] fields);
 
     /**
      * Create a record mapper that maps records to a new

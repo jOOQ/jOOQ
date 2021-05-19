@@ -62,7 +62,6 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.xml.bind.DatatypeConverter;
@@ -88,7 +87,6 @@ import org.jooq.JSONFormat;
 import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
-import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Schema;

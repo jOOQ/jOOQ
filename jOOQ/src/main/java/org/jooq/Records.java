@@ -82,7 +82,7 @@ public final class Records {
      * List&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toList());
+     *    .collect(intoList());
      * </pre></code>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
@@ -109,7 +109,7 @@ public final class Records {
      * List&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toList(r -&gt; r.get(BOOK.TITLE)));
+     *    .collect(intoList(r -&gt; r.get(BOOK.TITLE)));
      * </pre></code>
      * <p>
      * This is the same as the following:
@@ -136,7 +136,7 @@ public final class Records {
      * Set&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toSet());
+     *    .collect(intoSet());
      * </pre></code>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
@@ -163,7 +163,7 @@ public final class Records {
      * Set&lt;String&gt; titles =
      * ctx.select(BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toSet(r -&gt; r.get(BOOK.TITLE)));
+     *    .collect(intoSet(r -&gt; r.get(BOOK.TITLE)));
      * </pre></code>
      * <p>
      * This is the same as the following:
@@ -193,7 +193,7 @@ public final class Records {
      * Map&lt;Integer, String&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toMap());
+     *    .collect(intoMap());
      * </pre></code>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
@@ -224,7 +224,7 @@ public final class Records {
      * Map&lt;Integer, Record2&lt;Integer, String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toMap(r -&gt; r.get(BOOK.ID)));
+     *    .collect(intoMap(r -&gt; r.get(BOOK.ID)));
      * </pre></code>
      * <p>
      * This is the same as the following:
@@ -255,7 +255,7 @@ public final class Records {
      * Map&lt;Integer, String&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toMap(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
+     *    .collect(intoMap(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
      * </pre></code>
      * <p>
      * This is the same as the following:
@@ -292,7 +292,7 @@ public final class Records {
      * Map&lt;Integer, List&lt;String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toGroups());
+     *    .collect(intoGroups());
      * </pre></code>
      * <p>
      * This is the same as the following, but allows for omitting repeating the
@@ -321,7 +321,7 @@ public final class Records {
      * Map&lt;Integer, List&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toGroups(r -&gt; r.get(BOOK.ID)));
+     *    .collect(intoGroups(r -&gt; r.get(BOOK.ID)));
      * </pre></code>
      * <p>
      * This is the same as the following:
@@ -333,26 +333,8 @@ public final class Records {
      *    .fetchGroups(BOOK.ID);
      * </pre></code>
      */
-    @SuppressWarnings("unchecked")
-    public static final <K, R extends Record> Collector<R, ?, Map<K, Result<R>>> intoGroups(Function<? super R, ? extends K> keyMapper) {
-        return Collectors.groupingBy(
-            keyMapper,
-            LinkedHashMap::new,
-            Collector.<R, Result<R>[], Result<R>>of(
-                () -> new Result[1],
-                (x, r) -> {
-                    if (x[0] == null)
-                        x[0] = Internal.result(r);
-
-                    x[0].add(r);
-                },
-                (r1, r2) -> {
-                    r1[0].addAll(r2[0]);
-                    return r1;
-                },
-                r -> r[0]
-            )
-        );
+    public static final <K, R extends Record> Collector<R, ?, Map<K, List<R>>> intoGroups(Function<? super R, ? extends K> keyMapper) {
+        return intoGroups(keyMapper, r -> r);
     }
 
     /**
@@ -367,7 +349,7 @@ public final class Records {
      * Map&lt;Integer, List&lt;String&gt;&gt; books =
      * ctx.select(BOOK.ID, BOOK.TITLE)
      *    .from(BOOK)
-     *    .collect(toGroups(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
+     *    .collect(intoGroups(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
      * </pre></code>
      * <p>
      * This is the same as the following:
@@ -389,6 +371,85 @@ public final class Records {
             Collectors.mapping(
                 valueMapper,
                 Collectors.toList()
+            )
+        );
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into a {@link Map} using the result of the argument
+     * {@link RecordMapper} as key collecting the records themselves into a
+     * {@link Result}.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, Result&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(intoResultGroups(r -&gt; r.get(BOOK.ID)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, Result&lt;Record2&lt;Integer, String&gt;&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchGroups(BOOK.ID);
+     * </pre></code>
+     */
+    public static final <K, R extends Record> Collector<R, ?, Map<K, Result<R>>> intoResultGroups(Function<? super R, ? extends K> keyMapper) {
+        return intoResultGroups(keyMapper, r -> r);
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into a {@link Map} using the result of the argument
+     * {@link RecordMapper} as key collecting the result of another argument
+     * {@link RecordMapper} into a {@link Result} of values.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, Result&lt;Record1&lt;String&gt;&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(intoResultGroups(r -&gt; r.get(BOOK.ID), r -&gt; r.get(BOOK.TITLE)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * Map&lt;Integer, Result&lt;Record1&lt;String&gt;&gt;&gt; books =
+     * ctx.select(BOOK.ID, BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchGroups(BOOK.ID, BOOK.TITLE);
+     * </pre></code>
+     */
+    @SuppressWarnings("unchecked")
+    public static final <K, V extends Record, R extends Record> Collector<R, ?, Map<K, Result<V>>> intoResultGroups(
+        Function<? super R, ? extends K> keyMapper,
+        Function<? super R, ? extends V> valueMapper
+    ) {
+        return Collectors.groupingBy(
+            keyMapper,
+            LinkedHashMap::new,
+            Collector.<R, Result<V>[], Result<V>>of(
+                () -> new Result[1],
+                (x, r) -> {
+                    V v = valueMapper.apply(r);
+
+                    if (x[0] == null)
+                        x[0] = Internal.result(v);
+
+                    x[0].add(v);
+                },
+                (r1, r2) -> {
+                    r1[0].addAll(r2[0]);
+                    return r1;
+                },
+                r -> r[0]
             )
         );
     }

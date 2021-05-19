@@ -43,12 +43,15 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.newRecord;
 
 import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.jooq.Configuration;
@@ -60,6 +63,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.RecordType;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -106,6 +110,11 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     }
 
     @Override
+    public final RecordMapper<R, Record> mapper(int[] fieldIndexes) {
+        return mapper(fields(fieldIndexes));
+    }
+
+    @Override
     public final RecordMapper<R, ?> mapper(String fieldName) {
         return mapper(field(fieldName));
     }
@@ -121,6 +130,11 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     }
 
     @Override
+    public final RecordMapper<R, Record> mapper(String[] fieldNames) {
+        return mapper(fields(fieldNames));
+    }
+
+    @Override
     public final RecordMapper<R, ?> mapper(Name fieldName) {
         return mapper(field(fieldName));
     }
@@ -133,6 +147,11 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     @Override
     public final <U> RecordMapper<R, U> mapper(Name fieldName, Converter<?, ? extends U> converter) {
         return r -> r.get(fieldName, converter);
+    }
+
+    @Override
+    public final RecordMapper<R, Record> mapper(Name[] fieldNames) {
+        return mapper(fields(fieldNames));
     }
 
     @SuppressWarnings("unchecked")
@@ -151,6 +170,18 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     @Override
     public final <T, U> RecordMapper<R, U> mapper(Field<T> field, Converter<? super T, ? extends U> converter) {
         return (RecordMapper<R, U>) mapper(indexOrFail(fieldsRow(), field), converter);
+    }
+
+    @Override
+    public final RecordMapper<R, Record> mapper(Field<?>[] f) {
+        AbstractRow<?> row = Tools.row0(f == null ? EMPTY_FIELD : f);
+
+        return r -> newRecord(false, AbstractRecord.class, row, r.configuration()).operate(x -> {
+            for (Field<?> field : row.fields.fields)
+                Tools.copyValue((AbstractRecord) x, field, r, field);
+
+            return x;
+        });
     }
 
     @Override

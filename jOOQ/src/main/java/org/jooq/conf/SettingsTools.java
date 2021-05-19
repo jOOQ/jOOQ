@@ -37,6 +37,8 @@
  */
 package org.jooq.conf;
 
+import static org.jooq.conf.FetchIntermediateResult.WHEN_EXECUTE_LISTENERS_PRESENT;
+import static org.jooq.conf.FetchIntermediateResult.WHEN_RESULT_REQUESTED;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
@@ -50,7 +52,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.jooq.Configuration;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 
 /**
@@ -389,6 +393,22 @@ public final class SettingsTools {
              : settings.getMaxRows() != null
              ? settings.getMaxRows()
              : 0;
+    }
+
+    /**
+     * Return <code>FetchIntermediateResult</code>.
+     */
+    public static final boolean fetchIntermediateResult(Configuration configuration) {
+        switch (defaultIfNull(configuration.settings().getFetchIntermediateResult(), WHEN_RESULT_REQUESTED)) {
+            case ALWAYS:
+                return true;
+            case WHEN_EXECUTE_LISTENERS_PRESENT:
+                return configuration.executeListenerProviders().length > 0;
+            case WHEN_RESULT_REQUESTED:
+                return false;
+            default:
+                throw new IllegalStateException("Unhandled FetchIntermediateResult: " + configuration.settings().getFetchIntermediateResult());
+        }
     }
 
     /**

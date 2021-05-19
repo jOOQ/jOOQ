@@ -106,6 +106,9 @@ public class Settings
     protected Boolean bindOffsetTimeType = false;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
+    @XmlElement(defaultValue = "WHEN_RESULT_REQUESTED")
+    @XmlSchemaType(name = "string")
+    protected FetchIntermediateResult fetchIntermediateResult = FetchIntermediateResult.WHEN_RESULT_REQUESTED;
     @XmlElement(defaultValue = "false")
     protected Boolean transformAnsiJoinToTableLists = false;
     @XmlElement(defaultValue = "WHEN_NEEDED")
@@ -1018,6 +1021,40 @@ public class Settings
      */
     public void setFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         this.fetchTriggerValuesAfterSQLServerOutput = value;
+    }
+
+    /**
+     * Whether to fetch data into intermediate {@link org.jooq.Result} instances.
+     * <p>
+     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result} 
+     * instances if they are not explicitly requested by the caller, e.g. by calling
+     * {@link org.jooq.ResultQuery#fetch()}, or in the presence of {@link org.jooq.ExecuteListener}
+     * instances, which may require access to {@link org.jooq.ExecuteContext#result()}.
+     * This default behaviour helps avoid unnecessary allocations of possibly large data structures.
+     * <p>
+     * Using this flag, fetching of intermediate results can be turned off even when execute listeners
+     * are present, or turned on even if they're absent.
+     * 
+     */
+    public FetchIntermediateResult getFetchIntermediateResult() {
+        return fetchIntermediateResult;
+    }
+
+    /**
+     * Whether to fetch data into intermediate {@link org.jooq.Result} instances.
+     * <p>
+     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result} 
+     * instances if they are not explicitly requested by the caller, e.g. by calling
+     * {@link org.jooq.ResultQuery#fetch()}, or in the presence of {@link org.jooq.ExecuteListener}
+     * instances, which may require access to {@link org.jooq.ExecuteContext#result()}.
+     * This default behaviour helps avoid unnecessary allocations of possibly large data structures.
+     * <p>
+     * Using this flag, fetching of intermediate results can be turned off even when execute listeners
+     * are present, or turned on even if they're absent.
+     * 
+     */
+    public void setFetchIntermediateResult(FetchIntermediateResult value) {
+        this.fetchIntermediateResult = value;
     }
 
     /**
@@ -3123,6 +3160,24 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether to fetch data into intermediate {@link org.jooq.Result} instances.
+     * <p>
+     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result} 
+     * instances if they are not explicitly requested by the caller, e.g. by calling
+     * {@link org.jooq.ResultQuery#fetch()}, or in the presence of {@link org.jooq.ExecuteListener}
+     * instances, which may require access to {@link org.jooq.ExecuteContext#result()}.
+     * This default behaviour helps avoid unnecessary allocations of possibly large data structures.
+     * <p>
+     * Using this flag, fetching of intermediate results can be turned off even when execute listeners
+     * are present, or turned on even if they're absent.
+     * 
+     */
+    public Settings withFetchIntermediateResult(FetchIntermediateResult value) {
+        setFetchIntermediateResult(value);
+        return this;
+    }
+
     public Settings withTransformAnsiJoinToTableLists(Boolean value) {
         setTransformAnsiJoinToTableLists(value);
         return this;
@@ -3894,6 +3949,7 @@ public class Settings
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
+        builder.append("fetchIntermediateResult", fetchIntermediateResult);
         builder.append("transformAnsiJoinToTableLists", transformAnsiJoinToTableLists);
         builder.append("transformInConditionSubqueryWithLimitToDerivedTable", transformInConditionSubqueryWithLimitToDerivedTable);
         builder.append("transformQualify", transformQualify);
@@ -4262,6 +4318,15 @@ public class Settings
             }
         } else {
             if (!fetchTriggerValuesAfterSQLServerOutput.equals(other.fetchTriggerValuesAfterSQLServerOutput)) {
+                return false;
+            }
+        }
+        if (fetchIntermediateResult == null) {
+            if (other.fetchIntermediateResult!= null) {
+                return false;
+            }
+        } else {
+            if (!fetchIntermediateResult.equals(other.fetchIntermediateResult)) {
                 return false;
             }
         }
@@ -5102,6 +5167,7 @@ public class Settings
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
+        result = ((prime*result)+((fetchIntermediateResult == null)? 0 :fetchIntermediateResult.hashCode()));
         result = ((prime*result)+((transformAnsiJoinToTableLists == null)? 0 :transformAnsiJoinToTableLists.hashCode()));
         result = ((prime*result)+((transformInConditionSubqueryWithLimitToDerivedTable == null)? 0 :transformInConditionSubqueryWithLimitToDerivedTable.hashCode()));
         result = ((prime*result)+((transformQualify == null)? 0 :transformQualify.hashCode()));

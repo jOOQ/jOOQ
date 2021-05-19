@@ -245,6 +245,19 @@ included in the <code>OUTPUT</code> clause.
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="fetchIntermediateResult" type="jooq-runtime:FetchIntermediateResult" minOccurs="0" maxOccurs="1" default="WHEN_RESULT_REQUESTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to fetch data into intermediate {@link org.jooq.Result} instances.
+<p>
+By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result} 
+instances if they are not explicitly requested by the caller, e.g. by calling
+{@link org.jooq.ResultQuery#fetch()}, or in the presence of {@link org.jooq.ExecuteListener}
+instances, which may require access to {@link org.jooq.ExecuteContext#result()}.
+This default behaviour helps avoid unnecessary allocations of possibly large data structures.
+<p>
+Using this flag, fetching of intermediate results can be turned off even when execute listeners
+are present, or turned on even if they're absent.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformAnsiJoinToTableLists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform ANSI join to table lists if possible.
 <p>
@@ -1338,6 +1351,20 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       
       <!-- Transform all arithmetic expressions -->
       <enumeration value="ALWAYS"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="FetchIntermediateResult">
+    <restriction base="string">
+    
+      <!-- Always fetch intermediate results -->
+      <enumeration value="ALWAYS"/>
+    
+      <!-- Fetch intermediate results only when explicitly requested or when execute listeners are present -->
+      <enumeration value="WHEN_EXECUTE_LISTENERS_PRESENT"/>
+    
+      <!-- Fetch intermediate results only when explicitly requested -->
+      <enumeration value="WHEN_RESULT_REQUESTED"/>
     </restriction>
   </simpleType>
 </schema>

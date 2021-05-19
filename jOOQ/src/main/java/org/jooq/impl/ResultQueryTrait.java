@@ -41,6 +41,7 @@ import static org.jooq.Records.intoGroups;
 import static org.jooq.Records.intoList;
 import static org.jooq.Records.intoMap;
 import static org.jooq.Records.intoSet;
+import static org.jooq.conf.SettingsTools.fetchIntermediateResult;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
@@ -99,6 +100,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.R2DBC.BlockingRecordSubscription;
 import org.jooq.impl.R2DBC.QuerySubscription;
@@ -278,7 +280,10 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default ResultSet fetchResultSet() {
-        return fetchLazy().resultSet();
+        if (fetchIntermediateResult(Tools.configuration(this)))
+            return fetch().intoResultSet();
+        else
+            return fetchLazy().resultSet();
     }
 
     @Override
@@ -298,6 +303,9 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default Stream<R> fetchStream() {
+        if (fetchIntermediateResult(Tools.configuration(this)))
+            return fetch().stream();
+
         AtomicReference<Cursor<R>> r = new AtomicReference<>();
 
         // [#11895] Don't use the Stream.of(1).flatMap(i -> fetchLazy().stream())
@@ -332,6 +340,9 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <X, A> X collect(Collector<? super R, A, X> collector) {
+        if (fetchIntermediateResult(Tools.configuration(this)))
+            return fetch().collect(collector);
+
         try (Cursor<R> c = fetchLazyNonAutoClosing()) {
             return c.collect(collector);
         }

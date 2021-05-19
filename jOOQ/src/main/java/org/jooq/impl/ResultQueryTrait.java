@@ -63,6 +63,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -313,7 +314,21 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
         // [#11895] Don't use the Stream.of(1).flatMap(i -> fetchLazy().stream())
         //          trick, because flatMap() will consume the entire result set
-        return fetchLazy().stream();
+        AtomicReference<Cursor<R>> r = new AtomicReference<>();
+
+        // [#11895] Don't use the Stream.of(1).flatMap(i -> fetchLazy().stream())
+        //          trick, because flatMap() will consume the entire result set
+        return StreamSupport.stream(
+            () -> {
+                Cursor<R> c = fetchLazy();
+                r.set(c);
+                return c.spliterator();
+            },
+            Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.ORDERED,
+            false
+        ).onClose(() -> {
+            safeClose(r.get());
+        });
     }
 
     @Override
@@ -1396,6 +1411,16 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     default <H extends RecordHandler<? super R>> H fetchInto(H handler) {
         forEach(handler);
         return handler;
+    }
+
+    @Override
+    default void forEach(Consumer<? super R> action) {
+        if (fetchIntermediateResult(Tools.configuration(this))) {
+            fetch().forEach(action);
+        }
+        else try (Cursor<R> c = fetchLazy()) {
+            c.forEach(action);
+        }
     }
 
     @Override

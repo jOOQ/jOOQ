@@ -190,19 +190,6 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     Iterator<R> iterator() throws DataAccessException;
 
     /**
-     * Execute the query using {@link #fetch()} and pass all results to a
-     * consumer.
-     * <p>
-     * This is essentially the same as {@link #fetch()}.
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    default void forEach(Consumer<? super R> action) {
-        Iterable.super.forEach(action);
-    }
-
-    /**
      * Execute the query using {@link #fetch()} and return the generated result
      * as an {@link Spliterator}.
      * <p>

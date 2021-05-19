@@ -311,21 +311,9 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
         if (fetchIntermediateResult(Tools.configuration(this)))
             return fetch().stream();
 
-        AtomicReference<Cursor<R>> r = new AtomicReference<>();
-
         // [#11895] Don't use the Stream.of(1).flatMap(i -> fetchLazy().stream())
         //          trick, because flatMap() will consume the entire result set
-        return StreamSupport.stream(
-            () -> {
-                Cursor<R> c = fetchLazy();
-                r.set(c);
-                return c.spliterator();
-            },
-            Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.ORDERED,
-            false
-        ).onClose(() -> {
-            safeClose(r.get());
-        });
+        return fetchLazy().stream();
     }
 
     @Override
@@ -1406,7 +1394,8 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <H extends RecordHandler<? super R>> H fetchInto(H handler) {
-        return fetch().into(handler);
+        forEach(handler);
+        return handler;
     }
 
     @Override

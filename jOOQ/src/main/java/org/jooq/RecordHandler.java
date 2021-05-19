@@ -37,18 +37,27 @@
  */
 package org.jooq;
 
+import java.util.function.Consumer;
 
 /**
  * A <code>RecordHandler</code> is a handler that can receive {@link Record}
  * objects, when fetching data from the database.
  *
  * @author Lukas Eder
+ * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
+ *             based methods, instead.
  */
+@Deprecated
 @FunctionalInterface
-public interface RecordHandler<R extends Record> {
+public interface RecordHandler<R extends Record> extends Consumer<R> {
 
     /**
      * A callback method indicating that the next record has been fetched.
      */
     void next(R record);
+
+    @Override
+    default void accept(R record) {
+        next(record);
+    }
 }

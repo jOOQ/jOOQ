@@ -13333,10 +13333,6 @@ public class DSL {
      * <td>Fetch records into a custom POJO (optionally annotated with JPA
      * annotations)</td>
      * </tr>
-     * <tr>
-     * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
-     * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
-     * </tr>
      * </table>
      * <p>
      * Example (Postgres):
@@ -13381,10 +13377,6 @@ public class DSL {
      * <td> {@link ResultQuery#fetchInto(Class)}</td>
      * <td>Fetch records into a custom POJO (optionally annotated with JPA
      * annotations)</td>
-     * </tr>
-     * <tr>
-     * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
-     * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
      * </tr>
      * </table>
      * <p>
@@ -13431,10 +13423,6 @@ public class DSL {
      * <td> {@link ResultQuery#fetchInto(Class)}</td>
      * <td>Fetch records into a custom POJO (optionally annotated with JPA
      * annotations)</td>
-     * </tr>
-     * <tr>
-     * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
-     * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
      * </tr>
      * </table>
      * <p>

@@ -4188,7 +4188,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
+     *             based methods, instead.
      */
+    @Deprecated
     @NotNull
     <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 

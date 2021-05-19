@@ -43,6 +43,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
@@ -2816,7 +2817,10 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      *
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
+     * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
+     *             based methods, instead.
      */
+    @Deprecated
     @NotNull
     <H extends RecordHandler<? super R>> H into(H handler);
 

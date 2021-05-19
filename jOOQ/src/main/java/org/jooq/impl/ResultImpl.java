@@ -960,9 +960,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <H extends RecordHandler<? super R>> H into(H handler) {
-        for (R record : this)
-            handler.next(record);
-
+        forEach(handler);
         return handler;
     }
 

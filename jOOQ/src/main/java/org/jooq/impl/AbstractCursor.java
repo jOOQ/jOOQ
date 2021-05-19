@@ -185,9 +185,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractResult<R> implem
 
     @Override
     public final <H extends RecordHandler<? super R>> H fetchInto(H handler) {
-        while (hasNext())
-            fetchNextInto(handler);
-
+        forEach(handler);
         return handler;
     }
 

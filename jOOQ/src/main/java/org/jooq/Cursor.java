@@ -43,6 +43,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
@@ -146,7 +147,10 @@ public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattab
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
+     *             based methods, instead.
      */
+    @Deprecated
     @NotNull
     <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
@@ -208,6 +212,8 @@ public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattab
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextInto(RecordHandler)} instead.
+     * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
+     *             based methods, instead.
      */
     @NotNull
     @Deprecated
@@ -257,7 +263,10 @@ public interface Cursor<R extends Record> extends Fields, Iterable<R>, Formattab
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
+     *             based methods, instead.
      */
+    @Deprecated
     @NotNull
     <H extends RecordHandler<? super R>> H fetchNextInto(H handler) throws DataAccessException;
 

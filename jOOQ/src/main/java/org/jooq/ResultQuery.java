@@ -201,7 +201,6 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
         return Iterable.super.spliterator();
     }
 
-
     /**
      * Stream this query.
      * <p>

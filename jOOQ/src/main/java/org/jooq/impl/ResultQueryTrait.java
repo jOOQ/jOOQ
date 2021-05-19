@@ -52,6 +52,7 @@ import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -904,82 +905,82 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default Map<Record, R> fetchMap(Field<?>[] keys) {
-        return fetch().intoMap(keys);
+        return collect(intoMap(mapper(keys)));
     }
 
     @Override
     default Map<Record, R> fetchMap(int[] keyFieldIndexes) {
-        return fetch().intoMap(keyFieldIndexes);
+        return collect(intoMap(mapper(keyFieldIndexes)));
     }
 
     @Override
     default Map<Record, R> fetchMap(String[] keyFieldNames) {
-        return fetch().intoMap(keyFieldNames);
+        return collect(intoMap(mapper(keyFieldNames)));
     }
 
     @Override
     default Map<Record, R> fetchMap(Name[] keyFieldNames) {
-        return fetch().intoMap(keyFieldNames);
+        return collect(intoMap(mapper(keyFieldNames)));
     }
 
     @Override
     default Map<Record, Record> fetchMap(Field<?>[] keys, Field<?>[] values) {
-        return fetch().intoMap(keys, values);
+        return collect(intoMap(mapper(keys), mapper(values)));
     }
 
     @Override
     default Map<Record, Record> fetchMap(int[] keyFieldIndexes, int[] valueFieldIndexes) {
-        return fetch().intoMap(keyFieldIndexes, valueFieldIndexes);
+        return collect(intoMap(mapper(keyFieldIndexes), mapper(valueFieldIndexes)));
     }
 
     @Override
     default Map<Record, Record> fetchMap(String[] keyFieldNames, String[] valueFieldNames) {
-        return fetch().intoMap(keyFieldNames, valueFieldNames);
+        return collect(intoMap(mapper(keyFieldNames), mapper(valueFieldNames)));
     }
 
     @Override
     default Map<Record, Record> fetchMap(Name[] keyFieldNames, Name[] valueFieldNames) {
-        return fetch().intoMap(keyFieldNames, valueFieldNames);
+        return collect(intoMap(mapper(keyFieldNames), mapper(valueFieldNames)));
     }
 
     @Override
     default <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) {
-        return fetch().intoMap(keys, type);
+        return collect(intoMap(mapper(keys).andThen(Record::intoList), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, Class<? extends E> type) {
-        return fetch().intoMap(keyFieldIndexes, type);
+        return collect(intoMap(mapper(keyFieldIndexes).andThen(Record::intoList), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, Class<? extends E> type) {
-        return fetch().intoMap(keyFieldNames, type);
+        return collect(intoMap(mapper(keyFieldNames).andThen(Record::intoList), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, Class<? extends E> type) {
-        return fetch().intoMap(keyFieldNames, type);
+        return collect(intoMap(mapper(keyFieldNames).andThen(Record::intoList), mapper(Tools.configuration(this), type)));
     }
 
     @Override
     default <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(keys, mapper);
+        return collect(intoMap(mapper(keys).andThen(Record::intoList), mapper));
     }
 
     @Override
     default <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(keyFieldIndexes, mapper);
+        return collect(intoMap(mapper(keyFieldIndexes).andThen(Record::intoList), mapper));
     }
 
     @Override
     default <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(keyFieldNames, mapper);
+        return collect(intoMap(mapper(keyFieldNames).andThen(Record::intoList), mapper));
     }
 
     @Override
     default <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) {
-        return fetch().intoMap(keyFieldNames, mapper);
+        return collect(intoMap(mapper(keyFieldNames).andThen(Record::intoList), mapper));
     }
 
     @Override
@@ -1034,7 +1035,12 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default List<Map<String, Object>> fetchMaps() {
-        return fetch().intoMaps();
+        if (fetchIntermediateResult(Tools.configuration(this))) {
+            return fetch().intoMaps();
+        }
+        else try (Cursor<R> c = fetchLazy()) {
+            return c.stream().collect(ArrayList::new, (l, r) -> l.add(r.intoMap()), ArrayList::addAll);
+        }
     }
 
     @Override
@@ -1404,7 +1410,12 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
-        return fetch().into(table);
+        if (fetchIntermediateResult(Tools.configuration(this))) {
+            return fetch().into(table);
+        }
+        else try (Cursor<R> c = fetchLazy()) {
+            return c.fetchInto(table);
+        }
     }
 
     @Override

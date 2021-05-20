@@ -41,7 +41,6 @@ import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.Internal.*;
 import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
-import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.Tools.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
@@ -134,7 +133,7 @@ implements
 
     @Override
     public void accept(Context<?> ctx) {
-        QueryPartCollectionView<Field<?>> mapped = wrap((Collection<Field<?>>) fields).map(JSONEntryImpl.jsonCastMapper(ctx));
+        QueryPartCollectionView<Field<?>> mapped = QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(JSONEntryImpl.jsonCastMapper(ctx));
 
         switch (ctx.family()) {
 

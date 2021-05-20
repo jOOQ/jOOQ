@@ -54,7 +54,7 @@
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
 
         <!-- Examples and/or extension modules use these dependencies -->
-        <hibernate.version>5.4.10.Final</hibernate.version>
+        <hibernate.version>5.4.31.Final</hibernate.version>
         <liquibase.version>3.8.8</liquibase.version>
         <spring.version>5.3.2</spring.version>
         <spring.boot.version>2.4.0</spring.boot.version>

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.Records.intoArray;
 import static org.jooq.Records.intoGroups;
 import static org.jooq.Records.intoList;
 import static org.jooq.Records.intoMap;
@@ -1255,12 +1256,13 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default Object[][] fetchArrays() {
-        return fetch().intoArrays();
+        return collect(intoArray(new Object[0][], R::intoArray));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     default R[] fetchArray() {
+        // [#9288] TODO: Create a delayed Collector that can delay the array type lookup until it's available
         Result<R> r = fetch();
 
         if (r.isNotEmpty())
@@ -1281,62 +1283,65 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
 
     @Override
     default Object[] fetchArray(int fieldIndex) {
+        // [#9288] TODO: Create a delayed Collector that can delay the array type lookup until it's available
         return fetch().intoArray(fieldIndex);
     }
 
     @Override
     default <U> U[] fetchArray(int fieldIndex, Class<? extends U> type) {
-        return fetch().intoArray(fieldIndex, type);
+        return collect(Records.intoArray(type, mapper(fieldIndex, Tools.configuration(this), type)));
     }
 
     @Override
     default <U> U[] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) {
-        return fetch().intoArray(fieldIndex, converter);
+        return collect(Records.intoArray(converter.toType(), mapper(fieldIndex, converter)));
     }
 
     @Override
     default Object[] fetchArray(String fieldName) {
+        // [#9288] TODO: Create a delayed Collector that can delay the array type lookup until it's available
         return fetch().intoArray(fieldName);
     }
 
     @Override
     default <U> U[] fetchArray(String fieldName, Class<? extends U> type) {
-        return fetch().intoArray(fieldName, type);
+        return collect(Records.intoArray(type, mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
     default <U> U[] fetchArray(String fieldName, Converter<?, ? extends U> converter) {
-        return fetch().intoArray(fieldName, converter);
+        return collect(Records.intoArray(converter.toType(), mapper(fieldName, converter)));
     }
 
     @Override
     default Object[] fetchArray(Name fieldName) {
+        // [#9288] TODO: Create a delayed Collector that can delay the array type lookup until it's available
         return fetch().intoArray(fieldName);
     }
 
     @Override
     default <U> U[] fetchArray(Name fieldName, Class<? extends U> type) {
-        return fetch().intoArray(fieldName, type);
+        return collect(Records.intoArray(type, mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
     default <U> U[] fetchArray(Name fieldName, Converter<?, ? extends U> converter) {
-        return fetch().intoArray(fieldName, converter);
+        return collect(Records.intoArray(converter.toType(), mapper(fieldName, converter)));
     }
 
     @Override
     default <T> T[] fetchArray(Field<T> field) {
-        return fetch().intoArray(field);
+        return collect(Records.intoArray(field.getType(), mapper(field)));
     }
 
     @Override
     default <U> U[] fetchArray(Field<?> field, Class<? extends U> type) {
-        return fetch().intoArray(field, type);
+        return collect(Records.intoArray(type, mapper(field, Tools.configuration(this), type)));
     }
 
     @Override
     default <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return fetch().intoArray(field, converter);
+        return collect(Records.intoArray(converter.toType(), mapper(field, converter)));
     }
 
     @Override

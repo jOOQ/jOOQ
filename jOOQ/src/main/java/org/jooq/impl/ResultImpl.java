@@ -327,17 +327,17 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> Map<List<?>, E> intoMap(int[] keyFieldIndexes, Class<? extends E> type) {
-        return intoMap(fields(keyFieldIndexes), type);
+        return collect(Records.intoMap(recordType().mapper(keyFieldIndexes).andThen(Record::intoList), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<List<?>, E> intoMap(String[] keyFieldNames, Class<? extends E> type) {
-        return intoMap(fields(keyFieldNames), type);
+        return collect(Records.intoMap(recordType().mapper(keyFieldNames).andThen(Record::intoList), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, Class<? extends E> type) {
-        return intoMap(fields(keyFieldNames), type);
+        return collect(Records.intoMap(recordType().mapper(keyFieldNames).andThen(Record::intoList), recordType().mapper(Tools.configuration(this), type)));
     }
 
     @Override
@@ -347,34 +347,22 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <E> Map<List<?>, E> intoMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) {
-        return intoMap(fields(keyFieldIndexes), mapper);
+        return collect(Records.intoMap(recordType().mapper(keyFieldIndexes).andThen(Record::intoList), mapper));
     }
 
     @Override
     public final <E> Map<List<?>, E> intoMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) {
-        return intoMap(fields(keyFieldNames), mapper);
+        return collect(Records.intoMap(recordType().mapper(keyFieldNames).andThen(Record::intoList), mapper));
     }
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) {
-        return intoMap(fields(keyFieldNames), mapper);
+        return collect(Records.intoMap(recordType().mapper(keyFieldNames).andThen(Record::intoList), mapper));
     }
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
-        if (keys == null)
-            keys = new Field[0];
-
-        Map<List<?>, E> map = new LinkedHashMap<>();
-
-        for (R record : this) {
-            List<Object> keyValueList = Tools.map(keys, k -> record.get(k));
-
-            if (map.put(keyValueList, mapper.map(record)) != null)
-                throw new InvalidResultException("Key list " + keyValueList + " is not unique in Result for " + this);
-        }
-
-        return map;
+        return collect(Records.intoMap(recordType().mapper(keys).andThen(Record::intoList), mapper));
     }
 
     @Override
@@ -569,17 +557,17 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final Map<Record, Result<Record>> intoGroups(int[] keyFieldIndexes, int[] valueFieldIndexes) {
-        return intoGroups(fields(keyFieldIndexes), fields(valueFieldIndexes));
+        return collect(intoResultGroups(recordType().mapper(keyFieldIndexes), recordType().mapper(valueFieldIndexes)));
     }
 
     @Override
     public final Map<Record, Result<Record>> intoGroups(String[] keyFieldNames, String[] valueFieldNames) {
-        return intoGroups(fields(keyFieldNames), fields(valueFieldNames));
+        return collect(intoResultGroups(recordType().mapper(keyFieldNames), recordType().mapper(valueFieldNames)));
     }
 
     @Override
     public final Map<Record, Result<Record>> intoGroups(Name[] keyFieldNames, Name[] valueFieldNames) {
-        return intoGroups(fields(keyFieldNames), fields(keyFieldNames));
+        return collect(intoResultGroups(recordType().mapper(keyFieldNames), recordType().mapper(valueFieldNames)));
     }
 
     @Override
@@ -664,13 +652,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <S extends Record, T extends Record> Map<S, Result<T>> intoGroups(Table<S> keyTable, Table<T> valueTable) {
-        // [#9288] TODO: Can't use collect(Records.intoGroups(recordType().mapper(keyTable), recordType().mapper(valueTable))) yet
-        Map<S, Result<T>> map = new LinkedHashMap<>();
-
-        for (R record : this)
-            map.computeIfAbsent(record.into(keyTable), k -> DSL.using(Tools.configuration(this)).newResult(valueTable)).add(record.into(valueTable));
-
-        return map;
+        return collect(intoResultGroups(recordType().mapper(keyTable), recordType().mapper(valueTable)));
     }
 
     @Override
@@ -691,67 +673,67 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final Object[][] intoArrays() {
-        return Tools.map(this, r -> r.intoArray(), Object[][]::new);
+        return collect(Records.intoArray(new Object[0][], R::intoArray));
     }
 
     @Override
     public final Object[] intoArray(int fieldIndex) {
-        return getValues(fieldIndex).toArray((Object[]) Array.newInstance(field(safeIndex(fieldIndex)).getType(), size()));
+        return collect(Records.intoArray(field(safeIndex(fieldIndex)).getType(), recordType().mapper(fieldIndex)));
     }
 
     @Override
     public final <U> U[] intoArray(int fieldIndex, Class<? extends U> type) {
-        return getValues(fieldIndex, type).toArray((U[]) Array.newInstance(type, size()));
+        return collect(Records.intoArray(type, recordType().mapper(fieldIndex, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> U[] intoArray(int fieldIndex, Converter<?, ? extends U> converter) {
-        return Convert.convertArray(intoArray(fieldIndex), converter);
+        return collect(Records.intoArray(converter.toType(), recordType().mapper(fieldIndex, converter)));
     }
 
     @Override
     public final Object[] intoArray(String fieldName) {
-        return intoArray(indexOrFail(fieldsRow(), fieldName));
+        return collect(Records.intoArray(field(indexOrFail(this, fieldName)).getType(), recordType().mapper(fieldName)));
     }
 
     @Override
     public final <U> U[] intoArray(String fieldName, Class<? extends U> type) {
-        return intoArray(indexOrFail(fieldsRow(), fieldName), type);
+        return collect(Records.intoArray(type, recordType().mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> U[] intoArray(String fieldName, Converter<?, ? extends U> converter) {
-        return Convert.convertArray(intoArray(fieldName), converter);
+        return collect(Records.intoArray(converter.toType(), recordType().mapper(fieldName, converter)));
     }
 
     @Override
     public final Object[] intoArray(Name fieldName) {
-        return intoArray(indexOrFail(fieldsRow(), fieldName));
+        return collect(Records.intoArray(field(indexOrFail(this, fieldName)).getType(), recordType().mapper(fieldName)));
     }
 
     @Override
     public final <U> U[] intoArray(Name fieldName, Class<? extends U> type) {
-        return intoArray(indexOrFail(fieldsRow(), fieldName), type);
+        return collect(Records.intoArray(type, recordType().mapper(fieldName, Tools.configuration(this), type)));
     }
 
     @Override
     public final <U> U[] intoArray(Name fieldName, Converter<?, ? extends U> converter) {
-        return Convert.convertArray(intoArray(fieldName), converter);
+        return collect(Records.intoArray(converter.toType(), recordType().mapper(fieldName, converter)));
     }
 
     @Override
     public final <T> T[] intoArray(Field<T> field) {
-        return getValues(field).toArray((T[]) Array.newInstance(field.getType(), size()));
+        return collect(Records.intoArray(field.getType(), recordType().mapper(field)));
     }
 
     @Override
     public final <U> U[] intoArray(Field<?> field, Class<? extends U> type) {
-        return getValues(field, type).toArray((U[]) Array.newInstance(type, size()));
+        return collect(Records.intoArray(type, recordType().mapper(field, Tools.configuration(this), type)));
     }
 
     @Override
     public final <T, U> U[] intoArray(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return Convert.convertArray(intoArray(field), converter);
+        return collect(Records.intoArray(converter.toType(), recordType().mapper(field, converter)));
     }
 
     @Override

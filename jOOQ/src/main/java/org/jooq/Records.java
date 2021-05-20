@@ -37,6 +37,10 @@
  */
 package org.jooq;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -70,6 +74,112 @@ import org.jooq.impl.Internal;
  * @author Lukas Eder
  */
 public final class Records {
+
+    /**
+     * Create a collector that can collect {@link Record1} resulting from a
+     * single column {@link ResultQuery} into an array of that column's type.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * String[] titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(intoArray(new String[0]));
+     * </pre></code>
+     * <p>
+     * This is the same as the following, but allows for omitting repeating the
+     * <code>BOOK.TITLE</code> column:
+     * <p>
+     * <code><pre>
+     * String[] titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchArray(BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <E, R extends Record1<E>> Collector<R, ?, E[]> intoArray(E[] a) {
+        return intoArray(a, Record1::value1);
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into an array of a mapped type.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * String[] titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(intoList(new String[0], r -&gt; r.get(BOOK.TITLE)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * String[] titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchArray(BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <E, R extends Record1<E>> Collector<R, ?, E[]> intoArray(Class<? extends E> componentType) {
+        return intoArray(componentType, Record1::value1);
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into an array of a mapped type.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * String[] titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(intoList(new String[0], r -&gt; r.get(BOOK.TITLE)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * String[] titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchArray(BOOK.TITLE);
+     * </pre></code>
+     */
+    public static final <E, R extends Record> Collector<R, ?, E[]> intoArray(E[] a, Function<? super R, ? extends E> function) {
+        return collectingAndThen(Collectors.mapping(function, toCollection(ArrayList::new)), l -> l.toArray(a));
+    }
+
+    /**
+     * Create a collector that can collect {@link Record} resulting from a
+     * {@link ResultQuery} into an array of a mapped type.
+     * <p>
+     * For example:
+     * <p>
+     * <code><pre>
+     * String[] titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .collect(intoList(new String[0], r -&gt; r.get(BOOK.TITLE)));
+     * </pre></code>
+     * <p>
+     * This is the same as the following:
+     * <p>
+     * <code><pre>
+     * String[] titles =
+     * ctx.select(BOOK.TITLE)
+     *    .from(BOOK)
+     *    .fetchArray(BOOK.TITLE);
+     * </pre></code>
+     */
+    @SuppressWarnings("unchecked")
+    public static final <E, R extends Record> Collector<R, ?, E[]> intoArray(Class<? extends E> componentType, Function<? super R, ? extends E> function) {
+        return collectingAndThen(Collectors.mapping(function, toCollection(ArrayList::new)), l -> l.toArray((E[]) Array.newInstance(componentType, l.size())));
+    }
 
     /**
      * Create a collector that can collect {@link Record1} resulting from a

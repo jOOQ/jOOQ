@@ -116,12 +116,12 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final RecordMapper<R, ?> mapper(String fieldName) {
-        return mapper(field(fieldName));
+        return mapper(indexOrFail(this, fieldName));
     }
 
     @Override
     public final <U> RecordMapper<R, U> mapper(String fieldName, Configuration configuration, Class<? extends U> type) {
-        return mapper(fieldName, converterOrFail(configuration, field(fieldName).getType(), type));
+        return mapper(fieldName, converterOrFail(configuration, field(indexOrFail(this, fieldName)).getType(), type));
     }
 
     @Override
@@ -136,12 +136,12 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     @Override
     public final RecordMapper<R, ?> mapper(Name fieldName) {
-        return mapper(field(fieldName));
+        return mapper(indexOrFail(this, fieldName));
     }
 
     @Override
     public final <U> RecordMapper<R, U> mapper(Name fieldName, Configuration configuration, Class<? extends U> type) {
-        return mapper(fieldName, converterOrFail(configuration, field(fieldName).getType(), type));
+        return mapper(fieldName, converterOrFail(configuration, field(indexOrFail(this, fieldName)).getType(), type));
     }
 
     @Override
@@ -157,7 +157,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     @SuppressWarnings("unchecked")
     @Override
     public final <T> RecordMapper<R, T> mapper(Field<T> field) {
-        return (RecordMapper<R, T>) mapper(indexOrFail(fieldsRow(), field));
+        return (RecordMapper<R, T>) mapper(indexOrFail(this, field));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -169,7 +169,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     @SuppressWarnings("unchecked")
     @Override
     public final <T, U> RecordMapper<R, U> mapper(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return (RecordMapper<R, U>) mapper(indexOrFail(fieldsRow(), field), converter);
+        return (RecordMapper<R, U>) mapper(indexOrFail(this, field), converter);
     }
 
     @Override

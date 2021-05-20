@@ -138,6 +138,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 // ...
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
@@ -2283,7 +2284,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             ;
 
         List<Condition> semiAntiJoinPredicates = null;
-        ConditionProviderImpl where = getWhere();
+        ConditionProviderImpl where = getWhere(context);
 
         if (hasFrom) {
             Object previousCollect = context.data(DATA_COLLECT_SEMI_ANTI_JOIN, true);
@@ -3826,7 +3827,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         grouping = true;
     }
 
-    final ConditionProviderImpl getWhere() {
+    final ConditionProviderImpl getWhere(Context<?> ctx) {
         ConditionProviderImpl result = new ConditionProviderImpl();
 
         if (condition.hasWhere())
@@ -3839,6 +3840,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         //   and SEEK predicate is applied outside). See [#7459]
         if (!getOrderBy().isEmpty() && !getSeek().isEmpty() && unionOp.isEmpty())
             result.addConditions(getSeekCondition());
+
+
+
+
+
+
 
         return result;
     }

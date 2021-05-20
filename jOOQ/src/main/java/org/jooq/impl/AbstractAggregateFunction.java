@@ -55,6 +55,7 @@ import static org.jooq.impl.Keywords.K_FILTER;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Names.*;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -163,7 +164,7 @@ implements
 
 
         else
-            ctx.visit(args.map(arg -> DSL.when(filter, arg == ASTERISK ? one() : arg)));
+            ctx.visit(wrap(args).map(arg -> DSL.when(filter, arg == ASTERISK ? one() : arg)));
     }
 
 

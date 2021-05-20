@@ -41,6 +41,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.function.Function.identity;
+import static java.util.stream.IntStream.range;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_EXCEPT;
@@ -182,6 +183,7 @@ import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.fieldArray;
+import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.isWindow;
@@ -231,6 +233,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.jooq.Asterisk;
@@ -257,6 +260,7 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectLimitPercentStep;
 import org.jooq.SelectLimitStep;
@@ -2983,6 +2987,34 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 ctx.sql(' ').visit(K_BY).separatorRequired(true);
 
+                // [#11904] Shift field indexes in ORDER BY <field index>, in
+                //          case we are projecting emulated nested records of some sort
+                if (RowField.NO_NATIVE_SUPPORT.contains(ctx.dialect())
+                    && findAny(actualOrderBy, s -> ((SortFieldImpl<?>) s).getField() instanceof Val) != null) {
+                    SelectFieldIndexes s = getSelectFieldIndexes(ctx);
+
+                    if (s.mapped) {
+                        actualOrderBy = new QueryPartListView<>(actualOrderBy).map(t1 -> {
+                            Field<?> in = ((SortFieldImpl<?>) t1).getField();
+
+                            if (in instanceof Val && in.getDataType().isNumeric()) {
+                                Val<?> val = (Val<?>) in;
+                                int x = Convert.convert(val.getValue(), int.class) - 1;
+                                int mapped = s.mapping[x];
+                                Field<?> out = s.projectionSizes[x] == 1
+                                    ? val.copy(mapped + 1)
+                                    : DSL.field("{0}", DSL.list(range(mapped, mapped + s.projectionSizes[mapped])
+                                        .mapToObj(i -> val.copy(i + 1))
+                                        .toArray(SelectField<?>[]::new)
+                                    ));
+                                return ((SortFieldImpl<?>) t1).transform(out);
+                            }
+                            else
+                                return t1;
+                        });
+                    }
+                }
+
 
 
 
@@ -3734,6 +3766,33 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             result.add(one());
 
         return result;
+    }
+
+    private static final /* record */ class SelectFieldIndexes { private final boolean mapped; private final int[] mapping; private final int[] projectionSizes; public SelectFieldIndexes(boolean mapped, int[] mapping, int[] projectionSizes) { this.mapped = mapped; this.mapping = mapping; this.projectionSizes = projectionSizes; } public boolean mapped() { return mapped; } public int[] mapping() { return mapping; } public int[] projectionSizes() { return projectionSizes; } @Override public boolean equals(Object o) { if (!(o instanceof SelectFieldIndexes)) return false; SelectFieldIndexes other = (SelectFieldIndexes) o; if (!java.util.Objects.equals(this.mapped, other.mapped)) return false; if (!java.util.Objects.equals(this.mapping, other.mapping)) return false; if (!java.util.Objects.equals(this.projectionSizes, other.projectionSizes)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.mapped, this.mapping, this.projectionSizes); } @Override public String toString() { return new StringBuilder("SelectFieldIndexes[").append("mapped=").append(this.mapped).append(", mapping=").append(this.mapping).append(", projectionSizes=").append(this.projectionSizes).append("]").toString(); } }
+
+    /**
+     * [#11904] Get a mapping { projected field index -> generated field index }
+     */
+    private final SelectFieldIndexes getSelectFieldIndexes(Context<?> ctx) {
+        List<Field<?>> s = getSelect();
+        boolean mapped = false;
+        int[] mapping = new int[s.size()];
+        int[] projectionSizes = new int[s.size()];
+
+        if (RowField.NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
+            for (int i = 0; i < mapping.length; i++) {
+                projectionSizes[i] = ((AbstractField<?>) s.get(i)).projectionSize();
+                mapped |= projectionSizes[i] > 1;
+
+                if (i < mapping.length - 1)
+                    mapping[i + 1] = mapping[i] + projectionSizes[i];
+            }
+        }
+        else
+            for (int i = 0; i < mapping.length; i++)
+                mapping[i] = i;
+
+        return new SelectFieldIndexes(mapped, mapping, projectionSizes);
     }
 
     private final boolean knownTableSource() {

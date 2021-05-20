@@ -76,7 +76,16 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
 
     QueryPartCollectionView(Collection<T> wrapped) {
         this.wrapped = wrapped != null ? wrapped : Collections.emptyList();
-        this.separator = ",";
+
+        if (wrapped instanceof QueryPartCollectionView) {
+            QueryPartCollectionView<T> v = (QueryPartCollectionView<T>) wrapped;
+
+            this.qualify = v.qualify;
+            this.separator = v.separator;
+            this.mapper = v.mapper;
+        }
+        else
+            this.separator = ",";
     }
 
     QueryPartCollectionView<T> qualify(boolean newQualify) {
@@ -85,7 +94,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     }
 
     QueryPartCollectionView<T> map(Function<? super T, ? extends T> newMapper) {
-        this.mapper = newMapper;
+        this.mapper = mapper == null ? newMapper : mapper.andThen(newMapper);
         return this;
     }
 

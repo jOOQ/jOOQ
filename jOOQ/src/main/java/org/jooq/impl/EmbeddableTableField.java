@@ -42,6 +42,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import org.jooq.Context;
 import org.jooq.EmbeddableRecord;
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -92,5 +93,15 @@ implements TableField<R, E> {
     @Override
     public final Table<R> getTable() {
         return table;
+    }
+
+    @Override
+    int projectionSize() {
+        int result = 0;
+
+        for (Field<?> field : fieldsRow.fields.fields)
+            result += ((AbstractField<?>) field).projectionSize();
+
+        return result;
     }
 }

@@ -138,6 +138,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         return true;
     }
 
+    /* non-final */ int projectionSize() {
+        return 1;
+    }
+
     // ------------------------------------------------------------------------
     // [#5518] Record method inversions, e.g. for use as method references
     // ------------------------------------------------------------------------

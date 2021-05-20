@@ -88,9 +88,9 @@ import org.jooq.SQLDialect;
  */
 final class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> {
 
-    static final Set<SQLDialect>   NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
-    private final ROW              row;
+    final ROW                    row;
 
     RowField(ROW row) {
         this(row, N_ROW);
@@ -122,6 +122,16 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     ROW row() {
         return row;
+    }
+
+    @Override
+    int projectionSize() {
+        int result = 0;
+
+        for (Field<?> field : ((AbstractRow<?>) row).fields.fields)
+            result += ((AbstractField<?>) field).projectionSize();
+
+        return result;
     }
 
     @Override

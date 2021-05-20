@@ -16088,7 +16088,7 @@ public class DSL {
     /**
      * The <code>ABS</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -16108,7 +16108,7 @@ public class DSL {
     /**
      * The <code>ACOS</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16128,7 +16128,7 @@ public class DSL {
     /**
      * The <code>ASIN</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16148,7 +16148,7 @@ public class DSL {
     /**
      * The <code>ATAN</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16168,8 +16168,8 @@ public class DSL {
     /**
      * The <code>ATAN2</code> function.
      *
-     * @param x is wrapped as {@link #val(T)}.
-     * @param y is wrapped as {@link #val(T)}.
+     * @param x is wrapped as {@link #val(Object)}.
+     * @param y is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16180,7 +16180,7 @@ public class DSL {
     /**
      * The <code>ATAN2</code> function.
      *
-     * @param x is wrapped as {@link #val(T)}.
+     * @param x is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16191,7 +16191,7 @@ public class DSL {
     /**
      * The <code>ATAN2</code> function.
      *
-     * @param y is wrapped as {@link #val(T)}.
+     * @param y is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16213,7 +16213,7 @@ public class DSL {
      * <p>
      * Get the smallest integer value equal or greater to a value.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -16235,7 +16235,7 @@ public class DSL {
     /**
      * The <code>COS</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16255,7 +16255,7 @@ public class DSL {
     /**
      * The <code>COSH</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16275,7 +16275,7 @@ public class DSL {
     /**
      * The <code>COT</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16295,7 +16295,7 @@ public class DSL {
     /**
      * The <code>COTH</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16352,7 +16352,7 @@ public class DSL {
     /**
      * The <code>EXP</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16374,7 +16374,7 @@ public class DSL {
      * <p>
      * Get the biggest integer value equal or less than a value.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -16396,7 +16396,7 @@ public class DSL {
     /**
      * The <code>LN</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16416,8 +16416,8 @@ public class DSL {
     /**
      * The <code>LOG</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
-     * @param base is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
+     * @param base is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16428,7 +16428,7 @@ public class DSL {
     /**
      * The <code>LOG</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16439,7 +16439,7 @@ public class DSL {
     /**
      * The <code>LOG</code> function.
      *
-     * @param base is wrapped as {@link #val(T)}.
+     * @param base is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16459,7 +16459,7 @@ public class DSL {
     /**
      * The <code>LOG10</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16490,8 +16490,8 @@ public class DSL {
     /**
      * The <code>POWER</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
-     * @param exponent is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
+     * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16502,7 +16502,7 @@ public class DSL {
     /**
      * The <code>POWER</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16513,7 +16513,7 @@ public class DSL {
     /**
      * The <code>POWER</code> function.
      *
-     * @param exponent is wrapped as {@link #val(T)}.
+     * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16654,7 +16654,7 @@ public class DSL {
      * <p>
      * Get the sign of a number and return it as any of +1, 0, -1.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -16676,7 +16676,7 @@ public class DSL {
     /**
      * The <code>SIN</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16696,7 +16696,7 @@ public class DSL {
     /**
      * The <code>SINH</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16716,7 +16716,7 @@ public class DSL {
     /**
      * The <code>SQRT</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16736,7 +16736,7 @@ public class DSL {
     /**
      * The <code>SQUARE</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -16756,7 +16756,7 @@ public class DSL {
     /**
      * The <code>TAN</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16776,7 +16776,7 @@ public class DSL {
     /**
      * The <code>TANH</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES })
@@ -16901,7 +16901,7 @@ public class DSL {
      * <p>
      * The ASCII value of a character.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -16925,7 +16925,7 @@ public class DSL {
      * <p>
      * The length of a string in bits.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -16949,7 +16949,7 @@ public class DSL {
      * <p>
      * The length of a string in characters.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -16971,7 +16971,7 @@ public class DSL {
     /**
      * The <code>CHR</code> function.
      *
-     * @param number is wrapped as {@link #val(T)}.
+     * @param number is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -16991,7 +16991,7 @@ public class DSL {
     /**
      * The <code>DIGITS</code> function.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -17069,7 +17069,7 @@ public class DSL {
      * <p>
      * The length of a string in characters.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -17093,7 +17093,7 @@ public class DSL {
      * <p>
      * Turn a string into lower case.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -17287,7 +17287,7 @@ public class DSL {
      * <p>
      * Calculate an MD5 hash from a string.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
@@ -17399,7 +17399,7 @@ public class DSL {
      * <p>
      * The length of a string in octets.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -17805,7 +17805,7 @@ public class DSL {
      * <p>
      * Reverse a string.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -18427,7 +18427,7 @@ public class DSL {
      * <p>
      * Format a number to its hex value.
      *
-     * @param value is wrapped as {@link #val(T)}.
+     * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -18649,7 +18649,7 @@ public class DSL {
      * <p>
      * Turn a string into upper case.
      *
-     * @param string is wrapped as {@link #val(T)}.
+     * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support
@@ -19282,7 +19282,7 @@ public class DSL {
     /**
      * The <code>XMLCOMMENT</code> function.
      *
-     * @param comment is wrapped as {@link #val(T)}.
+     * @param comment is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ POSTGRES })

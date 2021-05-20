@@ -182,7 +182,7 @@ public interface AlterDomainStep<T> {
     /**
      * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      *
-     * @param setDefault is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param setDefault is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @NotNull @CheckReturnValue

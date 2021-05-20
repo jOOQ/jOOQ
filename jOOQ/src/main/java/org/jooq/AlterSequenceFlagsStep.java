@@ -77,7 +77,7 @@ public interface AlterSequenceFlagsStep<T extends Number> extends AlterSequenceF
     /**
      * Add the <code>RESTART WITH</code> clause to the <code>ALTER SEQUENCE</code> statement.
      *
-     * @param restartWith is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param restartWith is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -93,7 +93,7 @@ public interface AlterSequenceFlagsStep<T extends Number> extends AlterSequenceF
     /**
      * Add the <code>START WITH</code> clause to the <code>ALTER SEQUENCE</code> statement.
      *
-     * @param startWith is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param startWith is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -109,7 +109,7 @@ public interface AlterSequenceFlagsStep<T extends Number> extends AlterSequenceF
     /**
      * Add the <code>INCREMENT BY</code> clause to the <code>ALTER SEQUENCE</code> statement.
      *
-     * @param incrementBy is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param incrementBy is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -125,7 +125,7 @@ public interface AlterSequenceFlagsStep<T extends Number> extends AlterSequenceF
     /**
      * Add the <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      *
-     * @param minvalue is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param minvalue is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -148,7 +148,7 @@ public interface AlterSequenceFlagsStep<T extends Number> extends AlterSequenceF
     /**
      * Add the <code>MAXVALUE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      *
-     * @param maxvalue is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param maxvalue is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -185,7 +185,7 @@ public interface AlterSequenceFlagsStep<T extends Number> extends AlterSequenceF
     /**
      * Add the <code>CACHE</code> clause to the <code>ALTER SEQUENCE</code> statement.
      *
-     * @param cache is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param cache is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue

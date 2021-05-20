@@ -70,7 +70,7 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add the <code>START WITH</code> clause to the <code>CREATE SEQUENCE</code> statement.
      *
-     * @param startWith is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param startWith is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -86,7 +86,7 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add the <code>INCREMENT BY</code> clause to the <code>CREATE SEQUENCE</code> statement.
      *
-     * @param incrementBy is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param incrementBy is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -102,7 +102,7 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add the <code>MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      *
-     * @param minvalue is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param minvalue is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -125,7 +125,7 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add the <code>MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      *
-     * @param maxvalue is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param maxvalue is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue
@@ -162,7 +162,7 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add the <code>CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      *
-     * @param cache is wrapped as {@link org.jooq.impl.DSL#val(T)}.
+     * @param cache is wrapped as {@link org.jooq.impl.DSL#val(Object)}.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
     @NotNull @CheckReturnValue

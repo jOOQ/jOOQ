@@ -284,7 +284,6 @@ import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
-import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 

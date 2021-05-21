@@ -141,7 +141,6 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
-import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
 
 /**

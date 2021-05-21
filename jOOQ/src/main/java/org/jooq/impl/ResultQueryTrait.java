@@ -46,7 +46,9 @@ import static org.jooq.Records.intoMap;
 import static org.jooq.Records.intoResultGroups;
 import static org.jooq.Records.intoSet;
 import static org.jooq.conf.SettingsTools.fetchIntermediateResult;
+import static org.jooq.impl.DelayedArrayCollector.patch;
 import static org.jooq.impl.Tools.blocking;
+import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.lang.reflect.Array;
@@ -115,6 +117,7 @@ import org.jooq.impl.R2DBC.QuerySubscription;
 import org.jooq.impl.R2DBC.ResultSubscriber;
 import org.jooq.tools.jdbc.JDBCUtils;
 
+import org.jetbrains.annotations.NotNull;
 import org.reactivestreams.Subscriber;
 
 import io.r2dbc.spi.ConnectionFactory;
@@ -351,10 +354,10 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     @Override
     default <X, A> X collect(Collector<? super R, A, X> collector) {
         if (fetchIntermediateResult(Tools.configuration(this)))
-            return fetch().collect(collector);
+            return patch(collector, fetch()).collect(collector);
 
         try (Cursor<R> c = fetchLazyNonAutoClosing()) {
-            return c.collect(collector);
+            return patch(collector, c).collect(collector);
         }
     }
 
@@ -1281,10 +1284,13 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
         return r.toArray((R[]) Array.newInstance(recordType, r.size()));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     default Object[] fetchArray(int fieldIndex) {
-        // [#9288] TODO: Create a delayed Collector that can delay the array type lookup until it's available
-        return fetch().intoArray(fieldIndex);
+        return collect(new DelayedArrayCollector<>(
+            fields -> (Object[]) Array.newInstance(fields.field(indexOrFail(fields, fieldIndex)).getType(), 0),
+            (RecordMapper<R, Object>) mapper(fieldIndex)
+        ));
     }
 
     @Override
@@ -1297,10 +1303,13 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
         return collect(Records.intoArray(converter.toType(), mapper(fieldIndex, converter)));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     default Object[] fetchArray(String fieldName) {
-        // [#9288] TODO: Create a delayed Collector that can delay the array type lookup until it's available
-        return fetch().intoArray(fieldName);
+        return collect(new DelayedArrayCollector<>(
+            fields -> (Object[]) Array.newInstance(fields.field(indexOrFail(fields, fieldName)).getType(), 0),
+            (RecordMapper<R, Object>) mapper(fieldName)
+        ));
     }
 
     @Override
@@ -1313,10 +1322,13 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
         return collect(Records.intoArray(converter.toType(), mapper(fieldName, converter)));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     default Object[] fetchArray(Name fieldName) {
-        // [#9288] TODO: Create a delayed Collector that can delay the array type lookup until it's available
-        return fetch().intoArray(fieldName);
+        return collect(new DelayedArrayCollector<>(
+            fields -> (Object[]) Array.newInstance(fields.field(indexOrFail(fields, fieldName)).getType(), 0),
+            (RecordMapper<R, Object>) mapper(fieldName)
+        ));
     }
 
     @Override

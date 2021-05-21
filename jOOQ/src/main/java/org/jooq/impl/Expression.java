@@ -119,7 +119,6 @@ import org.jooq.Param;
 import org.jooq.SQLDialect;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
-import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;

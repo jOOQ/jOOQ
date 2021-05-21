@@ -77,7 +77,6 @@ import org.jooq.Converters.UnknownType;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
-import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;

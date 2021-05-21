@@ -61,7 +61,6 @@ import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
-import org.jooq.tools.Convert;
 
 import org.jetbrains.annotations.Nullable;
 

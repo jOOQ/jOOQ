@@ -427,7 +427,6 @@ import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.XMLParse.DocumentOrContent;
-import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;

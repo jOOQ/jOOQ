@@ -93,7 +93,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.ThreadGuard.Guard;
-import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;

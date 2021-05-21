@@ -309,6 +309,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * General internal jOOQ utilities
  *
@@ -1724,6 +1726,19 @@ final class Tools {
             throw indexFail(row, fieldName);
 
         return result;
+    }
+
+    static final IllegalArgumentException indexFail(Fields row, int fieldIndex) {
+        throw new IllegalArgumentException("Field (" + fieldIndex + ") is not contained in Row " + row);
+    }
+
+    static final int indexOrFail(Fields row, int fieldIndex) {
+        Field<?> result = row.field(fieldIndex);
+
+        if (result == null)
+            throw indexFail(row, fieldIndex);
+
+        return fieldIndex;
     }
 
     private static final <T> List<T> newListWithCapacity(Iterable<?> it) {

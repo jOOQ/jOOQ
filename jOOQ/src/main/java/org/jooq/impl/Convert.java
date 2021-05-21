@@ -35,7 +35,7 @@
  *
  *
  */
-package org.jooq.tools;
+package org.jooq.impl;
 
 import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
@@ -91,7 +91,6 @@ import javax.xml.bind.JAXB;
 // ...
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
-import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -102,7 +101,9 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.IdentityConverter;
+import org.jooq.tools.Ints;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.Longs;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
@@ -120,29 +121,27 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  * {@link #convert(Collection, Converter)} and {@link #convert(Object, Class)},
  * trying to retrofit the <code>Object</code> argument to the type provided in
  * {@link Converter#fromType()} before performing the actual conversion.
+ * <p>
+ * For better future configurability via {@link ConverterProvider} etc, this
+ * type has been moved to jOOQ's internals in jOOQ 3.15.0 ([#11898]) and is no
+ * longer accessible to users.
  *
  * @author Lukas Eder
- * @deprecated - 3.15.0 - [#11898] This class will be removed in the future. Do
- *             not reuse. Data type conversion happens using internal
- *             {@link Converter} implementations, or {@link ConverterProvider}
- *             provided ones, or implementations attached to fields via
- *             generated code, or via {@link Field#convert(Converter)}, or
- *             {@link DataType#asConvertedDataType(Converter)}.
  */
-@Deprecated
-public final class Convert {
+final class Convert {
 
     private static final JooqLogger log          = JooqLogger.getLogger(Convert.class);
 
     /**
-     * All string values that can be transformed into a boolean <code>true</code> value.
+     * All string values that can be transformed into a boolean
+     * <code>true</code> value.
      */
-    public static final Set<String> TRUE_VALUES;
+    static final Set<String> TRUE_VALUES;
 
     /**
      * All string values that can be transformed into a boolean <code>false</code> value.
      */
-    public static final Set<String> FALSE_VALUES;
+    static final Set<String> FALSE_VALUES;
 
     /**
      * A UUID pattern for UUIDs with or without hyphens
@@ -259,7 +258,7 @@ public final class Convert {
      * <p>
      * This converts <code>values[i]</code> to <code>fields[i].getType()</code>
      */
-    public static final Object[] convert(Object[] values, Field<?>[] fields) {
+    static final Object[] convert(Object[] values, Field<?>[] fields) {
         if (values == null)
             return null;
 
@@ -283,7 +282,7 @@ public final class Convert {
      * <p>
      * This converts <code>values[i]</code> to <code>types[i]</code>
      */
-    public static final Object[] convert(Object[] values, Class<?>[] types) {
+    static final Object[] convert(Object[] values, Class<?>[] types) {
         if (values == null)
             return null;
 
@@ -314,7 +313,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    public static final <U> U[] convertArray(Object[] from, Converter<?, ? extends U> converter) throws DataTypeException {
+    static final <U> U[] convertArray(Object[] from, Converter<?, ? extends U> converter) throws DataTypeException {
         if (from == null)
             return null;
 
@@ -344,7 +343,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    public static final Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
+    static final Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
         if (from == null)
             return null;
         else if (!toClass.isArray())
@@ -369,7 +368,7 @@ public final class Convert {
         }
     }
 
-    public static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
+    static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
         return new ConvertAll<U[]>(to).from(from);
     }
 
@@ -382,7 +381,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    public static final <U> U convert(Object from, Converter<?, ? extends U> converter) throws DataTypeException {
+    static final <U> U convert(Object from, Converter<?, ? extends U> converter) throws DataTypeException {
 
         // [#5865] [#6799] [#11099] This leads to significant performance improvements especially when
         //                          used from MockResultSet, which is likely to host IdentityConverters
@@ -471,7 +470,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    public static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
+    static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
         if (from != null && from.getClass() == toClass)
             return (T) from;
         else
@@ -488,7 +487,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Class)
      */
-    public static final <T> List<T> convert(Collection<?> collection, Class<? extends T> type) throws DataTypeException {
+    static final <T> List<T> convert(Collection<?> collection, Class<? extends T> type) throws DataTypeException {
         return convert(collection, new ConvertAll<>(type));
     }
 
@@ -502,7 +501,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Converter)
      */
-    public static final <U> List<U> convert(Collection<?> collection, Converter<?, ? extends U> converter) throws DataTypeException {
+    static final <U> List<U> convert(Collection<?> collection, Converter<?, ? extends U> converter) throws DataTypeException {
         return convert0(collection, converter);
     }
 

@@ -101,7 +101,6 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.MappingException;
-import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;

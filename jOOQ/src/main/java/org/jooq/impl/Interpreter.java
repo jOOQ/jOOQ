@@ -110,7 +110,6 @@ import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
-import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })

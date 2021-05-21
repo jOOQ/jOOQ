@@ -54,7 +54,6 @@ import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.SQLDialect;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
-import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder

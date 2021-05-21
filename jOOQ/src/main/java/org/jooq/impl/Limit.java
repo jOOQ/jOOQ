@@ -70,7 +70,6 @@ import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Tools.BooleanDataKey;
-import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder

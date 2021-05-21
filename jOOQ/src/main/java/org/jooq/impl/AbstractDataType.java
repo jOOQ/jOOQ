@@ -92,7 +92,6 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
-import org.jooq.tools.Convert;
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
 

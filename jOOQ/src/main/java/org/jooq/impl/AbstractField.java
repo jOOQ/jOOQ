@@ -101,7 +101,6 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
-import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder

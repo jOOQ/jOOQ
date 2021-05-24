@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.14.11</version>
+        <version>3.14.12-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq-xtend</artifactId>

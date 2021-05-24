@@ -109,7 +109,7 @@ extends
         Field<? extends Number> x = (Field) getArguments().get(0);
         Field<? extends Number> y = (Field) getArguments().get(1);
 
-        ctx.visit(fo(DSL.avg(x(x, y).cast(d(ctx)))).minus(fo(DSL.regrSlope(x, y)).times(fo(DSL.avg(y(x, y).cast(d(ctx)))))));
+        ctx.visit(fo(regrAvgY(x, y)).minus(fo(regrSlope(x, y)).times(fo(regrAvgX(x, y)))));
     }
 
 

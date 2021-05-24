@@ -106,10 +106,14 @@ extends
 
     @SuppressWarnings("unchecked")
     private final void acceptEmulation(Context<?> ctx) {
+
         Field<? extends Number> x = (Field) getArguments().get(0);
         Field<? extends Number> y = (Field) getArguments().get(1);
 
-        ctx.visit(fo(DSL.regrCount(x, y)).times(fo(DSL.covarPop(x, y))));
+        // [#11547] The formal emulation is REGR_COUNT(x, y) * COVAR_POP(x, y), but
+        //          COVAR_POP(x, y) can be expressed as REGR_SXY(x, y) / REGR_COUNT(x, y)
+        // ctx.visit(fo(DSL.regrCount(x, y)).times(fo(DSL.covarPop(x, y))));
+        ctx.visit(fo(DSL.sum(x.times(y))).minus(fo(DSL.sum(x(x, y))).times(fo(DSL.sum(y(x, y)))).div(fon(DSL.count(x.plus(y))).cast(d(ctx)))));
     }
 
 

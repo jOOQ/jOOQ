@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.name;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jooq.Name;
@@ -64,6 +65,9 @@ class GenerationUtil {
     static final Pattern       TYPE_REFERENCE_PATTERN     = Pattern.compile("^((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[.*])*)$");
     static final Pattern       PLAIN_GENERIC_TYPE_PATTERN = Pattern.compile("[<\\[]((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)[>\\]]");
     static final Pattern       UNDERSCORE_PATTERN         = Pattern.compile("_+");
+
+
+
 
     private static final Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
         "abstract",
@@ -468,9 +472,8 @@ class GenerationUtil {
      * @see Class#getSimpleName()
      */
     static String getSimpleJavaType(String qualifiedJavaType) {
-        if (qualifiedJavaType == null) {
+        if (qualifiedJavaType == null)
             return null;
-        }
 
         return qualifiedJavaType.replaceAll(".*\\.", "");
     }
@@ -482,6 +485,15 @@ class GenerationUtil {
 
         // [#4388] TODO: Improve array handling
         switch (dialect.family()) {
+
+
+
+
+
+
+
+
+
 
 
 

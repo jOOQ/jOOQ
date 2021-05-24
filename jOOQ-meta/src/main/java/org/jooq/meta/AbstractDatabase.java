@@ -2740,6 +2740,9 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+
+
             case POSTGRES:
             case H2:
                 return "ARRAY".equals(dataType);

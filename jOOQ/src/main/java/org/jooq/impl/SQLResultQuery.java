@@ -47,6 +47,7 @@ import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
+import org.jooq.SQL;
 
 /**
  * A plain SQL query that returns results
@@ -55,9 +56,9 @@ import org.jooq.Record;
  */
 final class SQLResultQuery extends AbstractResultQuery<Record> {
 
-    private final QueryPart   delegate;
+    private final SQL delegate;
 
-    SQLResultQuery(Configuration configuration, QueryPart delegate) {
+    SQLResultQuery(Configuration configuration, SQL delegate) {
         super(configuration);
 
         this.delegate = delegate;
@@ -69,7 +70,17 @@ final class SQLResultQuery extends AbstractResultQuery<Record> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate);
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(delegate);
+                break;
+        }
     }
 
     @Override

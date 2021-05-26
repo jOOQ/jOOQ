@@ -864,12 +864,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         if (value instanceof Field)
             return contains((Field) value);
         else
-            return new Contains<>(this, value);
+            return new Contains<>(this, value, true, true);
     }
 
     @Override
     public final Condition contains(Field<T> value) {
-        return new Contains<>(this, value);
+        return new Contains<>(this, value, true, true);
     }
 
     @Override
@@ -909,8 +909,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Condition startsWith(Field<T> value) {
-        Field<String> concat = DSL.concat(Tools.escapeForLike(value), inline("%"));
-        return like(concat, Tools.ESCAPE);
+        return new Contains<>(this, value, false, true);
     }
 
     @Override
@@ -930,8 +929,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     public final Condition endsWith(Field<T> value) {
-        Field<String> concat = DSL.concat(inline("%"), Tools.escapeForLike(value));
-        return like(concat, Tools.ESCAPE);
+        return new Contains<>(this, value, true, false);
     }
 
     @Override

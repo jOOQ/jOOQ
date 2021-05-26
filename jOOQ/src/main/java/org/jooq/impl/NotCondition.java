@@ -62,7 +62,17 @@ final class NotCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_NOT).sql(" (").visit(condition).sql(')');
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(K_NOT).sql(" (").visit(condition).sql(')');
+                break;
+        }
     }
 
     @Override

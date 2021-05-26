@@ -101,6 +101,12 @@ extends
 
 
 
+
+
+
+
+
+
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -122,6 +128,16 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

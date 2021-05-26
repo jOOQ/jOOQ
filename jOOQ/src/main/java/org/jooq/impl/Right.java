@@ -89,6 +89,12 @@ extends
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
             case DERBY:
                 ctx.visit(DSL.substring(string, iadd(DSL.length(string), isub(one(), length))));
                 break;
@@ -103,6 +109,19 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

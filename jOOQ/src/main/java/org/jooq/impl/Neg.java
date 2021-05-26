@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.ExpressionOperator.BIT_NOT;
 
 import java.util.Set;
@@ -103,6 +104,11 @@ final class Neg<T> extends AbstractTransformable<T> {
     @Override
     public final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
+
+
+
+
+
 
         if (operator == BIT_NOT && EMULATE_BIT_NOT.contains(ctx.dialect()))
             ctx.sql("(0 - ")

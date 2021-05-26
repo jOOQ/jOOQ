@@ -685,57 +685,50 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    private final QueryPartInternal delegate(Configuration configuration) {
 
         // These dialects don't support the SYMMETRIC keyword at all
-        if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.family())) {
-            return not
-                ? (QueryPartInternal) new RowBetweenCondition<>(row, minValue, true, false, maxValue).and(new RowBetweenCondition<>(row, maxValue, true, false, minValue))
-                : (QueryPartInternal) new RowBetweenCondition<>(row, minValue, false, false, maxValue).or(new RowBetweenCondition<>(row, maxValue, false, false, minValue));
+        if (symmetric && NO_SUPPORT_SYMMETRIC.contains(ctx.dialect())) {
+            ctx.visit(not
+                ? new RowBetweenCondition<>(row, minValue, true, false, maxValue).and(new RowBetweenCondition<>(row, maxValue, true, false, minValue))
+                : new RowBetweenCondition<>(row, minValue, false, false, maxValue).or(new RowBetweenCondition<>(row, maxValue, false, false, minValue)));
         }
 
         // These dialects either don't support row value expressions, or they
         // Can't handle row value expressions with the BETWEEN predicate
-        else if (row.size() > 1 && EMULATE_BETWEEN.contains(configuration.family())) {
+        else if (row.size() > 1 && EMULATE_BETWEEN.contains(ctx.dialect())) {
             Condition result = new RowCondition(row, minValue, Comparator.GREATER_OR_EQUAL).and(new RowCondition(row, maxValue, Comparator.LESS_OR_EQUAL));
 
             if (not)
                 result = result.not();
 
-            return (QueryPartInternal) result;
+            ctx.visit(result);
         }
+
+
+
+
+
+
+
+
+
+
         else {
-            return new Native();
+                           ctx.visit(row);
+            if (not)       ctx.sql(" ").visit(K_NOT);
+                           ctx.sql(" ").visit(K_BETWEEN);
+            if (symmetric) ctx.sql(" ").visit(K_SYMMETRIC);
+                           ctx.sql(" ").visit(minValue);
+                           ctx.sql(" ").visit(K_AND);
+                           ctx.sql(" ").visit(maxValue);
         }
     }
 
-    private class Native extends AbstractQueryPart {
-
-        @Override
-        public final void accept(Context<?> context) {
-                           context.visit(row);
-            if (not)       context.sql(" ").visit(K_NOT);
-                           context.sql(" ").visit(K_BETWEEN);
-            if (symmetric) context.sql(" ").visit(K_SYMMETRIC);
-                           context.sql(" ").visit(minValue);
-                           context.sql(" ").visit(K_AND);
-                           context.sql(" ").visit(maxValue);
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return not ? symmetric ? CLAUSES_NOT_BETWEEN_SYMMETRIC
-                                   : CLAUSES_NOT_BETWEEN
-                       : symmetric ? CLAUSES_BETWEEN_SYMMETRIC
-                                   : CLAUSES_BETWEEN;
-        }
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return not ? symmetric ? CLAUSES_NOT_BETWEEN_SYMMETRIC
+                               : CLAUSES_NOT_BETWEEN
+                   : symmetric ? CLAUSES_BETWEEN_SYMMETRIC
+                               : CLAUSES_BETWEEN;
     }
 }

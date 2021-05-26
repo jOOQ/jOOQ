@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -125,6 +126,16 @@ final class ListAgg extends DefaultAggregateFunction<String> {
 
         else
             super.accept(ctx);
+    }
+
+    @Override
+    void acceptFunctionName(Context<?> ctx) {
+
+
+
+
+
+        super.acceptFunctionName(ctx);
     }
 
     /**

@@ -43,6 +43,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -58,6 +59,7 @@ import static org.jooq.impl.Names.*;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.Tools.camelCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -132,10 +134,23 @@ implements
 
 
 
+
+
+
+
+
+
         ctx.visit(getQualifiedName());
     }
 
     final void acceptArguments0(Context<?> ctx) {
+
+
+
+
+
+
+
         acceptArguments1(ctx, arguments);
     }
 
@@ -185,20 +200,42 @@ implements
     }
 
     static final void acceptFilterClause(Context<?> ctx, Condition filter) {
-        if (filter != null && SUPPORT_FILTER.contains(ctx.dialect()))
-            ctx.sql(' ')
-               .visit(K_FILTER)
-               .sql(" (")
-               .visit(K_WHERE)
-               .sql(' ')
-               .visit(filter)
-               .sql(')');
+        if (filter != null) {
+            switch (ctx.family()) {
+
+
+
+
+
+
+                default:
+                    if (SUPPORT_FILTER.contains(ctx.dialect()))
+                        ctx.sql(' ')
+                           .visit(K_FILTER)
+                           .sql(" (")
+                           .visit(K_WHERE)
+                           .sql(' ')
+                           .visit(filter)
+                           .sql(')');
+                    break;
+            }
+        }
     }
 
     final void acceptOrderBy(Context<?> ctx) {
-        if (!Tools.isEmpty(withinGroupOrderBy))
-            ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
-               .visit(withinGroupOrderBy);
+        if (!Tools.isEmpty(withinGroupOrderBy)) {
+            switch (ctx.family()) {
+
+
+
+
+
+
+                default:
+                    ctx.sql(' ').visit(K_ORDER_BY).sql(' ').visit(withinGroupOrderBy);
+                    break;
+            }
+        }
     }
 
     // -------------------------------------------------------------------------

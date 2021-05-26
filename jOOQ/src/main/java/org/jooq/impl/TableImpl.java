@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
@@ -46,6 +47,7 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Internal.createPathAlias;
@@ -58,6 +60,8 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jooq.Clause;
 import org.jooq.Comment;
@@ -66,7 +70,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 // ...
-import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -262,6 +265,17 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
         if ((getType().isView() || getType().isFunction()) && isSynthetic() && ctx.declareTables()) {
             Select<?> s = getOptions().select();
 

@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -138,6 +139,11 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
     public final void accept(Context<?> ctx) {
         if (NO_NATIVE_SUPPORT.contains(ctx.dialect()))
             ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields(ctx.configuration()).fields.fields)));
+
+
+
+
+
 
 
 

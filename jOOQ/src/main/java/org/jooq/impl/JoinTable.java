@@ -85,6 +85,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -224,6 +225,13 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
         JoinType translatedType = translateType(ctx);
         Clause translatedClause = translateClause(translatedType);
         Keyword keyword = translateKeyword(ctx, translatedType);
@@ -292,13 +300,7 @@ implements
 
 
         // CROSS JOIN and NATURAL JOIN do not have any condition clauses
-        if (!asList(CROSS_JOIN,
-                    NATURAL_JOIN,
-                    NATURAL_LEFT_OUTER_JOIN,
-                    NATURAL_RIGHT_OUTER_JOIN,
-                    NATURAL_FULL_OUTER_JOIN,
-                    CROSS_APPLY,
-                    OUTER_APPLY).contains(translatedType)) {
+        if (translatedType.qualified()) {
             ctx.formatIndentStart();
             toSQLJoinCondition(ctx);
             ctx.formatIndentEnd();
@@ -316,6 +318,47 @@ implements
         ctx.end(translatedClause)
            .formatIndentEnd();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final Keyword translateKeyword(Context<?> ctx, JoinType translatedType) {
         Keyword keyword;

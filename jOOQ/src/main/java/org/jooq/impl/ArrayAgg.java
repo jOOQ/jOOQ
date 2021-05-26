@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 
 import org.jooq.Context;
@@ -53,10 +54,23 @@ final class ArrayAgg<T> extends DefaultAggregateFunction<T[]> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_ARRAY_AGG).sql('(');
-        acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
-        acceptOrderBy(ctx);
-        ctx.sql(')');
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(N_ARRAY_AGG).sql('(');
+                acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
+                acceptOrderBy(ctx);
+                ctx.sql(')');
+                break;
+        }
 
         acceptFilterClause(ctx);
         acceptOverClause(ctx);

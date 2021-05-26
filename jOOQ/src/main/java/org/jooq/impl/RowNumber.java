@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.Names.N_ROWNUM;
 import static org.jooq.impl.Names.N_ROW_NUMBER;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -57,12 +56,21 @@ final class RowNumber extends AbstractWindowFunction<Integer> {
     public final void accept(Context<?> ctx) {
 
         // [#1524] Don't render this clause where it is not supported
-        if (ctx.family() == HSQLDB) {
-            ctx.visit(N_ROWNUM).sql("()");
-        }
-        else {
-            ctx.visit(N_ROW_NUMBER).sql("()");
-            acceptOverClause(ctx);
+        switch (ctx.family()) {
+            case HSQLDB:
+                ctx.visit(N_ROWNUM).sql("()");
+                break;
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(N_ROW_NUMBER).sql("()");
+                acceptOverClause(ctx);
         }
     }
 }

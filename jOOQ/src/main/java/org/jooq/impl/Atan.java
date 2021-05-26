@@ -93,11 +93,28 @@ extends
 
 
 
+
+
+
+
+
+
             default:
                 ctx.visit(function(N_ATAN, getDataType(), number));
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

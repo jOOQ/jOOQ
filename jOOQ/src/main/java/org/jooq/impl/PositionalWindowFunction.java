@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAG;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LEAD;
+import static org.jooq.impl.Tools.camelCase;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -97,11 +98,26 @@ final class PositionalWindowFunction<T> extends AbstractWindowFunction<T> {
     }
 
     private final void accept0(Context<?> ctx) {
-        ctx.visit(functionType.name).sql('(');
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(functionType.name).sql('(');
+                break;
+        }
+
         ctx.visit(arg);
 
         if (offset != null) {
             switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -155,7 +171,7 @@ final class PositionalWindowFunction<T> extends AbstractWindowFunction<T> {
         private final Name name;
 
         private PositionalFunctionType() {
-            this.name = DSL.unquotedName(name());
+            this.name = DSL.unquotedName(name().toLowerCase());
         }
     }
 }

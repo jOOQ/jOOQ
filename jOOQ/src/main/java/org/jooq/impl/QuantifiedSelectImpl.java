@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Quantifier.ANY;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Configuration;
@@ -90,10 +91,29 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
     public final void accept(Context<?> ctx) {
         boolean extraParentheses = false ;
 
-        ctx.visit(quantifier.toKeyword());
-        ctx.sql(extraParentheses ? " ((" : " (");
-        visitSubquery(ctx, delegate(ctx.configuration()), false);
-        ctx.sql(extraParentheses ? "))" : ")");
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(quantifier.toKeyword());
+                ctx.sql(extraParentheses ? " ((" : " (");
+                visitSubquery(ctx, delegate(ctx.configuration()), false);
+                ctx.sql(extraParentheses ? "))" : ")");
+                break;
+        }
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -103,6 +123,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
         }
         else if (values != null) {
             Select<Record1<?>> select = null;
+
             for (Field value : values)
                 if (select == null)
                     select = select(value);

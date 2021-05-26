@@ -92,6 +92,12 @@ extends
 
 
 
+
+
+
+
+
+
             case SQLITE:
                 ctx.visit(when(((Field) number).gt(zero()), inline(1))
                 .when(((Field) number).lt(zero()), inline(-1))
@@ -103,6 +109,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

@@ -70,7 +70,7 @@ import org.jooq.RenderContext.CastMode;
  */
 final class Cast<T> extends AbstractField<T> {
 
-    private final Field<?>    field;
+    private final Field<?> field;
 
     public Cast(Field<?> field, DataType<T> type) {
         super(N_CAST, type.nullable(field.getDataType().nullable()));
@@ -85,6 +85,10 @@ final class Cast<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 

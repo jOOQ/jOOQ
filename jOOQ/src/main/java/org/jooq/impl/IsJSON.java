@@ -40,7 +40,9 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Keywords.K_IS_DOCUMENT;
 import static org.jooq.impl.Keywords.K_IS_JSON;
+import static org.jooq.impl.Keywords.K_IS_NOT_DOCUMENT;
 import static org.jooq.impl.Keywords.K_IS_NOT_JSON;
 import static org.jooq.impl.Names.N_ISJSON;
 import static org.jooq.impl.Names.N_JSON_VALID;
@@ -64,7 +66,14 @@ final class IsJSON extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
+
         switch (ctx.family()) {
+
+
+
+
+
+
             case MYSQL:
                 ctx.visit(function(N_JSON_VALID, BOOLEAN, field));
                 break;

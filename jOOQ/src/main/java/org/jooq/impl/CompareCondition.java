@@ -53,12 +53,14 @@ import static org.jooq.Comparator.SIMILAR_TO;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -83,6 +85,7 @@ import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_ESCAPE;
 import static org.jooq.impl.Keywords.K_VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
+import static org.jooq.impl.Tools.characterLiteral;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullableIf;
@@ -97,6 +100,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.LikeEscapeStep;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
@@ -149,6 +153,13 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
     }
 
     private final void accept0(Context<?> ctx) {
+
+
+
+
+
+
+
         SQLDialect family = ctx.family();
         Field<?> lhs = field1;
         Field<?> rhs = field2;
@@ -201,6 +212,41 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
                .visit(inline(escape));
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

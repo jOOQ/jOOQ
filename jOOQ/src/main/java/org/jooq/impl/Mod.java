@@ -73,6 +73,10 @@ final class Mod<T> extends AbstractField<T> {
 
 
 
+
+
+
+
             case SQLITE:
                 ctx.visit(new Expression<>(MODULO, false, arg1, arg2));
                 break;

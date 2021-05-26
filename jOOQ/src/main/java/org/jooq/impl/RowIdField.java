@@ -72,6 +72,10 @@ final class RowIdField extends AbstractField<RowId> {
 
 
 
+
+
+
+
             default:
                 ctx.visit(getQualifiedName());
                 break;

@@ -57,7 +57,11 @@ final class ConstantSortField<T> extends CustomField<T> {
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
-            // [#6574] [#7183] Some databases do not allow for ORDER BY null clauses
+
+
+
+
+
 
 
 

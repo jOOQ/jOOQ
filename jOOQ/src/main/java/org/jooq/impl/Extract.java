@@ -175,6 +175,10 @@ final class Extract extends AbstractField<Integer> {
 
 
 
+
+
+
+
             case DERBY:
                 switch (datePart) {
                     case YEAR:

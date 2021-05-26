@@ -105,9 +105,24 @@ extends
             else
                 ctx.visit(DSL.lpad(DSL.abs(value).cast(VARCHAR(t.precision())), inline(t.precision()), inline("0")));
         }
+
+
+
+
         else
             ctx.visit(N_DIGITS).sql('(').visit(value).sql(')');
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

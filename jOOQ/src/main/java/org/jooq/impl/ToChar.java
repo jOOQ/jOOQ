@@ -109,6 +109,10 @@ extends
             acceptCast(ctx);
         else if (formatMask != null && NO_SUPPORT_NATIVE_WITH_MASK.contains(ctx.dialect()))
             acceptCast(ctx);
+
+
+
+
         else
             acceptNative(ctx);
     }
@@ -125,6 +129,19 @@ extends
     private final void acceptCast(Context<?> ctx) {
         ctx.visit(DSL.cast(value, VARCHAR));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

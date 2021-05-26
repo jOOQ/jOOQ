@@ -102,6 +102,13 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
         if (characters == null) {
             switch (ctx.family()) {
                 case FIREBIRD:
@@ -128,6 +135,19 @@ extends
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

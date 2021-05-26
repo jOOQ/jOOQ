@@ -70,26 +70,38 @@ final class ContainsIgnoreCase extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(condition(ctx.configuration()));
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                Field<?>[] array = new Field[1 + (leftWildcard ? 1 : 0) + (rightWildcard ? 1 : 0)];
+
+                int i = 0;
+                if (leftWildcard)
+                    array[i++] = inline("%");
+
+                array[i++] = Tools.escapeForLike(rhs, ctx.configuration());
+
+                if (rightWildcard)
+                    array[i++] = inline("%");
+
+                ctx.visit(lhs.likeIgnoreCase(DSL.concat(array), Tools.ESCAPE));
+                break;
+        }
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
-    }
-
-    private final Condition condition(Configuration configuration) {
-        Field<?>[] array = new Field[1 + (leftWildcard ? 1 : 0) + (rightWildcard ? 1 : 0)];
-
-        int i = 0;
-        if (leftWildcard)
-            array[i++] = inline("%");
-
-        array[i++] = Tools.escapeForLike(rhs, configuration);
-
-        if (rightWildcard)
-            array[i++] = inline("%");
-
-        return lhs.likeIgnoreCase(DSL.concat(array), Tools.ESCAPE);
     }
 }

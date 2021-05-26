@@ -82,6 +82,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
@@ -183,9 +184,11 @@ import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.isWindow;
 import static org.jooq.impl.Tools.map;
@@ -1507,6 +1510,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
         Table<?> dmlTable;
 
         // [#6583] Work around MySQL's self-reference-in-DML-subquery restriction
@@ -1565,6 +1574,119 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             accept0(ctx);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     final void accept0(Context<?> context) {
         boolean topLevelCte = false;

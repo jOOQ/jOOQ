@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.IGNITE;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -128,17 +129,16 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
             return super.and(f);
     }
 
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
     @Override // Avoid AbstractCondition implementation
     public final Clause[] clauses(Context<?> ctx) {
-        return null;
+        return not ? symmetric ? CLAUSES_NOT_BETWEEN_SYMMETRIC
+                               : CLAUSES_NOT_BETWEEN
+                   : symmetric ? CLAUSES_BETWEEN_SYMMETRIC
+                               : CLAUSES_BETWEEN;
     }
 
-    private final QueryPartInternal delegate(Configuration configuration) {
+    @Override
+    public final void accept(Context<?> ctx) {
         if (field.getDataType().isEmbeddable()
                 && minValue.getDataType().isEmbeddable()
                 && maxValue.getDataType().isEmbeddable()) {
@@ -146,7 +146,7 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
             RowN min = row(embeddedFields(minValue));
             RowN max = row(embeddedFields(maxValue));
 
-            return (QueryPartInternal) (not
+            ctx.visit(not
                  ? symmetric
                      ? f.notBetweenSymmetric(min).and(max)
                      : f.notBetween(min).and(max)
@@ -154,18 +154,22 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
                      ? f.betweenSymmetric(min).and(max)
                      : f.between(min).and(max));
         }
-        else if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.dialect()))
-            return (QueryPartInternal) (not
+
+
+
+
+
+
+
+
+
+
+        else if (symmetric && NO_SUPPORT_SYMMETRIC.contains(ctx.dialect())) {
+            ctx.visit(not
                 ? field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue))
                 : field.between(minValue, maxValue).or(field.between(maxValue, minValue)));
-        else
-            return new Native();
-    }
-
-    private class Native extends AbstractQueryPart {
-
-        @Override
-        public final void accept(Context<?> ctx) {
+        }
+        else {
                            ctx.visit(field);
             if (not)       ctx.sql(' ').visit(K_NOT);
                            ctx.sql(' ').visit(K_BETWEEN);
@@ -173,14 +177,6 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
                            ctx.sql(' ').visit(minValue);
                            ctx.sql(' ').visit(K_AND);
                            ctx.sql(' ').visit(maxValue);
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return not ? symmetric ? CLAUSES_NOT_BETWEEN_SYMMETRIC
-                                   : CLAUSES_NOT_BETWEEN
-                       : symmetric ? CLAUSES_BETWEEN_SYMMETRIC
-                                   : CLAUSES_BETWEEN;
         }
     }
 }

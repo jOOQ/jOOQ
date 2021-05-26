@@ -39,8 +39,10 @@ package org.jooq.impl;
 
 import static org.jooq.Name.Quoted.DEFAULT;
 import static org.jooq.Name.Quoted.MIXED;
+// ...
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.stringLiteral;
 
 import org.jooq.Context;
 import org.jooq.Name;
@@ -144,6 +146,20 @@ final class QualifiedName extends AbstractName {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // [#3437] Fully qualify this field only if allowed in the current context
         if (ctx.qualify()) {

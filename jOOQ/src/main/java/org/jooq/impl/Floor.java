@@ -87,6 +87,12 @@ extends
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
+
+
+
+
+
+
             case SQLITE: {
                 // [#8275] Improved emulation for SQLite                    
                 ctx.sql('(').visit(value.cast(BIGINT)).sql(" - (").visit(value).sql(" < ").visit(value.cast(BIGINT)).sql("))");
@@ -98,6 +104,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

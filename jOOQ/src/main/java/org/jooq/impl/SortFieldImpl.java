@@ -44,6 +44,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -63,6 +64,7 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
@@ -134,6 +136,13 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
         if (nullsFirst || nullsLast) {
             if (NO_SUPPORT_NULLS.contains(ctx.dialect())) {
                 Field<Integer> ifNull = nullsFirst ? zero() : one();
@@ -144,14 +153,29 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
 
                 acceptFieldAndOrder(ctx, false);
             }
-            else {
+            else
                 acceptFieldAndOrder(ctx, true);
-            }
         }
-        else {
+        else
             acceptFieldAndOrder(ctx, false);
-        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void acceptFieldAndOrder(Context<?> ctx, boolean includeNulls) {
         String separator = "";

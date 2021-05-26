@@ -90,6 +90,10 @@ final class RegexpReplace extends AbstractField<String> {
 
 
 
+
+
+
+
             // [#10151] TODO: Emulate REGEXP_REPLACE_FIRST for these three
             case H2:
             case HSQLDB:

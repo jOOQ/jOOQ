@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.FIELD_ROW;
 // ...
+// ...
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
 
@@ -192,6 +193,11 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
 
 
 

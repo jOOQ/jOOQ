@@ -104,6 +104,16 @@ extends
             super.accept(ctx);
     }
 
+    @Override
+    void acceptFunctionName(Context<?> ctx) {
+
+
+
+
+
+        super.acceptFunctionName(ctx);
+    }
+
     @SuppressWarnings("unchecked")
     private final void acceptEmulation(Context<?> ctx) {
         Field<? extends Number> x = (Field) getArguments().get(0);

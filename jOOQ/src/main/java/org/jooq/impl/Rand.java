@@ -105,6 +105,12 @@ extends
 
 
 
+
+
+
+
+
+
             case DERBY:
             case POSTGRES:
             case SQLITE:
@@ -116,6 +122,16 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

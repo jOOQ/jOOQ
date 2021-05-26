@@ -40,6 +40,7 @@ package org.jooq.impl;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.SQL;
 import org.jooq.TableOptions;
 
 /**
@@ -47,9 +48,9 @@ import org.jooq.TableOptions;
  */
 final class SQLTable extends AbstractTable<Record> {
 
-    private final QueryPart delegate;
+    private final SQL delegate;
 
-    SQLTable(QueryPart delegate) {
+    SQLTable(SQL delegate) {
         super(TableOptions.expression(), DSL.name(delegate.toString()));
 
         this.delegate = delegate;
@@ -66,7 +67,17 @@ final class SQLTable extends AbstractTable<Record> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate);
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(delegate);
+                break;
+        }
     }
 
     @Override

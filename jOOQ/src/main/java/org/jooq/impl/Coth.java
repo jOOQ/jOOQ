@@ -86,11 +86,32 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(idiv(
-            iadd(DSL.exp(imul(number, two())), one()),
-            isub(DSL.exp(imul(number, two())), one())
-        ));
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(idiv(
+                    iadd(DSL.exp(imul(number, two())), one()),
+                    isub(DSL.exp(imul(number, two())), one())
+                ));
+                break;
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

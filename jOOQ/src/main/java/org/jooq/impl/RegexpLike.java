@@ -103,6 +103,10 @@ final class RegexpLike extends AbstractCondition {
 
 
 
+
+
+
+
             // Render the SQL standard for those databases that do not support
             // regular expressions
             default: {

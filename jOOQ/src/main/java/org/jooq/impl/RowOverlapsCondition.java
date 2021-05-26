@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -123,6 +124,11 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
         else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS.contains(ctx.dialect()))
             ctx.visit(right1.le(iadd(left1, left2)).and(left1.le(iadd(right1, right2))));
+
+
+
+
+
 
         // Everyone else can handle OVERLAPS
         else

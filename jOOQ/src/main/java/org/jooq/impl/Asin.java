@@ -98,11 +98,28 @@ extends
 
 
 
+
+
+
+
+
+
             default:
                 ctx.visit(function(N_ASIN, getDataType(), number));
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

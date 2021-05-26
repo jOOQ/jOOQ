@@ -57,7 +57,17 @@ final class Ntile extends AbstractWindowFunction<Integer> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_NTILE).sql('(').visit(tiles).sql(')');
+        switch (ctx.family()) {
+
+
+
+
+
+            default:
+                ctx.visit(N_NTILE).sql('(').visit(tiles).sql(')');
+                break;
+        }
+
         acceptOverClause(ctx);
     }
 }

@@ -87,6 +87,12 @@ extends
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
+
+
+
+
+
+
             case MARIADB:
             case MYSQL:
                 ctx.visit(function(N_HEX, getDataType(), value));
@@ -112,6 +118,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

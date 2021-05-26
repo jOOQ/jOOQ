@@ -43,12 +43,14 @@ import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_IN;
+import static org.jooq.Constants.MAX_ROW_DEGREE;
 // ...
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 // ...
 // ...
 // ...
@@ -69,6 +71,7 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Constants;
 import org.jooq.Context;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
@@ -97,32 +100,27 @@ final class RowInCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    private final QueryPartInternal delegate(Configuration configuration) {
-        if (EMULATE_IN.contains(configuration.dialect())) {
+        if (EMULATE_IN.contains(ctx.dialect())) {
             Condition result = DSL.or(map(right, r -> new RowCondition(left, r, EQUALS)));
 
             if (not)
                 result = result.not();
 
-            return (QueryPartInternal) result;
+            ctx.visit(result);
         }
+
+
+
+
+
+
+
+
+
+
+
+
         else {
-            return new Native();
-        }
-    }
-
-    private class Native extends AbstractCondition {
-
-        @Override
-        public final void accept(Context<?> ctx) {
             if (right.size() == 0) {
                 if (not)
                     ctx.visit(trueCondition());
@@ -136,10 +134,10 @@ final class RowInCondition extends AbstractCondition {
                    .sql(" (").visit(new QueryPartListView<>(padded(ctx, right))).sql(')');
             }
         }
+    }
 
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return not ? CLAUSES_IN_NOT : CLAUSES_IN;
-        }
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

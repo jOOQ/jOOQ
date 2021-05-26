@@ -54,6 +54,9 @@ import org.jooq.conf.*;
 import org.jooq.impl.*;
 import org.jooq.tools.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -158,6 +161,26 @@ extends
                 ctx.visit(N_DATEADD).sql('(').visit(inline(string)).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
                 break;
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -368,6 +391,20 @@ extends
     private final UnsupportedOperationException unsupported() {
         return new UnsupportedOperationException("Unknown date part : " + datePart);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -40,12 +40,13 @@ package org.jooq.impl;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.QueryPart;
+import org.jooq.SQL;
 
 final class SQLField<T> extends AbstractField<T> {
 
-    private final QueryPart   delegate;
+    private final QueryPart delegate;
 
-    SQLField(DataType<T> type, QueryPart delegate) {
+    SQLField(DataType<T> type, SQL delegate) {
         super(DSL.unquotedName(delegate.toString()), type);
 
         this.delegate = delegate;
@@ -57,6 +58,16 @@ final class SQLField<T> extends AbstractField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate);
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(delegate);
+                break;
+        }
     }
 }

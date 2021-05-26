@@ -101,6 +101,12 @@ extends
 
 
 
+
+
+
+
+
+
             case DERBY:
             case SQLITE:
                 ctx.visit(function(N_LENGTH, getDataType(), string));
@@ -111,6 +117,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

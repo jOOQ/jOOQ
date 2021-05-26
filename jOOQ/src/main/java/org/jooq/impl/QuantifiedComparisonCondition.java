@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -75,6 +76,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.characterLiteral;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
@@ -129,8 +131,9 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
     public final void accept(Context<?> ctx) {
         SelectQueryImpl<?> s;
 
-        if (field.getDataType().isEmbeddable())
+        if (field.getDataType().isEmbeddable()) {
             ctx.visit(row(embeddedFields(field)).compare(comparator, query));
+        }
         else if ((comparator == EQUALS || comparator == NOT_EQUALS)
                 && (s = subqueryWithLimit(query.query)) != null
                 && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
@@ -138,6 +141,16 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
 
         }
+
+
+
+
+
+
+
+
+
+
         else
             accept0(ctx);
     }
@@ -209,11 +222,24 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
     }
 
     private final void accept1(Context<?> ctx) {
-        ctx.visit(field)
-           .sql(' ')
-           .visit(comparator.toKeyword())
-           .sql(' ')
-           .visit(query);
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(field)
+                   .sql(' ')
+                   .visit(comparator.toKeyword())
+                   .sql(' ')
+                   .visit(query);
+
+                break;
+        }
     }
 
     private Comparator inverse(Comparator operator) {

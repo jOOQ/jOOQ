@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
+// ...
 import static org.jooq.impl.Keywords.K_EXCEPT;
 
 import java.util.Arrays;
@@ -67,6 +68,17 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
         ctx.sql('*');
 
         // [#7921] H2 has native support for EXCEPT. Emulations are implemented

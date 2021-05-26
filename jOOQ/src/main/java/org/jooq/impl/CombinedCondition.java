@@ -42,6 +42,7 @@ import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Operator.AND;
+// ...
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.trueCondition;
@@ -194,6 +195,27 @@ final class CombinedCondition extends AbstractCondition {
         else if (conditions.size() == 1) {
             ctx.visit(conditions.get(0));
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         else {
             ctx.sqlIndentStart('(');
 

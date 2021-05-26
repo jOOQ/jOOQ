@@ -60,6 +60,7 @@ import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 
@@ -86,6 +87,10 @@ implements JSONObjectAggNullStep<J> {
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -153,6 +158,20 @@ implements JSONObjectAggNullStep<J> {
 
         ctx.sql('(').visit(DSL.concat(inline('{'), listagg, inline('}'))).sql(')');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(N_JSON_OBJECTAGG).sql('(').visit(entry);

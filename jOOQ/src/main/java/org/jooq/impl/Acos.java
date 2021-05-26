@@ -102,11 +102,28 @@ extends
 
 
 
+
+
+
+
+
+
             default:
                 ctx.visit(function(N_ACOS, getDataType(), number));
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

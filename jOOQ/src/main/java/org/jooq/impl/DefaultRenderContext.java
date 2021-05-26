@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -63,10 +64,12 @@ import org.jooq.Constants;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Param;
+import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.RenderFormatting;
 import org.jooq.conf.RenderKeywordCase;
@@ -663,6 +666,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     protected final void visit0(QueryPartInternal internal) {
+
+
+
+
+
+
+
         int before = bindValues.size();
         internal.accept(this);
         int after = bindValues.size();

@@ -90,6 +90,12 @@ extends
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
+
+
+
+
+
+
             case DERBY:
             case SQLITE:
                 ctx.visit(DSL.substring(string, inline(1), length));
@@ -100,6 +106,19 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

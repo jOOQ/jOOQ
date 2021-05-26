@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
@@ -46,6 +47,7 @@ import java.util.Collection;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.OrderField;
+// ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationExcludeStep;
@@ -71,6 +73,10 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
 
         // In the WINDOW clause, always declare window definitions
         if (ctx.declareWindows()) {

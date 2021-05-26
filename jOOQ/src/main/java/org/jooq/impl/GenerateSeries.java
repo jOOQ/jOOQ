@@ -159,6 +159,12 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
 
 
 
+
+
+
+
+
+
         else {
             if (step == null)
                 ctx.visit(N_GENERATE_SERIES).sql('(').visit(from).sql(", ").visit(to).sql(')');

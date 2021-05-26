@@ -42,15 +42,16 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
+import org.jooq.SQL;
 
 /**
  * @author Lukas Eder
  */
 final class SQLQuery extends AbstractRowCountQuery {
 
-    private final QueryPart   delegate;
+    private final SQL delegate;
 
-    SQLQuery(Configuration configuration, QueryPart delegate) {
+    SQLQuery(Configuration configuration, SQL delegate) {
         super(configuration);
 
         this.delegate = delegate;
@@ -62,7 +63,17 @@ final class SQLQuery extends AbstractRowCountQuery {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate);
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(delegate);
+                break;
+        }
     }
 
     @Override

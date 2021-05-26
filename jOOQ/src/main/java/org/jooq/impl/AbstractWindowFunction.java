@@ -168,11 +168,27 @@ implements
         if (window == null)
             return;
 
-        ctx.sql(' ')
-           .visit(K_OVER)
-           .sql(' ');
+        switch (ctx.family()) {
 
-        ctx.data(DataExtendedKey.DATA_WINDOW_FUNCTION, this, c -> c.visit(window));
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.sql(' ')
+                   .visit(K_OVER)
+                   .sql(' ');
+
+                ctx.data(DataExtendedKey.DATA_WINDOW_FUNCTION, this, c -> c.visit(window));
+                break;
+        }
     }
 
 
@@ -198,21 +214,51 @@ implements
 
 
     final void acceptNullTreatment(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
 
-        if (TRUE.equals(ignoreNulls))
-            ctx.sql(' ').visit(K_IGNORE_NULLS);
-        else if (FALSE.equals(ignoreNulls))
-            ctx.sql(' ').visit(K_RESPECT_NULLS);
+
+
+
+
+
+
+
+
+
+
+            default:
+                if (TRUE.equals(ignoreNulls))
+                    ctx.sql(' ').visit(K_IGNORE_NULLS);
+                else if (FALSE.equals(ignoreNulls))
+                    ctx.sql(' ').visit(K_RESPECT_NULLS);
+
+                break;
+        }
     }
 
     final void acceptFromFirstOrLast(Context<?> ctx) {
-        if (TRUE.equals(fromLast))
-            ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
-        else if (FALSE.equals(fromLast))
-            ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                if (TRUE.equals(fromLast))
+                    ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
+                else if (FALSE.equals(fromLast))
+                    ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
+
+                break;
+        }
     }
 
     // -------------------------------------------------------------------------

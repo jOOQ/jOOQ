@@ -95,6 +95,12 @@ extends
 
 
 
+
+
+
+
+
+
             case FIREBIRD:
                 ctx.visit(DSL.rpad(string, imul(DSL.length(string), count), string));
                 break;
@@ -121,6 +127,19 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

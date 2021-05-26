@@ -69,7 +69,19 @@ final class JSONReturning extends AbstractQueryPart implements SimpleQueryPart {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (!NO_SUPPORT_RETURNING.contains(ctx.dialect()))
-            ctx.visit(K_RETURNING).sql(' ').sql(type.getCastTypeName(ctx.configuration()));
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+            default:
+                if (!NO_SUPPORT_RETURNING.contains(ctx.dialect()))
+                    ctx.visit(K_RETURNING).sql(' ').sql(type.getCastTypeName(ctx.configuration()));
+
+                break;
+        }
     }
 }

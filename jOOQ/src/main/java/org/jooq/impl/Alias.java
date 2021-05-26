@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -78,6 +79,8 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
@@ -141,6 +144,12 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
 
 
 

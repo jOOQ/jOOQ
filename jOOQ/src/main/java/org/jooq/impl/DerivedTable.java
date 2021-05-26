@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Names.N_SELECT;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -88,6 +89,10 @@ class DerivedTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
         visitSubquery(ctx, query, false);
     }
 

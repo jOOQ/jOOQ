@@ -128,6 +128,12 @@ extends
 
 
 
+
+
+
+
+
+
             case MARIADB:
             case MYSQL:
                 ctx.visit(DSL.substring(
@@ -172,6 +178,20 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

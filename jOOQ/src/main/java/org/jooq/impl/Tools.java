@@ -43,13 +43,7 @@ import static java.lang.Character.isJavaIdentifierPart;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_GETTER;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_MEMBERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_SETTERS;
-import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
+import static java.util.stream.Collectors.joining;
 // ...
 // ...
 // ...
@@ -60,6 +54,7 @@ import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -84,6 +79,13 @@ import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_GETTER;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_MEMBERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_MATCHING_SETTERS;
+import static org.jooq.impl.CacheType.REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.DDLStatementType.ALTER_SCHEMA;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
@@ -221,6 +223,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -308,8 +312,6 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * General internal jOOQ utilities
@@ -2332,6 +2334,11 @@ final class Tools {
     }
 
     static final void visitSubquery(Context<?> ctx, QueryPart query, boolean parentheses) {
+
+
+
+
+
         if (parentheses)
             ctx.sql('(');
 
@@ -6037,4 +6044,28 @@ final class Tools {
 
 
 
+
+    static final String capitalize(String string) {
+        return string.substring(0, 1).toUpperCase() + string.substring(1);
+    }
+
+    static final String decapitalize(String string) {
+        return string.substring(0, 1).toLowerCase() + string.substring(1);
+    }
+
+    static final String pascalCase(String snakeCase) {
+        return Stream.of(snakeCase.toLowerCase().split("_")).map(Tools::capitalize).collect(joining());
+    }
+
+    static final String camelCase(String snakeCase) {
+        return decapitalize(pascalCase(snakeCase));
+    }
+
+    static final String characterLiteral(char character) {
+        return "'" + ("" + character).replace("\\", "\\\\").replace("'", "\\'") + "'";
+    }
+
+    static final String stringLiteral(String string) {
+        return "\"" + string.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n\" + \n\"") + "\"";
+    }
 }

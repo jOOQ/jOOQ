@@ -149,8 +149,18 @@ final class RowIsNull extends AbstractCondition {
         else
             visitSubquery(ctx, select);
 
-        ctx.sql(' ')
-           .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.sql(' ')
+                   .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
+                break;
+        }
     }
 
     @Override // Avoid AbstractCondition implementation

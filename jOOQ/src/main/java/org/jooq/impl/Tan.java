@@ -86,8 +86,29 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(function(N_TAN, getDataType(), number));
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(function(N_TAN, getDataType(), number));
+                break;
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

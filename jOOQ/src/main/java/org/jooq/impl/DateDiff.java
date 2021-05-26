@@ -62,6 +62,9 @@ import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.castIfNeeded;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -196,6 +199,10 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
                 ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(')');
                 return;
+
+
+
+
 
 
 

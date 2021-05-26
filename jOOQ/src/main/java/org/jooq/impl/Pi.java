@@ -93,6 +93,12 @@ extends
 
 
 
+
+
+
+
+
+
             case SQLITE:
                 ctx.visit(inline(Math.PI, BigDecimal.class));
                 break;
@@ -102,6 +108,16 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

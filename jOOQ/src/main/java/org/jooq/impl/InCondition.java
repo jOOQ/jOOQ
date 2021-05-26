@@ -49,6 +49,8 @@ import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.IN;
+import static org.jooq.Constants.MAX_ROW_DEGREE;
+// ...
 // ...
 // ...
 // ...
@@ -60,6 +62,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -80,6 +83,8 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_OR;
+import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -137,6 +142,19 @@ final class InCondition<T> extends AbstractCondition {
     }
 
     private final void accept0(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (values.size() == 0 && NO_SUPPORT_EMPTY_LISTS.contains(ctx.dialect())) {
             if (comparator == IN)
                 ctx.visit(falseCondition());
@@ -185,9 +203,8 @@ final class InCondition<T> extends AbstractCondition {
                 }
             }
         }
-        else {
+        else
             toSQLSubValues(ctx, padded(ctx, values));
-        }
     }
 
     static <T> List<T> padded(Context<?> ctx, List<T> list) {

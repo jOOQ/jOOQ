@@ -65,6 +65,12 @@ final class ArrayGet<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
             case H2:
                 ctx.visit(N_ARRAY_GET).sql('(').visit(field).sql(", ").visit(index).sql(')');
                 break;

@@ -37,26 +37,50 @@
  */
 package org.jooq.impl;
 
+import static java.util.stream.Collectors.joining;
+// ...
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.embeddedFields;
+import static org.jooq.impl.Tools.findAny;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.util.Arrays;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.JSON;
+import org.jooq.JSONB;
+// ...
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
+import org.jooq.types.YearToMonth;
 
 /**
  * @author Lukas Eder
@@ -129,6 +153,12 @@ final class Val<T> extends AbstractParam<T> {
 
     @Override
     public void accept(Context<?> ctx) {
+
+
+
+
+
+
         if (getDataType().isEmbeddable()) {
             ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(embeddedFields(this))));
         }
@@ -155,6 +185,127 @@ final class Val<T> extends AbstractParam<T> {
                 ctx.bindValue(value, this);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Get a bind variable, depending on value of

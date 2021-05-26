@@ -80,8 +80,28 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(imul(pi(), two()));
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(imul(pi(), two()));
+                break;
+        }
     }
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

@@ -67,6 +67,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
+// ...
 import org.jooq.SQLDialect;
 
 
@@ -98,6 +99,9 @@ implements JSONArrayAggOrderByStep<J> {
                 ctx.visit(SUPPORT_JSON_MERGE_PRESERVE.contains(ctx.dialect()) ? N_JSON_MERGE_PRESERVE : N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(groupConcatEmulation(ctx)).sql(')');
                 break;
             }
+
+
+
 
 
 
@@ -170,6 +174,22 @@ implements JSONArrayAggOrderByStep<J> {
              ? groupConcat(field)
              : groupConcat(field).orderBy(orderBy);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(N_JSON_ARRAYAGG).sql('(');

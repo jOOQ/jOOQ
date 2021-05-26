@@ -679,7 +679,26 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(getQualifiedName());
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(getQualifiedName());
+                break;
+        }
     }
 
     private static final boolean eq(Integer i1, Integer i2) {

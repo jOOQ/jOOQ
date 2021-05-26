@@ -86,6 +86,12 @@ extends
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
             case SQLITE:
                 ctx.visit(imul(value, value));
                 break;
@@ -128,6 +134,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

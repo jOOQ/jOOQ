@@ -97,6 +97,12 @@ extends
 
 
 
+
+
+
+
+
+
             case DERBY:
             case SQLITE:
                 ctx.visit(DSL.exp(imul(DSL.ln(value), exponent)));
@@ -107,6 +113,19 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

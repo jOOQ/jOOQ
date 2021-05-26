@@ -61,7 +61,7 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
-import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.*;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -107,7 +107,7 @@ import org.jooq.impl.Tools.BooleanDataKey;
  */
 final class RowSubqueryCondition extends AbstractCondition {
     private static final Clause[]        CLAUSES                                    = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect> SUPPORT_NATIVE                             = SQLDialect.supportedBy(H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE                          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED                      = SQLDialect.supportedBy(DERBY, FIREBIRD, SQLITE);
     // See https://bugs.mysql.com/bug.php?id=103494
     private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED_OTHER_THAN_IN_NOT_IN = SQLDialect.supportedBy(MARIADB, MYSQL);
@@ -184,10 +184,6 @@ final class RowSubqueryCondition extends AbstractCondition {
                 return new Native();
         }
 
-        // [#2395] These dialects have full native support for comparison
-        // predicates with row value expressions and subqueries:
-        else if (SUPPORT_NATIVE.contains(ctx.dialect()))
-            return new Native();
 
 
 
@@ -196,9 +192,7 @@ final class RowSubqueryCondition extends AbstractCondition {
 
 
 
-
-        // [#2395] All other configurations have to be emulated
-        else
+        else if (NO_SUPPORT_NATIVE.contains(ctx.dialect()))
             return emulationUsingExists(ctx, left, right,
                 comparator == GREATER
              || comparator == GREATER_OR_EQUAL
@@ -206,6 +200,8 @@ final class RowSubqueryCondition extends AbstractCondition {
              || comparator == LESS_OR_EQUAL ? comparator : EQUALS,
                 comparator == NOT_IN || comparator == NOT_EQUALS
             );
+        else
+            return new Native();
     }
 
     private static final QueryPartInternal emulationUsingExists(Context<?> ctx, Row row, Select<?> select, Comparator comparator, boolean notExists) {
@@ -253,24 +249,44 @@ final class RowSubqueryCondition extends AbstractCondition {
         }
 
         final void accept0(Context<?> ctx) {
-            ctx.visit(left)
-               .sql(' ')
-               .visit(comparator.toKeyword())
-               .sql(' ');
+            switch (ctx.family()) {
 
-            if (rightQuantified == null) {
 
-                // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = false ;
 
-                ctx.sql(extraParentheses ? "((" : "(")
-                   .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, false))
-                   .sql(extraParentheses ? "))" : ")");
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+                    ctx.visit(left)
+                       .sql(' ')
+                       .visit(comparator.toKeyword())
+                       .sql(' ');
+
+                    if (rightQuantified == null) {
+
+                        // Some databases need extra parentheses around the RHS
+                        boolean extraParentheses = false ;
+
+                        ctx.sql(extraParentheses ? "((" : "(")
+                           .data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> visitSubquery(c, right, false))
+                           .sql(extraParentheses ? "))" : ")");
+                    }
+
+                    // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL
+                    else
+                        ctx.data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> c.subquery(true).visit(rightQuantified).subquery(false));
+
+                    break;
             }
-
-            // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL
-            else
-                ctx.data(BooleanDataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true, c -> c.subquery(true).visit(rightQuantified).subquery(false));
         }
 
         @Override

@@ -176,6 +176,10 @@ implements
 
 
 
+
+
+
+
             case MARIADB: {
                 JSONEntry<?> first;
                 Name name = JSONArrayAgg.SUPPORT_JSON_MERGE_PRESERVE.contains(ctx.dialect()) ? N_JSON_MERGE_PRESERVE : N_JSON_MERGE;
@@ -214,6 +218,17 @@ implements
             || field instanceof JSONArrayAgg
             || field instanceof ScalarSubquery && isJSONArray(((ScalarSubquery<?>) field).query.getSelect().get(0));
     }
+
+
+
+
+
+
+
+
+
+
+
 
     private final void acceptStandard(Context<?> ctx) {
         JSONNull jsonNull;

@@ -102,6 +102,12 @@ extends
 
 
 
+
+
+
+
+
+
             case SQLITE:
                 ctx.visit(DSL.power(value, inline(0.5)));
                 break;
@@ -111,6 +117,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

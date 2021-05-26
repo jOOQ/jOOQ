@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
+// ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
 
@@ -54,52 +55,73 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class Contains<T> extends AbstractCondition {
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
+    private static final Clause[] CLAUSES = { CONDITION, CONDITION_COMPARISON };
 
     private final Field<T>        lhs;
     private final Field<T>        rhs;
     private final T               value;
+    private final boolean         leftWildcard;
+    private final boolean         rightWildcard;
 
-    Contains(Field<T> field, T value) {
+    Contains(Field<T> field, T value, boolean leftWildcard, boolean rightWildcard) {
         this.lhs = field;
         this.rhs = null;
         this.value = value;
+        this.leftWildcard = leftWildcard;
+        this.rightWildcard = rightWildcard;
     }
 
-    Contains(Field<T> field, Field<T> rhs) {
+    Contains(Field<T> field, Field<T> rhs, boolean leftWildcard, boolean rightWildcard) {
         this.lhs = field;
         this.rhs = rhs;
         this.value = null;
+        this.leftWildcard = leftWildcard;
+        this.rightWildcard = rightWildcard;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(condition(ctx.configuration()));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
-
-    private final Condition condition(Configuration configuration) {
-
         // [#1107] Some dialects support "contains" operations for ARRAYs
         // [#5929] Check both sides of the operation for array types
         if (lhs.getDataType().isArray()
             || (rhs != null && rhs.getDataType().isArray())
             || (rhs == null && value != null && value.getClass().isArray()))
-            return new PostgresArrayContains();
+            ctx.visit(new PostgresArrayContains());
 
         // "contains" operations on Strings
-        else
-            return lhs.like(
-                DSL.concat(
-                    inline("%"),
-                    Tools.escapeForLike(rhs == null ? Tools.field(value, lhs) : rhs, configuration),
-                    inline("%")
-                ), Tools.ESCAPE
-            );
+        else {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+                    Field<?>[] array = new Field[1 + (leftWildcard ? 1 : 0) + (rightWildcard ? 1 : 0)];
+
+                    int i = 0;
+                    if (leftWildcard)
+                        array[i++] = inline("%");
+
+                    array[i++] = Tools.escapeForLike(rhs == null ? Tools.field(value, lhs) : rhs, ctx.configuration());
+
+                    if (rightWildcard)
+                        array[i++] = inline("%");
+
+                    ctx.visit(lhs.like(DSL.concat(array), Tools.ESCAPE));
+                    break;
+            }
+        }
     }
 
     /**
@@ -120,5 +142,10 @@ final class Contains<T> extends AbstractCondition {
         private final Field<T> rhs() {
             return (rhs == null) ? val(value, lhs) : rhs;
         }
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES;
     }
 }

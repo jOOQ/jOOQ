@@ -57,6 +57,8 @@ import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
 import static org.jooq.impl.Names.N_GETDATE;
 import static org.jooq.impl.Names.N_NOW;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Set;
 
 import org.jooq.Context;
@@ -85,6 +87,14 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
 
 
 

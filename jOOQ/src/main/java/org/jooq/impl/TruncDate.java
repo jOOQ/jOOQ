@@ -233,6 +233,11 @@ final class TruncDate<T> extends AbstractField<T> {
 
 
 
+
+
+
+
+
             default:
                 ctx.visit(N_TRUNC).sql('(').visit(date).sql(", ").visit(inline(keyword)).sql(')');
                 break;

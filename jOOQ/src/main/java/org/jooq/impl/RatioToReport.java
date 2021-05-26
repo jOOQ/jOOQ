@@ -76,6 +76,10 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
 
 
 
+
+
+
+
             case CUBRID:
 
 

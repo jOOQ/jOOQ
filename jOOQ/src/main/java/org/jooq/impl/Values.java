@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -65,6 +66,7 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Names.N_VALUES;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -180,6 +182,12 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
             visitSubquery(ctx, selects, false);
         }
+
+
+
+
+
+
 
         // [#915] Native support of VALUES(..)
         else {

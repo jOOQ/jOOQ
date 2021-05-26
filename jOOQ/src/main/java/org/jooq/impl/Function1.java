@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.camelCase;
+
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -56,6 +58,15 @@ final class Function1<T> extends AbstractField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(getQualifiedName()).sql('(').visit(argument).sql(')');
+        switch (ctx.family()) {
+
+
+
+
+
+            default:
+                ctx.visit(getQualifiedName()).sql('(').visit(argument).sql(')');
+                break;
+        }
     }
 }

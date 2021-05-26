@@ -38,6 +38,9 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TEMPLATE;
+import static org.jooq.impl.DSL.list;
+import static org.jooq.impl.Tools.renderAndBind;
+import static org.jooq.impl.Tools.stringLiteral;
 
 import java.util.List;
 
@@ -47,7 +50,8 @@ import org.jooq.QueryPart;
 import org.jooq.SQL;
 
 final class SQLImpl extends AbstractQueryPart implements SQL {
-    private static final Clause[] CLAUSES          = { TEMPLATE };
+
+    private static final Clause[] CLAUSES = { TEMPLATE };
     private final String          sql;
     private final List<QueryPart> substitutes;
 
@@ -58,7 +62,21 @@ final class SQLImpl extends AbstractQueryPart implements SQL {
 
     @Override
     public final void accept(Context<?> ctx) {
-        Tools.renderAndBind(ctx, sql, substitutes);
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                renderAndBind(ctx, sql, substitutes);
+                break;
+        }
     }
 
     @Override

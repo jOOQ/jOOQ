@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.rank;
@@ -49,6 +50,7 @@ import static org.jooq.impl.RankingFunction.RankingType.DENSE_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
 import static org.jooq.impl.RankingFunction.RankingType.RANK;
 import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.Tools.camelCase;
 
 import java.util.Set;
 
@@ -81,6 +83,10 @@ final class RankingFunction<T> extends AbstractWindowFunction<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
 
 
 

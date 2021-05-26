@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.Name.Quoted.DEFAULT;
 import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.Name.Quoted.UNQUOTED;
+// ...
+import static org.jooq.impl.Tools.stringLiteral;
 
 import org.jooq.Context;
 import org.jooq.Name;
@@ -68,6 +70,20 @@ final class UnqualifiedName extends AbstractName {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         RenderQuotedNames q = SettingsTools.getRenderQuotedNames(ctx.settings());
 
         boolean previous = ctx.quote();

@@ -112,6 +112,12 @@ extends
 
 
 
+
+
+
+
+
+
             case DERBY:
             case SQLITE:
                 ctx.visit(imul(inline(8), function(N_LENGTH, getDataType(), string)));
@@ -122,6 +128,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

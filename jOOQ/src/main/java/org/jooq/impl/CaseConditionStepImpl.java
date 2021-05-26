@@ -153,8 +153,12 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
 
 
 
+
+
+
+
             default:
-                ctx.visit(new Native());
+                acceptNative(ctx);
                 break;
         }
     }
@@ -192,21 +196,6 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
 
 
 
-    private class Native extends AbstractQueryPart {
-
-        @Override
-        public final void accept(Context<?> ctx) {
-            ctx.visit(K_CASE)
-               .formatIndentStart()
-               .formatSeparator();
-
-            int size = conditions.size();
-            for (int i = 0; i < size; i++) {
-                if (i > 0)
-                    ctx.formatSeparator();
-
-                Condition c = conditions.get(i);
-                Field<T> r = results.get(i);
 
 
 
@@ -217,17 +206,35 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
 
 
 
-                ctx.visit(K_WHEN).sql(' ').visit(c).sql(' ')
-                   .visit(K_THEN).sql(' ').visit(r);
-            }
 
-            if (else_ != null)
-                ctx.formatSeparator()
-                   .visit(K_ELSE).sql(' ').visit(else_);
+    private final void acceptNative(Context<?> ctx) {
+        ctx.visit(K_CASE)
+           .formatIndentStart();
 
-            ctx.formatIndentEnd()
-               .formatSeparator()
-               .visit(K_END);
+        int size = conditions.size();
+        for (int i = 0; i < size; i++) {
+            Condition c = conditions.get(i);
+
+
+
+
+
+
+
+
+
+
+            ctx.formatSeparator()
+               .visit(K_WHEN).sql(' ').visit(c).sql(' ')
+               .visit(K_THEN).sql(' ').visit(results.get(i));
         }
+
+        if (else_ != null)
+            ctx.formatSeparator()
+               .visit(K_ELSE).sql(' ').visit(else_);
+
+        ctx.formatIndentEnd()
+           .formatSeparator()
+           .visit(K_END);
     }
 }

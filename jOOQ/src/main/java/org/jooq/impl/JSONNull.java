@@ -69,10 +69,25 @@ final class JSONNull extends AbstractQueryPart implements SimpleQueryPart {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (!NO_SUPPORT_ABSENT_ON_NULL.contains(ctx.dialect()))
-            if (type == NULL_ON_NULL)
-                ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
-            else if (type == ABSENT_ON_NULL)
-                ctx.visit(K_ABSENT).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                if (!NO_SUPPORT_ABSENT_ON_NULL.contains(ctx.dialect()))
+                    if (type == NULL_ON_NULL)
+                        ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+                    else if (type == ABSENT_ON_NULL)
+                        ctx.visit(K_ABSENT).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+
+                break;
+        }
     }
 }

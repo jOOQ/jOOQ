@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.aggregate;
 import static org.jooq.impl.DSL.aggregateDistinct;
 import static org.jooq.impl.DSL.choose;
@@ -56,6 +57,7 @@ import java.math.BigDecimal;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 // ...
 
 /**
@@ -69,13 +71,23 @@ final class Product extends AbstractAggregateFunction<BigDecimal> {
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
 
 
-        acceptEmulation(ctx);
+
+
+            default:
+                acceptEmulation(ctx);
+                break;
+        }
     }
+
+
+
+
 
 
 

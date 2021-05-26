@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
+// ...
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.TrueCondition.NO_SUPPORT_BOOLEAN;
 
@@ -63,6 +64,10 @@ final class FalseCondition extends AbstractCondition implements False {
     public final void accept(Context<?> ctx) {
         if (NO_SUPPORT_BOOLEAN.contains(ctx.dialect()))
             ctx.sql("1 = 0");
+
+
+
+
         else
             ctx.visit(K_FALSE);
     }

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_MATERIALIZED;
@@ -97,6 +98,11 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
         if (ctx.declareCTE()) {
             QueryPart s = select;
 

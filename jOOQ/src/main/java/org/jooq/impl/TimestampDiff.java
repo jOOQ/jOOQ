@@ -48,6 +48,8 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND;
 import static org.jooq.impl.Tools.castIfNeeded;
 
+import java.sql.Timestamp;
+
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.types.DayToSecond;
@@ -70,6 +72,9 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
 
 
 

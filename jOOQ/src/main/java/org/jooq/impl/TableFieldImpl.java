@@ -38,9 +38,13 @@
 
 package org.jooq.impl;
 
+import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
+// ...
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+
+import java.util.stream.Stream;
 
 import org.jooq.Binding;
 import org.jooq.Clause;
@@ -95,6 +99,17 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
             if (c.qualify() && getTable() != null)
                 c.visit(getTable()).sql('.');

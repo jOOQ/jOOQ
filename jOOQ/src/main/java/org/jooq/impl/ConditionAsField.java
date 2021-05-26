@@ -68,6 +68,11 @@ final class ConditionAsField extends AbstractField<Boolean> {
 
 
 
+
+
+
+
+
             case CUBRID:
             case FIREBIRD:
                 acceptCase(ctx);

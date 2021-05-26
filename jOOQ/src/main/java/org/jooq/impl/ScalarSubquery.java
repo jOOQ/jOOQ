@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Names.N_SELECT;
@@ -69,6 +70,11 @@ final class ScalarSubquery<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         SelectQueryImpl<?> q = Tools.selectQueryImpl(query);
+
+
+
+
+
 
         // HSQLDB allows for using WITH inside of IN, see: https://sourceforge.net/p/hsqldb/bugs/1617/
         // We'll still emulate CTE in scalar subqueries with a derived tables in all cases.

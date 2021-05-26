@@ -92,6 +92,12 @@ extends
 
 
 
+
+
+
+
+
+
             case FIREBIRD:
             case SQLITE:
                 ctx.visit(idiv(
@@ -108,6 +114,17 @@ extends
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // The Object API

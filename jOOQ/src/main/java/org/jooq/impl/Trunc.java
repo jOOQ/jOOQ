@@ -148,11 +148,28 @@ extends
 
 
 
+
+
+
+
             default:
                 ctx.visit(N_TRUNC).sql('(').visit(value).sql(", ").visit(decimals).sql(')');
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

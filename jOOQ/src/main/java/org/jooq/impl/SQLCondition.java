@@ -40,12 +40,13 @@ package org.jooq.impl;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
+import org.jooq.SQL;
 
 final class SQLCondition extends AbstractCondition {
 
-    private final QueryPart   delegate;
+    private final SQL delegate;
 
-    SQLCondition(QueryPart delegate) {
+    SQLCondition(SQL delegate) {
         this.delegate = delegate;
     }
 
@@ -55,12 +56,22 @@ final class SQLCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        // We have no control over the plain SQL content, hence we MUST put it
-        // in parentheses to ensure correct semantics
+        switch (ctx.family()) {
 
-        ctx.sql('(');
-        ctx.visit(delegate);
-        ctx.sql(')');
+
+
+
+
+
+            default:
+                // We have no control over the plain SQL content, hence we MUST put it
+                // in parentheses to ensure correct semantics
+
+                ctx.sql('(');
+                ctx.visit(delegate);
+                ctx.sql(')');
+                break;
+        }
     }
 
     @Override // Avoid AbstractCondition implementation

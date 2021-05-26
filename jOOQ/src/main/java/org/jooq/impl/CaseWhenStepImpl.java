@@ -159,6 +159,10 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
 
 
 
+
+
+
+
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY:
                 acceptSearched(ctx);
@@ -169,6 +173,19 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

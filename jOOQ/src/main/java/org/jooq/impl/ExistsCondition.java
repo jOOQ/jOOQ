@@ -67,8 +67,19 @@ final class ExistsCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_EXISTS).sql(' ');
-        visitSubquery(ctx, query);
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+            default:
+                ctx.visit(K_EXISTS).sql(' ');
+                visitSubquery(ctx, query);
+                break;
+        }
     }
 
     @Override

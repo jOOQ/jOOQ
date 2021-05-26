@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Tools.map;
@@ -114,15 +115,6 @@ final class RowCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    private final QueryPartInternal delegate(Configuration configuration) {
 
 
 
@@ -131,7 +123,7 @@ final class RowCondition extends AbstractCondition {
 
         // Regular comparison predicate emulation
         if ((comparator == EQUALS || comparator == NOT_EQUALS) &&
-            (forceEmulation || EMULATE_EQ_AND_NE.contains(configuration.dialect()))) {
+            (forceEmulation || EMULATE_EQ_AND_NE.contains(ctx.dialect()))) {
 
             Field<?>[] rightFields = right.fields();
             Condition result = DSL.and(map(left.fields(), (f, i) -> f.equal((Field) rightFields[i])));
@@ -139,12 +131,12 @@ final class RowCondition extends AbstractCondition {
             if (comparator == NOT_EQUALS)
                 result = result.not();
 
-            return (QueryPartInternal) result;
+            ctx.visit(result);
         }
 
         // Ordering comparison predicate emulation
         else if ((comparator == GREATER || comparator == GREATER_OR_EQUAL || comparator == LESS || comparator == LESS_OR_EQUAL) &&
-                 (forceEmulation || EMULATE_RANGES.contains(configuration.dialect()))) {
+                 (forceEmulation || EMULATE_RANGES.contains(ctx.dialect()))) {
 
             // The order component of the comparator (stripping the equal component)
             Comparator order
@@ -200,17 +192,16 @@ final class RowCondition extends AbstractCondition {
             if (leftFields.length > 1)
                 result = leftFields[0].compare(factoredOrder, (Field) rightFields[0]).and(result);
 
-            return (QueryPartInternal) result;
+            ctx.visit(result);
         }
+
+
+
+
+
+
+
         else {
-            return new Native();
-        }
-    }
-
-    private class Native extends AbstractCondition {
-
-        @Override
-        public final void accept(Context<?> ctx) {
 
             // Some dialects do not support != comparison with rows
 
@@ -238,10 +229,10 @@ final class RowCondition extends AbstractCondition {
                    .sql(extraParentheses ? ")" : "");
             }
         }
+    }
 
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return CLAUSES;
-        }
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

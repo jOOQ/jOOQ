@@ -24521,6 +24521,15 @@ public class DSL {
     }
 
     /**
+     * The <code>ntile([number]) over ([analytic clause])</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static WindowOverStep<Integer> ntile(Field<Integer> number) {
+        return new Ntile(number);
+    }
+
+    /**
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
     @NotNull
@@ -24589,7 +24598,16 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
-        return new PositionalWindowFunction(LEAD, Tools.nullSafe(field), inline(offset), null);
+        return lead(field, inline(offset));
+    }
+
+    /**
+     * The <code>lead(field, offset) over ([analytic clause])</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset) {
+        return new PositionalWindowFunction(LEAD, Tools.nullSafe(field), Tools.nullSafe(offset), null);
     }
 
     /**
@@ -24600,7 +24618,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
-        return lead(Tools.nullSafe(field), offset, Tools.field(defaultValue, field));
+        return lead(Tools.nullSafe(field), inline(offset), Tools.field(defaultValue, field));
     }
 
     /**
@@ -24611,7 +24629,29 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
-        return new PositionalWindowFunction(LEAD, Tools.nullSafe(field), inline(offset), Tools.nullSafe(defaultValue));
+        return lead(field, inline(offset), defaultValue);
+    }
+
+    /**
+     * The
+     * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
+     * function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset, T defaultValue) {
+        return lead(field, Tools.nullSafe(offset), Tools.field(defaultValue, field));
+    }
+
+    /**
+     * The
+     * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
+     * function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
+        return new PositionalWindowFunction(LEAD, Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
     }
 
     /**
@@ -24629,7 +24669,16 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
-        return new PositionalWindowFunction(LAG, Tools.nullSafe(field), inline(offset), null);
+        return lag(field, inline(offset));
+    }
+
+    /**
+     * The <code>lag(field, offset) over ([analytic clause])</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset) {
+        return new PositionalWindowFunction(LAG, Tools.nullSafe(field), Tools.nullSafe(offset), null);
     }
 
     /**
@@ -24640,7 +24689,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
-        return lag(Tools.nullSafe(field), offset, Tools.field(defaultValue, field));
+        return lag(Tools.nullSafe(field), inline(offset), Tools.field(defaultValue, field));
     }
 
     /**
@@ -24651,7 +24700,29 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
-        return new PositionalWindowFunction(LAG, Tools.nullSafe(field), inline(offset), Tools.nullSafe(defaultValue));
+        return lag(field, inline(offset), defaultValue);
+    }
+
+    /**
+     * The
+     * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
+     * function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset, T defaultValue) {
+        return lag(field, offset, Tools.field(defaultValue, field));
+    }
+
+    /**
+     * The
+     * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
+     * function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
+    public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
+        return new PositionalWindowFunction(LAG, Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
     }
 
     // -------------------------------------------------------------------------

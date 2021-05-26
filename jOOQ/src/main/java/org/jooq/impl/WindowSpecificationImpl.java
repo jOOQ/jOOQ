@@ -38,12 +38,15 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.lang.Integer.MAX_VALUE;
+import static java.lang.Integer.MIN_VALUE;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.SQLDialect.H2;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -70,6 +73,7 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.DataExtendedKey.DATA_WINDOW_FUNCTION;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.CURRENT_ROW;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.GROUP;
@@ -157,6 +161,13 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
         SortFieldList o = orderBy;
 
         // [#8414] [#8593] [#11021] [#11851] Some RDBMS require ORDER BY in some window functions
@@ -305,6 +316,67 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             ctx.formatIndentEnd()
                .formatNewLine();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void toSQLRows(Context<?> ctx, Integer rows) {
         if (rows == Integer.MIN_VALUE)

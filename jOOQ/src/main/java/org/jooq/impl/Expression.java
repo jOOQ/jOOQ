@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -151,6 +152,13 @@ final class Expression<T> extends AbstractTransformable<T> {
     final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
+
+
+
+
+
+
+
         // ---------------------------------------------------------------------
         // XXX: Bitwise operators
         // ---------------------------------------------------------------------
@@ -235,6 +243,35 @@ final class Expression<T> extends AbstractTransformable<T> {
         else
             ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     @SuppressWarnings("null")

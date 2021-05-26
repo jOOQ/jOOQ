@@ -48,8 +48,9 @@ import org.jooq.Field;
  * @author Lukas Eder
  */
 final class IsDocument extends AbstractCondition {
-    private final Field<?>    field;
-    private final boolean     isDocument;
+
+    private final Field<?> field;
+    private final boolean  isDocument;
 
     IsDocument(Field<?> field, boolean isDocument) {
         this.field = field;
@@ -58,6 +59,16 @@ final class IsDocument extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(field).sql(' ').visit(isDocument ? K_IS_DOCUMENT : K_IS_NOT_DOCUMENT);
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(field).sql(' ').visit(isDocument ? K_IS_DOCUMENT : K_IS_NOT_DOCUMENT);
+                break;
+        }
     }
 }

@@ -66,6 +66,15 @@ final class ArraySelect<T> extends AbstractField<T[]> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
             case H2: {
                 Table<?> t = select.asTable("t", "c");
                 Field<?> c = t.field("c");

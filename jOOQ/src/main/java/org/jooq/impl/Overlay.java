@@ -123,42 +123,55 @@ extends
 
 
 
+
+
+
+
         if (l != null) {
-            if (SUPPORT_INSERT.contains(ctx.dialect())) {
+            if (SUPPORT_INSERT.contains(ctx.dialect()))
                 ctx.visit(function(N_INSERT, getDataType(), in, startIndex, l, placing));
-            }
-            else if (NO_SUPPORT.contains(ctx.dialect())) {
+            else if (NO_SUPPORT.contains(ctx.dialect()))
                 ctx.visit(
                     DSL.substring(in, inline(1), isub(startIndex, inline(1)))
                        .concat(placing)
                        .concat(DSL.substring(in, iadd(startIndex, l)))
                 );
-            }
-            else {
+            else
                 ctx.visit(N_OVERLAY).sql('(').visit(in).sql(' ')
                    .visit(K_PLACING).sql(' ').visit(placing).sql(' ')
                    .visit(K_FROM).sql(' ').visit(startIndex).sql(' ')
                    .visit(K_FOR).sql(' ').visit(l).sql(')');
-            }
         }
         else {
-            if (SUPPORT_INSERT.contains(ctx.dialect())) {
+            if (SUPPORT_INSERT.contains(ctx.dialect()))
                 ctx.visit(function(N_INSERT, getDataType(), in, startIndex, DSL.length(placing), placing));
-            }
-            else if (NO_SUPPORT.contains(ctx.dialect())) {
+            else if (NO_SUPPORT.contains(ctx.dialect()))
                 ctx.visit(
                     DSL.substring(in, inline(1), isub(startIndex, inline(1)))
                        .concat(placing)
                        .concat(DSL.substring(in, iadd(startIndex, DSL.length(placing))))
                 );
-            }
-            else {
+            else
                 ctx.visit(N_OVERLAY).sql('(').visit(in).sql(' ')
                    .visit(K_PLACING).sql(' ').visit(placing).sql(' ')
                    .visit(K_FROM).sql(' ').visit(startIndex).sql(')');
-            }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

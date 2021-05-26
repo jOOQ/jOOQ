@@ -111,6 +111,11 @@ extends
 
         switch (ctx.family()) {
 
+
+
+
+
+
             // [#430] These databases use SQL standard syntax
 
             case FIREBIRD: {
@@ -165,6 +170,20 @@ extends
         else
             ctx.visit(function(functionName, getDataType(), string, startingPosition, length));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -157,8 +157,6 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
 
 
-
-
         if (ctx.declareAliases() && (ctx.declareFields() || ctx.declareTables())) {
             ctx.declareAliases(false);
 

@@ -6942,6 +6942,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#11912] When X and IS_X create conflicts, we need to resolve
         //          them by specifying an explicit setter name
+
         if (column instanceof ColumnDefinition) {
             String member = getStrategy().getJavaMemberName(column, mode);
 
@@ -6953,6 +6954,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("@set:JvmName(\"%s\")", getStrategy().getJavaSetterName(column, mode));
             }
         }
+
     }
 
     private String nullableAnnotation(JavaWriter out) {

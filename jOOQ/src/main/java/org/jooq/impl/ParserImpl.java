@@ -9136,15 +9136,30 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldDateTruncIf() {
-        if (parseFunctionNameIf("DATE_TRUNC")) {
+        if (parseFunctionNameIf("DATE_TRUNC", "DATETIME_TRUNC")) {
             parse('(');
-            parse('\'');
-            DatePart part = parseDatePart();
-            parse('\'');
-            parse(',');
-            Field<?> field = parseField(D);
-            parse(')');
 
+            Field<?> field;
+            DatePart part;
+
+            switch (parseFamily()) {
+
+
+
+
+
+
+
+                default:
+                    parse('\'');
+                    part = parseDatePart();
+                    parse('\'');
+                    parse(',');
+                    field = parseField(D);
+                    break;
+            }
+
+            parse(')');
             return trunc(field, part);
         }
 

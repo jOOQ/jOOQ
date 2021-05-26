@@ -127,6 +127,7 @@ final class Names {
     static final Name N_DATEADD                = unquotedName("dateadd");
     static final Name N_DATEDIFF               = unquotedName("datediff");
     static final Name N_DATEPART               = unquotedName("datepart");
+    static final Name N_DATETIME_TRUNC         = unquotedName("datetime_trunc");
     static final Name N_DATE_ADD               = unquotedName("date_add");
     static final Name N_DATE_DIFF              = unquotedName("date_diff");
     static final Name N_DATE_TRUNC             = unquotedName("date_trunc");

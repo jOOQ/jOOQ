@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.SEQUENCE;
 import static org.jooq.Clause.SEQUENCE_REFERENCE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -49,6 +48,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.Keywords.K_CURRENT_VALUE_FOR;
 import static org.jooq.impl.Keywords.K_CURRVAL;
 import static org.jooq.impl.Keywords.K_NEXTVAL;
@@ -58,8 +58,6 @@ import static org.jooq.impl.Names.N_CURRVAL;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_GEN_ID;
 import static org.jooq.impl.Names.N_NEXTVAL;
-
-import java.util.stream.Stream;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;

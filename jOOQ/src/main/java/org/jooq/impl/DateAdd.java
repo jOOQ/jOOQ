@@ -54,9 +54,6 @@ import org.jooq.conf.*;
 import org.jooq.impl.*;
 import org.jooq.tools.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 

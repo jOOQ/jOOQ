@@ -2348,6 +2348,7 @@ public class JavaGenerator extends AbstractGenerator {
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
                 printValidationAnnotation(out, column);
+                printKotlinSetterAnnotation(out, column, Mode.RECORD);
 
                 out.println("%s%svar %s: %s?", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type);
                 out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
@@ -2938,6 +2939,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         printValidationAnnotation(out, column);
         printNullableOrNonnullAnnotation(out, column);
+        if (kotlin)
+            printKotlinSetterAnnotation(out, column, Mode.INTERFACE);
 
         if (scala)
             out.println("%sdef %s: %s", visibilityPublic(), scalaWhitespaceSuffix(getter), type);
@@ -4500,6 +4503,7 @@ public class JavaGenerator extends AbstractGenerator {
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
                 printValidationAnnotation(out, column);
+                printKotlinSetterAnnotation(out, column, Mode.POJO);
 
                 out.println("%s%s%s %s: %s? = null%s",
                     visibility(generateInterfaces()),
@@ -7247,6 +7251,23 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (length > 0)
                     out.println("@%s%s(max = %s)", prefix, out.ref("javax.validation.constraints.Size"), length);
+            }
+        }
+    }
+
+    protected void printKotlinSetterAnnotation(JavaWriter out, TypedElementDefinition<?> column, Mode mode) {
+
+        // [#11912] When X and IS_X create conflicts, we need to resolve
+        //          them by specifying an explicit setter name
+        if (column instanceof ColumnDefinition) {
+            String member = getStrategy().getJavaMemberName(column, mode);
+
+            if (member.startsWith("is") && ((ColumnDefinition) column)
+                    .getContainer()
+                    .getColumns()
+                    .stream()
+                    .anyMatch(c -> member.equals("is" + StringUtils.toUC(getStrategy().getJavaMemberName(c, mode))))) {
+                out.println("@set:JvmName(\"%s\")", getStrategy().getJavaSetterName(column, mode));
             }
         }
     }

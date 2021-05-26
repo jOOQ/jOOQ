@@ -673,6 +673,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
 
 
+
+
+
         int before = bindValues.size();
         internal.accept(this);
         int after = bindValues.size();

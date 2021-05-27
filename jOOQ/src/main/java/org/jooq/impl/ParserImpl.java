@@ -10946,19 +10946,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Table<?> parseTableName() {
-        return lookupTable(parseName());
+        return lookupTable(position(), parseName());
     }
 
     private final Table<?> parseTableNameIf() {
+        int positionBeforeName = position();
         Name name = parseNameIf();
 
         if (name == null)
             return null;
 
-        return lookupTable(name);
+        return lookupTable(positionBeforeName, name);
     }
 
     private final Field<?> parseFieldNameOrSequenceExpression() {
+        int positionBeforeName = position();
         Name name = parseName();
 
         if (name.qualified()) {
@@ -11008,11 +11010,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-        return lookupField(name);
+        return lookupField(positionBeforeName, name);
     }
 
     private final TableField<?, ?> parseFieldName() {
-        return (TableField<?, ?>) lookupField(parseName());
+        return (TableField<?, ?>) lookupField(position, parseName());
     }
 
     private final Sequence<?> parseSequenceName() {
@@ -11076,7 +11078,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final QualifiedAsterisk parseQualifiedAsteriskIf() {
-        int p = position();
+        int positionBeforeName = position();
         Name i1 = parseIdentifierIf();
 
         if (i1 == null)
@@ -11097,13 +11099,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
                 else {
                     parse('*');
-                    return lookupTable(result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
+                    return lookupTable(positionBeforeName, result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
                 }
             }
             while (parseIf('.'));
         }
 
-        position(p);
+        position(positionBeforeName);
         return null;
     }
 
@@ -13634,7 +13636,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
     }
 
-    private final Table<?> lookupTable(Name name) {
+    private final Table<?> lookupTable(int positionBeforeName, Name name) {
         if (meta != null) {
             List<Table<?>> tables;
 
@@ -13652,19 +13654,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return tables.get(0);
         }
 
-        if (metaLookups() == THROW_ON_FAILURE)
+        if (metaLookups() == THROW_ON_FAILURE) {
+            position(positionBeforeName);
             throw exception("Unknown table identifier");
+        }
 
         return table(name);
     }
 
-    private final Field<?> lookupField(Name name) {
+    private final Field<?> lookupField(int positionBeforeName, Name name) {
         if (metaLookups() == ParseWithMetaLookups.OFF || lookupFields.scopeLevel() < 0)
             return field(name);
 
         FieldProxy<?> field = lookupFields.get(name);
         if (field == null)
-            lookupFields.set(name, field = new FieldProxy<>((AbstractField<Object>) field(name), position));
+            lookupFields.set(name, field = new FieldProxy<>((AbstractField<Object>) field(name), positionBeforeName));
 
         return field;
     }

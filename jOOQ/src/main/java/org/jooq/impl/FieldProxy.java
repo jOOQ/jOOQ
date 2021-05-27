@@ -64,7 +64,7 @@ final class FieldProxy<T> extends AbstractField<T> implements TableField<Record,
      * The position in the parsed SQL string where this field proxy was
      * encountered.
      */
-    private int              position;
+    private final int        position;
 
     /**
      * The scope owner that produced this field proxy.

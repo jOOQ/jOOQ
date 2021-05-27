@@ -449,6 +449,22 @@ public interface Context<C extends Context<C>> extends Scope {
     C sqlIndentEnd(String sql);
 
     /**
+     * Append some SQL to the context's contained {@link StringBuilder},
+     * followed by the usual calls to {@link #formatIndentStart()} and
+     * {@link #formatNewLine()}.
+     */
+    @NotNull
+    C sqlIndentStart();
+
+    /**
+     * Append some SQL to the context's contained {@link StringBuilder} preceded
+     * by the usual calls to {@link #formatIndentEnd()} and
+     * {@link #formatNewLine()}.
+     */
+    @NotNull
+    C sqlIndentEnd();
+
+    /**
      * Append some SQL to the context's contained {@link StringBuilder}.
      */
     @NotNull

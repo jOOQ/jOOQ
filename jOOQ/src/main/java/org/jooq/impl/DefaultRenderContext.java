@@ -411,12 +411,22 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext sqlIndentStart(String c) {
-        return sql(c).formatIndentStart().formatNewLine();
+        return sql(c).sqlIndentStart();
     }
 
     @Override
     public final RenderContext sqlIndentEnd(String c) {
-        return formatIndentEnd().formatNewLine().sql(c);
+        return sqlIndentEnd().sql(c);
+    }
+
+    @Override
+    public final RenderContext sqlIndentStart() {
+        return formatIndentStart().formatNewLine();
+    }
+
+    @Override
+    public final RenderContext sqlIndentEnd() {
+        return formatIndentEnd().formatNewLine();
     }
 
     @Override
@@ -433,12 +443,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext sqlIndentStart(char c) {
-        return sql(c).formatIndentStart().formatNewLine();
+        return sql(c).sqlIndentStart();
     }
 
     @Override
     public final RenderContext sqlIndentEnd(char c) {
-        return formatIndentEnd().formatNewLine().sql(c);
+        return sqlIndentEnd().sql(c);
     }
 
     @Override

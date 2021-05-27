@@ -127,6 +127,16 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     }
 
     @Override
+    public final BindContext sqlIndentStart() {
+        return this;
+    }
+
+    @Override
+    public final BindContext sqlIndentEnd() {
+        return this;
+    }
+
+    @Override
     public final BindContext sql(char sql) {
         return this;
     }

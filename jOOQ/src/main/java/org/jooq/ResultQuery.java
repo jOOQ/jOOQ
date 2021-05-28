@@ -51,7 +51,6 @@ import java.util.Set;
 import java.util.Spliterator;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
-// ...
 import java.util.function.Consumer;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
@@ -94,7 +93,9 @@ import org.jetbrains.annotations.Nullable;
  * above), fetch the entire JDBC {@link ResultSet} eagerly into memory, which
  * allows for closing the underlying JDBC resources as quickly as possible. Such
  * operations are not resourceful, i.e. users do not need to worry about closing
- * any resources.
+ * any resources. None of the many ways of fetching data will affect the SQL
+ * query projection (<code>SELECT</code> clause). Hence, users must make sure
+ * not to fetch any unnecessary columns, themselves.
  * <p>
  * There are, however, some ways of fetching results lazily, and thus in a
  * resourceful way. These include:
@@ -414,7 +415,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * result.
      * <p>
      * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(Field)}
+     * {@link Result#getValues(Field)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * If the argument {@link Field} is the same as the one you've provided to
      * {@link DSLContext#select(SelectField)}, then you could also just call
@@ -429,6 +432,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field from the generated
      * result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Field, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -450,6 +458,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field from the generated
      * result.
      * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Field, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
+     * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
      * the collector is governed by
@@ -466,6 +479,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field index from the
      * generated result.
      * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(int)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
+     * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
      * the collector is governed by
@@ -480,6 +498,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field index from the
      * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(int, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -501,6 +524,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field index from the
      * generated result.
      * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(int, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
+     * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
      * the collector is governed by
@@ -517,6 +545,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(String)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
+     * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
      * the collector is governed by
@@ -531,6 +564,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field name from the
      * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(String, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -552,6 +590,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(String, Converter)}. As such, the query
+     * projection (<code>SELECT</code> clause) is not affected. Make sure not to
+     * fetch any unnecessary data.
+     * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
      * the collector is governed by
@@ -568,6 +611,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Name)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
+     * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
      * the collector is governed by
@@ -582,6 +630,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
     /**
      * Execute the query and return all values for a field name from the
      * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Name, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -603,6 +656,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Name, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
+     * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to
      * the collector is governed by
@@ -620,7 +678,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Field)}
+     * {@link Record#get(Field)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -635,7 +695,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Field, Class)}
+     * {@link Record#get(Field, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -654,7 +716,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Field, Converter)}
+     * {@link Record#get(Field, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -669,7 +733,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(int)}
+     * {@link Record#get(int)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -684,7 +750,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(int, Class)}
+     * {@link Record#get(int, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -703,7 +771,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(int, Converter)}
+     * {@link Record#get(int, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -718,7 +788,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(String)}
+     * {@link Record#get(String)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -733,7 +805,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(String, Class)}
+     * {@link Record#get(String, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -752,7 +826,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(String, Converter)}
+     * {@link Record#get(String, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -767,7 +843,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Name)}
+     * {@link Record#get(Name)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -782,7 +860,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Name, Class)}
+     * {@link Record#get(Name, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -801,7 +881,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Name, Converter)}
+     * {@link Record#get(Name, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -924,7 +1006,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(Field)}
+     * {@link Record#get(Field)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
      *         which never produce <code>null</code> records, this can be null
@@ -941,7 +1025,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(Field, Class)}
+     * {@link Record#get(Field, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -962,7 +1048,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(Field, Converter)}
+     * {@link Record#get(Field, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
      *         which never produce <code>null</code> records, this can be null
@@ -979,7 +1067,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(int)}
+     * {@link Record#get(int)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
      *         which never produce <code>null</code> records, this can be null
@@ -996,7 +1086,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(int, Class)}
+     * {@link Record#get(int, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1017,7 +1109,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(int, Converter)}
+     * {@link Record#get(int, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
      *         which never produce <code>null</code> records, this can be null
@@ -1034,7 +1128,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(String)}
+     * {@link Record#get(String)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
      *         which never produce <code>null</code> records, this can be null
@@ -1051,7 +1147,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(String, Class)}
+     * {@link Record#get(String, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1072,7 +1170,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(String, Converter)}
+     * {@link Record#get(String, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
      *         which never produce <code>null</code> records, this can be null
@@ -1089,7 +1189,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(Name)}
+     * {@link Record#get(Name)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
      *         which never produce <code>null</code> records, this can be null
@@ -1106,7 +1208,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(Name, Class)}
+     * {@link Record#get(Name, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1127,7 +1231,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
-     * {@link Record#get(Name, Converter)}
+     * {@link Record#get(Name, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
      *         which never produce <code>null</code> records, this can be null
@@ -1252,7 +1358,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(Field)}
+     * {@link Record#get(Field)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -1266,7 +1374,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(Field, Class)}
+     * {@link Record#get(Field, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1284,7 +1394,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(Field, Converter)}
+     * {@link Record#get(Field, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -1298,7 +1410,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(int)}
+     * {@link Record#get(int)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -1312,7 +1426,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(int, Class)}
+     * {@link Record#get(int, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1330,7 +1446,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(int, Converter)}
+     * {@link Record#get(int, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -1344,7 +1462,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(String)}
+     * {@link Record#get(String)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -1358,7 +1478,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(String, Class)}
+     * {@link Record#get(String, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1376,7 +1498,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(String, Converter)}
+     * {@link Record#get(String, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -1390,7 +1514,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(Name)}
+     * {@link Record#get(Name)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -1404,7 +1530,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(Name, Class)}
+     * {@link Record#get(Name, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1422,7 +1550,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#get(Name, Converter)}
+     * {@link Record#get(Name, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -1526,8 +1656,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Field)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(Field)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1540,8 +1672,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a field from
      * the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Field, Class)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(Field, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1558,8 +1692,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Field, Converter)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(Field, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1572,8 +1708,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field index from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(int)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(int)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1586,8 +1724,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a field
      * index from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(int, Class)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(int, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1604,8 +1744,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field index from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(int, Converter)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(int, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1618,8 +1760,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(String)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(String)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1632,8 +1776,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(String, Class)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(String, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1650,8 +1796,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(String, Converter)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(String, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1664,8 +1812,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Name)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(Name)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1678,8 +1828,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Name, Class)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(Name, Class)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      * <p>
      * The {@link Converter} that is provided by
      * {@link Configuration#converterProvider()} will be used to convert the
@@ -1696,8 +1848,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
      * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
-     * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#get(Name, Converter)}
+     * This is the same as calling {@link #fetchAny()} and then
+     * {@link Record#get(Name, Converter)}. As such, the query projection
+     * (<code>SELECT</code> clause) is not affected. Make sure not to fetch any
+     * unnecessary data.
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -4221,7 +4375,6 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publi
 
     /**
      * Execute the query and return the generated result as an array of records.
-     * <p>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query

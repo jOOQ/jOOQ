@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.stream.Collectors.joining;
 // ...
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.sql;
@@ -153,12 +154,6 @@ final class Val<T> extends AbstractParam<T> {
 
     @Override
     public void accept(Context<?> ctx) {
-
-
-
-
-
-
         if (getDataType().isEmbeddable()) {
             ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(embeddedFields(this))));
         }
@@ -166,7 +161,14 @@ final class Val<T> extends AbstractParam<T> {
             ParamType paramType = ctx.paramType();
 
             if (isInline(ctx))
-                ctx.paramType(ParamType.INLINED);
+                ctx.paramType(INLINED);
+
+
+
+
+
+
+
 
             try {
                 getBinding().sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), (RenderContext) ctx, value, getBindVariable(ctx)));

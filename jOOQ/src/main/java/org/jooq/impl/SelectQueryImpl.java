@@ -1510,12 +1510,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void accept(Context<?> ctx) {
-
-
-
-
-
-
         Table<?> dmlTable;
 
         // [#6583] Work around MySQL's self-reference-in-DML-subquery restriction
@@ -1689,6 +1683,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     final void accept0(Context<?> context) {
+
+
+
+
+
+
+
         boolean topLevelCte = false;
 
         // Subquery scopes are started in AbstractContext

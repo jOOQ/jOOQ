@@ -78,6 +78,7 @@ import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.anyMatch;
@@ -107,6 +108,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
@@ -1741,22 +1743,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         parseKeywordIf("FROM");
-        Table<?> table = parseTableNameIf();
-        if (table == null)
-            table = table(parseSelect());
-
-        Name alias;
-        if (parseKeywordIf("AS"))
-            table = table.as(parseIdentifier());
-        else if (!peekKeyword("USING", "WHERE", "ORDER BY", "LIMIT", "RETURNING")
-            && !peekKeyword(KEYWORDS_IN_STATEMENTS)
-            && (alias = parseIdentifierIf()) != null)
-            table = table.as(alias);
+        Table<?> table = parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM));
 
         scope(table);
 
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
-        DeleteWhereStep<?> s2 = parseKeywordIf("USING") ? s1.using(parseList(',', ParseContext::parseTable)) : s1;
+        DeleteWhereStep<?> s2 = parseKeywordIf("USING") ? s1.using(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)))) : s1;
         DeleteOrderByStep<?> s3 = parseKeywordIf("WHERE") ? s2.where(parseCondition()) : s2;
         DeleteLimitStep<?> s4 = parseKeywordIf("ORDER BY") ? s3.orderBy(parseList(',', ParseContext::parseSortField)) : s3;
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf("LIMIT"))
@@ -1936,19 +1928,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // percent = parseKeywordIf("PERCENT") && requireProEdition();
         }
 
-        Table<?> table = parseTableNameIf();
-        if (table == null)
-            table = table(parseSelect());
-
-        if (parseKeywordIf("AS"))
-            table = table.as(parseIdentifier());
-        else if (!peekKeyword("SET", "FROM"))
-            table = table.as(parseIdentifierIf());
+        Table<?> table = parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM));
 
         scope(table);
 
         UpdateSetFirstStep<?> s1 = (with == null ? dsl.update(table) : with.update(table));
-        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', ParseContext::parseTable) : null;
+        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))) : null;
 
         parseKeyword("SET");
         UpdateFromStep<?> s2;
@@ -1973,7 +1958,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         UpdateWhereStep<?> s3 = from != null
             ? s2.from(from)
             : parseKeywordIf("FROM")
-            ? s2.from(parseList(',', ParseContext::parseTable))
+            ? s2.from(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))))
             : s2;
         UpdateOrderByStep<?> s4 = parseKeywordIf("WHERE") ? s3.where(parseCondition()) : s3;
         UpdateLimitStep<?> s5 = parseKeywordIf("ORDER BY") ? s4.orderBy(parseList(',', ParseContext::parseSortField)) : s4;
@@ -6043,10 +6028,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Table<?> parseTable() {
-        Table<?> result = parseLateral();
+        return parseTable(() -> peekKeyword(KEYWORDS_IN_SELECT_FROM));
+    }
+
+    private final Table<?> parseTable(BooleanSupplier forbiddenKeywords) {
+        Table<?> result = parseLateral(forbiddenKeywords);
 
         for (;;) {
-            Table<?> joined = parseJoinedTableIf(result);
+            Table<?> joined = parseJoinedTableIf(result, forbiddenKeywords);
+
             if (joined == null)
                 return result;
             else
@@ -6054,11 +6044,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
     }
 
-    private final Table<?> parseLateral() {
+    private final Table<?> parseLateral(BooleanSupplier forbiddenKeywords) {
         if (parseKeywordIf("LATERAL"))
-            return lateral(parseTableFactor());
+            return lateral(parseTableFactor(forbiddenKeywords));
         else
-            return parseTableFactor();
+            return parseTableFactor(forbiddenKeywords);
     }
 
     private final <R extends Record> Table<R> t(TableLike<R> table) {
@@ -6074,7 +6064,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
           : table.asTable();
     }
 
-    private final Table<?> parseTableFactor() {
+    private final Table<?> parseTableFactor(BooleanSupplier forbiddenKeywords) {
 
         // [#7982] Postpone turning Select into a Table in case there is an alias
         TableLike<?> result = null;
@@ -6193,7 +6183,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 parse(')');
             }
             else {
-                result = parseJoinedTable();
+                result = parseJoinedTable(forbiddenKeywords);
                 parse(')');
             }
         }
@@ -6328,7 +6318,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         // TODO UNPIVOT
-        result = parseCorrelationNameIf(result, () -> peekKeyword(KEYWORDS_IN_FROM) || peekKeyword(KEYWORDS_IN_STATEMENTS));
+        result = parseCorrelationNameIf(result, forbiddenKeywords);
 
         int p = position();
         if (parseKeywordIf("WITH")) {
@@ -6505,11 +6495,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private final Table<?> parseJoinedTable() {
-        Table<?> result = parseLateral();
+    private final Table<?> parseJoinedTable(BooleanSupplier forbiddenKeywords) {
+        Table<?> result = parseLateral(forbiddenKeywords);
 
         for (;;) {
-            Table<?> joined = parseJoinedTableIf(result);
+            Table<?> joined = parseJoinedTableIf(result, forbiddenKeywords);
 
             if (joined == null)
                 return result;
@@ -6518,13 +6508,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
     }
 
-    private final Table<?> parseJoinedTableIf(Table<?> left) {
+    private final Table<?> parseJoinedTableIf(Table<?> left, BooleanSupplier forbiddenKeywords) {
         JoinType joinType = parseJoinTypeIf();
 
         if (joinType == null)
             return null;
 
-        Table<?> right = joinType.qualified() ? parseTable() : parseLateral();
+        Table<?> right = joinType.qualified() ? parseTable(forbiddenKeywords) : parseLateral(forbiddenKeywords);
 
         TableOptionalOnStep<?> s0;
         TablePartitionByStep<?> s1;
@@ -13046,7 +13036,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "WITH",
     };
 
-    private static final String[] KEYWORDS_IN_SELECT     = {
+    private static final String[] KEYWORDS_IN_SELECT = {
         "CONNECT BY",
         "EXCEPT",
         "FETCH FIRST",
@@ -13077,34 +13067,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "WINDOW",
     };
 
-    private static final String[] KEYWORDS_IN_FROM       = {
-        "CONNECT BY",
-        "CREATE",
+    private static final String[] KEYWORDS_IN_FROM = {
         "CROSS APPLY",
         "CROSS JOIN",
-        "EXCEPT",
-        "FETCH FIRST",
-        "FETCH NEXT",
-        "FOR JSON",
-        "FOR KEY SHARE",
-        "FOR NO KEY UPDATE",
-        "FOR SHARE",
-        "FOR UPDATE",
-        "FOR XML",
         "FULL JOIN",
         "FULL OUTER JOIN",
-        "GROUP BY",
-        "HAVING",
         "INNER JOIN",
-        "INTERSECT",
-        "INTO",
         "JOIN",
         "LEFT ANTI JOIN",
         "LEFT JOIN",
         "LEFT OUTER JOIN",
         "LEFT SEMI JOIN",
-        "LIMIT",
-        "MINUS",
         "NATURAL FULL JOIN",
         "NATURAL FULL OUTER JOIN",
         "NATURAL INNER JOIN",
@@ -13113,24 +13086,70 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "NATURAL LEFT OUTER JOIN",
         "NATURAL RIGHT JOIN",
         "NATURAL RIGHT OUTER JOIN",
-        "OFFSET",
         "ON",
-        "ORDER BY",
         "OUTER APPLY",
         "PARTITION BY",
-        "QUALIFY",
-        "RETURNING",
         "RIGHT ANTI JOIN",
         "RIGHT JOIN",
         "RIGHT OUTER JOIN",
         "RIGHT SEMI JOIN",
-        "ROWS",
-        "START WITH",
         "STRAIGHT_JOIN",
-        "UNION",
-        "USING",
-        "WHERE",
-        "WINDOW",
+        "USING"
+    };
+
+    private static final String[] KEYWORDS_IN_SELECT_FROM;
+
+    static {
+        Set<String> set = new TreeSet<>(asList(KEYWORDS_IN_FROM));
+        set.addAll(asList(KEYWORDS_IN_STATEMENTS));
+
+        set.addAll(asList(
+            "CONNECT BY",
+            "CREATE",
+            "EXCEPT",
+            "FETCH FIRST",
+            "FETCH NEXT",
+            "FOR JSON",
+            "FOR KEY SHARE",
+            "FOR NO KEY UPDATE",
+            "FOR SHARE",
+            "FOR UPDATE",
+            "FOR XML",
+            "GROUP BY",
+            "HAVING",
+            "INTERSECT",
+            "INTO",
+            "LIMIT",
+            "MINUS",
+            "OFFSET",
+            "ORDER BY",
+            "QUALIFY",
+            "RETURNING",
+            "ROWS",
+            "START WITH",
+            "UNION",
+            "WHERE",
+            "WINDOW"
+        ));
+
+        KEYWORDS_IN_SELECT_FROM = set.toArray(EMPTY_STRING);
+    };
+
+    private static final String[] KEYWORDS_IN_UPDATE_FROM;
+
+    static {
+        Set<String> set = new TreeSet<>(asList(KEYWORDS_IN_FROM));
+        set.addAll(asList("FROM", "SET"));
+        KEYWORDS_IN_UPDATE_FROM = set.toArray(EMPTY_STRING);
+    };
+
+    private static final String[] KEYWORDS_IN_DELETE_FROM;
+
+    static {
+        Set<String> set = new TreeSet<>(asList(KEYWORDS_IN_FROM));
+        set.addAll(asList("FROM", "USING", "WHERE", "ORDER BY", "LIMIT", "RETURNING"));
+        set.addAll(asList(KEYWORDS_IN_STATEMENTS));
+        KEYWORDS_IN_DELETE_FROM = set.toArray(EMPTY_STRING);
     };
 
     private static final String[] PIVOT_KEYWORDS      = {

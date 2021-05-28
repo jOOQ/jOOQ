@@ -82,6 +82,7 @@ import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Tools.traverseJoins;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -116,6 +117,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT = SQLDialect.supportedBy(IGNITE);
+    private static final Set<SQLDialect> SUPPORT_MULTITABLE_DELETE = SQLDialect.supportedBy(MARIADB, MYSQL);
 
 
 
@@ -230,7 +232,14 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
                    .sql(' ');
         }
 
-        ctx.visit(K_FROM).sql(' ').declareTables(true, c -> c.visit(table(c)));
+        Table<?> t = table(ctx);
+
+        // [#11924] Multiple tables listed in the FROM clause mean this is a
+        //          MySQL style multi table DELETE
+        if (SUPPORT_MULTITABLE_DELETE.contains(ctx.dialect()) && t instanceof JoinTable)
+            ctx.visit(traverseJoins(t, new TableList(), x -> false, (r, x) -> { r.add(x); return r; })).formatSeparator();
+
+        ctx.visit(K_FROM).sql(' ').declareTables(true, c -> c.visit(t));
 
         if (!using.isEmpty())
             ctx.formatSeparator()

@@ -198,7 +198,7 @@ implements
         this.using = new QueryPartList<>();
     }
 
-    JoinTable transform(Table<?> newLhs, Table<?> newRhs) {
+    final JoinTable transform(Table<?> newLhs, Table<?> newRhs) {
         if (lhs == newLhs && rhs == newRhs)
             return this;
 

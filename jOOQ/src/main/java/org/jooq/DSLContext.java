@@ -8576,6 +8576,27 @@ public interface DSLContext extends Scope {
      * </pre></code>
      * <p>
      * Some but not all databases support aliased tables in delete statements.
+     * <p>
+     * Note that some databases support table expressions more complex than
+     * simple table references. In MySQL, for instance, you can write this to
+     * form a multi table <code>DELETE</code> statement:
+     * <p>
+     * <code><pre>
+     * create.delete(t1.join(t2).on(t1.id.eq(t2.id)))
+     *       .where(t1.id.eq(10))
+     *       .execute();
+     * </pre></code>
+     * <p>
+     * For single table delete statements that depend on multiple tables, use
+     * the {@link DeleteUsingStep#using(TableLike)} clause, instead:
+     * <p>
+     * <code><pre>
+     * create.delete(t1)
+     *       .using(t2)
+     *       .where(t1.id.eq(t2.id))
+     *       .and(t1.id.eq(10))
+     *       .execute();
+     * </pre></code>
      */
     @NotNull @CheckReturnValue
     @Support

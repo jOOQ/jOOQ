@@ -740,6 +740,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     void scopeMarkEnd0(@SuppressWarnings("unused") QueryPart part) {}
     void scopeEnd0() {}
 
+    String applyNameCase(String literal) {
+        return literal;
+    }
+
     @Override
     public final boolean stringLiteral() {
         return stringLiteral > 0;

@@ -1748,7 +1748,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         scope(table);
 
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
-        DeleteWhereStep<?> s2 = parseKeywordIf("USING") ? s1.using(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)))) : s1;
+        DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)))) : s1;
         DeleteOrderByStep<?> s3 = parseKeywordIf("WHERE") ? s2.where(parseCondition()) : s2;
         DeleteLimitStep<?> s4 = parseKeywordIf("ORDER BY") ? s3.orderBy(parseList(',', ParseContext::parseSortField)) : s3;
         DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf("LIMIT"))

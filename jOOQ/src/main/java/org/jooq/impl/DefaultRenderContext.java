@@ -642,12 +642,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             // [#1982] [#3360] ... yet, do quote when an identifier contains special characters
             (family == SQLITE && !IDENTIFIER_PATTERN.matcher(literal).matches());
 
-        if (RenderNameCase.LOWER == cachedRenderNameCase ||
-            RenderNameCase.LOWER_IF_UNQUOTED == cachedRenderNameCase && !quote())
-            literal = literal.toLowerCase(renderLocale(configuration().settings()));
-        else if (RenderNameCase.UPPER == cachedRenderNameCase ||
-                 RenderNameCase.UPPER_IF_UNQUOTED == cachedRenderNameCase && !quote())
-            literal = literal.toUpperCase(renderLocale(configuration().settings()));
+        literal = applyNameCase(literal);
+
+
+
+
+
+
 
         if (needsQuote) {
             char[][][] quotes = QUOTES.get(family);
@@ -667,11 +668,22 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
             sql(end);
         }
-        else {
+        else
             sql(literal, true);
-        }
 
         return this;
+    }
+
+    @Override
+    final String applyNameCase(String literal) {
+        if (RenderNameCase.LOWER == cachedRenderNameCase ||
+            RenderNameCase.LOWER_IF_UNQUOTED == cachedRenderNameCase && !quote())
+            return literal.toLowerCase(renderLocale(configuration().settings()));
+        else if (RenderNameCase.UPPER == cachedRenderNameCase ||
+                 RenderNameCase.UPPER_IF_UNQUOTED == cachedRenderNameCase && !quote())
+            return literal.toUpperCase(renderLocale(configuration().settings()));
+        else
+            return literal;
     }
 
     @Override

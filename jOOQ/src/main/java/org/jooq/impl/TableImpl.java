@@ -277,6 +277,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
 
 
 
+
+
         if ((getType().isView() || getType().isFunction()) && isSynthetic() && ctx.declareTables()) {
             Select<?> s = getOptions().select();
 

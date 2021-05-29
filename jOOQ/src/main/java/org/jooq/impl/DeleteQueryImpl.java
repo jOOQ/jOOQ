@@ -109,15 +109,18 @@ import org.jooq.conf.ParamType;
  */
 final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R> {
 
-    private static final Clause[]        CLAUSES                   = { DELETE };
-    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX  = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Clause[]        CLAUSES                         = { DELETE };
+    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX        = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
     // LIMIT is supported but not ORDER BY
-    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT = SQLDialect.supportedBy(IGNITE);
-    private static final Set<SQLDialect> SUPPORT_MULTITABLE_DELETE = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT       = SQLDialect.supportedBy(IGNITE);
+    private static final Set<SQLDialect> SUPPORT_MULTITABLE_DELETE       = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRE_REPEAT_FROM_IN_USING    = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_REPEAT_FROM_IN_USING = SQLDialect.supportedBy(POSTGRES);
+
 
 
 
@@ -239,13 +242,36 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
         if (SUPPORT_MULTITABLE_DELETE.contains(ctx.dialect()) && t instanceof JoinTable)
             ctx.visit(traverseJoins(t, new TableList(), x -> false, (r, x) -> { r.add(x); return r; })).formatSeparator();
 
+
+
+
+
+
+
+
+
         ctx.visit(K_FROM).sql(' ').declareTables(true, c -> c.visit(t));
 
-        if (!using.isEmpty())
+        // [#11925] In MySQL, the tables in FROM must be repeated in USING
+        if (!using.isEmpty()) {
+            TableList u;
+
+            if (REQUIRE_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && !using.contains(t)) {
+                u = new TableList(t);
+                u.addAll(using);
+            }
+            else if (NO_SUPPORT_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && using.contains(t)) {
+                u = new TableList(using);
+                u.remove(t);
+            }
+            else
+                u = using;
+
             ctx.formatSeparator()
                .visit(K_USING)
                .sql(' ')
-               .declareTables(true, c -> c.visit(using));
+               .declareTables(true, c -> c.visit(u));
+        }
 
         ctx.end(DELETE_DELETE);
 

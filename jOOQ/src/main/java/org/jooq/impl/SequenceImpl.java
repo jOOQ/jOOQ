@@ -326,11 +326,13 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
 
 
 
+
+
         Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), schema);
 
         if (mappedSchema != null && !"".equals(mappedSchema.getName()) && ctx.family() != CUBRID)
-                ctx.visit(mappedSchema)
-                   .sql('.');
+            ctx.visit(mappedSchema)
+               .sql('.');
 
         if (nameIsPlainSQL)
             ctx.sql(getName());

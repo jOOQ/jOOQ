@@ -2142,6 +2142,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Query parseUse() {
         parseKeyword("USE");
+        parseKeywordIf("DATABASE");
         return dsl.setCatalog(parseCatalogName());
     }
 
@@ -2627,7 +2628,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Truncate<?> parseTruncate() {
         parseKeyword("TRUNCATE");
-        parseKeyword("TABLE");
+        parseKeywordIf("TABLE");
         Table<?> table = parseTableName();
         boolean continueIdentity = parseKeywordIf("CONTINUE IDENTITY");
         boolean restartIdentity = !continueIdentity && parseKeywordIf("RESTART IDENTITY");

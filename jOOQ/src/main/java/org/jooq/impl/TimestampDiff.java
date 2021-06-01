@@ -45,6 +45,7 @@ import static org.jooq.impl.Names.N_DAYS;
 import static org.jooq.impl.Names.N_NANO100_BETWEEN;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
+import static org.jooq.impl.Names.N_TIMESTAMP_DIFF;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND;
 import static org.jooq.impl.Tools.castIfNeeded;
@@ -73,6 +74,10 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 

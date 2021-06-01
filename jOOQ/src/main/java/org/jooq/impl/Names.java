@@ -353,6 +353,7 @@ final class Names {
     static final Name N_TAU                    = unquotedName("tau");
     static final Name N_TIMESTAMPADD           = unquotedName("timestampadd");
     static final Name N_TIMESTAMPDIFF          = unquotedName("timestampdiff");
+    static final Name N_TIMESTAMP_DIFF         = unquotedName("timestamp_diff");
     static final Name N_TO_CHAR                = unquotedName("to_char");
     static final Name N_TO_CLOB                = unquotedName("to_clob");
     static final Name N_TO_DATE                = unquotedName("to_date");

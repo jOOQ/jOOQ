@@ -50,23 +50,26 @@ import org.jooq.impl.DSL;
  */
 public final class DiffCLI {
 
-    public static final void main(String... args) throws Exception {
-        CLIUtil.main("https://www.jooq.org/doc/latest/manual/sql-building/schema-diff-cli/", () -> {
-            Args a;
-            Settings settings = new Settings();
-            DSLContext ctx;
+    public static final void main(final String... args) throws Exception {
+        CLIUtil.main("https://www.jooq.org/doc/latest/manual/sql-building/schema-diff-cli/", new Runnable() {
+            @Override
+            public void run() {
+                Args a;
+                Settings settings = new Settings();
+                DSLContext ctx;
 
-            a = parse(args);
-            settings(a, settings);
-            ctx = ctx(a, settings);
+                a = parse(args);
+                settings(a, settings);
+                ctx = ctx(a, settings);
 
-            if (a.done) {}
-            else if (a.toDialect == null || a.sql1 == null || a.sql2 == null) {
-                System.out.println("Mandatory arguments: -T and -1, -2. Use -h for help");
-                throw new RuntimeException();
+                if (a.done) {}
+                else if (a.toDialect == null || a.sql1 == null || a.sql2 == null) {
+                    System.out.println("Mandatory arguments: -T and -1, -2. Use -h for help");
+                    throw new RuntimeException();
+                }
+                else
+                    render(ctx, a);
             }
-            else
-                render(ctx, a);
         });
     }
 

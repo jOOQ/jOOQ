@@ -61,26 +61,29 @@ public final class ParserCLI {
 
     private static final Pattern FLAG = Pattern.compile("^/([\\w\\-]+)(?:\\s+(\\w+))?\\s*$");
 
-    public static final void main(String... args) throws Exception {
-        CLIUtil.main("https://www.jooq.org/doc/latest/manual/sql-building/sql-parser/sql-parser-cli/", () -> {
-            Args a;
-            Settings settings = new Settings();
-            DSLContext ctx;
+    public static final void main(final String... args) throws Exception {
+        CLIUtil.main("https://www.jooq.org/doc/latest/manual/sql-building/sql-parser/sql-parser-cli/", new Runnable() {
+            @Override
+            public void run() {
+                Args a;
+                Settings settings = new Settings();
+                DSLContext ctx;
 
-            a = parse(args);
-            settings(a, settings);
-            ctx = ctx(a, settings);
+                a = parse(args);
+                settings(a, settings);
+                ctx = ctx(a, settings);
 
-            if (a.interactive || args == null || args.length == 0) {
-                interactiveMode(ctx, a);
+                if (a.interactive || args == null || args.length == 0) {
+                    interactiveMode(ctx, a);
+                }
+                else if (a.done) {}
+                else if (a.toDialect == null || a.sql == null) {
+                    System.out.println("Mandatory arguments: -T and -s. Use -h for help");
+                    throw new RuntimeException();
+                }
+                else
+                    render(ctx, a);
             }
-            else if (a.done) {}
-            else if (a.toDialect == null || a.sql == null) {
-                System.out.println("Mandatory arguments: -T and -s. Use -h for help");
-                throw new RuntimeException();
-            }
-            else
-                render(ctx, a);
         });
     }
 

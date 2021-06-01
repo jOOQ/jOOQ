@@ -338,7 +338,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      */
     @Deprecated
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -361,7 +361,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      */
     @Deprecated
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 

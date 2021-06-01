@@ -48,7 +48,7 @@ public final class Constants {
     /**
      * The latest jOOQ minor version.
      */
-    public static final String MINOR_VERSION  = "3.13";
+    public static final String MINOR_VERSION  = "3.15";
 
     /**
      * The latest jOOQ version.

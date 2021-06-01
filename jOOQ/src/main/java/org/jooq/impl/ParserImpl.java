@@ -6075,16 +6075,31 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
         // TODO [#5306] Support FINAL TABLE (<data change statement>)
-        // TOOD ONLY ( table primary )
+        // TODIO ONLY ( table primary )
         if (parseFunctionNameIf("UNNEST", "TABLE")) {
             parse('(');
-            Field<?> f = parseField(Type.A);
 
-            // Work around a missing feature in unnest()
-            if (!f.getType().isArray())
-                f = f.coerce(f.getDataType().getArrayDataType());
+            if (parseFunctionNameIf("GENERATOR")) {
+                parse('(');
+                Field<?> tl = parseFunctionArgumentIf("TIMELIMIT");
+                Field<?> rc = parseFunctionArgumentIf("ROWCOUNT");
 
-            result = unnest(f);
+                if (tl == null)
+                    tl = parseFunctionArgumentIf("TIMELIMIT");
+
+                parse(')');
+                result = generateSeries(one(), (Field<Integer>) rc);
+            }
+            else {
+                Field<?> f = parseField(Type.A);
+
+                // Work around a missing feature in unnest()
+                if (!f.getType().isArray())
+                    f = f.coerce(f.getDataType().getArrayDataType());
+
+                result = unnest(f);
+            }
+
             parse(')');
         }
         else if (parseFunctionNameIf("GENERATE_SERIES", "SYSTEM_RANGE")) {
@@ -6337,6 +6352,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return t(result);
+    }
+
+    private final Field<?> parseFunctionArgumentIf(String parameterName) {
+        if (parseKeywordIf(parameterName) && parse("=>"))
+            return parseField();
+        else
+            return null;
     }
 
     private final TableLike<?> parseCorrelationNameIf(TableLike<?> result, BooleanSupplier forbiddenKeywords) {

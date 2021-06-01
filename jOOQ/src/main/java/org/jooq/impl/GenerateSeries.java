@@ -43,15 +43,19 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 // ...
 import static org.jooq.impl.DSL.one;
+// ...
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.withRecursive;
 import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.idiv;
 import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Internal.isub;
+import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Names.N_GENERATE_ARRAY;
-import static org.jooq.impl.Names.N_GENERATE_SERIES;
+import static org.jooq.impl.Names.*;
 import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.Names.N_UNNEST;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -76,6 +80,8 @@ import org.jooq.conf.ParamType;
 final class GenerateSeries extends AbstractTable<Record1<Integer>> implements AutoAliasTable<Record1<Integer>> {
     private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
+
+
 
 
 
@@ -165,6 +171,16 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
 
 
 
+
+
+
+
+
+
+
+
+
+
         else {
             if (step == null)
                 ctx.visit(N_GENERATE_SERIES).sql('(').visit(from).sql(", ").visit(to).sql(')');
@@ -195,6 +211,8 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
             return as(name);
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect()))
             return as(name, name);
+
+
 
 
 

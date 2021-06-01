@@ -165,6 +165,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
+
             case FIREBIRD:
             case H2:
             case HSQLDB:

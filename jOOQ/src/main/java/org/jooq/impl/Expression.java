@@ -115,6 +115,10 @@ import static org.jooq.impl.Names.N_SQL_TSI_MONTH;
 import static org.jooq.impl.Names.N_SQL_TSI_SECOND;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPADD;
+import static org.jooq.impl.Names.N_TIMESTAMP_ADD;
+import static org.jooq.impl.Names.N_TIMESTAMP_SUB;
+import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
@@ -720,6 +724,23 @@ final class Expression<T> extends AbstractTransformable<T> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case H2:
                 case HSQLDB:
                 case POSTGRES:
@@ -735,6 +756,15 @@ final class Expression<T> extends AbstractTransformable<T> {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         private final void acceptNumberExpression(Context<?> ctx) {
             switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
 
 
 

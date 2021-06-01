@@ -7652,6 +7652,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (N.is(type))
                     if (parseFunctionNameIf("SECOND"))
                         return second(parseFieldParenthesised(D));
+                    else if (parseFunctionNameIf("SEQ4", "SEQ8") && parse('(') && parse(')') && requireProEdition()) {
+
+
+
+                    }
                     else if (parseFunctionNameIf("SIGN", "SGN"))
                         return sign((Field) parseFieldParenthesised(N));
                     else if (parseFunctionNameIf("SQRT", "SQR"))

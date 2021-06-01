@@ -40,6 +40,7 @@ package org.jooq;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -123,20 +124,14 @@ public final class ParserCLI {
             settings.setTransformRownum(a.transformRownum);
     }
 
-    private static final <E extends Enum<E>> E parseInteractive(Class<E> type, E current, String arg, Runnable onSuccess) {
-        E result = current;
-
+    private static final <E extends Enum<E>> void parseInteractive(Class<E> type, String arg, Consumer<? super E> onSuccess) {
         try {
             if (arg != null)
-                result = Enum.valueOf(type, arg.toUpperCase());
-
-            onSuccess.run();
+                onSuccess.accept(Enum.valueOf(type, arg.toUpperCase()));
         }
         catch (IllegalArgumentException e) {
             invalid(arg, type);
         }
-
-        return result;
     }
 
     private static final void interactiveMode(DSLContext ctx, Args a) {
@@ -177,13 +172,13 @@ public final class ParserCLI {
                                 displayFormatted(a);
                             }
                             else if ("k".equals(flag) || "keyword".equals(flag))
-                                a.keywords = parseInteractive(RenderKeywordCase.class, a.keywords, arg, () -> displayKeywords(a));
+                                parseInteractive(RenderKeywordCase.class, arg, e -> { a.keywords = e; displayKeywords(a); });
                             else if ("i".equals(flag) || "identifier".equals(flag))
-                                a.name = parseInteractive(RenderNameCase.class, a.name, arg, () -> displayIdentifiers(a));
+                                parseInteractive(RenderNameCase.class, arg, e -> { a.name = e; displayIdentifiers(a); });
                             else if ("Q".equals(flag) || "quoted".equals(flag))
-                                a.quoted = parseInteractive(RenderQuotedNames.class, a.quoted, arg, () -> displayQuoted(a));
+                                parseInteractive(RenderQuotedNames.class, arg, e -> { a.quoted = e; displayQuoted(a); });
                             else if ("F".equals(flag) || "from-dialect".equals(flag))
-                                a.fromDialect = parseInteractive(SQLDialect.class, a.fromDialect, arg, () -> displayFromDialect(a));
+                                parseInteractive(SQLDialect.class, arg, e -> { a.fromDialect = e; displayFromDialect(a); });
                             else if ("render-coalesce-to-empty-string-in-concat".equals(flag)) {
                                 if (arg != null)
                                     a.renderCoalesceToEmptyStringInConcat = Boolean.parseBoolean(arg.toLowerCase());
@@ -191,13 +186,13 @@ public final class ParserCLI {
                                 displayRenderCoalesceToEmptyStringInConcat(a);
                             }
                             else if ("render-optional-inner-keyword".equals(flag))
-                                a.renderOptionalInnerKeyword = parseInteractive(RenderOptionalKeyword.class, a.renderOptionalInnerKeyword, arg, () -> displayRenderOptionalInnerKeyword(a));
+                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalInnerKeyword = e; displayRenderOptionalInnerKeyword(a); });
                             else if ("render-optional-outer-keyword".equals(flag))
-                                a.renderOptionalOuterKeyword = parseInteractive(RenderOptionalKeyword.class, a.renderOptionalOuterKeyword, arg, () -> displayRenderOptionalOuterKeyword(a));
+                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalOuterKeyword = e; displayRenderOptionalOuterKeyword(a); });
                             else if ("render-optional-as-keyword-for-field-aliases".equals(flag))
-                                a.renderOptionalAsKeywordForFieldAliases = parseInteractive(RenderOptionalKeyword.class, a.renderOptionalAsKeywordForFieldAliases, arg, () -> displayRenderOptionalAsKeywordForFieldAliases(a));
+                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalAsKeywordForFieldAliases = e; displayRenderOptionalAsKeywordForFieldAliases(a); });
                             else if ("render-optional-as-keyword-for-table-aliases".equals(flag))
-                                a.renderOptionalAsKeywordForTableAliases = parseInteractive(RenderOptionalKeyword.class, a.renderOptionalAsKeywordForTableAliases, arg, () -> displayRenderOptionalAsKeywordForTableAliases(a));
+                                parseInteractive(RenderOptionalKeyword.class, arg, e -> { a.renderOptionalAsKeywordForTableAliases = e; displayRenderOptionalAsKeywordForTableAliases(a); });
                             else if ("transform-ansi-join-to-table-lists".equals(flag)) {
                                 if (arg != null)
                                     a.transformAnsiJoinToTableLists = Boolean.parseBoolean(arg.toLowerCase());
@@ -205,9 +200,9 @@ public final class ParserCLI {
                                 displayTransformAnsiJoinToTablesLists(a);
                             }
                             else if ("transform-qualify".equals(flag))
-                                a.transformQualify = parseInteractive(Transformation.class, a.transformQualify, arg, () -> displayTransformQualify(a));
+                                parseInteractive(Transformation.class, arg, e -> { a.transformQualify = e; displayTransformQualify(a); });
                             else if ("transform-rownum".equals(flag))
-                                a.transformRownum = parseInteractive(Transformation.class, a.transformRownum, arg, () -> displayTransformRownum(a));
+                                parseInteractive(Transformation.class, arg, e -> { a.transformRownum = e; displayTransformRownum(a); });
                             else if ("transform-table-lists-to-ansi-join".equals(flag)) {
                                 if (arg != null)
                                     a.transformTableListsToAnsiJoin = Boolean.parseBoolean(arg.toLowerCase());
@@ -215,11 +210,11 @@ public final class ParserCLI {
                                 displayTransformTableListsToAnsiJoin(a);
                             }
                             else if ("transform-unneeded-arithmetic".equals(flag))
-                                a.transformUnneededArithmetic = parseInteractive(TransformUnneededArithmeticExpressions.class, a.transformUnneededArithmetic, arg, () -> displayTransformUnneededArithmetic(a));
+                                parseInteractive(TransformUnneededArithmeticExpressions.class, arg, e -> { a.transformUnneededArithmetic = e; displayTransformUnneededArithmetic(a); });
 
                             // [#9144] /t maintained for backwards compatibility
                             else if ("t".equals(flag) || "T".equals(flag) || "to-dialect".equals(flag))
-                                a.toDialect = parseInteractive(SQLDialect.class, a.toDialect, arg, () -> displayToDialect(a));
+                                parseInteractive(SQLDialect.class, arg, e -> { a.toDialect = e; displayToDialect(a); });
                         }
                     }
                     else {

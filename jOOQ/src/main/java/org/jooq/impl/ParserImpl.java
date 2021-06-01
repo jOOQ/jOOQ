@@ -13139,7 +13139,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     static {
         Set<String> set = new TreeSet<>(asList(KEYWORDS_IN_FROM));
-        set.addAll(asList("FROM", "SET"));
+        set.addAll(asList("FROM", "SET", "WHERE", "ORDER BY", "LIMIT", "RETURNING"));
         KEYWORDS_IN_UPDATE_FROM = set.toArray(EMPTY_STRING);
     };
 

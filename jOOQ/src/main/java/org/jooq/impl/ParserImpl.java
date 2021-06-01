@@ -8019,7 +8019,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return bitNot((Field) x);
         }
-        else if (parseKeywordIf("BIN_SHL")) {
+        else if (parseKeywordIf("BIN_SHL", "BITSHIFTLEFT")) {
             parse('(');
             Field<?> x = toField(parseNumericOp(N));
             parse(',');
@@ -8028,7 +8028,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return shl((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIN_SHR")) {
+        else if (parseKeywordIf("BIN_SHR", "BITSHIFTRIGHT")) {
             parse('(');
             Field<?> x = toField(parseNumericOp(N));
             parse(',');
@@ -9141,9 +9141,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 default:
-                    parse('\'');
                     part = parseDatePart();
-                    parse('\'');
                     parse(',');
                     field = parseField(D);
                     break;
@@ -9266,6 +9264,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final DatePart parseDatePartIf() {
+        int p = position();
+        boolean string = parseIf('\'');
+
+        DatePart result = parseDatePartIf0();
+
+        if (result == null)
+            position(p);
+        else if (string)
+            parse('\'');
+
+        return result;
+    }
+
+    private final DatePart parseDatePartIf0() {
         char character = characterUpper();
 
         switch (character) {

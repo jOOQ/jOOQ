@@ -117,6 +117,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+
+
     final Collection<? extends Statement> statements;
     final boolean                         alwaysWrapInBeginEnd;
 
@@ -339,6 +341,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
         if (wrapInBeginEnd) {
             boolean topLevel = ctx.scopeLevel() == -1;
+
 
 
 

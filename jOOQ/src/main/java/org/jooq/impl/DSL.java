@@ -20400,6 +20400,66 @@ public class DSL {
     }
 
     /**
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example,
+     * <code>TIMESTAMPDIFF(YEAR, '2000-03-01 00:00:00', '2002-01-01 00:00:00') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> timestampDiff(DatePart part, Timestamp startDate, Timestamp endDate) {
+        return timestampDiff(part, Tools.field(startDate), Tools.field(endDate));
+    }
+
+    /**
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example,
+     * <code>TIMESTAMPDIFF(YEAR, '2000-03-01 00:00:00', '2002-01-01 00:00:00') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> timestampDiff(DatePart part, Field<Timestamp> startDate, Timestamp endDate) {
+        return timestampDiff(part, Tools.nullSafe(startDate), Tools.field(endDate));
+    }
+
+    /**
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example,
+     * <code>TIMESTAMPDIFF(YEAR, '2000-03-01 00:00:00', '2002-01-01 00:00:00') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> timestampDiff(DatePart part, Timestamp startDate, Field<Timestamp> endDate) {
+        return timestampDiff(part, Tools.field(startDate), Tools.nullSafe(endDate));
+    }
+
+    /**
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example,
+     * <code>TIMESTAMPDIFF(YEAR, '2000-03-01 00:00:00', '2002-01-01 00:00:00') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> timestampDiff(DatePart part, Field<Timestamp> startDate, Field<Timestamp> endDate) {
+        return new DateDiff<>(part, Tools.nullSafe(startDate), Tools.nullSafe(endDate));
+    }
+
+    /**
      * Get the date difference between <code>endDate - startDate</code> in
      * number of days.
      *
@@ -20697,6 +20757,66 @@ public class DSL {
     @Support
     public static Field<DayToSecond> localDateTimeDiff(Field<LocalDateTime> timestamp1, Field<LocalDateTime> timestamp2) {
         return new TimestampDiff(Tools.nullSafe(timestamp1), Tools.nullSafe(timestamp2));
+    }
+
+    /**
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example,
+     * <code>TIMESTAMPDIFF(YEAR, '2000-03-01 00:00:00', '2002-01-01 00:00:00') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> localDateTimeDiff(DatePart part, LocalDateTime startDate, LocalDateTime endDate) {
+        return localDateTimeDiff(part, Tools.field(startDate), Tools.field(endDate));
+    }
+
+    /**
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example,
+     * <code>TIMESTAMPDIFF(YEAR, '2000-03-01 00:00:00', '2002-01-01 00:00:00') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> localDateTimeDiff(DatePart part, Field<LocalDateTime> startDate, LocalDateTime endDate) {
+        return localDateTimeDiff(part, Tools.nullSafe(startDate), Tools.field(endDate));
+    }
+
+    /**
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example,
+     * <code>TIMESTAMPDIFF(YEAR, '2000-03-01 00:00:00', '2002-01-01 00:00:00') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> localDateTimeDiff(DatePart part, LocalDateTime startDate, Field<LocalDateTime> endDate) {
+        return localDateTimeDiff(part, Tools.field(startDate), Tools.nullSafe(endDate));
+    }
+
+    /**
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example,
+     * <code>TIMESTAMPDIFF(YEAR, '2000-03-01 00:00:00', '2002-01-01 00:00:00') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Integer> localDateTimeDiff(DatePart part, Field<LocalDateTime> startDate, Field<LocalDateTime> endDate) {
+        return new DateDiff<>(part, Tools.nullSafe(startDate), Tools.nullSafe(endDate));
     }
 
     /**

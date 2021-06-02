@@ -52,6 +52,7 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -176,7 +177,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE    = SQLDialect.supportedBy(POSTGRES);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT          = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT = SQLDialect.supportedBy(IGNITE);

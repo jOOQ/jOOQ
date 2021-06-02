@@ -50,6 +50,7 @@ import static org.jooq.Clause.DELETE_WHERE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -113,7 +114,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX        = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT       = SQLDialect.supportedBy(IGNITE);

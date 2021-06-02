@@ -72,6 +72,7 @@ import static org.jooq.Operator.OR;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 // ...
@@ -1748,10 +1749,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             switch (dialect) {
-
-
-
-
 
 
 

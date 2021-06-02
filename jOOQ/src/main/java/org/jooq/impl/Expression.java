@@ -98,11 +98,16 @@ import static org.jooq.impl.Keywords.K_YEAR_TO_MONTH;
 import static org.jooq.impl.Names.N_ADD_DAYS;
 import static org.jooq.impl.Names.N_ADD_MONTHS;
 import static org.jooq.impl.Names.N_ADD_SECONDS;
+import static org.jooq.impl.Names.N_BIN_AND;
+import static org.jooq.impl.Names.N_BIN_OR;
 import static org.jooq.impl.Names.N_BIN_SHL;
 import static org.jooq.impl.Names.N_BIN_SHR;
+import static org.jooq.impl.Names.N_BIN_XOR;
 import static org.jooq.impl.Names.N_BITAND;
+import static org.jooq.impl.Names.N_BITOR;
 import static org.jooq.impl.Names.N_BITSHIFTLEFT;
 import static org.jooq.impl.Names.N_BITSHIFTRIGHT;
+import static org.jooq.impl.Names.N_BITXOR;
 import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
 import static org.jooq.impl.Names.N_LSHIFT;
@@ -181,15 +186,15 @@ final class Expression<T> extends AbstractTransformable<T> {
         if (BIT_AND == operator && SUPPORT_BIT_AND.contains(ctx.dialect()))
             ctx.visit(function(N_BITAND, getDataType(), lhs, rhs));
         else if (BIT_AND == operator && FIREBIRD == family)
-            ctx.visit(function("bin_and", getDataType(), lhs, rhs));
+            ctx.visit(function(N_BIN_AND, getDataType(), lhs, rhs));
         else if (BIT_XOR == operator && SUPPORT_BIT_OR_XOR.contains(ctx.dialect()))
-            ctx.visit(function("bitxor", getDataType(), lhs, rhs));
+            ctx.visit(function(N_BITXOR, getDataType(), lhs, rhs));
         else if (BIT_XOR == operator && FIREBIRD == family)
-            ctx.visit(function(Names.N_BIT_COUNT, getDataType(), lhs, rhs));
+            ctx.visit(function(N_BIN_XOR, getDataType(), lhs, rhs));
         else if (BIT_OR == operator && SUPPORT_BIT_OR_XOR.contains(ctx.dialect()))
-            ctx.visit(function("bitor", getDataType(), lhs, rhs));
+            ctx.visit(function(N_BITOR, getDataType(), lhs, rhs));
         else if (BIT_OR == operator && FIREBIRD == family)
-            ctx.visit(function("bin_or", getDataType(), lhs, rhs));
+            ctx.visit(function(N_BIN_OR, getDataType(), lhs, rhs));
 
 
 

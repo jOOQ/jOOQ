@@ -489,6 +489,8 @@ final class CreateTableImpl extends AbstractDDLQuery implements
 
 
 
+
+
             ctx.visit(comment);
         }
 

@@ -789,6 +789,7 @@ final class Expression<T> extends AbstractTransformable<T> {
 
 
 
+
                 case FIREBIRD: {
                     if (operator == ADD)
                         ctx.visit(N_DATEADD).sql('(').visit(K_DAY).sql(", ").visit(rhsAsNumber()).sql(", ").visit(lhs).sql(')');

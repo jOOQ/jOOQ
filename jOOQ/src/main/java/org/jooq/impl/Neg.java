@@ -46,7 +46,14 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
+// ...
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.ExpressionOperator.BIT_NOT;
+import static org.jooq.impl.Internal.isub;
+import static org.jooq.impl.Names.N_BIN_NOT;
+import static org.jooq.impl.Names.N_BITNOT;
 
 import java.util.Set;
 
@@ -111,17 +118,11 @@ final class Neg<T> extends AbstractTransformable<T> {
 
 
         if (operator == BIT_NOT && EMULATE_BIT_NOT.contains(ctx.dialect()))
-            ctx.sql("(0 - ")
-               .visit(field)
-               .sql(" - 1)");
+            ctx.visit(isub(isub(zero(), field), one()));
         else if (operator == BIT_NOT && SUPPORT_BIT_NOT.contains(ctx.dialect()))
-            ctx.sql("bitnot(")
-               .visit(field)
-               .sql(')');
+            ctx.visit(function(N_BITNOT, getDataType(), field));
         else if (operator == BIT_NOT && family == FIREBIRD)
-            ctx.sql("bin_not(")
-               .visit(field)
-               .sql(')');
+            ctx.visit(function(N_BIN_NOT, getDataType(), field));
         else
             ctx.sql(operator.toSQL())
                .sql('(')

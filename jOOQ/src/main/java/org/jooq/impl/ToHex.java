@@ -92,7 +92,6 @@ extends
 
 
 
-
             case MARIADB:
             case MYSQL:
                 ctx.visit(function(N_HEX, getDataType(), value));

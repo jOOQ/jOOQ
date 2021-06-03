@@ -254,8 +254,7 @@ extends
     private final <N extends Number> Condition bitCheck(Field<N> field, N mask) {
 
         // [#11956] TODO: Potentially refactor this to use GETBIT()
-        Condition c = DSL.bitAnd(field, inline(mask)).eq(inline(mask));
-        return filter != null ? filter.and(c) : c;
+        return f(DSL.bitAnd(field, inline(mask)).eq(inline(mask)));
     }
 
     @Override

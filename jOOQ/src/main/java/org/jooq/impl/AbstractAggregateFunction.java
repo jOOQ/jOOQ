@@ -360,6 +360,10 @@ implements
         return this;
     }
 
+    final Condition f(Condition c) {
+        return filter != null ? filter.and(c) : c;
+    }
+
     @SuppressWarnings("unchecked")
     final <U> Field<U> fon(AggregateFunction<U> function) {
         return DSL.nullif(fo(function), (Field<U>) zero());

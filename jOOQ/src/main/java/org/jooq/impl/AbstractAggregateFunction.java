@@ -370,16 +370,22 @@ implements
      * clauses to an argument aggregate function.
      */
     final <U> Field<U> fo(AggregateFunction<U> function) {
-        WindowBeforeOverStep<U> s1 = filter != null ? function.filterWhere(filter) : function;
+        return o(filter != null ? function.filterWhere(filter) : function);
+    }
 
+    /**
+     * Apply this aggregate function's <code>FILTER</code> and <code>OVER</code>
+     * clauses to an argument aggregate function.
+     */
+    final <U> Field<U> o(WindowBeforeOverStep<U> function) {
         if (windowSpecification != null)
-            return s1.over(windowSpecification);
+            return function.over(windowSpecification);
         else if (windowDefinition != null)
-            return s1.over(windowDefinition);
+            return function.over(windowDefinition);
         else if (windowName != null)
-            return s1.over(windowName);
+            return function.over(windowName);
         else
-            return s1;
+            return function;
     }
 
     /**

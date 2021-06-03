@@ -89,8 +89,14 @@ final class Names {
     static final Name N_BITSHIFTLEFT           = unquotedName("bitshiftleft");
     static final Name N_BITSHIFTRIGHT          = unquotedName("bitshiftright");
     static final Name N_BITXOR                 = unquotedName("bitxor");
+    static final Name N_BIT_AND                = unquotedName("bit_and");
+    static final Name N_BIT_AND_AGG            = unquotedName("bit_and_agg");
     static final Name N_BIT_COUNT              = unquotedName("bit_count");
     static final Name N_BIT_LENGTH             = unquotedName("bit_length");
+    static final Name N_BIT_OR                 = unquotedName("bit_or");
+    static final Name N_BIT_OR_AGG             = unquotedName("bit_or_agg");
+    static final Name N_BIT_XOR                = unquotedName("bit_xor");
+    static final Name N_BIT_XOR_AGG            = unquotedName("bit_xor_agg");
     static final Name N_BOOLAND_AGG            = unquotedName("booland_agg");
     static final Name N_BOOLOR_AGG             = unquotedName("boolor_agg");
     static final Name N_BOOL_AND               = unquotedName("bool_and");

@@ -19453,6 +19453,39 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>BIT_AND_AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>AND</code> aggregate value.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static <T extends Number> AggregateFunction<T> bitAndAgg(Field<T> value) {
+        return new BitAndAgg(value);
+    }
+
+    /**
+     * The <code>BIT_OR_AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>OR</code> aggregate value.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static <T extends Number> AggregateFunction<T> bitOrAgg(Field<T> value) {
+        return new BitOrAgg(value);
+    }
+
+    /**
+     * The <code>BIT_XOR_AGG</code> function.
+     * <p>
+     * Calculate the bitwise <code>XOR</code> aggregate value.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static <T extends Number> AggregateFunction<T> bitXorAgg(Field<T> value) {
+        return new BitXorAgg(value);
+    }
+
+    /**
      * The <code>CORR</code> function.
      * <p>
      * Calculate the correlation coefficient. This standard SQL function may be supported

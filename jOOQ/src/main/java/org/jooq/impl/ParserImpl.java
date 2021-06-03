@@ -7980,15 +7980,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         char c1 = character(p + 1);
         char c2 = character(p + 2);
+        boolean agg = false;
 
         if (c1 != 'I' && c1 != 'i')
             return null;
         if (c2 != 'T' && c2 != 't' && c2 != 'N' && c2 != 'n')
             return null;
 
-        if (parseKeywordIf("BIT_AND") || parseKeywordIf("BITAND") || parseKeywordIf("BIN_AND")) {
+        if (parseKeywordIf("BIT_AND") ||
+            parseKeywordIf("BITAND") ||
+            parseKeywordIf("BIN_AND") ||
+            (agg = parseKeywordIf("BIT_AND_AGG")) ||
+            (agg = parseKeywordIf("BITAND_AGG")) ||
+            (agg = parseKeywordIf("BIN_AND_AGG"))) {
             parse('(');
             Field<?> x = toField(parseNumericOp(N));
+
+            if (agg && parse(')') || parseIf(')'))
+                return parseAggregateFunctionIf(false, bitAndAgg((Field) x));
+
             parse(',');
             Field<?> y = toField(parseNumericOp(N));
             parse(')');
@@ -8004,9 +8014,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return bitNand((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIT_OR") || parseKeywordIf("BITOR") || parseKeywordIf("BIN_OR")) {
+        else if (parseKeywordIf("BIT_OR") ||
+            parseKeywordIf("BITOR") ||
+            parseKeywordIf("BIN_OR") ||
+            (agg = parseKeywordIf("BIT_OR_AGG")) ||
+            (agg = parseKeywordIf("BITOR_AGG")) ||
+            (agg = parseKeywordIf("BIN_OR_AGG"))) {
             parse('(');
             Field<?> x = toField(parseNumericOp(N));
+
+            if (agg && parse(')') || parseIf(')'))
+                return parseAggregateFunctionIf(false, bitOrAgg((Field) x));
+
             parse(',');
             Field<?> y = toField(parseNumericOp(N));
             parse(')');
@@ -8022,9 +8041,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return bitNor((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIT_XOR") || parseKeywordIf("BITXOR") || parseKeywordIf("BIN_XOR")) {
+        else if (parseKeywordIf("BIT_XOR") ||
+            parseKeywordIf("BITXOR") ||
+            parseKeywordIf("BIN_XOR") ||
+            (agg = parseKeywordIf("BIT_XOR_AGG")) ||
+            (agg = parseKeywordIf("BITXOR_AGG")) ||
+            (agg = parseKeywordIf("BIN_XOR_AGG"))) {
             parse('(');
             Field<?> x = toField(parseNumericOp(N));
+
+            if (agg && parse(')') || parseIf(')'))
+                return parseAggregateFunctionIf(false, bitXorAgg((Field) x));
+
             parse(',');
             Field<?> y = toField(parseNumericOp(N));
             parse(')');
@@ -10281,6 +10309,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseAggregateFunctionIf(boolean basic) {
+        return parseAggregateFunctionIf(basic, null);
+    }
+
+    private final Field<?> parseAggregateFunctionIf(boolean basic, AggregateFunction<?> f) {
         AggregateFunction<?> agg = null;
         AggregateFilterStep<?> filter = null;
         WindowBeforeOverStep<?> over = null;
@@ -10288,7 +10320,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Field<?> result = null;
         Condition condition = null;
 
-        keep = over = filter = agg = parseCountIf();
+        keep = over = filter = agg = f != null ? f : parseCountIf();
         if (filter == null) {
             Field<?> field = parseGeneralSetFunctionIf();
 

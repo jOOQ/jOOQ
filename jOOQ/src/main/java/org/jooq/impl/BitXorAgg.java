@@ -271,7 +271,7 @@ extends
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-                ctx.visit(N_BIT_AND);
+                ctx.visit(N_BIT_XOR);
                 break;
 
             default:

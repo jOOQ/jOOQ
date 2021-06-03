@@ -39,7 +39,6 @@ package org.jooq.util.postgres;
 
 import static java.lang.Integer.toOctalString;
 import static org.jooq.tools.StringUtils.leftPad;
-import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -202,36 +201,39 @@ public class PostgresUtils {
      * Convert a jOOQ <code>DAY TO SECOND</code> interval to a Postgres representation
      */
     public static Object toPGInterval(DayToSecond interval) {
-        return on("org.postgresql.util.PGInterval").create(0, 0,
+        return new PGInterval(0, 0,
             interval.getSign() * interval.getDays(),
             interval.getSign() * interval.getHours(),
             interval.getSign() * interval.getMinutes(),
             interval.getSign() * interval.getSeconds() +
-            interval.getSign() * interval.getNano() / 1000000000.0).get();
+            interval.getSign() * interval.getNano() / 1000000000.0
+        );
     }
 
     /**
      * Convert a jOOQ <code>YEAR TO SECOND</code> interval to a Postgres representation
      */
     public static Object toPGInterval(YearToSecond interval) {
-        return on("org.postgresql.util.PGInterval").create(
+        return new PGInterval(
             interval.getSign() * interval.getYears(),
             interval.getSign() * interval.getMonths(),
             interval.getSign() * interval.getDays(),
             interval.getSign() * interval.getHours(),
             interval.getSign() * interval.getMinutes(),
             interval.getSign() * interval.getSeconds() +
-            interval.getSign() * interval.getNano() / 1000000000.0).get();
+            interval.getSign() * interval.getNano() / 1000000000.0
+        );
     }
 
     /**
      * Convert a jOOQ <code>YEAR TO MONTH</code> interval to a Postgres representation
      */
     public static Object toPGInterval(YearToMonth interval) {
-        return on("org.postgresql.util.PGInterval").create(
+        return new PGInterval(
             interval.getSign() * interval.getYears(),
             interval.getSign() * interval.getMonths(),
-            0, 0, 0, 0.0).get();
+            0, 0, 0, 0.0
+        );
     }
 
     /**

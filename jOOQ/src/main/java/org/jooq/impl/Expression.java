@@ -166,6 +166,28 @@ final class Expression<T> extends AbstractTransformable<T> {
         this.rhs = rhs;
     }
 
+    @Override
+    DataType<?> getExpressionDataType() {
+
+        // [#11959] Workaround for lack of proper data type information for interval based expressions
+        AbstractField<?> l = (AbstractField<?>) lhs;
+        AbstractField<?> r = (AbstractField<?>) rhs;
+
+        DataType<?> lt = l.getExpressionDataType();
+        DataType<?> rt = r.getExpressionDataType();
+
+        switch (operator) {
+            case MULTIPLY:
+            case DIVIDE:
+                return rt.isInterval() ? rt : lt;
+
+            case ADD:
+                return lt.isInterval() ? rt : lt;
+        }
+
+        return lt;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     final void accept0(Context<?> ctx) {

@@ -200,7 +200,11 @@ extends
                     default: throw unsupported();
                 }
 
-                if (getDataType().isDate())
+                // [#10258] [#11954]
+                if (((AbstractField<?>) interval).getExpressionDataType().isInterval())
+                    ctx.sql('(').visit(date).sql(" + ").visit(interval).sql(')');
+
+                else if (getDataType().isDate())
 
                     // [#10258] Special case for DATE + INTEGER arithmetic
                     if (datePart == DatePart.DAY)

@@ -78,6 +78,14 @@ abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
         return getDataType().getType();
     }
 
+    /**
+     * [#11959] A workaround to get access to the actual data type of an
+     * expression.
+     */
+    /* non-final */ DataType<?> getExpressionDataType() {
+        return getDataType();
+    }
+
     @Override
     public final DataType<T> getDataType() {
         return type;

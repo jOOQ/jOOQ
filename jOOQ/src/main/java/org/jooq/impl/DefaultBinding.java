@@ -686,6 +686,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                     case H2:
                     case HSQLDB:
                     case POSTGRES:
@@ -696,6 +697,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#7242] Other vendor specific types also need a lot of casting
             if (dataType.isJSON()) {
                 switch (ctx.family()) {
+
 
 
                     case POSTGRES:
@@ -2232,8 +2234,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultDayToSecondBinding<U> extends AbstractBinding<DayToSecond, U> {
-        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL_SYNTAX = SQLDialect.supportedBy(POSTGRES);
-        private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL  = SQLDialect.supportedBy(H2);
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2);
 
         DefaultDayToSecondBinding(DataType<DayToSecond> dataType, Converter<DayToSecond, U> converter) {
             super(dataType, converter);
@@ -2241,32 +2243,25 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         void sqlInline0(BindingSQLContext<U> ctx, DayToSecond value) throws SQLException {
+
             // [#566] Interval data types are best bound as Strings
-            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect())) {
-                int sign = value.getSign();
-                int days = sign * value.getDays();
-                ctx.render().sql('\'')
-                    .sql(days >= 0 ? '+' : '-')
-                    .sql(Math.abs(days))
-                    .sql(' ')
-                    .sql(sign * value.getHours())
-                    .sql(':')
-                    .sql(sign * value.getMinutes())
-                    .sql(':')
-                    .sql(sign * value.getSeconds())
-                    .sql('.')
-                    .sql(StringUtils.leftPad(Integer.toString(value.getNano()), 9, '0'))
-                    .sql('\'');
-            }
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                ctx.render().visit(inline(toPGInterval(value).toString()));
             else
-                ctx.render().sql('\'').sql(value.toString()).sql('\'');
+                super.sqlInline0(ctx, value);
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, DayToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
-            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect()))
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+
+
+
+
+
+
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), renderDTS(ctx, value));
@@ -2279,7 +2274,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect())) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
@@ -2289,7 +2284,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect())) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
@@ -4610,10 +4605,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, YearToSecond value) throws SQLException {
+
+            // [#566] Interval data types are best bound as Strings
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                ctx.render().visit(inline(toPGInterval(value).toString()));
+            else
+                super.sqlInline0(ctx, value);
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, YearToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+
+
+
+
+
+
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -4669,10 +4680,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, YearToMonth value) throws SQLException {
+
+            // [#566] Interval data types are best bound as Strings
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                ctx.render().visit(inline(toPGInterval(value).toString()));
+            else
+                super.sqlInline0(ctx, value);
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, YearToMonth value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+
+
+
+
+
+
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), renderYTM(ctx, value));

@@ -113,7 +113,7 @@ final class BoolOr extends DefaultAggregateFunction<Boolean> {
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE.contains(ctx.dialect()))
-            ctx.visit(fo(DSL.max(DSL.when(condition, one()).otherwise(zero()))).eq(one()));
+            ctx.visit(DSL.field(fo(DSL.max(DSL.when(condition, one()).otherwise(zero()))).eq(one())));
         else
             super.accept(ctx);
     }

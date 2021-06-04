@@ -88,7 +88,7 @@ final class BoolAnd extends DefaultAggregateFunction<Boolean> {
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE.contains(ctx.dialect()))
-            ctx.visit(fo(DSL.min(DSL.when(condition, one()).otherwise(zero()))).eq(one()));
+            ctx.visit(DSL.field(fo(DSL.min(DSL.when(condition, one()).otherwise(zero()))).eq(one())));
         else
             super.accept(ctx);
     }

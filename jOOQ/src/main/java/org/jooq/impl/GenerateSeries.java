@@ -89,6 +89,8 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
 
 
 
+
+
     private final Field<Integer>         from;
     private final Field<Integer>         to;
     private final Field<Integer>         step;
@@ -211,6 +213,8 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> implements Au
             return as(name);
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect()))
             return as(name, name);
+
+
 
 
 

@@ -50,11 +50,13 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_DAY;
+import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_MILLISECOND;
 import static org.jooq.impl.Names.N_DATEDIFF;
 import static org.jooq.impl.Names.N_DATE_DIFF;
 import static org.jooq.impl.Names.N_DAYS;
 import static org.jooq.impl.Names.N_DAYS_BETWEEN;
+import static org.jooq.impl.Names.N_EXTRACT;
 import static org.jooq.impl.Names.N_SQL_TSI_DAY;
 import static org.jooq.impl.Names.N_SQL_TSI_FRAC_SECOND;
 import static org.jooq.impl.Names.N_SQL_TSI_HOUR;
@@ -254,6 +256,11 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
+
+
+                            case POSTGRES:
+                                ctx.visit(N_EXTRACT).sql('(').visit(K_DAY).sql(' ').visit(K_FROM).sql(' ').visit(endDate).sql(" - ").visit(startDate).sql(')');
+                                return;
 
                             default:
 

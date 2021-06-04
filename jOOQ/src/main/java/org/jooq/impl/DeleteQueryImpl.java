@@ -236,7 +236,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
         if (multiTableJoin)
 
             // No table declarations in this case, but references
-            ctx.visit(K_FROM).visit(traverseJoins(t, new TableList(), x -> false, (r, x) -> { r.add(x); return r; })).formatSeparator();
+            ctx.visit(K_FROM).sql(' ').visit(traverseJoins(t, new TableList(), x -> false, (r, x) -> { r.add(x); return r; })).formatSeparator();
 
 
 

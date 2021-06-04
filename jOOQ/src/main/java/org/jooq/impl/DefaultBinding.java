@@ -253,13 +253,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     private static final long            PG_DATE_POSITIVE_INFINITY = 9223372036825200000L;
     private static final long            PG_DATE_NEGATIVE_INFINITY = -9223372036832400000L;
 
-    final AbstractBinding<T, U>          delegate;
+    final Binding<T, U>                  delegate;
 
-    public final static <T, U> Binding<T, U> binding(Converter<T, U> converter) {
+    /**
+     * Get the internal default binding for a {@link Converter}.
+     */
+    public static final <T, U> Binding<T, U> binding(Converter<T, U> converter) {
         return binding(DefaultDataType.getDataType(DEFAULT, converter.fromType()), converter);
     }
 
-    static final <T> Binding<T, T> binding(DataType<T> dataType) {
+    /**
+     * Get the internal default binding for a {@link DataType}.
+     */
+    public static final <T> Binding<T, T> binding(DataType<T> dataType) {
         return binding(dataType, Converters.identity(dataType.getType()));
     }
 
@@ -427,7 +433,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      */
     @Deprecated
     public DefaultBinding(Converter<T, U> converter) {
-        this.delegate = (AbstractBinding<T, U>) binding(converter);
+        this.delegate = binding(converter);
+    }
+
+    public DefaultBinding(Binding<T, U> delegate) {
+        this.delegate = delegate;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -557,7 +567,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     @Override
     public Converter<T, U> converter() {
-        return delegate.converter;
+        return delegate.converter();
     }
 
     @Override
@@ -584,6 +594,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     public void get(BindingGetResultSetContext<U> ctx) throws SQLException {
         delegate.get(ctx);
     }
+
     @Override
     public void get(BindingGetStatementContext<U> ctx) throws SQLException {
         delegate.get(ctx);
@@ -600,7 +611,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     @Override
     public String toString() {
-        return "DefaultBinding [type=" + delegate.dataType + ", converter=" + delegate.converter + "]";
+        return delegate.toString();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

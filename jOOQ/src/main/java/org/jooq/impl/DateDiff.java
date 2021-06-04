@@ -259,7 +259,11 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
                             case POSTGRES:
-                                ctx.visit(N_EXTRACT).sql('(').visit(K_DAY).sql(' ').visit(K_FROM).sql(' ').visit(endDate).sql(" - ").visit(startDate).sql(')');
+                                if (endDate.getDataType().isDate() && startDate.getDataType().isDate())
+                                    ctx.sql('(').visit(endDate).sql(" - ").visit(startDate).sql(')');
+                                else
+                                    ctx.visit(N_EXTRACT).sql('(').visit(K_DAY).sql(' ').visit(K_FROM).sql(' ').visit(endDate).sql(" - ").visit(startDate).sql(')');
+
                                 return;
 
                             default:

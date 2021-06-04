@@ -228,9 +228,11 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         Table<?> t = table(ctx);
 
+        boolean multiTableJoin = (SUPPORT_MULTITABLE_DELETE.contains(ctx.dialect()) && t instanceof JoinTable);
+        boolean specialDeleteAsSyntax = SPECIAL_DELETE_AS_SYNTAX.contains(ctx.dialect());
+
         // [#11924] Multiple tables listed in the FROM clause mean this is a
         //          MySQL style multi table DELETE
-        boolean multiTableJoin = (SUPPORT_MULTITABLE_DELETE.contains(ctx.dialect()) && t instanceof JoinTable);
         if (multiTableJoin)
 
             // No table declarations in this case, but references
@@ -245,10 +247,10 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         // [#2464] Use the USING clause to declare aliases in MySQL
         else
-            ctx.visit(K_FROM).sql(' ').declareTables(!SPECIAL_DELETE_AS_SYNTAX.contains(ctx.dialect()), c -> c.visit(t));
+            ctx.visit(K_FROM).sql(' ').declareTables(!specialDeleteAsSyntax, c -> c.visit(t));
 
         // [#11925] In MySQL, the tables in FROM must be repeated in USING
-        if (!using.isEmpty() || multiTableJoin || Tools.alias(t) != null) {
+        if (!using.isEmpty() || multiTableJoin || specialDeleteAsSyntax && Tools.alias(t) != null) {
             TableList u;
 
             if (REQUIRE_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && !using.contains(t)) {

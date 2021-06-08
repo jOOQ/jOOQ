@@ -13497,7 +13497,7 @@ public class DSL {
      * Example
      * <p>
      * <code><pre>
-     * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
+     * String sql = "(SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA')";
      * </pre></code>
      * <p>
      * The returned table does not know its field references, i.e.
@@ -13529,7 +13529,7 @@ public class DSL {
      * Example
      * <p>
      * <code><pre>
-     * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
+     * String sql = "(SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA')";
      * </pre></code>
      * <p>
      * The returned table does not know its field references, i.e.
@@ -13563,7 +13563,7 @@ public class DSL {
      * Example
      * <p>
      * <code><pre>
-     * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = ?";
+     * String sql = "(SELECT * FROM USER_TABLES WHERE OWNER = ?)";
      * Object[] bindings = new Object[] { "MY_SCHEMA" };
      * </pre></code>
      * <p>
@@ -13597,7 +13597,7 @@ public class DSL {
      * Example
      * <p>
      * <code><pre>
-     * String sql = "SELECT * FROM USER_TABLES WHERE {0}";
+     * String sql = "(SELECT * FROM USER_TABLES WHERE {0})";
      * QueryPart[] parts = new QueryPart[] { USER_TABLES.OWNER.equal("MY_SCHEMA") };
      * </pre></code>
      * <p>

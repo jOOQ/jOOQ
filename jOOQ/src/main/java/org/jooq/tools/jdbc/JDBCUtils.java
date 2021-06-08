@@ -158,6 +158,7 @@ public class JDBCUtils {
                 String url = m.getURL();
                 int majorVersion = 0;
                 int minorVersion = 0;
+                String productVersion = "";
 
                 // [#6814] Better play safe with JDBC API
                 try {
@@ -170,7 +171,12 @@ public class JDBCUtils {
                 }
                 catch (SQLException ignore) {}
 
-                result = dialect(url, majorVersion, minorVersion);
+                try {
+                    productVersion = m.getDatabaseProductVersion();
+                }
+                catch (SQLException ignore) {}
+
+                result = dialect(url, majorVersion, minorVersion, productVersion);
             }
             catch (SQLException ignore) {}
         }
@@ -262,7 +268,7 @@ public class JDBCUtils {
     }
 
     @NotNull
-    private static final SQLDialect dialect(String url, int majorVersion, int minorVersion) {
+    private static final SQLDialect dialect(String url, int majorVersion, int minorVersion, String productVersion) {
         SQLDialect family = dialect(url).family();
 
         // [#6814] If the driver can't report the version, fall back to the dialect family
@@ -283,7 +289,7 @@ public class JDBCUtils {
             case MARIADB:
                 return mariadbDialect(majorVersion, minorVersion);
             case MYSQL:
-                return mysqlDialect(majorVersion, minorVersion);
+                return mysqlDialect(majorVersion, minorVersion, productVersion);
             case POSTGRES:
                 return postgresDialect(majorVersion, minorVersion);
         }
@@ -387,7 +393,14 @@ public class JDBCUtils {
         return MARIADB;
     }
 
-    private static final SQLDialect mysqlDialect(int majorVersion, int minorVersion) {
+    private static final SQLDialect mysqlDialect(int majorVersion, int minorVersion, String productVersion) {
+
+
+
+
+
+
+
 
 
 

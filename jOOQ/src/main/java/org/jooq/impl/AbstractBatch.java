@@ -53,8 +53,9 @@ import org.reactivestreams.Subscriber;
  * @author Lukas Eder
  */
 abstract class AbstractBatch implements Batch {
-    final Configuration       configuration;
-    final DSLContext          dsl;
+
+    final Configuration configuration;
+    final DSLContext    dsl;
 
     AbstractBatch(Configuration configuration) {
         this.configuration = configuration;

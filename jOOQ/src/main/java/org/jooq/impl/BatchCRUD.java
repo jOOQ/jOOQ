@@ -54,14 +54,16 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
  */
 final class BatchCRUD extends AbstractBatch {
 
-    private final TableRecord<?>[] records;
-    private final Action           action;
+    private static final JooqLogger log = JooqLogger.getLogger(BatchCRUD.class);
+    private final TableRecord<?>[]  records;
+    private final Action            action;
 
     BatchCRUD(Configuration configuration, Action action, TableRecord<?>[] records) {
         super(configuration);
@@ -118,6 +120,9 @@ final class BatchCRUD extends AbstractBatch {
                 records[i].attach(previous);
             }
         }
+
+        if (log.isDebugEnabled())
+            log.debug("Batch " + action + " of " + records.length + " records using " + queries.size() + " distinct queries (lower is better) with an average number of bind variable sets of " + queries.values().stream().mapToInt(List::size).average().orElse(0.0) + " (higher is better)");
 
         // Execute one batch statement for each identical SQL statement. Every
         // SQL statement may have several queries with different bind values.

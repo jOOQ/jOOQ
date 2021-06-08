@@ -58,7 +58,7 @@ import io.r2dbc.spi.ConnectionFactory;
  */
 final class BatchMultiple extends AbstractBatch {
 
-    final Query[]             queries;
+    final Query[] queries;
 
     public BatchMultiple(Configuration configuration, Query... queries) {
         super(configuration);

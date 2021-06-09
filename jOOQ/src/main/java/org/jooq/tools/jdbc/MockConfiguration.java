@@ -72,6 +72,7 @@ import org.jooq.UnwrapperProvider;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.impl.AbstractConfiguration;
+import org.jooq.impl.DefaultDSLContext;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -98,7 +99,7 @@ public class MockConfiguration extends AbstractConfiguration {
 
     @Override
     public DSLContext dsl() {
-        return delegate.dsl();
+        return new DefaultDSLContext(this);
     }
 
     @Override
@@ -253,108 +254,130 @@ public class MockConfiguration extends AbstractConfiguration {
 
     @Override
     public Configuration set(Clock newClock) {
-        return delegate.set(newClock);
+        delegate.set(newClock);
+        return this;
     }
 
     @Override
     public Configuration set(ConnectionProvider newConnectionProvider) {
-        return delegate.set(newConnectionProvider);
+        delegate.set(newConnectionProvider);
+        return this;
     }
 
     @Override
     public Configuration set(MetaProvider newMetaProvider) {
-        return delegate.set(newMetaProvider);
+        delegate.set(newMetaProvider);
+        return this;
     }
 
     @Override
     public Configuration set(CommitProvider newCommitProvider) {
-        return delegate.set(newCommitProvider);
+        delegate.set(newCommitProvider);
+        return this;
     }
 
     @Override
     public Configuration set(Connection newConnection) {
-        return delegate.set(newConnection);
+        delegate.set(newConnection);
+        return this;
     }
 
     @Override
     public Configuration set(DataSource newDataSource) {
-        return delegate.set(newDataSource);
+        delegate.set(newDataSource);
+        return this;
     }
 
     @Override
     public Configuration set(ConnectionFactory newConnectionFactory) {
-        return delegate.set(newConnectionFactory);
+        delegate.set(newConnectionFactory);
+        return this;
     }
 
     @Override
     public Configuration set(Executor newExecutor) {
-        return delegate.set(newExecutor);
+        delegate.set(newExecutor);
+        return this;
     }
 
     @Override
     public Configuration set(ExecutorProvider newExecutorProvider) {
-        return delegate.set(newExecutorProvider);
+        delegate.set(newExecutorProvider);
+        return this;
     }
 
     @Override
     public Configuration set(CacheProvider newCacheProvider) {
-        return delegate.set(newCacheProvider);
+        delegate.set(newCacheProvider);
+        return this;
     }
 
     @Override
     public Configuration set(TransactionProvider newTransactionProvider) {
-        return delegate.set(newTransactionProvider);
+        delegate.set(newTransactionProvider);
+        return this;
     }
 
     @Override
     public Configuration set(RecordMapper<?, ?> newRecordMapper) {
-        return delegate.set(newRecordMapper);
+        delegate.set(newRecordMapper);
+        return this;
     }
 
     @Override
     public Configuration set(RecordMapperProvider newRecordMapperProvider) {
-        return delegate.set(newRecordMapperProvider);
+        delegate.set(newRecordMapperProvider);
+        return this;
     }
 
     @Override
     public Configuration set(RecordUnmapper<?, ?> newRecordUnmapper) {
-        return delegate.set(newRecordUnmapper);
+        delegate.set(newRecordUnmapper);
+        return this;
     }
 
     @Override
     public Configuration set(RecordUnmapperProvider newRecordUnmapperProvider) {
-        return delegate.set(newRecordUnmapperProvider);
+        delegate.set(newRecordUnmapperProvider);
+        return this;
     }
 
     @Override
     public Configuration set(RecordListenerProvider... newRecordListenerProviders) {
-        return delegate.set(newRecordListenerProviders);
+        delegate.set(newRecordListenerProviders);
+        return this;
     }
 
     @Override
     public Configuration set(ExecuteListenerProvider... newExecuteListenerProviders) {
-        return delegate.set(newExecuteListenerProviders);
+        delegate.set(newExecuteListenerProviders);
+        return this;
     }
 
     @Override
     public Configuration set(MigrationListenerProvider... newMigrationListenerProviders) {
-        return delegate.set(newMigrationListenerProviders);
+        delegate.set(newMigrationListenerProviders);
+        return this;
     }
 
     @Override
     public Configuration set(VisitListenerProvider... newVisitListenerProviders) {
-        return delegate.set(newVisitListenerProviders);
+        delegate.set(newVisitListenerProviders);
+        return this;
     }
 
     @Override
     public Configuration set(TransactionListenerProvider... newTransactionListenerProviders) {
-        return delegate.set(newTransactionListenerProviders);
+        delegate.set(newTransactionListenerProviders);
+        return this;
     }
 
     @Override
     public Configuration set(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
-        return delegate.set(newDiagnosticsListenerProviders);
+        delegate.set(newDiagnosticsListenerProviders);
+        return this;
     }
+
 
 
 
@@ -368,142 +391,148 @@ public class MockConfiguration extends AbstractConfiguration {
 
     @Override
     public Configuration set(Unwrapper newUnwrapper) {
-        return delegate.set(newUnwrapper);
+        delegate.set(newUnwrapper);
+        return this;
     }
 
     @Override
     public Configuration set(UnwrapperProvider newUnwrapperProvider) {
-        return delegate.set(newUnwrapperProvider);
+        delegate.set(newUnwrapperProvider);
+        return this;
     }
 
     @Override
     public Configuration set(CharsetProvider newCharsetProvider) {
-        return delegate.set(newCharsetProvider);
+        delegate.set(newCharsetProvider);
+        return this;
     }
 
     @Override
     public Configuration set(ConverterProvider newConverterProvider) {
-        return delegate.set(newConverterProvider);
+        delegate.set(newConverterProvider);
+        return this;
     }
 
     @Override
     public Configuration set(SQLDialect newDialect) {
-        return delegate.set(newDialect);
+        delegate.set(newDialect);
+        return this;
     }
 
     @Override
     public Configuration set(Settings newSettings) {
-        return delegate.set(newSettings);
+        delegate.set(newSettings);
+        return this;
     }
 
     @Override
     public Configuration derive() {
-        return delegate.derive();
+        return new MockConfiguration(delegate.derive(), provider);
     }
 
     @Override
     public Configuration derive(Clock newClock) {
-        return delegate.derive(newClock);
+        return new MockConfiguration(delegate.derive(newClock), provider);
     }
 
     @Override
     public Configuration derive(Connection newConnection) {
-        return delegate.derive(newConnection);
+        return new MockConfiguration(delegate.derive(newConnection), provider);
     }
 
     @Override
     public Configuration derive(DataSource newDataSource) {
-        return delegate.derive(newDataSource);
+        return new MockConfiguration(delegate.derive(newDataSource), provider);
     }
 
     @Override
     public Configuration derive(ConnectionFactory newConnectionFactory) {
-        return delegate.derive(newConnectionFactory);
+        return new MockConfiguration(delegate.derive(newConnectionFactory), provider);
     }
 
     @Override
     public Configuration derive(ConnectionProvider newConnectionProvider) {
-        return delegate.derive(newConnectionProvider);
+        return new MockConfiguration(delegate.derive(newConnectionProvider), provider);
     }
 
     @Override
     public Configuration derive(MetaProvider newMetaProvider) {
-        return delegate.derive(newMetaProvider);
+        return new MockConfiguration(delegate.derive(newMetaProvider), provider);
     }
 
     @Override
     public Configuration derive(CommitProvider newCommitProvider) {
-        return delegate.derive(newCommitProvider);
+        return new MockConfiguration(delegate.derive(newCommitProvider), provider);
     }
 
     @Override
     public Configuration derive(Executor newExecutor) {
-        return delegate.derive(newExecutor);
+        return new MockConfiguration(delegate.derive(newExecutor), provider);
     }
 
     @Override
     public Configuration derive(ExecutorProvider newExecutorProvider) {
-        return delegate.derive(newExecutorProvider);
+        return new MockConfiguration(delegate.derive(newExecutorProvider), provider);
     }
 
     @Override
     public Configuration derive(CacheProvider newCacheProvider) {
-        return delegate.derive(newCacheProvider);
+        return new MockConfiguration(delegate.derive(newCacheProvider), provider);
     }
 
     @Override
     public Configuration derive(TransactionProvider newTransactionProvider) {
-        return delegate.derive(newTransactionProvider);
+        return new MockConfiguration(delegate.derive(newTransactionProvider), provider);
     }
 
     @Override
     public Configuration derive(RecordMapper<?, ?> newRecordMapper) {
-        return delegate.derive(newRecordMapper);
+        return new MockConfiguration(delegate.derive(newRecordMapper), provider);
     }
 
     @Override
     public Configuration derive(RecordMapperProvider newRecordMapperProvider) {
-        return delegate.derive(newRecordMapperProvider);
+        return new MockConfiguration(delegate.derive(newRecordMapperProvider), provider);
     }
 
     @Override
     public Configuration derive(RecordUnmapper<?, ?> newRecordUnmapper) {
-        return delegate.derive(newRecordUnmapper);
+        return new MockConfiguration(delegate.derive(newRecordUnmapper), provider);
     }
 
     @Override
     public Configuration derive(RecordUnmapperProvider newRecordUnmapperProvider) {
-        return delegate.derive(newRecordUnmapperProvider);
+        return new MockConfiguration(delegate.derive(newRecordUnmapperProvider), provider);
     }
 
     @Override
     public Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
-        return delegate.derive(newRecordListenerProviders);
+        return new MockConfiguration(delegate.derive(newRecordListenerProviders), provider);
     }
 
     @Override
     public Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
-        return delegate.derive(newExecuteListenerProviders);
+        return new MockConfiguration(delegate.derive(newExecuteListenerProviders), provider);
     }
 
     @Override
     public Configuration derive(MigrationListenerProvider... newMigrationListenerProviders) {
-        return delegate.derive(newMigrationListenerProviders);
+        return new MockConfiguration(delegate.derive(newMigrationListenerProviders), provider);
     }
 
     @Override
     public Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
-        return delegate.derive(newVisitListenerProviders);
+        return new MockConfiguration(delegate.derive(newVisitListenerProviders), provider);
     }
 
     @Override
     public Configuration derive(TransactionListenerProvider... newTransactionListenerProviders) {
-        return delegate.derive(newTransactionListenerProviders);
+        return new MockConfiguration(delegate.derive(newTransactionListenerProviders), provider);
     }
 
     @Override
     public Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
-        return delegate.derive(newDiagnosticsListenerProviders);
+        return new MockConfiguration(delegate.derive(newDiagnosticsListenerProviders), provider);
     }
 
 
@@ -518,36 +547,36 @@ public class MockConfiguration extends AbstractConfiguration {
 
     @Override
     public Configuration derive(Unwrapper newUnwrapper) {
-        return delegate.derive(newUnwrapper);
+        return new MockConfiguration(delegate.derive(newUnwrapper), provider);
     }
 
     @Override
     public Configuration derive(UnwrapperProvider newUnwrapperProvider) {
-        return delegate.derive(newUnwrapperProvider);
+        return new MockConfiguration(delegate.derive(newUnwrapperProvider), provider);
     }
 
     @Override
     public Configuration derive(CharsetProvider newCharsetProvider) {
-        return delegate.derive(newCharsetProvider);
+        return new MockConfiguration(delegate.derive(newCharsetProvider), provider);
     }
 
     @Override
     public Configuration derive(ConverterProvider newConverterProvider) {
-        return delegate.derive(newConverterProvider);
+        return new MockConfiguration(delegate.derive(newConverterProvider), provider);
     }
 
     @Override
     public Configuration derive(SQLDialect newDialect) {
-        return delegate.derive(newDialect);
+        return new MockConfiguration(delegate.derive(newDialect), provider);
     }
 
     @Override
     public Configuration derive(Settings newSettings) {
-        return delegate.derive(newSettings);
+        return new MockConfiguration(delegate.derive(newSettings), provider);
     }
 
     @Override
     public Configuration deriveSettings(Function<? super Settings, ? extends Settings> newSettings) {
-        return delegate.deriveSettings(newSettings);
+        return new MockConfiguration(delegate.deriveSettings(newSettings), provider);
     }
 }

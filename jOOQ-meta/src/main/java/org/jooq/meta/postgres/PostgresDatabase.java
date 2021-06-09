@@ -136,6 +136,8 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+import org.jooq.conf.ParseUnknownFunctions;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
@@ -289,7 +291,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     private String tryParseColumnName(String string) {
         try {
-            return create().parser().parseField(string).getName();
+            return create()
+                .configuration()
+                .derive(SettingsTools.clone(create().settings()).withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
+                .dsl()
+                .parser().parseField(string).getName();
         }
         catch (ParserException e) {
             log.info("Parse error", "Error when parsing column name : " + string, e);

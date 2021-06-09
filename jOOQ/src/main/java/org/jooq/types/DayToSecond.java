@@ -691,6 +691,8 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
                 return false;
             if (seconds != other.seconds)
                 return false;
+            if (negative != other.negative && doubleValue() != 0.0)
+                return false;
             return true;
         }
         else if (obj instanceof YearToSecond)

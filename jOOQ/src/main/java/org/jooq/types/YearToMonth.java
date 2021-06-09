@@ -314,6 +314,8 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
                 return false;
             if (years != other.years)
                 return false;
+            if (negative != other.negative && intValue() != 0)
+                return false;
             return true;
         }
         else if (obj instanceof YearToSecond)

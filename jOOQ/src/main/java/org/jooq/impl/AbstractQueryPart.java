@@ -193,7 +193,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
             // [#8355] Subtypes may have null configuration
             Configuration configuration = Tools.configuration(configuration());
-            return create(configuration.derive(SettingsTools.clone(configuration.settings()).withRenderFormatted(true))).renderInlined(this);
+            return create(configuration.deriveSettings(s -> s.withRenderFormatted(true))).renderInlined(this);
         }
         catch (SQLDialectNotSupportedException e) {
             return "[ ... " + e.getMessage() + " ... ]";

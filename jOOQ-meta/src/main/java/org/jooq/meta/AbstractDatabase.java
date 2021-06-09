@@ -357,7 +357,6 @@ public abstract class AbstractDatabase implements Database {
             return DSL.using(configuration);
         }
         else {
-            final Settings newSettings = SettingsTools.clone(configuration.settings()).withRenderFormatted(true);
             final ExecuteListener newListener = new DefaultExecuteListener() {
 
                 class SQLPerformanceWarning extends Exception {}
@@ -457,10 +456,11 @@ public abstract class AbstractDatabase implements Database {
                 }
 
                 private String formatted(Query query) {
-                    return DSL.using(configuration.derive(newSettings)).renderInlined(query);
+                    return configuration.deriveSettings(s -> s.withRenderFormatted(true)).dsl().renderInlined(query);
                 }
             };
-            return DSL.using(configuration.deriveAppending(newListener));
+
+            return configuration.deriveAppending(newListener).dsl();
         }
     }
 
@@ -3042,15 +3042,13 @@ public abstract class AbstractDatabase implements Database {
                 continue viewLoop;
 
             onError(ERROR, "Error while parsing view", () -> {
-                final Settings settings = SettingsTools.clone(create().settings())
-                    .withParseWithMetaLookups(ParseWithMetaLookups.THROW_ON_FAILURE);
 
                 // TODO: Add a Meta implementation that is based on jOOQ-meta
                 final Meta meta = create().meta();
                 final List<Param<?>> params = new ArrayList<>();
                 final Configuration configuration = create()
                     .configuration()
-                    .derive(settings)
+                    .deriveSettings(s -> s.withParseWithMetaLookups(ParseWithMetaLookups.THROW_ON_FAILURE))
                     .derive((MetaProvider) () -> meta);
 
                 // [#8722] [#11054] Before a public API is available, use this internal, undocumented

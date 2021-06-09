@@ -1048,7 +1048,7 @@ final class MetaImpl extends AbstractMeta {
                                     try {
                                         type = type.defaultValue(dsl()
                                             .configuration()
-                                            .derive(SettingsTools.clone(dsl().settings()).withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
+                                            .deriveSettings(s -> s.withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
                                             .dsl()
                                             .parser()
                                             .parseField(defaultValue)

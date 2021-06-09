@@ -80,8 +80,7 @@ final class DiagnosticsConnection extends DefaultConnection {
         super(configuration.connectionProvider().acquire());
 
         this.configuration = configuration;
-        this.normalisingRenderer = configuration.derive(
-            SettingsTools.clone(configuration.settings())
+        this.normalisingRenderer = configuration.deriveSettings(s -> s
 
             // Forcing all inline parameters to be indexed helps find opportunities to use bind variables
             .withParamType(FORCE_INDEXED)

@@ -46,6 +46,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javax.sql.DataSource;
@@ -1870,6 +1871,18 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(Settings newSettings);
+
+    /**
+     * Create a derived configuration from this one, with new settings
+     * constructed from a clone of the current settings.
+     *
+     * @param newSettings A function producing the new settings to be contained
+     *            in the derived configuration based on a clone of the current
+     *            settings.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration deriveSettings(Function<? super Settings, ? extends Settings> newSettings);
 
     /**
      * Whether this is a commercial edition of jOOQ.

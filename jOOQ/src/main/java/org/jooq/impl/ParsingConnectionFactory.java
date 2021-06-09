@@ -76,8 +76,7 @@ final class ParsingConnectionFactory implements ConnectionFactory {
         if (configuration.connectionFactory() instanceof NoConnectionFactory)
             throw new DetachedException("ConnectionProvider did not provide an R2DBC ConnectionFactory");
 
-        this.configuration = configuration.derive();
-        this.configuration.set(setParamType(configuration.dialect(), configuration.settings()));
+        this.configuration = configuration.deriveSettings(s -> setParamType(configuration.dialect(), s));
     }
 
     @Override

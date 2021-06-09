@@ -293,7 +293,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         try {
             return create()
                 .configuration()
-                .derive(SettingsTools.clone(create().settings()).withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
+                .deriveSettings(s -> s.withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
                 .dsl()
                 .parser().parseField(string).getName();
         }

@@ -615,8 +615,8 @@ final class R2DBC {
     // -------------------------------------------------------------------------
 
     static final Rendered rendered(Configuration configuration, Query query) {
-        DefaultRenderContext render = new DefaultRenderContext(configuration.derive(
-            setParamType(configuration.dialect(), configuration.settings())
+        DefaultRenderContext render = new DefaultRenderContext(configuration.deriveSettings(s ->
+            setParamType(configuration.dialect(), s)
         ));
 
         return new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
@@ -1244,8 +1244,6 @@ final class R2DBC {
     }
 
     static final Settings setParamType(SQLDialect dialect, Settings settings) {
-        settings = SettingsTools.clone(settings);
-
         switch (dialect.family()) {
             case MYSQL:
                 return settings

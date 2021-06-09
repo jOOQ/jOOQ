@@ -299,7 +299,7 @@ public class SQLiteDatabase extends AbstractDatabase {
     protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
         DSLContext ctx = create()
             .configuration()
-            .derive(SettingsTools.clone(create().settings()).withInterpreterDelayForeignKeyDeclarations(true))
+            .deriveSettings(s -> s.withInterpreterDelayForeignKeyDeclarations(true))
             .dsl();
 
         SchemaDefinition schema = getSchemata().get(0);

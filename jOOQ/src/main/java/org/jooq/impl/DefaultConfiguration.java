@@ -50,6 +50,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
+import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -92,6 +93,8 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
 import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
+
+import org.jetbrains.annotations.NotNull;
 
 import io.r2dbc.spi.ConnectionFactory;
 
@@ -1085,6 +1088,11 @@ public class DefaultConfiguration extends AbstractConfiguration {
             newSettings,
             data
         );
+    }
+
+    @Override
+    public final Configuration deriveSettings(Function<? super Settings, ? extends Settings> newSettings) {
+        return derive(newSettings.apply(SettingsTools.clone(settings)));
     }
 
     // -------------------------------------------------------------------------

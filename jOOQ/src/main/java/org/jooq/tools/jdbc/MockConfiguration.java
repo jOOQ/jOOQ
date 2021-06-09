@@ -41,6 +41,7 @@ import java.sql.Connection;
 import java.time.Clock;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -71,6 +72,8 @@ import org.jooq.UnwrapperProvider;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.impl.AbstractConfiguration;
+
+import org.jetbrains.annotations.NotNull;
 
 import io.r2dbc.spi.ConnectionFactory;
 
@@ -541,5 +544,10 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public Configuration derive(Settings newSettings) {
         return delegate.derive(newSettings);
+    }
+
+    @Override
+    public Configuration deriveSettings(Function<? super Settings, ? extends Settings> newSettings) {
+        return delegate.deriveSettings(newSettings);
     }
 }

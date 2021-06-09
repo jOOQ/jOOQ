@@ -511,8 +511,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         //         statements.
         if (TRUE.equals(configuration().data("org.jooq.ddl.parse-for-ddldatabase"))) {
             if (query instanceof Select) {
-                String s =
-                configuration().derive(SettingsTools.clone(configuration().settings())
+                String sql =
+                configuration().deriveSettings(s -> s
                     .withRenderFormatted(false)
                     .withRenderKeywordCase(RenderKeywordCase.LOWER)
                     .withRenderNameCase(RenderNameCase.LOWER)
@@ -523,7 +523,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 // [#8910] special treatment for PostgreSQL pg_dump's curious
                 //         usage of the SET SCHEMA command
-                Matcher matcher = P_SEARCH_PATH.matcher(s);
+                Matcher matcher = P_SEARCH_PATH.matcher(sql);
                 String schema;
                 if (matcher.find())
                     if (!StringUtils.isBlank(schema = matcher.group(2)))

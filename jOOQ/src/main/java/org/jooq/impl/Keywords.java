@@ -288,6 +288,7 @@ final class Keywords {
     static final Keyword K_NULLS_LAST                       = keyword("nulls last");
     static final Keyword K_NUMERIC                          = keyword("numeric");
     static final Keyword K_NVARCHAR                         = keyword("nvarchar");
+    static final Keyword K_OCCURRENCE                       = keyword("occurrence");
     static final Keyword K_OF                               = keyword("of");
     static final Keyword K_OFFSET                           = keyword("offset");
     static final Keyword K_OLD                              = keyword("old");

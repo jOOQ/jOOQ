@@ -37,8 +37,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_IN;
+import static org.jooq.impl.Keywords.K_OCCURRENCE;
+import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_REGEXP_REPLACE;
 import static org.jooq.impl.Names.N_REGEX_REPLACE;
+import static org.jooq.impl.Names.N_REPLACE_REGEXPR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -77,6 +81,15 @@ final class RegexpReplace extends AbstractField<String> {
                     ctx.sql(')');
 
                 break;
+
+
+
+
+
+
+
+
+
 
 
 

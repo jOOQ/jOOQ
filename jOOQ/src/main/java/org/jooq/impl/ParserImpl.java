@@ -9805,6 +9805,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 ? regexpReplaceFirst(field, pattern, replacement)
                 : regexpReplaceAll(field, pattern, replacement);
         }
+        else if (parseFunctionNameIf("REPLACE_REGEXPR")) {
+            parse('(');
+            Field pattern = parseField(S);
+            parseKeyword("IN");
+            Field field = parseField(S);
+            Field replacement = parseKeywordIf("WITH") ? parseField(S) : inline("");
+            first = parseKeywordIf("OCCURRENCE") && !parseKeywordIf("ALL") && parse("1");
+
+            parse(')');
+            return first
+                ? regexpReplaceFirst(field, pattern, replacement)
+                : regexpReplaceAll(field, pattern, replacement);
+        }
 
         return null;
     }

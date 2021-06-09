@@ -4838,7 +4838,6 @@ final class Tools {
 
 
 
-
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
 
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
@@ -4870,6 +4869,7 @@ final class Tools {
 
             // [#5062] H2's (and others') AUTO_INCREMENT flag is syntactically located *after* NULL flags.
             switch (ctx.family()) {
+
 
 
                 case H2:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;

@@ -293,6 +293,7 @@ final class Names {
     static final Name N_REGR_SYY               = unquotedName("regr_syy");
     static final Name N_REPEAT                 = unquotedName("repeat");
     static final Name N_REPLACE                = unquotedName("replace");
+    static final Name N_REPLACE_REGEXPR        = unquotedName("replace_regexpr");
     static final Name N_REPLICATE              = unquotedName("replicate");
     static final Name N_REVERSE                = unquotedName("reverse");
     static final Name N_RIGHT                  = unquotedName("right");

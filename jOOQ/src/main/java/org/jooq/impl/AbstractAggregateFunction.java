@@ -171,7 +171,7 @@ implements
                 ctx.sql(')');
     }
 
-    final void acceptArguments2(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
+    /* non-final */ void acceptArguments2(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
         if (filter == null || SUPPORT_FILTER.contains(ctx.dialect()))
             ctx.visit(args);
 

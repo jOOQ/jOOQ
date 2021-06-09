@@ -103,6 +103,7 @@ extends
             case DERBY:
             case FIREBIRD:
             case H2:
+
             case HSQLDB:
             case IGNITE:
             case MARIADB:
@@ -126,13 +127,6 @@ extends
                 break;
         }
     }
-
-    @Override
-    public void accept(Context<?> ctx) {
-        super.accept(ctx);
-    }
-
-
 
 
 }

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Names.N_BITCOUNT;
 import static org.jooq.impl.Names.N_BIT_COUNT;
 import static org.jooq.impl.Names.N_COUNTSET;
 
@@ -65,6 +66,10 @@ final class BitCount extends AbstractField<Integer> {
             case MYSQL:
                 ctx.visit(N_BIT_COUNT).sql('(').visit(field).sql(')');
                 return;
+
+
+
+
 
 
 

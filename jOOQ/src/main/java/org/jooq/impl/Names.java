@@ -91,6 +91,7 @@ final class Names {
     static final Name N_BITXOR                 = unquotedName("bitxor");
     static final Name N_BIT_AND                = unquotedName("bit_and");
     static final Name N_BIT_AND_AGG            = unquotedName("bit_and_agg");
+    static final Name N_BITCOUNT               = unquotedName("bitcount");
     static final Name N_BIT_COUNT              = unquotedName("bit_count");
     static final Name N_BIT_LENGTH             = unquotedName("bit_length");
     static final Name N_BIT_OR                 = unquotedName("bit_or");

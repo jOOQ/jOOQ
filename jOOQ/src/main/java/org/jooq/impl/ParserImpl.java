@@ -7192,7 +7192,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (N.is(type))
                     if (parseFunctionNameIf("BIT_LENGTH"))
                         return bitLength((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("BIT_COUNT"))
+                    else if (parseFunctionNameIf("BITCOUNT", "BIT_COUNT"))
                         return bitCount((Field) parseFieldNumericOpParenthesised());
                     else if (parseFunctionNameIf("BYTE_LENGTH"))
                         return octetLength((Field) parseFieldParenthesised(S));

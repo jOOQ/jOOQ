@@ -76,6 +76,7 @@ import java.util.stream.StreamSupport;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Cursor;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPartInternal;
@@ -108,6 +109,7 @@ import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
+import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
@@ -118,6 +120,7 @@ import org.jooq.impl.R2DBC.ResultSubscriber;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.reactivestreams.Subscriber;
 
 import io.r2dbc.spi.ConnectionFactory;
@@ -127,7 +130,7 @@ import io.r2dbc.spi.ConnectionFactory;
  *
  * @author Lukas Eder
  */
-interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQuery<R>, Mappable<R> {
+interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQuery<R>, Mappable<R>, FieldsTrait {
 
     @Override
     default ResultQuery<Record> coerce(Field<?>... fields) {
@@ -279,11 +282,6 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     default Results fetchMany() throws DataAccessException {
         throw new DataAccessException("Attempt to call fetchMany() on " + getClass());
     }
-
-    /**
-     * Get a list of fields provided a result set.
-     */
-    Field<?>[] getFields(ResultSetMetaData rs) throws SQLException;
 
     default Cursor<R> fetchLazyNonAutoClosing() {
         return fetchLazy();
@@ -1557,5 +1555,29 @@ interface ResultQueryTrait<R extends Record> extends QueryPartInternal, ResultQu
     @Override
     default <E> RecordMapper<R, E> mapper(Configuration configuration, Class<? extends E> type) {
         return new DelayedRecordMapper<>(t -> t.mapper(configuration, type));
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Fields API
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get a list of fields provided a result set.
+     *
+     * @throws SQLException If something goes wrong when accessing
+     *             {@link ResultSetMetaData}.
+     */
+    default Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
+        return getFields();
+    }
+
+    /**
+     * Get a list of fields if we don't have a result set.
+     */
+    Field<?>[] getFields();
+
+    @Override
+    default Row fieldsRow() {
+        return Tools.row0(getFields());
     }
 }

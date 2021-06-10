@@ -135,7 +135,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public interface ResultQuery<R extends Record> extends Query, Iterable<R>, Publisher<R> {
+public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R>, Publisher<R> {
 
     /**
      * Execute the query and return the generated result.

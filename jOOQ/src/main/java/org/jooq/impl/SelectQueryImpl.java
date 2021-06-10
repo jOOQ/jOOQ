@@ -249,6 +249,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Fields;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
 import org.jooq.JSONEntry;
@@ -662,165 +663,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final Stream<Field<?>> fieldStream() {
-        return Stream.of(fields());
-    }
-
-    @Override
-    public final <T> Field<T> field(Field<T> field) {
-        return asTable().field(field);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(String)}.
-     */
-    @Deprecated
-    @Override
-    public final Field<?> field(String string) {
-        return asTable().field(string);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(String, Class)}.
-     */
-    @Deprecated
-    @Override
-    public final <T> Field<T> field(String name, Class<T> type) {
-        return asTable().field(name, type);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(String, DataType)}.
-     */
-    @Deprecated
-    @Override
-    public final <T> Field<T> field(String name, DataType<T> dataType) {
-        return asTable().field(name, dataType);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(Name)}.
-     */
-    @Deprecated
-    @Override
-    public final Field<?> field(Name string) {
-        return asTable().field(string);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(Name, Class)}.
-     */
-    @Deprecated
-    @Override
-    public final <T> Field<T> field(Name name, Class<T> type) {
-        return asTable().field(name, type);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(Name, DataType)}.
-     */
-    @Deprecated
-    @Override
-    public final <T> Field<T> field(Name name, DataType<T> dataType) {
-        return asTable().field(name, dataType);
-    }
-
-    @Override
-    public final Field<?> field(int index) {
-        return asTable().field(index);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, Class<T> type) {
-        return asTable().field(index, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, DataType<T> dataType) {
-        return asTable().field(index, dataType);
-    }
-
-    @Override
-    public final Field<?>[] fields() {
-        return asTable().fields();
-    }
-
-    @Override
-    public final Field<?>[] fields(Field<?>... fields) {
-        return asTable().fields(fields);
-    }
-
-    @Override
-    public final Field<?>[] fields(String... fieldNames) {
-        return asTable().fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(Name... fieldNames) {
-        return asTable().fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(int... fieldIndexes) {
-        return asTable().fields(fieldIndexes);
-    }
-
-    @Override
-    public final int indexOf(Field<?> field) {
-        return asTable().indexOf(field);
-    }
-
-    @Override
-    public final int indexOf(String fieldName) {
-        return asTable().indexOf(fieldName);
-    }
-
-    @Override
-    public final int indexOf(Name fieldName) {
-        return asTable().indexOf(fieldName);
-    }
-
-    @Override
-    public final Class<?>[] types() {
-        return asTable().types();
-    }
-
-    @Override
-    public final Class<?> type(int fieldIndex) {
-        return asTable().type(fieldIndex);
-    }
-
-    @Override
-    public final Class<?> type(String fieldName) {
-        return asTable().type(fieldName);
-    }
-
-    @Override
-    public final Class<?> type(Name fieldName) {
-        return asTable().type(fieldName);
-    }
-
-    @Override
-    public final DataType<?>[] dataTypes() {
-        return asTable().dataTypes();
-    }
-
-    @Override
-    public final DataType<?> dataType(int fieldIndex) {
-        return asTable().dataType(fieldIndex);
-    }
-
-    @Override
-    public final DataType<?> dataType(String fieldName) {
-        return asTable().dataType(fieldName);
-    }
-
-    @Override
-    public final DataType<?> dataType(Name fieldName) {
-        return asTable().dataType(fieldName);
-    }
-
-    @Override
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query
@@ -869,6 +711,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Field<?>[] getFields(ResultSetMetaData meta) {
+        Field<?>[] fields = getFields();
+
+        // If no projection was specified explicitly, create fields from result
+        // set meta data instead. This is typically the case for SELECT * ...
+        if (fields.length == 0)
+            return new MetaDataFieldProvider(configuration(), meta).getFields();
+
+        return fields;
+    }
+
+    @Override
+    public final Field<?>[] getFields() {
         Collection<? extends Field<?>> fields = coerce();
 
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()
@@ -887,11 +741,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
             fields = getSelect();
-
-        // If no projection was specified explicitly, create fields from result
-        // set meta data instead. This is typically the case for SELECT * ...
-        if (fields.isEmpty())
-            return new MetaDataFieldProvider(configuration(), meta).getFields();
 
         return fieldArray(fields);
     }

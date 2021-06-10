@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.isEmpty;
+
 import java.sql.ResultSetMetaData;
 import java.util.Collection;
 
@@ -99,11 +102,21 @@ final class SQLResultQuery extends AbstractResultQuery<Record> {
 
     @Override
     public final Field<?>[] getFields(ResultSetMetaData meta) {
-        Collection<? extends Field<?>> coerce = coerce();
+        Field<?>[] result = getFields();
 
-        if (coerce != null && !coerce.isEmpty())
-            return coerce.toArray(Tools.EMPTY_FIELD);
+        if (!isEmpty(result))
+            return result;
         else
             return new MetaDataFieldProvider(configuration(), meta).getFields();
+    }
+
+    @Override
+    public final Field<?>[] getFields() {
+        Collection<? extends Field<?>> coerce = coerce();
+
+        if (!isEmpty(coerce))
+            return coerce.toArray(EMPTY_FIELD);
+        else
+            return EMPTY_FIELD;
     }
 }

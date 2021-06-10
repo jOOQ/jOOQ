@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -96,10 +98,16 @@ implements
 
     @Override
     public final Field<?>[] getFields(ResultSetMetaData rs) throws SQLException {
+        Field<?>[] f = getFields();
+        return f != null ? f : delegate.getFields(rs);
+    }
+
+    @Override
+    public final Field<?>[] getFields() {
         if (coerceFields != null && !coerceFields.isEmpty())
-            return coerceFields.toArray(Tools.EMPTY_FIELD);
+            return coerceFields.toArray(EMPTY_FIELD);
         else
-            return delegate.getFields(rs);
+            return delegate.returningResolvedAsterisks.toArray(EMPTY_FIELD);
     }
 
     @Override

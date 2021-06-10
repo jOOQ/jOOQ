@@ -246,7 +246,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery<R> im
             //         not a result set.
             if (ctx.resultSet() == null) {
                 DSLContext dsl = DSL.using(ctx.configuration());
-                Field<Integer> c = field(name("UPDATE_COUNT"), int.class);
+                Field<Integer> c = DSL.field(name("UPDATE_COUNT"), int.class);
                 Result<Record1<Integer>> r = dsl.newResult(c);
                 r.add(dsl.newRecord(c).values(ctx.rows()));
                 ctx.resultSet(new MockResultSet(r));

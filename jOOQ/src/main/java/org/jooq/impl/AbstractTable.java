@@ -121,7 +121,7 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractTable<R extends Record> extends AbstractNamed implements Table<R> {
+abstract class AbstractTable<R extends Record> extends AbstractNamed implements Table<R>, FieldsTrait {
 
     private static final JooqLogger  log              = JooqLogger.getLogger(AbstractTable.class);
     private static final Clause[]    CLAUSES          = { TABLE };
@@ -221,138 +221,8 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     }
 
     @Override
-    public final Stream<Field<?>> fieldStream() {
-        return Stream.of(fields());
-    }
-
-    @Override
-    public final <T> Field<T> field(Field<T> field) {
-        return fieldsRow().field(field);
-    }
-
-    @Override
-    public final Field<?> field(String string) {
-        return fieldsRow().field(string);
-    }
-
-    @Override
-    public final <T> Field<T> field(String name, Class<T> type) {
-        return fieldsRow().field(name, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(String name, DataType<T> dataType) {
-        return fieldsRow().field(name, dataType);
-    }
-
-    @Override
-    public final Field<?> field(Name name) {
-        return fieldsRow().field(name);
-    }
-
-    @Override
-    public final <T> Field<T> field(Name name, Class<T> type) {
-        return fieldsRow().field(name, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(Name name, DataType<T> dataType) {
-        return fieldsRow().field(name, dataType);
-    }
-
-    @Override
-    public final Field<?> field(int index) {
-        return fieldsRow().field(index);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, Class<T> type) {
-        return fieldsRow().field(index, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, DataType<T> dataType) {
-        return fieldsRow().field(index, dataType);
-    }
-
-    @Override
     public final Field<?>[] fields() {
         return fieldsRow().fields();
-    }
-
-    @Override
-    public final Field<?>[] fields(Field<?>... fields) {
-        return fieldsRow().fields(fields);
-    }
-
-    @Override
-    public final Field<?>[] fields(String... fieldNames) {
-        return fieldsRow().fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(Name... fieldNames) {
-        return fieldsRow().fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(int... fieldIndexes) {
-        return fieldsRow().fields(fieldIndexes);
-    }
-
-    @Override
-    public final int indexOf(Field<?> field) {
-        return fieldsRow().indexOf(field);
-    }
-
-    @Override
-    public final int indexOf(String fieldName) {
-        return fieldsRow().indexOf(fieldName);
-    }
-
-    @Override
-    public final int indexOf(Name fieldName) {
-        return fieldsRow().indexOf(fieldName);
-    }
-
-    @Override
-    public final Class<?>[] types() {
-        return fieldsRow().types();
-    }
-
-    @Override
-    public final Class<?> type(int index) {
-        return fieldsRow().type(index);
-    }
-
-    @Override
-    public final Class<?> type(String name) {
-        return fieldsRow().type(name);
-    }
-
-    @Override
-    public final Class<?> type(Name name) {
-        return fieldsRow().type(name);
-    }
-
-    @Override
-    public final DataType<?>[] dataTypes() {
-        return fieldsRow().dataTypes();
-    }
-
-    @Override
-    public final DataType<?> dataType(int index) {
-        return fieldsRow().dataType(index);
-    }
-
-    @Override
-    public final DataType<?> dataType(String name) {
-        return fieldsRow().dataType(name);
-    }
-
-    @Override
-    public final DataType<?> dataType(Name name) {
-        return fieldsRow().dataType(name);
     }
 
     @Override

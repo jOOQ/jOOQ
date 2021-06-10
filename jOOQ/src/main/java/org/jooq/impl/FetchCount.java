@@ -75,7 +75,7 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     }
 
     @Override
-    public final Field<?>[] getFields(ResultSetMetaData rs) {
+    public final Field<?>[] getFields() {
         return count;
     }
 }

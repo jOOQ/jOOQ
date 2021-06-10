@@ -431,7 +431,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     /**
      * @deprecated - 3.11 - [#6631] - Use {@link #binding(Converter)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public DefaultBinding(Converter<T, U> converter) {
         this.delegate = binding(converter);
     }

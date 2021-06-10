@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-// ...
+import java.util.concurrent.Flow;
 import java.util.function.Consumer;
 
 import org.reactivestreams.FlowAdapters;
@@ -52,14 +52,14 @@ import org.reactivestreams.Subscription;
  * @author Lukas Eder
  */
 @FunctionalInterface
-public interface Publisher<T> extends org.reactivestreams.Publisher<T> {
+public interface Publisher<T> extends org.reactivestreams.Publisher<T>, Flow.Publisher<T> {
 
 
 
-
-
-
-
+    @Override
+    default void subscribe(Flow.Subscriber<? super T> subscriber) {
+        subscribe(FlowAdapters.toSubscriber(subscriber));
+    }
 
 
 }

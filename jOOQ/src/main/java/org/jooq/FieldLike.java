@@ -108,7 +108,7 @@ public interface FieldLike {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support
     <T> Field<T> asField(Function<? super Field<T>, ? extends String> aliasFunction);

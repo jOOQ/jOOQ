@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-// ...
+import java.util.concurrent.Flow;
 
 import org.jooq.Record;
 import org.jooq.RowCountQuery;
@@ -55,10 +55,10 @@ abstract class AbstractDelegatingDMLQuery<R extends Record, Q extends AbstractDM
 
 
 
-
-
-
-
+    @Override
+    public final void subscribe(Flow.Subscriber<? super Integer> subscriber) {
+        getDelegate().subscribe(subscriber);
+    }
 
 
 

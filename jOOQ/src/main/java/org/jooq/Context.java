@@ -414,7 +414,7 @@ public interface Context<C extends Context<C>> extends Scope {
      * @deprecated - 3.10.0 - [#4990] - Use {@link DSL#keyword(String)} instead.
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     C keyword(String keyword);
 
     /**
@@ -593,7 +593,7 @@ public interface Context<C extends Context<C>> extends Scope {
      * @deprecated - [#10317] - 3.14.0 - Do not reuse this method. It will be
      *             removed without replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     C formatIndentLockStart();
 
@@ -621,7 +621,7 @@ public interface Context<C extends Context<C>> extends Scope {
      * @deprecated - [#10317] - 3.14.0 - Do not reuse this method. It will be
      *             removed without replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     C formatIndentLockEnd();
 
@@ -647,7 +647,7 @@ public interface Context<C extends Context<C>> extends Scope {
      *             {@link DSL#unquotedName(String)} instead.
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     C literal(String literal);
 
     /**

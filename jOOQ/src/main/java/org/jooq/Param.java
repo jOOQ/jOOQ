@@ -122,7 +122,7 @@ public interface Param<T> extends ParamOrVariable<T> {
      *             immutable. Modifying {@link Param} values is strongly
      *             discouraged.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.8")
     void setValue(T value);
 
     /**
@@ -135,7 +135,7 @@ public interface Param<T> extends ParamOrVariable<T> {
      *             immutable. Modifying {@link Param} values is strongly
      *             discouraged.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.8")
     void setConverted(Object value) throws DataTypeException;
 
     /**
@@ -145,7 +145,7 @@ public interface Param<T> extends ParamOrVariable<T> {
      *             immutable. Modifying {@link Param} values is strongly
      *             discouraged.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.8")
     void setInline(boolean inline);
 
     /**

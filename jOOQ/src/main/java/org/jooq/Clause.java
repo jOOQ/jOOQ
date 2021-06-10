@@ -51,7 +51,7 @@ package org.jooq;
  *             kept in one way or another: <a href=
  *             "https://github.com/jOOQ/jOOQ/issues/7258">https://github.com/jOOQ/jOOQ/issues/7258</a>
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.11")
 public enum Clause {
 
     // -------------------------------------------------------------------------

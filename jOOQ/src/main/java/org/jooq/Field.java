@@ -211,7 +211,7 @@ extends
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support
     Field<T> as(Function<? super Field<T>, ? extends String> aliasFunction);
@@ -3146,7 +3146,7 @@ extends
      * @see DSL#sign(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sign(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<Integer> sign();
@@ -3155,7 +3155,7 @@ extends
      * @see DSL#abs(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#abs(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> abs();
@@ -3164,7 +3164,7 @@ extends
      * @see DSL#round(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#round(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> round();
@@ -3173,7 +3173,7 @@ extends
      * @see DSL#round(Field, int)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#round(Field, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> round(int decimals);
@@ -3182,7 +3182,7 @@ extends
      * @see DSL#floor(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#floor(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> floor();
@@ -3191,7 +3191,7 @@ extends
      * @see DSL#ceil(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#ceil(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> ceil();
@@ -3200,7 +3200,7 @@ extends
      * @see DSL#sqrt(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sqrt(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sqrt();
@@ -3209,7 +3209,7 @@ extends
      * @see DSL#exp(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#exp(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> exp();
@@ -3218,7 +3218,7 @@ extends
      * @see DSL#ln(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#ln(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> ln();
@@ -3227,7 +3227,7 @@ extends
      * @see DSL#log(Field, int)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#log(Field, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> log(int base);
@@ -3236,7 +3236,7 @@ extends
      * @see DSL#acos(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#acos(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> acos();
@@ -3245,7 +3245,7 @@ extends
      * @see DSL#asin(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#asin(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> asin();
@@ -3254,7 +3254,7 @@ extends
      * @see DSL#atan(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan();
@@ -3263,7 +3263,7 @@ extends
      * @see DSL#atan2(Field, Number)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan2(Field, Number)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan2(Number y);
@@ -3272,7 +3272,7 @@ extends
      * @see DSL#atan2(Field, Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan2(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan2(Field<? extends Number> y);
@@ -3281,7 +3281,7 @@ extends
      * @see DSL#cos(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#cos(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cos();
@@ -3290,7 +3290,7 @@ extends
      * @see DSL#sin(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sin(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sin();
@@ -3299,7 +3299,7 @@ extends
      * @see DSL#tan(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#tan(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> tan();
@@ -3308,7 +3308,7 @@ extends
      * @see DSL#cot(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#cot(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cot();
@@ -3317,7 +3317,7 @@ extends
      * @see DSL#sinh(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sinh(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sinh();
@@ -3326,7 +3326,7 @@ extends
      * @see DSL#cosh(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#cosh(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cosh();
@@ -3335,7 +3335,7 @@ extends
      * @see DSL#tanh(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#tanh(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> tanh();
@@ -3344,7 +3344,7 @@ extends
      * @see DSL#coth(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#coth(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> coth();
@@ -3353,7 +3353,7 @@ extends
      * @see DSL#deg(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#deg(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<BigDecimal> deg();
@@ -3362,7 +3362,7 @@ extends
      * @see DSL#rad(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#rad(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<BigDecimal> rad();
@@ -3371,7 +3371,7 @@ extends
      * @see DSL#count(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#count(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<Integer> count();
@@ -3380,7 +3380,7 @@ extends
      * @see DSL#countDistinct(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#countDistinct(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<Integer> countDistinct();
@@ -3389,7 +3389,7 @@ extends
      * @see DSL#max(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#max(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> max();
@@ -3398,7 +3398,7 @@ extends
      * @see DSL#min(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#min(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> min();
@@ -3407,7 +3407,7 @@ extends
      * @see DSL#sum(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sum(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<BigDecimal> sum();
@@ -3416,7 +3416,7 @@ extends
      * @see DSL#avg(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#avg(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<BigDecimal> avg();
@@ -3425,7 +3425,7 @@ extends
      * @see DSL#median(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#median(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, HSQLDB })
     Field<BigDecimal> median();
@@ -3434,7 +3434,7 @@ extends
      * @see DSL#stddevPop(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevPop(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> stddevPop();
@@ -3443,7 +3443,7 @@ extends
      * @see DSL#stddevSamp(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevSamp(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> stddevSamp();
@@ -3452,7 +3452,7 @@ extends
      * @see DSL#varPop(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#varPop(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> varPop();
@@ -3461,7 +3461,7 @@ extends
      * @see DSL#varSamp(Field)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#varSamp(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> varSamp();
@@ -3471,7 +3471,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#count(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<Integer> countOver();
@@ -3481,7 +3481,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#max(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<T> maxOver();
@@ -3491,7 +3491,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#min(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<T> minOver();
@@ -3501,7 +3501,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sum(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<BigDecimal> sumOver();
@@ -3511,7 +3511,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#avg(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<BigDecimal> avgOver();
@@ -3521,7 +3521,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#firstValue(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> firstValue();
@@ -3531,7 +3531,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lastValue(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lastValue();
@@ -3541,7 +3541,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead();
@@ -3551,7 +3551,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset);
@@ -3561,7 +3561,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
@@ -3571,7 +3571,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
@@ -3581,7 +3581,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag();
@@ -3591,7 +3591,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset);
@@ -3601,7 +3601,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
@@ -3611,7 +3611,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
@@ -3621,7 +3621,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevPop(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> stddevPopOver();
@@ -3631,7 +3631,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevSamp(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> stddevSampOver();
@@ -3641,7 +3641,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#varPop(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> varPopOver();
@@ -3651,7 +3651,7 @@ extends
      * @see AggregateFunction#over()
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#varSamp(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> varSampOver();
@@ -3664,7 +3664,7 @@ extends
      * @see DSL#upper(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#upper(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> upper();
@@ -3677,7 +3677,7 @@ extends
      * @see DSL#lower(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lower(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> lower();
@@ -3690,7 +3690,7 @@ extends
      * @see DSL#trim(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#trim(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> trim();
@@ -3703,7 +3703,7 @@ extends
      * @see DSL#rtrim(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rtrim(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> rtrim();
@@ -3716,7 +3716,7 @@ extends
      * @see DSL#ltrim(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#ltrim(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> ltrim();
@@ -3729,7 +3729,7 @@ extends
      * @see DSL#rpad(Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(Field<? extends Number> length);
@@ -3742,7 +3742,7 @@ extends
      * @see DSL#rpad(Field, int)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(int length);
@@ -3755,7 +3755,7 @@ extends
      * @see DSL#rpad(Field, Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(Field<? extends Number> length, Field<String> character);
@@ -3768,7 +3768,7 @@ extends
      * @see DSL#rpad(Field, int, char)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, int, char)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(int length, char character);
@@ -3781,7 +3781,7 @@ extends
      * @see DSL#lpad(Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(Field<? extends Number> length);
@@ -3794,7 +3794,7 @@ extends
      * @see DSL#lpad(Field, int)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(int length);
@@ -3807,7 +3807,7 @@ extends
      * @see DSL#lpad(Field, Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(Field<? extends Number> length, Field<String> character);
@@ -3820,7 +3820,7 @@ extends
      * @see DSL#lpad(Field, int, char)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, int, char)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(int length, char character);
@@ -3833,7 +3833,7 @@ extends
      * @see DSL#repeat(Field, int)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#repeat(Field, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> repeat(Number count);
@@ -3846,7 +3846,7 @@ extends
      * @see DSL#repeat(Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#repeat(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> repeat(Field<? extends Number> count);
@@ -3859,7 +3859,7 @@ extends
      * @see DSL#replace(Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(Field<String> search);
@@ -3872,7 +3872,7 @@ extends
      * @see DSL#replace(Field, String)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, String)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(String search);
@@ -3885,7 +3885,7 @@ extends
      * @see DSL#replace(Field, Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(Field<String> search, Field<String> replace);
@@ -3898,7 +3898,7 @@ extends
      * @see DSL#replace(Field, String, String)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, String, String)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(String search, String replace);
@@ -3911,7 +3911,7 @@ extends
      * @see DSL#position(Field, String)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#position(Field, String)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> position(String search);
@@ -3924,7 +3924,7 @@ extends
      * @see DSL#position(Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#position(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> position(Field<String> search);
@@ -3937,7 +3937,7 @@ extends
      * @see DSL#ascii(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#ascii(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> ascii();
@@ -4008,7 +4008,7 @@ extends
      * @see DSL#substring(Field, int)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> substring(int startingPosition);
@@ -4021,7 +4021,7 @@ extends
      * @see DSL#substring(Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> substring(Field<? extends Number> startingPosition);
@@ -4034,7 +4034,7 @@ extends
      * @see DSL#substring(Field, int, int)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, int, int)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> substring(int startingPosition, int length);
@@ -4047,7 +4047,7 @@ extends
      * @see DSL#substring(Field, Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length);
@@ -4060,7 +4060,7 @@ extends
      * @see DSL#length(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#length(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<Integer> length();
@@ -4073,7 +4073,7 @@ extends
      * @see DSL#charLength(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#charLength(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<Integer> charLength();
@@ -4086,7 +4086,7 @@ extends
      * @see DSL#bitLength(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#bitLength(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<Integer> bitLength();
@@ -4099,7 +4099,7 @@ extends
      * @see DSL#octetLength(Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#octetLength(Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<Integer> octetLength();
@@ -4108,7 +4108,7 @@ extends
      * @see DSL#extract(Field, DatePart)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#extract(Field, DatePart)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<Integer> extract(DatePart datePart);
@@ -4117,7 +4117,7 @@ extends
      * @see DSL#greatest(Field, Field...)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#greatest(Field, Field...)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> greatest(T... others);
@@ -4126,7 +4126,7 @@ extends
      * @see DSL#greatest(Field, Field...)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#greatest(Field, Field...)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> greatest(Field<?>... others);
@@ -4135,7 +4135,7 @@ extends
      * @see DSL#least(Field, Field...)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#least(Field, Field...)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> least(T... others);
@@ -4144,7 +4144,7 @@ extends
      * @see DSL#least(Field, Field...)
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#least(Field, Field...)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     Field<T> least(Field<?>... others);
@@ -4157,7 +4157,7 @@ extends
      * @see DSL#nvl(Field, Object)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl(Field, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<T> nvl(T defaultValue);
@@ -4170,7 +4170,7 @@ extends
      * @see DSL#nvl(Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<T> nvl(Field<T> defaultValue);
@@ -4183,7 +4183,7 @@ extends
      * @see DSL#nvl2(Field, Object, Object)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl2(Field, Object, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     <Z> Field<Z> nvl2(Z valueIfNotNull, Z valueIfNull);
@@ -4196,7 +4196,7 @@ extends
      * @see DSL#nvl2(Field, Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl2(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull);
@@ -4209,7 +4209,7 @@ extends
      * @see DSL#nullif(Field, Object)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nullif(Field, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<T> nullif(T other);
@@ -4222,7 +4222,7 @@ extends
      * @see DSL#nullif(Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nullif(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<T> nullif(Field<T> other);
@@ -4235,7 +4235,7 @@ extends
      * @see DSL#decode(Object, Object, Object)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Object, Object, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     <Z> Field<Z> decode(T search, Z result);
@@ -4248,7 +4248,7 @@ extends
      * @see DSL#decode(Object, Object, Object, Object...)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Object, Object, Object, Object...)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     <Z> Field<Z> decode(T search, Z result, Object... more);
@@ -4261,7 +4261,7 @@ extends
      * @see DSL#decode(Field, Field, Field)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result);
@@ -4274,7 +4274,7 @@ extends
      * @see DSL#decode(Field, Field, Field, Field...)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Field, Field, Field, Field...)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more);
@@ -4287,7 +4287,7 @@ extends
      * @see DSL#coalesce(Object, Object...)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#coalesce(Object, Object...)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<T> coalesce(T option, T... options);
@@ -4300,7 +4300,7 @@ extends
      * @see DSL#coalesce(Field, Field...)
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#coalesce(Field, Field...)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     @NotNull
     @Support
     Field<T> coalesce(Field<T> option, Field<?>... options);

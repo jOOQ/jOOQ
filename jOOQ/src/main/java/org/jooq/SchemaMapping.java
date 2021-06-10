@@ -85,7 +85,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 1.5.2, 1.6.0
  * @deprecated - 2.0.5 - Use runtime configuration {@link Settings} instead
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "2.0")
 public class SchemaMapping implements Serializable {
 
     private static final JooqLogger                  log               = JooqLogger.getLogger(SchemaMapping.class);

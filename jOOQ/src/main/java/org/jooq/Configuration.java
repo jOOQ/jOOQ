@@ -561,7 +561,7 @@ public interface Configuration extends Serializable {
      * @deprecated - 2.0.5 - Use {@link #settings()} instead
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "2.0")
     SchemaMapping schemaMapping();
 
     /**

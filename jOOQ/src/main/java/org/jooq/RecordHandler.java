@@ -47,7 +47,7 @@ import java.util.function.Consumer;
  * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
  *             based methods, instead.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.15")
 @FunctionalInterface
 public interface RecordHandler<R extends Record> extends Consumer<R> {
 

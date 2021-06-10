@@ -292,9 +292,9 @@ public class Reflect {
         Constructor<MethodHandles.Lookup> result;
 
 
-
-
-
+        if (true)
+            result = null;
+        else
 
         try {
             try {
@@ -782,9 +782,9 @@ public class Reflect {
                         if (CACHED_LOOKUP_CONSTRUCTOR == null) {
 
 
-
-
-
+                            proxyLookup = MethodHandles
+                                .privateLookupIn(proxyType, MethodHandles.lookup())
+                                .in(proxyType);
 
 
                             // Java 9 version for Java 8 distribution (jOOQ Open Source Edition)

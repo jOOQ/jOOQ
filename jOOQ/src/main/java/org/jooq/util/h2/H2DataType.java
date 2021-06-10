@@ -75,7 +75,7 @@ import org.jooq.types.YearToMonth;
  *             <p>
  *             Use the corresponding {@link SQLDataType} instead.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.11")
 public class H2DataType {
 
     private static final SQLDialect FAMILY = SQLDialect.H2;

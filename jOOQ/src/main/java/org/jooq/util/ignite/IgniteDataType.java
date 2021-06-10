@@ -74,7 +74,7 @@ import org.jooq.types.YearToMonth;
  *             <p>
  *             Use the corresponding {@link SQLDataType} instead.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.11")
 public class IgniteDataType {
 
     private static final SQLDialect FAMILY = SQLDialect.IGNITE;

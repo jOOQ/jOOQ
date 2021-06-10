@@ -62,7 +62,7 @@ package org.jooq;
  * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
  * @author Lukas Eder
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.15")
 public interface ConstraintFinalStep extends Constraint {
 
 }

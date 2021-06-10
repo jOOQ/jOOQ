@@ -67,6 +67,6 @@ import org.jetbrains.annotations.*;
  * </ul>
  */
 @SuppressWarnings({ "unused" })
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.15")
 public interface CommentOnFinalStep extends DDLQuery {
 }

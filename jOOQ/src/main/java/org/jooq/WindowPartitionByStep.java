@@ -105,7 +105,7 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      *             supported, use {@link #partitionBy(Field...)} instead, or
      *             omit the clause entirely.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowOrderByStep<T> partitionByOne();

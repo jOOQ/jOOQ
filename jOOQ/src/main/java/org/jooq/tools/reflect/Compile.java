@@ -15,7 +15,7 @@ package org.jooq.tools.reflect;
 
 
 
-// ...
+import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -108,51 +108,51 @@ class Compile {
 
                 // This works if we have private-access to the interfaces in the class hierarchy
 
-
+                if (Reflect.CACHED_LOOKUP_CONSTRUCTOR != null) {
 
                     result = fileManager.loadAndReturnMainClass(className,
                         (name, bytes) -> Reflect.on(cl).call("defineClass", name, bytes, 0, bytes.length).get());
 
 
+                }
 
+                // Lookup.defineClass() has only been introduced in Java 9. It is
+                // required to get private-access to interfaces in the class hierarchy
+                else {
 
+                    // This method is called by client code from two levels up the current stack frame
+                    // We need a private-access lookup from the class in that stack frame in order to get
+                    // private-access to any local interfaces at that location.
+                    Class<?> caller = StackWalker
+                        .getInstance(RETAIN_CLASS_REFERENCE)
+                        .walk(s -> s
+                            .skip(2)
+                            .findFirst()
+                            .get()
+                            .getDeclaringClass());
 
+                    // If the compiled class is in the same package as the caller class, then
+                    // we can use the private-access Lookup of the caller class
+                    if (className.startsWith(caller.getPackageName() + ".") &&
 
+                        // [#74] This heuristic is necessary to prevent classes in subpackages of the caller to be loaded
+                        //       this way, as subpackages cannot access private content in super packages.
+                        //       The heuristic will work only with classes that follow standard naming conventions.
+                        //       A better implementation is difficult at this point.
+                        Character.isUpperCase(className.charAt(caller.getPackageName().length() + 1))) {
+                        Lookup privateLookup = MethodHandles.privateLookupIn(caller, lookup);
+                        result = fileManager.loadAndReturnMainClass(className,
+                            (name, bytes) -> privateLookup.defineClass(bytes));
+                    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    // Otherwise, use an arbitrary class loader. This approach doesn't allow for
+                    // loading private-access interfaces in the compiled class's type hierarchy
+                    else {
+                        ByteArrayClassLoader c = new ByteArrayClassLoader(fileManager.classes());
+                        result = fileManager.loadAndReturnMainClass(className,
+                            (name, bytes) -> c.loadClass(name));
+                    }
+                }
 
 
                 return result;
@@ -167,25 +167,25 @@ class Compile {
     }
 
 
+    static final class ByteArrayClassLoader extends ClassLoader {
+        private final Map<String, byte[]> classes;
 
+        ByteArrayClassLoader(Map<String, byte[]> classes) {
+            super(ByteArrayClassLoader.class.getClassLoader());
 
+            this.classes = classes;
+        }
 
+        @Override
+        protected Class<?> findClass(String name) throws ClassNotFoundException {
+            byte[] bytes = classes.get(name);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            if (bytes == null)
+                return super.findClass(name);
+            else
+                return defineClass(name, bytes, 0, bytes.length);
+        }
+    }
 
 
     static final class JavaFileObject extends SimpleJavaFileObject {

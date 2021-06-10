@@ -82,7 +82,7 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
      * @deprecated - 3.10 - [#6143] - Use {@link #queryStream()} instead.
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     Stream<Query> stream();
 
     /**

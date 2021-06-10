@@ -106,7 +106,7 @@ public enum SQLDialect {
      *             with jOOQ or without jOOQ and will be removed in the near
      *             future.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.13")
     CUBRID("CUBRID", false, true),
 
     /**
@@ -1084,7 +1084,7 @@ public enum SQLDialect {
      *
      * @deprecated - [#9882] - 3.14.0 - Use {@link #supportedBy(SQLDialect...)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     public final boolean supports(Collection<SQLDialect> other) {
         if (other.contains(family))
             return true;

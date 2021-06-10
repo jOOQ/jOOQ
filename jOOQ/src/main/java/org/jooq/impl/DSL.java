@@ -1024,7 +1024,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
@@ -2077,7 +2077,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
@@ -5962,7 +5962,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
@@ -5976,7 +5976,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
@@ -5990,7 +5990,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
@@ -6004,7 +6004,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
@@ -6018,7 +6018,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
@@ -6032,7 +6032,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
@@ -6046,7 +6046,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
@@ -6060,7 +6060,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
@@ -6074,7 +6074,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
@@ -6088,7 +6088,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
@@ -6102,7 +6102,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
@@ -6116,7 +6116,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
@@ -6130,7 +6130,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
@@ -6144,7 +6144,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
@@ -6158,7 +6158,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
@@ -6172,7 +6172,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
@@ -6186,7 +6186,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
@@ -6200,7 +6200,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
@@ -6214,7 +6214,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
@@ -6228,7 +6228,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
@@ -6242,7 +6242,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
@@ -6256,7 +6256,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
@@ -6292,7 +6292,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field...)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
@@ -6309,7 +6309,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Collection)
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
@@ -10170,7 +10170,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
@@ -10191,7 +10191,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
@@ -10212,7 +10212,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
@@ -10266,7 +10266,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
@@ -10287,7 +10287,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
@@ -10308,7 +10308,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
@@ -10362,7 +10362,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
@@ -10383,7 +10383,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
@@ -10404,7 +10404,7 @@ public class DSL {
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
@@ -11793,7 +11793,7 @@ public class DSL {
      * @return A schema referenced by <code>name</code>
      * @deprecated - [#3843] - 3.6.0 - use {@link #schema(Name)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support
     public static Schema schemaByName(String name) {
@@ -11894,7 +11894,7 @@ public class DSL {
      * @return A sequence referenced by <code>sequenceName</code>
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static Sequence<BigInteger> sequenceByName(String... qualifiedName) {
@@ -11920,7 +11920,7 @@ public class DSL {
      * @return A sequence referenced by <code>sequenceName</code>
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(Class<T> type, String... qualifiedName) {
@@ -11946,7 +11946,7 @@ public class DSL {
      * @return A sequence referenced by <code>sequenceName</code>
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(DataType<T> type, String... qualifiedName) {
@@ -12033,7 +12033,7 @@ public class DSL {
      * @return A table referenced by <code>tableName</code>
      * @deprecated - [#3843] - 3.6.0 - use {@link #table(Name)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support
     public static Table<Record> tableByName(String... qualifiedName) {
@@ -12111,7 +12111,7 @@ public class DSL {
      * @return A field referenced by <code>fieldName</code>
      * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support
     public static Field<Object> fieldByName(String... qualifiedName) {
@@ -12146,7 +12146,7 @@ public class DSL {
      * @return A field referenced by <code>fieldName</code>
      * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, Class)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support
     public static <T> Field<T> fieldByName(Class<T> type, String... qualifiedName) {
@@ -12181,7 +12181,7 @@ public class DSL {
      * @return A field referenced by <code>fieldName</code>
      * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, DataType)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support
     public static <T> Field<T> fieldByName(DataType<T> type, String... qualifiedName) {
@@ -13134,7 +13134,7 @@ public class DSL {
      * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String)} instead
      * @see SQL
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support
     @PlainSQL
@@ -13163,7 +13163,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support
     @PlainSQL
@@ -13190,7 +13190,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     @NotNull
     @Support
     @PlainSQL
@@ -13637,7 +13637,7 @@ public class DSL {
      * @see SQL
      * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
@@ -13659,7 +13659,7 @@ public class DSL {
      * @see SQL
      * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, Class)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
@@ -13682,7 +13682,7 @@ public class DSL {
      * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, DataType)}
      *             instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
@@ -14820,7 +14820,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static  Field<Record> rowField(RowN row) {
         return new RowField<>(row);
     }
@@ -14830,7 +14830,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1> Field<Record1<T1>> rowField(Row1<T1> row) {
         return new RowField<>(row);
     }
@@ -14840,7 +14840,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2> Field<Record2<T1, T2>> rowField(Row2<T1, T2> row) {
         return new RowField<>(row);
     }
@@ -14850,7 +14850,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3> Field<Record3<T1, T2, T3>> rowField(Row3<T1, T2, T3> row) {
         return new RowField<>(row);
     }
@@ -14860,7 +14860,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> rowField(Row4<T1, T2, T3, T4> row) {
         return new RowField<>(row);
     }
@@ -14870,7 +14870,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> rowField(Row5<T1, T2, T3, T4, T5> row) {
         return new RowField<>(row);
     }
@@ -14880,7 +14880,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> rowField(Row6<T1, T2, T3, T4, T5, T6> row) {
         return new RowField<>(row);
     }
@@ -14890,7 +14890,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> rowField(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
         return new RowField<>(row);
     }
@@ -14900,7 +14900,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> rowField(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
         return new RowField<>(row);
     }
@@ -14910,7 +14910,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> rowField(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
         return new RowField<>(row);
     }
@@ -14920,7 +14920,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> rowField(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
         return new RowField<>(row);
     }
@@ -14930,7 +14930,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> rowField(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
         return new RowField<>(row);
     }
@@ -14940,7 +14940,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> rowField(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
         return new RowField<>(row);
     }
@@ -14950,7 +14950,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> rowField(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
         return new RowField<>(row);
     }
@@ -14960,7 +14960,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> rowField(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
         return new RowField<>(row);
     }
@@ -14970,7 +14970,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> rowField(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
         return new RowField<>(row);
     }
@@ -14980,7 +14980,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> rowField(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
         return new RowField<>(row);
     }
@@ -14990,7 +14990,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> rowField(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
         return new RowField<>(row);
     }
@@ -15000,7 +15000,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> rowField(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
         return new RowField<>(row);
     }
@@ -15010,7 +15010,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> rowField(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
         return new RowField<>(row);
     }
@@ -15020,7 +15020,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> rowField(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
         return new RowField<>(row);
     }
@@ -15030,7 +15030,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> rowField(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
         return new RowField<>(row);
     }
@@ -15040,7 +15040,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> rowField(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
         return new RowField<>(row);
     }
@@ -24104,7 +24104,7 @@ public class DSL {
      * @deprecated - [#7956] - 3.12.0 - Use {@link #groupConcat(Field)} and
      *             {@link GroupConcatSeparatorStep#separator(String)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.12")
     @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<String> groupConcat(Field<?> field, String separator) {
@@ -28635,7 +28635,7 @@ public class DSL {
      * @deprecated - [#11092] - 3.15.0 - This method will be removed without
      *             public replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     protected static <T> Field<T> nullSafe(Field<T> field) {
         return Tools.nullSafe(field);
     }
@@ -28644,7 +28644,7 @@ public class DSL {
      * @deprecated - [#11092] - 3.15.0 - This method will be removed without
      *             public replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     protected static <T> Field<T> nullSafe(Field<T> field, DataType<?> type) {
         return Tools.nullSafe(field, type);
     }
@@ -28653,7 +28653,7 @@ public class DSL {
      * @deprecated - [#11092] - 3.15.0 - This method will be removed without
      *             public replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     protected static Field<?>[] nullSafe(Field<?>... fields) {
         return Tools.nullSafe(fields);
     }
@@ -28662,7 +28662,7 @@ public class DSL {
      * @deprecated - [#11092] - 3.15.0 - This method will be removed without
      *             public replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     protected static Field<?>[] nullSafe(Field<?>[] fields, DataType<?> type) {
         return Tools.nullSafe(fields, type);
     }
@@ -28671,7 +28671,7 @@ public class DSL {
      * @deprecated - [#11092] - 3.15.0 - This method will be removed without
      *             public replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     protected static List<Field<?>> nullSafeList(Field<?>... fields) {
         return Tools.nullSafeList(fields);
     }
@@ -28680,7 +28680,7 @@ public class DSL {
      * @deprecated - [#11092] - 3.15.0 - This method will be removed without
      *             public replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     protected static List<Field<?>> nullSafeList(Field<?>[] fields, DataType<?> type) {
         return Tools.nullSafeList(fields, type);
     }
@@ -28689,7 +28689,7 @@ public class DSL {
      * @deprecated - [#11092] - 3.15.0 - This method will be removed without
      *             public replacement.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     protected static <T> DataType<T> nullSafeDataType(Field<T> field) {
         return Tools.nullSafeDataType(field);
     }
@@ -28763,7 +28763,7 @@ public class DSL {
      * @deprecated - 3.11.0 - [#7483] - The (indirect) use of the internal
      *             static data type registry is not recommended.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
     @Support
     public static <T> DataType<T> getDataType(Class<T> type) {

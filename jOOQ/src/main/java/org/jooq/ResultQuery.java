@@ -4862,7 +4862,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
      *             based methods, instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
@@ -5051,7 +5051,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      *             and will be removed in 4.0
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     ResultQuery<R> intern(Field<?>... fields);
 
     /**
@@ -5070,7 +5070,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      *             and will be removed in 4.0
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     ResultQuery<R> intern(int... fieldIndexes);
 
     /**
@@ -5089,7 +5089,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      *             and will be removed in 4.0
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     ResultQuery<R> intern(String... fieldNames);
 
     /**
@@ -5108,7 +5108,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      *             and will be removed in 4.0
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     ResultQuery<R> intern(Name... fieldNames);
 
     /**

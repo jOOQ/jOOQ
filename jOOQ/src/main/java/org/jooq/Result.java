@@ -2186,7 +2186,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @deprecated - 3.6.0 - [#3879] - Use {@link #intoArrays()} instead.
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.6")
     Object[][] intoArray();
 
     /**
@@ -2820,7 +2820,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      * @deprecated - 3.15.0 - [#11902] - Use {@link Iterable#forEach(Consumer)}
      *             based methods, instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     <H extends RecordHandler<? super R>> H into(H handler);
 
@@ -3122,7 +3122,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      *             and will be removed in 4.0
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     Result<R> intern(Field<?>... fields);
 
     /**
@@ -3148,7 +3148,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      *             and will be removed in 4.0
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     Result<R> intern(int... fieldIndexes);
 
     /**
@@ -3165,7 +3165,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      *             and will be removed in 4.0
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     Result<R> intern(String... fieldNames);
 
     /**
@@ -3182,7 +3182,7 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
      *             and will be removed in 4.0
      */
     @NotNull
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.10")
     Result<R> intern(Name... fieldNames);
 
     // ------------------------------------------------------------------------

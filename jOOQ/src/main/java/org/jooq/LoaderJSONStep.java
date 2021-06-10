@@ -103,7 +103,7 @@ public interface LoaderJSONStep<R extends Record> {
      * @deprecated - 3.14.0 - [#10010] - Use {@link #fieldsCorresponding()}
      *             instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
     @Support
     LoaderCSVOptionsStep<R> fieldsFromSource();

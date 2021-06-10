@@ -77,7 +77,7 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      * @deprecated - [#10689] - 3.14.0 - This converter does not work. Do not
      *             use this method, use {@link #identity(Class)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     public static <T, U> Converter<T, U> of() {
         return new Converters();
@@ -89,7 +89,7 @@ public class Converters<T, U> extends AbstractConverter<T, U> {
      * @deprecated - [#10689] - 3.14.0 - This method does not provide any useful
      *             functionality and will be removed in the future.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     public static <T, U> Converter<T, U> of(Converter<T, U> converter) {
         return new Converters(converter);

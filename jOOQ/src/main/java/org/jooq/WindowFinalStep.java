@@ -59,7 +59,7 @@ package org.jooq;
  * @param <T> The function return type
  * @author Lukas Eder
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.15")
 public interface WindowFinalStep<T> extends Field<T> {
 
 }

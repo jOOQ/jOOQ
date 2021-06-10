@@ -71,7 +71,7 @@ import org.jooq.types.UShort;
  *             <p>
  *             Use the corresponding {@link SQLDataType} instead.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.11")
 public class MySQLDataType {
 
     private static final SQLDialect FAMILY = SQLDialect.MYSQL;

@@ -129,7 +129,7 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  *             generated code, or via {@link Field#convert(Converter)}, or
  *             {@link DataType#asConvertedDataType(Converter)}.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.15")
 public final class Convert {
 
     private static final JooqLogger log          = JooqLogger.getLogger(Convert.class);

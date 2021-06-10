@@ -78,7 +78,7 @@ import org.jooq.types.YearToSecond;
  *             <p>
  *             Use the corresponding {@link SQLDataType} instead.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.11")
 public class PostgresDataType {
 
     private static final SQLDialect FAMILY = SQLDialect.POSTGRES;

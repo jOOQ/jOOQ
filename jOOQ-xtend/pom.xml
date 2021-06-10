@@ -46,12 +46,12 @@
                 <configuration>
                     <encoding>UTF-8</encoding>
 
-
+                    <release>11</release>
 
 
                     <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
 

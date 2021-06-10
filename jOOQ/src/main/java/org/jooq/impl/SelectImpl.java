@@ -49,7 +49,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-// ...
+import java.util.concurrent.Flow;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -2814,10 +2814,10 @@ implements
 
 
 
-
-
-
-
+    @Override
+    public final void subscribe(Flow.Subscriber<? super R> subscriber) {
+        getDelegate().subscribe(subscriber);
+    }
 
 
 

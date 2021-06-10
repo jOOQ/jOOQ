@@ -34,7 +34,7 @@
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.2.19</postgres.version>
-        <sqlserver.version>9.2.1.jre8</sqlserver.version>
+        <sqlserver.version>9.2.1.jre11</sqlserver.version>
         <oracle.version>21.1.0.0</oracle.version>
 
         <!-- R2DBC SPI version and some matching driver versions -->
@@ -490,12 +490,12 @@
                         <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
 
-
+                        <release>11</release>
 
 
                         <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>11</source>
+                        <target>11</target>
 
                         <debug>true</debug>
                         <debuglevel>lines,vars,source</debuglevel>

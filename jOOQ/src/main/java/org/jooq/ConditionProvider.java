@@ -48,7 +48,7 @@ import java.util.Collection;
  *             soon. Its methods will be pushed down into extending interfaces.
  *             Do not reference this type directly.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "2.6")
 public interface ConditionProvider {
 
     /**

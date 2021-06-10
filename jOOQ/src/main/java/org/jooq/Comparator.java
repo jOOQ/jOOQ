@@ -209,7 +209,7 @@ public enum Comparator {
      *
      * @deprecated - 3.14.0 - [#9911] - This method is no longer supported.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     public final boolean supportsNulls() {
         return supportsNulls;
     }
@@ -219,7 +219,7 @@ public enum Comparator {
      *
      * @deprecated - 3.14.0 - [#9911] - This method is no longer supported.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     public boolean supportsQuantifier() {
         return supportsQuantifier;
     }
@@ -229,7 +229,7 @@ public enum Comparator {
      *
      * @deprecated - 3.14.0 - [#9911] - This method is no longer supported.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     public boolean supportsSubselect() {
         return supportsSubselect;
     }

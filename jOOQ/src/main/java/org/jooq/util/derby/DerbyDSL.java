@@ -47,7 +47,7 @@ import org.jooq.impl.DSL;
  * @deprecated - 3.15.0 - [#10796] - This class will be removed, soon, no more
  *             vendor specific DSL API will be added.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.15")
 public class DerbyDSL extends DSL {
 
     /**

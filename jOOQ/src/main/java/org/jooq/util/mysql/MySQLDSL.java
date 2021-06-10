@@ -74,7 +74,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<String> decode(String cryptString, String keyString) {
@@ -88,7 +88,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> decode(byte[] cryptString, byte[] keyString) {
@@ -102,7 +102,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> decode(Field<T> cryptString, Field<T> keyString) {
@@ -114,7 +114,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<String> encode(String string, String keyString) {
@@ -126,7 +126,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> encode(byte[] string, byte[] keyString) {
@@ -138,7 +138,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> encode(Field<T> string, Field<T> keyString) {
@@ -204,7 +204,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<String> desDecrypt(String cryptString) {
@@ -216,7 +216,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> desDecrypt(byte[] cryptString) {
@@ -228,7 +228,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desDecrypt(Field<T> cryptString) {
@@ -240,7 +240,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<String> desDecrypt(String cryptString, String keyString) {
@@ -252,7 +252,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> desDecrypt(byte[] cryptString, byte[] keyString) {
@@ -264,7 +264,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desDecrypt(Field<T> cryptString, Field<T> keyString) {
@@ -276,7 +276,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<String> desEncrypt(String string) {
@@ -288,7 +288,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> desEncrypt(byte[] string) {
@@ -300,7 +300,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desEncrypt(Field<T> string) {
@@ -312,7 +312,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<String> desEncrypt(String string, String keyString) {
@@ -324,7 +324,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> desEncrypt(byte[] string, byte[] keyString) {
@@ -336,7 +336,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desEncrypt(Field<T> string, Field<T> keyString) {
@@ -483,7 +483,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<String> password(String string) {
@@ -495,7 +495,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static Field<byte[]> password(byte[] string) {
@@ -507,7 +507,7 @@ public class MySQLDSL extends DSL {
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.15")
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> password(Field<T> string) {

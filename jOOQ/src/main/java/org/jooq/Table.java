@@ -463,7 +463,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support
     Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
@@ -488,7 +488,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support
     Table<R> as(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
@@ -590,7 +590,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support
     Table<R> as(Name alias, Function<? super Field<?>, ? extends Name> aliasFunction);
@@ -615,7 +615,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support
     Table<R> as(Name alias, BiFunction<? super Field<?>, ? super Integer, ? extends Name> aliasFunction);
@@ -662,7 +662,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support
     Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction);
@@ -687,7 +687,7 @@ public interface Table<R extends Record> extends TableLike<R>, RecordQualifier<R
      *             that would not be possible otherwise - yet they add
      *             complexity in jOOQ's internals.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
     @Support
     Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction);

@@ -69,7 +69,7 @@ import org.jooq.DerivedColumnList8;
 import org.jooq.DerivedColumnList9;
 import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.Select;
+import org.jooq.ResultQuery;
 
 /**
  * @author Lukas Eder
@@ -122,36 +122,36 @@ implements
         this.fieldNameFunction = fieldNameFunction;
     }
 
-    final CommonTableExpression as0(Select select, Boolean materialized) {
-        Select<?> s = select;
+    final CommonTableExpression as0(ResultQuery query, Boolean materialized) {
+        ResultQuery<?> q = query;
 
         if (fieldNameFunction != null)
             return new CommonTableExpressionImpl(
                 new DerivedColumnListImpl(name, map(
-                    s.getSelect(),
-                    (f, i) -> DSL.name(fieldNameFunction.apply(s.getSelect().get(i), i)),
+                    q.fields(),
+                    (f, i) -> DSL.name(fieldNameFunction.apply(f, i)),
                     Name[]::new
                 )),
-                s,
+                q,
                 materialized
             );
         else
-            return new CommonTableExpressionImpl(this, s, materialized);
+            return new CommonTableExpressionImpl(this, q, materialized);
     }
 
     @Override
-    public final CommonTableExpression as(Select select) {
-        return as0(select, null);
+    public final CommonTableExpression as(ResultQuery query) {
+        return as0(query, null);
     }
 
     @Override
-    public final CommonTableExpression asMaterialized(Select select) {
-        return as0(select, true);
+    public final CommonTableExpression asMaterialized(ResultQuery query) {
+        return as0(query, true);
     }
 
     @Override
-    public final CommonTableExpression asNotMaterialized(Select select) {
-        return as0(select, false);
+    public final CommonTableExpression asNotMaterialized(ResultQuery query) {
+        return as0(query, false);
     }
 
     @Override

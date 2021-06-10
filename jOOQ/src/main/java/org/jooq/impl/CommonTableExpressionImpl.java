@@ -56,6 +56,7 @@ import org.jooq.Field;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.TableOptions;
@@ -73,22 +74,22 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
 
     private final DerivedColumnListImpl  name;
-    private final Select<R>              select;
+    private final ResultQuery<R>         query;
     private final FieldsImpl<R>          fields;
     private final Boolean                materialized;
 
-    CommonTableExpressionImpl(DerivedColumnListImpl name, Select<R> select, Boolean materialized) {
+    CommonTableExpressionImpl(DerivedColumnListImpl name, ResultQuery<R> query, Boolean materialized) {
         super(TableOptions.expression(), name.name);
 
         this.name = name;
-        this.select = select;
+        this.query = query;
         this.fields = fields1();
         this.materialized = materialized;
     }
 
     @Override
     public final Class<? extends R> getRecordType() {
-        return select.getRecordType();
+        return query.getRecordType();
     }
 
     @Override
@@ -104,7 +105,8 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
 
         if (ctx.declareCTE()) {
-            QueryPart s = select;
+            QueryPart s = query;
+
 
 
 
@@ -147,8 +149,8 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     }
 
     final FieldsImpl<R> fields1() {
-        List<Field<?>> s = select.getSelect();
-        Field<?>[] f = new Field[Tools.degree(select)];
+        Field<?>[] s = query.fields();
+        Field<?>[] f = new Field[Tools.degree(query)];
 
         for (int i = 0; i < f.length; i++) {
             f[i] = DSL.field(
@@ -158,8 +160,8 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
                     // If the CTE has no explicit column names, inherit those of the subquery
                     name.fieldNames.length > 0
                         ? name.fieldNames[i]
-                        : s.get(i).getUnqualifiedName()),
-                (DataType<?>) (f.length == 1 ? Tools.scalarType(select) : s.get(i).getDataType())
+                        : s[i].getUnqualifiedName()),
+                (DataType<?>) (f.length == 1 ? Tools.scalarType(query) : s[i].getDataType())
             );
         }
 

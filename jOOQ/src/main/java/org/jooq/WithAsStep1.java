@@ -66,7 +66,7 @@ public interface WithAsStep1 {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    WithStep as(Select<? extends Record1<?>> select);
+    WithStep as(ResultQuery<? extends Record1<?>> query);
 
     /**
      * Associate a materialized subselect with a common table expression's table
@@ -78,7 +78,7 @@ public interface WithAsStep1 {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    WithStep asMaterialized(Select<? extends Record1<?>> select);
+    WithStep asMaterialized(ResultQuery<? extends Record1<?>> query);
 
     /**
      * Associate a non-materialized subselect with a common table expression's
@@ -90,5 +90,5 @@ public interface WithAsStep1 {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    WithStep asNotMaterialized(Select<? extends Record1<?>> select);
+    WithStep asNotMaterialized(ResultQuery<? extends Record1<?>> query);
 }

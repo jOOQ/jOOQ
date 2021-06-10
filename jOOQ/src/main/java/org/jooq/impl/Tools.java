@@ -271,6 +271,7 @@ import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.Result;
 import org.jooq.ResultOrRows;
+import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -3282,7 +3283,7 @@ final class Tools {
             return null;
     }
 
-    static final int degree(Select<?> select) {
+    static final int degree(ResultQuery<?> query) {
 
 
 
@@ -3290,10 +3291,10 @@ final class Tools {
 
 
 
-        return select.getSelect().size();
+        return query.fields().length;
     }
 
-    static final List<DataType<?>> dataTypes(Select<?> select) {
+    static final List<DataType<?>> dataTypes(ResultQuery<?> query) {
 
 
 
@@ -3305,11 +3306,11 @@ final class Tools {
 
 
 
-        return map(select.getSelect(), f -> f.getDataType());
+        return map(query.fields(), f -> f.getDataType());
     }
 
-    static final DataType<?> scalarType(Select<?> select) {
-        List<DataType<?>> list = dataTypes(select);
+    static final DataType<?> scalarType(ResultQuery<?> query) {
+        List<DataType<?>> list = dataTypes(query);
 
         if (list.size() != 1)
             throw new IllegalStateException("Only single-column selects have a scalar type");

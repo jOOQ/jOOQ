@@ -92,7 +92,7 @@ public interface DerivedColumnList extends QueryPart {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record> CommonTableExpression<R> as(Select<R> select);
+    <R extends Record> CommonTableExpression<R> as(ResultQuery<R> query);
 
     /**
      * Specify a materialized subselect to refer to by the
@@ -104,7 +104,7 @@ public interface DerivedColumnList extends QueryPart {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record> CommonTableExpression<R> asMaterialized(Select<R> select);
+    <R extends Record> CommonTableExpression<R> asMaterialized(ResultQuery<R> query);
 
     /**
      * Specify a non-materialized subselect to refer to by the
@@ -116,6 +116,6 @@ public interface DerivedColumnList extends QueryPart {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record> CommonTableExpression<R> asNotMaterialized(Select<R> select);
+    <R extends Record> CommonTableExpression<R> asNotMaterialized(ResultQuery<R> query);
 
 }

@@ -94,9 +94,9 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+import org.jooq.ResultQuery;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
-import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectSelectStep;
@@ -252,7 +252,7 @@ implements
     // XXX With API
     // -------------------------------------------------------------------------
 
-    private final WithStep as0(Select select, Boolean materialized) {
+    private final WithStep as0(ResultQuery query, Boolean materialized) {
         DerivedColumnList dcl;
 
         if (fieldNameFunction != null)
@@ -263,11 +263,11 @@ implements
         CommonTableExpression cte;
 
         if (materialized == null)
-            cte = dcl.as(select);
+            cte = dcl.as(query);
         else if (materialized)
-            cte = dcl.asMaterialized(select);
+            cte = dcl.asMaterialized(query);
         else
-            cte = dcl.asNotMaterialized(select);
+            cte = dcl.asNotMaterialized(query);
 
         this.ctes.add(cte);
         this.alias = null;
@@ -278,18 +278,18 @@ implements
     }
 
     @Override
-    public final WithStep as(Select select) {
-        return as0(select, null);
+    public final WithStep as(ResultQuery query) {
+        return as0(query, null);
     }
 
     @Override
-    public final WithStep asMaterialized(Select select) {
-        return as0(select, true);
+    public final WithStep asMaterialized(ResultQuery query) {
+        return as0(query, true);
     }
 
     @Override
-    public final WithStep asNotMaterialized(Select select) {
-        return as0(select, false);
+    public final WithStep asNotMaterialized(ResultQuery query) {
+        return as0(query, false);
     }
 
     @Override

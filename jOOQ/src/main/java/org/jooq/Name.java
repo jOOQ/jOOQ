@@ -262,7 +262,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record> CommonTableExpression<R> as(Select<R> select);
+    <R extends Record> CommonTableExpression<R> as(ResultQuery<R> query);
 
     /**
      * Specify a materialized subselect to refer to by the <code>Name</code> to
@@ -277,7 +277,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record> CommonTableExpression<R> asMaterialized(Select<R> select);
+    <R extends Record> CommonTableExpression<R> asMaterialized(ResultQuery<R> query);
 
     /**
      * Specify a non-materialized subselect to refer to by the <code>Name</code>
@@ -292,7 +292,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record> CommonTableExpression<R> asNotMaterialized(Select<R> select);
+    <R extends Record> CommonTableExpression<R> asNotMaterialized(ResultQuery<R> query);
 
     /**
      * Add a list of fields to this name to make this name a

@@ -74,7 +74,7 @@ public interface DerivedColumnList12 extends QueryPart {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> CommonTableExpression<R> as(Select<R> select);
+    <R extends Record12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> CommonTableExpression<R> as(ResultQuery<R> query);
 
     /**
      * Specify a materialized subselect to refer to by the
@@ -86,7 +86,7 @@ public interface DerivedColumnList12 extends QueryPart {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> CommonTableExpression<R> asMaterialized(Select<R> select);
+    <R extends Record12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> CommonTableExpression<R> asMaterialized(ResultQuery<R> query);
 
     /**
      * Specify a non-materialized subselect to refer to by the
@@ -98,6 +98,6 @@ public interface DerivedColumnList12 extends QueryPart {
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> CommonTableExpression<R> asNotMaterialized(Select<R> select);
+    <R extends Record12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> CommonTableExpression<R> asNotMaterialized(ResultQuery<R> query);
 
 }

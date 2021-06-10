@@ -45,7 +45,7 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Select;
+import org.jooq.ResultQuery;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 
@@ -89,20 +89,20 @@ abstract class AbstractName extends AbstractQueryPart implements Name, SimpleQue
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <R extends Record> CommonTableExpression<R> as(Select<R> select) {
-        return fields(new String[0]).as(select);
+    public final <R extends Record> CommonTableExpression<R> as(ResultQuery<R> query) {
+        return fields(new String[0]).as(query);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <R extends Record> CommonTableExpression<R> asMaterialized(Select<R> select) {
-        return fields(new String[0]).asMaterialized(select);
+    public final <R extends Record> CommonTableExpression<R> asMaterialized(ResultQuery<R> query) {
+        return fields(new String[0]).asMaterialized(query);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <R extends Record> CommonTableExpression<R> asNotMaterialized(Select<R> select) {
-        return fields(new String[0]).asNotMaterialized(select);
+    public final <R extends Record> CommonTableExpression<R> asNotMaterialized(ResultQuery<R> query) {
+        return fields(new String[0]).asNotMaterialized(query);
     }
 
     @Override

@@ -6942,7 +6942,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final FieldOrRow parseSum(Type type) {
         FieldOrRow r = parseFactor(type);
 
-        if (N.is(type) && r instanceof Field)
+        if ((N.is(type) || D.is(type)) && r instanceof Field)
             for (;;)
                 if (parseIf('+'))
                     r = parseSumRightOperand(type, r, true);

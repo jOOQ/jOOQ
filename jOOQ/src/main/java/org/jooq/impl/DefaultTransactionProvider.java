@@ -72,16 +72,10 @@ import org.jooq.exception.DataAccessException;
 public class DefaultTransactionProvider implements TransactionProvider {
 
     /**
-     * This {@link Savepoint} serves as a marker for top level
-     * transactions in dialects that do not support Savepoints.
+     * This {@link Savepoint} serves as a marker for top level transactions if
+     * {@link #nested()} transactions are deactivated.
      */
-    private static final Savepoint UNSUPPORTED_SAVEPOINT = new DefaultSavepoint();
-
-    /**
-     * This {@link Savepoint} serves as a marker for top level
-     * transactions if {@link #nested()} transactions are deactivated.
-     */
-    private static final Savepoint IGNORED_SAVEPOINT     = new DefaultSavepoint();
+    private static final Savepoint   IGNORED_SAVEPOINT     = new DefaultSavepoint();
 
     private final ConnectionProvider connectionProvider;
     private final boolean            nested;
@@ -150,25 +144,14 @@ public class DefaultTransactionProvider implements TransactionProvider {
         if (topLevel)
             brace(ctx.configuration(), true);
 
-        Savepoint savepoint = setSavepoint(ctx.configuration(), topLevel);
-
-        if (savepoint == UNSUPPORTED_SAVEPOINT && !topLevel)
-            throw new DataAccessException("Cannot nest transactions because Savepoints are not supported");
-
-        savepoints.push(savepoint);
+        savepoints.push(setSavepoint(ctx.configuration(), topLevel));
     }
 
     private final Savepoint setSavepoint(Configuration configuration, boolean topLevel) {
         if (topLevel || !nested())
             return IGNORED_SAVEPOINT;
-
-        switch (configuration.family()) {
-
-            case CUBRID:
-                return UNSUPPORTED_SAVEPOINT;
-            default:
-                return connection(configuration).setSavepoint();
-        }
+        else
+            return connection(configuration).setSavepoint();
     }
 
     @Override
@@ -177,7 +160,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
         Savepoint savepoint = savepoints.pop();
 
         // [#3489] Explicitly release savepoints prior to commit
-        if (savepoint != null && savepoint != UNSUPPORTED_SAVEPOINT && savepoint != IGNORED_SAVEPOINT)
+        if (savepoint != null && savepoint != IGNORED_SAVEPOINT)
             try {
                 connection(ctx.configuration()).releaseSavepoint(savepoint);
             }
@@ -207,7 +190,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
             savepoint = savepoints.pop();
 
         try {
-            if (savepoint == null || savepoint == UNSUPPORTED_SAVEPOINT) {
+            if (savepoint == null) {
                 connection(ctx.configuration()).rollback();
             }
 
@@ -217,9 +200,8 @@ public class DefaultTransactionProvider implements TransactionProvider {
                 if (savepoints.isEmpty())
                     connection(ctx.configuration()).rollback();
             }
-            else {
+            else
                 connection(ctx.configuration()).rollback(savepoint);
-            }
         }
 
         finally {

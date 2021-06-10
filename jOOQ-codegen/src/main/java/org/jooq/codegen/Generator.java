@@ -538,6 +538,22 @@ public interface Generator {
     void setGenerateSpringAnnotations(boolean generateSpringAnnotations);
 
     /**
+     * Whether kotlin mutable properties should be annotated with
+     * <code>set:JvmName</code> as a workaround for problems occurring when
+     * kotlin produces <code>setX()</code> instead of <code>setIsX()</code>
+     * setters for an <code>isX</code> property.
+     */
+    boolean generateKotlinSetterJvmNameAnnotationsOnIsPrefix();
+
+    /**
+     * Whether kotlin mutable properties should be annotated with
+     * <code>set:JvmName</code> as a workaround for problems occurring when
+     * kotlin produces <code>setX()</code> instead of <code>setIsX()</code>
+     * setters for an <code>isX</code> property.
+     */
+    void setGenerateKotlinSetterJvmNameAnnotationsOnIsPrefix(boolean generateKotlinSetterJvmNameAnnotationsOnIsPrefix);
+
+    /**
      * The type of <code>serialVersionUID</code> that should be generated.
      */
     GeneratedSerialVersionUID generatedSerialVersionUID();

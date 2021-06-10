@@ -1683,6 +1683,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
       <element name="springAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Annotate DAOs with useful spring annotations such as @Repository or @Autowired.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="kotlinSetterJvmNameAnnotationsOnIsPrefix" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Workaround for Kotlin generating <code>setX()</code> setters instead of <code>setIsX()</code> in byte code for mutable properties called <code>isX</code>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all global object references.]]></jxb:javadoc></jxb:property></appinfo></annotation>

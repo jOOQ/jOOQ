@@ -123,6 +123,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "false")
     protected Boolean springAnnotations = false;
     @XmlElement(defaultValue = "true")
+    protected Boolean kotlinSetterJvmNameAnnotationsOnIsPrefix = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean globalObjectReferences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean globalCatalogReferences = true;
@@ -1258,6 +1260,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setSpringAnnotations(Boolean value) {
         this.springAnnotations = value;
+    }
+
+    /**
+     * Workaround for Kotlin generating <code>setX()</code> setters instead of <code>setIsX()</code> in byte code for mutable properties called <code>isX</code>.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isKotlinSetterJvmNameAnnotationsOnIsPrefix() {
+        return kotlinSetterJvmNameAnnotationsOnIsPrefix;
+    }
+
+    /**
+     * Sets the value of the kotlinSetterJvmNameAnnotationsOnIsPrefix property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setKotlinSetterJvmNameAnnotationsOnIsPrefix(Boolean value) {
+        this.kotlinSetterJvmNameAnnotationsOnIsPrefix = value;
     }
 
     /**
@@ -2496,6 +2522,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withKotlinSetterJvmNameAnnotationsOnIsPrefix(Boolean value) {
+        setKotlinSetterJvmNameAnnotationsOnIsPrefix(value);
+        return this;
+    }
+
     public Generate withGlobalObjectReferences(Boolean value) {
         setGlobalObjectReferences(value);
         return this;
@@ -2781,6 +2812,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("jpaVersion", jpaVersion);
         builder.append("validationAnnotations", validationAnnotations);
         builder.append("springAnnotations", springAnnotations);
+        builder.append("kotlinSetterJvmNameAnnotationsOnIsPrefix", kotlinSetterJvmNameAnnotationsOnIsPrefix);
         builder.append("globalObjectReferences", globalObjectReferences);
         builder.append("globalCatalogReferences", globalCatalogReferences);
         builder.append("globalSchemaReferences", globalSchemaReferences);
@@ -3249,6 +3281,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (kotlinSetterJvmNameAnnotationsOnIsPrefix == null) {
+            if (other.kotlinSetterJvmNameAnnotationsOnIsPrefix!= null) {
+                return false;
+            }
+        } else {
+            if (!kotlinSetterJvmNameAnnotationsOnIsPrefix.equals(other.kotlinSetterJvmNameAnnotationsOnIsPrefix)) {
+                return false;
+            }
+        }
         if (globalObjectReferences == null) {
             if (other.globalObjectReferences!= null) {
                 return false;
@@ -3679,6 +3720,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((jpaVersion == null)? 0 :jpaVersion.hashCode()));
         result = ((prime*result)+((validationAnnotations == null)? 0 :validationAnnotations.hashCode()));
         result = ((prime*result)+((springAnnotations == null)? 0 :springAnnotations.hashCode()));
+        result = ((prime*result)+((kotlinSetterJvmNameAnnotationsOnIsPrefix == null)? 0 :kotlinSetterJvmNameAnnotationsOnIsPrefix.hashCode()));
         result = ((prime*result)+((globalObjectReferences == null)? 0 :globalObjectReferences.hashCode()));
         result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));
         result = ((prime*result)+((globalSchemaReferences == null)? 0 :globalSchemaReferences.hashCode()));

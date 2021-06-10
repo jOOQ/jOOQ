@@ -7255,21 +7255,17 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
+    private static final Pattern P_IS = Pattern.compile("^is[A-Z].*$");
+
     protected void printKotlinSetterAnnotation(JavaWriter out, TypedElementDefinition<?> column, Mode mode) {
 
         // [#11912] When X and IS_X create conflicts, we need to resolve
         //          them by specifying an explicit setter name
-        if (column instanceof ColumnDefinition) {
-            String member = getStrategy().getJavaMemberName(column, mode);
-
-            if (member.startsWith("is") && ((ColumnDefinition) column)
-                    .getContainer()
-                    .getColumns()
-                    .stream()
-                    .anyMatch(c -> member.equals("is" + StringUtils.toUC(getStrategy().getJavaMemberName(c, mode))))) {
-                out.println("@set:JvmName(\"%s\")", getStrategy().getJavaSetterName(column, mode));
-            }
-        }
+        if (kotlin
+                && generateKotlinSetterJvmNameAnnotationsOnIsPrefix()
+                && column instanceof ColumnDefinition
+                && P_IS.matcher(getStrategy().getJavaMemberName(column, mode)).matches())
+            out.println("@set:JvmName(\"%s\")", getStrategy().getJavaSetterName(column, mode));
     }
 
     private String nullableAnnotation(JavaWriter out) {

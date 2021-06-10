@@ -750,6 +750,8 @@ public class GenerationTool {
                 generator.setGenerateValidationAnnotations(g.getGenerate().isValidationAnnotations());
             if (g.getGenerate().isSpringAnnotations() != null)
                 generator.setGenerateSpringAnnotations(g.getGenerate().isSpringAnnotations());
+            if (g.getGenerate().isKotlinSetterJvmNameAnnotationsOnIsPrefix() != null)
+                generator.setGenerateKotlinSetterJvmNameAnnotationsOnIsPrefix(g.getGenerate().isKotlinSetterJvmNameAnnotationsOnIsPrefix());
             if (g.getGenerate().getGeneratedSerialVersionUID() != null)
                 generator.setGenerateGeneratedSerialVersionUID(g.getGenerate().getGeneratedSerialVersionUID());
             if (g.getGenerate().getMaxMembersPerInitialiser() != null)

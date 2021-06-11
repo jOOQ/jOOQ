@@ -380,14 +380,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return;
         }
 
-        // [#10071] Single-field Record1 types can be mapped if there is a ConverterProvider allowing for this mapping
-        if ((debugVTFL = fields.length == 1) && (debugVTCP = Tools.converter(configuration, fields[0].getType(), type) != null)) {
-            delegate = new ValueTypeMapper();
-            return;
-        }
-
         // [#1470] Return a proxy if the supplied type is an interface
-        if (Modifier.isAbstract(type.getModifiers())) {
+        // [#10071] [#11148] Primitive types are abstract! They're mapped by a ConverterProvider only later
+        if (Modifier.isAbstract(type.getModifiers()) && !type.isPrimitive()) {
             delegate = new ProxyMapper();
             return;
         }
@@ -395,6 +390,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         // [#2989] [#2836] Records are mapped
         if (AbstractRecord.class.isAssignableFrom(type)) {
             delegate = (RecordMapper<R, E>) new RecordToRecordMapper();
+            return;
+        }
+
+        // [#10071] Single-field Record1 types can be mapped if there is a ConverterProvider allowing for this mapping
+        if ((debugVTFL = fields.length == 1) && (debugVTCP = Tools.converter(configuration, fields[0].getType(), type) != null)) {
+            delegate = new ValueTypeMapper();
             return;
         }
 

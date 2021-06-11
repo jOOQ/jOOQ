@@ -73,7 +73,7 @@ final class DefaultConnectionFactory implements ConnectionFactory {
 
     final Connection connectionOrThrow() {
         if (connection == null)
-            throw new DetachedException("Connection not available or already closed");
+            throw new DetachedException("R2DBC Connection not available or already closed");
         else
             return connection;
     }

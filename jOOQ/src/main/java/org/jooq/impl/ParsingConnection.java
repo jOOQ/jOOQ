@@ -37,10 +37,8 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
-import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.map;
 
 import java.sql.CallableStatement;
@@ -52,11 +50,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.impl.CacheType;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
-import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
@@ -76,7 +72,10 @@ final class ParsingConnection extends DefaultConnection {
         super(configuration.connectionProvider().acquire());
 
         if (getDelegate() == null)
-            throw new DetachedException("ConnectionProvider did not provide a JDBC Connection");
+            if (configuration.connectionFactory() instanceof NoConnectionFactory)
+                throw new DetachedException("ConnectionProvider did not provide a JDBC Connection");
+            else
+                throw new DetachedException("Attempt to use a ParsingConnection (JDBC) when only an R2BDC ConnectionFactory was configured. Using ParsingConnectionFactory instead.");
 
         this.configuration = configuration;
     }

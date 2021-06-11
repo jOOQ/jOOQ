@@ -293,7 +293,10 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                     // This optimises unnecessary ConnectionProvider.acquire() calls when
                     // ControlFlowSignals are thrown
                     if (ctx.connection() == null)
-                        throw new DetachedException("Cannot execute query. No Connection configured");
+                        if (ctx.configuration().connectionFactory() instanceof NoConnectionFactory)
+                            throw new DetachedException("Cannot execute query. No JDBC Connection configured");
+                        else
+                            throw new DetachedException("Attempt to execute a blocking method (e.g. Query.execute() or ResultQuery.fetch()) when only an R2BDC ConnectionFactory was configured");
 
                     listener.prepareStart(ctx);
                     prepare(ctx);

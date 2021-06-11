@@ -55,7 +55,6 @@ import java.util.function.Function;
 import javax.sql.DataSource;
 
 import org.jooq.CacheProvider;
-import org.jooq.impl.CacheType;
 import org.jooq.CharsetProvider;
 import org.jooq.CommitProvider;
 import org.jooq.Configuration;
@@ -93,8 +92,6 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
 import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
-
-import org.jetbrains.annotations.NotNull;
 
 import io.r2dbc.spi.ConnectionFactory;
 

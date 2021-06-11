@@ -1,8 +1,0 @@
-{
-  "catalogs": {},
-  "aliases": {
-    "codegen": {
-      "script-ref": "codegen.java"
-    }
-  }
-}

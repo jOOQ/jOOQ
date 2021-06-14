@@ -23519,6 +23519,135 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // XXX Array functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create an array literal.
+     * <p>
+     * This translates to the following databases and syntaxes:
+     * <table>
+     * <tr>
+     * <th><code>SQLDialect</code></th>
+     * <th>Java</th>
+     * <th>SQL</th>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#H2}</td>
+     * <td>array(1, 2)</td>
+     * <td>(1, 2)</td>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
+     * <td>array(1, 2)</td>
+     * <td>array[1, 2]</td>
+     * </tr>
+     * </table>
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T[]> array(T... values) {
+        return array(Tools.fields(values));
+    }
+
+    /**
+     * Create an array literal.
+     * <p>
+     * This translates to the following databases and syntaxes:
+     * <table>
+     * <tr>
+     * <th><code>SQLDialect</code></th>
+     * <th>Java</th>
+     * <th>SQL</th>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#H2}</td>
+     * <td>array(1, 2)</td>
+     * <td>(1, 2)</td>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
+     * <td>array(1, 2)</td>
+     * <td>array[1, 2]</td>
+     * </tr>
+     * </table>
+     */
+    @SafeVarargs
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T[]> array(Field<T>... fields) {
+        return array(Arrays.asList(fields));
+    }
+
+    /**
+     * Create an array literal.
+     * <p>
+     * This translates to the following databases and syntaxes:
+     * <table>
+     * <tr>
+     * <th><code>SQLDialect</code></th>
+     * <th>Java</th>
+     * <th>SQL</th>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#H2}</td>
+     * <td>array(1, 2)</td>
+     * <td>(1, 2)</td>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
+     * <td>array(1, 2)</td>
+     * <td>array[1, 2]</td>
+     * </tr>
+     * </table>
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T[]> array(Collection<? extends Field<T>> fields) {
+        return new Array<>(fields);
+    }
+
+    /**
+     * The PostgreSQL <code>array(select)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array(select 1 union select 2 union select 3)
+     * </pre></code>
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
+        return new ArraySelect<>(select);
+    }
+
+    /**
+     * Calculate the cardinality of an array field.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Integer> cardinality(Field<? extends Object[]> field) {
+        return new Cardinality(field);
+    }
+
+    /**
+     * Get an array element at a given index (1 based)
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T> arrayGet(Field<T[]> field, int index) {
+        return arrayGet(field, Tools.field(index));
+    }
+
+    /**
+     * Get an array element at a given index (1 based)
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T> arrayGet(Field<T[]> field, Field<Integer> index) {
+        return new ArrayGet<>(Tools.nullSafe(field), Tools.nullSafe(index));
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Aggregate functions
     // -------------------------------------------------------------------------
 
@@ -23759,131 +23888,6 @@ public class DSL {
 
 
 
-
-    /**
-     * Create an array literal.
-     * <p>
-     * This translates to the following databases and syntaxes:
-     * <table>
-     * <tr>
-     * <th><code>SQLDialect</code></th>
-     * <th>Java</th>
-     * <th>SQL</th>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#H2}</td>
-     * <td>array(1, 2)</td>
-     * <td>(1, 2)</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
-     * <td>array(1, 2)</td>
-     * <td>array[1, 2]</td>
-     * </tr>
-     * </table>
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static <T> Field<T[]> array(T... values) {
-        return array(Tools.fields(values));
-    }
-
-    /**
-     * Create an array literal.
-     * <p>
-     * This translates to the following databases and syntaxes:
-     * <table>
-     * <tr>
-     * <th><code>SQLDialect</code></th>
-     * <th>Java</th>
-     * <th>SQL</th>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#H2}</td>
-     * <td>array(1, 2)</td>
-     * <td>(1, 2)</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
-     * <td>array(1, 2)</td>
-     * <td>array[1, 2]</td>
-     * </tr>
-     * </table>
-     */
-    @SafeVarargs
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static <T> Field<T[]> array(Field<T>... fields) {
-        return array(Arrays.asList(fields));
-    }
-
-    /**
-     * Create an array literal.
-     * <p>
-     * This translates to the following databases and syntaxes:
-     * <table>
-     * <tr>
-     * <th><code>SQLDialect</code></th>
-     * <th>Java</th>
-     * <th>SQL</th>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#H2}</td>
-     * <td>array(1, 2)</td>
-     * <td>(1, 2)</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
-     * <td>array(1, 2)</td>
-     * <td>array[1, 2]</td>
-     * </tr>
-     * </table>
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static <T> Field<T[]> array(Collection<? extends Field<T>> fields) {
-        return new Array<>(fields);
-    }
-
-    /**
-     * The PostgreSQL <code>array(select)</code> function.
-     * <p>
-     * Example: <code><pre>
-     * {1, 2, 3} = array(select 1 union select 2 union select 3)
-     * </pre></code>
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
-        return new ArraySelect<>(select);
-    }
-
-    /**
-     * Calculate the cardinality of an array field.
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static Field<Integer> cardinality(Field<? extends Object[]> field) {
-        return new Cardinality(field);
-    }
-
-    /**
-     * Get an array element at a given index (1 based)
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static <T> Field<T> arrayGet(Field<T[]> field, int index) {
-        return arrayGet(field, Tools.field(index));
-    }
-
-    /**
-     * Get an array element at a given index (1 based)
-     */
-    @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static <T> Field<T> arrayGet(Field<T[]> field, Field<Integer> index) {
-        return new ArrayGet<>(Tools.nullSafe(field), Tools.nullSafe(index));
-    }
 
     /**
      * Get the max value over a field: max(field).

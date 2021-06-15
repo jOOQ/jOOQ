@@ -108,7 +108,6 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
 
 
                 default:
-                    ctx.sql(')');
                     ctx.sql(' ').visit(K_KEEP)
                        .sql(" (").visit(K_DENSE_RANK)
                        .sql(' ').visit(first ? K_FIRST : K_LAST)

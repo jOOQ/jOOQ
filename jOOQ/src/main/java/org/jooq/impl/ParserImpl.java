@@ -3598,8 +3598,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final DDLQuery parseDropExtension() {
-        parseKeywordIf("IF EXISTS");
+        boolean ifExists = parseKeywordIf("IF EXISTS");
         parseIdentifiers();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
         if (!parseKeywordIf("CASCADE"))
             parseKeywordIf("RESTRICT");
         return IGNORE;
@@ -3639,6 +3640,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseDropView() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Table<?> tableName = parseTableName();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
 
         DropViewFinalStep s1;
 
@@ -3828,6 +3830,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseDropSequence() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Sequence<?> sequenceName = parseSequenceName();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
         parseKeywordIf("RESTRICT");
 
         return ifExists
@@ -4985,6 +4988,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseDropTable(boolean temporary) {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Table<?> tableName = parseTableName();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
         boolean cascade = parseKeywordIf("CASCADE");
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
@@ -5336,9 +5340,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
+
+
+
+
+
+
     private final DDLQuery parseDropType() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         List<Name> typeNames = parseIdentifiers();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
         boolean cascade = parseKeywordIf("CASCADE");
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
@@ -5463,6 +5478,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseDropDomain() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Domain<?> domainName = parseDomainName();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
         boolean cascade = parseKeywordIf("CASCADE");
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
@@ -5530,6 +5546,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseDropDatabase() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Catalog catalogName = parseCatalogName();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
 
         return ifExists
             ? dsl.dropDatabaseIfExists(catalogName)
@@ -5571,6 +5588,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseDropSchema() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Schema schemaName = parseSchemaName();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
         boolean cascade = parseKeywordIf("CASCADE");
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
@@ -5670,6 +5688,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseDropIndex() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Name indexName = parseIndexName();
+        ifExists = ifExists || parseKeywordIf("IF EXISTS");
         boolean on = parseKeywordIf("ON");
         Table<?> onTable = on ? parseTableName() : null;
 

@@ -82,11 +82,14 @@ import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Param;
 // ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.XML;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
@@ -766,7 +769,7 @@ final class R2DBC {
             }
         }
 
-        private final Class<?> type(Class<?> type) {
+        private final Class<?> nullType(Class<?> type) {
 
             // [#11700] Intercept JDBC temporal types, which aren't supported by R2DBC
             if (type == Date.class)
@@ -775,6 +778,12 @@ final class R2DBC {
                 return LocalTime.class;
             else if (type == Timestamp.class)
                 return LocalDateTime.class;
+            else if (type == XML.class)
+                return String.class;
+            else if (type == JSON.class)
+                return String.class;
+            else if (type == JSONB.class)
+                return String.class;
             else
                 return type;
         }
@@ -790,7 +799,7 @@ final class R2DBC {
         }
 
         public final void setNull(int parameterIndex, DataType<?> dataType) {
-            bindNull(parameterIndex, type(dataType.getType()));
+            bindNull(parameterIndex, nullType(dataType.getType()));
         }
 
         @Override

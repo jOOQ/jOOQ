@@ -320,6 +320,7 @@ final class R2DBC {
                         // TODO: Make sure all the embeddable records, and other types of nested records are supported
                         for (int i = 0; i < fields.length; i++) {
                             ctx.index(i + 1);
+                            ctx.field((Field) fields[i]);
                             fields[i].getBinding().get((BindingGetResultSetContext) ctx);
                             record.values[i] = ctx.value();
                             record.originals[i] = ctx.value();

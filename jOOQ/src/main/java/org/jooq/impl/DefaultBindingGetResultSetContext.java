@@ -43,6 +43,8 @@ import java.util.Map;
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.Field;
+
 
 /**
  * @author Lukas Eder
@@ -51,6 +53,7 @@ class DefaultBindingGetResultSetContext<U> extends AbstractScope implements Bind
 
     private final ResultSet resultSet;
     private int             index;
+    private Field<U>        field;
     private U               value;
 
     DefaultBindingGetResultSetContext(Configuration configuration, Map<Object, Object> data, ResultSet resultSet, int index) {
@@ -72,6 +75,15 @@ class DefaultBindingGetResultSetContext<U> extends AbstractScope implements Bind
 
     final void index(int i) {
         this.index = i;
+    }
+
+    @Override
+    public final Field<U> field() {
+        return field;
+    }
+
+    final void field(Field<U> f) {
+        this.field = f;
     }
 
     @Override

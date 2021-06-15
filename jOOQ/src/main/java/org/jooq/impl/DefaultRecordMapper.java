@@ -743,9 +743,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         @Override
         public final AbstractRecord map(R record) {
             try {
-                if (record instanceof AbstractRecord) {
+                if (record instanceof AbstractRecord)
                     return ((AbstractRecord) record).intoRecord((Class<AbstractRecord>) type);
-                }
 
                 throw new MappingException("Cannot map record " + record + " to type " + type);
             }

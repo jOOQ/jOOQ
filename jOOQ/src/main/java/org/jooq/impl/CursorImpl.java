@@ -42,6 +42,7 @@ import static org.jooq.impl.RowField.NO_NATIVE_SUPPORT;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.embeddedRecordType;
 import static org.jooq.impl.Tools.recordFactory;
+import static org.jooq.impl.Tools.uncoerce;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -1521,7 +1522,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
                     // [#7100] TODO: This should be transparent to the CursorImpl
                     //         RowField may have a Row[N].mapping(...) applied
-                    Field<?> f = field instanceof Coerce ? ((Coerce<?>) field).field : field;
+                    Field<?> f = uncoerce(field);
 
                     if (f instanceof RowField && NO_NATIVE_SUPPORT.contains(ctx.dialect())) {
                         nested = ((RowField<?, ?>) f).emulatedFields(configuration);
@@ -1546,6 +1547,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     }
                     else {
                         rsContext.index(nestedOffset + 1);
+                        rsContext.field((Field) field);
                         field.getBinding().get((BindingGetResultSetContext<T>) rsContext);
                         value = (T) rsContext.value();
                     }

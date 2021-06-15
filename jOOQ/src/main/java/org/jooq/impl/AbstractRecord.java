@@ -529,10 +529,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     public Record original() {
         return Tools.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields, configuration())
                     .operate(record -> {
-                        for (int i = 0; i < originals.length; i++) {
-                            record.values[i] = originals[i];
-                            record.originals[i] = originals[i];
-                        }
+                        for (int i = 0; i < originals.length; i++)
+                            record.values[i] = record.originals[i] = originals[i];
 
                         return record;
                     });
@@ -840,7 +838,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return (R) Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<>(null));
     }
 
-    private class TransferRecordState<R extends Record> implements ThrowingFunction<R, R, MappingException> {
+    class TransferRecordState<R extends Record> implements ThrowingFunction<R, R, MappingException> {
 
         private final Field<?>[] targetFields;
 
@@ -879,9 +877,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                     for (Field<?> targetField : target.fields()) {
                         Field<?> sourceField = field(targetField);
 
-                        if (sourceField != null) {
+                        if (sourceField != null)
                             Tools.setValue(target, targetField, source, sourceField);
-                        }
                     }
                 }
 

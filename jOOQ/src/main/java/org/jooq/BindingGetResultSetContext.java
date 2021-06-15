@@ -58,6 +58,12 @@ public interface BindingGetResultSetContext<U> extends Scope {
     int index();
 
     /**
+     * The {@link Field} at column index {@link #index()} whose value is
+     * retrieved.
+     */
+    Field<U> field();
+
+    /**
      * A callback to which the resulting value is registered.
      */
     void value(U value);

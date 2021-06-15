@@ -223,7 +223,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.Column;
@@ -289,6 +288,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.WindowSpecification;
 import org.jooq.XML;
 import org.jooq.conf.BackslashEscaping;
+import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.RenderDefaultNullability;
 import org.jooq.conf.RenderQuotedNames;
@@ -5262,6 +5262,10 @@ final class Tools {
         return result != null ? result : table;
     }
 
+    static final Field<?> uncoerce(Field<?> field) {
+        return field instanceof Coerce ? ((Coerce<?>) field).field : field;
+    }
+
     static final <R extends Record> Table<R> aliased(Table<R> table) {
         if (table instanceof TableImpl)
             return ((TableImpl<R>) table).getAliasedTable();
@@ -5754,6 +5758,36 @@ final class Tools {
                 default:
                     // The SQL standard uses upper case identifiers if unquoted
                     return ParseNameCase.UPPER_IF_UNQUOTED;
+            }
+        }
+
+        return result;
+    }
+
+    static final NestedCollectionEmulation emulateMultiset(Configuration configuration) {
+        NestedCollectionEmulation result = defaultIfNull(configuration.settings().getEmulateMultiset(), NestedCollectionEmulation.DEFAULT);
+
+        if (result == NestedCollectionEmulation.DEFAULT) {
+            switch (configuration.family()) {
+
+
+
+                case H2:
+                case POSTGRES:
+                    return NestedCollectionEmulation.ARRAY;
+
+                case MARIADB:
+                case MYSQL:
+                    return NestedCollectionEmulation.JSON;
+
+
+
+
+
+
+
+                default:
+                    return NestedCollectionEmulation.NATIVE;
             }
         }
 

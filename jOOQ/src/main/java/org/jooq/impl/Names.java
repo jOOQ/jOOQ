@@ -247,6 +247,7 @@ final class Names {
     static final Name N_MOD                    = unquotedName("mod");
     static final Name N_MODE                   = unquotedName("mode");
     static final Name N_MUL                    = unquotedName("mul");
+    static final Name N_MULTISET               = unquotedName("multiset");
     static final Name N_NANO100_BETWEEN        = unquotedName("nano100_between");
     static final Name N_NEWID                  = unquotedName("newid");
     static final Name N_NEXTVAL                = unquotedName("nextval");
@@ -281,6 +282,7 @@ final class Names {
     static final Name N_RANK                   = unquotedName("rank");
     static final Name N_RATIO_TO_REPORT        = unquotedName("ratio_to_report");
     static final Name N_RAWTOHEX               = unquotedName("rawtohex");
+    static final Name N_RECORD                 = unquotedName("record");
     static final Name N_REGEXP_REPLACE         = unquotedName("regexp_replace");
     static final Name N_REGEX_REPLACE          = unquotedName("regex_replace");
     static final Name N_REGR_AVGX              = unquotedName("regr_avgx");
@@ -296,6 +298,7 @@ final class Names {
     static final Name N_REPLACE                = unquotedName("replace");
     static final Name N_REPLACE_REGEXPR        = unquotedName("replace_regexpr");
     static final Name N_REPLICATE              = unquotedName("replicate");
+    static final Name N_RESULT                 = unquotedName("result");
     static final Name N_REVERSE                = unquotedName("reverse");
     static final Name N_RIGHT                  = unquotedName("right");
     static final Name N_RND                    = unquotedName("rnd");

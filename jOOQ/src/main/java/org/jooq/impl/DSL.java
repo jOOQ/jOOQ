@@ -23647,6 +23647,19 @@ public class DSL {
         return new ArrayGet<>(Tools.nullSafe(field), Tools.nullSafe(index));
     }
 
+    /**
+     * Get the <code>MULTISET</code> operator to nest subqueries.
+     * <p>
+     * EXPERIMENTAL: The standard SQL <code>MULTISET</code> operator is poorly
+     * supported by most dialects. As such, it needs to be emulated using
+     * elaborate mappings to:
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <R extends Record> Field<Result<R>> multiset(Select<R> select) {
+        return new Multiset<>(select);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Aggregate functions
     // -------------------------------------------------------------------------

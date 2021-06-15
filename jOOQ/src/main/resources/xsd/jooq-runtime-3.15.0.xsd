@@ -552,6 +552,18 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="emulateList" type="jooq-runtime:NestedCollectionEmulation" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] Whether <code>LIST</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="emulateMultiset" type="jooq-runtime:NestedCollectionEmulation" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] Whether <code>MULTISET</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="emulateSet" type="jooq-runtime:NestedCollectionEmulation" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] Whether <code>SET</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="executeUpdateWithoutWhere" type="jooq-runtime:ExecuteWithoutWhere" minOccurs="0" maxOccurs="1" default="LOG_DEBUG">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1365,6 +1377,29 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
     
       <!-- Fetch intermediate results only when explicitly requested -->
       <enumeration value="WHEN_RESULT_REQUESTED"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="NestedCollectionEmulation">
+    <restriction base="string">
+    
+      <!-- Generate native LIST, SET, MULTISET syntax irrespective of support -->
+      <enumeration value="NATIVE"/>
+    
+      <!-- Generate native LIST, SET, MULTISET syntax if supported, or the most optimal emulation, otherwise -->
+      <enumeration value="DEFAULT"/>
+    
+      <!-- Emulate LIST, SET, MULTISET syntax using ARRAY and ROW -->
+      <enumeration value="ARRAY"/>
+    
+      <!-- Emulate LIST, SET, MULTISET syntax using XML -->
+      <enumeration value="XML"/>
+    
+      <!-- Emulate LIST, SET, MULTISET syntax using JSON -->
+      <enumeration value="JSON"/>
+    
+      <!-- Emulate LIST, SET, MULTISET syntax using JSONB -->
+      <enumeration value="JSONB"/>
     </restriction>
   </simpleType>
 </schema>

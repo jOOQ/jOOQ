@@ -76,6 +76,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -124,11 +125,15 @@ import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
+import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.enums;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
+import static org.jooq.impl.Tools.newRecord;
+import static org.jooq.impl.Tools.row0;
+import static org.jooq.impl.Tools.uncoerce;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
@@ -207,6 +212,7 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
+import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
@@ -232,7 +238,7 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 // ...
 
@@ -3773,16 +3779,47 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             throw new UnsupportedOperationException("Cannot bind a value of type Result to a SQLOutput");
         }
 
+        private final Result<?> copy(Scope ctx, Multiset<?> field, Result<?> x) {
+            Select<?> select = ((Multiset<?>) field).select;
+            Class<? extends Record> type = select.getRecordType();
+            AbstractRow<?> row = row0(select.getSelect());
+            ResultImpl<Record> result = new ResultImpl<>(ctx.configuration(), row);
+
+            for (Record record : x)
+                result.add(newRecord(true, type, row, ctx.configuration())
+                    .operate(((AbstractRecord) record).new TransferRecordState<Record>(null)));
+
+            return result;
+        }
+
         @Override
         final Result<?> get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            ResultSet nested = Convert.convert(ctx.resultSet().getObject(ctx.index()), ResultSet.class);
-            return DSL.using(ctx.configuration()).fetch(nested);
+            Field<?> field = uncoerce(ctx.field());
+
+            if (field instanceof Multiset) {
+                switch (emulateMultiset(ctx.configuration())) {
+                    case ARRAY:
+                        return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetch(ctx.resultSet().getArray(ctx.index()).getResultSet()));
+
+                    case JSON:
+                    case JSONB:
+
+                        // [#12012] TODO: Can we avoid the intermediate Result?
+                        return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetchFromJSON(ctx.resultSet().getString(ctx.index())));
+
+                    case XML:
+
+                        // [#12012] TODO: Can we avoid the intermediate Result?
+                        return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetchFromXML(ctx.resultSet().getString(ctx.index())));
+                }
+            }
+
+            return ctx.configuration().dsl().fetch(convert(ctx.resultSet().getObject(ctx.index()), ResultSet.class));
         }
 
         @Override
         final Result<?> get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            ResultSet nested = Convert.convert(ctx.statement().getObject(ctx.index()), ResultSet.class);
-            return DSL.using(ctx.configuration()).fetch(nested);
+            return ctx.configuration().dsl().fetch(convert(ctx.statement().getObject(ctx.index()), ResultSet.class));
         }
 
         @Override

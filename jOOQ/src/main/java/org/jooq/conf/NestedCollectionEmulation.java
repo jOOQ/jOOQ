@@ -14,7 +14,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *     &lt;enumeration value="NATIVE"/&gt;
  *     &lt;enumeration value="DEFAULT"/&gt;
- *     &lt;enumeration value="ARRAY"/&gt;
  *     &lt;enumeration value="XML"/&gt;
  *     &lt;enumeration value="JSON"/&gt;
  *     &lt;enumeration value="JSONB"/&gt;
@@ -29,7 +28,6 @@ public enum NestedCollectionEmulation {
 
     NATIVE,
     DEFAULT,
-    ARRAY,
     XML,
     JSON,
     JSONB;

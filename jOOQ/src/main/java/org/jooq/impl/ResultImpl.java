@@ -102,7 +102,7 @@ import org.jooq.tools.jdbc.MockResultSet;
 @SuppressWarnings({"rawtypes", "unchecked" })
 final class ResultImpl<R extends Record> extends AbstractResult<R> implements Result<R> {
 
-    private final List<R>     records;
+    private final List<R> records;
 
     ResultImpl(Configuration configuration, Collection<? extends Field<?>> fields) {
         this(configuration, Tools.row0(fields));

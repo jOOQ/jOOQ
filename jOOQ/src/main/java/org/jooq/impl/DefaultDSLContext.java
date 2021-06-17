@@ -1424,50 +1424,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Result<Record> fetchFromJSON(String string) {
-        return new JSONReader(this).read(string);
+        return new JSONReader<Record>(this, null, null).read(string);
     }
 
     @Override
     public Result<Record> fetchFromXML(String string) {
-        try {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-
-            // -----------------------------------------------------------------
-            // [JOOX #136] FIX START: Prevent OWASP attack vectors
-            try {
-                factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-            }
-            catch (ParserConfigurationException ignore) {}
-
-            try {
-                factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
-            }
-            catch (ParserConfigurationException ignore) {}
-
-            try {
-                factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-            }
-            catch (ParserConfigurationException ignore) {}
-
-            // [#149] Not implemented on Android
-            try {
-                factory.setXIncludeAware(false);
-            }
-            catch (UnsupportedOperationException ignore) {}
-
-            // [JOOX #136] FIX END
-            // -----------------------------------------------------------------
-
-            SAXParser saxParser = factory.newSAXParser();
-            // TODO: Why does the SAXParser replace \r by \n?
-
-            XMLHandler handler = new XMLHandler(this);
-            saxParser.parse(new ByteArrayInputStream(string.getBytes(configuration().charsetProvider().provide())), handler);
-            return handler.result;
-        }
-        catch (Exception e) {
-            throw new DataAccessException("Could not read the XML string", e);
-        }
+        return new XMLHandler<>(this, null, null).read(string);
     }
 
     @Override

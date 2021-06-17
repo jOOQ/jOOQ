@@ -38,8 +38,10 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.array;
+import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonObject;
+import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.select;
@@ -52,11 +54,9 @@ import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Context;
-import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Select;
@@ -70,9 +70,9 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
     final Select<R> select;
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("unchecked")
     Multiset(Select<R> select) {
-        super(N_MULTISET, (DataType) SQLDataType.RESULT);
+        super(N_MULTISET, new MultisetDataType<>((AbstractRow<R>) select.fieldsRow(), select.getRecordType()));
 
         this.select = select;
     }
@@ -81,12 +81,6 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (emulateMultiset(ctx.configuration())) {
-            case ARRAY: {
-                Table<?> t = select.asTable("t");
-                ctx.visit(array(select((SelectField<R>) t.fieldsRow()).from(t)));
-                break;
-            }
-
             case JSON: {
                 switch (ctx.family()) {
 
@@ -102,7 +96,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                     default:
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         Table<?> t = select.asTable("t");
-                        visitSubquery(ctx, select(jsonArrayAgg(jsonObject(t.fields()))).from(t), true);
+                        visitSubquery(ctx, select(DSL.coalesce(jsonArrayAgg(jsonObject(t.fields())), jsonArray())).from(t), true);
                         break;
                 }
 
@@ -124,7 +118,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                     default:
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         Table<?> t = select.asTable("t");
-                        visitSubquery(ctx, select(jsonbArrayAgg(jsonbObject(t.fields()))).from(t), true);
+                        visitSubquery(ctx, select(DSL.coalesce(jsonbArrayAgg(jsonbObject(t.fields())), jsonbArray())).from(t), true);
                         break;
                 }
 

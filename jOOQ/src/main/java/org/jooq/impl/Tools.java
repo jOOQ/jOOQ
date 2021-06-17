@@ -5774,7 +5774,7 @@ final class Tools {
 
                 case H2:
                 case POSTGRES:
-                    return NestedCollectionEmulation.ARRAY;
+                    return NestedCollectionEmulation.JSONB;
 
                 case MARIADB:
                 case MYSQL:

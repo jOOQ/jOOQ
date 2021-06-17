@@ -816,8 +816,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             else {
                 writer.append(">");
 
-                if (value instanceof Formattable)
-                    ((Formattable) value).formatXML(writer, format);
+                if (value instanceof Formattable) {
+                    writer.append(newline).append(format.indentString(recordLevel + 2));
+                    ((Formattable) value).formatXML(writer, format.globalIndent(format.indent() * (recordLevel + 2)));
+                    writer.append(newline).append(format.indentString(recordLevel + 1));
+                }
                 else if (value instanceof XML && !format.quoteNested())
                     writer.append(((XML) value).data());
                 else

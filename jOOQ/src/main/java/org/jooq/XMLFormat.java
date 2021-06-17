@@ -55,6 +55,7 @@ public final class XMLFormat {
     final boolean                 xmlns;
     final boolean                 format;
     final String                  newline;
+    final int                     globalIndent;
     final int                     indent;
     final String[]                indented;
     final boolean                 header;
@@ -66,6 +67,7 @@ public final class XMLFormat {
             true,
             false,
             "\n",
+            0,
             2,
             null,
             true,
@@ -78,6 +80,7 @@ public final class XMLFormat {
         boolean xmlns,
         boolean format,
         String newline,
+        int globalIndent,
         int indent,
         String[] indented,
         boolean header,
@@ -87,6 +90,7 @@ public final class XMLFormat {
         this.xmlns = xmlns;
         this.format = format;
         this.newline = newline;
+        this.globalIndent = globalIndent;
         this.indent = indent;
         this.indented = indented != null ? indented : new String[] {
                                                 "",
@@ -107,6 +111,7 @@ public final class XMLFormat {
             newXmlns,
             format,
             newline,
+            globalIndent,
             indent,
             indented,
             header,
@@ -130,6 +135,7 @@ public final class XMLFormat {
             xmlns,
             newFormat,
             newline,
+            globalIndent,
             indent,
             null,
             header,
@@ -153,6 +159,7 @@ public final class XMLFormat {
             xmlns,
             format,
             newNewline,
+            globalIndent,
             indent,
             indented,
             header,
@@ -169,13 +176,38 @@ public final class XMLFormat {
     }
 
     /**
-     * The new indentation value, defaulting to <code>2</code>.
+     * The new global indentation size applied on all levels, defaulting to <code>0</code>.
+     */
+    public final XMLFormat globalIndent(int newGlobalIndent) {
+        return new XMLFormat(
+            xmlns,
+            format,
+            newline,
+            newGlobalIndent,
+            indent,
+            null,
+            header,
+            recordFormat,
+            quoteNested
+        );
+    }
+
+    /**
+     * The global indentation applied on all levels.
+     */
+    public final int globalIndent() {
+        return globalIndent;
+    }
+
+    /**
+     * The new indentation size per level value, defaulting to <code>2</code>.
      */
     public final XMLFormat indent(int newIndent) {
         return new XMLFormat(
             xmlns,
             format,
             newline,
+            globalIndent,
             newIndent,
             null,
             header,
@@ -185,7 +217,7 @@ public final class XMLFormat {
     }
 
     /**
-     * The indentation.
+     * The indentation size per level.
      */
     public final int indent() {
         return indent;
@@ -195,10 +227,12 @@ public final class XMLFormat {
      * Convenience method to get an indentation string at a given level.
      */
     public final String indentString(int level) {
-        if (level < indented.length)
-            return indented[level];
+        int i = level + globalIndent / indent;
+
+        if (i < indented.length)
+            return indented[i];
         else if (format)
-            return rightPad("", indent * level);
+            return rightPad("", globalIndent + indent * level);
         else
             return "";
     }
@@ -217,6 +251,7 @@ public final class XMLFormat {
             xmlns,
             format,
             newline,
+            globalIndent,
             indent,
             indented,
             newHeader,
@@ -241,6 +276,7 @@ public final class XMLFormat {
             xmlns,
             format,
             newline,
+            globalIndent,
             indent,
             indented,
             header,
@@ -266,6 +302,7 @@ public final class XMLFormat {
             xmlns,
             format,
             newline,
+            globalIndent,
             indent,
             indented,
             header,

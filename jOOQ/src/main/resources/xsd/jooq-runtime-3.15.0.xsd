@@ -1389,9 +1389,10 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <!-- Generate native LIST, SET, MULTISET syntax if supported, or the most optimal emulation, otherwise -->
       <enumeration value="DEFAULT"/>
     
-      <!-- Emulate LIST, SET, MULTISET syntax using ARRAY and ROW -->
+      <!-- Emulate LIST, SET, MULTISET syntax using ARRAY and ROW 
       <enumeration value="ARRAY"/>
-    
+        -->
+        
       <!-- Emulate LIST, SET, MULTISET syntax using XML -->
       <enumeration value="XML"/>
     

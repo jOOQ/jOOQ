@@ -44,13 +44,10 @@ import org.jooq.Collation;
 import org.jooq.Field;
 import org.jooq.Nullability;
 import org.jooq.Record;
-import org.jooq.RecordType;
 import org.jooq.Row;
 
-import org.jetbrains.annotations.Nullable;
-
 /**
- * A wrapper for anonymous array data types
+ * A wrapper for anonymous row data types.
  *
  * @author Lukas Eder
  */

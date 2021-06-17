@@ -37,21 +37,21 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.fields;
+import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -69,20 +69,24 @@ import org.jooq.tools.json.JSONParser;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked" })
-final class JSONReader {
+final class JSONReader<R extends Record> {
 
-    private final DSLContext ctx;
+    private final DSLContext         ctx;
+    private final AbstractRow<R>     row;
+    private final Class<? extends R> recordType;
 
-    JSONReader(DSLContext ctx) {
+    JSONReader(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType) {
         this.ctx = ctx;
+        this.row = row;
+        this.recordType = recordType != null ? recordType : (Class<? extends R>) Record.class;
     }
 
-    final Result<Record> read(String string) {
+    final Result<R> read(String string) {
         return read(new StringReader(string));
     }
 
     @SuppressWarnings("rawtypes")
-    final Result<Record> read(final Reader reader) {
+    final Result<R> read(final Reader reader) {
         try {
             Object root = new JSONParser().parse(reader, new ContainerFactory() {
                 @Override
@@ -96,11 +100,11 @@ final class JSONReader {
                 }
             });
 
-            List<Field<?>> f = new ArrayList<>();
+            AbstractRow<R> actualRow = row;
+            List<Field<?>> header = new ArrayList<>();
 
             List<?> records;
-            Result<Record> result = null;
-            Map<String, Integer> fieldIndexes = null;
+            Result<R> result = null;
 
             if (root instanceof Map) {
                 Map<String, Object> o1 = (Map<String, Object>) root;
@@ -114,66 +118,58 @@ final class JSONReader {
                         String name = field.get("name");
                         String type = field.get("type");
 
-                        f.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
+                        header.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
                     }
-
-                    result = ctx.newResult(f);
                 }
 
                 records = (List<?>) o1.get("records");
             }
-            else {
+            else
                 records = (List<?>) root;
-            }
+
+            if (actualRow == null && !header.isEmpty())
+                actualRow = (AbstractRow<R>) Tools.row0(header);
+
+            if (actualRow != null)
+                result = new ResultImpl<>(ctx.configuration(), actualRow);
 
             for (Object o3 : records) {
                 if (o3 instanceof Map) {
                     Map<String, Object> record = (Map<String, Object>) o3;
-                    String[] values = new String[record.size()];
 
                     if (result == null) {
-                        if (f.isEmpty())
+                        if (header.isEmpty())
                             for (String name : record.keySet())
-                                f.add(field(name(name), VARCHAR));
+                                header.add(field(name(name), VARCHAR));
 
-                        result = ctx.newResult(f);
+                        result = new ResultImpl<>(ctx.configuration(), actualRow = (AbstractRow<R>) Tools.row0(header));
                     }
 
-                    if (fieldIndexes == null) {
-                        fieldIndexes = new HashMap<>();
-
-                        int i = 0;
-                        for (String name : record.keySet())
-                            fieldIndexes.put(name, i++);
-                    }
-
-                    for (Entry<String, Object> entry : record.entrySet())
-                        values[fieldIndexes.get(entry.getKey())] = "" + entry.getValue();
-
-                    Record r = ctx.newRecord(f);
-                    r.from(values);
-                    result.add(r);
+                    result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
+                        r.fromMap(record);
+                        return r;
+                    }));
                 }
                 else {
                     List record = (List) o3;
 
                     if (result == null) {
-                        if (f.isEmpty())
-                            f.addAll(Arrays.asList(Tools.fields(record.size())));
+                        if (header.isEmpty())
+                            header.addAll(asList(fields(record.size())));
 
-                        result = ctx.newResult(f);
+                        result = new ResultImpl<>(ctx.configuration(), actualRow = (AbstractRow<R>) Tools.row0(header));
                     }
-
-                    Record r = ctx.newRecord(f);
 
                     // [#8829] LoaderImpl expects binary data to be encoded in base64,
                     //         not according to org.jooq.tools.Convert
-                    for (int i = 0; i < f.size(); i++)
-                        if (f.get(i).getType() == byte[].class && record.get(i) instanceof String)
+                    for (int i = 0; i < result.fields().length; i++)
+                        if (result.field(i).getType() == byte[].class && record.get(i) instanceof String)
                             record.set(i, DatatypeConverter.parseBase64Binary((String) record.get(i)));
 
-                    r.from(record);
-                    result.add(r);
+                    result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
+                        r.from(record);
+                        return r;
+                    }));
                 }
             }
 

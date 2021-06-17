@@ -216,6 +216,7 @@ import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
+import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
@@ -3779,42 +3780,32 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             throw new UnsupportedOperationException("Cannot bind a value of type Result to a SQLOutput");
         }
 
-        private final Result<?> copy(Scope ctx, Multiset<?> field, Result<?> x) {
-            Select<?> select = ((Multiset<?>) field).select;
-            Class<? extends Record> type = select.getRecordType();
-            AbstractRow<?> row = row0(select.getSelect());
-            ResultImpl<Record> result = new ResultImpl<>(ctx.configuration(), row);
-
-            for (Record record : x)
-                result.add(newRecord(true, type, row, ctx.configuration())
-                    .operate(((AbstractRecord) record).new TransferRecordState<Record>(null)));
-
-            return result;
-        }
-
         @Override
         final Result<?> get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             Field<?> field = uncoerce(ctx.field());
 
-            if (field instanceof Multiset) {
-                switch (emulateMultiset(ctx.configuration())) {
-                    case ARRAY:
-                        return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetch(ctx.resultSet().getArray(ctx.index()).getResultSet()));
+            if (field.getDataType() instanceof MultisetDataType)
+                return extracted(ctx, (MultisetDataType<?>) field.getDataType());
+            else
+                return ctx.configuration().dsl().fetch(convert(ctx.resultSet().getObject(ctx.index()), ResultSet.class));
+        }
 
-                    case JSON:
-                    case JSONB:
+        private final <R extends Record> Result<R> extracted(BindingGetResultSetContext<U> ctx, MultisetDataType<R> type) throws SQLException {
+            NestedCollectionEmulation emulation = emulateMultiset(ctx.configuration());
 
-                        // [#12012] TODO: Can we avoid the intermediate Result?
-                        return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetchFromJSON(ctx.resultSet().getString(ctx.index())));
+            switch (emulation) {
+                // case ARRAY:
+                //     return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetch(ctx.resultSet().getArray(ctx.index()).getResultSet()));
 
-                    case XML:
+                case JSON:
+                case JSONB:
+                    return new JSONReader<>(ctx.dsl(), type.row, type.recordType).read(ctx.resultSet().getString(ctx.index()));
 
-                        // [#12012] TODO: Can we avoid the intermediate Result?
-                        return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetchFromXML(ctx.resultSet().getString(ctx.index())));
-                }
+                case XML:
+                    return new XMLHandler<>(ctx.dsl(), type.row, type.recordType).read(ctx.resultSet().getString(ctx.index()));
             }
 
-            return ctx.configuration().dsl().fetch(convert(ctx.resultSet().getObject(ctx.index()), ResultSet.class));
+            throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);
         }
 
         @Override

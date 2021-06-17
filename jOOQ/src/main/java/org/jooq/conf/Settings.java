@@ -2281,7 +2281,7 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] Whether <code>LIST</code> support should be emulated.
      * 
      */
     public NestedCollectionEmulation getEmulateList() {
@@ -2289,7 +2289,7 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] Whether <code>LIST</code> support should be emulated.
      * 
      */
     public void setEmulateList(NestedCollectionEmulation value) {
@@ -2313,7 +2313,7 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] Whether <code>SET</code> support should be emulated.
      * 
      */
     public NestedCollectionEmulation getEmulateSet() {
@@ -2321,7 +2321,7 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] Whether <code>SET</code> support should be emulated.
      * 
      */
     public void setEmulateSet(NestedCollectionEmulation value) {
@@ -3676,7 +3676,7 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] Whether <code>LIST</code> support should be emulated.
      * 
      */
     public Settings withEmulateList(NestedCollectionEmulation value) {
@@ -3694,7 +3694,7 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] Whether <code>SET</code> support should be emulated.
      * 
      */
     public Settings withEmulateSet(NestedCollectionEmulation value) {

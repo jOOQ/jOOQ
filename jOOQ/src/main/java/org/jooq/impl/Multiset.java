@@ -77,7 +77,6 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
         this.select = select;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {
         switch (emulateMultiset(ctx.configuration())) {

@@ -461,6 +461,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         try {
             String separator;
             int recordLevel = format.header() ? 2 : 1;
+            boolean hasRecords = false;
 
             if (format.header()) {
                 if (format.format())
@@ -552,6 +553,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             switch (format.recordFormat()) {
                 case ARRAY:
                     for (Record record : this) {
+                        hasRecords = true;
                         writer.append(separator);
 
                         if (format.format())
@@ -564,6 +566,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     break;
                 case OBJECT:
                     for (Record record : this) {
+                        hasRecords = true;
                         writer.append(separator);
 
                         if (format.format())
@@ -578,17 +581,23 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     throw new IllegalArgumentException("Format not supported: " + format);
             }
 
-            if (format.format()) {
+            if (format.format() && hasRecords) {
                 writer.append(format.newline());
 
                 if (format.header())
                     writer.append(format.indentString(1));
+                else
+                    writer.append(format.indentString(0));
             }
 
             writer.append(']');
 
-            if (format.header())
-                writer.append(format.newline()).append('}');
+            if (format.header()) {
+                if (format.format())
+                    writer.append(format.newline()).append(format.indentString(0));
+
+                writer.append('}');
+            }
 
             writer.flush();
         }
@@ -647,17 +656,20 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         int size = fields.size();
         boolean wrapRecords = format.wrapSingleColumnRecords() || size > 1;
 
+        if (format.format())
+            writer.append(format.indentString(recordLevel));
+
         if (wrapRecords)
-            if (format.format())
-                writer.append(format.indentString(recordLevel)).append('{');
-            else
-                writer.append('{');
+            writer.append('{');
 
         for (int index = 0; index < size; index++) {
             writer.append(separator);
 
             if (format.format())
-                writer.append(format.newline()).append(format.indentString(recordLevel + 1));
+                if (size > 1)
+                    writer.append(format.newline()).append(format.indentString(recordLevel + 1));
+                else if (format.wrapSingleColumnRecords())
+                    writer.append(' ');
 
             if (wrapRecords) {
                 JSONValue.writeJSONString(record.field(index).getName(), writer);
@@ -667,12 +679,16 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     writer.append(' ');
             }
 
-            formatJSON0(record.get(index), writer, format);
+            formatJSON0(record.get(index), writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 1)));
+
+            if (format.format() && format.wrapSingleColumnRecords() && size == 1)
+                writer.append(' ');
+
             separator = ",";
         }
 
         if (wrapRecords)
-            if (format.format())
+            if (format.format() && size > 1)
                 writer.append(format.newline()).append(format.indentString(recordLevel)).append('}');
             else
                 writer.append('}');
@@ -686,26 +702,34 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         Writer writer
     ) throws java.io.IOException {
         String separator = "";
-
         int size = fields.size();
-        if (format.wrapSingleColumnRecords() || size > 1)
-            if (format.format())
-                writer.append(format.indentString(recordLevel)).append('[');
-            else
-                writer.append('[');
+        boolean wrapRecords = format.wrapSingleColumnRecords() || size > 1;
+
+        if (format.format())
+            writer.append(format.indentString(recordLevel));
+
+        if (wrapRecords)
+            writer.append('[');
 
         for (int index = 0; index < size; index++) {
             writer.append(separator);
 
             if (format.format())
-                writer.append(format.newline()).append(format.indentString(recordLevel + 1));
+                if (size > 1)
+                    writer.append(format.newline()).append(format.indentString(recordLevel + 1));
+                else if (format.wrapSingleColumnRecords())
+                    writer.append(' ');
 
-            formatJSON0(record.get(index), writer, format);
+            formatJSON0(record.get(index), writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 1)));
+
+            if (format.format() && format.wrapSingleColumnRecords() && size == 1)
+                writer.append(' ');
+
             separator = ",";
         }
 
-        if (format.wrapSingleColumnRecords() || size > 1)
-            if (format.format())
+        if (wrapRecords)
+            if (format.format() && size > 1)
                 writer.append(format.newline()).append(format.indentString(recordLevel)).append(']');
             else
                 writer.append(']');
@@ -771,7 +795,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             if (format.header())
                 writer.append(newline).append(format.indentString(1)).append("</records>");
 
-            writer.append(newline).append("</result>");
+            writer.append(newline).append(format.indentString(0)).append("</result>");
             writer.flush();
         }
         catch (java.io.IOException e) {
@@ -818,7 +842,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 if (value instanceof Formattable) {
                     writer.append(newline).append(format.indentString(recordLevel + 2));
-                    ((Formattable) value).formatXML(writer, format.globalIndent(format.indent() * (recordLevel + 2)));
+                    ((Formattable) value).formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
                     writer.append(newline).append(format.indentString(recordLevel + 1));
                 }
                 else if (value instanceof XML && !format.quoteNested())

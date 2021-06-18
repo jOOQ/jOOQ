@@ -73,6 +73,7 @@ public final class JSONFormat {
 
     final boolean                  format;
     final String                   newline;
+    final int                      globalIndent;
     final int                      indent;
     final String[]                 indented;
     final boolean                  header;
@@ -84,6 +85,7 @@ public final class JSONFormat {
         this(
             false,
             "\n",
+            0,
             2,
             null,
             true,
@@ -96,6 +98,7 @@ public final class JSONFormat {
     private JSONFormat(
         boolean format,
         String newline,
+        int globalIndent,
         int indent,
         String[] indented,
         boolean header,
@@ -105,6 +108,7 @@ public final class JSONFormat {
     ) {
         this.format = format;
         this.newline = newline;
+        this.globalIndent = globalIndent;
         this.indent = indent;
         this.indented = indented != null ? indented : new String[] {
                                                 "",
@@ -125,6 +129,7 @@ public final class JSONFormat {
         return new JSONFormat(
             newFormat,
             newline,
+            globalIndent,
             indent,
             null,
             header,
@@ -148,6 +153,7 @@ public final class JSONFormat {
         return new JSONFormat(
             format,
             newNewline,
+            globalIndent,
             indent,
             indented,
             header,
@@ -165,12 +171,37 @@ public final class JSONFormat {
     }
 
     /**
-     * The new indentation value, defaulting to <code>2</code>.
+     * The new global indentation size applied on all levels, defaulting to <code>0</code>.
+     */
+    public final JSONFormat globalIndent(int newGlobalIndent) {
+        return new JSONFormat(
+            format,
+            newline,
+            newGlobalIndent,
+            indent,
+            null,
+            header,
+            recordFormat,
+            wrapSingleColumnRecords,
+            quoteNested
+        );
+    }
+
+    /**
+     * The global indentation applied on all levels.
+     */
+    public final int globalIndent() {
+        return globalIndent;
+    }
+
+    /**
+     * The new indentation size per level value, defaulting to <code>2</code>.
      */
     public final JSONFormat indent(int newIndent) {
         return new JSONFormat(
             format,
             newline,
+            globalIndent,
             newIndent,
             null,
             header,
@@ -181,7 +212,7 @@ public final class JSONFormat {
     }
 
     /**
-     * The indentation.
+     * The indentation size per level.
      */
     public final int indent() {
         return indent;
@@ -191,10 +222,12 @@ public final class JSONFormat {
      * Convenience method to get an indentation string at a given level.
      */
     public final String indentString(int level) {
-        if (level < indented.length)
-            return indented[level];
+        int i = level + globalIndent / indent;
+
+        if (i < indented.length)
+            return indented[i];
         else if (format)
-            return rightPad("", indent * level);
+            return rightPad("", globalIndent + indent * level);
         else
             return "";
     }
@@ -207,6 +240,7 @@ public final class JSONFormat {
         return new JSONFormat(
             format,
             newline,
+            globalIndent,
             indent,
             indented,
             newHeader,
@@ -232,6 +266,7 @@ public final class JSONFormat {
         return new JSONFormat(
             format,
             newline,
+            globalIndent,
             indent,
             indented,
             header,
@@ -256,6 +291,7 @@ public final class JSONFormat {
         return new JSONFormat(
             format,
             newline,
+            globalIndent,
             indent,
             indented,
             header,
@@ -280,6 +316,7 @@ public final class JSONFormat {
         return new JSONFormat(
             format,
             newline,
+            globalIndent,
             indent,
             indented,
             header,

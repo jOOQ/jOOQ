@@ -1532,6 +1532,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
     final void accept0(Context<?> context) {
 
 
@@ -3471,6 +3478,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final void initLockMode() {
         forLock().forLockMode = forLock().forLockMode == null ? ForLockMode.UPDATE : forLock().forLockMode;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

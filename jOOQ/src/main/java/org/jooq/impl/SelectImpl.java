@@ -1968,6 +1968,36 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final SelectImpl union(Select<? extends R> select) {
         return new SelectImpl(getDelegate().union(select));

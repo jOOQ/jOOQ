@@ -452,6 +452,7 @@ final class Keywords {
     static final Keyword K_XML                              = keyword("xml");
     static final Keyword K_XMLEXISTS                        = keyword("xmlexists");
     static final Keyword K_XMLTABLE                         = keyword("xmltable");
+    static final Keyword K_XSINIL                           = keyword("xsinil");
     static final Keyword K_YEAR                             = keyword("year");
     static final Keyword K_YEAR_MONTH                       = keyword("year_month");
     static final Keyword K_YEAR_TO_DAY                      = keyword("year to day");

@@ -260,6 +260,7 @@ import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
 import org.jooq.JSONExistsOnStep;
+import org.jooq.JSONFormat;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONTableColumnsFirstStep;
@@ -372,6 +373,7 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.SelectForStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
@@ -422,8 +424,10 @@ import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 import org.jooq.XMLAttributes;
 import org.jooq.XMLExistsPassingStep;
+import org.jooq.XMLFormat;
 import org.jooq.XMLQueryPassingStep;
 import org.jooq.XMLTablePassingStep;
+import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.XMLParse.DocumentOrContent;
@@ -23652,7 +23656,43 @@ public class DSL {
      * <p>
      * EXPERIMENTAL: The standard SQL <code>MULTISET</code> operator is poorly
      * supported by most dialects. As such, it needs to be emulated using
-     * elaborate mappings to:
+     * elaborate mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
      */
     @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })

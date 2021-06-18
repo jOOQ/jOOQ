@@ -7553,6 +7553,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     else if (parseFunctionNameIf("MD5"))
                         return md5((Field) parseFieldParenthesised(S));
 
+                if (A.is(type))
+                    if ((field = parseMultisetValueConstructorIf()) != null)
+                        return field;
+
                 if ((field = parseFieldGreatestIf()) != null)
                     return field;
                 else if ((field = parseFieldLeastIf()) != null)
@@ -8646,6 +8650,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             else
                 throw expected("[", "(");
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseMultisetValueConstructorIf() {
+        if (parseKeywordIf("MULTISET")) {
+            if (parseIf('(')) {
+                SelectQueryImpl select = parseWithOrSelect();
+                parse(')');
+
+                return DSL.multiset(select);
+            }
+            else
+                throw expected("(");
         }
 
         return null;

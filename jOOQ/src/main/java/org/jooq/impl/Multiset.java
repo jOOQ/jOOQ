@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
@@ -79,6 +80,18 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
                 switch (ctx.family()) {
@@ -126,6 +139,9 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
             case XML: {
                 switch (ctx.family()) {
+
+
+
 
 
 

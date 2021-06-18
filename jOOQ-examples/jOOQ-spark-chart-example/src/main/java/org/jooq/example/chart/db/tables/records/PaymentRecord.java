@@ -21,7 +21,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PaymentRecord extends UpdatableRecordImpl<PaymentRecord> implements Record6<Integer, Integer, Integer, Integer, BigDecimal, LocalDateTime> {
 
-    private static final long serialVersionUID = -1124289195;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.payment.payment_id</code>.
@@ -284,11 +284,11 @@ public class PaymentRecord extends UpdatableRecordImpl<PaymentRecord> implements
     public PaymentRecord(Integer paymentId, Integer customerId, Integer staffId, Integer rentalId, BigDecimal amount, LocalDateTime paymentDate) {
         super(Payment.PAYMENT);
 
-        set(0, paymentId);
-        set(1, customerId);
-        set(2, staffId);
-        set(3, rentalId);
-        set(4, amount);
-        set(5, paymentDate);
+        setPaymentId(paymentId);
+        setCustomerId(customerId);
+        setStaffId(staffId);
+        setRentalId(rentalId);
+        setAmount(amount);
+        setPaymentDate(paymentDate);
     }
 }

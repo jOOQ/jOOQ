@@ -20,7 +20,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PaymentP2007_05Record extends TableRecordImpl<PaymentP2007_05Record> implements Record6<Integer, Integer, Integer, Integer, BigDecimal, LocalDateTime> {
 
-    private static final long serialVersionUID = -1146783539;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.payment_p2007_05.payment_id</code>.
@@ -274,11 +274,11 @@ public class PaymentP2007_05Record extends TableRecordImpl<PaymentP2007_05Record
     public PaymentP2007_05Record(Integer paymentId, Integer customerId, Integer staffId, Integer rentalId, BigDecimal amount, LocalDateTime paymentDate) {
         super(PaymentP2007_05.PAYMENT_P2007_05);
 
-        set(0, paymentId);
-        set(1, customerId);
-        set(2, staffId);
-        set(3, rentalId);
-        set(4, amount);
-        set(5, paymentDate);
+        setPaymentId(paymentId);
+        setCustomerId(customerId);
+        setStaffId(staffId);
+        setRentalId(rentalId);
+        setAmount(amount);
+        setPaymentDate(paymentDate);
     }
 }

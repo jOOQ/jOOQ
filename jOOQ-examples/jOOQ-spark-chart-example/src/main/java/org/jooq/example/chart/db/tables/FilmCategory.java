@@ -16,11 +16,13 @@ import org.jooq.Row3;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.FilmCategoryRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -30,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmCategory extends TableImpl<FilmCategoryRecord> {
 
-    private static final long serialVersionUID = 1712239705;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.film_category</code>
@@ -48,23 +50,24 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     /**
      * The column <code>public.film_category.film_id</code>.
      */
-    public final TableField<FilmCategoryRecord, Integer> FILM_ID = createField(DSL.name("film_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmCategoryRecord, Integer> FILM_ID = createField(DSL.name("film_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.film_category.category_id</code>.
      */
-    public final TableField<FilmCategoryRecord, Integer> CATEGORY_ID = createField(DSL.name("category_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmCategoryRecord, Integer> CATEGORY_ID = createField(DSL.name("category_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.film_category.last_update</code>.
      */
-    public final TableField<FilmCategoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<FilmCategoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.film_category</code> table reference
-     */
-    public FilmCategory() {
-        this(DSL.name("film_category"), null);
+    private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -81,12 +84,11 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
         this(alias, FILM_CATEGORY);
     }
 
-    private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.film_category</code> table reference
+     */
+    public FilmCategory() {
+        this(DSL.name("film_category"), null);
     }
 
     public <O extends Record> FilmCategory(Table<O> child, ForeignKey<O, FilmCategoryRecord> key) {
@@ -95,7 +97,7 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
@@ -104,21 +106,25 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     }
 
     @Override
-    public List<UniqueKey<FilmCategoryRecord>> getKeys() {
-        return Arrays.<UniqueKey<FilmCategoryRecord>>asList(Keys.FILM_CATEGORY_PKEY);
+    public List<ForeignKey<FilmCategoryRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.FILM_CATEGORY__FILM_CATEGORY_FILM_ID_FKEY, Keys.FILM_CATEGORY__FILM_CATEGORY_CATEGORY_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<FilmCategoryRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<FilmCategoryRecord, ?>>asList(Keys.FILM_CATEGORY__FILM_CATEGORY_FILM_ID_FKEY, Keys.FILM_CATEGORY__FILM_CATEGORY_CATEGORY_ID_FKEY);
-    }
+    private transient Film _film;
+    private transient Category _category;
 
     public Film film() {
-        return new Film(this, Keys.FILM_CATEGORY__FILM_CATEGORY_FILM_ID_FKEY);
+        if (_film == null)
+            _film = new Film(this, Keys.FILM_CATEGORY__FILM_CATEGORY_FILM_ID_FKEY);
+
+        return _film;
     }
 
     public Category category() {
-        return new Category(this, Keys.FILM_CATEGORY__FILM_CATEGORY_CATEGORY_ID_FKEY);
+        if (_category == null)
+            _category = new Category(this, Keys.FILM_CATEGORY__FILM_CATEGORY_CATEGORY_ID_FKEY);
+
+        return _category;
     }
 
     @Override

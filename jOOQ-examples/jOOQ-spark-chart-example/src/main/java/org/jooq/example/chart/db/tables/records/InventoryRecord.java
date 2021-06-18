@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InventoryRecord extends UpdatableRecordImpl<InventoryRecord> implements Record4<Integer, Integer, Integer, LocalDateTime> {
 
-    private static final long serialVersionUID = 494562705;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.inventory.inventory_id</code>.
@@ -211,9 +211,9 @@ public class InventoryRecord extends UpdatableRecordImpl<InventoryRecord> implem
     public InventoryRecord(Integer inventoryId, Integer filmId, Integer storeId, LocalDateTime lastUpdate) {
         super(Inventory.INVENTORY);
 
-        set(0, inventoryId);
-        set(1, filmId);
-        set(2, storeId);
-        set(3, lastUpdate);
+        setInventoryId(inventoryId);
+        setFilmId(filmId);
+        setStoreId(storeId);
+        setLastUpdate(lastUpdate);
     }
 }

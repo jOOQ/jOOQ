@@ -9,6 +9,7 @@ import org.jooq.Parameter;
 import org.jooq.example.chart.db.Public;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 
 
 /**
@@ -17,23 +18,23 @@ import org.jooq.impl.Internal;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InventoryInStock extends AbstractRoutine<Boolean> {
 
-    private static final long serialVersionUID = -198741027;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The parameter <code>public.inventory_in_stock.RETURN_VALUE</code>.
      */
-    public static final Parameter<Boolean> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BOOLEAN, false, false);
+    public static final Parameter<Boolean> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", SQLDataType.BOOLEAN, false, false);
 
     /**
      * The parameter <code>public.inventory_in_stock.p_inventory_id</code>.
      */
-    public static final Parameter<Integer> P_INVENTORY_ID = Internal.createParameter("p_inventory_id", org.jooq.impl.SQLDataType.INTEGER, false, false);
+    public static final Parameter<Integer> P_INVENTORY_ID = Internal.createParameter("p_inventory_id", SQLDataType.INTEGER, false, false);
 
     /**
      * Create a new routine call instance
      */
     public InventoryInStock() {
-        super("inventory_in_stock", Public.PUBLIC, org.jooq.impl.SQLDataType.BOOLEAN);
+        super("inventory_in_stock", Public.PUBLIC, SQLDataType.BOOLEAN);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(P_INVENTORY_ID);
@@ -47,7 +48,8 @@ public class InventoryInStock extends AbstractRoutine<Boolean> {
     }
 
     /**
-     * Set the <code>p_inventory_id</code> parameter to the function to be used with a {@link org.jooq.Select} statement
+     * Set the <code>p_inventory_id</code> parameter to the function to be used
+     * with a {@link org.jooq.Select} statement
      */
     public void setPInventoryId(Field<Integer> field) {
         setField(P_INVENTORY_ID, field);

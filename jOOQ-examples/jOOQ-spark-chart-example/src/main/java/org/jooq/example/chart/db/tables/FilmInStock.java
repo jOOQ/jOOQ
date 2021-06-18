@@ -5,16 +5,16 @@ package org.jooq.example.chart.db.tables;
 
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
-import org.jooq.Record;
 import org.jooq.Row1;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.FilmInStockRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -24,7 +24,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmInStock extends TableImpl<FilmInStockRecord> {
 
-    private static final long serialVersionUID = 350360627;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.film_in_stock</code>
@@ -42,13 +42,17 @@ public class FilmInStock extends TableImpl<FilmInStockRecord> {
     /**
      * The column <code>public.film_in_stock.p_film_count</code>.
      */
-    public final TableField<FilmInStockRecord, Integer> P_FILM_COUNT = createField(DSL.name("p_film_count"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<FilmInStockRecord, Integer> P_FILM_COUNT = createField(DSL.name("p_film_count"), SQLDataType.INTEGER, this, "");
 
-    /**
-     * Create a <code>public.film_in_stock</code> table reference
-     */
-    public FilmInStock() {
-        this(DSL.name("film_in_stock"), null);
+    private FilmInStock(Name alias, Table<FilmInStockRecord> aliased) {
+        this(alias, aliased, new Field[] {
+            DSL.val(null, SQLDataType.INTEGER),
+            DSL.val(null, SQLDataType.INTEGER)
+        });
+    }
+
+    private FilmInStock(Name alias, Table<FilmInStockRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.function());
     }
 
     /**
@@ -65,21 +69,16 @@ public class FilmInStock extends TableImpl<FilmInStockRecord> {
         this(alias, FILM_IN_STOCK);
     }
 
-    private FilmInStock(Name alias, Table<FilmInStockRecord> aliased) {
-        this(alias, aliased, new Field[2]);
-    }
-
-    private FilmInStock(Name alias, Table<FilmInStockRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
-    }
-
-    public <O extends Record> FilmInStock(Table<O> child, ForeignKey<O, FilmInStockRecord> key) {
-        super(child, key, FILM_IN_STOCK);
+    /**
+     * Create a <code>public.film_in_stock</code> table reference
+     */
+    public FilmInStock() {
+        this(DSL.name("film_in_stock"), null);
     }
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
@@ -120,20 +119,30 @@ public class FilmInStock extends TableImpl<FilmInStockRecord> {
     /**
      * Call this table-valued function
      */
-    public FilmInStock call(Integer pFilmId, Integer pStoreId) {
-        return new FilmInStock(DSL.name(getName()), null, new Field[] { 
-              DSL.val(pFilmId, org.jooq.impl.SQLDataType.INTEGER)
-            , DSL.val(pStoreId, org.jooq.impl.SQLDataType.INTEGER)
+    public FilmInStock call(
+          Integer pFilmId
+        , Integer pStoreId
+    ) {
+        FilmInStock result = new FilmInStock(DSL.name("film_in_stock"), null, new Field[] {
+            DSL.val(pFilmId, SQLDataType.INTEGER),
+            DSL.val(pStoreId, SQLDataType.INTEGER)
         });
+
+        return aliased() ? result.as(getUnqualifiedName()) : result;
     }
 
     /**
      * Call this table-valued function
      */
-    public FilmInStock call(Field<Integer> pFilmId, Field<Integer> pStoreId) {
-        return new FilmInStock(DSL.name(getName()), null, new Field[] { 
-              pFilmId
-            , pStoreId
+    public FilmInStock call(
+          Field<Integer> pFilmId
+        , Field<Integer> pStoreId
+    ) {
+        FilmInStock result = new FilmInStock(DSL.name("film_in_stock"), null, new Field[] {
+            pFilmId,
+            pStoreId
         });
+
+        return aliased() ? result.as(getUnqualifiedName()) : result;
     }
 }

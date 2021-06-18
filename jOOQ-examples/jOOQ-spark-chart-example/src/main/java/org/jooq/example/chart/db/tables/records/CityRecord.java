@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CityRecord extends UpdatableRecordImpl<CityRecord> implements Record4<Integer, String, Integer, LocalDateTime> {
 
-    private static final long serialVersionUID = 1903055275;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.city.city_id</code>.
@@ -211,9 +211,9 @@ public class CityRecord extends UpdatableRecordImpl<CityRecord> implements Recor
     public CityRecord(Integer cityId, String city, Integer countryId, LocalDateTime lastUpdate) {
         super(City.CITY);
 
-        set(0, cityId);
-        set(1, city);
-        set(2, countryId);
-        set(3, lastUpdate);
+        setCityId(cityId);
+        setCity(city);
+        setCountryId(countryId);
+        setLastUpdate(lastUpdate);
     }
 }

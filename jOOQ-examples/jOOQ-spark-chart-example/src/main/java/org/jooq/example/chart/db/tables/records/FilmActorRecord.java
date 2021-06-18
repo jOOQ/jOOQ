@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActorRecord extends UpdatableRecordImpl<FilmActorRecord> implements Record3<Integer, Integer, LocalDateTime> {
 
-    private static final long serialVersionUID = 1339507062;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.film_actor.actor_id</code>.
@@ -175,8 +175,8 @@ public class FilmActorRecord extends UpdatableRecordImpl<FilmActorRecord> implem
     public FilmActorRecord(Integer actorId, Integer filmId, LocalDateTime lastUpdate) {
         super(FilmActor.FILM_ACTOR);
 
-        set(0, actorId);
-        set(1, filmId);
-        set(2, lastUpdate);
+        setActorId(actorId);
+        setFilmId(filmId);
+        setLastUpdate(lastUpdate);
     }
 }

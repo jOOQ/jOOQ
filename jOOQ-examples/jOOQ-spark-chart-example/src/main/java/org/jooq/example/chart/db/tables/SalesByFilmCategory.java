@@ -14,9 +14,11 @@ import org.jooq.Row2;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.SalesByFilmCategoryRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -26,7 +28,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
 
-    private static final long serialVersionUID = -1263636232;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.sales_by_film_category</code>
@@ -44,12 +46,36 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     /**
      * The column <code>public.sales_by_film_category.category</code>.
      */
-    public final TableField<SalesByFilmCategoryRecord, String> CATEGORY = createField(DSL.name("category"), org.jooq.impl.SQLDataType.VARCHAR(25), this, "");
+    public final TableField<SalesByFilmCategoryRecord, String> CATEGORY = createField(DSL.name("category"), SQLDataType.VARCHAR(25), this, "");
 
     /**
      * The column <code>public.sales_by_film_category.total_sales</code>.
      */
-    public final TableField<SalesByFilmCategoryRecord, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), org.jooq.impl.SQLDataType.NUMERIC, this, "");
+    public final TableField<SalesByFilmCategoryRecord, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.NUMERIC, this, "");
+
+    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"sales_by_film_category\" as  SELECT c.name AS category,\n    sum(p.amount) AS total_sales\n   FROM (((((payment p\n     JOIN rental r ON ((p.rental_id = r.rental_id)))\n     JOIN inventory i ON ((r.inventory_id = i.inventory_id)))\n     JOIN film f ON ((i.film_id = f.film_id)))\n     JOIN film_category fc ON ((f.film_id = fc.film_id)))\n     JOIN category c ON ((fc.category_id = c.category_id)))\n  GROUP BY c.name\n  ORDER BY (sum(p.amount)) DESC;"));
+    }
+
+    /**
+     * Create an aliased <code>public.sales_by_film_category</code> table
+     * reference
+     */
+    public SalesByFilmCategory(String alias) {
+        this(DSL.name(alias), SALES_BY_FILM_CATEGORY);
+    }
+
+    /**
+     * Create an aliased <code>public.sales_by_film_category</code> table
+     * reference
+     */
+    public SalesByFilmCategory(Name alias) {
+        this(alias, SALES_BY_FILM_CATEGORY);
+    }
 
     /**
      * Create a <code>public.sales_by_film_category</code> table reference
@@ -58,35 +84,13 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
         this(DSL.name("sales_by_film_category"), null);
     }
 
-    /**
-     * Create an aliased <code>public.sales_by_film_category</code> table reference
-     */
-    public SalesByFilmCategory(String alias) {
-        this(DSL.name(alias), SALES_BY_FILM_CATEGORY);
-    }
-
-    /**
-     * Create an aliased <code>public.sales_by_film_category</code> table reference
-     */
-    public SalesByFilmCategory(Name alias) {
-        this(alias, SALES_BY_FILM_CATEGORY);
-    }
-
-    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
-    }
-
     public <O extends Record> SalesByFilmCategory(Table<O> child, ForeignKey<O, SalesByFilmCategoryRecord> key) {
         super(child, key, SALES_BY_FILM_CATEGORY);
     }
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override

@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RentalRecord extends UpdatableRecordImpl<RentalRecord> implements Record7<Integer, LocalDateTime, Integer, Integer, LocalDateTime, Integer, LocalDateTime> {
 
-    private static final long serialVersionUID = -1507881025;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.rental.rental_id</code>.
@@ -319,12 +319,12 @@ public class RentalRecord extends UpdatableRecordImpl<RentalRecord> implements R
     public RentalRecord(Integer rentalId, LocalDateTime rentalDate, Integer inventoryId, Integer customerId, LocalDateTime returnDate, Integer staffId, LocalDateTime lastUpdate) {
         super(Rental.RENTAL);
 
-        set(0, rentalId);
-        set(1, rentalDate);
-        set(2, inventoryId);
-        set(3, customerId);
-        set(4, returnDate);
-        set(5, staffId);
-        set(6, lastUpdate);
+        setRentalId(rentalId);
+        setRentalDate(rentalDate);
+        setInventoryId(inventoryId);
+        setCustomerId(customerId);
+        setReturnDate(returnDate);
+        setStaffId(staffId);
+        setLastUpdate(lastUpdate);
     }
 }

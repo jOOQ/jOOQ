@@ -18,12 +18,14 @@ import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.AddressRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -33,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Address extends TableImpl<AddressRecord> {
 
-    private static final long serialVersionUID = -523875203;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.address</code>
@@ -51,48 +53,49 @@ public class Address extends TableImpl<AddressRecord> {
     /**
      * The column <code>public.address.address_id</code>.
      */
-    public final TableField<AddressRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('address_address_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<AddressRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.address.address</code>.
      */
-    public final TableField<AddressRecord, String> ADDRESS_ = createField(DSL.name("address"), org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<AddressRecord, String> ADDRESS_ = createField(DSL.name("address"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>public.address.address2</code>.
      */
-    public final TableField<AddressRecord, String> ADDRESS2 = createField(DSL.name("address2"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<AddressRecord, String> ADDRESS2 = createField(DSL.name("address2"), SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>public.address.district</code>.
      */
-    public final TableField<AddressRecord, String> DISTRICT = createField(DSL.name("district"), org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false), this, "");
+    public final TableField<AddressRecord, String> DISTRICT = createField(DSL.name("district"), SQLDataType.VARCHAR(20).nullable(false), this, "");
 
     /**
      * The column <code>public.address.city_id</code>.
      */
-    public final TableField<AddressRecord, Integer> CITY_ID = createField(DSL.name("city_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<AddressRecord, Integer> CITY_ID = createField(DSL.name("city_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.address.postal_code</code>.
      */
-    public final TableField<AddressRecord, String> POSTAL_CODE = createField(DSL.name("postal_code"), org.jooq.impl.SQLDataType.VARCHAR(10), this, "");
+    public final TableField<AddressRecord, String> POSTAL_CODE = createField(DSL.name("postal_code"), SQLDataType.VARCHAR(10), this, "");
 
     /**
      * The column <code>public.address.phone</code>.
      */
-    public final TableField<AddressRecord, String> PHONE = createField(DSL.name("phone"), org.jooq.impl.SQLDataType.VARCHAR(20).nullable(false), this, "");
+    public final TableField<AddressRecord, String> PHONE = createField(DSL.name("phone"), SQLDataType.VARCHAR(20).nullable(false), this, "");
 
     /**
      * The column <code>public.address.last_update</code>.
      */
-    public final TableField<AddressRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<AddressRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.address</code> table reference
-     */
-    public Address() {
-        this(DSL.name("address"), null);
+    private Address(Name alias, Table<AddressRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Address(Name alias, Table<AddressRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -109,12 +112,11 @@ public class Address extends TableImpl<AddressRecord> {
         this(alias, ADDRESS);
     }
 
-    private Address(Name alias, Table<AddressRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Address(Name alias, Table<AddressRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.address</code> table reference
+     */
+    public Address() {
+        this(DSL.name("address"), null);
     }
 
     public <O extends Record> Address(Table<O> child, ForeignKey<O, AddressRecord> key) {
@@ -123,17 +125,17 @@ public class Address extends TableImpl<AddressRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_FK_CITY_ID);
+        return Arrays.asList(Indexes.IDX_FK_CITY_ID);
     }
 
     @Override
     public Identity<AddressRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_ADDRESS;
+        return (Identity<AddressRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -142,17 +144,17 @@ public class Address extends TableImpl<AddressRecord> {
     }
 
     @Override
-    public List<UniqueKey<AddressRecord>> getKeys() {
-        return Arrays.<UniqueKey<AddressRecord>>asList(Keys.ADDRESS_PKEY);
+    public List<ForeignKey<AddressRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.ADDRESS__ADDRESS_CITY_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<AddressRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<AddressRecord, ?>>asList(Keys.ADDRESS__ADDRESS_CITY_ID_FKEY);
-    }
+    private transient City _city;
 
     public City city() {
-        return new City(this, Keys.ADDRESS__ADDRESS_CITY_ID_FKEY);
+        if (_city == null)
+            _city = new City(this, Keys.ADDRESS__ADDRESS_CITY_ID_FKEY);
+
+        return _city;
     }
 
     @Override

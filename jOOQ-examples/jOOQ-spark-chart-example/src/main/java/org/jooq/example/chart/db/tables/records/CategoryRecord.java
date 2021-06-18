@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CategoryRecord extends UpdatableRecordImpl<CategoryRecord> implements Record3<Integer, String, LocalDateTime> {
 
-    private static final long serialVersionUID = 2070841798;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.category.category_id</code>.
@@ -175,8 +175,8 @@ public class CategoryRecord extends UpdatableRecordImpl<CategoryRecord> implemen
     public CategoryRecord(Integer categoryId, String name, LocalDateTime lastUpdate) {
         super(Category.CATEGORY);
 
-        set(0, categoryId);
-        set(1, name);
-        set(2, lastUpdate);
+        setCategoryId(categoryId);
+        setName(name);
+        setLastUpdate(lastUpdate);
     }
 }

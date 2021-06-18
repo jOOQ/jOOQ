@@ -18,12 +18,14 @@ import org.jooq.Row7;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.RentalRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -33,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rental extends TableImpl<RentalRecord> {
 
-    private static final long serialVersionUID = -2041307944;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.rental</code>
@@ -51,43 +53,44 @@ public class Rental extends TableImpl<RentalRecord> {
     /**
      * The column <code>public.rental.rental_id</code>.
      */
-    public final TableField<RentalRecord, Integer> RENTAL_ID = createField(DSL.name("rental_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rental_rental_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<RentalRecord, Integer> RENTAL_ID = createField(DSL.name("rental_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.rental.rental_date</code>.
      */
-    public final TableField<RentalRecord, LocalDateTime> RENTAL_DATE = createField(DSL.name("rental_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<RentalRecord, LocalDateTime> RENTAL_DATE = createField(DSL.name("rental_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
 
     /**
      * The column <code>public.rental.inventory_id</code>.
      */
-    public final TableField<RentalRecord, Integer> INVENTORY_ID = createField(DSL.name("inventory_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RentalRecord, Integer> INVENTORY_ID = createField(DSL.name("inventory_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rental.customer_id</code>.
      */
-    public final TableField<RentalRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RentalRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rental.return_date</code>.
      */
-    public final TableField<RentalRecord, LocalDateTime> RETURN_DATE = createField(DSL.name("return_date"), org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
+    public final TableField<RentalRecord, LocalDateTime> RETURN_DATE = createField(DSL.name("return_date"), SQLDataType.LOCALDATETIME(6), this, "");
 
     /**
      * The column <code>public.rental.staff_id</code>.
      */
-    public final TableField<RentalRecord, Integer> STAFF_ID = createField(DSL.name("staff_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RentalRecord, Integer> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rental.last_update</code>.
      */
-    public final TableField<RentalRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<RentalRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.rental</code> table reference
-     */
-    public Rental() {
-        this(DSL.name("rental"), null);
+    private Rental(Name alias, Table<RentalRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Rental(Name alias, Table<RentalRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -104,12 +107,11 @@ public class Rental extends TableImpl<RentalRecord> {
         this(alias, RENTAL);
     }
 
-    private Rental(Name alias, Table<RentalRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Rental(Name alias, Table<RentalRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.rental</code> table reference
+     */
+    public Rental() {
+        this(DSL.name("rental"), null);
     }
 
     public <O extends Record> Rental(Table<O> child, ForeignKey<O, RentalRecord> key) {
@@ -118,17 +120,17 @@ public class Rental extends TableImpl<RentalRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_FK_INVENTORY_ID, Indexes.IDX_UNQ_RENTAL_RENTAL_DATE_INVENTORY_ID_CUSTOMER_ID);
+        return Arrays.asList(Indexes.IDX_FK_INVENTORY_ID, Indexes.IDX_UNQ_RENTAL_RENTAL_DATE_INVENTORY_ID_CUSTOMER_ID);
     }
 
     @Override
     public Identity<RentalRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_RENTAL;
+        return (Identity<RentalRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -137,25 +139,33 @@ public class Rental extends TableImpl<RentalRecord> {
     }
 
     @Override
-    public List<UniqueKey<RentalRecord>> getKeys() {
-        return Arrays.<UniqueKey<RentalRecord>>asList(Keys.RENTAL_PKEY);
+    public List<ForeignKey<RentalRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY, Keys.RENTAL__RENTAL_STAFF_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<RentalRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<RentalRecord, ?>>asList(Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY, Keys.RENTAL__RENTAL_STAFF_ID_FKEY);
-    }
+    private transient Inventory _inventory;
+    private transient Customer _customer;
+    private transient Staff _staff;
 
     public Inventory inventory() {
-        return new Inventory(this, Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY);
+        if (_inventory == null)
+            _inventory = new Inventory(this, Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY);
+
+        return _inventory;
     }
 
     public Customer customer() {
-        return new Customer(this, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY);
+        if (_customer == null)
+            _customer = new Customer(this, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY);
+
+        return _customer;
     }
 
     public Staff staff() {
-        return new Staff(this, Keys.RENTAL__RENTAL_STAFF_ID_FKEY);
+        if (_staff == null)
+            _staff = new Staff(this, Keys.RENTAL__RENTAL_STAFF_ID_FKEY);
+
+        return _staff;
     }
 
     @Override

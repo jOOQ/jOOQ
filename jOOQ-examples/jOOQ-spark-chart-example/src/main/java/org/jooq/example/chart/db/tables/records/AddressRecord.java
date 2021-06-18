@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AddressRecord extends UpdatableRecordImpl<AddressRecord> implements Record8<Integer, String, String, String, Integer, String, String, LocalDateTime> {
 
-    private static final long serialVersionUID = -596052934;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.address.address_id</code>.
@@ -355,13 +355,13 @@ public class AddressRecord extends UpdatableRecordImpl<AddressRecord> implements
     public AddressRecord(Integer addressId, String address, String address2, String district, Integer cityId, String postalCode, String phone, LocalDateTime lastUpdate) {
         super(Address.ADDRESS);
 
-        set(0, addressId);
-        set(1, address);
-        set(2, address2);
-        set(3, district);
-        set(4, cityId);
-        set(5, postalCode);
-        set(6, phone);
-        set(7, lastUpdate);
+        setAddressId(addressId);
+        setAddress(address);
+        setAddress2(address2);
+        setDistrict(district);
+        setCityId(cityId);
+        setPostalCode(postalCode);
+        setPhone(phone);
+        setLastUpdate(lastUpdate);
     }
 }

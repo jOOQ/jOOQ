@@ -19,7 +19,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SalesByFilmCategoryRecord extends TableRecordImpl<SalesByFilmCategoryRecord> implements Record2<String, BigDecimal> {
 
-    private static final long serialVersionUID = 648256004;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.sales_by_film_category.category</code>.
@@ -129,7 +129,7 @@ public class SalesByFilmCategoryRecord extends TableRecordImpl<SalesByFilmCatego
     public SalesByFilmCategoryRecord(String category, BigDecimal totalSales) {
         super(SalesByFilmCategory.SALES_BY_FILM_CATEGORY);
 
-        set(0, category);
-        set(1, totalSales);
+        setCategory(category);
+        setTotalSales(totalSales);
     }
 }

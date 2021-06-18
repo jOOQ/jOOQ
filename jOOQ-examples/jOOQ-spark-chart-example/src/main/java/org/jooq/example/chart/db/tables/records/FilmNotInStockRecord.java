@@ -17,7 +17,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmNotInStockRecord extends TableRecordImpl<FilmNotInStockRecord> implements Record1<Integer> {
 
-    private static final long serialVersionUID = -1803130032;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.film_not_in_stock.p_film_count</code>.
@@ -91,6 +91,6 @@ public class FilmNotInStockRecord extends TableRecordImpl<FilmNotInStockRecord> 
     public FilmNotInStockRecord(Integer pFilmCount) {
         super(FilmNotInStock.FILM_NOT_IN_STOCK);
 
-        set(0, pFilmCount);
+        setPFilmCount(pFilmCount);
     }
 }

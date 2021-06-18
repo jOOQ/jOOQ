@@ -18,12 +18,14 @@ import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.CityRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -33,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class City extends TableImpl<CityRecord> {
 
-    private static final long serialVersionUID = 1886016935;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.city</code>
@@ -51,28 +53,29 @@ public class City extends TableImpl<CityRecord> {
     /**
      * The column <code>public.city.city_id</code>.
      */
-    public final TableField<CityRecord, Integer> CITY_ID = createField(DSL.name("city_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('city_city_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<CityRecord, Integer> CITY_ID = createField(DSL.name("city_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.city.city</code>.
      */
-    public final TableField<CityRecord, String> CITY_ = createField(DSL.name("city"), org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<CityRecord, String> CITY_ = createField(DSL.name("city"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>public.city.country_id</code>.
      */
-    public final TableField<CityRecord, Integer> COUNTRY_ID = createField(DSL.name("country_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<CityRecord, Integer> COUNTRY_ID = createField(DSL.name("country_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.city.last_update</code>.
      */
-    public final TableField<CityRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<CityRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.city</code> table reference
-     */
-    public City() {
-        this(DSL.name("city"), null);
+    private City(Name alias, Table<CityRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private City(Name alias, Table<CityRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -89,12 +92,11 @@ public class City extends TableImpl<CityRecord> {
         this(alias, CITY);
     }
 
-    private City(Name alias, Table<CityRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private City(Name alias, Table<CityRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.city</code> table reference
+     */
+    public City() {
+        this(DSL.name("city"), null);
     }
 
     public <O extends Record> City(Table<O> child, ForeignKey<O, CityRecord> key) {
@@ -103,17 +105,17 @@ public class City extends TableImpl<CityRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_FK_COUNTRY_ID);
+        return Arrays.asList(Indexes.IDX_FK_COUNTRY_ID);
     }
 
     @Override
     public Identity<CityRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_CITY;
+        return (Identity<CityRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -122,17 +124,17 @@ public class City extends TableImpl<CityRecord> {
     }
 
     @Override
-    public List<UniqueKey<CityRecord>> getKeys() {
-        return Arrays.<UniqueKey<CityRecord>>asList(Keys.CITY_PKEY);
+    public List<ForeignKey<CityRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.CITY__CITY_COUNTRY_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<CityRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<CityRecord, ?>>asList(Keys.CITY__CITY_COUNTRY_ID_FKEY);
-    }
+    private transient Country _country;
 
     public Country country() {
-        return new Country(this, Keys.CITY__CITY_COUNTRY_ID_FKEY);
+        if (_country == null)
+            _country = new Country(this, Keys.CITY__CITY_COUNTRY_ID_FKEY);
+
+        return _country;
     }
 
     @Override

@@ -19,7 +19,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SalesByStoreRecord extends TableRecordImpl<SalesByStoreRecord> implements Record3<String, String, BigDecimal> {
 
-    private static final long serialVersionUID = 1526483571;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.sales_by_store.store</code>.
@@ -165,8 +165,8 @@ public class SalesByStoreRecord extends TableRecordImpl<SalesByStoreRecord> impl
     public SalesByStoreRecord(String store, String manager, BigDecimal totalSales) {
         super(SalesByStore.SALES_BY_STORE);
 
-        set(0, store);
-        set(1, manager);
-        set(2, totalSales);
+        setStore(store);
+        setManager(manager);
+        setTotalSales(totalSales);
     }
 }

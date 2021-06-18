@@ -27,7 +27,7 @@ import org.jooq.example.chart.db.tables.records.RewardsReportRecord;
 
 
 /**
- * Convenience access to all stored procedures and functions in public
+ * Convenience access to all stored procedures and functions in public.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
@@ -35,7 +35,11 @@ public class Routines {
     /**
      * Call <code>public._group_concat</code>
      */
-    public static String _GroupConcat(Configuration configuration, String __1, String __2) {
+    public static String _GroupConcat(
+          Configuration configuration
+        , String __1
+        , String __2
+    ) {
         _GroupConcat f = new _GroupConcat();
         f.set__1(__1);
         f.set__2(__2);
@@ -47,7 +51,10 @@ public class Routines {
     /**
      * Get <code>public._group_concat</code> as a field.
      */
-    public static Field<String> _GroupConcat(String __1, String __2) {
+    public static Field<String> _GroupConcat(
+          String __1
+        , String __2
+    ) {
         _GroupConcat f = new _GroupConcat();
         f.set__1(__1);
         f.set__2(__2);
@@ -58,7 +65,10 @@ public class Routines {
     /**
      * Get <code>public._group_concat</code> as a field.
      */
-    public static Field<String> _GroupConcat(Field<String> __1, Field<String> __2) {
+    public static Field<String> _GroupConcat(
+          Field<String> __1
+        , Field<String> __2
+    ) {
         _GroupConcat f = new _GroupConcat();
         f.set__1(__1);
         f.set__2(__2);
@@ -69,7 +79,11 @@ public class Routines {
     /**
      * Call <code>public.get_customer_balance</code>
      */
-    public static BigDecimal getCustomerBalance(Configuration configuration, Integer pCustomerId, LocalDateTime pEffectiveDate) {
+    public static BigDecimal getCustomerBalance(
+          Configuration configuration
+        , Integer pCustomerId
+        , LocalDateTime pEffectiveDate
+    ) {
         GetCustomerBalance f = new GetCustomerBalance();
         f.setPCustomerId(pCustomerId);
         f.setPEffectiveDate(pEffectiveDate);
@@ -81,7 +95,10 @@ public class Routines {
     /**
      * Get <code>public.get_customer_balance</code> as a field.
      */
-    public static Field<BigDecimal> getCustomerBalance(Integer pCustomerId, LocalDateTime pEffectiveDate) {
+    public static Field<BigDecimal> getCustomerBalance(
+          Integer pCustomerId
+        , LocalDateTime pEffectiveDate
+    ) {
         GetCustomerBalance f = new GetCustomerBalance();
         f.setPCustomerId(pCustomerId);
         f.setPEffectiveDate(pEffectiveDate);
@@ -92,7 +109,10 @@ public class Routines {
     /**
      * Get <code>public.get_customer_balance</code> as a field.
      */
-    public static Field<BigDecimal> getCustomerBalance(Field<Integer> pCustomerId, Field<LocalDateTime> pEffectiveDate) {
+    public static Field<BigDecimal> getCustomerBalance(
+          Field<Integer> pCustomerId
+        , Field<LocalDateTime> pEffectiveDate
+    ) {
         GetCustomerBalance f = new GetCustomerBalance();
         f.setPCustomerId(pCustomerId);
         f.setPEffectiveDate(pEffectiveDate);
@@ -103,7 +123,9 @@ public class Routines {
     /**
      * Get <code>public.group_concat</code> as a field.
      */
-    public static AggregateFunction<String> groupConcat(String __1) {
+    public static AggregateFunction<String> groupConcat(
+          String __1
+    ) {
         GroupConcat f = new GroupConcat();
         f.set__1(__1);
 
@@ -113,7 +135,9 @@ public class Routines {
     /**
      * Get <code>public.group_concat</code> as a field.
      */
-    public static AggregateFunction<String> groupConcat(Field<String> __1) {
+    public static AggregateFunction<String> groupConcat(
+          Field<String> __1
+    ) {
         GroupConcat f = new GroupConcat();
         f.set__1(__1);
 
@@ -123,7 +147,10 @@ public class Routines {
     /**
      * Call <code>public.inventory_held_by_customer</code>
      */
-    public static Integer inventoryHeldByCustomer(Configuration configuration, Integer pInventoryId) {
+    public static Integer inventoryHeldByCustomer(
+          Configuration configuration
+        , Integer pInventoryId
+    ) {
         InventoryHeldByCustomer f = new InventoryHeldByCustomer();
         f.setPInventoryId(pInventoryId);
 
@@ -134,7 +161,9 @@ public class Routines {
     /**
      * Get <code>public.inventory_held_by_customer</code> as a field.
      */
-    public static Field<Integer> inventoryHeldByCustomer(Integer pInventoryId) {
+    public static Field<Integer> inventoryHeldByCustomer(
+          Integer pInventoryId
+    ) {
         InventoryHeldByCustomer f = new InventoryHeldByCustomer();
         f.setPInventoryId(pInventoryId);
 
@@ -144,7 +173,9 @@ public class Routines {
     /**
      * Get <code>public.inventory_held_by_customer</code> as a field.
      */
-    public static Field<Integer> inventoryHeldByCustomer(Field<Integer> pInventoryId) {
+    public static Field<Integer> inventoryHeldByCustomer(
+          Field<Integer> pInventoryId
+    ) {
         InventoryHeldByCustomer f = new InventoryHeldByCustomer();
         f.setPInventoryId(pInventoryId);
 
@@ -154,7 +185,10 @@ public class Routines {
     /**
      * Call <code>public.inventory_in_stock</code>
      */
-    public static Boolean inventoryInStock(Configuration configuration, Integer pInventoryId) {
+    public static Boolean inventoryInStock(
+          Configuration configuration
+        , Integer pInventoryId
+    ) {
         InventoryInStock f = new InventoryInStock();
         f.setPInventoryId(pInventoryId);
 
@@ -165,7 +199,9 @@ public class Routines {
     /**
      * Get <code>public.inventory_in_stock</code> as a field.
      */
-    public static Field<Boolean> inventoryInStock(Integer pInventoryId) {
+    public static Field<Boolean> inventoryInStock(
+          Integer pInventoryId
+    ) {
         InventoryInStock f = new InventoryInStock();
         f.setPInventoryId(pInventoryId);
 
@@ -175,7 +211,9 @@ public class Routines {
     /**
      * Get <code>public.inventory_in_stock</code> as a field.
      */
-    public static Field<Boolean> inventoryInStock(Field<Integer> pInventoryId) {
+    public static Field<Boolean> inventoryInStock(
+          Field<Integer> pInventoryId
+    ) {
         InventoryInStock f = new InventoryInStock();
         f.setPInventoryId(pInventoryId);
 
@@ -185,7 +223,10 @@ public class Routines {
     /**
      * Call <code>public.last_day</code>
      */
-    public static LocalDate lastDay(Configuration configuration, LocalDateTime __1) {
+    public static LocalDate lastDay(
+          Configuration configuration
+        , LocalDateTime __1
+    ) {
         LastDay f = new LastDay();
         f.set__1(__1);
 
@@ -196,7 +237,9 @@ public class Routines {
     /**
      * Get <code>public.last_day</code> as a field.
      */
-    public static Field<LocalDate> lastDay(LocalDateTime __1) {
+    public static Field<LocalDate> lastDay(
+          LocalDateTime __1
+    ) {
         LastDay f = new LastDay();
         f.set__1(__1);
 
@@ -206,7 +249,9 @@ public class Routines {
     /**
      * Get <code>public.last_day</code> as a field.
      */
-    public static Field<LocalDate> lastDay(Field<LocalDateTime> __1) {
+    public static Field<LocalDate> lastDay(
+          Field<LocalDateTime> __1
+    ) {
         LastDay f = new LastDay();
         f.set__1(__1);
 
@@ -216,63 +261,120 @@ public class Routines {
     /**
      * Call <code>public.film_in_stock</code>.
      */
-    public static Result<FilmInStockRecord> filmInStock(Configuration configuration, Integer pFilmId, Integer pStoreId) {
-        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(pFilmId, pStoreId)).fetch();
+    public static Result<FilmInStockRecord> filmInStock(
+          Configuration configuration
+        , Integer pFilmId
+        , Integer pStoreId
+    ) {
+        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(
+              pFilmId
+            , pStoreId
+        )).fetch();
     }
 
     /**
      * Get <code>public.film_in_stock</code> as a table.
      */
-    public static FilmInStock filmInStock(Integer pFilmId, Integer pStoreId) {
-        return org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(pFilmId, pStoreId);
+    public static FilmInStock filmInStock(
+          Integer pFilmId
+        , Integer pStoreId
+    ) {
+        return org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(
+            pFilmId,
+            pStoreId
+        );
     }
 
     /**
      * Get <code>public.film_in_stock</code> as a table.
      */
-    public static FilmInStock filmInStock(Field<Integer> pFilmId, Field<Integer> pStoreId) {
-        return org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(pFilmId, pStoreId);
+    public static FilmInStock filmInStock(
+          Field<Integer> pFilmId
+        , Field<Integer> pStoreId
+    ) {
+        return org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(
+            pFilmId,
+            pStoreId
+        );
     }
 
     /**
      * Call <code>public.film_not_in_stock</code>.
      */
-    public static Result<FilmNotInStockRecord> filmNotInStock(Configuration configuration, Integer pFilmId, Integer pStoreId) {
-        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(pFilmId, pStoreId)).fetch();
+    public static Result<FilmNotInStockRecord> filmNotInStock(
+          Configuration configuration
+        , Integer pFilmId
+        , Integer pStoreId
+    ) {
+        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(
+              pFilmId
+            , pStoreId
+        )).fetch();
     }
 
     /**
      * Get <code>public.film_not_in_stock</code> as a table.
      */
-    public static FilmNotInStock filmNotInStock(Integer pFilmId, Integer pStoreId) {
-        return org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(pFilmId, pStoreId);
+    public static FilmNotInStock filmNotInStock(
+          Integer pFilmId
+        , Integer pStoreId
+    ) {
+        return org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(
+            pFilmId,
+            pStoreId
+        );
     }
 
     /**
      * Get <code>public.film_not_in_stock</code> as a table.
      */
-    public static FilmNotInStock filmNotInStock(Field<Integer> pFilmId, Field<Integer> pStoreId) {
-        return org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(pFilmId, pStoreId);
+    public static FilmNotInStock filmNotInStock(
+          Field<Integer> pFilmId
+        , Field<Integer> pStoreId
+    ) {
+        return org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(
+            pFilmId,
+            pStoreId
+        );
     }
 
     /**
      * Call <code>public.rewards_report</code>.
      */
-    public static Result<RewardsReportRecord> rewardsReport(Configuration configuration, Integer minMonthlyPurchases, BigDecimal minDollarAmountPurchased) {
-        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(minMonthlyPurchases, minDollarAmountPurchased)).fetch();
+    public static Result<RewardsReportRecord> rewardsReport(
+          Configuration configuration
+        , Integer minMonthlyPurchases
+        , BigDecimal minDollarAmountPurchased
+    ) {
+        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(
+              minMonthlyPurchases
+            , minDollarAmountPurchased
+        )).fetch();
     }
 
     /**
      * Get <code>public.rewards_report</code> as a table.
      */
-    public static RewardsReport rewardsReport(Integer minMonthlyPurchases, BigDecimal minDollarAmountPurchased) {
-        return org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(minMonthlyPurchases, minDollarAmountPurchased);
+    public static RewardsReport rewardsReport(
+          Integer minMonthlyPurchases
+        , BigDecimal minDollarAmountPurchased
+    ) {
+        return org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(
+            minMonthlyPurchases,
+            minDollarAmountPurchased
+        );
     }
 
     /**
      * Get <code>public.rewards_report</code> as a table.
      */
-    public static RewardsReport rewardsReport(Field<Integer> minMonthlyPurchases, Field<BigDecimal> minDollarAmountPurchased) {
-        return org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(minMonthlyPurchases, minDollarAmountPurchased);
+    public static RewardsReport rewardsReport(
+          Field<Integer> minMonthlyPurchases
+        , Field<BigDecimal> minDollarAmountPurchased
+    ) {
+        return org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(
+            minMonthlyPurchases,
+            minDollarAmountPurchased
+        );
     }
 }

@@ -18,12 +18,14 @@ import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.ActorRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -33,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = -1103262906;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.actor</code>
@@ -51,28 +53,29 @@ public class Actor extends TableImpl<ActorRecord> {
     /**
      * The column <code>public.actor.actor_id</code>.
      */
-    public final TableField<ActorRecord, Integer> ACTOR_ID = createField(DSL.name("actor_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('actor_actor_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<ActorRecord, Integer> ACTOR_ID = createField(DSL.name("actor_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.actor.first_name</code>.
      */
-    public final TableField<ActorRecord, String> FIRST_NAME = createField(DSL.name("first_name"), org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<ActorRecord, String> FIRST_NAME = createField(DSL.name("first_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>public.actor.last_name</code>.
      */
-    public final TableField<ActorRecord, String> LAST_NAME = createField(DSL.name("last_name"), org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<ActorRecord, String> LAST_NAME = createField(DSL.name("last_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>public.actor.last_update</code>.
      */
-    public final TableField<ActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<ActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.actor</code> table reference
-     */
-    public Actor() {
-        this(DSL.name("actor"), null);
+    private Actor(Name alias, Table<ActorRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Actor(Name alias, Table<ActorRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -89,12 +92,11 @@ public class Actor extends TableImpl<ActorRecord> {
         this(alias, ACTOR);
     }
 
-    private Actor(Name alias, Table<ActorRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Actor(Name alias, Table<ActorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.actor</code> table reference
+     */
+    public Actor() {
+        this(DSL.name("actor"), null);
     }
 
     public <O extends Record> Actor(Table<O> child, ForeignKey<O, ActorRecord> key) {
@@ -103,27 +105,22 @@ public class Actor extends TableImpl<ActorRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_ACTOR_LAST_NAME);
+        return Arrays.asList(Indexes.IDX_ACTOR_LAST_NAME);
     }
 
     @Override
     public Identity<ActorRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_ACTOR;
+        return (Identity<ActorRecord, Integer>) super.getIdentity();
     }
 
     @Override
     public UniqueKey<ActorRecord> getPrimaryKey() {
         return Keys.ACTOR_PKEY;
-    }
-
-    @Override
-    public List<UniqueKey<ActorRecord>> getKeys() {
-        return Arrays.<UniqueKey<ActorRecord>>asList(Keys.ACTOR_PKEY);
     }
 
     @Override

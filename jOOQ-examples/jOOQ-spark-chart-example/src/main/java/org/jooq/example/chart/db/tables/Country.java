@@ -5,8 +5,6 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -17,11 +15,13 @@ import org.jooq.Row3;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.CountryRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -31,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Country extends TableImpl<CountryRecord> {
 
-    private static final long serialVersionUID = -606842076;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.country</code>
@@ -49,23 +49,24 @@ public class Country extends TableImpl<CountryRecord> {
     /**
      * The column <code>public.country.country_id</code>.
      */
-    public final TableField<CountryRecord, Integer> COUNTRY_ID = createField(DSL.name("country_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('country_country_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<CountryRecord, Integer> COUNTRY_ID = createField(DSL.name("country_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.country.country</code>.
      */
-    public final TableField<CountryRecord, String> COUNTRY_ = createField(DSL.name("country"), org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<CountryRecord, String> COUNTRY_ = createField(DSL.name("country"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>public.country.last_update</code>.
      */
-    public final TableField<CountryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<CountryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.country</code> table reference
-     */
-    public Country() {
-        this(DSL.name("country"), null);
+    private Country(Name alias, Table<CountryRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Country(Name alias, Table<CountryRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -82,12 +83,11 @@ public class Country extends TableImpl<CountryRecord> {
         this(alias, COUNTRY);
     }
 
-    private Country(Name alias, Table<CountryRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Country(Name alias, Table<CountryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.country</code> table reference
+     */
+    public Country() {
+        this(DSL.name("country"), null);
     }
 
     public <O extends Record> Country(Table<O> child, ForeignKey<O, CountryRecord> key) {
@@ -96,22 +96,17 @@ public class Country extends TableImpl<CountryRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public Identity<CountryRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_COUNTRY;
+        return (Identity<CountryRecord, Integer>) super.getIdentity();
     }
 
     @Override
     public UniqueKey<CountryRecord> getPrimaryKey() {
         return Keys.COUNTRY_PKEY;
-    }
-
-    @Override
-    public List<UniqueKey<CountryRecord>> getKeys() {
-        return Arrays.<UniqueKey<CountryRecord>>asList(Keys.COUNTRY_PKEY);
     }
 
     @Override

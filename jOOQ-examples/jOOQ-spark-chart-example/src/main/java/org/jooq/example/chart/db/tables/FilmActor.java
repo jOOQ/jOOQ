@@ -17,12 +17,14 @@ import org.jooq.Row3;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.FilmActorRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -32,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActor extends TableImpl<FilmActorRecord> {
 
-    private static final long serialVersionUID = -501269511;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.film_actor</code>
@@ -50,23 +52,24 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     /**
      * The column <code>public.film_actor.actor_id</code>.
      */
-    public final TableField<FilmActorRecord, Integer> ACTOR_ID = createField(DSL.name("actor_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmActorRecord, Integer> ACTOR_ID = createField(DSL.name("actor_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.film_actor.film_id</code>.
      */
-    public final TableField<FilmActorRecord, Integer> FILM_ID = createField(DSL.name("film_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmActorRecord, Integer> FILM_ID = createField(DSL.name("film_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.film_actor.last_update</code>.
      */
-    public final TableField<FilmActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<FilmActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.film_actor</code> table reference
-     */
-    public FilmActor() {
-        this(DSL.name("film_actor"), null);
+    private FilmActor(Name alias, Table<FilmActorRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private FilmActor(Name alias, Table<FilmActorRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -83,12 +86,11 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         this(alias, FILM_ACTOR);
     }
 
-    private FilmActor(Name alias, Table<FilmActorRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private FilmActor(Name alias, Table<FilmActorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.film_actor</code> table reference
+     */
+    public FilmActor() {
+        this(DSL.name("film_actor"), null);
     }
 
     public <O extends Record> FilmActor(Table<O> child, ForeignKey<O, FilmActorRecord> key) {
@@ -97,12 +99,12 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_FK_FILM_ID);
+        return Arrays.asList(Indexes.IDX_FK_FILM_ID);
     }
 
     @Override
@@ -111,21 +113,25 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     }
 
     @Override
-    public List<UniqueKey<FilmActorRecord>> getKeys() {
-        return Arrays.<UniqueKey<FilmActorRecord>>asList(Keys.FILM_ACTOR_PKEY);
+    public List<ForeignKey<FilmActorRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<FilmActorRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<FilmActorRecord, ?>>asList(Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
-    }
+    private transient Actor _actor;
+    private transient Film _film;
 
     public Actor actor() {
-        return new Actor(this, Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY);
+        if (_actor == null)
+            _actor = new Actor(this, Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY);
+
+        return _actor;
     }
 
     public Film film() {
-        return new Film(this, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
+        if (_film == null)
+            _film = new Film(this, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
+
+        return _film;
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.jooq.Parameter;
 import org.jooq.example.chart.db.Public;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 
 
 /**
@@ -17,23 +18,25 @@ import org.jooq.impl.Internal;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InventoryHeldByCustomer extends AbstractRoutine<Integer> {
 
-    private static final long serialVersionUID = -280459083;
+    private static final long serialVersionUID = 1L;
 
     /**
-     * The parameter <code>public.inventory_held_by_customer.RETURN_VALUE</code>.
+     * The parameter
+     * <code>public.inventory_held_by_customer.RETURN_VALUE</code>.
      */
-    public static final Parameter<Integer> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER, false, false);
+    public static final Parameter<Integer> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", SQLDataType.INTEGER, false, false);
 
     /**
-     * The parameter <code>public.inventory_held_by_customer.p_inventory_id</code>.
+     * The parameter
+     * <code>public.inventory_held_by_customer.p_inventory_id</code>.
      */
-    public static final Parameter<Integer> P_INVENTORY_ID = Internal.createParameter("p_inventory_id", org.jooq.impl.SQLDataType.INTEGER, false, false);
+    public static final Parameter<Integer> P_INVENTORY_ID = Internal.createParameter("p_inventory_id", SQLDataType.INTEGER, false, false);
 
     /**
      * Create a new routine call instance
      */
     public InventoryHeldByCustomer() {
-        super("inventory_held_by_customer", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER);
+        super("inventory_held_by_customer", Public.PUBLIC, SQLDataType.INTEGER);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(P_INVENTORY_ID);
@@ -47,7 +50,8 @@ public class InventoryHeldByCustomer extends AbstractRoutine<Integer> {
     }
 
     /**
-     * Set the <code>p_inventory_id</code> parameter to the function to be used with a {@link org.jooq.Select} statement
+     * Set the <code>p_inventory_id</code> parameter to the function to be used
+     * with a {@link org.jooq.Select} statement
      */
     public void setPInventoryId(Field<Integer> field) {
         setField(P_INVENTORY_ID, field);

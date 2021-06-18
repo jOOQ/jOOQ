@@ -20,7 +20,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RewardsReportRecord extends TableRecordImpl<RewardsReportRecord> implements Record10<Integer, Integer, String, String, String, Integer, Boolean, LocalDate, LocalDateTime, Integer> {
 
-    private static final long serialVersionUID = 178425683;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.rewards_report.customer_id</code>.
@@ -418,15 +418,15 @@ public class RewardsReportRecord extends TableRecordImpl<RewardsReportRecord> im
     public RewardsReportRecord(Integer customerId, Integer storeId, String firstName, String lastName, String email, Integer addressId, Boolean activebool, LocalDate createDate, LocalDateTime lastUpdate, Integer active) {
         super(RewardsReport.REWARDS_REPORT);
 
-        set(0, customerId);
-        set(1, storeId);
-        set(2, firstName);
-        set(3, lastName);
-        set(4, email);
-        set(5, addressId);
-        set(6, activebool);
-        set(7, createDate);
-        set(8, lastUpdate);
-        set(9, active);
+        setCustomerId(customerId);
+        setStoreId(storeId);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        setAddressId(addressId);
+        setActivebool(activebool);
+        setCreateDate(createDate);
+        setLastUpdate(lastUpdate);
+        setActive(active);
     }
 }

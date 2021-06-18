@@ -12,6 +12,7 @@ import org.jooq.Parameter;
 import org.jooq.example.chart.db.Public;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 
 
 /**
@@ -20,23 +21,23 @@ import org.jooq.impl.Internal;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LastDay extends AbstractRoutine<LocalDate> {
 
-    private static final long serialVersionUID = 653086439;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The parameter <code>public.last_day.RETURN_VALUE</code>.
      */
-    public static final Parameter<LocalDate> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.LOCALDATE, false, false);
+    public static final Parameter<LocalDate> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", SQLDataType.LOCALDATE, false, false);
 
     /**
      * The parameter <code>public.last_day._1</code>.
      */
-    public static final Parameter<LocalDateTime> _1 = Internal.createParameter("_1", org.jooq.impl.SQLDataType.LOCALDATETIME, false, true);
+    public static final Parameter<LocalDateTime> _1 = Internal.createParameter("_1", SQLDataType.LOCALDATETIME(0), false, true);
 
     /**
      * Create a new routine call instance
      */
     public LastDay() {
-        super("last_day", Public.PUBLIC, org.jooq.impl.SQLDataType.LOCALDATE);
+        super("last_day", Public.PUBLIC, SQLDataType.LOCALDATE);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(_1);
@@ -50,7 +51,8 @@ public class LastDay extends AbstractRoutine<LocalDate> {
     }
 
     /**
-     * Set the <code>_1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
+     * Set the <code>_1</code> parameter to the function to be used with a
+     * {@link org.jooq.Select} statement
      */
     public void set__1(Field<LocalDateTime> field) {
         setField(_1, field);

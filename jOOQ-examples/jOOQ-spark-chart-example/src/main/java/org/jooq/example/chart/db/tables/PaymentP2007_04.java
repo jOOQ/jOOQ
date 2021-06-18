@@ -20,12 +20,14 @@ import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.PaymentP2007_04Record;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -35,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
 
-    private static final long serialVersionUID = -2094192016;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.payment_p2007_04</code>
@@ -53,38 +55,39 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
     /**
      * The column <code>public.payment_p2007_04.payment_id</code>.
      */
-    public final TableField<PaymentP2007_04Record, Integer> PAYMENT_ID = createField(DSL.name("payment_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('payment_payment_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<PaymentP2007_04Record, Integer> PAYMENT_ID = createField(DSL.name("payment_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.payment_p2007_04.customer_id</code>.
      */
-    public final TableField<PaymentP2007_04Record, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PaymentP2007_04Record, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.payment_p2007_04.staff_id</code>.
      */
-    public final TableField<PaymentP2007_04Record, Integer> STAFF_ID = createField(DSL.name("staff_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PaymentP2007_04Record, Integer> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.payment_p2007_04.rental_id</code>.
      */
-    public final TableField<PaymentP2007_04Record, Integer> RENTAL_ID = createField(DSL.name("rental_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PaymentP2007_04Record, Integer> RENTAL_ID = createField(DSL.name("rental_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.payment_p2007_04.amount</code>.
      */
-    public final TableField<PaymentP2007_04Record, BigDecimal> AMOUNT = createField(DSL.name("amount"), org.jooq.impl.SQLDataType.NUMERIC(5, 2).nullable(false), this, "");
+    public final TableField<PaymentP2007_04Record, BigDecimal> AMOUNT = createField(DSL.name("amount"), SQLDataType.NUMERIC(5, 2).nullable(false), this, "");
 
     /**
      * The column <code>public.payment_p2007_04.payment_date</code>.
      */
-    public final TableField<PaymentP2007_04Record, LocalDateTime> PAYMENT_DATE = createField(DSL.name("payment_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<PaymentP2007_04Record, LocalDateTime> PAYMENT_DATE = createField(DSL.name("payment_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
 
-    /**
-     * Create a <code>public.payment_p2007_04</code> table reference
-     */
-    public PaymentP2007_04() {
-        this(DSL.name("payment_p2007_04"), null);
+    private PaymentP2007_04(Name alias, Table<PaymentP2007_04Record> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private PaymentP2007_04(Name alias, Table<PaymentP2007_04Record> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -101,12 +104,11 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
         this(alias, PAYMENT_P2007_04);
     }
 
-    private PaymentP2007_04(Name alias, Table<PaymentP2007_04Record> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private PaymentP2007_04(Name alias, Table<PaymentP2007_04Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.payment_p2007_04</code> table reference
+     */
+    public PaymentP2007_04() {
+        this(DSL.name("payment_p2007_04"), null);
     }
 
     public <O extends Record> PaymentP2007_04(Table<O> child, ForeignKey<O, PaymentP2007_04Record> key) {
@@ -115,40 +117,53 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_FK_PAYMENT_P2007_04_CUSTOMER_ID, Indexes.IDX_FK_PAYMENT_P2007_04_STAFF_ID);
+        return Arrays.asList(Indexes.IDX_FK_PAYMENT_P2007_04_CUSTOMER_ID, Indexes.IDX_FK_PAYMENT_P2007_04_STAFF_ID);
     }
 
     @Override
     public Identity<PaymentP2007_04Record, Integer> getIdentity() {
-        return Keys.IDENTITY_PAYMENT_P2007_04;
+        return (Identity<PaymentP2007_04Record, Integer>) super.getIdentity();
     }
 
     @Override
     public List<ForeignKey<PaymentP2007_04Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<PaymentP2007_04Record, ?>>asList(Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_CUSTOMER_ID_FKEY, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_STAFF_ID_FKEY, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_RENTAL_ID_FKEY);
+        return Arrays.asList(Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_CUSTOMER_ID_FKEY, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_STAFF_ID_FKEY, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_RENTAL_ID_FKEY);
     }
 
+    private transient Customer _customer;
+    private transient Staff _staff;
+    private transient Rental _rental;
+
     public Customer customer() {
-        return new Customer(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_CUSTOMER_ID_FKEY);
+        if (_customer == null)
+            _customer = new Customer(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_CUSTOMER_ID_FKEY);
+
+        return _customer;
     }
 
     public Staff staff() {
-        return new Staff(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_STAFF_ID_FKEY);
+        if (_staff == null)
+            _staff = new Staff(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_STAFF_ID_FKEY);
+
+        return _staff;
     }
 
     public Rental rental() {
-        return new Rental(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_RENTAL_ID_FKEY);
+        if (_rental == null)
+            _rental = new Rental(this, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_RENTAL_ID_FKEY);
+
+        return _rental;
     }
 
     @Override
     public List<Check<PaymentP2007_04Record>> getChecks() {
-        return Arrays.<Check<PaymentP2007_04Record>>asList(
-              Internal.createCheck(this, DSL.name("payment_p2007_04_payment_date_check"), "(((payment_date >= '2007-04-01 00:00:00'::timestamp without time zone) AND (payment_date < '2007-05-01 00:00:00'::timestamp without time zone)))", true)
+        return Arrays.asList(
+            Internal.createCheck(this, DSL.name("payment_p2007_04_payment_date_check"), "(((payment_date >= '2007-04-01 00:00:00'::timestamp without time zone) AND (payment_date < '2007-05-01 00:00:00'::timestamp without time zone)))", true)
         );
     }
 

@@ -17,11 +17,13 @@ import org.jooq.Row11;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.StaffRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -31,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Staff extends TableImpl<StaffRecord> {
 
-    private static final long serialVersionUID = -808879254;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.staff</code>
@@ -49,63 +51,64 @@ public class Staff extends TableImpl<StaffRecord> {
     /**
      * The column <code>public.staff.staff_id</code>.
      */
-    public final TableField<StaffRecord, Integer> STAFF_ID = createField(DSL.name("staff_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('staff_staff_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<StaffRecord, Integer> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.staff.first_name</code>.
      */
-    public final TableField<StaffRecord, String> FIRST_NAME = createField(DSL.name("first_name"), org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<StaffRecord, String> FIRST_NAME = createField(DSL.name("first_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>public.staff.last_name</code>.
      */
-    public final TableField<StaffRecord, String> LAST_NAME = createField(DSL.name("last_name"), org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<StaffRecord, String> LAST_NAME = createField(DSL.name("last_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>public.staff.address_id</code>.
      */
-    public final TableField<StaffRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<StaffRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.staff.email</code>.
      */
-    public final TableField<StaffRecord, String> EMAIL = createField(DSL.name("email"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<StaffRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>public.staff.store_id</code>.
      */
-    public final TableField<StaffRecord, Integer> STORE_ID = createField(DSL.name("store_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<StaffRecord, Integer> STORE_ID = createField(DSL.name("store_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.staff.active</code>.
      */
-    public final TableField<StaffRecord, Boolean> ACTIVE = createField(DSL.name("active"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("true", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
+    public final TableField<StaffRecord, Boolean> ACTIVE = createField(DSL.name("active"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field("true", SQLDataType.BOOLEAN)), this, "");
 
     /**
      * The column <code>public.staff.username</code>.
      */
-    public final TableField<StaffRecord, String> USERNAME = createField(DSL.name("username"), org.jooq.impl.SQLDataType.VARCHAR(16).nullable(false), this, "");
+    public final TableField<StaffRecord, String> USERNAME = createField(DSL.name("username"), SQLDataType.VARCHAR(16).nullable(false), this, "");
 
     /**
      * The column <code>public.staff.password</code>.
      */
-    public final TableField<StaffRecord, String> PASSWORD = createField(DSL.name("password"), org.jooq.impl.SQLDataType.VARCHAR(40), this, "");
+    public final TableField<StaffRecord, String> PASSWORD = createField(DSL.name("password"), SQLDataType.VARCHAR(40), this, "");
 
     /**
      * The column <code>public.staff.last_update</code>.
      */
-    public final TableField<StaffRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<StaffRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.staff.picture</code>.
      */
-    public final TableField<StaffRecord, byte[]> PICTURE = createField(DSL.name("picture"), org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<StaffRecord, byte[]> PICTURE = createField(DSL.name("picture"), SQLDataType.BLOB, this, "");
 
-    /**
-     * Create a <code>public.staff</code> table reference
-     */
-    public Staff() {
-        this(DSL.name("staff"), null);
+    private Staff(Name alias, Table<StaffRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Staff(Name alias, Table<StaffRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -122,12 +125,11 @@ public class Staff extends TableImpl<StaffRecord> {
         this(alias, STAFF);
     }
 
-    private Staff(Name alias, Table<StaffRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Staff(Name alias, Table<StaffRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.staff</code> table reference
+     */
+    public Staff() {
+        this(DSL.name("staff"), null);
     }
 
     public <O extends Record> Staff(Table<O> child, ForeignKey<O, StaffRecord> key) {
@@ -136,12 +138,12 @@ public class Staff extends TableImpl<StaffRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public Identity<StaffRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_STAFF;
+        return (Identity<StaffRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -150,21 +152,25 @@ public class Staff extends TableImpl<StaffRecord> {
     }
 
     @Override
-    public List<UniqueKey<StaffRecord>> getKeys() {
-        return Arrays.<UniqueKey<StaffRecord>>asList(Keys.STAFF_PKEY);
+    public List<ForeignKey<StaffRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.STAFF__STAFF_ADDRESS_ID_FKEY, Keys.STAFF__STAFF_STORE_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<StaffRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<StaffRecord, ?>>asList(Keys.STAFF__STAFF_ADDRESS_ID_FKEY, Keys.STAFF__STAFF_STORE_ID_FKEY);
-    }
+    private transient Address _address;
+    private transient Store _store;
 
     public Address address() {
-        return new Address(this, Keys.STAFF__STAFF_ADDRESS_ID_FKEY);
+        if (_address == null)
+            _address = new Address(this, Keys.STAFF__STAFF_ADDRESS_ID_FKEY);
+
+        return _address;
     }
 
     public Store store() {
-        return new Store(this, Keys.STAFF__STAFF_STORE_ID_FKEY);
+        if (_store == null)
+            _store = new Store(this, Keys.STAFF__STAFF_STORE_ID_FKEY);
+
+        return _store;
     }
 
     @Override

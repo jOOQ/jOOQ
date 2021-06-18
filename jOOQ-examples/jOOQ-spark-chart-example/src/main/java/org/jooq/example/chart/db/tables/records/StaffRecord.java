@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class StaffRecord extends UpdatableRecordImpl<StaffRecord> implements Record11<Integer, String, String, Integer, String, Integer, Boolean, String, String, LocalDateTime, byte[]> {
 
-    private static final long serialVersionUID = -368799417;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.staff.staff_id</code>.
@@ -463,16 +463,16 @@ public class StaffRecord extends UpdatableRecordImpl<StaffRecord> implements Rec
     public StaffRecord(Integer staffId, String firstName, String lastName, Integer addressId, String email, Integer storeId, Boolean active, String username, String password, LocalDateTime lastUpdate, byte[] picture) {
         super(Staff.STAFF);
 
-        set(0, staffId);
-        set(1, firstName);
-        set(2, lastName);
-        set(3, addressId);
-        set(4, email);
-        set(5, storeId);
-        set(6, active);
-        set(7, username);
-        set(8, password);
-        set(9, lastUpdate);
-        set(10, picture);
+        setStaffId(staffId);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAddressId(addressId);
+        setEmail(email);
+        setStoreId(storeId);
+        setActive(active);
+        setUsername(username);
+        setPassword(password);
+        setLastUpdate(lastUpdate);
+        setPicture(picture);
     }
 }

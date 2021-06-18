@@ -22,7 +22,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Record14<Integer, String, String, Integer, Integer, Integer, Integer, BigDecimal, Integer, BigDecimal, MpaaRating, LocalDateTime, String[], Object> {
 
-    private static final long serialVersionUID = -857410764;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.film.film_id</code>.
@@ -207,17 +207,23 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     }
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public void setFulltext(Object value) {
         set(13, value);
     }
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public Object getFulltext() {
         return get(13);
     }
@@ -311,9 +317,12 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     }
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     @Override
     public Field<Object> field14() {
         return Film.FILM.FULLTEXT;
@@ -385,9 +394,12 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     }
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     @Override
     public Object component14() {
         return getFulltext();
@@ -459,9 +471,12 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     }
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     @Override
     public Object value14() {
         return getFulltext();
@@ -546,9 +561,12 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     }
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     @Override
     public FilmRecord value14(Object value) {
         setFulltext(value);
@@ -591,19 +609,19 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     public FilmRecord(Integer filmId, String title, String description, Integer releaseYear, Integer languageId, Integer originalLanguageId, Integer rentalDuration, BigDecimal rentalRate, Integer length, BigDecimal replacementCost, MpaaRating rating, LocalDateTime lastUpdate, String[] specialFeatures, Object fulltext) {
         super(Film.FILM);
 
-        set(0, filmId);
-        set(1, title);
-        set(2, description);
-        set(3, releaseYear);
-        set(4, languageId);
-        set(5, originalLanguageId);
-        set(6, rentalDuration);
-        set(7, rentalRate);
-        set(8, length);
-        set(9, replacementCost);
-        set(10, rating);
-        set(11, lastUpdate);
-        set(12, specialFeatures);
-        set(13, fulltext);
+        setFilmId(filmId);
+        setTitle(title);
+        setDescription(description);
+        setReleaseYear(releaseYear);
+        setLanguageId(languageId);
+        setOriginalLanguageId(originalLanguageId);
+        setRentalDuration(rentalDuration);
+        setRentalRate(rentalRate);
+        setLength(length);
+        setReplacementCost(replacementCost);
+        setRating(rating);
+        setLastUpdate(lastUpdate);
+        setSpecialFeatures(specialFeatures);
+        setFulltext(fulltext);
     }
 }

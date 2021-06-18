@@ -20,7 +20,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmListRecord extends TableRecordImpl<FilmListRecord> implements Record8<Integer, String, String, String, BigDecimal, Integer, MpaaRating, String> {
 
-    private static final long serialVersionUID = 1773119494;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.film_list.fid</code>.
@@ -346,13 +346,13 @@ public class FilmListRecord extends TableRecordImpl<FilmListRecord> implements R
     public FilmListRecord(Integer fid, String title, String description, String category, BigDecimal price, Integer length, MpaaRating rating, String actors) {
         super(FilmList.FILM_LIST);
 
-        set(0, fid);
-        set(1, title);
-        set(2, description);
-        set(3, category);
-        set(4, price);
-        set(5, length);
-        set(6, rating);
-        set(7, actors);
+        setFid(fid);
+        setTitle(title);
+        setDescription(description);
+        setCategory(category);
+        setPrice(price);
+        setLength(length);
+        setRating(rating);
+        setActors(actors);
     }
 }

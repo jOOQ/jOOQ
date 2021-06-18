@@ -19,6 +19,7 @@ import org.jooq.Row14;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
@@ -26,6 +27,7 @@ import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.enums.MpaaRating;
 import org.jooq.example.chart.db.tables.records.FilmRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -35,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 1163953580;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.film</code>
@@ -53,79 +55,83 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.film_id</code>.
      */
-    public final TableField<FilmRecord, Integer> FILM_ID = createField(DSL.name("film_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('film_film_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<FilmRecord, Integer> FILM_ID = createField(DSL.name("film_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.film.title</code>.
      */
-    public final TableField<FilmRecord, String> TITLE = createField(DSL.name("title"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<FilmRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>public.film.description</code>.
      */
-    public final TableField<FilmRecord, String> DESCRIPTION = createField(DSL.name("description"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<FilmRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>public.film.release_year</code>.
      */
-    public final TableField<FilmRecord, Integer> RELEASE_YEAR = createField(DSL.name("release_year"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<FilmRecord, Integer> RELEASE_YEAR = createField(DSL.name("release_year"), org.jooq.example.chart.db.Domains.YEAR.getDataType(), this, "");
 
     /**
      * The column <code>public.film.language_id</code>.
      */
-    public final TableField<FilmRecord, Integer> LANGUAGE_ID = createField(DSL.name("language_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FilmRecord, Integer> LANGUAGE_ID = createField(DSL.name("language_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.film.original_language_id</code>.
      */
-    public final TableField<FilmRecord, Integer> ORIGINAL_LANGUAGE_ID = createField(DSL.name("original_language_id"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<FilmRecord, Integer> ORIGINAL_LANGUAGE_ID = createField(DSL.name("original_language_id"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.film.rental_duration</code>.
      */
-    public final TableField<FilmRecord, Integer> RENTAL_DURATION = createField(DSL.name("rental_duration"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("3", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<FilmRecord, Integer> RENTAL_DURATION = createField(DSL.name("rental_duration"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field("3", SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.film.rental_rate</code>.
      */
-    public final TableField<FilmRecord, BigDecimal> RENTAL_RATE = createField(DSL.name("rental_rate"), org.jooq.impl.SQLDataType.NUMERIC(4, 2).nullable(false).defaultValue(org.jooq.impl.DSL.field("4.99", org.jooq.impl.SQLDataType.NUMERIC)), this, "");
+    public final TableField<FilmRecord, BigDecimal> RENTAL_RATE = createField(DSL.name("rental_rate"), SQLDataType.NUMERIC(4, 2).nullable(false).defaultValue(DSL.field("4.99", SQLDataType.NUMERIC)), this, "");
 
     /**
      * The column <code>public.film.length</code>.
      */
-    public final TableField<FilmRecord, Integer> LENGTH = createField(DSL.name("length"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<FilmRecord, Integer> LENGTH = createField(DSL.name("length"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.film.replacement_cost</code>.
      */
-    public final TableField<FilmRecord, BigDecimal> REPLACEMENT_COST = createField(DSL.name("replacement_cost"), org.jooq.impl.SQLDataType.NUMERIC(5, 2).nullable(false).defaultValue(org.jooq.impl.DSL.field("19.99", org.jooq.impl.SQLDataType.NUMERIC)), this, "");
+    public final TableField<FilmRecord, BigDecimal> REPLACEMENT_COST = createField(DSL.name("replacement_cost"), SQLDataType.NUMERIC(5, 2).nullable(false).defaultValue(DSL.field("19.99", SQLDataType.NUMERIC)), this, "");
 
     /**
      * The column <code>public.film.rating</code>.
      */
-    public final TableField<FilmRecord, MpaaRating> RATING = createField(DSL.name("rating"), org.jooq.impl.SQLDataType.VARCHAR.defaultValue(org.jooq.impl.DSL.field("'G'::mpaa_rating", org.jooq.impl.SQLDataType.VARCHAR)).asEnumDataType(org.jooq.example.chart.db.enums.MpaaRating.class), this, "");
+    public final TableField<FilmRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.defaultValue(DSL.field("'G'::mpaa_rating", SQLDataType.VARCHAR)).asEnumDataType(org.jooq.example.chart.db.enums.MpaaRating.class), this, "");
 
     /**
      * The column <code>public.film.last_update</code>.
      */
-    public final TableField<FilmRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<FilmRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.film.special_features</code>.
      */
-    public final TableField<FilmRecord, String[]> SPECIAL_FEATURES = createField(DSL.name("special_features"), org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<FilmRecord, String[]> SPECIAL_FEATURES = createField(DSL.name("special_features"), SQLDataType.CLOB.getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link
+     * org.jooq.Binding} to specify how this type should be handled. Deprecation
+     * can be turned off using {@literal <deprecationOnUnknownTypes/>} in your
+     * code generator configuration.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public final TableField<FilmRecord, Object> FULLTEXT = createField(DSL.name("fulltext"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"tsvector\"").nullable(false), this, "");
 
-    /**
-     * Create a <code>public.film</code> table reference
-     */
-    public Film() {
-        this(DSL.name("film"), null);
+    private Film(Name alias, Table<FilmRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -142,12 +148,11 @@ public class Film extends TableImpl<FilmRecord> {
         this(alias, FILM);
     }
 
-    private Film(Name alias, Table<FilmRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.film</code> table reference
+     */
+    public Film() {
+        this(DSL.name("film"), null);
     }
 
     public <O extends Record> Film(Table<O> child, ForeignKey<O, FilmRecord> key) {
@@ -156,17 +161,17 @@ public class Film extends TableImpl<FilmRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.FILM_FULLTEXT_IDX, Indexes.IDX_FK_LANGUAGE_ID, Indexes.IDX_FK_ORIGINAL_LANGUAGE_ID, Indexes.IDX_TITLE);
+        return Arrays.asList(Indexes.FILM_FULLTEXT_IDX, Indexes.IDX_FK_LANGUAGE_ID, Indexes.IDX_FK_ORIGINAL_LANGUAGE_ID, Indexes.IDX_TITLE);
     }
 
     @Override
     public Identity<FilmRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_FILM;
+        return (Identity<FilmRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -175,21 +180,25 @@ public class Film extends TableImpl<FilmRecord> {
     }
 
     @Override
-    public List<UniqueKey<FilmRecord>> getKeys() {
-        return Arrays.<UniqueKey<FilmRecord>>asList(Keys.FILM_PKEY);
-    }
-
-    @Override
     public List<ForeignKey<FilmRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<FilmRecord, ?>>asList(Keys.FILM__FILM_LANGUAGE_ID_FKEY, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
+        return Arrays.asList(Keys.FILM__FILM_LANGUAGE_ID_FKEY, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
     }
 
-    public Language film_FilmLanguageIdFkey() {
-        return new Language(this, Keys.FILM__FILM_LANGUAGE_ID_FKEY);
+    private transient Language _filmLanguageIdFkey;
+    private transient Language _filmOriginalLanguageIdFkey;
+
+    public Language filmLanguageIdFkey() {
+        if (_filmLanguageIdFkey == null)
+            _filmLanguageIdFkey = new Language(this, Keys.FILM__FILM_LANGUAGE_ID_FKEY);
+
+        return _filmLanguageIdFkey;
     }
 
-    public Language film_FilmOriginalLanguageIdFkey() {
-        return new Language(this, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
+    public Language filmOriginalLanguageIdFkey() {
+        if (_filmOriginalLanguageIdFkey == null)
+            _filmOriginalLanguageIdFkey = new Language(this, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
+
+        return _filmOriginalLanguageIdFkey;
     }
 
     @Override

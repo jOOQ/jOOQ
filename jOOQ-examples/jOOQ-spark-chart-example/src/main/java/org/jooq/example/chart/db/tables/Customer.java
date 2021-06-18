@@ -19,12 +19,14 @@ import org.jooq.Row10;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.CustomerRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -34,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Customer extends TableImpl<CustomerRecord> {
 
-    private static final long serialVersionUID = -1972820627;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.customer</code>
@@ -52,58 +54,59 @@ public class Customer extends TableImpl<CustomerRecord> {
     /**
      * The column <code>public.customer.customer_id</code>.
      */
-    public final TableField<CustomerRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('customer_customer_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<CustomerRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.customer.store_id</code>.
      */
-    public final TableField<CustomerRecord, Integer> STORE_ID = createField(DSL.name("store_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<CustomerRecord, Integer> STORE_ID = createField(DSL.name("store_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.customer.first_name</code>.
      */
-    public final TableField<CustomerRecord, String> FIRST_NAME = createField(DSL.name("first_name"), org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<CustomerRecord, String> FIRST_NAME = createField(DSL.name("first_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>public.customer.last_name</code>.
      */
-    public final TableField<CustomerRecord, String> LAST_NAME = createField(DSL.name("last_name"), org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<CustomerRecord, String> LAST_NAME = createField(DSL.name("last_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>public.customer.email</code>.
      */
-    public final TableField<CustomerRecord, String> EMAIL = createField(DSL.name("email"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<CustomerRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>public.customer.address_id</code>.
      */
-    public final TableField<CustomerRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<CustomerRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.customer.activebool</code>.
      */
-    public final TableField<CustomerRecord, Boolean> ACTIVEBOOL = createField(DSL.name("activebool"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("true", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
+    public final TableField<CustomerRecord, Boolean> ACTIVEBOOL = createField(DSL.name("activebool"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field("true", SQLDataType.BOOLEAN)), this, "");
 
     /**
      * The column <code>public.customer.create_date</code>.
      */
-    public final TableField<CustomerRecord, LocalDate> CREATE_DATE = createField(DSL.name("create_date"), org.jooq.impl.SQLDataType.LOCALDATE.nullable(false).defaultValue(org.jooq.impl.DSL.field("('now'::text)::date", org.jooq.impl.SQLDataType.LOCALDATE)), this, "");
+    public final TableField<CustomerRecord, LocalDate> CREATE_DATE = createField(DSL.name("create_date"), SQLDataType.LOCALDATE.nullable(false).defaultValue(DSL.field("('now'::text)::date", SQLDataType.LOCALDATE)), this, "");
 
     /**
      * The column <code>public.customer.last_update</code>.
      */
-    public final TableField<CustomerRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<CustomerRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.customer.active</code>.
      */
-    public final TableField<CustomerRecord, Integer> ACTIVE = createField(DSL.name("active"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<CustomerRecord, Integer> ACTIVE = createField(DSL.name("active"), SQLDataType.INTEGER, this, "");
 
-    /**
-     * Create a <code>public.customer</code> table reference
-     */
-    public Customer() {
-        this(DSL.name("customer"), null);
+    private Customer(Name alias, Table<CustomerRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Customer(Name alias, Table<CustomerRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -120,12 +123,11 @@ public class Customer extends TableImpl<CustomerRecord> {
         this(alias, CUSTOMER);
     }
 
-    private Customer(Name alias, Table<CustomerRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Customer(Name alias, Table<CustomerRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.customer</code> table reference
+     */
+    public Customer() {
+        this(DSL.name("customer"), null);
     }
 
     public <O extends Record> Customer(Table<O> child, ForeignKey<O, CustomerRecord> key) {
@@ -134,17 +136,17 @@ public class Customer extends TableImpl<CustomerRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_FK_ADDRESS_ID, Indexes.IDX_FK_STORE_ID, Indexes.IDX_LAST_NAME);
+        return Arrays.asList(Indexes.IDX_FK_ADDRESS_ID, Indexes.IDX_FK_STORE_ID, Indexes.IDX_LAST_NAME);
     }
 
     @Override
     public Identity<CustomerRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_CUSTOMER;
+        return (Identity<CustomerRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -153,21 +155,25 @@ public class Customer extends TableImpl<CustomerRecord> {
     }
 
     @Override
-    public List<UniqueKey<CustomerRecord>> getKeys() {
-        return Arrays.<UniqueKey<CustomerRecord>>asList(Keys.CUSTOMER_PKEY);
+    public List<ForeignKey<CustomerRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.CUSTOMER__CUSTOMER_STORE_ID_FKEY, Keys.CUSTOMER__CUSTOMER_ADDRESS_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<CustomerRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<CustomerRecord, ?>>asList(Keys.CUSTOMER__CUSTOMER_STORE_ID_FKEY, Keys.CUSTOMER__CUSTOMER_ADDRESS_ID_FKEY);
-    }
+    private transient Store _store;
+    private transient Address _address;
 
     public Store store() {
-        return new Store(this, Keys.CUSTOMER__CUSTOMER_STORE_ID_FKEY);
+        if (_store == null)
+            _store = new Store(this, Keys.CUSTOMER__CUSTOMER_STORE_ID_FKEY);
+
+        return _store;
     }
 
     public Address address() {
-        return new Address(this, Keys.CUSTOMER__CUSTOMER_ADDRESS_ID_FKEY);
+        if (_address == null)
+            _address = new Address(this, Keys.CUSTOMER__CUSTOMER_ADDRESS_ID_FKEY);
+
+        return _address;
     }
 
     @Override

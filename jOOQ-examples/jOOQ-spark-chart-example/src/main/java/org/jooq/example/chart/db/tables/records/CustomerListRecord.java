@@ -17,7 +17,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CustomerListRecord extends TableRecordImpl<CustomerListRecord> implements Record9<Integer, String, String, String, String, String, String, String, Integer> {
 
-    private static final long serialVersionUID = 98792961;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.customer_list.id</code>.
@@ -379,14 +379,14 @@ public class CustomerListRecord extends TableRecordImpl<CustomerListRecord> impl
     public CustomerListRecord(Integer id, String name, String address, String zipCode, String phone, String city, String country, String notes, Integer sid) {
         super(CustomerList.CUSTOMER_LIST);
 
-        set(0, id);
-        set(1, name);
-        set(2, address);
-        set(3, zipCode);
-        set(4, phone);
-        set(5, city);
-        set(6, country);
-        set(7, notes);
-        set(8, sid);
+        setId(id);
+        setName(name);
+        setAddress(address);
+        setZipCode(zipCode);
+        setPhone(phone);
+        setCity(city);
+        setCountry(country);
+        setNotes(notes);
+        setSid(sid);
     }
 }

@@ -9,18 +9,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
-import org.jooq.Record;
 import org.jooq.Row10;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.example.chart.db.Keys;
+import org.jooq.TableOptions;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.RewardsReportRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -30,7 +29,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RewardsReport extends TableImpl<RewardsReportRecord> {
 
-    private static final long serialVersionUID = 246294598;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.rewards_report</code>
@@ -48,58 +47,62 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
     /**
      * The column <code>public.rewards_report.customer_id</code>.
      */
-    public final TableField<RewardsReportRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('customer_customer_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<RewardsReportRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.INTEGER.nullable(false).identity(true).defaultValue(DSL.field("nextval('customer_customer_id_seq'::regclass)", SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.rewards_report.store_id</code>.
      */
-    public final TableField<RewardsReportRecord, Integer> STORE_ID = createField(DSL.name("store_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RewardsReportRecord, Integer> STORE_ID = createField(DSL.name("store_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rewards_report.first_name</code>.
      */
-    public final TableField<RewardsReportRecord, String> FIRST_NAME = createField(DSL.name("first_name"), org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<RewardsReportRecord, String> FIRST_NAME = createField(DSL.name("first_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>public.rewards_report.last_name</code>.
      */
-    public final TableField<RewardsReportRecord, String> LAST_NAME = createField(DSL.name("last_name"), org.jooq.impl.SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<RewardsReportRecord, String> LAST_NAME = createField(DSL.name("last_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>public.rewards_report.email</code>.
      */
-    public final TableField<RewardsReportRecord, String> EMAIL = createField(DSL.name("email"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<RewardsReportRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>public.rewards_report.address_id</code>.
      */
-    public final TableField<RewardsReportRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RewardsReportRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rewards_report.activebool</code>.
      */
-    public final TableField<RewardsReportRecord, Boolean> ACTIVEBOOL = createField(DSL.name("activebool"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("true", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
+    public final TableField<RewardsReportRecord, Boolean> ACTIVEBOOL = createField(DSL.name("activebool"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field("true", SQLDataType.BOOLEAN)), this, "");
 
     /**
      * The column <code>public.rewards_report.create_date</code>.
      */
-    public final TableField<RewardsReportRecord, LocalDate> CREATE_DATE = createField(DSL.name("create_date"), org.jooq.impl.SQLDataType.LOCALDATE.nullable(false).defaultValue(org.jooq.impl.DSL.field("('now'::text)::date", org.jooq.impl.SQLDataType.LOCALDATE)), this, "");
+    public final TableField<RewardsReportRecord, LocalDate> CREATE_DATE = createField(DSL.name("create_date"), SQLDataType.LOCALDATE.nullable(false).defaultValue(DSL.field("('now'::text)::date", SQLDataType.LOCALDATE)), this, "");
 
     /**
      * The column <code>public.rewards_report.last_update</code>.
      */
-    public final TableField<RewardsReportRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<RewardsReportRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(0).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.rewards_report.active</code>.
      */
-    public final TableField<RewardsReportRecord, Integer> ACTIVE = createField(DSL.name("active"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<RewardsReportRecord, Integer> ACTIVE = createField(DSL.name("active"), SQLDataType.INTEGER, this, "");
 
-    /**
-     * Create a <code>public.rewards_report</code> table reference
-     */
-    public RewardsReport() {
-        this(DSL.name("rewards_report"), null);
+    private RewardsReport(Name alias, Table<RewardsReportRecord> aliased) {
+        this(alias, aliased, new Field[] {
+            DSL.val(null, SQLDataType.INTEGER),
+            DSL.val(null, SQLDataType.NUMERIC)
+        });
+    }
+
+    private RewardsReport(Name alias, Table<RewardsReportRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.function());
     }
 
     /**
@@ -116,26 +119,21 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
         this(alias, REWARDS_REPORT);
     }
 
-    private RewardsReport(Name alias, Table<RewardsReportRecord> aliased) {
-        this(alias, aliased, new Field[2]);
-    }
-
-    private RewardsReport(Name alias, Table<RewardsReportRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
-    }
-
-    public <O extends Record> RewardsReport(Table<O> child, ForeignKey<O, RewardsReportRecord> key) {
-        super(child, key, REWARDS_REPORT);
+    /**
+     * Create a <code>public.rewards_report</code> table reference
+     */
+    public RewardsReport() {
+        this(DSL.name("rewards_report"), null);
     }
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public Identity<RewardsReportRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_REWARDS_REPORT;
+        return (Identity<RewardsReportRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -176,20 +174,30 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
     /**
      * Call this table-valued function
      */
-    public RewardsReport call(Integer minMonthlyPurchases, BigDecimal minDollarAmountPurchased) {
-        return new RewardsReport(DSL.name(getName()), null, new Field[] { 
-              DSL.val(minMonthlyPurchases, org.jooq.impl.SQLDataType.INTEGER)
-            , DSL.val(minDollarAmountPurchased, org.jooq.impl.SQLDataType.NUMERIC)
+    public RewardsReport call(
+          Integer minMonthlyPurchases
+        , BigDecimal minDollarAmountPurchased
+    ) {
+        RewardsReport result = new RewardsReport(DSL.name("rewards_report"), null, new Field[] {
+            DSL.val(minMonthlyPurchases, SQLDataType.INTEGER),
+            DSL.val(minDollarAmountPurchased, SQLDataType.NUMERIC)
         });
+
+        return aliased() ? result.as(getUnqualifiedName()) : result;
     }
 
     /**
      * Call this table-valued function
      */
-    public RewardsReport call(Field<Integer> minMonthlyPurchases, Field<BigDecimal> minDollarAmountPurchased) {
-        return new RewardsReport(DSL.name(getName()), null, new Field[] { 
-              minMonthlyPurchases
-            , minDollarAmountPurchased
+    public RewardsReport call(
+          Field<Integer> minMonthlyPurchases
+        , Field<BigDecimal> minDollarAmountPurchased
+    ) {
+        RewardsReport result = new RewardsReport(DSL.name("rewards_report"), null, new Field[] {
+            minMonthlyPurchases,
+            minDollarAmountPurchased
         });
+
+        return aliased() ? result.as(getUnqualifiedName()) : result;
     }
 }

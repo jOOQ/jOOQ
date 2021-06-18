@@ -18,12 +18,14 @@ import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.InventoryRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -33,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Inventory extends TableImpl<InventoryRecord> {
 
-    private static final long serialVersionUID = 61022235;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.inventory</code>
@@ -51,28 +53,29 @@ public class Inventory extends TableImpl<InventoryRecord> {
     /**
      * The column <code>public.inventory.inventory_id</code>.
      */
-    public final TableField<InventoryRecord, Integer> INVENTORY_ID = createField(DSL.name("inventory_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('inventory_inventory_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<InventoryRecord, Integer> INVENTORY_ID = createField(DSL.name("inventory_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.inventory.film_id</code>.
      */
-    public final TableField<InventoryRecord, Integer> FILM_ID = createField(DSL.name("film_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<InventoryRecord, Integer> FILM_ID = createField(DSL.name("film_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.inventory.store_id</code>.
      */
-    public final TableField<InventoryRecord, Integer> STORE_ID = createField(DSL.name("store_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<InventoryRecord, Integer> STORE_ID = createField(DSL.name("store_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.inventory.last_update</code>.
      */
-    public final TableField<InventoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<InventoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.inventory</code> table reference
-     */
-    public Inventory() {
-        this(DSL.name("inventory"), null);
+    private Inventory(Name alias, Table<InventoryRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Inventory(Name alias, Table<InventoryRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -89,12 +92,11 @@ public class Inventory extends TableImpl<InventoryRecord> {
         this(alias, INVENTORY);
     }
 
-    private Inventory(Name alias, Table<InventoryRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Inventory(Name alias, Table<InventoryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.inventory</code> table reference
+     */
+    public Inventory() {
+        this(DSL.name("inventory"), null);
     }
 
     public <O extends Record> Inventory(Table<O> child, ForeignKey<O, InventoryRecord> key) {
@@ -103,17 +105,17 @@ public class Inventory extends TableImpl<InventoryRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_STORE_ID_FILM_ID);
+        return Arrays.asList(Indexes.IDX_STORE_ID_FILM_ID);
     }
 
     @Override
     public Identity<InventoryRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_INVENTORY;
+        return (Identity<InventoryRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -122,21 +124,25 @@ public class Inventory extends TableImpl<InventoryRecord> {
     }
 
     @Override
-    public List<UniqueKey<InventoryRecord>> getKeys() {
-        return Arrays.<UniqueKey<InventoryRecord>>asList(Keys.INVENTORY_PKEY);
+    public List<ForeignKey<InventoryRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.INVENTORY__INVENTORY_FILM_ID_FKEY, Keys.INVENTORY__INVENTORY_STORE_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<InventoryRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<InventoryRecord, ?>>asList(Keys.INVENTORY__INVENTORY_FILM_ID_FKEY, Keys.INVENTORY__INVENTORY_STORE_ID_FKEY);
-    }
+    private transient Film _film;
+    private transient Store _store;
 
     public Film film() {
-        return new Film(this, Keys.INVENTORY__INVENTORY_FILM_ID_FKEY);
+        if (_film == null)
+            _film = new Film(this, Keys.INVENTORY__INVENTORY_FILM_ID_FKEY);
+
+        return _film;
     }
 
     public Store store() {
-        return new Store(this, Keys.INVENTORY__INVENTORY_STORE_ID_FKEY);
+        if (_store == null)
+            _store = new Store(this, Keys.INVENTORY__INVENTORY_STORE_ID_FKEY);
+
+        return _store;
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.jooq.Parameter;
 import org.jooq.example.chart.db.Public;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.Internal;
+import org.jooq.impl.SQLDataType;
 
 
 /**
@@ -17,23 +18,23 @@ import org.jooq.impl.Internal;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GroupConcat extends AbstractRoutine<String> {
 
-    private static final long serialVersionUID = -2146473794;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The parameter <code>public.group_concat.RETURN_VALUE</code>.
      */
-    public static final Parameter<String> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.CLOB, false, false);
+    public static final Parameter<String> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", SQLDataType.CLOB, false, false);
 
     /**
      * The parameter <code>public.group_concat._1</code>.
      */
-    public static final Parameter<String> _1 = Internal.createParameter("_1", org.jooq.impl.SQLDataType.CLOB, false, true);
+    public static final Parameter<String> _1 = Internal.createParameter("_1", SQLDataType.CLOB, false, true);
 
     /**
      * Create a new routine call instance
      */
     public GroupConcat() {
-        super("group_concat", Public.PUBLIC, org.jooq.impl.SQLDataType.CLOB);
+        super("group_concat", Public.PUBLIC, SQLDataType.CLOB);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(_1);
@@ -47,7 +48,8 @@ public class GroupConcat extends AbstractRoutine<String> {
     }
 
     /**
-     * Set the <code>_1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
+     * Set the <code>_1</code> parameter to the function to be used with a
+     * {@link org.jooq.Select} statement
      */
     public void set__1(Field<String> field) {
         setField(_1, field);

@@ -12,9 +12,11 @@ import org.jooq.Row9;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.CustomerListRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -24,7 +26,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CustomerList extends TableImpl<CustomerListRecord> {
 
-    private static final long serialVersionUID = -1972971697;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.customer_list</code>
@@ -42,53 +44,54 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
     /**
      * The column <code>public.customer_list.id</code>.
      */
-    public final TableField<CustomerListRecord, Integer> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<CustomerListRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.customer_list.name</code>.
      */
-    public final TableField<CustomerListRecord, String> NAME = createField(DSL.name("name"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<CustomerListRecord, String> NAME = createField(DSL.name("name"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>public.customer_list.address</code>.
      */
-    public final TableField<CustomerListRecord, String> ADDRESS = createField(DSL.name("address"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<CustomerListRecord, String> ADDRESS = createField(DSL.name("address"), SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>public.customer_list.zip code</code>.
      */
-    public final TableField<CustomerListRecord, String> ZIP_CODE = createField(DSL.name("zip code"), org.jooq.impl.SQLDataType.VARCHAR(10), this, "");
+    public final TableField<CustomerListRecord, String> ZIP_CODE = createField(DSL.name("zip code"), SQLDataType.VARCHAR(10), this, "");
 
     /**
      * The column <code>public.customer_list.phone</code>.
      */
-    public final TableField<CustomerListRecord, String> PHONE = createField(DSL.name("phone"), org.jooq.impl.SQLDataType.VARCHAR(20), this, "");
+    public final TableField<CustomerListRecord, String> PHONE = createField(DSL.name("phone"), SQLDataType.VARCHAR(20), this, "");
 
     /**
      * The column <code>public.customer_list.city</code>.
      */
-    public final TableField<CustomerListRecord, String> CITY = createField(DSL.name("city"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<CustomerListRecord, String> CITY = createField(DSL.name("city"), SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>public.customer_list.country</code>.
      */
-    public final TableField<CustomerListRecord, String> COUNTRY = createField(DSL.name("country"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
+    public final TableField<CustomerListRecord, String> COUNTRY = createField(DSL.name("country"), SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>public.customer_list.notes</code>.
      */
-    public final TableField<CustomerListRecord, String> NOTES = createField(DSL.name("notes"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<CustomerListRecord, String> NOTES = createField(DSL.name("notes"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>public.customer_list.sid</code>.
      */
-    public final TableField<CustomerListRecord, Integer> SID = createField(DSL.name("sid"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<CustomerListRecord, Integer> SID = createField(DSL.name("sid"), SQLDataType.INTEGER, this, "");
 
-    /**
-     * Create a <code>public.customer_list</code> table reference
-     */
-    public CustomerList() {
-        this(DSL.name("customer_list"), null);
+    private CustomerList(Name alias, Table<CustomerListRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private CustomerList(Name alias, Table<CustomerListRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"customer_list\" as  SELECT cu.customer_id AS id,\n    (((cu.first_name)::text || ' '::text) || (cu.last_name)::text) AS name,\n    a.address,\n    a.postal_code AS \"zip code\",\n    a.phone,\n    city.city,\n    country.country,\n        CASE\n            WHEN cu.activebool THEN 'active'::text\n            ELSE ''::text\n        END AS notes,\n    cu.store_id AS sid\n   FROM (((customer cu\n     JOIN address a ON ((cu.address_id = a.address_id)))\n     JOIN city ON ((a.city_id = city.city_id)))\n     JOIN country ON ((city.country_id = country.country_id)));"));
     }
 
     /**
@@ -105,12 +108,11 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
         this(alias, CUSTOMER_LIST);
     }
 
-    private CustomerList(Name alias, Table<CustomerListRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private CustomerList(Name alias, Table<CustomerListRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.customer_list</code> table reference
+     */
+    public CustomerList() {
+        this(DSL.name("customer_list"), null);
     }
 
     public <O extends Record> CustomerList(Table<O> child, ForeignKey<O, CustomerListRecord> key) {
@@ -119,7 +121,7 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override

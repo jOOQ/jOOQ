@@ -18,12 +18,14 @@ import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.tables.records.StoreRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 
@@ -33,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Store extends TableImpl<StoreRecord> {
 
-    private static final long serialVersionUID = 1555554789;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>public.store</code>
@@ -51,28 +53,29 @@ public class Store extends TableImpl<StoreRecord> {
     /**
      * The column <code>public.store.store_id</code>.
      */
-    public final TableField<StoreRecord, Integer> STORE_ID = createField(DSL.name("store_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('store_store_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<StoreRecord, Integer> STORE_ID = createField(DSL.name("store_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.store.manager_staff_id</code>.
      */
-    public final TableField<StoreRecord, Integer> MANAGER_STAFF_ID = createField(DSL.name("manager_staff_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<StoreRecord, Integer> MANAGER_STAFF_ID = createField(DSL.name("manager_staff_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.store.address_id</code>.
      */
-    public final TableField<StoreRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<StoreRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.store.last_update</code>.
      */
-    public final TableField<StoreRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<StoreRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
 
-    /**
-     * Create a <code>public.store</code> table reference
-     */
-    public Store() {
-        this(DSL.name("store"), null);
+    private Store(Name alias, Table<StoreRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Store(Name alias, Table<StoreRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -89,12 +92,11 @@ public class Store extends TableImpl<StoreRecord> {
         this(alias, STORE);
     }
 
-    private Store(Name alias, Table<StoreRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Store(Name alias, Table<StoreRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+    /**
+     * Create a <code>public.store</code> table reference
+     */
+    public Store() {
+        this(DSL.name("store"), null);
     }
 
     public <O extends Record> Store(Table<O> child, ForeignKey<O, StoreRecord> key) {
@@ -103,17 +105,17 @@ public class Store extends TableImpl<StoreRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return aliased() ? null : Public.PUBLIC;
     }
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.IDX_UNQ_MANAGER_STAFF_ID);
+        return Arrays.asList(Indexes.IDX_UNQ_MANAGER_STAFF_ID);
     }
 
     @Override
     public Identity<StoreRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_STORE;
+        return (Identity<StoreRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -122,21 +124,25 @@ public class Store extends TableImpl<StoreRecord> {
     }
 
     @Override
-    public List<UniqueKey<StoreRecord>> getKeys() {
-        return Arrays.<UniqueKey<StoreRecord>>asList(Keys.STORE_PKEY);
+    public List<ForeignKey<StoreRecord, ?>> getReferences() {
+        return Arrays.asList(Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY, Keys.STORE__STORE_ADDRESS_ID_FKEY);
     }
 
-    @Override
-    public List<ForeignKey<StoreRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<StoreRecord, ?>>asList(Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY, Keys.STORE__STORE_ADDRESS_ID_FKEY);
-    }
+    private transient Staff _staff;
+    private transient Address _address;
 
     public Staff staff() {
-        return new Staff(this, Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY);
+        if (_staff == null)
+            _staff = new Staff(this, Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY);
+
+        return _staff;
     }
 
     public Address address() {
-        return new Address(this, Keys.STORE__STORE_ADDRESS_ID_FKEY);
+        if (_address == null)
+            _address = new Address(this, Keys.STORE__STORE_ADDRESS_ID_FKEY);
+
+        return _address;
     }
 
     @Override

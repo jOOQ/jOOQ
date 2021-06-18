@@ -17,7 +17,7 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActorInfoRecord extends TableRecordImpl<ActorInfoRecord> implements Record4<Integer, String, String, String> {
 
-    private static final long serialVersionUID = 1291980946;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.actor_info.actor_id</code>.
@@ -199,9 +199,9 @@ public class ActorInfoRecord extends TableRecordImpl<ActorInfoRecord> implements
     public ActorInfoRecord(Integer actorId, String firstName, String lastName, String filmInfo) {
         super(ActorInfo.ACTOR_INFO);
 
-        set(0, actorId);
-        set(1, firstName);
-        set(2, lastName);
-        set(3, filmInfo);
+        setActorId(actorId);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setFilmInfo(filmInfo);
     }
 }

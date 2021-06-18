@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SchemaVersionRecord extends UpdatableRecordImpl<SchemaVersionRecord> implements Record11<Integer, Integer, String, String, String, String, Integer, String, LocalDateTime, Integer, Boolean> {
 
-    private static final long serialVersionUID = -907741195;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>public.schema_version.version_rank</code>.
@@ -463,16 +463,16 @@ public class SchemaVersionRecord extends UpdatableRecordImpl<SchemaVersionRecord
     public SchemaVersionRecord(Integer versionRank, Integer installedRank, String version, String description, String type, String script, Integer checksum, String installedBy, LocalDateTime installedOn, Integer executionTime, Boolean success) {
         super(SchemaVersion.SCHEMA_VERSION);
 
-        set(0, versionRank);
-        set(1, installedRank);
-        set(2, version);
-        set(3, description);
-        set(4, type);
-        set(5, script);
-        set(6, checksum);
-        set(7, installedBy);
-        set(8, installedOn);
-        set(9, executionTime);
-        set(10, success);
+        setVersionRank(versionRank);
+        setInstalledRank(installedRank);
+        setVersion(version);
+        setDescription(description);
+        setType(type);
+        setScript(script);
+        setChecksum(checksum);
+        setInstalledBy(installedBy);
+        setInstalledOn(installedOn);
+        setExecutionTime(executionTime);
+        setSuccess(success);
     }
 }

@@ -47,7 +47,7 @@ import org.jooq.example.chart.db.tables.records.RewardsReportRecord;
 
 
 /**
- * Convenience access to all tables in public
+ * Convenience access to all tables in public.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
@@ -115,22 +115,41 @@ public class Tables {
     /**
      * Call <code>public.film_in_stock</code>.
      */
-    public static Result<FilmInStockRecord> FILM_IN_STOCK(Configuration configuration, Integer pFilmId, Integer pStoreId) {
-        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(pFilmId, pStoreId)).fetch();
+    public static Result<FilmInStockRecord> FILM_IN_STOCK(
+          Configuration configuration
+        , Integer pFilmId
+        , Integer pStoreId
+    ) {
+        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(
+              pFilmId
+            , pStoreId
+        )).fetch();
     }
 
     /**
      * Get <code>public.film_in_stock</code> as a table.
      */
-    public static FilmInStock FILM_IN_STOCK(Integer pFilmId, Integer pStoreId) {
-        return org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(pFilmId, pStoreId);
+    public static FilmInStock FILM_IN_STOCK(
+          Integer pFilmId
+        , Integer pStoreId
+    ) {
+        return org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(
+            pFilmId,
+            pStoreId
+        );
     }
 
     /**
      * Get <code>public.film_in_stock</code> as a table.
      */
-    public static FilmInStock FILM_IN_STOCK(Field<Integer> pFilmId, Field<Integer> pStoreId) {
-        return org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(pFilmId, pStoreId);
+    public static FilmInStock FILM_IN_STOCK(
+          Field<Integer> pFilmId
+        , Field<Integer> pStoreId
+    ) {
+        return org.jooq.example.chart.db.tables.FilmInStock.FILM_IN_STOCK.call(
+            pFilmId,
+            pStoreId
+        );
     }
 
     /**
@@ -146,22 +165,41 @@ public class Tables {
     /**
      * Call <code>public.film_not_in_stock</code>.
      */
-    public static Result<FilmNotInStockRecord> FILM_NOT_IN_STOCK(Configuration configuration, Integer pFilmId, Integer pStoreId) {
-        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(pFilmId, pStoreId)).fetch();
+    public static Result<FilmNotInStockRecord> FILM_NOT_IN_STOCK(
+          Configuration configuration
+        , Integer pFilmId
+        , Integer pStoreId
+    ) {
+        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(
+              pFilmId
+            , pStoreId
+        )).fetch();
     }
 
     /**
      * Get <code>public.film_not_in_stock</code> as a table.
      */
-    public static FilmNotInStock FILM_NOT_IN_STOCK(Integer pFilmId, Integer pStoreId) {
-        return org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(pFilmId, pStoreId);
+    public static FilmNotInStock FILM_NOT_IN_STOCK(
+          Integer pFilmId
+        , Integer pStoreId
+    ) {
+        return org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(
+            pFilmId,
+            pStoreId
+        );
     }
 
     /**
      * Get <code>public.film_not_in_stock</code> as a table.
      */
-    public static FilmNotInStock FILM_NOT_IN_STOCK(Field<Integer> pFilmId, Field<Integer> pStoreId) {
-        return org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(pFilmId, pStoreId);
+    public static FilmNotInStock FILM_NOT_IN_STOCK(
+          Field<Integer> pFilmId
+        , Field<Integer> pStoreId
+    ) {
+        return org.jooq.example.chart.db.tables.FilmNotInStock.FILM_NOT_IN_STOCK.call(
+            pFilmId,
+            pStoreId
+        );
     }
 
     /**
@@ -227,22 +265,41 @@ public class Tables {
     /**
      * Call <code>public.rewards_report</code>.
      */
-    public static Result<RewardsReportRecord> REWARDS_REPORT(Configuration configuration, Integer minMonthlyPurchases, BigDecimal minDollarAmountPurchased) {
-        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(minMonthlyPurchases, minDollarAmountPurchased)).fetch();
+    public static Result<RewardsReportRecord> REWARDS_REPORT(
+          Configuration configuration
+        , Integer minMonthlyPurchases
+        , BigDecimal minDollarAmountPurchased
+    ) {
+        return configuration.dsl().selectFrom(org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(
+              minMonthlyPurchases
+            , minDollarAmountPurchased
+        )).fetch();
     }
 
     /**
      * Get <code>public.rewards_report</code> as a table.
      */
-    public static RewardsReport REWARDS_REPORT(Integer minMonthlyPurchases, BigDecimal minDollarAmountPurchased) {
-        return org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(minMonthlyPurchases, minDollarAmountPurchased);
+    public static RewardsReport REWARDS_REPORT(
+          Integer minMonthlyPurchases
+        , BigDecimal minDollarAmountPurchased
+    ) {
+        return org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(
+            minMonthlyPurchases,
+            minDollarAmountPurchased
+        );
     }
 
     /**
      * Get <code>public.rewards_report</code> as a table.
      */
-    public static RewardsReport REWARDS_REPORT(Field<Integer> minMonthlyPurchases, Field<BigDecimal> minDollarAmountPurchased) {
-        return org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(minMonthlyPurchases, minDollarAmountPurchased);
+    public static RewardsReport REWARDS_REPORT(
+          Field<Integer> minMonthlyPurchases
+        , Field<BigDecimal> minDollarAmountPurchased
+    ) {
+        return org.jooq.example.chart.db.tables.RewardsReport.REWARDS_REPORT.call(
+            minMonthlyPurchases,
+            minDollarAmountPurchased
+        );
     }
 
     /**

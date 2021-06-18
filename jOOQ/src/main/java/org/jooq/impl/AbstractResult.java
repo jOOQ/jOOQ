@@ -747,8 +747,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
         try {
             writer.append("<result");
-            if (format.xmlns())
+            if (format.xmlns()) {
+                format = format.xmlns(false);
                 writer.append(" xmlns=\"" + Constants.NS_EXPORT + "\"");
+            }
             writer.append(">");
 
             if (format.header()) {
@@ -814,8 +816,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         String newline = format.newline();
 
         writer.append("<record");
-        if (format.xmlns())
+        if (format.xmlns()) {
+            format = format.xmlns(false);
             writer.append(" xmlns=\"" + Constants.NS_EXPORT + "\"");
+        }
         writer.append(">");
 
         int size = fields.size();

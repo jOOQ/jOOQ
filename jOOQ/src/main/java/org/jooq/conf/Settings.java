@@ -244,13 +244,7 @@ public class Settings
     protected Boolean emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly = false;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
-    protected NestedCollectionEmulation emulateList = NestedCollectionEmulation.DEFAULT;
-    @XmlElement(defaultValue = "DEFAULT")
-    @XmlSchemaType(name = "string")
     protected NestedCollectionEmulation emulateMultiset = NestedCollectionEmulation.DEFAULT;
-    @XmlElement(defaultValue = "DEFAULT")
-    @XmlSchemaType(name = "string")
-    protected NestedCollectionEmulation emulateSet = NestedCollectionEmulation.DEFAULT;
     @XmlElement(defaultValue = "LOG_DEBUG")
     @XmlSchemaType(name = "string")
     protected ExecuteWithoutWhere executeUpdateWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
@@ -2281,23 +2275,7 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>LIST</code> support should be emulated.
-     * 
-     */
-    public NestedCollectionEmulation getEmulateList() {
-        return emulateList;
-    }
-
-    /**
-     * [#3884] Whether <code>LIST</code> support should be emulated.
-     * 
-     */
-    public void setEmulateList(NestedCollectionEmulation value) {
-        this.emulateList = value;
-    }
-
-    /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] How <code>MULTISET</code> support should be emulated.
      * 
      */
     public NestedCollectionEmulation getEmulateMultiset() {
@@ -2305,27 +2283,11 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] How <code>MULTISET</code> support should be emulated.
      * 
      */
     public void setEmulateMultiset(NestedCollectionEmulation value) {
         this.emulateMultiset = value;
-    }
-
-    /**
-     * [#3884] Whether <code>SET</code> support should be emulated.
-     * 
-     */
-    public NestedCollectionEmulation getEmulateSet() {
-        return emulateSet;
-    }
-
-    /**
-     * [#3884] Whether <code>SET</code> support should be emulated.
-     * 
-     */
-    public void setEmulateSet(NestedCollectionEmulation value) {
-        this.emulateSet = value;
     }
 
     /**
@@ -3676,29 +3638,11 @@ public class Settings
     }
 
     /**
-     * [#3884] Whether <code>LIST</code> support should be emulated.
-     * 
-     */
-    public Settings withEmulateList(NestedCollectionEmulation value) {
-        setEmulateList(value);
-        return this;
-    }
-
-    /**
-     * [#3884] Whether <code>MULTISET</code> support should be emulated.
+     * [#3884] How <code>MULTISET</code> support should be emulated.
      * 
      */
     public Settings withEmulateMultiset(NestedCollectionEmulation value) {
         setEmulateMultiset(value);
-        return this;
-    }
-
-    /**
-     * [#3884] Whether <code>SET</code> support should be emulated.
-     * 
-     */
-    public Settings withEmulateSet(NestedCollectionEmulation value) {
-        setEmulateSet(value);
         return this;
     }
 
@@ -4090,9 +4034,7 @@ public class Settings
         builder.append("inListPadBase", inListPadBase);
         builder.append("delimiter", delimiter);
         builder.append("emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly", emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly);
-        builder.append("emulateList", emulateList);
         builder.append("emulateMultiset", emulateMultiset);
-        builder.append("emulateSet", emulateSet);
         builder.append("executeUpdateWithoutWhere", executeUpdateWithoutWhere);
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
         builder.append("interpreterDialect", interpreterDialect);
@@ -4921,30 +4863,12 @@ public class Settings
                 return false;
             }
         }
-        if (emulateList == null) {
-            if (other.emulateList!= null) {
-                return false;
-            }
-        } else {
-            if (!emulateList.equals(other.emulateList)) {
-                return false;
-            }
-        }
         if (emulateMultiset == null) {
             if (other.emulateMultiset!= null) {
                 return false;
             }
         } else {
             if (!emulateMultiset.equals(other.emulateMultiset)) {
-                return false;
-            }
-        }
-        if (emulateSet == null) {
-            if (other.emulateSet!= null) {
-                return false;
-            }
-        } else {
-            if (!emulateSet.equals(other.emulateSet)) {
                 return false;
             }
         }
@@ -5338,9 +5262,7 @@ public class Settings
         result = ((prime*result)+((inListPadBase == null)? 0 :inListPadBase.hashCode()));
         result = ((prime*result)+((delimiter == null)? 0 :delimiter.hashCode()));
         result = ((prime*result)+((emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly == null)? 0 :emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly.hashCode()));
-        result = ((prime*result)+((emulateList == null)? 0 :emulateList.hashCode()));
         result = ((prime*result)+((emulateMultiset == null)? 0 :emulateMultiset.hashCode()));
-        result = ((prime*result)+((emulateSet == null)? 0 :emulateSet.hashCode()));
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));

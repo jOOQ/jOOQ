@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-// ...
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 
 import org.jooq.Context;

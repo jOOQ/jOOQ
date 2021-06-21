@@ -23683,6 +23683,9 @@ public class DSL {
      * transparently.</li>
      * </ul>
      * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      * <strong>An important known limitation is that predicates based on
@@ -23877,6 +23880,1306 @@ public class DSL {
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
         return new ArrayAgg(true, Tools.nullSafe(field));
     }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Collection<? extends Field<?>> fields) {
+        return new MultisetAgg<>(false, row(fields));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Field<?>... fields) {
+        return new MultisetAgg<>(false, row(fields));
+    }
+
+
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1> ArrayAggOrderByStep<Result<Record1<T1>>> multisetAgg(SelectField<T1> field1) {
+        return new MultisetAgg<>(false, row(field1));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2> ArrayAggOrderByStep<Result<Record2<T1, T2>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2) {
+        return new MultisetAgg<>(false, row(field1, field2));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3> ArrayAggOrderByStep<Result<Record3<T1, T2, T3>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
+        return new MultisetAgg<>(false, row(field1, field2, field3));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4> ArrayAggOrderByStep<Result<Record4<T1, T2, T3, T4>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5> ArrayAggOrderByStep<Result<Record5<T1, T2, T3, T4, T5>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6> ArrayAggOrderByStep<Result<Record6<T1, T2, T3, T4, T5, T6>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7> ArrayAggOrderByStep<Result<Record7<T1, T2, T3, T4, T5, T6, T7>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8> ArrayAggOrderByStep<Result<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> ArrayAggOrderByStep<Result<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> ArrayAggOrderByStep<Result<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> ArrayAggOrderByStep<Result<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ArrayAggOrderByStep<Result<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ArrayAggOrderByStep<Result<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> ArrayAggOrderByStep<Result<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> ArrayAggOrderByStep<Result<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> ArrayAggOrderByStep<Result<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> ArrayAggOrderByStep<Result<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> ArrayAggOrderByStep<Result<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> ArrayAggOrderByStep<Result<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> ArrayAggOrderByStep<Result<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> ArrayAggOrderByStep<Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * EXPERIMENTAL: This synthetic, non-standard aggregate function works in a
+     * similar way as the standard SQL <code>ARRAY_AGG</code> aggregate
+     * function. It is emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAgg(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAgg(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#XML}: A MULTISET of ROW types works
+     * just like a {@link #xmlagg(Field)} of
+     * {@link #xmlelement(Name, Field...)}, or an application of
+     * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
+     * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link XMLFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
+     * support for MULTISET.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     * <p>
+     * <p>
+     * A set of known limitations can be found here: <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
+     * <strong>An important known limitation is that predicates based on
+     * MULTISETs expose undefined behaviour: Either they don't work
+     * (uncomparable types, such as XML), or they will compare JSON/XML document
+     * structures where ordinals matter. Please do not rely on the current
+     * comparison behaviour.</strong>
+     * <p>
+     * Please report any issues you may encounter on the above issue, or in a
+     * new issue on github.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ArrayAggOrderByStep<Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
+        return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
+    }
+
+
 
 
 

@@ -552,16 +552,8 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="emulateList" type="jooq-runtime:NestedCollectionEmulation" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] Whether <code>LIST</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
-
       <element name="emulateMultiset" type="jooq-runtime:NestedCollectionEmulation" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] Whether <code>MULTISET</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
-
-      <element name="emulateSet" type="jooq-runtime:NestedCollectionEmulation" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] Whether <code>SET</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] How <code>MULTISET</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="executeUpdateWithoutWhere" type="jooq-runtime:ExecuteWithoutWhere" minOccurs="0" maxOccurs="1" default="LOG_DEBUG">

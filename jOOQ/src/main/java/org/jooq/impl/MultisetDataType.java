@@ -39,8 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.newRecord;
-import static org.jooq.impl.Tools.recordType;
-import static org.jooq.impl.Tools.row0;
 
 import java.util.List;
 
@@ -51,8 +49,6 @@ import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
-import org.jooq.Select;
-import org.jooq.impl.AbstractRecord.TransferRecordState;
 
 /**
  * A wrapper for anonymous multiset data types.

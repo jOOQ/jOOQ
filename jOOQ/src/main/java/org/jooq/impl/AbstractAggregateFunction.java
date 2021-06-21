@@ -60,6 +60,7 @@ import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.Tools.camelCase;
+import static org.jooq.impl.Tools.isEmpty;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -367,6 +368,15 @@ implements
     @SuppressWarnings("unchecked")
     final <U> Field<U> fon(AggregateFunction<U> function) {
         return DSL.nullif(fo(function), (Field<U>) zero());
+    }
+
+    /**
+     * Apply this aggregate function's <code>ORDER BY</code>,
+     * <code>FILTER</code> and <code>OVER</code> clauses to an argument
+     * aggregate function.
+     */
+    final <U> Field<U> ofo(AbstractAggregateFunction<U> function) {
+        return fo(isEmpty(withinGroupOrderBy) ? function : function.orderBy(withinGroupOrderBy));
     }
 
     /**

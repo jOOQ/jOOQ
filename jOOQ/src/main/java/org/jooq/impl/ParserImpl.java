@@ -10423,6 +10423,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (filter == null && !basic)
             over = filter = parseArrayAggFunctionIf();
         if (filter == null && !basic)
+            over = filter = parseMultisetAggFunctionIf();
+        if (filter == null && !basic)
             over = filter = parseXMLAggFunctionIf();
         if (filter == null && !basic)
             over = filter = parseJSONArrayAggFunctionIf();
@@ -10841,6 +10843,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 ? arrayAggDistinct(a1)
                 : arrayAgg(a1);
 
+            return sort == null ? s1 : s1.orderBy(sort);
+        }
+
+        return null;
+    }
+
+    private final AggregateFilterStep<?> parseMultisetAggFunctionIf() {
+        if (parseKeywordIf("MULTISET_AGG")) {
+            parse('(');
+
+            List<Field<?>> fields = parseList(',', ParseContext::parseField);
+            List<SortField<?>> sort = null;
+
+            if (parseKeywordIf("ORDER BY"))
+                sort = parseList(',', ParseContext::parseSortField);
+
+            parse(')');
+            ArrayAggOrderByStep<?> s1 = multisetAgg(fields);
             return sort == null ? s1 : s1.orderBy(sort);
         }
 

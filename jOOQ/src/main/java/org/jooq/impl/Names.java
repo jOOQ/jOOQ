@@ -248,6 +248,7 @@ final class Names {
     static final Name N_MODE                   = unquotedName("mode");
     static final Name N_MUL                    = unquotedName("mul");
     static final Name N_MULTISET               = unquotedName("multiset");
+    static final Name N_MULTISET_AGG           = unquotedName("multiset_agg");
     static final Name N_NANO100_BETWEEN        = unquotedName("nano100_between");
     static final Name N_NEWID                  = unquotedName("newid");
     static final Name N_NEXTVAL                = unquotedName("nextval");

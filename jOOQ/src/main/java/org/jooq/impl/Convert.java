@@ -213,7 +213,16 @@ final class Convert {
         try {
             Class<?> klass = Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
 
-            jsonMapper = klass.getDeclaredConstructor().newInstance();
+            try {
+                Class<?> kotlin = Class.forName("com.fasterxml.jackson.module.kotlin.ExtensionsKt");
+                jsonMapper = kotlin.getMethod("jacksonObjectMapper").invoke(kotlin);
+                log.debug("Jackson kotlin module is available");
+            }
+            catch (Exception e) {
+                jsonMapper = klass.getDeclaredConstructor().newInstance();
+                log.debug("Jackson kotlin module is not available");
+            }
+
             jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
             jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
             log.debug("Jackson is available");

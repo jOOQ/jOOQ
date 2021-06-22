@@ -112,8 +112,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.REMARKS,
                 COLUMNS.SEQUENCE_NAME,
-                COLUMNS.DOMAIN_SCHEMA,
-                COLUMNS.DOMAIN_NAME
+                ((H2Database) getDatabase()).is1_4_198() ? COLUMNS.DOMAIN_SCHEMA : inline("").as(COLUMNS.DOMAIN_SCHEMA),
+                ((H2Database) getDatabase()).is1_4_198() ? COLUMNS.DOMAIN_NAME : inline("").as(COLUMNS.DOMAIN_NAME)
             )
             .from(COLUMNS)
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))

@@ -286,6 +286,8 @@ public class JDBCUtils {
 
             case FIREBIRD:
                 return firebirdDialect(majorVersion);
+            case H2:
+                return h2Dialect(majorVersion, minorVersion, productVersion);
             case MARIADB:
                 return mariadbDialect(majorVersion, minorVersion);
             case MYSQL:
@@ -425,6 +427,24 @@ public class JDBCUtils {
 
 
         return FIREBIRD;
+    }
+
+    private static final SQLDialect h2Dialect(int majorVersion, int minorVersion, String productVersion) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return H2;
     }
 
     /**

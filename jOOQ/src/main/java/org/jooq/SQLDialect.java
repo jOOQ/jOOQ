@@ -144,6 +144,24 @@ public enum SQLDialect {
      */
     H2("H2", false, true),
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The Hypersonic dialect family.
      */

@@ -48,6 +48,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
+import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultExecuteListener;
@@ -92,6 +93,7 @@ public class SakilaReportService {
         // Some nice debug logging of formatted queries and the first 5 rows in each result set.
         dsl = DSL.using(new DefaultConfiguration()
             .set(ds)
+            .set(SQLDialect.POSTGRES)
             .set(DefaultExecuteListenerProvider.providers(new DefaultExecuteListener() {
                 @Override
                 public void executeEnd(ExecuteContext ctx) {

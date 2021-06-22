@@ -38,6 +38,10 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.util.Objects;
+
+import org.jooq.tools.json.JSONParser;
+import org.jooq.tools.json.ParseException;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -53,7 +57,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class JSONB implements Serializable {
 
-    private final String data;
+    private final String     data;
+    private transient Object parsed;
 
     private JSONB(String data) {
         this.data = String.valueOf(data);
@@ -92,9 +97,23 @@ public final class JSONB implements Serializable {
         return data == null ? null : jsonb(data);
     }
 
+    private final Object parsed() {
+        if (parsed == null) {
+            try {
+                parsed = new JSONParser().parse(data);
+            }
+            catch (ParseException e) {
+                parsed = data;
+            }
+        }
+
+        return parsed;
+    }
+
     @Override
     public int hashCode() {
-        return data.hashCode();
+        Object p = parsed();
+        return p == null ? 0 : p.hashCode();
     }
 
     @Override
@@ -102,12 +121,12 @@ public final class JSONB implements Serializable {
         if (this == obj)
             return true;
         if (obj instanceof JSONB)
-            return data.equals(((JSONB) obj).data);
+            return Objects.equals(parsed(), (((JSONB) obj).parsed()));
         return false;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(data);
+        return String.valueOf(parsed());
     }
 }

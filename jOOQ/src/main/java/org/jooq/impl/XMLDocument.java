@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Names.N_XMLDOCUMENT;
 
 import org.jooq.Context;
@@ -58,6 +59,13 @@ final class XMLDocument extends AbstractField<XML> {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
         ctx.visit(N_XMLDOCUMENT).sql('(').visit(content).sql(')');
     }
 }

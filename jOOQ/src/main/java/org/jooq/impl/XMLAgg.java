@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Names.N_XMLAGG;
 
 import org.jooq.Context;
@@ -46,8 +47,6 @@ import org.jooq.XMLAggOrderByStep;
 
 
 /**
- * The JSON array constructor.
- *
  * @author Lukas Eder
  */
 final class XMLAgg extends AbstractAggregateFunction<XML> implements XMLAggOrderByStep<XML> {
@@ -58,7 +57,19 @@ final class XMLAgg extends AbstractAggregateFunction<XML> implements XMLAggOrder
 
     @Override
     public void accept(Context<?> ctx) {
-        ctx.visit(N_XMLAGG).sql('(').visit(arguments);
+
+
+
+
+
+
+
+
+
+
+
+        ctx.visit(N_XMLAGG).sql('(');
+        acceptArguments0(ctx);
         acceptOrderBy(ctx);
         ctx.sql(')');
 

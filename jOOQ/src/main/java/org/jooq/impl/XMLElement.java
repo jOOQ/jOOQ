@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Keywords.K_NAME;
 import static org.jooq.impl.Names.N_XMLCONCAT;
 import static org.jooq.impl.Names.N_XMLELEMENT;
@@ -69,6 +70,21 @@ final class XMLElement extends AbstractField<XML> {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         boolean hasAttributes = attributes != null && !((XMLAttributesImpl) attributes).attributes.isEmpty();
         boolean hasContent = !content.isEmpty();
         boolean format = hasAttributes || hasContent;

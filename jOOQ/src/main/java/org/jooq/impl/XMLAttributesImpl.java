@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Names.N_XMLATTRIBUTES;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 
@@ -59,6 +60,13 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
         boolean format = attributes.size() > 1;
 
         ctx.data(DATA_AS_REQUIRED, true, c -> {

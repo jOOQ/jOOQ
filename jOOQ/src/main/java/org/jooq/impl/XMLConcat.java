@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.Names.N_XMLCONCAT;
 
 import java.util.Collection;
@@ -59,6 +60,13 @@ final class XMLConcat extends AbstractField<XML> {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
         ctx.visit(N_XMLCONCAT).sql('(').visit(args).sql(')');
     }
 }

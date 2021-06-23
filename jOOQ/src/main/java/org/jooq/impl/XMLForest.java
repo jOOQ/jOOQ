@@ -87,6 +87,11 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
         ctx.data(DATA_AS_REQUIRED, true,
             c -> c.visit(N_XMLFOREST).sql('(')
                   .declareFields(true, x -> x.visit(new SelectFieldList<>(fields)))

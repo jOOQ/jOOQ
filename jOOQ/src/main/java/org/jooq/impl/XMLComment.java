@@ -87,6 +87,11 @@ extends
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
         ctx.visit(N_XMLCOMMENT).sql('(').visit(comment).sql(')');
     }
 

@@ -393,7 +393,7 @@ public class MockFileDatabase implements MockDataProvider {
 
             // [#9078] Listing possible reasons for this to happen
             if (list == null)
-                throw new SQLException("Invalid SQL: " + sql
+                throw new SQLException("SQL statement could not be matched by any statement in the MockFileDatabase: " + sql
                     + "\nPossible reasons include: "
                     + "\n  Your regular expressions are case sensitive."
                     + "\n  Your regular expressions use constant literals (e.g. 'Hello'), but the above SQL string uses bind variable placeholders (e.g. ?)."

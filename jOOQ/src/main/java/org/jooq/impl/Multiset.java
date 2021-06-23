@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
@@ -51,6 +52,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
@@ -223,7 +225,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                         Select<Record1<XML>> s = select(xmlelement(N_RESULT, filter)).from(t);
 
                         if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
-                            ctx.visit(DSL.field(s).cast(VARCHAR));
+                            ctx.visit(xmlserializeContent(DSL.field(s), VARCHAR));
                         else
                             visitSubquery(ctx, s, true);
 

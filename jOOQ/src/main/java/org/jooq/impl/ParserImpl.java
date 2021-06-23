@@ -7827,6 +7827,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return field;
                     else if ((field = parseFieldXMLQueryIf()) != null)
                         return field;
+                    else if ((field = parseFieldXMLSerializeIf()) != null)
+                        return field;
 
                 break;
 
@@ -8211,6 +8213,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(')');
 
             return xmlcomment(comment);
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldXMLSerializeIf() {
+        if (parseFunctionNameIf("XMLSERIALIZE")) {
+            parse('(');
+            boolean content = parseKeywordIf("CONTENT");
+            if (!content)
+                parseKeywordIf("DOCUMENT");
+
+            Field<XML> value = (Field<XML>) parseField();
+            parseKeyword("AS");
+            DataType<?> type = parseCastDataType();
+            parse(')');
+
+            return content ? xmlserializeContent(value, type) : xmlserializeDocument(value, type);
         }
 
         return null;

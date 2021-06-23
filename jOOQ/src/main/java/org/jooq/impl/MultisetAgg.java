@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.Multiset.NO_SUPPORT_JSON_COMPARE;
 import static org.jooq.impl.Multiset.NO_SUPPORT_XML_COMPARE;
 import static org.jooq.impl.Multiset.jsonArrayaggEmulation;
@@ -140,14 +141,14 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
             case XML: {
                 XMLAggOrderByStep<XML> order = xmlaggEmulation(row, multisetCondition);
 
-                Field<?> f = xmlelement(N_RESULT,
+                Field<XML> f = xmlelement(N_RESULT,
                     multisetCondition
                         ? fo((AbstractAggregateFunction<?>) order.orderBy(row.fields()))
                         : ofo((AbstractAggregateFunction<?>) order)
                 );
 
                 if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
-                    ctx.visit(f.cast(VARCHAR));
+                    ctx.visit(xmlserializeContent(f, VARCHAR));
                 else
                     ctx.visit(f);
 

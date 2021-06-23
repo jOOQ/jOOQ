@@ -19320,6 +19320,46 @@ public class DSL {
         return new Xmlforest(fields);
     }
 
+    /**
+     * The <code>XMLSERIALIZE_DOCUMENT</code> function.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static <T> Field<T> xmlserializeDocument(XML value, DataType<T> type) {
+        return new Xmlserialize(false, Tools.field(value), type);
+    }
+
+    /**
+     * The <code>XMLSERIALIZE_DOCUMENT</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static <T> Field<T> xmlserializeDocument(Field<XML> value, DataType<T> type) {
+        return new Xmlserialize(false, value, type);
+    }
+
+    /**
+     * The <code>XMLSERIALIZE_CONTENT</code> function.
+     *
+     * @param value is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static <T> Field<T> xmlserializeContent(XML value, DataType<T> type) {
+        return new Xmlserialize(true, Tools.field(value), type);
+    }
+
+    /**
+     * The <code>XMLSERIALIZE_CONTENT</code> function.
+     */
+    @NotNull
+    @Support({ POSTGRES })
+    public static <T> Field<T> xmlserializeContent(Field<XML> value, DataType<T> type) {
+        return new Xmlserialize(true, value, type);
+    }
+
     // -------------------------------------------------------------------------
     // JSON functions
     // -------------------------------------------------------------------------

@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.partitionBy;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 
@@ -129,7 +130,18 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 p.PARAMETER_NAME,
                 p.DATA_TYPE,
                 p.CHARACTER_MAXIMUM_LENGTH,
-                p.NUMERIC_PRECISION,
+
+                // [#12048] TODO: Maintain whether we know the precision or not
+                when(p.NUMERIC_PRECISION.isNull().and(p.DATA_TYPE.in(
+                    inline("time"),
+                    inline("timetz"),
+                    inline("time without time zone"),
+                    inline("time with time zone"),
+                    inline("timestamp"),
+                    inline("timestamptz"),
+                    inline("timestamp without time zone"),
+                    inline("timestamp with time zone"))), inline(6))
+                .else_(p.NUMERIC_PRECISION).as(p.NUMERIC_PRECISION),
                 p.NUMERIC_SCALE,
                 p.UDT_SCHEMA,
                 p.UDT_NAME,

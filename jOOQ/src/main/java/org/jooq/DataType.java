@@ -906,6 +906,15 @@ public interface DataType<T> extends Named {
     boolean isRecord();
 
     /**
+     * Whether this data type is a nested collection type.
+     * <p>
+     * This is true for anonymous, structural nested collection types
+     * constructed with {@link DSL#multiset(Select)} or
+     * {@link DSL#multisetAgg(Field...)}.
+     */
+    boolean isMultiset();
+
+    /**
      * Whether this data type is an enum type.
      */
     boolean isEnum();

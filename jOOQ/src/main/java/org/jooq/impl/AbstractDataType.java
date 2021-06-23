@@ -662,6 +662,11 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
+    public final boolean isMultiset() {
+        return this instanceof MultisetDataType;
+    }
+
+    @Override
     public final boolean isEnum() {
         return EnumType.class.isAssignableFrom(tType0());
     }

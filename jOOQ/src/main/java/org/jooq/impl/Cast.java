@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
@@ -56,11 +57,13 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.regex.Pattern;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Keyword;
+import org.jooq.LanguageContext;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
@@ -298,6 +301,12 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
+
+
+
+
+
+
     static class CastNative<T> extends AbstractQueryPart {
         private final QueryPart   expression;
         private final DataType<T> type;
@@ -330,6 +339,11 @@ final class Cast<T> extends AbstractField<T> {
 
             if (typeAsKeyword != null)
                 ctx.visit(typeAsKeyword);
+
+
+
+
+
             else
                 ctx.sql(type.getCastTypeName(ctx.configuration()));
 

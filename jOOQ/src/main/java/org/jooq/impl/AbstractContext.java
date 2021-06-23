@@ -74,6 +74,7 @@ import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.ForeignKey;
 import org.jooq.JoinType;
+import org.jooq.LanguageContext;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -91,6 +92,8 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -134,6 +137,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     final ParamType                                forcedParamType;
     final boolean                                  castModeOverride;
     CastMode                                       castMode;
+    LanguageContext                                languageContext;
     ParamType                                      paramType                   = ParamType.INDEXED;
     boolean                                        quote                       = true;
     boolean                                        qualifySchema               = true;
@@ -205,6 +209,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             : m == ParamCastMode.NEVER
             ? CastMode.NEVER
             : CastMode.DEFAULT;
+        this.languageContext = LanguageContext.QUERY;
         this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>(ScopeStackElement::new);
     }
 
@@ -904,6 +909,30 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C qualifyCatalog(boolean q, Consumer<? super C> consumer) {
         return toggle(q, this::qualifyCatalog, this::qualifyCatalog, consumer);
+    }
+
+    @Override
+    public final LanguageContext languageContext() {
+        return languageContext;
+    }
+
+    @Override
+    public final C languageContext(LanguageContext context) {
+        this.languageContext = context;
+        return (C) this;
+    }
+
+    @Override
+    public final C languageContext(LanguageContext context, Consumer<? super C> consumer) {
+        return toggle(context, this::languageContext, this::languageContext, consumer);
+    }
+
+    @Override
+    public final C languageContextIf(LanguageContext context, boolean condition) {
+        if (condition)
+            languageContext(context);
+
+        return (C) this;
     }
 
     @Override

@@ -88,6 +88,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
 import org.jooq.Keyword;
+import org.jooq.LanguageContext;
 import org.jooq.Name;
 // ...
 import org.jooq.Query;
@@ -97,6 +98,8 @@ import org.jooq.Statement;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.impl.Tools.DataExtendedKey;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -341,6 +344,10 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
         if (wrapInBeginEnd) {
             boolean topLevel = ctx.scopeLevel() == -1;
+            LanguageContext language = ctx.languageContext();
+
+            if (topLevel && language == LanguageContext.QUERY)
+                ctx.languageContext(LanguageContext.BLOCK);
 
 
 
@@ -375,6 +382,9 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                 scopeDeclarations(ctx, c -> accept1(c));
                 end(ctx, topLevel);
             }
+
+            if (topLevel && language == LanguageContext.QUERY)
+                ctx.languageContext(language);
         }
         else
             accept1(ctx);
@@ -407,6 +417,9 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             for (Statement s : statements) {
                 if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.dialect()))
                     continue statementLoop;
+
+                LanguageContext language = ctx.languageContext();
+                ctx.languageContextIf(LanguageContext.QUERY, s instanceof Query && !(s instanceof Block));
 
                 ctx.formatSeparator();
                 int position = r != null ? r.sql.length() : 0;
@@ -457,6 +470,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                 // [#11374] [#11367] TODO Improve this clunky semi colon decision logic
                 if (position < (r != null ? r.sql.length() : 0))
                     semicolonAfterStatement(ctx, s);
+
+                ctx.languageContext(language);
             }
         }
     }

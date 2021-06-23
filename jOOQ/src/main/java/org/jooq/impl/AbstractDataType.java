@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -82,6 +83,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.LanguageContext;
 import org.jooq.Name;
 import org.jooq.Nullability;
 // ...

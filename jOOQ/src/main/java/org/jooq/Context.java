@@ -784,6 +784,32 @@ public interface Context<C extends Context<C>> extends Scope {
     C paramTypeIf(ParamType paramType, boolean condition, Consumer<? super C> runnable);
 
     /**
+     * The current language context.
+     */
+    @NotNull
+    LanguageContext languageContext();
+
+    /**
+     * Set the new language context for {@link #languageContext()}
+     */
+    @NotNull
+    C languageContext(LanguageContext languageContext);
+
+    /**
+     * Set the new language context for {@link #languageContext()} for the scope
+     * of a {@link Consumer}.
+     */
+    @NotNull
+    C languageContext(LanguageContext languageContext, Consumer<? super C> consumer);
+
+    /**
+     * Set the new language context for {@link #languageContext()}, if a
+     * condition is true.
+     */
+    @NotNull
+    C languageContextIf(LanguageContext languageContext, boolean condition);
+
+    /**
      * The currently applied cast mode for bind values.
      */
     @NotNull
@@ -800,7 +826,7 @@ public interface Context<C extends Context<C>> extends Scope {
      * {@link Consumer}.
      */
     @NotNull
-    C castMode(CastMode mode, Consumer<? super C> runnable);
+    C castMode(CastMode mode, Consumer<? super C> consumer);
 
     /**
      * Set the new cast mode for {@link #castMode()}, if a condition is true.

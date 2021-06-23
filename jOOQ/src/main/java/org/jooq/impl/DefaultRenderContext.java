@@ -63,6 +63,7 @@ import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.LanguageContext;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;

@@ -512,9 +512,16 @@ final class Tools {
         DATA_EMULATE_BULK_INSERT_RETURNING,
 
         /**
-         * [#9925] In some cases the <code>AS</code> keyword is required for aliasing, e.g. XML.
+         * [#9925] In some cases the <code>AS</code> keyword is required for
+         * aliasing, e.g. XML.
          */
-        DATA_AS_REQUIRED
+        DATA_AS_REQUIRED,
+
+        /**
+         * [#12030] MULTISET conditions need to render the MULTISET emulation
+         * differently to implement MULTISET semantics (ORDER agnostic)
+         */
+        DATA_MULTISET_CONDITION
     }
 
     /**

@@ -49,7 +49,6 @@ import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.IN;
-import static org.jooq.Constants.MAX_ROW_DEGREE;
 // ...
 // ...
 // ...
@@ -87,6 +86,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.AbstractList;
@@ -133,6 +133,8 @@ final class InCondition<T> extends AbstractCondition {
                 ctx.visit(row(embeddedFields(field)).in(rows()));
             else
                 ctx.visit(row(embeddedFields(field)).notIn(rows()));
+        else if (field.getDataType().isMultiset() && !TRUE.equals(ctx.data(DATA_MULTISET_CONDITION)))
+            ctx.data(DATA_MULTISET_CONDITION, true, c -> c.visit(this));
         else
             accept0(ctx);
     }

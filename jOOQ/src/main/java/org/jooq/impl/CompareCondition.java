@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.IN;
@@ -89,6 +90,7 @@ import static org.jooq.impl.Tools.characterLiteral;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullableIf;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 import static org.jooq.impl.Transformations.subqueryWithLimit;
 
@@ -104,6 +106,7 @@ import org.jooq.LikeEscapeStep;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -148,6 +151,10 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
 
         }
+        else if (field1.getDataType().isMultiset()
+                && field2.getDataType().isMultiset()
+                && !TRUE.equals(ctx.data(DATA_MULTISET_CONDITION)))
+            ctx.data(DATA_MULTISET_CONDITION, true, c -> c.visit(this));
         else
             accept0(ctx);
     }

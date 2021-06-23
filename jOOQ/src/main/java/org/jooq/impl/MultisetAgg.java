@@ -37,34 +37,39 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 // ...
-import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonObject;
-import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
-import static org.jooq.impl.DSL.jsonbObject;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlelement;
-import static org.jooq.impl.Keywords.K_MULTISET;
-import static org.jooq.impl.Names.N_ARRAY_AGG;
+import static org.jooq.impl.Multiset.NO_SUPPORT_JSON_COMPARE;
+import static org.jooq.impl.Multiset.NO_SUPPORT_XML_COMPARE;
+import static org.jooq.impl.Multiset.jsonArrayaggEmulation;
+import static org.jooq.impl.Multiset.jsonbArrayaggEmulation;
+import static org.jooq.impl.Multiset.xmlaggEmulation;
 import static org.jooq.impl.Names.N_MULTISET_AGG;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
+import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.visitSubquery;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 
-import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.JSON;
+import org.jooq.JSONArrayAggOrderByStep;
+import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.Row;
 import org.jooq.SelectField;
-import org.jooq.Table;
+import org.jooq.XML;
+import org.jooq.XMLAggOrderByStep;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -93,25 +98,59 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
 
 
 
+
+        if (TRUE.equals(ctx.data(DATA_MULTISET_CONDITION))) {
+            ctx.data().remove(DATA_MULTISET_CONDITION);
+            accept0(ctx, true);
+            ctx.data(DATA_MULTISET_CONDITION, true);
+        }
+        else
+            accept0(ctx, false);
+    }
+
+    private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
-                ctx.visit(ofo((AbstractAggregateFunction<?>) jsonArrayAgg(jsonObject(row.fields()))));
+                JSONArrayAggOrderByStep<JSON> order = jsonArrayaggEmulation(row, multisetCondition);
+
+                Field<?> f = multisetCondition
+                    ? fo((AbstractAggregateFunction<?>) order.orderBy(row.fields()))
+                    : ofo((AbstractAggregateFunction<?>) order);
+
+
+                if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
+                    ctx.visit(f.cast(VARCHAR));
+                else
+                    ctx.visit(f);
+
                 break;
             }
 
             case JSONB: {
-                ctx.visit(ofo((AbstractAggregateFunction<?>) jsonbArrayAgg(jsonObject(row.fields()))));
+                JSONArrayAggOrderByStep<JSONB> order = jsonbArrayaggEmulation(row, multisetCondition);
+
+                Field<?> f = multisetCondition
+                    ? fo((AbstractAggregateFunction<?>) order.orderBy(row.fields()))
+                    : ofo((AbstractAggregateFunction<?>) order);
+
+                ctx.visit(f);
                 break;
             }
 
             case XML: {
-                ctx.visit(xmlelement(N_RESULT,
-                    ofo((AbstractAggregateFunction<?>)
-                        xmlagg(xmlelement(N_RECORD,
-                            map(row.fields(), f -> xmlelement(f.getUnqualifiedName(), f))
-                        ))
-                    )
-                ));
+                XMLAggOrderByStep<XML> order = xmlaggEmulation(row, multisetCondition);
+
+                Field<?> f = xmlelement(N_RESULT,
+                    multisetCondition
+                        ? fo((AbstractAggregateFunction<?>) order.orderBy(row.fields()))
+                        : ofo((AbstractAggregateFunction<?>) order)
+                );
+
+                if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
+                    ctx.visit(f.cast(VARCHAR));
+                else
+                    ctx.visit(f);
+
                 break;
             }
 

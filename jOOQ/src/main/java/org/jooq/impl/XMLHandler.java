@@ -150,10 +150,10 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (!s.inResult && "result".equals(qName)) {
+        if (!s.inResult && "result".equalsIgnoreCase(qName)) {
             s.inResult = true;
         }
-        else if (s.inColumn && "result".equals(qName)) {
+        else if (s.inColumn && "result".equalsIgnoreCase(qName)) {
             Field<?> f = s.row.field(s.column);
 
             if (f.getDataType() instanceof MultisetDataType) {
@@ -164,10 +164,10 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             else
                 throw new UnsupportedOperationException("Nested result sets not supported yet");
         }
-        else if (s.inResult && "fields".equals(qName)) {
+        else if (s.inResult && "fields".equalsIgnoreCase(qName)) {
             s.inFields = true;
         }
-        else if (s.inResult && s.inFields && "field".equals(qName)) {
+        else if (s.inResult && s.inFields && "field".equalsIgnoreCase(qName)) {
             String catalog = attributes.getValue("catalog");
             String schema = attributes.getValue("schema");
             String table = attributes.getValue("table");
@@ -176,15 +176,15 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
             s.fields.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
         }
-        else if (s.inResult && "records".equals(qName)) {}
-        else if (s.inResult && "record".equals(qName)) {
+        else if (s.inResult && "records".equalsIgnoreCase(qName)) {}
+        else if (s.inResult && "record".equalsIgnoreCase(qName)) {
             s.inRecord++;
         }
         else {
             if (s.result == null) {
                 String fieldName;
 
-                if (("value").equals(qName) && (fieldName = attributes.getValue("field")) != null)
+                if (("value").equalsIgnoreCase(qName) && (fieldName = attributes.getValue("field")) != null)
                     ;
                 else
                     fieldName = qName;
@@ -203,16 +203,16 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
     @Override
     public final void endElement(String uri, String localName, String qName) throws SAXException {
-        if (s.inResult && s.inRecord == 0 && "result".equals(qName)) {
+        if (s.inResult && s.inRecord == 0 && "result".equalsIgnoreCase(qName)) {
             s.inResult = false;
         }
-        else if (s.inResult && s.inFields && "fields".equals(qName)) {
+        else if (s.inResult && s.inFields && "fields".equalsIgnoreCase(qName)) {
             s.inFields = false;
             initResult();
         }
-        else if (s.inResult && s.inFields && "field".equals(qName)) {}
-        else if (s.inResult && "records".equals(qName)) {}
-        else if (s.inRecord > 0 && "record".equals(qName)) {
+        else if (s.inResult && s.inFields && "field".equalsIgnoreCase(qName)) {}
+        else if (s.inResult && "records".equalsIgnoreCase(qName)) {}
+        else if (s.inRecord > 0 && "record".equalsIgnoreCase(qName)) {
             s.inRecord--;
 
             initResult();

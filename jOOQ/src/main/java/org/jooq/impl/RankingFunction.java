@@ -136,7 +136,7 @@ final class RankingFunction<T> extends AbstractWindowFunction<T> {
         private final Name name;
 
         RankingType() {
-            this.name = DSL.unquotedName(name());
+            this.name = DSL.unquotedName(name().toLowerCase());
         }
     }
 }

@@ -3,6 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
 
     <parent>
         <groupId>org.jooq</groupId>
@@ -76,5 +82,6 @@
         <module>jOOQ-spring-guice-example</module>
         <module>jOOQ-jpa-example-entities</module>
         <module>jOOQ-jpa-example</module>
+        <module>jOOQ-testcontainers-example</module>
     </modules>
 </project>

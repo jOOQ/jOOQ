@@ -66,7 +66,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         super(null, (Class) Result.class, "multiset", "multiset");
 
         this.row = row;
-        this.recordType = recordType;
+        this.recordType = recordType != null ? recordType : (Class<? extends R>) Record.class;
     }
 
     /**

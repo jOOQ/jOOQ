@@ -47,6 +47,16 @@ import org.jooq.ConnectionProvider;
  * This {@link ConnectionProvider} wraps a delegate
  * <code>ConnectionProvider</code> and wraps all acquired {@link Connection}
  * references in {@link MockConnection}.
+ * <p>
+ * <strong>Disclaimer: The general idea of mocking a JDBC connection with this
+ * jOOQ API is to provide quick workarounds, injection points, etc. using a very
+ * simple JDBC abstraction. It is NOT RECOMMENDED to emulate an entire database
+ * (including complex state transitions, transactions, locking, etc.) using this
+ * mock API. Once you have this requirement, please consider using an actual
+ * database instead for integration testing (e.g. using
+ * <a href="https://www.testcontainers.org">https://www.testcontainers.org</a>),
+ * rather than implementing your test database inside of a
+ * MockDataProvider.</strong>
  *
  * @author Lukas Eder
  */

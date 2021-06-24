@@ -52,14 +52,15 @@ import org.jooq.ResultQuery;
  * Supply this data provider to your {@link MockConnection} in order to globally
  * provide data for SQL statements.
  * <p>
- * The general idea of mocking a JDBC connection with this jOOQ API is to
- * provide quick workarounds, injection points, etc. using a <em>very
- * simple</em> JDBC abstraction (see the {@link #execute(MockExecuteContext)}
- * method). It is <em>NOT RECOMMENDED</em> to emulate an entire database
+ * <strong>Disclaimer: The general idea of mocking a JDBC connection with this
+ * jOOQ API is to provide quick workarounds, injection points, etc. using a very
+ * simple JDBC abstraction. It is NOT RECOMMENDED to emulate an entire database
  * (including complex state transitions, transactions, locking, etc.) using this
  * mock API. Once you have this requirement, please consider using an actual
- * database instead for integration testing, rather than implementing your test
- * database inside of a {@link MockDataProvider}.
+ * database instead for integration testing (e.g. using
+ * <a href="https://www.testcontainers.org">https://www.testcontainers.org</a>),
+ * rather than implementing your test database inside of a
+ * MockDataProvider.</strong>
  * <p>
  * See {@link #execute(MockExecuteContext)} for more details.
  *

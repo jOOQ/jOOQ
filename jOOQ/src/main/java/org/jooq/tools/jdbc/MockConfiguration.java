@@ -74,8 +74,6 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.AbstractConfiguration;
 import org.jooq.impl.DefaultDSLContext;
 
-import org.jetbrains.annotations.NotNull;
-
 import io.r2dbc.spi.ConnectionFactory;
 
 /**

@@ -238,6 +238,7 @@ import org.jooq.LanguageContext;
 import org.jooq.LikeEscapeStep;
 // ...
 import org.jooq.Merge;
+import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeMatchedWhereStep;
@@ -675,7 +676,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
         Query result = null;
         LanguageContext previous = languageContext;
-        
+
         try {
             languageContext = LanguageContext.QUERY;
 

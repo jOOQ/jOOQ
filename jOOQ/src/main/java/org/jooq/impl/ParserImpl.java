@@ -234,10 +234,10 @@ import org.jooq.JSONValueOnStep;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
 // ...
+import org.jooq.LanguageContext;
 import org.jooq.LikeEscapeStep;
 // ...
 import org.jooq.Merge;
-import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeMatchedWhereStep;
@@ -674,7 +674,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         scopeStart();
         boolean previousMetaLookupsForceIgnore = metaLookupsForceIgnore();
         Query result = null;
+        LanguageContext previous = languageContext;
+        
         try {
+            languageContext = LanguageContext.QUERY;
+
             switch (characterUpper()) {
                 case 'A':
                     if (!parseResultQuery && peekKeyword("ALTER"))
@@ -683,8 +687,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 case 'B':
-                    if (!parseResultQuery && peekKeyword("BEGIN"))
+                    if (!parseResultQuery && peekKeyword("BEGIN")) {
+                        languageContext = previous;
                         return result = parseBlock(false);
+                    }
 
                     break;
 
@@ -847,6 +853,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             scopeEnd(result);
             scopeResolve();
             metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
+            languageContext = previous;
         }
     }
 
@@ -2765,34 +2772,44 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Block parseBlock(boolean allowDeclareSection) {
-        List<Statement> statements = new ArrayList<>();
+        LanguageContext previous = languageContext;
+
+        try {
+            if (languageContext == LanguageContext.QUERY)
+                languageContext = LanguageContext.BLOCK;
+
+            List<Statement> statements = new ArrayList<>();
 
 
 
 
 
-        if (allowDeclareSection && parseKeywordIf("DECLARE") && requireProEdition())
+            if (allowDeclareSection && parseKeywordIf("DECLARE") && requireProEdition())
 
 
 
-            ;
-        else
-            parseKeywordIf("EXECUTE BLOCK AS");
+                ;
+            else
+                parseKeywordIf("EXECUTE BLOCK AS");
 
-        parseKeyword("BEGIN");
-        parseKeywordIf("ATOMIC", "NOT ATOMIC");
-        statements.addAll(parseStatementsAndPeek("END"));
-        parseKeyword("END");
-
-
-
-        parseIf(';');
+            parseKeyword("BEGIN");
+            parseKeywordIf("ATOMIC", "NOT ATOMIC");
+            statements.addAll(parseStatementsAndPeek("END"));
+            parseKeyword("END");
 
 
 
+            parseIf(';');
 
 
-        return dsl.begin(statements);
+
+
+
+            return dsl.begin(statements);
+        }
+        finally {
+            languageContext = previous;
+        }
     }
 
     private final void parseSemicolonAfterNonBlocks(Statement result) {
@@ -5016,6 +5033,33 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         return s2;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -13386,6 +13430,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final ScopeStack<Name, Field<?>>      fieldScope             = new ScopeStack<>(null);
     private final ScopeStack<Name, FieldProxy<?>> lookupFields           = new ScopeStack<>(null);
     private boolean                               scopeClear             = false;
+    private LanguageContext                       languageContext        = LanguageContext.QUERY;
 
 
 
@@ -13431,6 +13476,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     @Override
     public final SQLDialect parseFamily() {
         return parseDialect().family();
+    }
+
+    @Override
+    public final LanguageContext languageContext() {
+        return languageContext;
     }
 
     private final ParseWithMetaLookups metaLookups() {

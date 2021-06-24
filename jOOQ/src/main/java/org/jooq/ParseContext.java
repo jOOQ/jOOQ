@@ -44,11 +44,12 @@ import java.util.function.Predicate;
 import org.jooq.conf.Settings;
 import org.jooq.impl.ParserException;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A publicly available API for the internal parse context that allows for
  * parsing SQL fragements.
- * <p>
- *
  *
  * @author Lukas Eder
  */
@@ -61,16 +62,24 @@ public interface ParseContext extends Scope {
     /**
      * Convenient access to {@link Settings#getParseDialect()}.
      */
+    @NotNull
     SQLDialect parseDialect();
 
     /**
      * Convenient access to {@link Settings#getParseDialect()}'s family.
      */
+    @NotNull
     SQLDialect parseFamily();
 
     // -------------------------------------------------------------------------
     // Parse context
     // -------------------------------------------------------------------------
+
+    /**
+     * The current language context.
+     */
+    @NotNull
+    LanguageContext languageContext();
 
     /**
      * The character at the current {@link #position()}.
@@ -135,6 +144,7 @@ public interface ParseContext extends Scope {
      * Parse a single character or fail if it cannot be parsed.
      *
      * @return Always returns true.
+     * @throws ParserException if the character could not be parsed.
      */
     boolean parse(char c) throws ParserException;
 
@@ -149,6 +159,7 @@ public interface ParseContext extends Scope {
      * Parse a string or fail if it cannot be parsed.
      *
      * @return Always returns true.
+     * @throws ParserException if the string could not be parsed.
      */
     boolean parse(String string) throws ParserException;
 
@@ -168,7 +179,7 @@ public interface ParseContext extends Scope {
      * then <code>"order    by"</code> will be parsed as well.
      *
      * @return Always returns true.
-     * @see #parseKeywordIf(String)
+     * @throws ParserException if the keyword could not be parsed.
      */
     boolean parseKeyword(String keyword) throws ParserException;
 
@@ -188,7 +199,6 @@ public interface ParseContext extends Scope {
      * Try parsing any keyword.
      *
      * @return Whether any of the keywords could be parsed.
-     * @see #parseKeywordIf(String)
      */
     boolean parseKeywordIf(String... keywords);
 
@@ -196,7 +206,7 @@ public interface ParseContext extends Scope {
      * Parse any keyword or fail if none of the keywords could be parsed.
      *
      * @return Always returns true.
-     * @see #parseKeyword(String)
+     * @throws ParserException if none of the keywords could be parsed.
      */
     boolean parseKeyword(String... keywords) throws ParserException;
 
@@ -205,17 +215,18 @@ public interface ParseContext extends Scope {
      * identifier.
      *
      * @return The parsed identifier.
-     * @see #parseName()
+     * @throws ParserException if no identifier could be parsed.
      */
-    Name parseIdentifier();
+    @NotNull
+    Name parseIdentifier() throws ParserException;
 
     /**
      * Try parsing an (unqualified) identifier.
      *
      * @return The identifier if it could be parsed, or <code>null</code> if the
      *         current token is not an identifier.
-     * @see #parseNameIf()
      */
+    @Nullable
     Name parseIdentifierIf();
 
     /**
@@ -223,8 +234,9 @@ public interface ParseContext extends Scope {
      * a name.
      *
      * @return The parsed name.
-     * @see #parseIdentifier()
+     * @throws ParserException if no name could be parsed.
      */
+    @NotNull
     Name parseName() throws ParserException;
 
     /**
@@ -232,8 +244,8 @@ public interface ParseContext extends Scope {
      *
      * @return The name if it could be parsed, or <code>null</code> if the
      *         current token is not a name.
-     * @see #parseIdentifierIf()
      */
+    @Nullable
     Name parseNameIf();
 
     /**
@@ -247,7 +259,6 @@ public interface ParseContext extends Scope {
      * Try parsing any function name.
      *
      * @return Whether any function name could be parsed.
-     * @see #parseFunctionNameIf(String)
      */
     boolean parseFunctionNameIf(String... names);
 
@@ -256,7 +267,9 @@ public interface ParseContext extends Scope {
      * literal.
      *
      * @return The parsed string literal.
+     * @throws ParserException if no string literal could be parsed.
      */
+    @NotNull
     String parseStringLiteral() throws ParserException;
 
     /**
@@ -265,6 +278,7 @@ public interface ParseContext extends Scope {
      * @return The string literal if it could be parsed, or <code>null</code> if
      *         the current token is not a string literal.
      */
+    @Nullable
     String parseStringLiteralIf();
 
     /**
@@ -272,8 +286,10 @@ public interface ParseContext extends Scope {
      * unsigned integer literal.
      *
      * @return The unsigned integer literal.
+     * @throws ParserException if no unsigned integer literal could be parsed.
      */
-    Long parseUnsignedIntegerLiteral();
+    @NotNull
+    Long parseUnsignedIntegerLiteral() throws ParserException;
 
     /**
      * Try parsing an unsigned integer literal.
@@ -282,6 +298,7 @@ public interface ParseContext extends Scope {
      *         <code>null</code> if the current token is not an unsigned integer
      *         literal.
      */
+    @Nullable
     Long parseUnsignedIntegerLiteralIf();
 
     /**
@@ -289,8 +306,10 @@ public interface ParseContext extends Scope {
      * signed integer literal.
      *
      * @return The signed integer literal.
+     * @throws ParserException if no signed integer literal could be parsed.
      */
-    Long parseSignedIntegerLiteral();
+    @NotNull
+    Long parseSignedIntegerLiteral() throws ParserException;
 
     /**
      * Try parsing an signed integer literal.
@@ -299,6 +318,7 @@ public interface ParseContext extends Scope {
      *         <code>null</code> if the current token is not an signed integer
      *         literal.
      */
+    @Nullable
     Long parseSignedIntegerLiteralIf();
 
     /**
@@ -306,15 +326,19 @@ public interface ParseContext extends Scope {
      * not a data type.
      *
      * @return The data type.
+     * @throws ParserException if no data type expression could be parsed.
      */
-    DataType<?> parseDataType();
+    @NotNull
+    DataType<?> parseDataType() throws ParserException;
 
     /**
      * Parse a {@link Field} expression or fail if the current expression is not
      * a field.
      *
      * @return The parsed field.
+     * @throws ParserException if no field expression could be parsed.
      */
+    @NotNull
     Field<?> parseField() throws ParserException;
 
     /**
@@ -322,7 +346,9 @@ public interface ParseContext extends Scope {
      * not a sort field.
      *
      * @return The parsed sort field.
+     * @throws ParserException if no sort field expression could be parsed.
      */
+    @NotNull
     SortField<?> parseSortField() throws ParserException;
 
     /**
@@ -330,7 +356,9 @@ public interface ParseContext extends Scope {
      * not a condition.
      *
      * @return The parsed condition.
+     * @throws ParserException if no condition expression could be parsed.
      */
+    @NotNull
     Condition parseCondition() throws ParserException;
 
     /**
@@ -338,18 +366,23 @@ public interface ParseContext extends Scope {
      * a table.
      *
      * @return The parsed table.
+     * @throws ParserException if no table expression could be parsed.
      */
+    @NotNull
     Table<?> parseTable() throws ParserException;
 
     /**
      * Convenience method to parse a list of at least 1 elements.
      */
+    @NotNull
     <T> List<T> parseList(String separator, Function<? super ParseContext, ? extends T> element);
 
     /**
      * Convenience method to parse a list of at least 1 elements.
      */
-    <T> List<T> parseList(Predicate<? super ParseContext> separator, Function<? super ParseContext, ? extends T> element);
+    @NotNull
+    <T> List<T> parseList(Predicate<? super ParseContext> separator,
+        Function<? super ParseContext, ? extends T> element);
 
     /**
      * Convenience method to parse parenthesised content.
@@ -369,7 +402,7 @@ public interface ParseContext extends Scope {
     /**
      * An exception that can be thrown from the current position.
      */
+    @NotNull
     ParserException exception(String message);
 
 }
-

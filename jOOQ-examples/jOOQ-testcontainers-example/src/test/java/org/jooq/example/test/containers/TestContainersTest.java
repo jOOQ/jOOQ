@@ -83,14 +83,14 @@ public class TestContainersTest {
             .limit(5))
             .fetch();
 
-        result.forEach(System.out::println);
+        System.out.println(result);
     }
 
     @Test
     public void testMultisetFormattingAsXMLorJSON() {
 
-        // Get films by title, and their actors and categories as nested collections
-        // all the customers that have rented the film
+        // Get films by title, and their actors and categories as nested collections,
+        // and all the customers that have rented the film, and their payments
         var result = println(ctx
             .select(
                 FILM.TITLE,

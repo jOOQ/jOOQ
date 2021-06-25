@@ -60,10 +60,12 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 // ...
 // ...
@@ -5786,6 +5788,16 @@ final class Tools {
                 case MARIADB:
                 case MYSQL:
                     return NestedCollectionEmulation.JSON;
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -60,7 +60,6 @@ import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldName;
-import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
@@ -69,6 +68,7 @@ import java.util.Set;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Fields;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
@@ -81,8 +81,6 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -126,6 +124,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
+                Table<?> t = select.asTable("t");
+
                 switch (ctx.family()) {
 
 
@@ -136,10 +136,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
 
 
-
                     default: {
-                        Table<?> t = select.asTable("t");
-
                         JSONArrayAggOrderByStep<JSON> order;
                         AggregateFilterStep<JSON> filter;
 
@@ -163,6 +160,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             }
 
             case JSONB: {
+                Table<?> t = select.asTable("t");
+
                 switch (ctx.family()) {
 
 
@@ -173,10 +172,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
 
 
-
                     default: {
-                        Table<?> t = select.asTable("t");
-
                         JSONArrayAggOrderByStep<JSONB> order;
                         AggregateFilterStep<JSONB> filter;
 
@@ -196,6 +192,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             }
 
             case XML: {
+                Table<?> t = select.asTable("t");
+
                 switch (ctx.family()) {
 
 
@@ -210,9 +208,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
 
 
-                    default: {
-                        Table<?> t = select.asTable("t");
 
+                    default: {
                         XMLAggOrderByStep<XML> order;
                         AggregateFilterStep<XML> filter;
 

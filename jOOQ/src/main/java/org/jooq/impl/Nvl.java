@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_IS_NULL;
 import static org.jooq.impl.Names.N_IFNULL;
 import static org.jooq.impl.Names.N_IIF;
@@ -65,6 +66,16 @@ final class Nvl<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
 
 
 

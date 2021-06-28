@@ -174,7 +174,7 @@ implements
                 else
                     jsonNull = new JSONNull(onNull);
 
-                ctx.visit(K_JSON_ARRAY).sql('(').visit(QueryPartListView.wrap(mapped, jsonNull, jsonReturning).separator("")).sql(')');
+                ctx.visit(N_JSON_ARRAY).sql('(').visit(QueryPartListView.wrap(mapped, jsonNull, jsonReturning).separator("")).sql(')');
                 break;
             }
         }

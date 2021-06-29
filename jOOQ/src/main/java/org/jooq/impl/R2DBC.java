@@ -1345,4 +1345,8 @@ final class R2DBC {
             }
         }
     }
+
+    static final boolean isR2dbc(java.sql.Statement statement) {
+        return statement instanceof R2DBCPreparedStatement;
+    }
 }

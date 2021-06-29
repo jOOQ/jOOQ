@@ -108,6 +108,7 @@ import static org.jooq.impl.Keywords.K_TIME_WITH_TIME_ZONE;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
+import static org.jooq.impl.R2DBC.isR2dbc;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CHAR;

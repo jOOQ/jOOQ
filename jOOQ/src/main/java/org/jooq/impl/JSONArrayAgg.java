@@ -56,8 +56,10 @@ import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
 import java.util.Collection;
 import java.util.Set;
@@ -193,7 +195,18 @@ implements JSONArrayAggOrderByStep<J> {
 
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(N_JSON_ARRAYAGG).sql('(');
-        ctx.visit(jsonCast(ctx, arguments.get(0)));
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                acceptArguments2(ctx, wrap(jsonCast(ctx, arguments.get(0))));
+                break;
+        }
         acceptOrderBy(ctx);
 
         JSONNull jsonNull = new JSONNull(onNull);

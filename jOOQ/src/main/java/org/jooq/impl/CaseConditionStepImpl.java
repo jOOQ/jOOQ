@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.impl.AbstractCondition.unwrapNot;
 import static org.jooq.impl.DSL.one;
@@ -44,11 +45,13 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
+import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_SWITCH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Names.N_CASE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,6 +235,9 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
         if (else_ != null)
             ctx.formatSeparator()
                .visit(K_ELSE).sql(' ').visit(else_);
+        else if (TRUE.equals(ctx.data(DATA_FORCE_CASE_ELSE_NULL)))
+            ctx.formatSeparator()
+               .visit(K_ELSE).sql(' ').visit(K_NULL);
 
         ctx.formatIndentEnd()
            .formatSeparator()

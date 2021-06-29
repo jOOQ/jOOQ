@@ -526,7 +526,13 @@ final class Tools {
          * [#12030] MULTISET conditions need to render the MULTISET emulation
          * differently to implement MULTISET semantics (ORDER agnostic)
          */
-        DATA_MULTISET_CONDITION
+        DATA_MULTISET_CONDITION,
+
+        /**
+         * [#12072] In some cases, it's recommended to generate an explicit
+         * <code>ELSE NULL</code> clause in a <code>CASE</code> expression.
+         */
+        DATA_FORCE_CASE_ELSE_NULL,
     }
 
     /**

@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-// ...
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
@@ -59,7 +58,9 @@ import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
 // ...
 import org.jooq.Record1;
+import org.jooq.Scope;
 import org.jooq.Select;
+import org.jooq.conf.NestedCollectionEmulation;
 
 
 /**
@@ -178,9 +179,6 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
 
-
-
-
             case POSTGRES:
                 if (field instanceof Param)
                     if (field.getType() != Object.class)
@@ -193,6 +191,14 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
         return field;
     }
+
+
+
+
+
+
+
+
 
 
 

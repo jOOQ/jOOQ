@@ -58,6 +58,7 @@ import static org.jooq.impl.Names.N_CURRVAL;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_GEN_ID;
 import static org.jooq.impl.Names.N_NEXTVAL;
+import static org.jooq.impl.Tools.getMappedSchema;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -328,7 +329,7 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
 
 
 
-        Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), schema);
+        Schema mappedSchema = getMappedSchema(ctx, schema);
 
         if (mappedSchema != null && !"".equals(mappedSchema.getName()) && ctx.family() != CUBRID)
             ctx.visit(mappedSchema)

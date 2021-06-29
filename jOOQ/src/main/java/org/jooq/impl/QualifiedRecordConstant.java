@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Tools.getMappedUDTName;
 
 import org.jooq.BindContext;
 import org.jooq.Context;
@@ -160,7 +161,7 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
                 return "ROW";
 
             default:
-                return Tools.getMappedUDTName(ctx.configuration(), value);
+                return getMappedUDTName(ctx, value);
         }
     }
 

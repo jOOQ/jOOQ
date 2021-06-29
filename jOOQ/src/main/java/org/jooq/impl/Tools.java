@@ -277,6 +277,7 @@ import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.SchemaMapping;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
@@ -315,6 +316,8 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * General internal jOOQ utilities
@@ -634,7 +637,13 @@ final class Tools {
          * [#10540] Aliases to be applied to the current <code>SELECT</code>
          * statement.
          */
-        DATA_SELECT_ALIASES
+        DATA_SELECT_ALIASES,
+
+        /**
+         * [#8917] An internal schema mapping that overrides any user-defined
+         * schema mappings.
+         */
+        DATA_SCHEMA_MAPPING,
     }
 
     /**
@@ -2995,9 +3004,12 @@ final class Tools {
     /**
      * Map a {@link Catalog} according to the configured {@link org.jooq.SchemaMapping}
      */
-    static final Catalog getMappedCatalog(Configuration configuration, Catalog catalog) {
-        if (configuration != null) {
-            org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+    static final Catalog getMappedCatalog(Scope scope, Catalog catalog) {
+        if (scope != null) {
+            org.jooq.SchemaMapping mapping = (SchemaMapping) scope.data(DataKey.DATA_SCHEMA_MAPPING);
+
+            if (mapping == null)
+                mapping = scope.configuration().schemaMapping();
 
             if (mapping != null)
                 return mapping.map(catalog);
@@ -3009,9 +3021,12 @@ final class Tools {
     /**
      * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
      */
-    static final Schema getMappedSchema(Configuration configuration, Schema schema) {
-        if (configuration != null) {
-            org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+    static final Schema getMappedSchema(Scope scope, Schema schema) {
+        if (scope != null) {
+            org.jooq.SchemaMapping mapping = (SchemaMapping) scope.data(DataKey.DATA_SCHEMA_MAPPING);
+
+            if (mapping == null)
+                mapping = scope.configuration().schemaMapping();
 
             if (mapping != null)
                 return mapping.map(schema);
@@ -3023,9 +3038,12 @@ final class Tools {
     /**
      * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
      */
-    static final <R extends Record> Table<R> getMappedTable(Configuration configuration, Table<R> table) {
-        if (configuration != null) {
-            org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+    static final <R extends Record> Table<R> getMappedTable(Scope scope, Table<R> table) {
+        if (scope != null) {
+            org.jooq.SchemaMapping mapping = (SchemaMapping) scope.data(DataKey.DATA_SCHEMA_MAPPING);
+
+            if (mapping == null)
+                mapping = scope.configuration().schemaMapping();
 
             if (mapping != null)
                 return mapping.map(table);
@@ -3039,17 +3057,17 @@ final class Tools {
      * {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("unchecked")
-    static final String getMappedUDTName(Configuration configuration, Class<? extends QualifiedRecord<?>> type) {
-        return getMappedUDTName(configuration, Tools.newRecord(false, (Class<QualifiedRecord<?>>) type).operate(null));
+    static final String getMappedUDTName(Scope scope, Class<? extends QualifiedRecord<?>> type) {
+        return getMappedUDTName(scope, Tools.newRecord(false, (Class<QualifiedRecord<?>>) type).operate(null));
     }
 
     /**
      * Map an {@link QualifiedRecord} according to the configured
      * {@link org.jooq.SchemaMapping}
      */
-    static final String getMappedUDTName(Configuration configuration, QualifiedRecord<?> record) {
+    static final String getMappedUDTName(Scope scope, QualifiedRecord<?> record) {
         RecordQualifier<?> udt = record.getQualifier();
-        Schema mapped = getMappedSchema(configuration, udt.getSchema());
+        Schema mapped = getMappedSchema(scope, udt.getSchema());
         StringBuilder sb = new StringBuilder();
 
         if (mapped != null && !"".equals(mapped.getName()))
@@ -3121,7 +3139,29 @@ final class Tools {
 
 
 
-    static final DSLContext CTX    = DSL.using(new DefaultConfiguration());
+    static final DSLContext CTX = DSL.using(new DefaultConfiguration());
+
+    /**
+     * A possibly inefficient but stable way to generate an alias for any
+     * {@link QueryPart}.
+     * <p>
+     * Stability is important to profit from execution plan caching. Equal query
+     * parts must produce the same alias every time.
+     */
+    static final String autoAlias(QueryPart part) {
+        return "alias_" + hash(part);
+    }
+
+    /**
+     * A possibly inefficient but stable way to generate an alias for any
+     * {@link QueryPart}.
+     * <p>
+     * Stability is important to profit from execution plan caching. Equal query
+     * parts must produce the same alias every time.
+     */
+    static final Name autoAliasName(QueryPart part) {
+        return DSL.name(autoAlias(part));
+    }
 
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into

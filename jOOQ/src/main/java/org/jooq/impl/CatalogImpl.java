@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CATALOG;
 import static org.jooq.Clause.CATALOG_REFERENCE;
+import static org.jooq.impl.Tools.getMappedCatalog;
 
 import java.util.Collections;
 import java.util.List;
@@ -82,7 +83,7 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
 
     @Override
     public final void accept(Context<?> ctx) {
-        Catalog mappedCatalog = Tools.getMappedCatalog(ctx.configuration(), this);
+        Catalog mappedCatalog = getMappedCatalog(ctx, this);
         ctx.visit(mappedCatalog != null ? mappedCatalog.getUnqualifiedName() : getUnqualifiedName());
     }
 

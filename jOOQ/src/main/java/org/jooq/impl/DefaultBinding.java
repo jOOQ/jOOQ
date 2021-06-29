@@ -128,6 +128,7 @@ import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.enums;
 import static org.jooq.impl.Tools.findAny;
+// ...
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
@@ -511,19 +512,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return theBinding;
     }
 
-    static final Map<String, Class<?>> typeMap(Class<?> type, Configuration configuration) {
-        return typeMap(type, configuration, new HashMap<>());
+    static final Map<String, Class<?>> typeMap(Class<?> type, Scope scope) {
+        return typeMap(type, scope, new HashMap<>());
     }
 
     @SuppressWarnings("unchecked")
-    static final Map<String, Class<?>> typeMap(Class<?> type, Configuration configuration, Map<String, Class<?>> result) {
+    static final Map<String, Class<?>> typeMap(Class<?> type, Scope scope, Map<String, Class<?>> result) {
         try {
             if (QualifiedRecord.class.isAssignableFrom(type)) {
                 Class<QualifiedRecord<?>> t = (Class<QualifiedRecord<?>>) type;
-                result.put(getMappedUDTName(configuration, t), t);
+                result.put(getMappedUDTName(scope, t), t);
                 QualifiedRecord<?> r = t.getDeclaredConstructor().newInstance();
                 for (Field<?> field : r.getQualifier().fields())
-                    typeMap(field.getType(), configuration, result);
+                    typeMap(field.getType(), scope, result);
             }
 
 
@@ -3561,7 +3562,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     return pgNewRecord(dataType.getType(), null, ctx.resultSet().getObject(ctx.index()));
 
                 default:
-                    return (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx.configuration()));
+                    return (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx));
             }
         }
 
@@ -3574,7 +3575,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     return pgNewRecord(dataType.getType(), null, ctx.statement().getObject(ctx.index()));
 
                 default:
-                    return (Record) ctx.statement().getObject(ctx.index(), typeMap(dataType.getType(), ctx.configuration()));
+                    return (Record) ctx.statement().getObject(ctx.index(), typeMap(dataType.getType(), ctx));
             }
         }
 

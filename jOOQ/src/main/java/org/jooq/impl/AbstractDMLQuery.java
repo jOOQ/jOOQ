@@ -87,14 +87,13 @@ import static org.jooq.impl.Keywords.K_ROWCOUNT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
-import static org.jooq.impl.ScopeMarker.TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
@@ -120,6 +119,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.regex.Pattern;
 
 import org.jooq.Asterisk;
 import org.jooq.Binding;
@@ -143,13 +144,18 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.SchemaMapping;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.ExecuteWithoutWhere;
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.MappedTable;
+import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
@@ -608,6 +614,23 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         {
             accept0(ctx);
         }
@@ -745,6 +768,17 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 throw new DataAccessException("A statement is executed without WHERE clause");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -185,6 +185,7 @@ import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.findAny;
@@ -666,7 +667,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query
-        return new DerivedTable<>(this).as("alias_" + Tools.hash(this));
+        return new DerivedTable<>(this).as(autoAlias(this));
     }
 
     @Override

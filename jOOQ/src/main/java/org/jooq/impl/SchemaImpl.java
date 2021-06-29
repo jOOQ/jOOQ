@@ -42,6 +42,8 @@ import static org.jooq.Clause.SCHEMA;
 import static org.jooq.Clause.SCHEMA_REFERENCE;
 import static org.jooq.impl.CatalogImpl.DEFAULT_CATALOG;
 import static org.jooq.impl.Tools.flatMap;
+import static org.jooq.impl.Tools.getMappedCatalog;
+import static org.jooq.impl.Tools.getMappedSchema;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.ArrayList;
@@ -118,15 +120,13 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     @Override
     public final void accept(Context<?> ctx) {
         if (ctx.qualifyCatalog()) {
-            Catalog mappedCatalog = Tools.getMappedCatalog(ctx.configuration(), getCatalog());
+            Catalog mappedCatalog = getMappedCatalog(ctx, getCatalog());
 
-            if (mappedCatalog != null && !"".equals(mappedCatalog.getName())) {
-                ctx.visit(mappedCatalog);
-                ctx.sql('.');
-            }
+            if (mappedCatalog != null && !"".equals(mappedCatalog.getName()))
+                ctx.visit(mappedCatalog).sql('.');
         }
 
-        Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), this);
+        Schema mappedSchema = getMappedSchema(ctx, this);
         ctx.visit(mappedSchema != null ? mappedSchema.getUnqualifiedName() : getUnqualifiedName());
     }
 

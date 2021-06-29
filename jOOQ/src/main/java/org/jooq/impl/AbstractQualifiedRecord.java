@@ -37,24 +37,21 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DefaultExecuteContext.localConfiguration;
-import static org.jooq.impl.DefaultExecuteContext.localData;
+import static org.jooq.impl.DefaultExecuteContext.localScope;
 import static org.jooq.impl.Tools.fieldsArray;
+import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.row0;
 
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
-import java.util.Map;
 
-import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Field;
 import org.jooq.QualifiedRecord;
-import org.jooq.Record;
 import org.jooq.RecordQualifier;
 import org.jooq.Row;
-import org.jooq.UDT;
+import org.jooq.Scope;
 
 /**
  * @author Lukas Eder
@@ -115,20 +112,18 @@ abstract class AbstractQualifiedRecord<R extends QualifiedRecord<R>> extends Abs
 
         // [#1693] This needs to return the fully qualified SQL type name, in
         // case the connected user is not the owner of the UDT
-        Configuration configuration = localConfiguration();
-        return Tools.getMappedUDTName(configuration, this);
+        return getMappedUDTName(localScope(), this);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
-        Configuration configuration = localConfiguration();
-        Map<Object, Object> data = localData();
+        Scope scope = localScope();
         Field<?>[] f = getQualifier().fields();
 
         for (int i = 0; i < f.length; i++) {
             Field field = f[i];
-            DefaultBindingGetSQLInputContext out = new DefaultBindingGetSQLInputContext(configuration, data, stream);
+            DefaultBindingGetSQLInputContext out = new DefaultBindingGetSQLInputContext(scope.configuration(), scope.data(), stream);
             field.getBinding().get(out);
             set(i, field, out.value());
         }
@@ -137,13 +132,10 @@ abstract class AbstractQualifiedRecord<R extends QualifiedRecord<R>> extends Abs
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void writeSQL(SQLOutput stream) throws SQLException {
-        Configuration configuration = localConfiguration();
-        Map<Object, Object> data = localData();
+        Scope scope = localScope();
         Field<?>[] f = getQualifier().fields();
 
-        for (int i = 0; i < f.length; i++) {
-            Field field = f[i];
-            field.getBinding().set(new DefaultBindingSetSQLOutputContext(configuration, data, stream, get(i)));
-        }
+        for (int i = 0; i < f.length; i++)
+            f[i].getBinding().set(new DefaultBindingSetSQLOutputContext(scope.configuration(), scope.data(), stream, get(i)));
     }
 }

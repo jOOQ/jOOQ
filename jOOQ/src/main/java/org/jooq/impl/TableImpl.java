@@ -308,7 +308,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
                 // [#4834] Generate alias only if allowed to do so
                 if (ctx.declareAliases())
                     ctx.sql(' ')
-                       .visit(Tools.getMappedTable(ctx.configuration(), this).getUnqualifiedName());
+                       .visit(getMappedTable(ctx, this).getUnqualifiedName());
             }
             else
                 accept0(ctx);
@@ -330,7 +330,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
 
 
         )) {
-            Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
+            Schema mappedSchema = Tools.getMappedSchema(ctx, getSchema());
 
             if (mappedSchema != null && !"".equals(mappedSchema.getName())) {
                 ctx.visit(mappedSchema);
@@ -338,7 +338,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
             }
         }
 
-        ctx.visit(getMappedTable(ctx.configuration(), this).getUnqualifiedName());
+        ctx.visit(getMappedTable(ctx, this).getUnqualifiedName());
 
         if (parameters != null && ctx.declareTables()) {
 

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.getMappedSchema;
+
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -151,7 +153,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
     @Override
     public final void accept(Context<?> ctx) {
-        Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
+        Schema mappedSchema = getMappedSchema(ctx, getSchema());
 
         if (mappedSchema != null && !"".equals(mappedSchema.getName()))
             ctx.visit(mappedSchema).sql('.');

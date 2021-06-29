@@ -61,6 +61,8 @@ import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
 import static org.jooq.impl.Tools.EMPTY_UPDATABLE_RECORD;
 import static org.jooq.impl.Tools.blocking;
+import static org.jooq.impl.Tools.getMappedSchema;
+import static org.jooq.impl.Tools.getMappedTable;
 import static org.jooq.impl.Tools.list;
 
 import java.io.ByteArrayInputStream;
@@ -350,12 +352,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Schema map(Schema schema) {
-        return Tools.getMappedSchema(configuration(), schema);
+        return getMappedSchema(this, schema);
     }
 
     @Override
     public <R extends Record> Table<R> map(Table<R> table) {
-        return Tools.getMappedTable(configuration(), table);
+        return getMappedTable(this, table);
     }
 
     // -------------------------------------------------------------------------

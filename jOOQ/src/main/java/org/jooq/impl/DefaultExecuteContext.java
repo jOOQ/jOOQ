@@ -42,8 +42,6 @@ import static org.jooq.impl.Tools.EMPTY_INT;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -69,21 +67,19 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.Insert;
 import org.jooq.Merge;
-// ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Update;
 import org.jooq.conf.Settings;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.jetbrains.annotations.NotNull;
-
-// ...
 
 /**
  * A default implementation for the {@link ExecuteContext}.
@@ -171,8 +167,7 @@ class DefaultExecuteContext implements ExecuteContext {
             RESOURCES.remove();
         }
 
-        LOCAL_CONFIGURATION.remove();
-        LOCAL_DATA.remove();
+        LOCAL_SCOPE.remove();
         LOCAL_CONNECTION.remove();
     }
 
@@ -222,29 +217,17 @@ class DefaultExecuteContext implements ExecuteContext {
     // XXX: Static utility methods for handling Configuration lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<Configuration>       LOCAL_CONFIGURATION = new ThreadLocal<>();
-    private static final ThreadLocal<Map<Object, Object>> LOCAL_DATA          = new ThreadLocal<>();
+    private static final ThreadLocal<Scope> LOCAL_SCOPE = new ThreadLocal<>();
 
     /**
-     * Get the registered configuration.
+     * Get the registered scope.
      * <p>
      * It can be safely assumed that such a configuration is available once the
      * {@link ExecuteContext} has been established, until the statement is
      * closed.
      */
-    static final Configuration localConfiguration() {
-        return LOCAL_CONFIGURATION.get();
-    }
-
-    /**
-     * Get the registered data.
-     * <p>
-     * It can be safely assumed that such a configuration is available once the
-     * {@link ExecuteContext} has been established, until the statement is
-     * closed.
-     */
-    static final Map<Object, Object> localData() {
-        return LOCAL_DATA.get();
+    static final Scope localScope() {
+        return LOCAL_SCOPE.get();
     }
 
     // ------------------------------------------------------------------------
@@ -272,7 +255,7 @@ class DefaultExecuteContext implements ExecuteContext {
      * {@link ExecuteContext} has been established, until the statement is
      * closed.
      */
-    static final Connection localTargetConnection(Configuration configuration) {
+    static final Connection localTargetConnection(Scope scope) {
         Connection result = localConnection();
 
 
@@ -360,8 +343,7 @@ class DefaultExecuteContext implements ExecuteContext {
         }
 
         clean();
-        LOCAL_CONFIGURATION.set(configuration);
-        LOCAL_DATA.set(this.data);
+        LOCAL_SCOPE.set(this);
     }
 
     @Override

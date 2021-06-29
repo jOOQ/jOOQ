@@ -1175,7 +1175,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         List<Name> list = new ArrayList<>();
 
         if (ctx.qualify()) {
-            Schema mapped = Tools.getMappedSchema(ctx.configuration(), getSchema());
+            Schema mapped = Tools.getMappedSchema(ctx, getSchema());
 
             if (mapped != null && !"".equals(mapped.getName()))
                 list.addAll(asList(mapped.getQualifiedName().parts()));

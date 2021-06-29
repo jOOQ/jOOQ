@@ -68,6 +68,7 @@ import org.jooq.exception.DataAccessException;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -115,17 +116,17 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             try {
                 factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
             }
-            catch (ParserConfigurationException ignore) {}
+            catch (ParserConfigurationException | SAXNotRecognizedException ignore) {}
 
             try {
                 factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
             }
-            catch (ParserConfigurationException ignore) {}
+            catch (ParserConfigurationException | SAXNotRecognizedException ignore) {}
 
             try {
                 factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             }
-            catch (ParserConfigurationException ignore) {}
+            catch (ParserConfigurationException | SAXNotRecognizedException ignore) {}
 
             // [#149] Not implemented on Android
             try {

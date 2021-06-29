@@ -6,6 +6,9 @@ module org.jooq {
     // jOOQ heavily depends on JDBC and cannot work without it
     requires transitive java.sql;
 
+    // We're using SAX to parse XML
+    requires static java.xml;
+
     // JAXB is used optionally for loading a variety of XML content, including
     // - Settings (org.jooq.conf)
     // - InformationSchema (org.jooq.util.xml.jaxb)

@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
+import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
@@ -56,7 +57,6 @@ import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
-import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
@@ -204,7 +204,7 @@ implements JSONArrayAggOrderByStep<J> {
 
 
             default:
-                acceptArguments2(ctx, wrap(jsonCast(ctx, arguments.get(0))));
+                acceptArguments3(ctx, arguments, jsonCastMapper(ctx));
                 break;
         }
         acceptOrderBy(ctx);

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.function.Function.identity;
 // ...
 // ...
 // ...
@@ -65,6 +66,7 @@ import static org.jooq.impl.Tools.isEmpty;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
@@ -172,15 +174,19 @@ implements
                 ctx.sql(')');
     }
 
-    /* non-final */ void acceptArguments2(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
+    final void acceptArguments2(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
+        acceptArguments3(ctx, args, identity());
+    }
+
+    final void acceptArguments3(Context<?> ctx, QueryPartCollectionView<Field<?>> args, Function<? super Field<?>, ? extends Field<?>> fun) {
         if (filter == null || SUPPORT_FILTER.contains(ctx.dialect()))
-            ctx.visit(args);
+            ctx.visit(wrap(args).map(fun));
 
 
 
 
         else
-            ctx.visit(wrap(args).map(arg -> DSL.when(filter, arg == ASTERISK ? one() : arg)));
+            ctx.visit(wrap(args).map(arg -> DSL.when(filter, arg == ASTERISK ? one() : arg)).map(fun));
     }
 
 

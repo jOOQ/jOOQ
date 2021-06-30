@@ -39,15 +39,13 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.getMappedSchema;
 
-import java.util.stream.Stream;
-
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
-import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.Named;
 import org.jooq.Package;
 import org.jooq.Record;
 import org.jooq.Row;
@@ -101,8 +99,8 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
     @Override
     public /* non-final */ Name getQualifiedName() {
-        Schema s = getSchema();
-        return s == null ? super.getQualifiedName() : s.getQualifiedName().append(getUnqualifiedName());
+        Named q = getPackage() != null ? getPackage() : getSchema();
+        return q == null ? super.getQualifiedName() : q.getQualifiedName().append(getUnqualifiedName());
     }
 
     @Override

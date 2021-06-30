@@ -784,6 +784,11 @@ final class R2DBC {
                 return String.class;
             else if (type == JSONB.class)
                 return String.class;
+
+
+
+
+
             else
                 return type;
         }

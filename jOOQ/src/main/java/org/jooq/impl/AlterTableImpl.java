@@ -1665,17 +1665,8 @@ final class AlterTableImpl extends AbstractDDLQuery implements
 
 
 
-
-
-
-            case HSQLDB:
-            case POSTGRES:
             default:
-                if (dropCascade == CASCADE)
-                    ctx.sql(' ').visit(K_CASCADE);
-                else if (dropCascade == RESTRICT)
-                    ctx.sql(' ').visit(K_RESTRICT);
-
+                acceptCascade(ctx, dropCascade);
                 break;
         }
     }

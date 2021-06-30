@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
+import static org.jooq.impl.AbstractDMLQuery.EMULATE_RETURNING_WITH_OUTPUT;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -206,7 +207,13 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
 
             // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
             if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord())
-                    && REFRESH_GENERATED_KEYS.contains(configuration().dialect())
+                    && (REFRESH_GENERATED_KEYS.contains(configuration().dialect())
+
+
+
+
+
+                    )
                     && this instanceof UpdatableRecord)
                 ((UpdatableRecord<?>) this).refresh(key.toArray(EMPTY_FIELD));
         }

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.JSONEntryImpl.isJSON;
 import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
@@ -146,6 +147,14 @@ implements
                     ctx.sql(')');
 
                 break;
+
+
+
+
+
+
+
+
 
 
 

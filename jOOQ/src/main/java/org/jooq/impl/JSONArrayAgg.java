@@ -42,11 +42,11 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
-import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
@@ -64,13 +64,17 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 import java.util.Collection;
 import java.util.Set;
 
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
 // ...
+import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
+import org.jooq.SelectHavingStep;
 
 
 /**
@@ -81,8 +85,13 @@ import org.jooq.SQLDialect;
 final class JSONArrayAgg<J>
 extends AbstractAggregateFunction<J>
 implements JSONArrayAggOrderByStep<J> {
+
     static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT   = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect> SUPPORT_JSON_MERGE_PRESERVE = SQLDialect.supportedBy(MARIADB, MYSQL);
+
+
+
+
 
     private JSONOnNull           onNull;
     private DataType<?>          returning;
@@ -249,5 +258,16 @@ implements JSONArrayAggOrderByStep<J> {
     @Override
     public final JSONArrayAgg<J> orderBy(Collection<? extends OrderField<?>> fields) {
         return (JSONArrayAgg<J>) super.orderBy(fields);
+    }
+
+    static final <R extends Record> Select<R> patchOracleArrayAggBug(Configuration configuration, SelectHavingStep<R> select) {
+
+
+
+
+
+
+
+        return select;
     }
 }

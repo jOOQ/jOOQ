@@ -147,6 +147,7 @@ import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.JSONArrayAgg.EMULATE_WITH_GROUP_CONCAT;
+import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.JSONNull.NO_SUPPORT_ABSENT_ON_NULL;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_BY;
@@ -269,6 +270,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.SelectHavingStep;
 import org.jooq.SelectLimitPercentStep;
 import org.jooq.SelectLimitStep;
 import org.jooq.SelectOffsetStep;
@@ -293,7 +295,6 @@ import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
@@ -750,6 +751,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
+
+
+
 
 
 

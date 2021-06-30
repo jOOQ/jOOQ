@@ -54,6 +54,7 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
+import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
@@ -147,7 +148,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                         if (multisetCondition)
                             filter = order.orderBy(t.fields());
 
-                        Select<Record1<JSON>> s = select(DSL.coalesce(filter, jsonArray())).from(t);
+                        Select<Record1<JSON>> s = patchOracleArrayAggBug(
+                            ctx.configuration(),
+                            select(DSL.coalesce(filter, jsonArray())).from(t)
+                        );
+
                         if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
                             ctx.visit(DSL.field(s).cast(VARCHAR));
                         else
@@ -183,7 +188,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                         if (multisetCondition)
                             filter = order.orderBy(t.fields());
 
-                        Select<Record1<JSONB>> s = select(DSL.coalesce(filter, jsonbArray())).from(t);
+                        Select<Record1<JSONB>> s = patchOracleArrayAggBug(
+                            ctx.configuration(),
+                            select(DSL.coalesce(filter, jsonbArray())).from(t)
+                        );
+
                         visitSubquery(ctx, s, true);
                         break;
                     }

@@ -5119,6 +5119,10 @@ final class Tools {
             return;
         }
 
+        // [#12019] If dateAsTimestamp=true is active, we must declare a DATE instead.
+        if (type.isTimestamp() && type.getBinding() instanceof DateAsTimestampBinding)
+            type = SQLDataType.DATE;
+
         String typeName = type.getTypeName(ctx.configuration());
 
         // [#8070] Make sure VARCHAR(n) ARRAY types are generated as such in HSQLDB

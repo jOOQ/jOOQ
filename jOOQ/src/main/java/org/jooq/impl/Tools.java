@@ -533,6 +533,13 @@ final class Tools {
          * <code>ELSE NULL</code> clause in a <code>CASE</code> expression.
          */
         DATA_FORCE_CASE_ELSE_NULL,
+
+        /**
+         * [#12092] Whether the @@group_concat_max_len value has already been
+         * set.
+         */
+        DATA_GROUP_CONCAT_MAX_LEN_SET
+
     }
 
     /**

@@ -73,6 +73,7 @@ import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.Tools.appendSQL;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.prependSQL;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_GROUP_CONCAT_MAX_LEN_SET;
 
 import java.util.Set;
 
@@ -94,11 +95,11 @@ final class ListAgg extends DefaultAggregateFunction<String> {
 
 
     ListAgg(boolean distinct, Field<?> arg) {
-        super(distinct, N_LISTAGG, SQLDataType.VARCHAR, arg);
+        super(distinct, N_LISTAGG, VARCHAR, arg);
     }
 
     ListAgg(boolean distinct, Field<?> arg, Field<String> separator) {
-        super(distinct, N_LISTAGG, SQLDataType.VARCHAR, arg, separator);
+        super(distinct, N_LISTAGG, VARCHAR, arg, separator);
     }
 
     // -------------------------------------------------------------------------
@@ -108,8 +109,14 @@ final class ListAgg extends DefaultAggregateFunction<String> {
     @Override
     public final void accept(Context<?> ctx) {
         if (SUPPORT_GROUP_CONCAT.contains(ctx.dialect())) {
-            if (SET_GROUP_CONCAT_MAX_LEN.contains(ctx.dialect()) && !FALSE.equals(ctx.settings().isRenderGroupConcatMaxLenSessionVariable())) {
-                prependSQL(ctx.skipUpdateCounts(2),
+
+            // [#12092] Prevent silent truncation of GROUP_CONCAT max length
+            if (SET_GROUP_CONCAT_MAX_LEN.contains(ctx.dialect())
+                    && !FALSE.equals(ctx.settings().isRenderGroupConcatMaxLenSessionVariable())
+                    && ctx.data(DATA_GROUP_CONCAT_MAX_LEN_SET) == null) {
+                ctx.skipUpdateCounts(2).data(DATA_GROUP_CONCAT_MAX_LEN_SET, true);
+
+                prependSQL(ctx,
                     query("{set} @t = @@group_concat_max_len"),
                     query("{set} @@group_concat_max_len = 4294967295")
                 );

@@ -47,6 +47,7 @@ import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.DataKey.DATA_APPEND_SQL;
 import static org.jooq.impl.Tools.DataKey.DATA_PREPEND_SQL;
 
 import java.util.ArrayDeque;
@@ -373,12 +374,19 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final String render() {
         String prepend = (String) data(DATA_PREPEND_SQL);
+        String append = (String) data(DATA_APPEND_SQL);
+
         String result = sql.toString();
-        return prepend == null
+
+        return prepend == null && append == null
              ? result
              : format()
-             ? prepend + (prepend.endsWith(cachedNewline) ? "" : cachedNewline) + result
-             : prepend + (prepend.endsWith(" ") ? "" : " ") + result;
+             ? (prepend != null ? prepend + (prepend.endsWith(cachedNewline) ? "" : cachedNewline) : "")
+                 + result
+                 + (append != null ? ";" + (append.endsWith(cachedNewline) ? "" : cachedNewline) + append : "")
+             : (prepend != null ? prepend + (prepend.endsWith(" ") ? "" : " ") : "")
+                 + result
+                 + (append != null ? ";" + (append.endsWith(" ") ? "" : " ") + append : "");
     }
 
     @Override

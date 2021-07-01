@@ -96,6 +96,8 @@ public class Settings
     protected Boolean renderOrderByRownumberForEmulatedPagination = true;
     @XmlElement(defaultValue = "true")
     protected Boolean renderOutputForSQLServerReturningClause = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean renderGroupConcatMaxLenSessionVariable = true;
     @XmlElement(defaultValue = "false")
     protected Boolean renderParenthesisAroundSetOperationQueries = false;
     @XmlElement(defaultValue = ".")
@@ -864,6 +866,37 @@ public class Settings
      */
     public void setRenderOutputForSQLServerReturningClause(Boolean value) {
         this.renderOutputForSQLServerReturningClause = value;
+    }
+
+    /**
+     * Whether the jOOQ <code>GROUP_CONCAT</code> function should be overflow-protected by setting the <code>@@group_concat_max_len</code> session variable in MySQL style database systems.
+     * <p>
+     * MySQL truncates <code>GROUP_CONCAT</code> results after a certain length, which may be way
+     * too small for jOOQ's usage, especially when using the <code>MULTISET</code> emulation. By
+     * default, jOOQ sets a session variable to the highest possible value prior to executing a
+     * query containing <code>GROUP_CONCAT</code>. This flag can be used to opt out of this.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/12092">https://github.com/jOOQ/jOOQ/issues/12092</a>.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRenderGroupConcatMaxLenSessionVariable() {
+        return renderGroupConcatMaxLenSessionVariable;
+    }
+
+    /**
+     * Sets the value of the renderGroupConcatMaxLenSessionVariable property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRenderGroupConcatMaxLenSessionVariable(Boolean value) {
+        this.renderGroupConcatMaxLenSessionVariable = value;
     }
 
     /**
@@ -3139,6 +3172,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderGroupConcatMaxLenSessionVariable(Boolean value) {
+        setRenderGroupConcatMaxLenSessionVariable(value);
+        return this;
+    }
+
     public Settings withRenderParenthesisAroundSetOperationQueries(Boolean value) {
         setRenderParenthesisAroundSetOperationQueries(value);
         return this;
@@ -3972,6 +4010,7 @@ public class Settings
         builder.append("renderCoalesceToEmptyStringInConcat", renderCoalesceToEmptyStringInConcat);
         builder.append("renderOrderByRownumberForEmulatedPagination", renderOrderByRownumberForEmulatedPagination);
         builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
+        builder.append("renderGroupConcatMaxLenSessionVariable", renderGroupConcatMaxLenSessionVariable);
         builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
@@ -4302,6 +4341,15 @@ public class Settings
             }
         } else {
             if (!renderOutputForSQLServerReturningClause.equals(other.renderOutputForSQLServerReturningClause)) {
+                return false;
+            }
+        }
+        if (renderGroupConcatMaxLenSessionVariable == null) {
+            if (other.renderGroupConcatMaxLenSessionVariable!= null) {
+                return false;
+            }
+        } else {
+            if (!renderGroupConcatMaxLenSessionVariable.equals(other.renderGroupConcatMaxLenSessionVariable)) {
                 return false;
             }
         }
@@ -5200,6 +5248,7 @@ public class Settings
         result = ((prime*result)+((renderCoalesceToEmptyStringInConcat == null)? 0 :renderCoalesceToEmptyStringInConcat.hashCode()));
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
+        result = ((prime*result)+((renderGroupConcatMaxLenSessionVariable == null)? 0 :renderGroupConcatMaxLenSessionVariable.hashCode()));
         result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));

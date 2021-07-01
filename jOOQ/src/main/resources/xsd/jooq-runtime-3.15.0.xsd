@@ -188,6 +188,17 @@ be enabled as well.
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="renderGroupConcatMaxLenSessionVariable" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the jOOQ <code>GROUP_CONCAT</code> function should be overflow-protected by setting the <code>@@group_concat_max_len</code> session variable in MySQL style database systems.
+<p>
+MySQL truncates <code>GROUP_CONCAT</code> results after a certain length, which may be way
+too small for jOOQ's usage, especially when using the <code>MULTISET</code> emulation. By
+default, jOOQ sets a session variable to the highest possible value prior to executing a
+query containing <code>GROUP_CONCAT</code>. This flag can be used to opt out of this.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/12092">https://github.com/jOOQ/jOOQ/issues/12092</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="renderParenthesisAroundSetOperationQueries" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
 <p>

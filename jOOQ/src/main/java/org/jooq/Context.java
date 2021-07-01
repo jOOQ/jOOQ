@@ -343,10 +343,16 @@ public interface Context<C extends Context<C>> extends Scope {
     int peekIndex();
 
     /**
-     * Skip an update count produced by this query.
+     * Skip an additional update count produced by this query.
      */
     @NotNull
     C skipUpdateCount();
+
+    /**
+     * Skip a number of additional update counts produced by this query.
+     */
+    @NotNull
+    C skipUpdateCounts(int skip);
 
     /**
      * The number of update counts to be skipped by this query.

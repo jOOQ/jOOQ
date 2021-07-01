@@ -586,9 +586,11 @@ final class Tools {
         DATA_COLLECTED_SEMI_ANTI_JOIN,
 
         /**
-         * [#5764] Sometimes, it is necessary to prepend some SQL to the generated SQL.
+         * [#5764] Sometimes, it is necessary to prepend some SQL to the
+         * generated SQL.
          * <p>
-         * This needs to be done e.g. to emulate inline table valued parameters in SQL Server:
+         * This needs to be done e.g. to emulate inline table valued parameters
+         * in SQL Server:
          * <p>
          * <code><pre>
          * -- With TVP bind variable:
@@ -601,6 +603,23 @@ final class Tools {
          * </pre></code>
          */
         DATA_PREPEND_SQL,
+
+        /**
+         * [#12092] Sometimes, it is necessary to append some SQL to the
+         * generated SQL.
+         * <p>
+         * This needs to be done e.g. to make sure the
+         * MySQL @@group_concat_max_len setting is set to an appropriate value,
+         * and reset to the previous value again.
+         * <p>
+         * <code><pre>
+         * SET @t = @@group_concat_max_len;
+         * SET @@group_concat_max_len = 4294967295;
+         * SELECT group_concat(...);
+         * SET @@group_concat_max_len = @t;
+         * </pre></code>
+         */
+        DATA_APPEND_SQL,
 
 
 
@@ -5126,8 +5145,16 @@ final class Tools {
         return VARCHAR(length).nullability(type.nullability()).defaultValue((Field) type.defaultValue());
     }
 
-    static <C extends Context<? extends C>> C prependSQL(C ctx, Query... queries) {
-        ctx.data().compute(DataKey.DATA_PREPEND_SQL, (k, v) -> {
+    static final <C extends Context<? extends C>> C prependSQL(C ctx, Query... queries) {
+        return preOrAppendSQL(DataKey.DATA_PREPEND_SQL, ctx, queries);
+    }
+
+    static final <C extends Context<? extends C>> C appendSQL(C ctx, Query... queries) {
+        return preOrAppendSQL(DataKey.DATA_APPEND_SQL, ctx, queries);
+    }
+
+    private static final <C extends Context<? extends C>> C preOrAppendSQL(DataKey key, C ctx, Query... queries) {
+        ctx.data().compute(key, (k, v) -> {
             String sql = ctx.dsl().renderInlined(ctx.dsl().queries(queries));
 
             if (v == null)

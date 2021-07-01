@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 // ...
 // ...
 // ...
@@ -57,23 +58,21 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.DSL.query;
 import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CONTENT;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_SEPARATOR;
-import static org.jooq.impl.Names.N_CONCAT;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_LIST;
 import static org.jooq.impl.Names.N_LISTAGG;
 import static org.jooq.impl.Names.N_STRING_AGG;
-import static org.jooq.impl.Names.N_SUBSTR;
-import static org.jooq.impl.Names.N_XMLAGG;
 import static org.jooq.impl.Names.N_XMLSERIALIZE;
 import static org.jooq.impl.Names.N_XMLTEXT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.appendSQL;
 import static org.jooq.impl.Tools.castIfNeeded;
+import static org.jooq.impl.Tools.prependSQL;
 
 import java.util.Set;
 
@@ -81,13 +80,12 @@ import org.jooq.Context;
 import org.jooq.Field;
 // ...
 import org.jooq.SQLDialect;
-import org.jooq.XML;
-// ...
 
 /**
  * @author Lukas Eder
  */
 final class ListAgg extends DefaultAggregateFunction<String> {
+    private static final Set<SQLDialect> SET_GROUP_CONCAT_MAX_LEN     = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> SUPPORT_GROUP_CONCAT         = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> SUPPORT_STRING_AGG           = SQLDialect.supportedBy(POSTGRES);
 
@@ -110,7 +108,16 @@ final class ListAgg extends DefaultAggregateFunction<String> {
     @Override
     public final void accept(Context<?> ctx) {
         if (SUPPORT_GROUP_CONCAT.contains(ctx.dialect())) {
-            acceptGroupConcat(ctx);
+            if (SET_GROUP_CONCAT_MAX_LEN.contains(ctx.dialect()) && !FALSE.equals(ctx.settings().isRenderGroupConcatMaxLenSessionVariable())) {
+                prependSQL(ctx.skipUpdateCounts(2),
+                    query("{set} @t = @@group_concat_max_len"),
+                    query("{set} @@group_concat_max_len = 4294967295")
+                );
+                acceptGroupConcat(ctx);
+                appendSQL(ctx, query("{set} @@group_concat_max_len = @t"));
+            }
+            else
+                acceptGroupConcat(ctx);
         }
         else if (SUPPORT_STRING_AGG.contains(ctx.dialect())) {
             acceptStringAgg(ctx);

@@ -468,6 +468,18 @@ public interface Database extends AutoCloseable {
     boolean getIncludeExcludeColumns();
 
     /**
+     * Indicate whether include / exclude regular expression shall also match
+     * package routines.
+     */
+    void setIncludeExcludePackageRoutines(boolean includeExcludePackageRoutines);
+
+    /**
+     * Indicate whether include / exclude regular expression shall also match
+     * package routines.
+     */
+    boolean getIncludeExcludePackageRoutines();
+
+    /**
      * whether foreign key relationships should be included.
      */
     void setIncludeForeignKeys(boolean includeForeignKeys);

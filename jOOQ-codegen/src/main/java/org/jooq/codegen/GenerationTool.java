@@ -530,6 +530,7 @@ public class GenerationTool {
             database.setIncludes(new String[] { defaultString(d.getIncludes()) });
             database.setExcludes(new String[] { defaultString(d.getExcludes()) });
             database.setIncludeExcludeColumns(TRUE.equals(d.isIncludeExcludeColumns()));
+            database.setIncludeExcludePackageRoutines(TRUE.equals(d.isIncludeExcludePackageRoutines()));
             database.setIncludeForeignKeys(!FALSE.equals(d.isIncludeForeignKeys()));
             database.setIncludePackages(!FALSE.equals(d.isIncludePackages()));
             database.setIncludePackageRoutines(!FALSE.equals(d.isIncludePackageRoutines()));

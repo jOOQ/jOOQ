@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import static org.jooq.meta.AbstractDatabase.fetchedSize;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +76,15 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
 
             if (getDatabase().getIncludePackageRoutines()) {
                 try {
-                    routines = getRoutines0();
+                    List<RoutineDefinition> r = getRoutines0();
+
+                    // [#12093] Filter exclude / include also for package routines
+                    if (getDatabase().getIncludeExcludePackageRoutines()) {
+                        routines = getDatabase().filterExcludeInclude(r);
+                        log.info("Columns fetched", fetchedSize(r, routines));
+                    }
+                    else
+                        routines = r;
                 }
                 catch (Exception e) {
                     log.error("Error while initialising package", e);

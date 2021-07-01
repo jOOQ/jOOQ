@@ -159,7 +159,8 @@ public abstract class AbstractDatabase implements Database {
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
     private String[]                                                         includes                             = { ".*" };
-    private boolean                                                          includeExcludeColumns;
+    private boolean                                                          includeExcludeColumns                = false;
+    private boolean                                                          includeExcludePackageRoutines        = false;
     private boolean                                                          includeInvisibleColumns              = true;
     private boolean                                                          includeTables                        = true;
     private boolean                                                          includeEmbeddables                   = true;
@@ -959,6 +960,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean getIncludeExcludeColumns() {
         return includeExcludeColumns;
+    }
+
+    @Override
+    public final void setIncludeExcludePackageRoutines(boolean includeExcludePackageRoutines) {
+        this.includeExcludePackageRoutines = includeExcludePackageRoutines;
+    }
+
+    @Override
+    public final boolean getIncludeExcludePackageRoutines() {
+        return includeExcludePackageRoutines;
     }
 
     @Override

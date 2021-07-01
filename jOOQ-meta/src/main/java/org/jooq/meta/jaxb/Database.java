@@ -51,6 +51,8 @@ public class Database implements Serializable, XMLAppendable
     protected String excludes = "";
     @XmlElement(defaultValue = "false")
     protected Boolean includeExcludeColumns = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean includeExcludePackageRoutines = false;
     @XmlElement(defaultValue = "true")
     protected Boolean includeTables = true;
     @XmlElement(defaultValue = "true")
@@ -437,6 +439,30 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeExcludeColumns(Boolean value) {
         this.includeExcludeColumns = value;
+    }
+
+    /**
+     * This flag indicates whether include / exclude patterns should also match routines within packages.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeExcludePackageRoutines() {
+        return includeExcludePackageRoutines;
+    }
+
+    /**
+     * Sets the value of the includeExcludePackageRoutines property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeExcludePackageRoutines(Boolean value) {
+        this.includeExcludePackageRoutines = value;
     }
 
     /**
@@ -1885,6 +1911,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withIncludeExcludePackageRoutines(Boolean value) {
+        setIncludeExcludePackageRoutines(value);
+        return this;
+    }
+
     public Database withIncludeTables(Boolean value) {
         setIncludeTables(value);
         return this;
@@ -2463,6 +2494,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includes", includes);
         builder.append("excludes", excludes);
         builder.append("includeExcludeColumns", includeExcludeColumns);
+        builder.append("includeExcludePackageRoutines", includeExcludePackageRoutines);
         builder.append("includeTables", includeTables);
         builder.append("includeEmbeddables", includeEmbeddables);
         builder.append("includeRoutines", includeRoutines);
@@ -2600,6 +2632,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeExcludeColumns.equals(other.includeExcludeColumns)) {
+                return false;
+            }
+        }
+        if (includeExcludePackageRoutines == null) {
+            if (other.includeExcludePackageRoutines!= null) {
+                return false;
+            }
+        } else {
+            if (!includeExcludePackageRoutines.equals(other.includeExcludePackageRoutines)) {
                 return false;
             }
         }
@@ -3121,6 +3162,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includes == null)? 0 :includes.hashCode()));
         result = ((prime*result)+((excludes == null)? 0 :excludes.hashCode()));
         result = ((prime*result)+((includeExcludeColumns == null)? 0 :includeExcludeColumns.hashCode()));
+        result = ((prime*result)+((includeExcludePackageRoutines == null)? 0 :includeExcludePackageRoutines.hashCode()));
         result = ((prime*result)+((includeTables == null)? 0 :includeTables.hashCode()));
         result = ((prime*result)+((includeEmbeddables == null)? 0 :includeEmbeddables.hashCode()));
         result = ((prime*result)+((includeRoutines == null)? 0 :includeRoutines.hashCode()));

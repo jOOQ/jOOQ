@@ -110,9 +110,8 @@ extends AbstractDefinition {
                     elements = db.filterExcludeInclude(e);
                     log.info("Columns fetched", fetchedSize(e, elements));
                 }
-                else {
+                else
                     elements = e;
-                }
 
                 db.sort(elements);
             }

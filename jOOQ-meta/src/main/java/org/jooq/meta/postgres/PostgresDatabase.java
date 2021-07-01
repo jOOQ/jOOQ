@@ -877,7 +877,18 @@ public class PostgresDatabase extends AbstractDatabase {
                     : r1.DATA_TYPE.as("data_type"),
 
                 r1.CHARACTER_MAXIMUM_LENGTH,
-                r1.NUMERIC_PRECISION,
+
+                // [#12048] TODO: Maintain whether we know the precision or not
+                when(r1.NUMERIC_PRECISION.isNull().and(r1.DATA_TYPE.in(
+                    inline("time"),
+                    inline("timetz"),
+                    inline("time without time zone"),
+                    inline("time with time zone"),
+                    inline("timestamp"),
+                    inline("timestamptz"),
+                    inline("timestamp without time zone"),
+                    inline("timestamp with time zone"))), inline(6))
+                .else_(r1.NUMERIC_PRECISION).as(r1.NUMERIC_PRECISION),
                 r1.NUMERIC_SCALE,
                 r1.TYPE_UDT_SCHEMA,
                 r1.TYPE_UDT_NAME,

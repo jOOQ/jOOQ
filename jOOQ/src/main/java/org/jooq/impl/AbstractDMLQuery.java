@@ -747,6 +747,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
+
+
+
+
     abstract void accept0(Context<?> ctx);
 
     /**
@@ -771,6 +776,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 throw new DataAccessException("A statement is executed without WHERE clause");
         }
     }
+
+
+
 
 
 

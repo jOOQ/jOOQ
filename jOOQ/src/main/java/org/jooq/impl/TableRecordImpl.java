@@ -48,7 +48,6 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
-import static org.jooq.impl.AbstractDMLQuery.EMULATE_RETURNING_WITH_OUTPUT;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;

@@ -149,7 +149,9 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
 
                 @Override
                 public U from(T t) {
-                    if (uWrapper.isInstance(t))
+                    if (t == null)
+                        return null;
+                    else if (uWrapper.isInstance(t))
                         return uWrapper.cast(t);
                     else
                         throw new DataTypeException("Cannot cast from " + tWrapper + " (instance type: " + t.getClass() + " to " + tWrapper);

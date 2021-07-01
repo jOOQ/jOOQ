@@ -49,6 +49,7 @@ import static org.jooq.impl.Multiset.NO_SUPPORT_JSON_COMPARE;
 import static org.jooq.impl.Multiset.NO_SUPPORT_XML_COMPARE;
 import static org.jooq.impl.Multiset.jsonArrayaggEmulation;
 import static org.jooq.impl.Multiset.jsonbArrayaggEmulation;
+import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Multiset.xmlaggEmulation;
 import static org.jooq.impl.Names.N_MULTISET_AGG;
 import static org.jooq.impl.Names.N_RECORD;
@@ -112,12 +113,11 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
-                JSONArrayAggOrderByStep<JSON> order = jsonArrayaggEmulation(row, multisetCondition);
+                JSONArrayAggOrderByStep<JSON> order = jsonArrayaggEmulation(ctx, row, multisetCondition);
 
                 Field<?> f = multisetCondition
-                    ? fo((AbstractAggregateFunction<?>) order.orderBy(row.fields()))
-                    : ofo((AbstractAggregateFunction<?>) order);
-
+                    ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))
+                    : ofo((AbstractAggregateFunction<?>) returningClob(ctx, order));
 
                 if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
                     ctx.visit(f.cast(VARCHAR));
@@ -128,11 +128,11 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
             }
 
             case JSONB: {
-                JSONArrayAggOrderByStep<JSONB> order = jsonbArrayaggEmulation(row, multisetCondition);
+                JSONArrayAggOrderByStep<JSONB> order = jsonbArrayaggEmulation(ctx, row, multisetCondition);
 
                 Field<?> f = multisetCondition
-                    ? fo((AbstractAggregateFunction<?>) order.orderBy(row.fields()))
-                    : ofo((AbstractAggregateFunction<?>) order);
+                    ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))
+                    : ofo((AbstractAggregateFunction<?>) returningClob(ctx, order));
 
                 ctx.visit(f);
                 break;

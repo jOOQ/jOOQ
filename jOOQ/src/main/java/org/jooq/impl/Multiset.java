@@ -59,6 +59,7 @@ import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
+import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldName;
@@ -74,11 +75,15 @@ import org.jooq.Field;
 import org.jooq.Fields;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
+import org.jooq.JSONArrayAggReturningStep;
+import org.jooq.JSONArrayReturningStep;
 import org.jooq.JSONB;
+import org.jooq.JSONObjectReturningStep;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.XML;
@@ -140,17 +145,20 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
                     default: {
                         JSONArrayAggOrderByStep<JSON> order;
-                        AggregateFilterStep<JSON> filter;
+                        JSONArrayAggReturningStep<JSON> returning;
 
-                        filter = order = jsonArrayaggEmulation(t, multisetCondition);
+                        returning = order = jsonArrayaggEmulation(ctx, t, multisetCondition);
 
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         if (multisetCondition)
-                            filter = order.orderBy(t.fields());
+                            returning = order.orderBy(t.fields());
 
                         Select<Record1<JSON>> s = patchOracleArrayAggBug(
                             ctx.configuration(),
-                            select(DSL.coalesce(filter, jsonArray())).from(t)
+                            select(DSL.coalesce(
+                                returningClob(ctx, returning),
+                                returningClob(ctx, jsonArray())
+                            )).from(t)
                         );
 
                         if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
@@ -180,17 +188,20 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
                     default: {
                         JSONArrayAggOrderByStep<JSONB> order;
-                        AggregateFilterStep<JSONB> filter;
+                        JSONArrayAggReturningStep<JSONB> returning;
 
-                        filter = order = jsonbArrayaggEmulation(t, multisetCondition);
+                        returning = order = jsonbArrayaggEmulation(ctx, t, multisetCondition);
 
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         if (multisetCondition)
-                            filter = order.orderBy(t.fields());
+                            returning = order.orderBy(t.fields());
 
                         Select<Record1<JSONB>> s = patchOracleArrayAggBug(
                             ctx.configuration(),
-                            select(DSL.coalesce(filter, jsonbArray())).from(t)
+                            select(DSL.coalesce(
+                                returningClob(ctx, returning),
+                                returningClob(ctx, jsonbArray())
+                            )).from(t)
                         );
 
                         visitSubquery(ctx, s, true);
@@ -249,12 +260,56 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
         }
     }
 
-    static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Fields fields, boolean multisetCondition) {
-        return jsonArrayAgg(jsonObject(map(fields.fields(), (f, i) -> jsonEntry(multisetCondition ? Tools.fieldNameString(i) : f.getName(), f))));
+    static final <J> Field<J> returningClob(Scope ctx, JSONObjectReturningStep<J> jsonObject) {
+        switch (ctx.family()) {
+
+
+
+
+
+            default:
+                return jsonObject;
+        }
     }
 
-    static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Fields fields, boolean multisetCondition) {
-        return jsonbArrayAgg(jsonbObject(map(fields.fields(), (f, i) -> jsonEntry(multisetCondition ? Tools.fieldNameString(i) : f.getName(), f))));
+    static final <J> Field<J> returningClob(Scope ctx, JSONArrayReturningStep<J> jsonArray) {
+        switch (ctx.family()) {
+
+
+
+
+
+            default:
+                return jsonArray;
+        }
+    }
+
+    static final <J> Field<J> returningClob(Scope ctx, JSONArrayAggReturningStep<J> jsonArrayagg) {
+        switch (ctx.family()) {
+
+
+
+
+
+            default:
+                return jsonArrayagg;
+        }
+    }
+
+    static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Scope ctx, Fields fields, boolean multisetCondition) {
+        return jsonArrayAgg(
+            returningClob(ctx, jsonObject(
+                map(fields.fields(), (f, i) -> jsonEntry(multisetCondition ? Tools.fieldNameString(i) : f.getName(), f))
+            ))
+        );
+    }
+
+    static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Scope ctx, Fields fields, boolean multisetCondition) {
+        return jsonbArrayAgg(
+            returningClob(ctx, jsonbObject(
+                map(fields.fields(), (f, i) -> jsonEntry(multisetCondition ? Tools.fieldNameString(i) : f.getName(), f))
+            ))
+        );
     }
 
     static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean multisetCondition) {

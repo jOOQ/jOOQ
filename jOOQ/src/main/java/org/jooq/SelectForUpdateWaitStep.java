@@ -39,10 +39,12 @@ package org.jooq;
 
 import org.jetbrains.annotations.*;
 
-
+// ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -119,7 +121,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      * @see SelectQuery#setForLockModeWait(int)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     SelectForStep<R> wait(int seconds);
 
     /**

@@ -538,7 +538,13 @@ final class Tools {
          * [#12092] Whether the @@group_concat_max_len value has already been
          * set.
          */
-        DATA_GROUP_CONCAT_MAX_LEN_SET
+        DATA_GROUP_CONCAT_MAX_LEN_SET,
+
+        /**
+         * [#11543] Whether the @@innodb_lock_wait_timeout value has already
+         * been set.
+         */
+        DATA_LOCK_WAIT_TIMEOUT_SET
 
     }
 

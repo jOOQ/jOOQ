@@ -1170,7 +1170,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param seconds The number of seconds to wait for a lock
      */
-    @Support({ MARIADB, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     void setForLockModeWait(int seconds);
 
     /**

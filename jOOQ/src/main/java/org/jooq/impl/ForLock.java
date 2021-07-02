@@ -48,7 +48,9 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -65,7 +67,10 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Keywords.K_WITH_LOCK;
 import static org.jooq.impl.Names.N_LOCK_TIMEOUT;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
+import static org.jooq.impl.Tools.appendSQL;
 import static org.jooq.impl.Tools.prependSQL;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_GROUP_CONCAT_MAX_LEN_SET;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_LOCK_WAIT_TIMEOUT_SET;
 
 import java.util.Set;
 
@@ -77,6 +82,7 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataExtendedKey;
 
 /**
@@ -92,7 +98,8 @@ final class ForLock extends AbstractQueryPart {
 
 
 
-    private static final Set<SQLDialect> EMULATE_FOR_UPDATE_WAIT         = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> EMULATE_FOR_UPDATE_WAIT_MY      = SQLDialect.supportedUntil(MYSQL);
+    private static final Set<SQLDialect> EMULATE_FOR_UPDATE_WAIT_PG      = SQLDialect.supportedBy(POSTGRES);
 
     QueryPartList<Field<?>>              forLockOf;
     TableList                            forLockOfTables;
@@ -168,8 +175,19 @@ final class ForLock extends AbstractQueryPart {
         if (forLockWaitMode != null) {
 
             // [#11243] PostgreSQL FOR UPDATE WAIT <n> emulation
-            if (forLockWaitMode == ForLockWaitMode.WAIT && EMULATE_FOR_UPDATE_WAIT.contains(ctx.dialect())) {
+            if (forLockWaitMode == ForLockWaitMode.WAIT && EMULATE_FOR_UPDATE_WAIT_PG.contains(ctx.dialect())) {
                 prependSQL(ctx.skipUpdateCount(), ctx.dsl().setLocal(N_LOCK_TIMEOUT, inline(forLockWait * 1000)));
+            }
+            else if (forLockWaitMode == ForLockWaitMode.WAIT && EMULATE_FOR_UPDATE_WAIT_MY.contains(ctx.dialect())) {
+                if (ctx.data(DATA_LOCK_WAIT_TIMEOUT_SET) == null) {
+                    ctx.skipUpdateCounts(2).data(DATA_LOCK_WAIT_TIMEOUT_SET, true);
+
+                    prependSQL(ctx,
+                        ctx.dsl().query("{set} @t = @@innodb_lock_wait_timeout"),
+                        ctx.dsl().query("{set} @@innodb_lock_wait_timeout = {0}", inline(forLockWait))
+                    );
+                    appendSQL(ctx, ctx.dsl().query("{set} @@innodb_lock_wait_timeout = @t"));
+                }
             }
             else {
                 ctx.sql(' ').visit(forLockWaitMode.toKeyword());

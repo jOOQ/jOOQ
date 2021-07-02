@@ -2262,6 +2262,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+
+
+
+
+
+
                 ctx.render().visit(inline(toPGInterval(value).toString()));
             else
                 super.sqlInline0(ctx, value);
@@ -4646,6 +4652,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+
+
+
+
+
+
                 ctx.render().visit(inline(toPGInterval(value).toString()));
             else
                 super.sqlInline0(ctx, value);
@@ -4721,6 +4733,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+
+
+
+
+
+
                 ctx.render().visit(inline(toPGInterval(value).toString()));
             else
                 super.sqlInline0(ctx, value);

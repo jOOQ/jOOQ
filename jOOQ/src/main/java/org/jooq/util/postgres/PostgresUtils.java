@@ -51,14 +51,18 @@ import java.util.List;
 
 import org.jooq.Converter;
 import org.jooq.EnumType;
+// ...
 import org.jooq.Record;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+// ...
 
 import org.postgresql.util.PGInterval;
+
+// ...
 
 /**
  * A collection of utilities to cover the Postgres JDBC driver's missing
@@ -236,29 +240,97 @@ public class PostgresUtils {
         );
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Convert a Postgres interval to a jOOQ <code>DAY TO SECOND</code> interval
      */
     public static DayToSecond toDayToSecond(Object pgInterval) {
         boolean negative = pgInterval.toString().contains("-");
 
-        PGInterval i = (PGInterval) pgInterval;
-        if (negative)
-            i.scale(-1);
+        if (pgInterval instanceof PGInterval) {
+            PGInterval i = (PGInterval) pgInterval;
+            if (negative)
+                i.scale(-1);
 
-        Double seconds = i.getSeconds();
-        DayToSecond result = new DayToSecond(
-            i.getDays(),
-            i.getHours(),
-            i.getMinutes(),
-            seconds.intValue(),
-            (int) (1000000000 * (seconds - seconds.intValue()))
-        );
+            Double seconds = i.getSeconds();
+            DayToSecond result = new DayToSecond(
+                i.getDays(),
+                i.getHours(),
+                i.getMinutes(),
+                seconds.intValue(),
+                (int) (1000000000 * (seconds - seconds.intValue()))
+            );
 
-        if (negative)
-            result = result.neg();
+            if (negative)
+                result = result.neg();
 
-        return result;
+            return result;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        else
+            throw new IllegalArgumentException("Unsupported interval type: " + pgInterval);
     }
 
     /**
@@ -267,16 +339,34 @@ public class PostgresUtils {
     public static YearToMonth toYearToMonth(Object pgInterval) {
         boolean negative = pgInterval.toString().contains("-");
 
-        PGInterval i = (PGInterval) pgInterval;
-        if (negative)
-            i.scale(-1);
+        if (pgInterval instanceof PGInterval) {
+            PGInterval i = (PGInterval) pgInterval;
+            if (negative)
+                i.scale(-1);
 
-        YearToMonth result = new YearToMonth(i.getYears(), i.getMonths());
+            YearToMonth result = new YearToMonth(i.getYears(), i.getMonths());
 
-        if (negative)
-            result = result.neg();
+            if (negative)
+                result = result.neg();
 
-        return result;
+            return result;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        else
+            throw new IllegalArgumentException("Unsupported interval type: " + pgInterval);
     }
 
     /**

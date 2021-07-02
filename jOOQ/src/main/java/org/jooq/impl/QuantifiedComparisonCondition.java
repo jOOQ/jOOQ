@@ -212,7 +212,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
             Table<?> t = query.array != null
                 ? new ArrayTable(query.array).asTable("t", "pattern")
-                : new AliasedSelect<>(query.query, true, name("pattern")).as("t");
+                : new AliasedSelect<>(query.query, true, true, name("pattern")).as("t");
             Select<Record1<Boolean>> select = select(DSL.field(cond)).from(t);
             ctx.visit(lhs.eq(query.quantifier.apply(select)));
         }

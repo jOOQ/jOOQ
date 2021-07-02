@@ -131,7 +131,7 @@ final class RowIsNull extends AbstractCondition {
                 acceptStandard(ctx);
             }
             else {
-                Table<?> t = new AliasedSelect<>(select, true).as("t");
+                Table<?> t = new AliasedSelect<>(select, true, true).as("t");
                 ctx.visit(inline(1).eq(selectCount().from(t).where(condition(t.fields()))));
             }
         }

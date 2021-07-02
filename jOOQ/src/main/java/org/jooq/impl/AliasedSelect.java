@@ -63,17 +63,19 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
 
     private final Select<R> query;
     private final boolean   subquery;
+    private final boolean   ignoreOrderBy;
     private final Name[]    aliases;
 
-    AliasedSelect(Select<R> query, boolean subquery) {
-        this(query, subquery, Tools.fieldNames(Tools.degree(query)));
+    AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy) {
+        this(query, subquery, ignoreOrderBy, Tools.fieldNames(Tools.degree(query)));
     }
 
-    AliasedSelect(Select<R> query, boolean subquery, Name... aliases) {
+    AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy, Name... aliases) {
         super(TableOptions.expression(), N_SELECT);
 
         this.query = query;
         this.subquery = subquery;
+        this.ignoreOrderBy = ignoreOrderBy;
         this.aliases = aliases;
     }
 
@@ -85,7 +87,9 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> {
     public final Table<R> as(Name alias) {
         SelectQueryImpl<R> q = selectQueryImpl(query);
 
-        if (q != null && (!q.getOrderBy().isEmpty() || Tools.hasEmbeddedFields(q.getSelect())))
+        // [#11473] In the presence of ORDER BY, AliasedSelect tends not to work
+        //          correctly if ORDER BY references names available prior to the aliasing only
+        if (q != null && (ignoreOrderBy && !q.getOrderBy().isEmpty() || Tools.hasEmbeddedFields(q.getSelect())))
             return query.asTable(alias, aliases);
         else
             return new TableAlias<>(this, alias, c -> true);

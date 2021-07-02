@@ -39,12 +39,9 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
-import static org.jooq.impl.DSL.jsonArrayAgg;
-import static org.jooq.impl.DSL.jsonObject;
-import static org.jooq.impl.DSL.jsonbArrayAgg;
-import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
+import static org.jooq.impl.Multiset.NO_SUPPORT_JSONB_COMPARE;
 import static org.jooq.impl.Multiset.NO_SUPPORT_JSON_COMPARE;
 import static org.jooq.impl.Multiset.NO_SUPPORT_XML_COMPARE;
 import static org.jooq.impl.Multiset.jsonArrayaggEmulation;
@@ -52,12 +49,9 @@ import static org.jooq.impl.Multiset.jsonbArrayaggEmulation;
 import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Multiset.xmlaggEmulation;
 import static org.jooq.impl.Names.N_MULTISET_AGG;
-import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
-import static org.jooq.impl.Tools.fieldName;
-import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 
 import org.jooq.Context;
@@ -70,8 +64,6 @@ import org.jooq.Result;
 import org.jooq.SelectField;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -134,7 +126,12 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
                     ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))
                     : ofo((AbstractAggregateFunction<?>) returningClob(ctx, order));
 
-                ctx.visit(f);
+
+                if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect()))
+                    ctx.visit(f.cast(VARCHAR));
+                else
+                    ctx.visit(f);
+
                 break;
             }
 

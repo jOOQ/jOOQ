@@ -65,6 +65,7 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.fieldNameStrings;
+import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
@@ -81,6 +82,7 @@ import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayAggReturningStep;
 import org.jooq.JSONArrayReturningStep;
 import org.jooq.JSONB;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
@@ -96,8 +98,9 @@ import org.jooq.XMLAggOrderByStep;
  */
 final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
-    static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE = SQLDialect.supportedBy(POSTGRES);
-    static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE  = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE  = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE = SQLDialect.supportedBy();
+    static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE   = SQLDialect.supportedBy(POSTGRES);
 
     final Select<R>              select;
 
@@ -134,7 +137,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
-                Table<?> t = select.asTable("t", fieldNameStrings(select.getSelect().size()));
+                Table<?> t = new AliasedSelect<>(select, true, false, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 
@@ -177,7 +180,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             }
 
             case JSONB: {
-                Table<?> t = select.asTable("t", fieldNameStrings(select.getSelect().size()));
+                Table<?> t = new AliasedSelect<>(select, true, false, fieldNames(select.getSelect().size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 
@@ -207,7 +210,10 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                             )).from(t)
                         );
 
-                        visitSubquery(ctx, s, true);
+                        if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect()))
+                            ctx.visit(DSL.field(s).cast(VARCHAR));
+                        else
+                            visitSubquery(ctx, s, true);
                         break;
                     }
                 }
@@ -217,7 +223,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
             case XML: {
                 List<Field<?>> fields = select.getSelect();
-                Table<?> t = select.asTable("t", fieldNameStrings(fields.size()));
+                Table<?> t = new AliasedSelect<>(select, true, false, fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
 
                 switch (ctx.family()) {
 

@@ -174,7 +174,26 @@ implements
                 else
                     jsonNull = new JSONNull(onNull);
 
-                ctx.visit(N_JSON_ARRAY).sql('(').visit(QueryPartListView.wrap(mapped, jsonNull, jsonReturning).separator("")).sql(')');
+                Field<T> jsonArray = CustomField.of(N_JSON_ARRAY, getDataType(), c ->
+                    c.visit(N_JSON_ARRAY).sql('(').visit(QueryPartListView.wrap(mapped, jsonNull, jsonReturning).separator("")).sql(')')
+                );
+
+                switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+                    default:
+                        ctx.visit(jsonArray);
+                        break;
+                }
                 break;
             }
         }

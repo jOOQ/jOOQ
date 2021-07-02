@@ -64,7 +64,6 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.fieldNameString;
-import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
@@ -82,6 +81,7 @@ import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayAggReturningStep;
 import org.jooq.JSONArrayReturningStep;
 import org.jooq.JSONB;
+import org.jooq.JSONObjectReturningStep;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -274,6 +274,18 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
         }
     }
 
+    static final <J> Field<J> returningClob(Scope ctx, JSONObjectReturningStep<J> jsonObject) {
+        switch (ctx.family()) {
+
+
+
+
+
+            default:
+                return jsonObject;
+        }
+    }
+
     static final <J> Field<J> returningClob(Scope ctx, JSONArrayReturningStep<J> jsonArray) {
         switch (ctx.family()) {
 
@@ -304,19 +316,51 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
     // - The JSON never leaks outside of the emulation into user code
 
     static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Scope ctx, Fields fields, boolean agg) {
-        return jsonArrayAgg(
-            returningClob(ctx, jsonArray(
-                map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
-            ))
-        );
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                return jsonArrayAgg(
+                    returningClob(ctx, jsonArray(
+                        map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
+                    ))
+                );
+        }
     }
 
     static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Scope ctx, Fields fields, boolean agg) {
-        return jsonbArrayAgg(
-            returningClob(ctx, jsonbArray(
-                map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
-            ))
-        );
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                return jsonbArrayAgg(
+                    returningClob(ctx, jsonbArray(
+                        map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
+                    ))
+                );
+        }
     }
 
     static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean multisetCondition, boolean agg) {

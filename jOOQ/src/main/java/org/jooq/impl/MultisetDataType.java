@@ -37,10 +37,14 @@
  */
 package org.jooq.impl;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.newRecord;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -124,6 +128,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         return row;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Result<R> convert(Object object) {
 
@@ -137,7 +142,11 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
 
                         // [#12014] TODO: Fix this and remove workaround
                         if (record instanceof Record)
-                            ((AbstractRecord) r).from((Record) record);
+                            ((AbstractRecord) r).fromArray(((Record) record).intoArray());
+
+                        // This sort is required if we use the JSONFormat.RecordFormat.OBJECT encoding (e.g. in SQL Server)
+                        else if (record instanceof Map)
+                            r.from(((Map<String, ?>) record).entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).collect(toList()));
                         else
                             r.from(record);
 

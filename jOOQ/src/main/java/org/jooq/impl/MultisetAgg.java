@@ -113,7 +113,7 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
-                JSONArrayAggOrderByStep<JSON> order = jsonArrayaggEmulation(ctx, row, multisetCondition);
+                JSONArrayAggOrderByStep<JSON> order = jsonArrayaggEmulation(ctx, row, true);
 
                 Field<?> f = multisetCondition
                     ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))
@@ -128,7 +128,7 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
             }
 
             case JSONB: {
-                JSONArrayAggOrderByStep<JSONB> order = jsonbArrayaggEmulation(ctx, row, multisetCondition);
+                JSONArrayAggOrderByStep<JSONB> order = jsonbArrayaggEmulation(ctx, row, true);
 
                 Field<?> f = multisetCondition
                     ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))
@@ -139,7 +139,7 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
             }
 
             case XML: {
-                XMLAggOrderByStep<XML> order = xmlaggEmulation(row, multisetCondition);
+                XMLAggOrderByStep<XML> order = xmlaggEmulation(row, multisetCondition, true);
 
                 Field<XML> f = xmlelement(N_RESULT,
                     multisetCondition

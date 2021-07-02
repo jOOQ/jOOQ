@@ -5890,7 +5890,6 @@ final class Tools {
 
 
 
-
                 default:
                     return NestedCollectionEmulation.NATIVE;
             }

@@ -133,8 +133,6 @@ import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
-import static org.jooq.impl.Tools.newRecord;
-import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.uncoerce;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -146,6 +144,7 @@ import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
 import java.io.Serializable;
+import java.io.StringReader;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -214,7 +213,6 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
-import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
@@ -240,8 +238,6 @@ import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 // ...
 
@@ -3787,12 +3783,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Field<?> field = uncoerce(ctx.field());
 
             if (field.getDataType() instanceof MultisetDataType)
-                return extracted(ctx, (MultisetDataType<?>) field.getDataType());
+                return readMultiset(ctx, (MultisetDataType<?>) field.getDataType());
             else
                 return ctx.configuration().dsl().fetch(convert(ctx.resultSet().getObject(ctx.index()), ResultSet.class));
         }
 
-        private final <R extends Record> Result<R> extracted(BindingGetResultSetContext<U> ctx, MultisetDataType<R> type) throws SQLException {
+        private final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<U> ctx, MultisetDataType<R> type) throws SQLException {
             NestedCollectionEmulation emulation = emulateMultiset(ctx.configuration());
 
             switch (emulation) {
@@ -3801,7 +3797,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case JSON:
                 case JSONB:
-                    return new JSONReader<>(ctx.dsl(), type.row, type.recordType).read(ctx.resultSet().getString(ctx.index()));
+                    return new JSONReader<>(ctx.dsl(), type.row, type.recordType).read(new StringReader(ctx.resultSet().getString(ctx.index())), true);
 
                 case XML:
                     return new XMLHandler<>(ctx.dsl(), type.row, type.recordType).read(ctx.resultSet().getString(ctx.index()));

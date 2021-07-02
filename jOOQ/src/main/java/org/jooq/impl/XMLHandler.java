@@ -261,7 +261,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         if (fields.size() <= 1)
             return false;
         else
-            return !anyMatch(fields, f -> !"value".equals(f.getName()));
+            return !anyMatch(fields, f -> !"value".equalsIgnoreCase(f.getName()));
     }
 
     @Override

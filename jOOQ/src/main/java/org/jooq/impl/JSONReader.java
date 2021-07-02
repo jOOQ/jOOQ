@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
@@ -52,6 +54,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -85,8 +88,12 @@ final class JSONReader<R extends Record> {
         return read(new StringReader(string));
     }
 
-    @SuppressWarnings("rawtypes")
     final Result<R> read(final Reader reader) {
+        return read(reader, false);
+    }
+
+    @SuppressWarnings("rawtypes")
+    final Result<R> read(final Reader reader, boolean multiset) {
         try {
             Object root = new JSONParser().parse(reader, new ContainerFactory() {
                 @Override
@@ -146,7 +153,13 @@ final class JSONReader<R extends Record> {
                     }
 
                     result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
-                        r.fromMap(record);
+
+                        // This sort is required if we use the JSONFormat.RecordFormat.OBJECT encoding (e.g. in SQL Server)
+                        if (multiset)
+                            r.from(record.entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).collect(toList()));
+                        else
+                            r.fromMap(record);
+
                         return r;
                     }));
                 }

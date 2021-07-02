@@ -300,7 +300,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
     static final JSONArrayAggOrderByStep<JSON> jsonArrayaggEmulation(Scope ctx, Fields fields, boolean agg) {
         return jsonArrayAgg(
             returningClob(ctx, jsonArray(
-                map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), SQLDataType.JSON))
+                map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
             ))
         );
     }
@@ -308,7 +308,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
     static final JSONArrayAggOrderByStep<JSONB> jsonbArrayaggEmulation(Scope ctx, Fields fields, boolean agg) {
         return jsonbArrayAgg(
             returningClob(ctx, jsonbArray(
-                map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), SQLDataType.JSONB))
+                map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
             ))
         );
     }
@@ -318,7 +318,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             xmlelement(N_RECORD,
                 map(fields.fields(), (f, i) -> xmlelement(
                     multisetCondition ? fieldNameString(i) : f.getName(),
-                    agg ? f : DSL.field(fieldName(i))
+                    agg ? f : DSL.field(fieldName(i), f.getDataType())
                 ))
             )
         );

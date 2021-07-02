@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.14.12</version>
+        <version>3.14.13-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq-meta-extensions-hibernate</artifactId>

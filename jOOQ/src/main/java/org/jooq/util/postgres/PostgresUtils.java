@@ -76,15 +76,21 @@ import org.postgresql.util.PGInterval;
  */
 public class PostgresUtils {
 
-    private static final String POSTGRESQL_HEX_STRING_PREFIX = "\\x";
+    private static final String     POSTGRESQL_HEX_STRING_PREFIX = "\\x";
 
     // PGobject parsing state machine
-    private static final int    PG_OBJECT_INIT               = 0;
-    private static final int    PG_OBJECT_BEFORE_VALUE       = 1;
-    private static final int    PG_OBJECT_QUOTED_VALUE       = 2;
-    private static final int    PG_OBJECT_UNQUOTED_VALUE     = 3;
-    private static final int    PG_OBJECT_AFTER_VALUE        = 4;
-    private static final int    PG_OBJECT_END                = 5;
+    private static final int        PG_OBJECT_INIT               = 0;
+    private static final int        PG_OBJECT_BEFORE_VALUE       = 1;
+    private static final int        PG_OBJECT_QUOTED_VALUE       = 2;
+    private static final int        PG_OBJECT_UNQUOTED_VALUE     = 3;
+    private static final int        PG_OBJECT_AFTER_VALUE        = 4;
+    private static final int        PG_OBJECT_END                = 5;
+
+    private static volatile Boolean pgIntervalAvailable;
+
+
+
+
 
     /**
      * Parse a Postgres-encoded <code>bytea</code> string
@@ -283,13 +289,16 @@ public class PostgresUtils {
 
 
 
+
+
+
     /**
      * Convert a Postgres interval to a jOOQ <code>DAY TO SECOND</code> interval
      */
     public static DayToSecond toDayToSecond(Object pgInterval) {
         boolean negative = pgInterval.toString().contains("-");
 
-        if (pgInterval instanceof PGInterval) {
+        if (pgIntervalAvailable() && pgInterval instanceof PGInterval) {
             PGInterval i = (PGInterval) pgInterval;
             if (negative)
                 i.scale(-1);
@@ -330,7 +339,7 @@ public class PostgresUtils {
 
 
         else
-            throw new IllegalArgumentException("Unsupported interval type: " + pgInterval);
+            throw new IllegalArgumentException("Unsupported interval type. Make sure you have the pgjdbc or redshift driver on your classpath: " + pgInterval);
     }
 
     /**
@@ -339,7 +348,7 @@ public class PostgresUtils {
     public static YearToMonth toYearToMonth(Object pgInterval) {
         boolean negative = pgInterval.toString().contains("-");
 
-        if (pgInterval instanceof PGInterval) {
+        if (pgIntervalAvailable() && pgInterval instanceof PGInterval) {
             PGInterval i = (PGInterval) pgInterval;
             if (negative)
                 i.scale(-1);
@@ -366,7 +375,7 @@ public class PostgresUtils {
 
 
         else
-            throw new IllegalArgumentException("Unsupported interval type: " + pgInterval);
+            throw new IllegalArgumentException("Unsupported interval type. Make sure you have the pgjdbc or redshift driver on your classpath: " + pgInterval);
     }
 
     /**
@@ -630,4 +639,37 @@ public class PostgresUtils {
 
         return sb.toString();
     }
+
+    private static final boolean pgIntervalAvailable() {
+        if (pgIntervalAvailable == null) {
+            try {
+                new PGInterval();
+                pgIntervalAvailable = true;
+            }
+            catch (NoClassDefFoundError e) {
+                pgIntervalAvailable = false;
+            }
+        }
+
+        return pgIntervalAvailable;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

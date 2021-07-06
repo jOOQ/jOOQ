@@ -11781,30 +11781,6 @@ public class DSL {
     }
 
     /**
-     * Create a qualified schema, given its schema name.
-     * <p>
-     * This constructs a schema reference given the schema's qualified name.
-     * <p>
-     * Example: <code><pre>
-     * // This schema...
-     * schemaByName("MY_SCHEMA");
-     *
-     * // ... will render this SQL by default, using the SQL Server dialect
-     * [MY_SCHEMA]
-     * </pre></code>
-     *
-     * @param name The schema's reference name.
-     * @return A schema referenced by <code>name</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #schema(Name)} instead
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support
-    public static Schema schemaByName(String name) {
-        return new SchemaImpl(name);
-    }
-
-    /**
      * Create a qualified catalog, given its catalog name.
      * <p>
      * This constructs a catalog reference given the catalog's qualified name.
@@ -11887,83 +11863,6 @@ public class DSL {
      * <p>
      * Example: <code><pre>
      * // This sequence...
-     * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
-     *
-     * // ... will render this SQL by default, using the SQL Server dialect
-     * [MY_SCHEMA].[MY_SEQUENCE]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your sequence's
-     *            reference name.
-     * @return A sequence referenced by <code>sequenceName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name)} instead
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static Sequence<BigInteger> sequenceByName(String... qualifiedName) {
-        return sequenceByName(BigInteger.class, qualifiedName);
-    }
-
-    /**
-     * Create a qualified sequence, given its sequence name.
-     * <p>
-     * This constructs a sequence reference given the sequence's qualified name.
-     * <p>
-     * Example: <code><pre>
-     * // This sequence...
-     * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
-     *
-     * // ... will render this SQL by default, using the SQL Server dialect
-     * [MY_SCHEMA].[MY_SEQUENCE]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your sequence's
-     *            reference name.
-     * @param type The type of the returned field
-     * @return A sequence referenced by <code>sequenceName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> Sequence<T> sequenceByName(Class<T> type, String... qualifiedName) {
-        return sequenceByName(getDataType(type), qualifiedName);
-    }
-
-    /**
-     * Create a qualified sequence, given its sequence name.
-     * <p>
-     * This constructs a sequence reference given the sequence's qualified name.
-     * <p>
-     * Example: <code><pre>
-     * // This sequence...
-     * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
-     *
-     * // ... will render this SQL by default, using the SQL Server dialect
-     * [MY_SCHEMA].[MY_SEQUENCE]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your sequence's
-     *            reference name.
-     * @param type The type of the returned field
-     * @return A sequence referenced by <code>sequenceName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> Sequence<T> sequenceByName(DataType<T> type, String... qualifiedName) {
-        return sequence(name(qualifiedName), type);
-    }
-
-    /**
-     * Create a qualified sequence, given its sequence name.
-     * <p>
-     * This constructs a sequence reference given the sequence's qualified name.
-     * <p>
-     * Example: <code><pre>
-     * // This sequence...
      * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
@@ -12031,31 +11930,6 @@ public class DSL {
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE]
      * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your table's reference
-     *            name.
-     * @return A table referenced by <code>tableName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #table(Name)} instead
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support
-    public static Table<Record> tableByName(String... qualifiedName) {
-        return table(name(qualifiedName));
-    }
-
-    /**
-     * Create a qualified table, given its table name.
-     * <p>
-     * This constructs a table reference given the table's qualified name. jOOQ
-     * <p>
-     * Example: <code><pre>
-     * // This table...
-     * tableByName("MY_SCHEMA", "MY_TABLE");
-     *
-     * // ... will render this SQL by default, using the SQL Server dialect
-     * [MY_SCHEMA].[MY_TABLE]
-     * </pre></code>
      * <p>
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
@@ -12086,110 +11960,6 @@ public class DSL {
     @Support
     public static Table<Record> table(Name name, Comment comment) {
         return new TableImpl<>(name, null, null, null, comment);
-    }
-
-    /**
-     * Create a qualified field, given its (qualified) field name.
-     * <p>
-     * This constructs a field reference given the field's qualified name. jOOQ
-     * <p>
-     * Example: <code><pre>
-     * // This field...
-     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
-     *
-     * // ... will render this SQL by default, using the SQL Server dialect
-     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </pre></code>
-     * <p>
-     * Another example: <code><pre>
-     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
-     *       .from(tableByName("T_BOOK"))
-     *       .fetch();
-     *
-     * // ... will execute this SQL on SQL Server:
-     * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your field's reference
-     *            name.
-     * @return A field referenced by <code>fieldName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name)} instead
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support
-    public static Field<Object> fieldByName(String... qualifiedName) {
-        return fieldByName(Object.class, qualifiedName);
-    }
-
-    /**
-     * Create a qualified field, given its (qualified) field name.
-     * <p>
-     * This constructs a field reference given the field's qualified name. jOOQ
-     * <p>
-     * Example: <code><pre>
-     * // This field...
-     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
-     *
-     * // ... will render this SQL by default, using the SQL Server dialect
-     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </pre></code>
-     * <p>
-     * Another example: <code><pre>
-     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
-     *       .from(tableByName("T_BOOK"))
-     *       .fetch();
-     *
-     * // ... will execute this SQL on SQL Server:
-     * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your field's reference
-     *            name.
-     * @param type The type of the returned field
-     * @return A field referenced by <code>fieldName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, Class)} instead
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support
-    public static <T> Field<T> fieldByName(Class<T> type, String... qualifiedName) {
-        return fieldByName(getDataType(type), qualifiedName);
-    }
-
-    /**
-     * Create a qualified field, given its (qualified) field name.
-     * <p>
-     * This constructs a field reference given the field's qualified name. jOOQ
-     * <p>
-     * Example: <code><pre>
-     * // This field...
-     * fieldByName("MY_SCHEMA", "MY_TABLE", "MY_FIELD");
-     *
-     * // ... will render this SQL by default, using the SQL Server dialect
-     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </pre></code>
-     * <p>
-     * Another example: <code><pre>
-     * create.select(field("length({1})", Integer.class, fieldByName("TITLE")))
-     *       .from(tableByName("T_BOOK"))
-     *       .fetch();
-     *
-     * // ... will execute this SQL on SQL Server:
-     * select length([TITLE]) from [T_BOOK]
-     * </pre></code>
-     *
-     * @param qualifiedName The various parts making up your field's reference
-     *            name.
-     * @param type The type of the returned field
-     * @return A field referenced by <code>fieldName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, DataType)} instead
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support
-    public static <T> Field<T> fieldByName(DataType<T> type, String... qualifiedName) {
-        return field(name(qualifiedName), type);
     }
 
     /**
@@ -13119,87 +12889,6 @@ public class DSL {
     @PlainSQL
     public static SQL sql(String sql, Object... bindings) {
         return new SQLImpl(sql, bindings);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary expressions.
-     * <p>
-     * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
-     * contain user-defined plain SQL, because sometimes it is easier to express
-     * things directly in SQL.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @return A query part wrapping the plain SQL
-     * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String)} instead
-     * @see SQL
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support
-    @PlainSQL
-    public static QueryPart queryPart(String sql) {
-        return sql(sql);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary expressions.
-     * <p>
-     * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
-     * contain user-defined plain SQL, because sometimes it is easier to express
-     * things directly in SQL.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL clause, containing {numbered placeholders} where query
-     *            parts can be injected
-     * @param parts The {@link QueryPart} objects that are rendered at the
-     *            {numbered placeholder} locations
-     * @return A query part wrapping the plain SQL
-     * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String, QueryPart...)} instead
-     * @see SQL
-     * @see DSL#sql(String, QueryPart...)
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support
-    @PlainSQL
-    public static QueryPart queryPart(String sql, QueryPart... parts) {
-        return sql(sql, parts);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary expressions.
-     * <p>
-     * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
-     * contain user-defined plain SQL, because sometimes it is easier to express
-     * things directly in SQL. There must be as many bind variables contained
-     * in the SQL, as passed in the bindings parameter
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @return A query part wrapping the plain SQL
-     * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String, Object...)} instead
-     * @see SQL
-     * @see DSL#sql(String, Object...)
-     */
-    @Deprecated(forRemoval = true, since = "3.6")
-    @NotNull
-    @Support
-    @PlainSQL
-    public static QueryPart queryPart(String sql, Object... bindings) {
-        return sql(sql, bindings);
     }
 
     // -------------------------------------------------------------------------

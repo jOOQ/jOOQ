@@ -665,12 +665,6 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     }
 
     @Override
-    @Deprecated
-    public final Object[][] intoArray() {
-        return intoArrays();
-    }
-
-    @Override
     public final Object[][] intoArrays() {
         return collect(Records.intoArray(new Object[0][], R::intoArray));
     }

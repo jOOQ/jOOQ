@@ -2183,13 +2183,6 @@ public interface Result<R extends Record> extends Fields, List<R>, Attachable, F
     <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
-     * @deprecated - 3.6.0 - [#3879] - Use {@link #intoArrays()} instead.
-     */
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.6")
-    Object[][] intoArray();
-
-    /**
      * Convert this result into an array of arrays.
      * <p>
      * The resulting array has the same number of first-dimension elements as

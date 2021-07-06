@@ -78,15 +78,6 @@ import org.jetbrains.annotations.Nullable;
 public enum SQLDialect {
 
     /**
-     * The standard SQL dialect family.
-     *
-     * @deprecated - [#3844] - 3.6.0 - {@link #DEFAULT} will replace this
-     *             pseudo-dialect.
-     */
-    @Deprecated
-    SQL99("", false, false),
-
-    /**
      * The default SQL dialect.
      * <p>
      * This dialect is chosen in the absence of a more explicit dialect. It is

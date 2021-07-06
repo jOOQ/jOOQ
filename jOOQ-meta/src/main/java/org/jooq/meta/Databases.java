@@ -116,8 +116,7 @@ public class Databases {
             case POSTGRES:         result = PostgresDatabase.class;         break;
             case SQLITE:           result = SQLiteDatabase.class;           break;
 
-            case DEFAULT:
-            case SQL99:            result = JDBCDatabase.class;             break;
+            case DEFAULT:          result = JDBCDatabase.class;             break;
         }
 
         return result;

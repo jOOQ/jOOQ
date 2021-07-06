@@ -946,7 +946,6 @@ public enum SQLDialect {
      * <ul>
      * <li>{@link #DEFAULT}: A hypothetical dialect used for
      * {@link QueryPart#toString()} calls of unattached query parts.</li>
-     * <li>{@link #SQL99}: A legacy version of {@link #DEFAULT}.</li>
      * <li>{@link #POSTGRESPLUS}: A not yet supported dialect.</li>
      * </ul>
      */

@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.13.6-SNAPSHOT</version>
+    <version>3.13.7-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -503,15 +503,6 @@
 
 
         <module>jOOQ-xtend</module>
-
-
-        <module>jOOQ-refaster</module>
-
-
-
-
-
-
 
 
 

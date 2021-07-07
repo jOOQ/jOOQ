@@ -148,6 +148,11 @@
                 <version>3.4.7</version>
             </dependency>
             <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-test</artifactId>
+                <version>3.4.7</version>
+            </dependency>
+            <dependency>
                 <groupId>io.r2dbc</groupId>
                 <artifactId>r2dbc-h2</artifactId>
                 <version>0.8.4.RELEASE</version>

@@ -381,13 +381,22 @@ public final class Records {
         Function<? super R, ? extends K> keyMapper,
         Function<? super R, ? extends V> valueMapper
     ) {
-        return Collectors.toMap(
-            keyMapper,
-            valueMapper,
-            (k1, k2) -> {
-                throw new InvalidResultException("Key " + k1 + " is not unique in Result");
+
+        // [#12123] Can't use Collectors.toMap() with nulls
+        return Collector.of(
+            LinkedHashMap::new,
+            (m, e) -> {
+                K k = keyMapper.apply(e);
+
+                if (m.containsKey(k))
+                    throw new InvalidResultException("Key " + k + " is not unique in Result");
+                else
+                    m.put(k, valueMapper.apply(e));
             },
-            LinkedHashMap::new
+            (m1, m2) -> {
+                m1.putAll(m2);
+                return m1;
+            }
         );
     }
 
@@ -475,13 +484,13 @@ public final class Records {
         Function<? super R, ? extends K> keyMapper,
         Function<? super R, ? extends V> valueMapper
     ) {
-        return Collectors.groupingBy(
-            keyMapper,
-            LinkedHashMap::new,
-            Collectors.mapping(
-                valueMapper,
-                Collectors.toList()
-            )
+        return collectingAndThen(
+            Collectors.groupingBy(
+                keyMapper.andThen(wrapNulls()),
+                LinkedHashMap::new,
+                Collectors.mapping(valueMapper, Collectors.toList())
+            ),
+            unwrapNulls()
         );
     }
 
@@ -787,4 +796,20 @@ public final class Records {
     }
 
 
+
+    private static final Object NULL = new Object();
+
+    private static final <T> Function<T, Object> wrapNulls() {
+        return t -> t == null ? NULL : t;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private static final <K, V> Function<Map<Object, V>, Map<K, V>> unwrapNulls() {
+        return map -> {
+            if (map.containsKey(NULL))
+                map.put(null, map.remove(NULL));
+
+            return (Map) map;
+        };
+    }
 }

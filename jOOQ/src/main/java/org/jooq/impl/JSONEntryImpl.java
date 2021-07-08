@@ -153,10 +153,12 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
         switch (ctx.family()) {
 
-            // [#10769] Some dialects don't support auto conversions from X to JSON
+            // [#10769] [#12141] Some dialects don't support auto conversions from X to JSON
             case H2:
                 if (type.getType() == UUID.class)
                     return field.cast(VARCHAR(36));
+                else if (type.isTemporal())
+                    return field.cast(VARCHAR);
 
                 break;
 

@@ -1207,12 +1207,13 @@ final class Convert {
         }
 
         private static final String patchIso8601(String string, boolean t) {
-            if (t && string.charAt(10) == ' ')
-                return string.substring(0, 10) + "T" + string.substring(11);
-            else if (!t && string.charAt(10) == 'T')
-                return string.substring(0, 10) + " " + string.substring(11);
-            else
-                return string;
+            if (string.length() > 11)
+                if (t && string.charAt(10) == ' ')
+                    return string.substring(0, 10) + "T" + string.substring(11);
+                else if (!t && string.charAt(10) == 'T')
+                    return string.substring(0, 10) + " " + string.substring(11);
+
+            return string;
         }
 
         @Override

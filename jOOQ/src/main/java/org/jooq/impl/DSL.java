@@ -23728,11 +23728,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -23960,11 +23955,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24014,11 +24004,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24070,11 +24055,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24124,11 +24104,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24178,11 +24153,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24232,11 +24202,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24286,11 +24251,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24340,11 +24300,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24394,11 +24349,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24448,11 +24398,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24502,11 +24447,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24556,11 +24496,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24610,11 +24545,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24664,11 +24594,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24718,11 +24643,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24772,11 +24692,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24826,11 +24741,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24880,11 +24790,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24934,11 +24839,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -24988,11 +24888,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -25042,11 +24937,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -25096,11 +24986,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -25150,11 +25035,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
@@ -25204,11 +25084,6 @@ public class DSL {
      * <p>
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
-     * <strong>An important known limitation is that predicates based on
-     * MULTISETs expose undefined behaviour: Either they don't work
-     * (uncomparable types, such as XML), or they will compare JSON/XML document
-     * structures where ordinals matter. Please do not rely on the current
-     * comparison behaviour.</strong>
      * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.

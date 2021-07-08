@@ -23738,7 +23738,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> Field<Result<R>> multiset(Select<R> select) {
         return new Multiset<>(select);
     }
@@ -23970,7 +23970,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Collection<? extends Field<?>> fields) {
         return new MultisetAgg<>(false, row(fields));
     }

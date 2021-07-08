@@ -68,6 +68,7 @@ import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.List;
 import java.util.Set;
@@ -127,11 +128,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
 
         if (TRUE.equals(ctx.data(DATA_MULTISET_CONDITION))) {
             ctx.data().remove(DATA_MULTISET_CONDITION);
-            accept0(ctx, true);
+            ctx.data(DATA_MULTISET_CONTENT, true, c -> accept0(c, true));
             ctx.data(DATA_MULTISET_CONDITION, true);
         }
         else
-            accept0(ctx, false);
+            ctx.data(DATA_MULTISET_CONTENT, true, c -> accept0(c, false));
     }
 
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
@@ -214,6 +215,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                             ctx.visit(DSL.field(s).cast(VARCHAR));
                         else
                             visitSubquery(ctx, s, true);
+
                         break;
                     }
                 }

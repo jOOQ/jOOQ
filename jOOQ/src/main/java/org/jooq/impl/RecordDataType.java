@@ -37,7 +37,15 @@
  */
 package org.jooq.impl;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+import static org.jooq.impl.Tools.CTX;
+import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -53,14 +61,14 @@ import org.jooq.Row;
  */
 final class RecordDataType<R extends Record> extends DefaultDataType<R> {
 
-    final Row row;
+    final AbstractRow<R> row;
 
     @SuppressWarnings("unchecked")
     public RecordDataType(Row row) {
         // [#11829] TODO: Implement this correctly for UDTRecord, TableRecord, and EmbeddableRecord
         super(null, (Class<R>) recordType(row.size()), "record", "record");
 
-        this.row = row;
+        this.row = (AbstractRow<R>) row;
     }
 
     /**
@@ -68,7 +76,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
      */
     RecordDataType(
         DefaultDataType<R> t,
-        Row row,
+        AbstractRow<R> row,
         Integer precision,
         Integer scale,
         Integer length,
@@ -113,5 +121,36 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
     @Override
     public final Row getRow() {
         return row;
+    }
+
+    @Override
+    public final Class<? extends Record> getRecordType() {
+        return getType();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public R convert(Object object) {
+
+        // [#12116] TODO: Move this logic into JSONReader to make it more generally useful
+        if (object instanceof Record || object instanceof Map || object instanceof List) {
+            return newRecord(true, (Class<R>) Record.class, row, CTX.configuration())
+                .operate(r -> {
+
+                    // [#12014] TODO: Fix this and remove workaround
+                    if (object instanceof Record)
+                        ((AbstractRecord) r).fromArray(((Record) object).intoArray());
+
+                    // This sort is required if we use the JSONFormat.RecordFormat.OBJECT encoding (e.g. in SQL Server)
+                    else if (object instanceof Map)
+                        r.from(((Map<String, ?>) object).entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).collect(toList()));
+                    else
+                        r.from(object);
+
+                    return r;
+                });
+        }
+        else
+            return super.convert(object);
     }
 }

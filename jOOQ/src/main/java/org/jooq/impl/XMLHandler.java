@@ -46,7 +46,6 @@ import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.row0;
-import static org.jooq.impl.Tools.unalias;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 
 import java.io.ByteArrayInputStream;
@@ -63,8 +62,8 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.Select;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.JooqLogger;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -75,10 +74,11 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Lukas Eder
  */
 final class XMLHandler<R extends Record> extends DefaultHandler {
-
-    private final DSLContext      ctx;
-    private final Deque<State<R>> states;
-    private State<R>              s;
+    private static final JooqLogger log   = JooqLogger.getLogger(XMLHandler.class);
+    private static final boolean    debug = false;
+    private final DSLContext        ctx;
+    private final Deque<State<R>>   states;
+    private State<R>                s;
 
     private static class State<R extends Record> {
         AbstractRow<R>           row;
@@ -148,18 +148,22 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         }
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     @Override
     public final void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        if (debug)
+            if (log.isDebugEnabled())
+                log.debug("> " + qName);
+
         if (!s.inResult && "result".equalsIgnoreCase(qName)) {
             s.inResult = true;
         }
         else if (s.inColumn && "result".equalsIgnoreCase(qName)) {
             Field<?> f = s.row.field(s.column);
 
-            if (f.getDataType() instanceof MultisetDataType) {
+            if (f.getDataType().isMultiset()) {
                 states.push(s);
-                s = new State(((MultisetDataType<?>) f.getDataType()).row, ((MultisetDataType<?>) f.getDataType()).recordType);
+                s = new State<>((AbstractRow<R>) f.getDataType().getRow(), (Class<R>) f.getDataType().getRecordType());
                 s.inResult = true;
             }
             else
@@ -180,6 +184,19 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         else if (s.inResult && "records".equalsIgnoreCase(qName)) {}
         else if (s.inResult && "record".equalsIgnoreCase(qName)) {
             s.inRecord++;
+
+            if (s.inColumn) {
+                Field<?> f = s.row.field(s.column);
+
+                if (f.getDataType().isRecord()) {
+                    states.push(s);
+                    // TODO: Support UDTRecord, EmbeddableRecord types
+                    s = new State<>((AbstractRow<R>) f.getDataType().getRow(), (Class<R>) Record.class);
+                    s.inResult = true;
+                }
+                else
+                    throw new UnsupportedOperationException("Nested records not supported yet");
+            }
         }
         else {
             if (s.result == null) {
@@ -192,8 +209,11 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
                 Field<?> f;
 
-                if (s.row != null && (f = s.row.field(fieldName)) != null)
-                    s.fields.add(f);
+                if (s.row != null)
+                    if ((f = s.row.field(fieldName)) != null)
+                        s.fields.add(f);
+                    else
+                        s.fields.add(s.row.field(s.fields.size()));
                 else
                     s.fields.add(field(name(fieldName), VARCHAR));
             }
@@ -204,6 +224,10 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
     @Override
     public final void endElement(String uri, String localName, String qName) throws SAXException {
+        if (debug)
+            if (log.isDebugEnabled())
+                log.debug("< " + qName);
+
         if (s.inResult && s.inRecord == 0 && "result".equalsIgnoreCase(qName)) {
             s.inResult = false;
         }
@@ -225,12 +249,22 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             s.values.clear();
             s.column = 0;
         }
-        else {
+
+        else x: {
             if (!states.isEmpty()) {
                 State<R> peek = states.peek();
                 Field<?> f = peek.row.field(peek.column);
 
-                if (f.getName().equals(qName) && f.getDataType() instanceof MultisetDataType) {
+                if ("record".equalsIgnoreCase(qName) && f.getDataType().isRecord()) {
+                    peek.values.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(r -> {
+                        r.from(s.values);
+                        return r;
+                    }));
+
+                    s = states.pop();
+                    break x;
+                }
+                else if (f.getName().equals(qName) && f.getDataType().isMultiset()) {
                     initResult();
                     peek.values.add(s.result);
                     s = states.pop();
@@ -266,7 +300,9 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
     @Override
     public final void characters(char[] ch, int start, int length) throws SAXException {
-        if (s.inColumn && !(s.fields.get(s.column).getDataType() instanceof MultisetDataType)) {
+        if (s.inColumn
+                && !(s.fields.get(s.column).getDataType().isRecord())
+                && !(s.fields.get(s.column).getDataType().isMultiset())) {
             String value = new String(ch, start, length);
 
             if (s.values.size() == s.column)

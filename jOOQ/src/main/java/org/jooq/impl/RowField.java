@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Converter.fromNullable;
 // ...
 // ...
@@ -66,13 +67,24 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.DSL.jsonArray;
+import static org.jooq.impl.DSL.jsonObject;
+import static org.jooq.impl.DSL.jsonbArray;
+import static org.jooq.impl.DSL.jsonbObject;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.pgNewRecord;
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Multiset.returningClob;
+import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_ROW;
+import static org.jooq.impl.Tools.emulateMultiset;
+import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.Set;
 
@@ -137,6 +149,84 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
     @Override
     public final void accept(Context<?> ctx) {
+
+        // [#12021] If a RowField is nested somewhere in MULTISET, we must apply
+        //          the MULTISET emulation as well, here
+        if (TRUE.equals(ctx.data(DATA_MULTISET_CONTENT))) {
+            switch (emulateMultiset(ctx.configuration())) {
+                case JSON:
+                    switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+                        default:
+                            ctx.visit(alias(ctx, returningClob(ctx, jsonArray(row.fields()))));
+                            break;
+                    }
+
+                    break;
+
+                case JSONB:
+                    switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+                        default:
+                            ctx.visit(alias(ctx, returningClob(ctx, jsonbArray(row.fields()))));
+                            break;
+                    }
+
+                    break;
+
+                case XML:
+                    switch (ctx.family()) {
+
+
+
+
+
+
+
+                        default:
+                            ctx.visit(alias(ctx, xmlelement(N_RECORD,
+                                map(row.fields(), (f, i) -> xmlelement(fieldNameString(i), f)))
+                            ));
+
+                            break;
+                    }
+
+                    break;
+
+                case NATIVE:
+                    acceptDefault(ctx);
+                    break;
+            }
+        }
+        else
+            acceptDefault(ctx);
+    }
+
+    private final Field<?> alias(Context<?> ctx, Field<?> field) {
+        return ctx.declareFields() ? field.as(getUnqualifiedName()) : field;
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
         if (NO_NATIVE_SUPPORT.contains(ctx.dialect()))
             ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(new SelectFieldList<>(emulatedFields(ctx.configuration()).fields.fields)));
 

@@ -80,6 +80,7 @@ import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.Tools.emulateMultiset;
+import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
@@ -167,6 +168,11 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
 
 
+
+
+
+
+
                         default:
                             ctx.visit(alias(ctx, returningClob(ctx, jsonArray(row.fields()))));
                             break;
@@ -176,6 +182,11 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
                 case JSONB:
                     switch (ctx.family()) {
+
+
+
+
+
 
 
 

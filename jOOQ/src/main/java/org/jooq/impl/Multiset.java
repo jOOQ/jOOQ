@@ -336,7 +336,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                 return jsonArrayAgg(
                     returningClob(ctx, jsonArray(
                         map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
-                    ))
+                    ).nullOnNull())
                 );
         }
     }
@@ -360,7 +360,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                 return jsonbArrayAgg(
                     returningClob(ctx, jsonbArray(
                         map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
-                    ))
+                    ).nullOnNull())
                 );
         }
     }

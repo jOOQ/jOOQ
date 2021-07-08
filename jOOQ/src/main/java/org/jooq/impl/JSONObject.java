@@ -37,36 +37,24 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.impl.DSL.asterisk;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.jsonObject;
-import static org.jooq.impl.DSL.key;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.unquotedName;
-import static org.jooq.impl.DSL.values;
-import static org.jooq.impl.Names.N_JSON_MERGE;
-import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
-import static org.jooq.impl.Names.N_JSON_OBJECT;
-import static org.jooq.impl.Names.N_T;
-import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.DataExtendedKey.*;
+import static org.jooq.impl.Tools.DataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Collection;
+import org.jooq.*;
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.tools.*;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.JSONB;
-import org.jooq.JSONEntry;
-import org.jooq.JSONObjectNullStep;
-import org.jooq.JSONObjectReturningStep;
-import org.jooq.Name;
-// ...
-// ...
-import org.jooq.tools.StringUtils;
+import java.util.*;
 
 
 /**

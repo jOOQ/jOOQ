@@ -23729,6 +23729,21 @@ public class DSL {
      * A set of known limitations can be found here: <a href=
      * "https://github.com/jOOQ/jOOQ/issues/12021">https://github.com/jOOQ/jOOQ/issues/12021</a>.
      * <p>
+     * An important limitation is that correlating <code>MULTISET</code>
+     * subqueries currently only works on dialects that support correlating
+     * derived tables. This excludes:
+     * <ul>
+     * <li>{@link SQLDialect#DB2}</li>
+     * <li>{@link SQLDialect#H2}</li>
+     * <li>{@link SQLDialect#MARIADB}</li>
+     * <li>{@link SQLDialect#MYSQL_5_7}</li>
+     * </ul>
+     * <p>
+     * See also <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/12045">https://github.com/jOOQ/jOOQ/issues/12045</a>.
+     * The various {@link #multisetAgg(Field...)} overloads are not affected
+     * from this limitation.
+     * <p>
      * Please report any issues you may encounter on the above issue, or in a
      * new issue on github.
      */

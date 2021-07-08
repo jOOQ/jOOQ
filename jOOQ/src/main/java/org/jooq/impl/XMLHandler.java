@@ -59,6 +59,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -219,6 +220,10 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             }
 
             s.inColumn = true;
+
+            DataType<?> t = s.fields.get(s.column).getDataType();
+            if (!t.isMultiset() && !t.isRecord())
+                s.values.add(null);
         }
     }
 
@@ -304,11 +309,14 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 && !(s.fields.get(s.column).getDataType().isRecord())
                 && !(s.fields.get(s.column).getDataType().isMultiset())) {
             String value = new String(ch, start, length);
+            Object old;
 
             if (s.values.size() == s.column)
                 s.values.add(value);
+            else if ((old = s.values.get(s.column)) == null)
+                s.values.set(s.column, value);
             else
-                s.values.set(s.column, s.values.get(s.column) + value);
+                s.values.set(s.column, old + value);
         }
     }
 }

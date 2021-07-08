@@ -3784,17 +3784,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             throw new UnsupportedOperationException("Cannot bind a value of type Result to a SQLOutput");
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         final Result<?> get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             Field<?> field = uncoerce(ctx.field());
 
-            if (field.getDataType() instanceof MultisetDataType)
-                return readMultiset(ctx, (MultisetDataType<?>) field.getDataType());
+            if (field.getDataType().isMultiset())
+                return readMultiset(ctx, (DataType<Result<Record>>) field.getDataType());
             else
                 return ctx.configuration().dsl().fetch(convert(ctx.resultSet().getObject(ctx.index()), ResultSet.class));
         }
 
-        private final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<U> ctx, MultisetDataType<R> type) throws SQLException {
+        @SuppressWarnings("unchecked")
+        private final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<U> ctx, DataType<Result<R>> type) throws SQLException {
             NestedCollectionEmulation emulation = emulateMultiset(ctx.configuration());
 
             switch (emulation) {
@@ -3803,10 +3805,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case JSON:
                 case JSONB:
-                    return new JSONReader<>(ctx.dsl(), type.row, type.recordType).read(new StringReader(ctx.resultSet().getString(ctx.index())), true);
+                    return new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new StringReader(ctx.resultSet().getString(ctx.index())), true);
 
                 case XML:
-                    return new XMLHandler<>(ctx.dsl(), type.row, type.recordType).read(ctx.resultSet().getString(ctx.index()));
+                    return new XMLHandler<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(ctx.resultSet().getString(ctx.index()));
             }
 
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);

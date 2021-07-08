@@ -45,7 +45,7 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Nullability;
-import org.jooq.RecordType;
+import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 
@@ -97,6 +97,21 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final Row getRow() {
         return delegate.getRow();
+    }
+
+    @Override
+    public final Class<? extends Record> getRecordType() {
+        return delegate.getRecordType();
+    }
+
+    @Override
+    public final boolean isRecord() {
+        return delegate.isRecord();
+    }
+
+    @Override
+    public final boolean isMultiset() {
+        return delegate.isMultiset();
     }
 
     @Override

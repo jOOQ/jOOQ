@@ -529,6 +529,12 @@ final class Tools {
         DATA_MULTISET_CONDITION,
 
         /**
+         * [#12021] MULTISET content may need to be rendered differently (e.g.
+         * nested <code>ROW</code> types).
+         */
+        DATA_MULTISET_CONTENT,
+
+        /**
          * [#12072] In some cases, it's recommended to generate an explicit
          * <code>ELSE NULL</code> clause in a <code>CASE</code> expression.
          */

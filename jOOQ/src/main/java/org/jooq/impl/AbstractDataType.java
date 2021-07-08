@@ -490,6 +490,11 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         return null;
     }
 
+    @Override
+    public /* non-final */ Class<? extends Record> getRecordType() {
+        return null;
+    }
+
 
 
 
@@ -659,12 +664,12 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
-    public final boolean isRecord() {
+    public /* non-final */ boolean isRecord() {
         return Record.class.isAssignableFrom(tType0());
     }
 
     @Override
-    public final boolean isMultiset() {
+    public /* non-final */ boolean isMultiset() {
         return this instanceof MultisetDataType;
     }
 

@@ -128,6 +128,11 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         return row;
     }
 
+    @Override
+    public final Class<? extends R> getRecordType() {
+        return recordType;
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Result<R> convert(Object object) {

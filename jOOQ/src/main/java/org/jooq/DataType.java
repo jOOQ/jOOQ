@@ -150,10 +150,19 @@ public interface DataType<T> extends Named {
 
     /**
      * Get the nested record's {@link Row} definition, if this is a
-     * {@link #isRecord()}, or <code>NULL</code> otherwise.
+     * {@link #isRecord()}, or a {@link #isMultiset()}, or <code>NULL</code>
+     * otherwise.
      */
     @Nullable
     Row getRow();
+
+    /**
+     * Get the nested record's record type definition, if this is a
+     * {@link #isRecord()}, or a {@link #isMultiset()}, or <code>NULL</code>
+     * otherwise.
+     */
+    @Nullable
+    Class<? extends Record> getRecordType();
 
     /**
      * Retrieve the Java type associated with ARRAYs of this data type.

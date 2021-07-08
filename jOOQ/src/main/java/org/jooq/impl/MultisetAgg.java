@@ -53,6 +53,7 @@ import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -95,11 +96,11 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
 
         if (TRUE.equals(ctx.data(DATA_MULTISET_CONDITION))) {
             ctx.data().remove(DATA_MULTISET_CONDITION);
-            accept0(ctx, true);
+            ctx.data(DATA_MULTISET_CONTENT, true, c -> accept0(c, true));
             ctx.data(DATA_MULTISET_CONDITION, true);
         }
         else
-            accept0(ctx, false);
+            ctx.data(DATA_MULTISET_CONTENT, true, c -> accept0(c, false));
     }
 
     private final void accept0(Context<?> ctx, boolean multisetCondition) {

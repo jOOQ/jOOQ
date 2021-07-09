@@ -41,6 +41,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.jooq.tools.json.JSONParser;
+import org.jooq.tools.json.JSONValue;
 import org.jooq.tools.json.ParseException;
 
 import org.jetbrains.annotations.NotNull;
@@ -127,6 +128,6 @@ public final class JSONB implements Serializable {
 
     @Override
     public String toString() {
-        return String.valueOf(parsed());
+        return JSONValue.toJSONString(parsed());
     }
 }

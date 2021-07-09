@@ -24024,7 +24024,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Field<?>... fields) {
         return new MultisetAgg<>(false, row(fields));
     }
@@ -24075,7 +24075,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1> ArrayAggOrderByStep<Result<Record1<T1>>> multisetAgg(SelectField<T1> field1) {
         return new MultisetAgg<>(false, row(field1));
     }
@@ -24124,7 +24124,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2> ArrayAggOrderByStep<Result<Record2<T1, T2>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2) {
         return new MultisetAgg<>(false, row(field1, field2));
     }
@@ -24173,7 +24173,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3> ArrayAggOrderByStep<Result<Record3<T1, T2, T3>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
         return new MultisetAgg<>(false, row(field1, field2, field3));
     }
@@ -24222,7 +24222,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4> ArrayAggOrderByStep<Result<Record4<T1, T2, T3, T4>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4));
     }
@@ -24271,7 +24271,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5> ArrayAggOrderByStep<Result<Record5<T1, T2, T3, T4, T5>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5));
     }
@@ -24320,7 +24320,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6> ArrayAggOrderByStep<Result<Record6<T1, T2, T3, T4, T5, T6>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6));
     }
@@ -24369,7 +24369,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7> ArrayAggOrderByStep<Result<Record7<T1, T2, T3, T4, T5, T6, T7>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7));
     }
@@ -24418,7 +24418,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8> ArrayAggOrderByStep<Result<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8));
     }
@@ -24467,7 +24467,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> ArrayAggOrderByStep<Result<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9));
     }
@@ -24516,7 +24516,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> ArrayAggOrderByStep<Result<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
     }
@@ -24565,7 +24565,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> ArrayAggOrderByStep<Result<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
     }
@@ -24614,7 +24614,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ArrayAggOrderByStep<Result<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
     }
@@ -24663,7 +24663,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ArrayAggOrderByStep<Result<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
     }
@@ -24712,7 +24712,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> ArrayAggOrderByStep<Result<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
     }
@@ -24761,7 +24761,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> ArrayAggOrderByStep<Result<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
     }
@@ -24810,7 +24810,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> ArrayAggOrderByStep<Result<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
     }
@@ -24859,7 +24859,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> ArrayAggOrderByStep<Result<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
     }
@@ -24908,7 +24908,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> ArrayAggOrderByStep<Result<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
     }
@@ -24957,7 +24957,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> ArrayAggOrderByStep<Result<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
     }
@@ -25006,7 +25006,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> ArrayAggOrderByStep<Result<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
     }
@@ -25055,7 +25055,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> ArrayAggOrderByStep<Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
     }
@@ -25104,7 +25104,7 @@ public class DSL {
      * new issue on github.
      */
     @NotNull
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ArrayAggOrderByStep<Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }

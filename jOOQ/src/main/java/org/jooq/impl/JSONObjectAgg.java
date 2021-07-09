@@ -48,6 +48,7 @@ import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_FIELD;
 import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
+import static org.jooq.impl.Names.N_JSON_GROUP_OBJECT;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
 import static org.jooq.impl.SQLDataType.JSON;
@@ -119,6 +120,10 @@ implements JSONObjectAggNullStep<J> {
 
                 break;
 
+            case SQLITE:
+                acceptSQLite(ctx);
+                break;
+
             default:
                 acceptStandard(ctx);
                 break;
@@ -127,6 +132,19 @@ implements JSONObjectAggNullStep<J> {
 
     private final void acceptPostgres(Context<?> ctx) {
         ctx.visit(getDataType() == JSON ? N_JSON_OBJECT_AGG : N_JSONB_OBJECT_AGG).sql('(');
+        ctx.visit(entry);
+        ctx.sql(')');
+
+        if (onNull == ABSENT_ON_NULL)
+            acceptFilterClause(ctx, (filter == null ? noCondition() : filter).and(entry.value().isNotNull()));
+        else
+            acceptFilterClause(ctx);
+
+        acceptOverClause(ctx);
+    }
+
+    private final void acceptSQLite(Context<?> ctx) {
+        ctx.visit(N_JSON_GROUP_OBJECT).sql('(');
         ctx.visit(entry);
         ctx.sql(')');
 

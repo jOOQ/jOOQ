@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Keywords.K_RETURNING;
 
 import java.util.Set;
@@ -55,7 +56,7 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 final class JSONReturning extends AbstractQueryPart implements SimpleQueryPart {
-    static final Set<SQLDialect> NO_SUPPORT_RETURNING = SQLDialect.supportedBy(H2, MARIADB, MYSQL, POSTGRES);
+    static final Set<SQLDialect> NO_SUPPORT_RETURNING = SQLDialect.supportedBy(H2, MARIADB, MYSQL, POSTGRES, SQLITE);
     final DataType<?>            type;
 
     JSONReturning(DataType<?> type) {

@@ -5883,6 +5883,7 @@ final class Tools {
 
                 case MARIADB:
                 case MYSQL:
+                case SQLITE:
                     return NestedCollectionEmulation.JSON;
 
 

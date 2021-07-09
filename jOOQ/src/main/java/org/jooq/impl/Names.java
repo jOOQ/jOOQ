@@ -200,12 +200,15 @@ final class Names {
     static final Name N_JSONB_OBJECT_AGG       = unquotedName("jsonb_object_agg");
     static final Name N_JSONB_PATH_EXISTS      = unquotedName("jsonb_path_exists");
     static final Name N_JSONB_PATH_QUERY_FIRST = unquotedName("jsonb_path_query_first");
+    static final Name N_JSON                   = unquotedName("json");
     static final Name N_JSON_AGG               = unquotedName("json_agg");
     static final Name N_JSON_ARRAY             = unquotedName("json_array");
     static final Name N_JSON_ARRAYAGG          = unquotedName("json_arrayagg");
     static final Name N_JSON_BUILD_ARRAY       = unquotedName("json_build_array");
     static final Name N_JSON_CONTAINS_PATH     = unquotedName("json_contains_path");
     static final Name N_JSON_EXTRACT           = unquotedName("json_extract");
+    static final Name N_JSON_GROUP_ARRAY       = unquotedName("json_group_array");
+    static final Name N_JSON_GROUP_OBJECT      = unquotedName("json_group_object");
     static final Name N_JSON_MERGE             = unquotedName("json_merge");
     static final Name N_JSON_MERGE_PRESERVE    = unquotedName("json_merge_preserve");
     static final Name N_JSON_OBJECT            = unquotedName("json_object");

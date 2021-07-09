@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 
 import org.jooq.impl.DSL;
 
@@ -65,6 +66,6 @@ public interface JSONObjectAggReturningStep<T> extends AggregateFilterStep<T> {
      * function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     AggregateFilterStep<T> returning(DataType<?> returning);
 }

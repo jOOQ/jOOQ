@@ -40,12 +40,18 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.iif;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_VALUE;
+import static org.jooq.impl.Names.N_JSON;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
@@ -135,6 +141,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+            case SQLITE:
                 ctx.visit(key).sql(", ").visit(jsonCast(ctx, value));
                 break;
 
@@ -148,6 +155,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return field -> jsonCast(ctx, field);
     }
 
+    @SuppressWarnings("unchecked")
     static final Field<?> jsonCast(Context<?> ctx, Field<?> field) {
         DataType<?> type = field.getDataType();
 
@@ -167,6 +175,12 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case MYSQL:
                 if (type.getType() == Boolean.class)
                     return inlined(field);
+
+                break;
+
+            case SQLITE:
+                if (type.getType() == Boolean.class)
+                    return function(N_JSON, SQLDataType.JSON, iif(condition((Field<Boolean>) field), inline("true"), inline("false")));
 
                 break;
 

@@ -8581,7 +8581,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final AggregateFilterStep<?> parseJSONArrayAggFunctionIf() {
         boolean jsonb = false;
 
-        if (parseFunctionNameIf("JSON_ARRAYAGG", "JSON_AGG") || (jsonb = parseFunctionNameIf("JSONB_AGG"))) {
+        if (parseFunctionNameIf("JSON_ARRAYAGG", "JSON_AGG", "JSON_GROUP_ARRAY") || (jsonb = parseFunctionNameIf("JSONB_AGG"))) {
             AggregateFilterStep<?> result;
             JSONArrayAggOrderByStep<?> s1;
             JSONArrayAggNullStep<?> s2;
@@ -8645,7 +8645,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final AggregateFilterStep<?> parseJSONObjectAggFunctionIf() {
         boolean jsonb = false;
 
-        if (parseFunctionNameIf("JSON_OBJECTAGG", "JSON_OBJECT_AGG") || (jsonb = parseFunctionNameIf("JSONB_OBJECT_AGG"))) {
+        if (parseFunctionNameIf("JSON_OBJECTAGG", "JSON_OBJECT_AGG", "JSON_GROUP_OBJECT") || (jsonb = parseFunctionNameIf("JSONB_OBJECT_AGG"))) {
             AggregateFilterStep<?> result;
             JSONObjectAggNullStep<?> s1;
             JSONObjectAggReturningStep<?> s2;

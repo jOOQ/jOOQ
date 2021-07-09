@@ -54,6 +54,7 @@ import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
+import static org.jooq.impl.Names.N_JSON_GROUP_ARRAY;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
@@ -128,6 +129,20 @@ implements JSONArrayAggOrderByStep<J> {
 
             case POSTGRES:
                 ctx.visit(getDataType() == JSON ? N_JSON_AGG : N_JSONB_AGG).sql('(');
+                ctx.visit(arguments.get(0));
+                acceptOrderBy(ctx);
+                ctx.sql(')');
+
+                if (onNull == ABSENT_ON_NULL)
+                    acceptFilterClause(ctx, (filter == null ? noCondition() : filter).and(arguments.get(0).isNotNull()));
+                else
+                    acceptFilterClause(ctx);
+
+                acceptOverClause(ctx);
+                break;
+
+            case SQLITE:
+                ctx.visit(N_JSON_GROUP_ARRAY).sql('(');
                 ctx.visit(arguments.get(0));
                 acceptOrderBy(ctx);
                 ctx.sql(')');

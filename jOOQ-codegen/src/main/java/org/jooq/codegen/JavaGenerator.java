@@ -1090,7 +1090,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala)
             out.print("%sval %s: %s = ",
                 visibility(),
-                getStrategy().getJavaIdentifier(index),
+                scalaWhitespaceSuffix(getStrategy().getJavaIdentifier(index)),
                 Index.class
             );
         else if (kotlin)
@@ -1175,7 +1175,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala)
             out.print("%sval %s: %s[%s] = ",
                 visibility(),
-                getStrategy().getJavaIdentifier(uniqueKey),
+                scalaWhitespaceSuffix(getStrategy().getJavaIdentifier(uniqueKey)),
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)));
         else if (kotlin)
@@ -1295,7 +1295,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala)
             out.print("%sval %s: %s[%s, %s] = ",
                 visibility(),
-                getStrategy().getJavaIdentifier(foreignKey),
+                scalaWhitespaceSuffix(getStrategy().getJavaIdentifier(foreignKey)),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)));
@@ -3370,7 +3370,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("The domain <code>%s</code>.", domain.getQualifiedOutputName());
 
             if (scala) {
-                out.println("%sval %s: %s[%s] = %s.createDomain(", visibility(), id, Domain.class, domainType, Internal.class);
+                out.println("%sval %s: %s[%s] = %s.createDomain(", visibility(), scalaWhitespaceSuffix(id), Domain.class, domainType, Internal.class);
                 out.println("  schema");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
@@ -3635,7 +3635,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             for (String identifier : identifiers)
-                out.println("val %s: %s = %s.%s", identifier, className, getStrategy().getJavaPackageName(e), identifier);
+                out.println("val %s: %s = %s.%s", scalaWhitespaceSuffix(identifier), className, getStrategy().getJavaPackageName(e), identifier);
 
             out.println();
             out.println("def values: %s[%s] = %s(",
@@ -4485,7 +4485,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%s%s %s: %s%s",
                     visibility(generateInterfaces()),
                     generateImmutablePojos() ? "val" : "var",
-                    getStrategy().getJavaMemberName(column, Mode.POJO),
+                    scalaWhitespaceSuffix(getStrategy().getJavaMemberName(column, Mode.POJO)),
                     out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
                     separator
                 );
@@ -4932,7 +4932,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
             if (scala) {
-                out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, columnMember, columnType, columnSetterReturnType);
+                out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, scalaWhitespaceSuffix(columnMember), columnType, columnSetterReturnType);
                 out.println("this.%s = %s", columnMember, columnMember);
 
                 if (generateFluentSetters())
@@ -4963,7 +4963,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala) {
                 // [#3082] TODO Handle <interfaces/> + ARRAY also for Scala
 
-                out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, columnMember, columnTypeInterface, columnSetterReturnType);
+                out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, scalaWhitespaceSuffix(columnMember), columnTypeInterface, columnSetterReturnType);
                 out.println("if (%s == null)", columnMember);
                 out.println("this.%s = null", columnMember);
                 out.println("else");
@@ -5449,7 +5449,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.println("%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
+                    columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
             }
             else if (kotlin) {
                 out.println("%sval %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
@@ -5477,7 +5477,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala)
                 out.println("%sval %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
-                    visibility(), columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+                    visibility(), scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
             else if (kotlin)
                 out.println("%sval %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, [[%s]])",
                     visibility(), columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
@@ -6509,7 +6509,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 out.println("%sval %s: %s[%s] = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s)",
                     visibility(),
-                    seqId,
+                    scalaWhitespaceSuffix(seqId),
                     Sequence.class,
                     seqType,
                     Internal.class,
@@ -6741,7 +6741,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println("public companion object {");
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
-            out.println("%sval %s: %s = %s()", visibility(), schemaId, className, className);
+            out.println("%sval %s: %s = %s()", visibility(), scalaWhitespaceSuffix(schemaId), className, className);
             out.println("}");
         }
         else {
@@ -6774,7 +6774,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala)
                     out.println("%sdef %s = %s", visibility(), tableId, tableShortId);
                 else if (kotlin)
-                    out.println("%sval %s: %s get() = %s", visibility(), tableId, tableClassName, tableShortId);
+                    out.println("%sval %s: %s get() = %s", visibility(), scalaWhitespaceSuffix(tableId), tableClassName, tableShortId);
                 else
                     out.println("%sfinal %s %s = %s;", visibility(), tableClassName, tableId, tableShortId);
 
@@ -7387,7 +7387,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.javadoc("The parameter <code>%s</code>.[[before= ][%s]]", parameter.getQualifiedOutputName(), list(escapeEntities(comment(parameter))));
 
                 out.println("val %s: %s[%s] = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    paramId, Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                    scalaWhitespaceSuffix(paramId), Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
 
             out.println("}");
@@ -7433,7 +7433,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (kotlin)
                     out.println("%sval %s: %s<%s?> = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        visibility(), paramId, Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                        visibility(), scalaWhitespaceSuffix(paramId), Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
                 else
                     out.println("%sstatic final %s<%s> %s = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
                         visibility(), Parameter.class, paramType, paramId, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
@@ -7543,7 +7543,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.println("%sdef %s(%s: %s) : Unit = set%s(%s.%s, %s)",
-                    visibility(), setter, paramName, refNumberType(out, parameter.getType(resolver(out))), numberValue, className, paramId, paramName);
+                    visibility(), setter, scalaWhitespaceSuffix(paramName), refNumberType(out, parameter.getType(resolver(out))), numberValue, className, paramId, paramName);
             }
             else if (kotlin) {
                 out.println("%sfun %s(%s: %s?): Unit = set%s(%s, %s)",
@@ -7769,9 +7769,9 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 if (parametersAsField)
-                    out.println("%s%s: %s[%s]", separator, memberName, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))));
+                    out.println("%s%s: %s[%s]", separator, scalaWhitespaceSuffix(memberName), Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))));
                 else
-                    out.println("%s%s: %s", separator, memberName, refNumberType(out, parameter.getType(resolver(out))));
+                    out.println("%s%s: %s", separator, scalaWhitespaceSuffix(memberName), refNumberType(out, parameter.getType(resolver(out))));
             }
             else if (kotlin) {
                 if (parametersAsField)
@@ -7837,7 +7837,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         String separator = "  ";
         if (!instance) {
-            if (scala || kotlin)
+            if (scala)
+                out.println("%s%s: %s", separator, scalaWhitespaceSuffix(configurationArgument), Configuration.class);
+            else if (kotlin)
                 out.println("%s%s: %s", separator, configurationArgument, Configuration.class);
             else
                 out.println("%s%s %s", separator, Configuration.class, configurationArgument);
@@ -7855,7 +7857,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String paramMember = getStrategy().getJavaMemberName(parameter);
 
             if (scala)
-                out.println("%s%s: %s", separator, paramMember, paramType);
+                out.println("%s%s: %s", separator, scalaWhitespaceSuffix(paramMember), paramType);
             else if (kotlin)
                 out.println("%s%s: %s%s", separator, paramMember, paramType, kotlinNullability(parameter));
             else
@@ -7934,7 +7936,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         String separator = "  ";
         if (!instance) {
-            if (scala || kotlin)
+            if (scala)
+                out.println("%s%s: %s", separator, scalaWhitespaceSuffix(configurationArgument), Configuration.class);
+            else if (kotlin)
                 out.println("%s%s: %s", separator, configurationArgument, Configuration.class);
             else
                 out.println("%s%s %s", separator, Configuration.class, configurationArgument);
@@ -7952,7 +7956,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String typeName = refNumberType(out, parameter.getType(resolver(out)));
 
             if (scala)
-                out.println("%s%s: %s", separator, memberName, typeName);
+                out.println("%s%s: %s", separator, scalaWhitespaceSuffix(memberName), typeName);
             else if (kotlin)
                 out.println("%s%s: %s?", separator, memberName, typeName);
             else
@@ -8048,7 +8052,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sstatic %s<%s> %s(", visibility(), Result.class, recordClassName, methodName);
 
         String separator = "  ";
-        if (scala || kotlin)
+        if (scala)
+            out.println("%s%s: %s", separator, scalaWhitespaceSuffix(configurationArgument), Configuration.class);
+        else if (kotlin)
             out.println("%s%s: %s", separator, configurationArgument, Configuration.class);
         else
             out.println("%s%s %s", separator, Configuration.class, configurationArgument);

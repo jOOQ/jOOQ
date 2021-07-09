@@ -182,11 +182,9 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         else if (definition instanceof IndexDefinition && asList(MARIADB, MYSQL).contains(definition.getDatabase().getDialect().family()))
             return ((IndexDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "_" + definition.getOutputName().toUpperCase(targetLocale);
 
-
-
-
-
-
+        // [#5538] [#11286] [#12118] The same is true for unique keys, which are really indexes
+        else if (definition instanceof UniqueKeyDefinition && asList(SQLITE).contains(definition.getDatabase().getDialect().family()))
+            return ((UniqueKeyDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "__" + definition.getOutputName().toUpperCase(targetLocale);
 
         // [#9758] And then also for foreign keys
         else if (definition instanceof ForeignKeyDefinition && asList(POSTGRES, SQLITE).contains(definition.getDatabase().getDialect().family()))

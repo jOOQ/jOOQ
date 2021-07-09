@@ -4451,12 +4451,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, JSON value) throws SQLException {
-            ctx.statement().setString(ctx.index(), value.toString());
+            ctx.statement().setString(ctx.index(), value.data());
         }
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, JSON value) throws SQLException {
-            ctx.output().writeString(value.toString());
+            ctx.output().writeString(value.data());
         }
 
         @Override
@@ -4526,7 +4526,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
                 bytes(ctx.configuration()).set0(ctx, bytesConverter(ctx.configuration()).to(value));
             else
-                ctx.statement().setString(ctx.index(), value.toString());
+                ctx.statement().setString(ctx.index(), value.data());
         }
 
         @Override
@@ -4534,7 +4534,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
                 bytes(ctx.configuration()).set0(ctx, bytesConverter(ctx.configuration()).to(value));
             else
-                ctx.output().writeString(value.toString());
+                ctx.output().writeString(value.data());
         }
 
         @Override

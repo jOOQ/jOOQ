@@ -680,7 +680,7 @@ final class R2DBC {
         Properties properties = new Properties();
         properties.setProperty("user", username);
         properties.setProperty("password", password);
-        return getConnection(url, new Properties());
+        return getConnection(url, properties);
     }
 
     static final Connection getConnection(String url, Properties properties) {

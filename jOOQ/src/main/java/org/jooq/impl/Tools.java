@@ -225,6 +225,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.persistence.Column;
@@ -1278,6 +1279,15 @@ final class Tools {
     // XXX: General utility methods
     // ------------------------------------------------------------------------
 
+    private static final int      FIELD_NAME_CACHE_SIZE = 128;
+    private static final String[] FIELD_NAME_STRINGS;
+    private static final Name[]   FIELD_NAMES;
+
+    static {
+        FIELD_NAME_STRINGS = IntStream.range(0, FIELD_NAME_CACHE_SIZE).mapToObj(Tools::fieldNameString0).toArray(String[]::new);
+        FIELD_NAMES = IntStream.range(0, FIELD_NAME_CACHE_SIZE).mapToObj(i -> name(FIELD_NAME_STRINGS[i])).toArray(Name[]::new);
+    }
+
     static final <T> SortField<T> sortField(OrderField<T> field) {
         if (field instanceof SortField)
             return (SortField<T>) field;
@@ -1298,12 +1308,16 @@ final class Tools {
         return Tools.map(fields, (OrderField<?> o) -> sortField(o));
     }
 
-    static final String fieldNameString(int index) {
+    private static final String fieldNameString0(int index) {
         return "v" + index;
     }
 
+    static final String fieldNameString(int index) {
+        return index < FIELD_NAME_CACHE_SIZE ? FIELD_NAME_STRINGS[index] : fieldNameString0(index);
+    }
+
     static final Name fieldName(int index) {
-        return name(fieldNameString(index));
+        return index < FIELD_NAME_CACHE_SIZE ? FIELD_NAMES[index] : name(fieldNameString0(index));
     }
 
     static final Name[] fieldNames(int length) {

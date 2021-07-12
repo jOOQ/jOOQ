@@ -173,6 +173,7 @@ implements
         switch (ctx.family()) {
 
             case MYSQL:
+            case SQLITE:
                 ctx.visit(N_JSON_EXTRACT).sql('(').visit(json).sql(", ").visit(path).sql(')');
                 break;
 

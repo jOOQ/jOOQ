@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.JSONExists.Behaviour.ERROR;
 import static org.jooq.impl.JSONExists.Behaviour.FALSE;
 import static org.jooq.impl.JSONExists.Behaviour.TRUE;
@@ -47,6 +48,7 @@ import static org.jooq.impl.Keywords.K_JSON_EXISTS;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Names.N_JSONB_PATH_EXISTS;
 import static org.jooq.impl.Names.N_JSON_CONTAINS_PATH;
+import static org.jooq.impl.Names.N_JSON_TYPE;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.Tools.castIfNeeded;
 
@@ -127,6 +129,10 @@ final class JSONExists extends AbstractCondition implements JSONExistsOnStep {
 
             case MYSQL:
                 ctx.visit(N_JSON_CONTAINS_PATH).sql('(').visit(json).sql(", 'one', ").visit(path).sql(')');
+                break;
+
+            case SQLITE:
+                ctx.visit(function(N_JSON_TYPE, SQLDataType.JSON, json, path).isNotNull());
                 break;
 
             case POSTGRES:

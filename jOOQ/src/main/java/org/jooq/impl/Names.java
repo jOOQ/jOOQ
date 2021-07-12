@@ -217,6 +217,7 @@ final class Names {
     static final Name N_JSON_QUERY             = unquotedName("json_query");
     static final Name N_JSON_QUOTE             = unquotedName("json_quote");
     static final Name N_JSON_TABLE             = unquotedName("json_table");
+    static final Name N_JSON_TYPE              = unquotedName("json_type");
     static final Name N_JSON_VALID             = unquotedName("json_valid");
     static final Name N_JSON_VALUE             = unquotedName("json_value");
     static final Name N_LCASE                  = unquotedName("lcase");

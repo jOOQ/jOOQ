@@ -22909,7 +22909,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, String path) {
         return jsonValue(json, Tools.field(path));
     }
@@ -22918,7 +22918,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSON, json, path, null);
     }
@@ -22927,7 +22927,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, String path) {
         return jsonbValue(json, Tools.field(path));
     }
@@ -22936,7 +22936,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSONB, json, path, null);
     }
@@ -23183,7 +23183,7 @@ public class DSL {
      * The JSON exists predicate.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONExistsOnStep jsonExists(Field<JSON> field, String path) {
         return jsonExists(field, Tools.field(path));
     }
@@ -23192,7 +23192,7 @@ public class DSL {
      * The JSON exists predicate.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONExistsOnStep jsonExists(Field<JSON> field, Field<String> path) {
         return new JSONExists(field, Tools.nullSafe(path));
     }
@@ -23201,7 +23201,7 @@ public class DSL {
      * The JSONB exists predicate.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, String path) {
         return jsonbExists(field, Tools.field(path));
     }
@@ -23210,7 +23210,7 @@ public class DSL {
      * The JSONB exists predicate.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, Field<String> path) {
         return new JSONExists(field, Tools.nullSafe(path));
     }

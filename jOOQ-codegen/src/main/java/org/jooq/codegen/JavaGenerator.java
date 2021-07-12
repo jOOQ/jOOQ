@@ -4503,7 +4503,8 @@ public class JavaGenerator extends AbstractGenerator {
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
                 printValidationAnnotation(out, column);
-                printKotlinSetterAnnotation(out, column, Mode.POJO);
+                if (!generateImmutablePojos())
+                    printKotlinSetterAnnotation(out, column, Mode.POJO);
 
                 out.println("%s%s%s %s: %s? = null%s",
                     visibility(generateInterfaces()),

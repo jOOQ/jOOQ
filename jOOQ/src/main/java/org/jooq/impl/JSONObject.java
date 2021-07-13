@@ -182,23 +182,14 @@ implements
 
             case MARIADB: {
                 JSONEntry<?> first;
-                Name name = JSONArrayAgg.SUPPORT_JSON_MERGE_PRESERVE.contains(ctx.dialect()) ? N_JSON_MERGE_PRESERVE : N_JSON_MERGE;
 
                 // Workaround for https://jira.mariadb.org/browse/MDEV-13701
                 if (entries.size() > 1) {
-                    ctx.visit(name).sql('(').visit(inline("{}"))
-                       .formatIndentStart();
-
-                    for (JSONEntry<?> entry : entries)
-                        ctx.sql(',').formatSeparator().visit(jsonObject(entry));
-
-                    ctx.formatIndentEnd()
-                       .formatNewLine()
-                       .sql(')');
+                    ctx.visit(jsonMerge(ctx, "{}", Tools.map(entries, e -> jsonObject(e), Field[]::new)));
                 }
                 else if (!entries.isEmpty() && isJSONArray((first = entries.iterator().next()).value())) {
                     ctx.visit(jsonObject(
-                        key(first.key()).value(DSL.field("{0}({1}, {2})", getDataType(), name, inline("[]"), first.value()))
+                        key(first.key()).value(jsonMerge(ctx, "[]", first.value()))
                     ));
                 }
                 else

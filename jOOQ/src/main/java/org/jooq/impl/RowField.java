@@ -174,7 +174,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
 
                         default:
-                            ctx.visit(alias(ctx, returningClob(ctx, jsonArray(row.fields()))));
+                            ctx.visit(alias(ctx, returningClob(ctx, jsonArray(row.fields()).nullOnNull())));
                             break;
                     }
 
@@ -199,7 +199,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
 
                         default:
-                            ctx.visit(alias(ctx, returningClob(ctx, jsonbArray(row.fields()))));
+                            ctx.visit(alias(ctx, returningClob(ctx, jsonbArray(row.fields()).nullOnNull())));
                             break;
                     }
 

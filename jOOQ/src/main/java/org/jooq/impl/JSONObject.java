@@ -185,11 +185,11 @@ implements
 
                 // Workaround for https://jira.mariadb.org/browse/MDEV-13701
                 if (entries.size() > 1) {
-                    ctx.visit(jsonMerge(ctx, "{}", Tools.map(entries, e -> jsonObject(e), Field[]::new)));
+                    ctx.visit(JSONEntryImpl.jsonMerge(ctx, "{}", Tools.map(entries, e -> jsonObject(e), Field[]::new)));
                 }
                 else if (!entries.isEmpty() && isJSONArray((first = entries.iterator().next()).value())) {
                     ctx.visit(jsonObject(
-                        key(first.key()).value(jsonMerge(ctx, "[]", first.value()))
+                        key(first.key()).value(JSONEntryImpl.jsonMerge(ctx, "[]", first.value()))
                     ));
                 }
                 else

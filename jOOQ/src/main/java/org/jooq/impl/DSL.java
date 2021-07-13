@@ -23843,7 +23843,7 @@ public class DSL {
      * {@link SelectForStep#forXML()}. jOOQ produces an XML encoding that is
      * compatible with {@link DSLContext#fetchFromXML(String)}. Future jOOQ
      * versions will make this format configurable according to
-     * {@link XMLFormat.RecordFormau}.</li>
+     * {@link XMLFormat.RecordFormat}.</li>
      * <li>{@link NestedCollectionEmulation#NATIVE}: A few dialects have native
      * support for MULTISET.</li>
      * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses

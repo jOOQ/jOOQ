@@ -41,7 +41,6 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonObject;
-import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
@@ -59,10 +58,7 @@ import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
-import org.jooq.JSONObjectNullStep;
 // ...
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**

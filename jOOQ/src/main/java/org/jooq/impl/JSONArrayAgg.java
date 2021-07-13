@@ -39,23 +39,20 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.SQLDialect.MARIADB;
-// ...
 import static org.jooq.SQLDialect.MYSQL;
-// ...
 // ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
+import static org.jooq.impl.JSONEntryImpl.jsonMerge;
 import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
-import static org.jooq.impl.Names.N_JSON_MERGE;
-import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -87,7 +84,6 @@ extends AbstractAggregateFunction<J>
 implements JSONArrayAggOrderByStep<J> {
 
     static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT   = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect> SUPPORT_JSON_MERGE_PRESERVE = SQLDialect.supportedBy(MARIADB, MYSQL);
 
 
 
@@ -101,13 +97,13 @@ implements JSONArrayAggOrderByStep<J> {
     }
 
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
             case MARIADB:
             case MYSQL: {
                 // Workaround for https://jira.mariadb.org/browse/MDEV-21912,
                 // https://jira.mariadb.org/browse/MDEV-21914, and other issues
-                ctx.visit(SUPPORT_JSON_MERGE_PRESERVE.contains(ctx.dialect()) ? N_JSON_MERGE_PRESERVE : N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(groupConcatEmulation(ctx)).sql(')');
+                ctx.visit(jsonMerge(ctx, "[]", groupConcatEmulation(ctx)));
                 break;
             }
 

@@ -39,9 +39,14 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.toChar;
@@ -49,11 +54,15 @@ import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_VALUE;
+import static org.jooq.impl.Names.N_JSON_MERGE;
+import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -65,6 +74,7 @@ import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
 // ...
 import org.jooq.Record1;
+import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.conf.NestedCollectionEmulation;
@@ -76,8 +86,12 @@ import org.jooq.conf.NestedCollectionEmulation;
  * @author Lukas Eder
  */
 final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, JSONEntryValueStep {
-    private final Field<String> key;
-    private final Field<T>      value;
+
+    static final Set<SQLDialect> REQUIRE_JSON_MERGE          = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> SUPPORT_JSON_MERGE_PRESERVE = SQLDialect.supportedBy(MARIADB, MYSQL);
+
+    private final Field<String>  key;
+    private final Field<T>       value;
 
     JSONEntryImpl(Field<String> key) {
         this(key, null);
@@ -236,4 +250,12 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
 
+
+    static final Field<?> jsonMerge(Scope scope, String empty, Field<?>... fields) {
+        return function(
+            SUPPORT_JSON_MERGE_PRESERVE.contains(scope.dialect()) ? N_JSON_MERGE_PRESERVE : N_JSON_MERGE,
+            fields[0].getDataType(),
+            combine(inline(empty), fields)
+        );
+    }
 }

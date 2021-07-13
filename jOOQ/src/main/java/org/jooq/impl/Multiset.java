@@ -42,6 +42,8 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
@@ -55,7 +57,13 @@ import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
+import static org.jooq.impl.JSONEntryImpl.REQUIRE_JSON_MERGE;
+import static org.jooq.impl.JSONEntryImpl.SUPPORT_JSON_MERGE_PRESERVE;
+import static org.jooq.impl.JSONEntryImpl.isJSON;
+import static org.jooq.impl.JSONEntryImpl.jsonMerge;
 import static org.jooq.impl.Keywords.K_MULTISET;
+import static org.jooq.impl.Names.N_JSON_MERGE;
+import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
@@ -335,7 +343,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             default:
                 return jsonArrayAgg(
                     returningClob(ctx, jsonArray(
-                        map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
+                        map(fields.fields(), (f, i) -> jsonMerge(ctx, "[]", agg ? f : DSL.field(fieldName(i), f.getDataType())))
                     ).nullOnNull())
                 );
         }
@@ -359,12 +367,24 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             default:
                 return jsonbArrayAgg(
                     returningClob(ctx, jsonbArray(
-                        map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
+                        map(fields.fields(), (f, i) -> jsonMerge(ctx, "[]", agg ? f : DSL.field(fieldName(i), f.getDataType())))
                     ).nullOnNull())
                 );
         }
     }
 
+    private static final Field<?> jsonMerge(Scope scope, String empty, Field<?> field) {
+
+        // [#12168] Yet another MariaDB JSON un-escaping workaround https://jira.mariadb.org/browse/MDEV-26134
+        return REQUIRE_JSON_MERGE.contains(scope.dialect()) && isJSON(scope, field.getDataType())
+            ? function(
+                SUPPORT_JSON_MERGE_PRESERVE.contains(scope.dialect()) ? N_JSON_MERGE_PRESERVE : N_JSON_MERGE,
+                field.getDataType(),
+                inline(empty),
+                field
+            )
+            : field;
+    }
     static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean multisetCondition, boolean agg) {
         return xmlagg(
             xmlelement(N_RECORD,

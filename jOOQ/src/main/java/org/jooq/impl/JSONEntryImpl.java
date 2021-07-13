@@ -220,36 +220,29 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return field;
     }
 
+    static final <T> Field<T> unescapeNestedJSON(Context<?> ctx, Field<T> value) {
 
+        // [#12086] Avoid escaping nested JSON
+        return
+            JSONEntryImpl.isJSON(ctx, value.getDataType())
+          ? DSL.function(N_JSON_QUERY, value.getDataType(), value)
+          : value;
+    }
 
+    static final boolean isJSON(Scope scope, DataType<?> t) {
+        return t.isJSON()
+            || t.isRecord() && (TRUE.equals(scope.data(DATA_MULTISET_CONTENT)) && emulateMultisetWithJSON(scope))
+            || t.isMultiset() && emulateMultisetWithJSON(scope);
+    }
 
+    private static final boolean emulateMultisetWithJSON(Scope scope) {
+        return emulateMultiset(scope.configuration()) == NestedCollectionEmulation.JSON
+            || emulateMultiset(scope.configuration()) == NestedCollectionEmulation.JSONB;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    static final Field<?> booleanValAsVarchar(Field<?> field) {
+        return field instanceof Val ? ((Val<?>) field).convertTo0(VARCHAR) : field;
+    }
 
     static final Field<?> jsonMerge(Scope scope, String empty, Field<?>... fields) {
         return function(

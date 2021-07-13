@@ -910,7 +910,7 @@ public final class Convert {
                 // [#1501] Strings can be converted to java.sql.Date
                 else if (fromClass == String.class && toClass == java.sql.Time.class) {
                     try {
-                        return (U) java.sql.Time.valueOf((String) from);
+                        return (U) java.sql.Time.valueOf(patchIso8601Time((String) from));
                     }
                     catch (IllegalArgumentException e) {
                         return null;
@@ -920,7 +920,7 @@ public final class Convert {
                 // [#1501] Strings can be converted to java.sql.Date
                 else if (fromClass == String.class && toClass == java.sql.Timestamp.class) {
                     try {
-                        return (U) java.sql.Timestamp.valueOf(patchIso8601((String) from, false));
+                        return (U) java.sql.Timestamp.valueOf(patchIso8601Timestamp((String) from, false));
                     }
                     catch (IllegalArgumentException e) {
                         return null;
@@ -943,18 +943,11 @@ public final class Convert {
                 }
 
                 else if (fromClass == String.class && toClass == LocalTime.class) {
-
-                    // Try "lenient" ISO date formats first
                     try {
-                        return (U) java.sql.Time.valueOf((String) from).toLocalTime();
+                        return (U) LocalTime.parse(patchIso8601Time((String) from));
                     }
-                    catch (IllegalArgumentException e1) {
-                        try {
-                            return (U) LocalTime.parse((String) from);
-                        }
-                        catch (DateTimeParseException e2) {
-                            return null;
-                        }
+                    catch (DateTimeParseException e2) {
+                        return null;
                     }
                 }
 
@@ -976,7 +969,7 @@ public final class Convert {
 
                 else if (fromClass == String.class && toClass == LocalDateTime.class) {
                     try {
-                        return (U) LocalDateTime.parse(patchIso8601((String) from, true));
+                        return (U) LocalDateTime.parse(patchIso8601Timestamp((String) from, true));
                     }
                     catch (DateTimeParseException e2) {
                         return null;
@@ -1198,7 +1191,14 @@ public final class Convert {
             throw fail(from, toClass);
         }
 
-        private static final String patchIso8601(String string, boolean t) {
+        private static final String patchIso8601Time(String string) {
+            // [#12158] Support Db2's 15.30.45 format
+            return string.length() == 8
+                 ? string.replace('.', ':')
+                 : string;
+        }
+
+        private static final String patchIso8601Timestamp(String string, boolean t) {
             if (string.length() > 11)
                 if (t && string.charAt(10) == ' ')
                     return string.substring(0, 10) + "T" + string.substring(11);

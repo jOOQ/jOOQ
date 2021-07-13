@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+// ...
 import static org.jooq.impl.DSL.NULL;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.condition;
@@ -46,7 +47,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
-import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
@@ -183,6 +184,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                     return function(N_JSON, SQLDataType.JSON, iif(condition((Field<Boolean>) field), inline("true"), inline("false")));
 
                 break;
+
+
+
+
+
 
 
 

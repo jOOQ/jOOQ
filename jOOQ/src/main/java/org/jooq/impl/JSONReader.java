@@ -60,6 +60,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Fields;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.tools.json.ContainerFactory;
@@ -71,7 +72,7 @@ import org.jooq.tools.json.JSONParser;
  * @author Johannes Bühler
  * @author Lukas Eder
  */
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 final class JSONReader<R extends Record> {
 
     private final DSLContext         ctx;
@@ -92,7 +93,6 @@ final class JSONReader<R extends Record> {
         return read(reader, false);
     }
 
-    @SuppressWarnings("rawtypes")
     final Result<R> read(final Reader reader, boolean multiset) {
         try {
             Object root = new JSONParser().parse(reader, new ContainerFactory() {
@@ -107,39 +107,53 @@ final class JSONReader<R extends Record> {
                 }
             });
 
-            AbstractRow<R> actualRow = row;
-            List<Field<?>> header = new ArrayList<>();
+            return read(ctx, row, recordType, multiset, root);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            List<?> records;
-            Result<R> result = null;
+    private static final <R extends Record> Result<R> read(
+        DSLContext ctx,
+        AbstractRow<R> actualRow,
+        Class<? extends R> recordType,
+        boolean multiset,
+        Object root
+    ) {
+        List<Field<?>> header = new ArrayList<>();
 
-            if (root instanceof Map) {
-                Map<String, Object> o1 = (Map<String, Object>) root;
-                List<Map<String, String>> fields = (List<Map<String, String>>) o1.get("fields");
+        List<?> records;
+        Result<R> result = null;
 
-                if (fields != null) {
-                    for (Map<String, String> field : fields) {
-                        String catalog = field.get("catalog");
-                        String schema = field.get("schema");
-                        String table = field.get("table");
-                        String name = field.get("name");
-                        String type = field.get("type");
+        if (root instanceof Map) {
+            Map<String, Object> o1 = (Map<String, Object>) root;
+            List<Map<String, String>> fields = (List<Map<String, String>>) o1.get("fields");
 
-                        header.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
-                    }
+            if (fields != null) {
+                for (Map<String, String> field : fields) {
+                    String catalog = field.get("catalog");
+                    String schema = field.get("schema");
+                    String table = field.get("table");
+                    String name = field.get("name");
+                    String type = field.get("type");
+
+                    header.add(field(name(catalog, schema, table, name), getDataType(ctx.dialect(), defaultIfBlank(type, "VARCHAR"))));
                 }
-
-                records = (List<?>) o1.get("records");
             }
-            else
-                records = (List<?>) root;
 
-            if (actualRow == null && !header.isEmpty())
-                actualRow = (AbstractRow<R>) Tools.row0(header);
+            records = (List<?>) o1.get("records");
+        }
+        else
+            records = (List<?>) root;
 
-            if (actualRow != null)
-                result = new ResultImpl<>(ctx.configuration(), actualRow);
+        if (actualRow == null && !header.isEmpty())
+            actualRow = (AbstractRow<R>) Tools.row0(header);
 
+        if (actualRow != null)
+            result = new ResultImpl<>(ctx.configuration(), actualRow);
+
+        if (records != null) {
             for (Object o3 : records) {
                 if (o3 instanceof Map) {
                     Map<String, Object> record = (Map<String, Object>) o3;
@@ -152,11 +166,20 @@ final class JSONReader<R extends Record> {
                         result = new ResultImpl<>(ctx.configuration(), actualRow = (AbstractRow<R>) Tools.row0(header));
                     }
 
-                    result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
+                    List<Object> list = multiset
+                        ? patchRecord(
+                            ctx,
+                            multiset,
+                            actualRow,
 
-                        // This sort is required if we use the JSONFormat.RecordFormat.OBJECT encoding (e.g. in SQL Server)
+                            // This sort is required if we use the JSONFormat.RecordFormat.OBJECT encoding (e.g. in SQL Server)
+                            record.entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).collect(toList())
+                        )
+                        : null;
+
+                    result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
                         if (multiset)
-                            r.from(record.entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).collect(toList()));
+                            r.from(list);
                         else
                             r.fromMap(record);
 
@@ -164,7 +187,7 @@ final class JSONReader<R extends Record> {
                     }));
                 }
                 else {
-                    List record = (List) o3;
+                    List<Object> record = (List<Object>) o3;
 
                     if (result == null) {
                         if (header.isEmpty())
@@ -173,24 +196,39 @@ final class JSONReader<R extends Record> {
                         result = new ResultImpl<>(ctx.configuration(), actualRow = (AbstractRow<R>) Tools.row0(header));
                     }
 
-                    // [#8829] LoaderImpl expects binary data to be encoded in base64,
-                    //         not according to org.jooq.tools.Convert
-                    for (int i = 0; i < result.fields().length; i++)
-                        if (result.field(i).getType() == byte[].class && record.get(i) instanceof String)
-                            record.set(i, DatatypeConverter.parseBase64Binary((String) record.get(i)));
-
+                    patchRecord(ctx, multiset, actualRow, record);
                     result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
                         r.from(record);
                         return r;
                     }));
                 }
             }
+        }
 
-            return result;
+        return result;
+    }
+
+    private static final List<Object> patchRecord(DSLContext ctx, boolean multiset, Fields result, List<Object> record) {
+        for (int i = 0; i < result.fields().length; i++) {
+            Field<?> field = result.field(i);
+
+            // [#8829] LoaderImpl expects binary data to be encoded in base64,
+            //         not according to org.jooq.tools.Convert
+            if (field.getType() == byte[].class && record.get(i) instanceof String)
+                record.set(i, DatatypeConverter.parseBase64Binary((String) record.get(i)));
+
+            // [#12155] Recurse for nested data types
+            else if (multiset && field.getDataType().isMultiset())
+                record.set(i, read(
+                    ctx,
+                    (AbstractRow) field.getDataType().getRow(),
+                    (Class) field.getDataType().getRecordType(),
+                    multiset,
+                    record.get(i)
+                ));
         }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+        return record;
     }
 }
 

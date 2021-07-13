@@ -46,6 +46,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Nullability;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 
@@ -212,6 +213,10 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final U convert(Object object) {
         if (getConverter().toType().isInstance(object))
+            return (U) object;
+
+        // [#12155] Avoid double conversion passes between Result and custom List<UserType>
+        else if (delegate.isMultiset() && !(object instanceof Result))
             return (U) object;
 
         // [#3200] Try to convert arbitrary objects to T

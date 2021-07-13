@@ -37,14 +37,17 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.Keywords.K_NAME;
-import static org.jooq.impl.Names.N_XMLCONCAT;
 import static org.jooq.impl.Names.N_XMLELEMENT;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Collection;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.XML;
@@ -96,9 +99,9 @@ final class XMLElement extends AbstractField<XML> {
 
         if (hasContent)
             if (format)
-                ctx.sql(',').formatSeparator().visit(content);
+                ctx.sql(',').formatSeparator().visit(wrap(content).map(xmlCastMapper(ctx)));
             else
-                ctx.sql(", ").visit(content);
+                ctx.sql(", ").visit(wrap(content).map(xmlCastMapper(ctx)));
 
         if (format) {
             ctx.formatIndentEnd()
@@ -107,5 +110,34 @@ final class XMLElement extends AbstractField<XML> {
         }
 
         ctx.sql(')');
+    }
+
+    static final F1<? super Field<?>, ? extends Field<?>> xmlCastMapper(final Context<?> ctx) {
+        return new F1<Field<?>, Field<?>>() {
+            @Override
+            public Field<?> apply(Field<?> field) {
+                return xmlCast(ctx, field);
+            }
+        };
+    }
+
+    static final Field<?> xmlCast(Context<?> ctx, Field<?> field) {
+        DataType<?> type = field.getDataType();
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+            default:
+                break;
+        }
+
+        return field;
     }
 }

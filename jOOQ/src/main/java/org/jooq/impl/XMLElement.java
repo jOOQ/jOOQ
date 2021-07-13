@@ -38,17 +38,32 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.iif;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.inlined;
+import static org.jooq.impl.DSL.toChar;
+import static org.jooq.impl.Keywords.K_FORMAT;
+import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_NAME;
-import static org.jooq.impl.Names.N_XMLCONCAT;
+import static org.jooq.impl.Names.N_JSON;
 import static org.jooq.impl.Names.N_XMLELEMENT;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.Param;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
 
@@ -100,9 +115,9 @@ final class XMLElement extends AbstractField<XML> {
 
             if (hasContent)
                 if (format)
-                    c.sql(',').formatSeparator().visit(content);
+                    c.sql(',').formatSeparator().visit(wrap(content).map(xmlCastMapper(ctx)));
                 else
-                    c.sql(", ").visit(content);
+                    c.sql(", ").visit(wrap(content).map(xmlCastMapper(ctx)));
         };
 
         ctx.visit(N_XMLELEMENT).sql('(');
@@ -118,5 +133,29 @@ final class XMLElement extends AbstractField<XML> {
             accept0.accept(ctx);
 
         ctx.sql(')');
+    }
+
+    static final Function<? super Field<?>, ? extends Field<?>> xmlCastMapper(final Context<?> ctx) {
+        return field -> xmlCast(ctx, field);
+    }
+
+    static final Field<?> xmlCast(Context<?> ctx, Field<?> field) {
+        DataType<?> type = field.getDataType();
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+            default:
+                break;
+        }
+
+        return field;
     }
 }

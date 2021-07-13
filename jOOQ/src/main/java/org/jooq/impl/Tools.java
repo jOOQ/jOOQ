@@ -5062,8 +5062,8 @@ final class Tools {
             return;
         }
 
-        // [#12019] If dateAsTimestamp=true is active, we must declare a DATE instead.
-        if (type.isTimestamp() && type.getBinding() instanceof DateAsTimestampBinding)
+        // [#12019] [#12117] If dateAsTimestamp=true is active, we must declare a DATE instead.
+        if (type.isTimestamp() && (type.getBinding() instanceof DateAsTimestampBinding || type.getBinding() instanceof LocalDateAsLocalDateTimeBinding))
             type = SQLDataType.DATE;
 
         String typeName = type.getTypeName(ctx.configuration());

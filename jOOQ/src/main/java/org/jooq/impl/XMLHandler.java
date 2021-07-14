@@ -208,13 +208,8 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 else
                     fieldName = qName;
 
-                Field<?> f;
-
                 if (s.row != null)
-                    if ((f = s.row.field(fieldName)) != null)
-                        s.fields.add(f);
-                    else
-                        s.fields.add(s.row.field(s.fields.size()));
+                    s.fields.add(s.row.field(s.fields.size()));
                 else
                     s.fields.add(field(name(fieldName), VARCHAR));
             }
@@ -233,7 +228,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             if (log.isDebugEnabled())
                 log.debug("< " + qName);
 
-        if (s.inResult && s.inRecord == 0 && "result".equalsIgnoreCase(qName)) {
+        if (states.isEmpty() && s.inResult && s.inRecord == 0 && "result".equalsIgnoreCase(qName)) {
             s.inResult = false;
         }
         else if (s.inResult && s.inFields && "fields".equalsIgnoreCase(qName)) {
@@ -269,10 +264,11 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                     s = states.pop();
                     break x;
                 }
-                else if (f.getName().equals(qName) && f.getDataType().isMultiset()) {
+                else if ("result".equalsIgnoreCase(qName) && f.getDataType().isMultiset()) {
                     initResult();
                     peek.values.add(s.result);
                     s = states.pop();
+                    break x;
                 }
             }
 

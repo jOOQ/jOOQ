@@ -137,7 +137,7 @@ final class MultisetAgg<R extends Record> extends DefaultAggregateFunction<Resul
             }
 
             case XML: {
-                XMLAggOrderByStep<XML> order = xmlaggEmulation(row, multisetCondition, true);
+                XMLAggOrderByStep<XML> order = xmlaggEmulation(row, true);
 
                 Field<XML> f = xmlelement(N_RESULT,
                     multisetCondition

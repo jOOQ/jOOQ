@@ -5409,6 +5409,11 @@ final class Tools {
         return result != null ? result : table;
     }
 
+    static final boolean isScalarSubquery(Field<?> field) {
+        // TODO: Replace other instanceof checks by this one
+        return uncoerce(field) instanceof ScalarSubquery;
+    }
+
     static final Field<?> uncoerce(Field<?> field) {
         return field instanceof Coerce ? ((Coerce<?>) field).field : field;
     }

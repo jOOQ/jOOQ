@@ -63,6 +63,7 @@ import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.emulateMultiset;
+import static org.jooq.impl.Tools.isScalarSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.Set;
@@ -241,6 +242,9 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     }
 
     static final boolean isJSON(Scope scope, DataType<?> t) {
+        if (t instanceof ConvertedDataType)
+            t = ((ConvertedDataType<?, ?>) t).delegate();
+
         return t.isJSON()
             || t.isRecord() && (TRUE.equals(scope.data(DATA_MULTISET_CONTENT)) && emulateMultisetWithJSON(scope))
             || t.isMultiset() && emulateMultisetWithJSON(scope);

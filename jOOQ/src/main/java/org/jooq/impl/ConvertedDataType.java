@@ -228,5 +228,9 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     public final <X> DataType<X> asConvertedDataType(Converter<? super U, X> converter) {
         return super.asConvertedDataType(new ChainedConverterBinding(getBinding(), converter));
     }
+
+    final DataType<T> delegate() {
+        return delegate instanceof ConvertedDataType ? ((ConvertedDataType) delegate).delegate() : delegate;
+    }
 }
 

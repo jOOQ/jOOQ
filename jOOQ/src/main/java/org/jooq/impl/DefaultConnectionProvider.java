@@ -44,7 +44,6 @@ import java.sql.Savepoint;
 import org.jooq.ConnectionProvider;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -64,15 +63,9 @@ public class DefaultConnectionProvider implements ConnectionProvider {
 
     private static final JooqLogger log = JooqLogger.getLogger(DefaultConnectionProvider.class);
     Connection                      connection;
-    final boolean                   finalize;
 
     public DefaultConnectionProvider(Connection connection) {
-        this(connection, false);
-    }
-
-    DefaultConnectionProvider(Connection connection, boolean finalize) {
         this.connection = connection;
-        this.finalize = finalize;
     }
 
     // -------------------------------------------------------------------------
@@ -87,14 +80,6 @@ public class DefaultConnectionProvider implements ConnectionProvider {
 
     @Override
     public final void release(Connection released) {}
-
-    @Override
-    protected void finalize() throws Throwable {
-        if (finalize)
-            JDBCUtils.safeClose(connection);
-
-        super.finalize();
-    }
 
     // -------------------------------------------------------------------------
     // XXX: Original DSLContext/Factory API (JDBC utility methods)

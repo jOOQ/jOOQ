@@ -2948,6 +2948,22 @@ final class Tools {
     /**
      * Translate a {@link R2dbcException} to a {@link DataAccessException}
      */
+    static final RuntimeException translate(String sql, Throwable t) {
+        if (t instanceof R2dbcException)
+            return translate(sql, (R2dbcException) t);
+        else if (t instanceof SQLException)
+            return translate(sql, (SQLException) t);
+        else if (t instanceof RuntimeException)
+            return translate(sql, (RuntimeException) t);
+        else if (t != null)
+            return new DataAccessException("SQL [" + sql + "]; Unspecified Throwable", t);
+        else
+            return new DataAccessException("SQL [" + sql + "]; Unspecified Throwable");
+    }
+
+    /**
+     * Translate a {@link R2dbcException} to a {@link DataAccessException}
+     */
     static final DataAccessException translate(String sql, R2dbcException e) {
         if (e != null)
             return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);

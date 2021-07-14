@@ -45,6 +45,7 @@ import static org.jooq.impl.Tools.abstractDMLQuery;
 import static org.jooq.impl.Tools.abstractResultQuery;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.recordFactory;
+import static org.jooq.impl.Tools.translate;
 import static org.jooq.impl.Tools.visitAll;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
@@ -74,7 +75,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.Configuration;
@@ -233,7 +233,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            resultSubscriber.downstream.subscriber.onError(t);
+            resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.sql(), t));
         }
 
         @Override
@@ -260,7 +260,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            downstream.subscriber.onError(t);
+            downstream.subscriber.onError(translate(downstream.sql(), t));
         }
 
         @Override
@@ -367,7 +367,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            downstream.subscriber.onError(t);
+            downstream.subscriber.onError(translate(downstream.sql(), t));
         }
 
         @Override
@@ -379,6 +379,7 @@ final class R2DBC {
         final Q                                                                     query;
         final Configuration                                                         configuration;
         final BiFunction<Q, AbstractNonBlockingSubscription<T>, Subscriber<Result>> resultSubscriber;
+        volatile String                                                             sql;
 
         QueryExecutionSubscriber(
             Q query,
@@ -396,7 +397,7 @@ final class R2DBC {
         final void onNext0(Connection c) {
             try {
                 Rendered rendered = rendered(configuration, query);
-                Statement stmt = c.createStatement(rendered.sql);
+                Statement stmt = c.createStatement(sql = rendered.sql);
                 new DefaultBindContext(configuration, new R2DBCPreparedStatement(configuration, stmt)).visit(rendered.bindValues);
 
                 // TODO: Reuse org.jooq.impl.Tools.setFetchSize(ExecuteContext ctx, int fetchSize)
@@ -499,8 +500,6 @@ final class R2DBC {
 
                 stmt.execute().subscribe(new RowCountSubscriber(downstream));
             }
-
-            // TODO: More specific error handling
             catch (Throwable t) {
                 onError(t);
             }
@@ -525,6 +524,8 @@ final class R2DBC {
             this.nextForwarderIndex = new AtomicInteger();
             this.forwarders = new ConcurrentHashMap<>();
         }
+
+        abstract String sql();
 
         @Override
         final void request0() {
@@ -607,11 +608,18 @@ final class R2DBC {
         final QueryExecutionSubscriber<T, Q> delegate() {
             return queryExecutionSubscriber;
         }
+
+        @Override
+        final String sql() {
+            String result = queryExecutionSubscriber.sql;
+            return result != null ? result : "" + queryExecutionSubscriber.query;
+        }
     }
 
     static final class BatchSubscription<B extends AbstractBatch> extends AbstractNonBlockingSubscription<Integer> {
 
         final ConnectionSubscriber<Integer> batchSubscriber;
+        final B                             batch;
 
         BatchSubscription(
             B batch,
@@ -621,11 +629,17 @@ final class R2DBC {
             super(batch.configuration, subscriber);
 
             this.batchSubscriber = batchSubscriber.apply(this);
+            this.batch = batch;
         }
 
         @Override
         final ConnectionSubscriber<Integer> delegate() {
             return batchSubscriber;
+        }
+
+        @Override
+        final String sql() {
+            return batch.toString();
         }
     }
 

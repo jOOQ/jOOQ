@@ -558,7 +558,7 @@ public class DSL {
         else {
             try {
                 Connection connection = DriverManager.getConnection(url);
-                return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+                return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
                 throw Tools.translate("Error when initialising Connection", e);
@@ -599,7 +599,7 @@ public class DSL {
         else {
             try {
                 Connection connection = DriverManager.getConnection(url, username, password);
-                return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+                return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
                 throw Tools.translate("Error when initialising Connection", e);
@@ -639,7 +639,7 @@ public class DSL {
         else {
             try {
                 Connection connection = DriverManager.getConnection(url, properties);
-                return new DefaultCloseableDSLContext(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+                return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
                 throw Tools.translate("Error when initialising Connection", e);

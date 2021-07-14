@@ -258,7 +258,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
                         XMLAggOrderByStep<XML> order;
                         AggregateFilterStep<XML> filter;
 
-                        filter = order = xmlaggEmulation(select, multisetCondition, false);
+                        filter = order = xmlaggEmulation(select, false);
 
                         // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
                         if (multisetCondition)
@@ -385,11 +385,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> {
             )
             : field;
     }
-    static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean multisetCondition, boolean agg) {
+    static final XMLAggOrderByStep<XML> xmlaggEmulation(Fields fields, boolean agg) {
         return xmlagg(
             xmlelement(N_RECORD,
                 map(fields.fields(), (f, i) -> xmlelement(
-                    multisetCondition ? fieldNameString(i) : f.getName(),
+                    fieldNameString(i),
                     agg ? f : DSL.field(fieldName(i), f.getDataType())
                 ))
             )

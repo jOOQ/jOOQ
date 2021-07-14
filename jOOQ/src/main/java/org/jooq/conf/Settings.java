@@ -133,6 +133,8 @@ public class Settings
     @XmlElement(defaultValue = "INDEXED")
     @XmlSchemaType(name = "string")
     protected ParamType paramType = ParamType.INDEXED;
+    @XmlElement(defaultValue = "false")
+    protected Boolean bindByParamName = false;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected ParamCastMode paramCastMode = ParamCastMode.DEFAULT;
@@ -1326,6 +1328,14 @@ public class Settings
      */
     public void setParamCastMode(ParamCastMode value) {
         this.paramCastMode = value;
+    }
+
+    public Boolean isBindByParamName() {
+        return bindByParamName;
+    }
+
+    public void setBindByParamName(Boolean value) {
+        bindByParamName = value;
     }
 
     /**
@@ -4026,6 +4036,7 @@ public class Settings
         builder.append("backslashEscaping", backslashEscaping);
         builder.append("paramType", paramType);
         builder.append("paramCastMode", paramCastMode);
+        builder.append("bindByParamName", bindByParamName);
         builder.append("statementType", statementType);
         builder.append("inlineThreshold", inlineThreshold);
         builder.append("transactionListenerStartInvocationOrder", transactionListenerStartInvocationOrder);
@@ -4485,6 +4496,15 @@ public class Settings
             }
         } else {
             if (!paramCastMode.equals(other.paramCastMode)) {
+                return false;
+            }
+        }
+        if (bindByParamName == null) {
+            if (other.bindByParamName != null) {
+                return false;
+            }
+        } else {
+            if (!bindByParamName.equals(other.bindByParamName)) {
                 return false;
             }
         }
@@ -5264,6 +5284,7 @@ public class Settings
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));
+        result = ((prime*result)+((bindByParamName == null)? 0 :bindByParamName.hashCode()));
         result = ((prime*result)+((statementType == null)? 0 :statementType.hashCode()));
         result = ((prime*result)+((inlineThreshold == null)? 0 :inlineThreshold.hashCode()));
         result = ((prime*result)+((transactionListenerStartInvocationOrder == null)? 0 :transactionListenerStartInvocationOrder.hashCode()));

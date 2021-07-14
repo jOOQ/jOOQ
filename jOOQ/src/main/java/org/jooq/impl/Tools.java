@@ -320,6 +320,8 @@ import org.jooq.types.UShort;
 
 import org.jetbrains.annotations.Nullable;
 
+import io.r2dbc.spi.R2dbcException;
+
 /**
  * General internal jOOQ utilities
  *
@@ -2955,6 +2957,16 @@ final class Tools {
             System.arraycopy(fields, 0, result, 3, fields.length);
             return result;
         }
+    }
+
+    /**
+     * Translate a {@link R2dbcException} to a {@link DataAccessException}
+     */
+    static final DataAccessException translate(String sql, R2dbcException e) {
+        if (e != null)
+            return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
+        else
+            return new DataAccessException("SQL [" + sql + "]; Unspecified R2dbcException");
     }
 
     /**

@@ -39,6 +39,8 @@ package org.jooq.exception;
 
 import java.sql.SQLException;
 
+import io.r2dbc.spi.R2dbcException;
+
 /**
  * The <code>DataAccessException</code> is a generic {@link RuntimeException}
  * indicating that something went wrong while executing a SQL statement from
@@ -71,45 +73,53 @@ public class DataAccessException extends RuntimeException {
     }
 
     /**
-     * Retrieve the {@link SQLException#getSQLState()} from {@link #getCause()},
-     * if this <code>DataAccessException</code> was caused by a
-     * {@link SQLException}.
+     * Retrieve the {@link SQLException#getSQLState()} or
+     * {@link R2dbcException#getSqlState()} from {@link #getCause()}, if this
+     * <code>DataAccessException</code> was caused by a {@link SQLException} or
+     * {@link R2dbcException}.
      */
     public String sqlState() {
-        SQLException e = getCause(SQLException.class);
-        if (e != null)
-            return e.getSQLState();
+        SQLException s = getCause(SQLException.class);
+        if (s != null)
+            return s.getSQLState();
+
+        R2dbcException r = getCause(R2dbcException.class);
+        if (r != null)
+            return r.getSqlState();
 
         return "00000";
     }
 
     /**
-     * Decode the {@link SQLException#getSQLState()} from {@link #getCause()}
-     * into {@link SQLStateClass}, if this <code>DataAccessException</code> was
-     * caused by a {@link SQLException}.
+     * Decode the {@link SQLException#getSQLState()} or
+     * {@link R2dbcException#getSqlState()} from {@link #getCause()} into
+     * {@link SQLStateClass}, if this <code>DataAccessException</code> was
+     * caused by a {@link SQLException} or {@link R2dbcException}.
      */
     public SQLStateClass sqlStateClass() {
-        SQLException e = getCause(SQLException.class);
-        if (e != null)
-            if (e.getSQLState() != null)
-                return SQLStateClass.fromCode(e.getSQLState());
-            else if (e.getSQLState() == null && "org.sqlite.SQLiteException".equals(e.getClass().getName()))
-                return SQLStateClass.fromSQLiteVendorCode(e.getErrorCode());
+        SQLException s = getCause(SQLException.class);
+        if (s != null)
+            if (s.getSQLState() != null)
+                return SQLStateClass.fromCode(s.getSQLState());
+            else if (s.getSQLState() == null && "org.sqlite.SQLiteException".equals(s.getClass().getName()))
+                return SQLStateClass.fromSQLiteVendorCode(s.getErrorCode());
+
+        R2dbcException r = getCause(R2dbcException.class);
+        if (r != null)
+            if (r.getSqlState() != null)
+                return SQLStateClass.fromCode(r.getSqlState());
 
         return SQLStateClass.NONE;
     }
 
     /**
-     * Decode the {@link SQLException#getSQLState()} from {@link #getCause()}
-     * into {@link SQLStateSubclass}, if this <code>DataAccessException</code> was
-     * caused by a {@link SQLException}.
+     * Decode the {@link SQLException#getSQLState()} or
+     * {@link R2dbcException#getSqlState()} from {@link #getCause()} into
+     * {@link SQLStateSubclass}, if this <code>DataAccessException</code> was
+     * caused by a {@link SQLException} or {@link R2dbcException}.
      */
     public SQLStateSubclass sqlStateSubclass() {
-        SQLException e = getCause(SQLException.class);
-        if (e != null)
-            return SQLStateSubclass.fromCode(e.getSQLState());
-
-        return SQLStateSubclass.NONE;
+        return SQLStateSubclass.fromCode(sqlState());
     }
 
     @Override

@@ -91,7 +91,7 @@ final class XMLElement extends AbstractField<XML> {
 
         boolean hasAttributes = attributes != null && !((XMLAttributesImpl) attributes).attributes.isEmpty();
         boolean hasContent = !content.isEmpty();
-        boolean format = hasAttributes || hasContent;
+        boolean format = hasAttributes || !content.isSimple();
 
         Consumer<Context<?>> accept0 = c -> {
             c.visit(K_NAME).sql(' ').visit(elementName);

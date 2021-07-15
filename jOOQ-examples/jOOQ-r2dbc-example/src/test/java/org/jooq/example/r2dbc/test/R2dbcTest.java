@@ -41,9 +41,18 @@ public class R2dbcTest {
 
     @Test
     public void test() {
-        Flux.from(ctx.insertInto(AUTHOR).columns(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME).values("John", "Doe").returningResult(AUTHOR.ID))
-            .flatMap(id -> ctx.insertInto(BOOK).columns(BOOK.AUTHOR_ID, BOOK.TITLE).values(id.value1(), "Fancy Book"))
-            .thenMany(ctx.select(BOOK.author().FIRST_NAME, BOOK.author().LAST_NAME, BOOK.TITLE).from(BOOK))
+        Flux.from(ctx
+                .insertInto(AUTHOR)
+                .columns(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+                .values("John", "Doe")
+                .returningResult(AUTHOR.ID))
+            .flatMap(id -> ctx
+                .insertInto(BOOK)
+                .columns(BOOK.AUTHOR_ID, BOOK.TITLE)
+                .values(id.value1(), "Fancy Book"))
+            .thenMany(ctx
+                .select(BOOK.author().FIRST_NAME, BOOK.author().LAST_NAME, BOOK.TITLE)
+                .from(BOOK))
             .doOnNext(System.out::println)
             .subscribe();
     }

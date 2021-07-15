@@ -81,6 +81,14 @@ final class Tips {
         "A ResultQuery<R> extends Iterable<R>, so you can just foreach your queries! See: https://blog.jooq.org/2016/09/27/a-hidden-jooq-gem-foreach-loop-over-resultquery/",
         "jOOQ works even better in kotlin! https://blog.jooq.org/2017/05/18/10-nice-examples-of-writing-sql-in-kotlin-with-jooq/",
         "Don't want tips? Use the -Dorg.jooq.no-tips=true system property",
+        "You don't have to register your Converters or Bindings with the code generator. You can use ad-hoc converters on any Field expression: https://www.jooq.org/doc/latest/manual/sql-execution/fetching/ad-hoc-converter/",
+        "There's no easier way to nest collections directly in SQL than using MULTISET, e.g. to collect your to-many relationships: https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/multiset-value-constructor/",
+        "Want to aggregate multiple values per group? Use the synthetic MULTISET_AGG aggregate function! https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/aggregate-functions/multiset-agg-function/",
+        "You can formally nest records directly in SQL by projecting any ROW type: https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/nested-records/",
+        "Need a random value from a group? Use the ANY_VALUE aggregate function, which is supported natively in a few dialects: https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/aggregate-functions/any-value-function/",
+        "Using jOOQ's parsers, and can't parse some vendor specific syntax? The ParseListener SPI will help you: https://www.jooq.org/doc/latest/manual/sql-building/sql-parser/sql-parser-listener/",
+        "Move logic to your data, not data to your logic, by running procedural code as a stored function: https://www.jooq.org/doc/latest/manual/sql-building/ddl-statements/create-statement/create-function-statement/",
+        "The code generator produces Javadoc from table or column comments, but you can override those directly in the code generator: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-comments/"
         ""
     };
 

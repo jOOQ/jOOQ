@@ -208,7 +208,7 @@ public interface SelectOnStep<R extends Record> {
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectJoinStep<R> onKey() throws DataAccessException;
+    SelectOnConditionStep<R> onKey() throws DataAccessException;
 
     /**
      * Join the previous table on a non-ambiguous foreign key relationship
@@ -222,7 +222,7 @@ public interface SelectOnStep<R extends Record> {
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectJoinStep<R> onKey(TableField<?, ?>... keyFields) throws DataAccessException;
+    SelectOnConditionStep<R> onKey(TableField<?, ?>... keyFields) throws DataAccessException;
 
     /**
      * Join the table on a non-ambiguous foreign key relationship between the
@@ -234,7 +234,7 @@ public interface SelectOnStep<R extends Record> {
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectJoinStep<R> onKey(ForeignKey<?, ?> key);
+    SelectOnConditionStep<R> onKey(ForeignKey<?, ?> key);
 
     /**
      * Join the previous table with the <code>USING(column [, column...])</code>

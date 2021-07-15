@@ -52,7 +52,6 @@ import java.util.List;
 import java.util.concurrent.Flow;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.BetweenAndStepR;
@@ -73,28 +72,6 @@ import org.jooq.Param;
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.Record10;
-import org.jooq.Record11;
-import org.jooq.Record12;
-import org.jooq.Record13;
-import org.jooq.Record14;
-import org.jooq.Record15;
-import org.jooq.Record16;
-import org.jooq.Record17;
-import org.jooq.Record18;
-import org.jooq.Record19;
-import org.jooq.Record2;
-import org.jooq.Record20;
-import org.jooq.Record21;
-import org.jooq.Record22;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
@@ -2199,6 +2176,8 @@ implements
     public final SelectImpl onKey() {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType);
+
+        joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
         joinTable = null;
         joinPartitionBy = null;
         joinType = null;
@@ -2209,6 +2188,8 @@ implements
     public final SelectImpl onKey(TableField<?, ?>... keyFields) {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, keyFields);
+
+        joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
         joinTable = null;
         joinPartitionBy = null;
         joinType = null;
@@ -2219,6 +2200,8 @@ implements
     public final SelectImpl onKey(ForeignKey<?, ?> key) {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, key);
+
+        joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
         joinTable = null;
         joinPartitionBy = null;
         joinType = null;

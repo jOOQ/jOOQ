@@ -83,6 +83,7 @@ import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Tools.containsDeclaredTable;
 import static org.jooq.impl.Tools.traverseJoins;
 
 import java.util.Arrays;
@@ -253,11 +254,12 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
         if (!using.isEmpty() || multiTableJoin || specialDeleteAsSyntax && Tools.alias(t) != null) {
             TableList u;
 
-            if (REQUIRE_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && !using.contains(t)) {
+
+            if (REQUIRE_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && !containsDeclaredTable(using, t)) {
                 u = new TableList(t);
                 u.addAll(using);
             }
-            else if (NO_SUPPORT_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && using.contains(t)) {
+            else if (NO_SUPPORT_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && containsDeclaredTable(using, t)) {
                 u = new TableList(using);
                 u.remove(t);
             }

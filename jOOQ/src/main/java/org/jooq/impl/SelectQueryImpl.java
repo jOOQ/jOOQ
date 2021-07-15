@@ -188,6 +188,7 @@ import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
+import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
@@ -197,7 +198,6 @@ import static org.jooq.impl.Tools.isWindow;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
-import static org.jooq.impl.Tools.search;
 import static org.jooq.impl.Tools.selectQueryImpl;
 // ...
 import static org.jooq.impl.Tools.traverseJoins;
@@ -1374,7 +1374,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && REQUIRES_DERIVED_TABLE_DML.contains(ctx.dialect())
             && !TRUE.equals(ctx.data(DATA_INSERT_SELECT))
             && (dmlTable = (Table<?>) ctx.data(DATA_DML_TARGET_TABLE)) != null
-            && containsTable(dmlTable)) {
+            && containsUnaliasedTable(getFrom(), dmlTable)) {
             ctx.visit(DSL.select(asterisk()).from(asTable("t")));
         }
 
@@ -3793,10 +3793,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final boolean knownTableSource() {
         return traverseJoins(getFrom(), true, r -> !r, (r, t) -> r && t.fieldsRow().size() > 0);
-    }
-
-    private final boolean containsTable(Table<?> table) {
-        return traverseJoins(getFrom(), false, r -> r, search(table));
     }
 
     @SuppressWarnings("unchecked")

@@ -104,9 +104,8 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.search;
-import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 
@@ -704,7 +703,7 @@ implements
                     unaliased.set(i, (TableField<?, ?>) alias.wrapped().field(f));
             }
 
-            if (traverseJoins(lhs, false, r -> r, search(keyFields[0].getTable()))) {
+            if (containsUnaliasedTable(lhs, keyFields[0].getTable())) {
                 for (ForeignKey<?, ?> key : lhs.getReferences())
                     if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
                         return onKey(key);
@@ -713,7 +712,7 @@ implements
                     if (key.getFields().containsAll(unaliased))
                         return onKey(key);
             }
-            else if (traverseJoins(rhs, false, r -> r, search(keyFields[0].getTable()))) {
+            else if (containsUnaliasedTable(rhs, keyFields[0].getTable())) {
                 for (ForeignKey<?, ?> key : rhs.getReferences())
                     if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
                         return onKey(key);
@@ -729,9 +728,9 @@ implements
 
     @Override
     public final JoinTable onKey(ForeignKey<?, ?> key) {
-        if (traverseJoins(lhs, false, r -> r, search(key.getTable())))
+        if (containsUnaliasedTable(lhs, key.getTable()))
             return onKey(key, lhs, rhs);
-        else if (traverseJoins(rhs, false, r -> r, search(key.getTable())))
+        else if (containsUnaliasedTable(rhs, key.getTable()))
             return onKey(key, rhs, lhs);
 
         throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);

@@ -12,8 +12,8 @@ import java.io.Serializable
  */
 @Suppress("UNCHECKED_CAST")
 data class BookToBookStore(
-    var bookStoreName: String? = null, 
-    var bookId: Int? = null, 
+    var bookStoreName: String? = null,
+    var bookId: Int? = null,
     var stock: Int? = null
 ): Serializable {
 

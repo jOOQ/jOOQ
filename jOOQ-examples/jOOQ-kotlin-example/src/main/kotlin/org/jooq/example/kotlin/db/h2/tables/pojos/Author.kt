@@ -13,11 +13,11 @@ import java.time.LocalDate
  */
 @Suppress("UNCHECKED_CAST")
 data class Author(
-    var id: Int? = null, 
-    var firstName: String? = null, 
-    var lastName: String? = null, 
-    var dateOfBirth: LocalDate? = null, 
-    var yearOfBirth: Int? = null, 
+    var id: Int? = null,
+    var firstName: String? = null,
+    var lastName: String? = null,
+    var dateOfBirth: LocalDate? = null,
+    var yearOfBirth: Int? = null,
     var address: String? = null
 ): Serializable {
 

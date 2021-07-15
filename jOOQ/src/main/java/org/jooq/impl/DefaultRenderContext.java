@@ -104,6 +104,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private boolean                       separatorRequired;
     private boolean                       separator;
     private boolean                       newline;
+    private Boolean                       isQuery;
 
     // [#1632] Cached values from Settings
     RenderKeywordCase                     cachedRenderKeywordCase;
@@ -373,8 +374,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final String render() {
-        String prepend = (String) data(DATA_PREPEND_SQL);
-        String append = (String) data(DATA_APPEND_SQL);
+        String prepend = null;
+        String append = null;
+
+        if (TRUE.equals(isQuery)) {
+            prepend = (String) data(DATA_PREPEND_SQL);
+            append = (String) data(DATA_APPEND_SQL);
+        }
 
         String result = sql.toString();
 
@@ -697,6 +703,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     protected final void visit0(QueryPartInternal internal) {
+        if (isQuery == null)
+            isQuery = internal instanceof Query;
+
 
 
 

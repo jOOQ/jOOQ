@@ -42,6 +42,8 @@ import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.Keywords.K_NAME;
 import static org.jooq.impl.Names.N_XMLELEMENT;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
+import static org.jooq.impl.Tools.aliased;
+import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Collection;
@@ -122,6 +124,7 @@ final class XMLElement extends AbstractField<XML> {
     }
 
     static final Field<?> xmlCast(Context<?> ctx, Field<?> field) {
+        Field<?> result = field;
         DataType<?> type = field.getDataType();
 
         switch (ctx.family()) {
@@ -138,6 +141,9 @@ final class XMLElement extends AbstractField<XML> {
                 break;
         }
 
-        return field;
+        if (result != field && aliased(field) != null)
+            return result.as(field);
+        else
+            return result;
     }
 }

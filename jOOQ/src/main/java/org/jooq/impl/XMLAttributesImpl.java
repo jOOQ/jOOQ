@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_XMLATTRIBUTES;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
+import static org.jooq.impl.XMLElement.xmlCastMapper;
 
 import java.util.Collection;
 
@@ -75,7 +76,7 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
                .formatNewLine();
 
         ctx.declareFields(true)
-           .visit(attributes)
+           .visit(new SelectFieldList<>(attributes).map(xmlCastMapper(ctx)))
            .declareFields(declareFields);
 
         if (format)

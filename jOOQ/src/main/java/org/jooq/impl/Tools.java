@@ -6116,15 +6116,29 @@ final class Tools {
     // TODO: In a new expression tree model, we'll support generic visitors of some sort
     // ---------------------------------------------------------------------------------
 
-    static final BiFunction<Boolean, Table<?>, Boolean> search(Table<?> table) {
-        return (r, t) -> {
+    static final boolean containsDeclaredTable(Table<?> in, Table<?> search) {
+        return traverseJoins(in, false, r -> r, search(search, t -> t));
+    }
 
-            // [#6304] [#7626] Improved alias discovery
-            Table<?> t1 = defaultIfNull(Tools.aliased(table), table);
-            Table<?> t2 = defaultIfNull(Tools.aliased(t), t);
+    static final boolean containsDeclaredTable(Iterable<? extends Table<?>> in, Table<?> search) {
+        return traverseJoins(in, false, r -> r, search(search, t -> t));
+    }
 
-            return r || t1.equals(t2);
-        };
+    private static final BiFunction<Boolean, Table<?>, Boolean> search(Table<?> table, Function<? super Table<?>, ? extends Table<?>> f) {
+        Table<?> unaliased = f.apply(table);
+        return (r, t) -> r || unaliased.equals(f.apply(t));
+    }
+
+    static final boolean containsUnaliasedTable(Table<?> in, Table<?> search) {
+
+        // [#6304] [#7626] Improved alias discovery
+        return traverseJoins(in, false, r -> r, search(search, Tools::unalias));
+    }
+
+    static final boolean containsUnaliasedTable(Iterable<? extends Table<?>> in, Table<?> search) {
+
+        // [#6304] [#7626] Improved alias discovery
+        return traverseJoins(in, false, r -> r, search(search, Tools::unalias));
     }
 
     static final void traverseJoins(Iterable<? extends Table<?>> i, Consumer<? super Table<?>> consumer) {

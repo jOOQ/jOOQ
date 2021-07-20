@@ -69,6 +69,7 @@ import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_FOR_UPDATE_OF_FIELDS;
+import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
@@ -151,6 +152,7 @@ import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
+import org.jooq.Context;
 import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
 // ...
@@ -13411,8 +13413,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "FOR"
     };
 
-    private static final DDLQuery                 IGNORE                 = Reflect.on(DSL.query("/* ignored */")).as(DDLQuery.class, QueryPartInternal.class);
-    private static final Query                    IGNORE_NO_DELIMITER    = Reflect.on(DSL.query("/* ignored */")).as(Query.class, QueryPartInternal.class);
+    private static final DDLQuery                 IGNORE                 = new IgnoreQuery();
+    private static final Query                    IGNORE_NO_DELIMITER    = new IgnoreQuery();
+
+    private static final class IgnoreQuery extends AbstractDDLQuery {
+        IgnoreQuery() {
+            super(CTX.configuration());
+        }
+
+        @Override
+        public void accept(Context<?> ctx) {
+            ctx.sql("/* ignored */");
+        }
+    }
 
     private final DSLContext                      dsl;
     private final Locale                          locale;

@@ -143,10 +143,21 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         databaseChangeLogLockTableName = database.getDatabaseChangeLogLockTableName();
 
         // [#9866] Allow for loading included files from the classpath or using absolute paths.
+        FileSystemResourceAccessor fsra;
+
+        try {
+            fsra = new FileSystemResourceAccessor();
+        }
+
+        // [#11659] Continue supporting Liquibase 3.x
+        catch (NoSuchMethodError e) {
+            fsra = FileSystemResourceAccessor.class.getConstructor().newInstance();
+        }
+
         Liquibase liquibase = new Liquibase(
             scripts,
             new CompositeResourceAccessor(
-                new FileSystemResourceAccessor(),
+                fsra,
                 new ClassLoaderResourceAccessor(),
                 new ClassLoaderResourceAccessor(Thread.currentThread().getContextClassLoader())
             ),

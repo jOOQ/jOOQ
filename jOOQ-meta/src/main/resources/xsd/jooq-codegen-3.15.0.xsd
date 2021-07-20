@@ -841,7 +841,7 @@ There are three operation modes for this element:
 <li>The value is a constant, such as a Maven property</li>
 </ul>
 <p>
-Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
+Schema versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
 generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
@@ -857,7 +857,7 @@ There are three operation modes for this element:
   SELECT statement may contain a named variable called :catalog_name</li>
 <li>The value is a constant, such as a Maven property</li>
 <p>
-Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
+Catalog versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
 generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
@@ -1531,17 +1531,17 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
       </element>
 
       <element name="generatedAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.processing.Generated} annotation to indicate
 jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="generatedAnnotationType" type="tns:GeneratedAnnotationType" default="DETECT_FROM_JDK" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.processing.Generated} annotation to indicate
 jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="generatedAnnotationDate" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should include the <code>date</code> attribute.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link javax.annotation.processing.Generated} annotation should include the <code>date</code> attribute.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="nonnullAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">

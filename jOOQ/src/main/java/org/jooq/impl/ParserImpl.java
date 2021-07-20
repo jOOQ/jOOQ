@@ -334,6 +334,7 @@ import static org.jooq.impl.ParserImpl.Type.Y;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
+import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
@@ -401,6 +402,7 @@ import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
+import org.jooq.Context;
 import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
 import org.jooq.CreateIndexFinalStep;
@@ -12127,8 +12129,19 @@ final class ParserImpl implements Parser {
         "FOR"
     };
 
-    private static final DDLQuery IGNORE              = Reflect.on(DSL.query("/* ignored */")).as(DDLQuery.class, QueryPartInternal.class);
-    private static final Query    IGNORE_NO_DELIMITER = Reflect.on(DSL.query("/* ignored */")).as(Query.class, QueryPartInternal.class);
+    private static final DDLQuery                 IGNORE                 = new IgnoreQuery();
+    private static final Query                    IGNORE_NO_DELIMITER    = new IgnoreQuery();
+
+    private static final class IgnoreQuery extends AbstractRowCountQuery implements DDLQuery {
+        IgnoreQuery() {
+            super(CTX.configuration());
+        }
+
+        @Override
+        public void accept(Context<?> ctx) {
+            ctx.sql("/* ignored */");
+        }
+    }
 }
 
 final class ParserContext {

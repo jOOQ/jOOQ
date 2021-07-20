@@ -76,6 +76,9 @@ final class ScalarSubquery<T> extends AbstractField<T> {
 
 
 
+
+
+
         // HSQLDB allows for using WITH inside of IN, see: https://sourceforge.net/p/hsqldb/bugs/1617/
         // We'll still emulate CTE in scalar subqueries with a derived tables in all cases.
         if (q != null && q.with != null && NO_SUPPORT_WITH_IN_SCALAR_SUBQUERY.contains(ctx.dialect()))

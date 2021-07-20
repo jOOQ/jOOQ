@@ -1422,7 +1422,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>The value is a constant, such as a Maven property</li>
      * </ul>
      * <p>
-     * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * Schema versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
      * generated artefacts.
      * 
      */
@@ -1443,7 +1443,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>The value is a constant, such as a Maven property</li>
      * </ul>
      * <p>
-     * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * Schema versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
      * generated artefacts.
      * 
      */
@@ -1463,7 +1463,7 @@ public class Database implements Serializable, XMLAppendable
      *   SELECT statement may contain a named variable called :catalog_name</li>
      * <li>The value is a constant, such as a Maven property</li>
      * <p>
-     * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * Catalog versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
      * generated artefacts.
      * 
      */
@@ -1483,7 +1483,7 @@ public class Database implements Serializable, XMLAppendable
      *   SELECT statement may contain a named variable called :catalog_name</li>
      * <li>The value is a constant, such as a Maven property</li>
      * <p>
-     * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * Catalog versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
      * generated artefacts.
      * 
      */
@@ -2209,7 +2209,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>The value is a constant, such as a Maven property</li>
      * </ul>
      * <p>
-     * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * Schema versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
      * generated artefacts.
      * 
      */
@@ -2230,7 +2230,7 @@ public class Database implements Serializable, XMLAppendable
      *   SELECT statement may contain a named variable called :catalog_name</li>
      * <li>The value is a constant, such as a Maven property</li>
      * <p>
-     * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * Catalog versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
      * generated artefacts.
      * 
      */

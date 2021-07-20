@@ -402,7 +402,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+     * Generate the {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
      * 
      * @return
@@ -427,7 +427,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+     * Generate the {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
      * 
      */
@@ -436,7 +436,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+     * Generate the {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
      * 
      */
@@ -445,7 +445,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should include the <code>date</code> attribute.
+     * Whether the {@link javax.annotation.processing.Generated} annotation should include the <code>date</code> attribute.
      * 
      * @return
      *     possible object is
@@ -2326,7 +2326,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+     * Generate the {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
      * 
      */

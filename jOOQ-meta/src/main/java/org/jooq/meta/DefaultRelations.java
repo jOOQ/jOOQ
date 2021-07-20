@@ -80,7 +80,8 @@ public class DefaultRelations implements Relations {
         // [#2718] Column exclusions may hit primary key references. Ignore
         // such primary keys
         if (column == null) {
-            log.info("Ignoring primary key", keyName + " (column unavailable)");
+            if (log.isDebugEnabled())
+                log.debug("Ignoring primary key", keyName + " (column unavailable)");
 
             // [#7826] Prevent incomplete keys from being generated
             if (table != null) {
@@ -112,7 +113,8 @@ public class DefaultRelations implements Relations {
         // [#2718] Column exclusions may hit unique key references. Ignore
         // such unique keys
         if (column == null) {
-            log.info("Ignoring unique key", keyName + " (column unavailable)");
+            if (log.isDebugEnabled())
+                log.debug("Ignoring unique key", keyName + " (column unavailable)");
 
             // [#7826] Prevent incomplete keys from being generated
             if (table != null) {
@@ -166,9 +168,10 @@ public class DefaultRelations implements Relations {
         if (old != null)
             uniqueKeys.put(mapKey, old);
 
-        log.info("Overriding primary key", "Table : " + key.getTable() +
-                 ", previous key : " + ((old == null) ? "none" : old.getName()) +
-                 ", new key : " + key.getName());
+        if (log.isDebugEnabled())
+            log.debug("Overriding primary key", "Table : " + key.getTable() +
+                     ", previous key : " + ((old == null) ? "none" : old.getName()) +
+                     ", new key : " + key.getName());
     }
 
     private UniqueKeyDefinition getUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean isPK, boolean enforced) {
@@ -209,7 +212,8 @@ public class DefaultRelations implements Relations {
         Key key = key(foreignKeyTable, foreignKeyName);
 
         if (uk == null) {
-            log.info("Ignoring foreign key", uniqueKeyName + " (unique key unavailable)");
+            if (log.isDebugEnabled())
+                log.debug("Ignoring foreign key", uniqueKeyName + " (unique key unavailable)");
 
             // [#7826] Prevent incomplete keys from being generated
             if (foreignKeyTable != null) {
@@ -250,7 +254,8 @@ public class DefaultRelations implements Relations {
         // such foreign keys
         Key key = key(foreignKeyTable, foreignKeyName);
         if (foreignKeyColumn == null || uniqueKeyColumn == null) {
-            log.info("Ignoring foreign key", foreignKeyColumn + " referencing " + uniqueKeyColumn + " (column unavailable)");
+            if (log.isDebugEnabled())
+                log.debug("Ignoring foreign key", foreignKeyColumn + " referencing " + uniqueKeyColumn + " (column unavailable)");
 
             // [#7826] Prevent incomplete keys from being generated
             if (foreignKeyTable != null) {
@@ -267,11 +272,14 @@ public class DefaultRelations implements Relations {
         // [#1134] Prevent NPE's when a foreign key references a unique key
         // from another schema
         if (uniqueKeyTable == null) {
-            log.info("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " (" + uniqueKeyColumn + ") references a schema out of scope for jooq-meta: " + uniqueKeyTable);
+            if (log.isDebugEnabled())
+                log.debug("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " (" + uniqueKeyColumn + ") references a schema out of scope for jooq-meta: " + uniqueKeyTable);
+
             return;
         }
 
-        log.info("Adding foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " (" + uniqueKeyColumn + ")");
+        if (log.isDebugEnabled())
+            log.debug("Adding foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " (" + uniqueKeyColumn + ")");
 
         ForeignKeyDefinition foreignKey = foreignKeys.get(key);
 

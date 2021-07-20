@@ -49,7 +49,7 @@
         <scala.version>2.13.6</scala.version>
 
         <!-- Kotlin versions -->
-        <kotlin.version>1.5.10</kotlin.version>
+        <kotlin.version>1.5.21</kotlin.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
@@ -541,7 +541,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>3.2.0</version>
                     <inherited>true</inherited>
                     <executions>
                         <execution>

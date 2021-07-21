@@ -235,6 +235,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             t = ((ConvertedDataType<?, ?>) t).delegate();
 
         return t.isJSON()
+            || t.isEmbeddable() && (TRUE.equals(scope.data(DATA_MULTISET_CONTENT)) && emulateMultisetWithJSON(scope))
             || t.isRecord() && (TRUE.equals(scope.data(DATA_MULTISET_CONTENT)) && emulateMultisetWithJSON(scope))
             || t.isMultiset() && emulateMultisetWithJSON(scope);
     }

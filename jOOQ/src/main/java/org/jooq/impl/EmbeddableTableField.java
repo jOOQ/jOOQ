@@ -37,15 +37,17 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.RowField.acceptMultisetContent;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import org.jooq.Context;
 import org.jooq.EmbeddableRecord;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 
@@ -58,7 +60,6 @@ implements TableField<R, E> {
     final Class<E>            recordType;
     final boolean             replacesFields;
     final Table<R>            table;
-    final AbstractRow<?>      fieldsRow;
     /**
      * @deprecated - [#11058] - 3.14.5 - This will be removed in the future.
      */
@@ -67,12 +68,11 @@ implements TableField<R, E> {
 
 
     EmbeddableTableField(Name name, Class<E> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>[] fields) {
-        super(name, new DefaultDataType<>(SQLDialect.DEFAULT, recordType, name.last()));
+        super(name, new RecordDataType<>(Tools.row0(fields), recordType, name.last()));
 
         this.recordType = recordType;
         this.replacesFields = replacesFields;
         this.table = table;
-        this.fieldsRow = Tools.row0(fields);
         this.fields = fields;
 
 
@@ -87,7 +87,17 @@ implements TableField<R, E> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(fieldsRow.fields.fields)));
+
+        // [#12237] If a RowField is nested somewhere in MULTISET, we must apply
+        //          the MULTISET emulation as well, here
+        if (TRUE.equals(ctx.data(DATA_MULTISET_CONTENT)))
+            acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptDefault);
+        else
+            acceptDefault(ctx);
+    }
+
+    private void acceptDefault(Context<?> ctx) {
+        ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(getDataType().getRow().fields())));
     }
 
     @Override
@@ -99,7 +109,7 @@ implements TableField<R, E> {
     int projectionSize() {
         int result = 0;
 
-        for (Field<?> field : fieldsRow.fields.fields)
+        for (Field<?> field : ((AbstractRow<?>) getDataType().getRow()).fields.fields)
             result += ((AbstractField<?>) field).projectionSize();
 
         return result;

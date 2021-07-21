@@ -383,7 +383,7 @@ public final class Internal {
      */
     @NotNull
     public static final <R extends Record, ER extends EmbeddableRecord<ER>> Row fieldsRow(TableField<R, ER> embeddableField) {
-        return ((EmbeddableTableField<R, ER>) embeddableField).fieldsRow;
+        return embeddableField.getDataType().getRow();
     }
 
     @Support

@@ -65,8 +65,12 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
 
     @SuppressWarnings("unchecked")
     public RecordDataType(Row row) {
-        // [#11829] TODO: Implement this correctly for UDTRecord, TableRecord, and EmbeddableRecord
-        super(null, (Class<R>) recordType(row.size()), "record", "record");
+        this(row, (Class<R>) recordType(row.size()), "record");
+    }
+
+    @SuppressWarnings("unchecked")
+    public RecordDataType(Row row, Class<R> recordType, String name) {
+        super(null, recordType, name, name);
 
         this.row = (AbstractRow<R>) row;
     }
@@ -124,7 +128,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
     }
 
     @Override
-    public final Class<? extends Record> getRecordType() {
+    public final Class<? extends R> getRecordType() {
         return getType();
     }
 
@@ -134,7 +138,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
 
         // [#12116] TODO: Move this logic into JSONReader to make it more generally useful
         if (object instanceof Record || object instanceof Map || object instanceof List) {
-            return newRecord(true, (Class<R>) Record.class, row, CTX.configuration())
+            return newRecord(true, getRecordType(), row, CTX.configuration())
                 .operate(r -> {
 
                     // [#12014] TODO: Fix this and remove workaround

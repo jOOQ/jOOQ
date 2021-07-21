@@ -80,7 +80,6 @@ import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.Tools.emulateMultiset;
-import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
@@ -88,6 +87,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -153,90 +153,95 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
         // [#12021] If a RowField is nested somewhere in MULTISET, we must apply
         //          the MULTISET emulation as well, here
-        if (TRUE.equals(ctx.data(DATA_MULTISET_CONTENT))) {
-            switch (emulateMultiset(ctx.configuration())) {
-                case JSON:
-                    switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        default:
-                            ctx.visit(alias(ctx, returningClob(ctx, jsonArray(row.fields()).nullOnNull())));
-                            break;
-                    }
-
-                    break;
-
-                case JSONB:
-                    switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        default:
-                            ctx.visit(alias(ctx, returningClob(ctx, jsonbArray(row.fields()).nullOnNull())));
-                            break;
-                    }
-
-                    break;
-
-                case XML:
-                    switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-                        default:
-                            ctx.visit(alias(ctx, xmlelement(N_RECORD,
-                                map(row.fields(), (f, i) -> xmlelement(fieldNameString(i), f)))
-                            ));
-
-                            break;
-                    }
-
-                    break;
-
-                case NATIVE:
-                    acceptDefault(ctx);
-                    break;
-            }
-        }
+        if (TRUE.equals(ctx.data(DATA_MULTISET_CONTENT)))
+            acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptDefault);
         else
             acceptDefault(ctx);
     }
 
-    private final Field<?> alias(Context<?> ctx, Field<?> field) {
-        return ctx.declareFields() ? field.as(getUnqualifiedName()) : field;
+    static void acceptMultisetContent(Context<?> ctx, Row row, Field<?> field, Consumer<? super Context<?>> acceptDefault) {
+        Name alias = field.getUnqualifiedName();
+
+        switch (emulateMultiset(ctx.configuration())) {
+            case JSON:
+                switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    default:
+                        ctx.visit(alias(ctx, alias, returningClob(ctx, jsonArray(row.fields()).nullOnNull())));
+                        break;
+                }
+
+                break;
+
+            case JSONB:
+                switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    default:
+                        ctx.visit(alias(ctx, alias, returningClob(ctx, jsonbArray(row.fields()).nullOnNull())));
+                        break;
+                }
+
+                break;
+
+            case XML:
+                switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+                    default:
+                        ctx.visit(alias(ctx, alias, xmlelement(N_RECORD,
+                            map(row.fields(), (f, i) -> xmlelement(fieldNameString(i), f)))
+                        ));
+
+                        break;
+                }
+
+                break;
+
+            case NATIVE:
+                acceptDefault.accept(ctx);
+                break;
+        }
+    }
+
+    private static final Field<?> alias(Context<?> ctx, Name alias, Field<?> field) {
+        return ctx.declareFields() ? field.as(alias) : field;
     }
 
     private final void acceptDefault(Context<?> ctx) {

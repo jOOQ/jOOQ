@@ -74,6 +74,7 @@ import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultString;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.Serializable;
 import java.sql.DatabaseMetaData;
@@ -156,6 +157,10 @@ final class MetaImpl extends AbstractMeta {
 
         this.databaseMetaData = databaseMetaData;
         this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(dialect());
+    }
+
+    final boolean hasCatalog(Catalog catalog) {
+        return catalog != null && !isEmpty(catalog.getName());
     }
 
     final <R> R catalogSchema(Catalog catalog, Schema schema, ThrowingBiFunction<String, String, R, SQLException> function) throws SQLException {
@@ -824,7 +829,7 @@ final class MetaImpl extends AbstractMeta {
 
                 // [#7377] The schema may be null instead of "" in some dialects
                 Schema schema = schemas.get(name(
-                    defaultString(k.get(0, String.class)),
+                    hasCatalog(getCatalog()) ? defaultString(k.get(0, String.class)) : null,
                     defaultString(k.get(1, String.class))
                 ));
 

@@ -1499,12 +1499,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("%sclass %s extends %s[%s](%s.fieldsRow(%s.%s))[[before= with ][separator= with ][%s]] {",
+                out.println("%sclass %s extends %s[%s](%s.%s.getDataType.getRow)[[before= with ][separator= with ][%s]] {",
                     visibility(),
                     className,
                     baseClass,
                     className,
-                    Internal.class,
                     out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
                     getStrategy().getJavaIdentifier(tableUdtOrEmbeddable),
                     interfaces
@@ -1520,12 +1519,11 @@ public class JavaGenerator extends AbstractGenerator {
                 );
         else if (kotlin)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("%sopen class %s() : %s<%s>(%s.fieldsRow(%s.%s))[[before=, ][%s]] {",
+                out.println("%sopen class %s() : %s<%s>(%s.%s.dataType.row)[[before=, ][%s]] {",
                     visibility(),
                     className,
                     baseClass,
                     className,
-                    Internal.class,
                     out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
                     getStrategy().getJavaIdentifier(tableUdtOrEmbeddable),
                     interfaces
@@ -1898,8 +1896,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s%s() {", visibility(), className);
 
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("super(%s.fieldsRow(%s.%s));",
-                    Internal.class,
+                out.println("super(%s.%s.getDataType().getRow());",
                     out.ref(getStrategy().getFullJavaIdentifier(((EmbeddableDefinition) tableUdtOrEmbeddable).getTable()), 2),
                     getStrategy().getJavaIdentifier(tableUdtOrEmbeddable));
             else

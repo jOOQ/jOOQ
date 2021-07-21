@@ -316,7 +316,7 @@ public final class Internal {
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
     @NotNull
-    @Deprecated
+    @Deprecated(since = "3.14", forRemoval = true)
     public static final Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
         return createIndex(DSL.name(name), table, sortFields, unique);
     }
@@ -327,8 +327,8 @@ public final class Internal {
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
     @NotNull
-    @Deprecated
     @SafeVarargs
+    @Deprecated(since = "3.14", forRemoval = true)
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
         return createUniqueKey(table, name, fields, true);
     }
@@ -339,7 +339,7 @@ public final class Internal {
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
     @NotNull
-    @Deprecated
+    @Deprecated(since = "3.14", forRemoval = true)
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
         return createUniqueKey(table, DSL.name(name), fields, enforced);
     }
@@ -350,8 +350,8 @@ public final class Internal {
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
     @NotNull
-    @Deprecated
     @SafeVarargs
+    @Deprecated(since = "3.14", forRemoval = true)
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
         return createForeignKey(key, table, name, fields, true);
     }
@@ -362,7 +362,7 @@ public final class Internal {
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
     @NotNull
-    @Deprecated
+    @Deprecated(since = "3.14", forRemoval = true)
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
         return createForeignKey(table, DSL.name(name), fields, key, key.getFieldsArray(), enforced);
     }
@@ -372,16 +372,19 @@ public final class Internal {
      *
      * @deprecated - [#11058] - 3.14.5 - Please re-generate your code.
      */
-    @Deprecated
     @NotNull
+    @Deprecated(since = "3.14", forRemoval = true)
     public static final <R extends Record, ER extends EmbeddableRecord<ER>> TableField<R, ?>[] fields(TableField<R, ER> embeddableField) {
         return ((EmbeddableTableField<R, ER>) embeddableField).fields;
     }
 
     /**
      * Get the fields row of an embeddable type.
+     *
+     * @deprecated - [#12238] - 3.16.0 - Please re-generate your code.
      */
     @NotNull
+    @Deprecated(since = "3.16", forRemoval = true)
     public static final <R extends Record, ER extends EmbeddableRecord<ER>> Row fieldsRow(TableField<R, ER> embeddableField) {
         return embeddableField.getDataType().getRow();
     }

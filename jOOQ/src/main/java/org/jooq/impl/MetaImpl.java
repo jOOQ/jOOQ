@@ -53,6 +53,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultString;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -128,6 +129,10 @@ final class MetaImpl extends AbstractMeta {
 
         this.databaseMetaData = databaseMetaData;
         this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(dialect());
+    }
+
+    final boolean hasCatalog(Catalog catalog) {
+        return catalog != null && !isEmpty(catalog.getName());
     }
 
     private interface MetaFunction {
@@ -715,7 +720,7 @@ final class MetaImpl extends AbstractMeta {
 
                 // [#7377] The schema may be null instead of "" in some dialects
                 Schema schema = schemas.get(name(
-                    defaultString(entry.getKey().get(0, String.class)),
+                    hasCatalog(getCatalog()) ? defaultString(entry.getKey().get(0, String.class)) : null,
                     defaultString(entry.getKey().get(1, String.class))
                 ));
 

@@ -19987,6 +19987,32 @@ public class DSL {
      * <p>
      * This translates into any dialect
      *
+     * @see Field#add(Number)
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateSub(Date date, Field<? extends Number> interval) {
+        return dateSub(Tools.field(date), Tools.nullSafe(interval));
+    }
+
+    /**
+     * Subtract an interval from a date.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Number)
+     */
+    @NotNull
+    @Support
+    public static <T> Field<Date> dateSub(Field<Date> date, Number interval) {
+        return dateSub(Tools.nullSafe(date), Tools.field(interval));
+    }
+
+    /**
+     * Subtract an interval from a date.
+     * <p>
+     * This translates into any dialect
+     *
      * @see Field#add(Field)
      */
     @NotNull

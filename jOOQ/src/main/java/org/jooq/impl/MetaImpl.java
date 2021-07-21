@@ -815,15 +815,18 @@ final class MetaImpl extends AbstractMeta {
                 result.field(12),
             });
 
-            Map<String, Schema> schemas = new HashMap<>();
+            Map<Name, Schema> schemas = new HashMap<>();
             for (Schema schema : getSchemas())
-                schemas.put(schema.getName(), schema);
+                schemas.put(schema.getQualifiedName(), schema);
 
             List<ForeignKey<Record, ?>> references = new ArrayList<>(groups.size());
             groups.forEach((k, v) -> {
 
                 // [#7377] The schema may be null instead of "" in some dialects
-                Schema schema = schemas.get(defaultString(k.get(1, String.class)));
+                Schema schema = schemas.get(name(
+                    defaultString(k.get(0, String.class)),
+                    defaultString(k.get(1, String.class))
+                ));
 
                 String fkName = k.get(3, String.class);
                 String pkName = k.get(4, String.class);

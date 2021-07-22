@@ -719,10 +719,15 @@ final class MetaImpl extends AbstractMeta {
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
 
                 // [#7377] The schema may be null instead of "" in some dialects
-                Schema schema = schemas.get(name(
-                    hasCatalog(getCatalog()) ? defaultString(entry.getKey().get(0, String.class)) : null,
-                    defaultString(entry.getKey().get(1, String.class))
-                ));
+                // [#12243] [#12240] Not all dialects have catalog support
+                Schema schema = schemas.get(
+                    hasCatalog(getCatalog())
+                    ? name(
+                        defaultString(entry.getKey().get(0, String.class)),
+                        defaultString(entry.getKey().get(1, String.class))
+                    )
+                    : name(defaultString(entry.getKey().get(1, String.class)))
+                );
 
                 String fkName = entry.getKey().get(3, String.class);
                 String pkName = entry.getKey().get(4, String.class);

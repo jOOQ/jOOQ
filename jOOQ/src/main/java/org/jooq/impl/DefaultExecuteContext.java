@@ -81,6 +81,8 @@ import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.jetbrains.annotations.NotNull;
 
+// ...
+
 /**
  * A default implementation for the {@link ExecuteContext}.
  *
@@ -257,12 +259,6 @@ class DefaultExecuteContext implements ExecuteContext {
      */
     static final Connection localTargetConnection(Scope scope) {
         Connection result = localConnection();
-
-
-
-
-
-
 
 
 

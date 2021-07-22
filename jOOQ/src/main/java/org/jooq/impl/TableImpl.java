@@ -249,6 +249,12 @@ public class TableImpl<R extends Record> extends AbstractTable<R> implements Sco
     }
 
     @Override
+    @org.jooq.Internal
+    public final boolean isSimple() {
+        return alias == null && (parameters == null || parameters.length < 2);
+    }
+
+    @Override
     final FieldsImpl<R> fields0() {
         return fields;
     }

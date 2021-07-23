@@ -899,9 +899,17 @@ public final class Convert {
                         return toDate(((java.util.Date) from).getTime(), toClass);
                 }
 
-
                 else if (Temporal.class.isAssignableFrom(fromClass)) {
-                    return toDate(convert(from, Long.class), toClass);
+
+                    // [#12225] Avoid losing precision if possible
+                    if (LocalDateTime.class == fromClass && Timestamp.class == toClass)
+                        return (U) Timestamp.valueOf((LocalDateTime) from);
+                    else if (LocalDate.class == fromClass && Date.class == toClass)
+                        return (U) Date.valueOf((LocalDate) from);
+                    else if (LocalTime.class == fromClass && Time.class == toClass)
+                        return (U) Time.valueOf((LocalTime) from);
+                    else
+                        return toDate(convert(from, Long.class), toClass);
                 }
 
 

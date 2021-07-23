@@ -49,6 +49,8 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 
+// ...
+
 /**
  * @author Lukas Eder
  */

@@ -246,6 +246,7 @@ import org.jooq.util.postgres.PostgresUtils;
 // ...
 // ...
 // ...
+// ...
 
 /**
  * @author Lukas Eder
@@ -3841,7 +3842,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (configuration.family()) {
 
                 case H2:
-                    return -10; // OracleTypes.CURSOR;
+                    return OracleTypes.CURSOR;
 
                 default:
                     return Types.OTHER;

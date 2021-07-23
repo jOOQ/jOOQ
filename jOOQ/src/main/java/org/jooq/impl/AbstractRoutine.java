@@ -62,10 +62,11 @@ import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BOOLEAN;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_COLUMNS;
-import static org.jooq.impl.Keywords.K_DECLARE;
+import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
 import static org.jooq.impl.Keywords.K_FALSE;
+import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_FUNCTION;
@@ -77,23 +78,28 @@ import static org.jooq.impl.Keywords.K_PASSING;
 import static org.jooq.impl.Keywords.K_RECORD;
 import static org.jooq.impl.Keywords.K_RETURN;
 import static org.jooq.impl.Keywords.K_SELECT;
+import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.Keywords.K_WHILE;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.SQLDataType.RESULT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.configurationOrThrow;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.settings;
+import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -106,6 +112,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
+// ...
 // ...
 import org.jooq.BindContext;
 import org.jooq.Binding;
@@ -142,6 +149,8 @@ import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.reflect.Reflect;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base class for stored procedures
@@ -180,6 +189,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     private ResultsImpl                       results;
     private boolean                           overloaded;
     private boolean                           hasUnnamedParameters;
+
+
 
 
 
@@ -571,7 +582,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     }
 
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
         if (ctx instanceof RenderContext)
             toSQL0((RenderContext) ctx);
         else
@@ -581,6 +592,13 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     final void bind0(BindContext context) {
         List<Parameter<?>> all = getParameters0(context.configuration());
         List<Parameter<?>> in = getInParameters0(context.configuration());
+
+
+
+
+
+
+
 
 
 
@@ -649,11 +667,11 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
         }
 
         if (bindAsIn) {
-
-
 
 
 
@@ -692,9 +710,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
         // Skip one index for OUT parameters
-        else {
+        else
             context.nextIndex();
-        }
     }
 
     final void toSQL0(RenderContext context) {
@@ -765,6 +782,13 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     }
 
     private final void toSQLEnd(RenderContext context) {
+
+
+
+
+
+
+
 
 
 
@@ -877,7 +901,67 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1093,7 +1177,141 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final void toSQLAssign(RenderContext context) {
+
+
+
+
 
 
 
@@ -1126,6 +1344,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     }
 
     private final void toSQLOutParam(RenderContext ctx, Parameter<?> parameter, int index) {
+
+
 
 
 
@@ -1195,8 +1415,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     }
 
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {
-        for (Parameter<?> parameter : getParameters0(ctx.configuration()))
-            if (resultParameter(ctx.configuration(), parameter))
+        for (Parameter<?> parameter : getParameters0(ctx.configuration())) {
+            if (resultParameter(ctx.configuration(), parameter)) {
                 try {
                     fetchOutParameter(ctx, parameter);
                 }
@@ -1207,9 +1427,16 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                     if (ctx.settings().getThrowExceptions() != THROW_NONE)
                         throw e;
                 }
+            }
+        }
     }
 
     private final <U> void fetchOutParameter(ExecuteContext ctx, Parameter<U> parameter) throws SQLException {
+
+
+
+
+
 
 
 
@@ -1246,6 +1473,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     }
 
     private final <U> void registerOutParameter(Configuration c, Map<Object, Object> data, CallableStatement statement, Parameter<U> parameter) throws SQLException {
+
+
 
 
 
@@ -1425,6 +1654,15 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
+
+
+
+
+
+
+
     private final boolean hasUnnamedParameters() {
         return hasUnnamedParameters;
     }
@@ -1438,7 +1676,30 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

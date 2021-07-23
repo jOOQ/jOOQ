@@ -125,18 +125,15 @@ abstract class AbstractStore extends AbstractFormattable implements Attachable {
         for (int i = 0; i < size(); i++) {
             final Object obj = get(i);
 
-            if (obj == null) {
+            if (obj == null)
                 hashCode = 31 * hashCode;
-            }
 
             // [#985] [#2045] Don't use obj.hashCode() on arrays, but avoid
             // calculating it as byte[] (BLOBs) can be quite large
-            else if (obj.getClass().isArray()) {
+            else if (obj.getClass().isArray())
                 hashCode = 31 * hashCode;
-            }
-            else {
+            else
                 hashCode = 31 * hashCode + obj.hashCode();
-            }
         }
 
         return hashCode;

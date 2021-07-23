@@ -120,6 +120,7 @@ import org.jooq.codegen.GeneratorWriter.CloseResult;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractRoutine;
 // ...
+import org.jooq.impl.AssociativeArrayRecordImpl;
 import org.jooq.impl.CatalogImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.DSL;
@@ -3456,6 +3457,26 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateArray(ArrayDefinition array, JavaWriter out) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -8652,7 +8673,7 @@ public class JavaGenerator extends AbstractGenerator {
             ArrayDefinition array = database.getArray(schema, u);
 
             sb.append(getJavaTypeReference(db, array.getElementType(resolver(out)), out));
-            sb.append(".asArrayDataType(");
+            sb.append(array.getIndexType() != null ? ".asAssociativeArrayDataType(" : ".asArrayDataType(");
             sb.append(classOf(getStrategy().getFullJavaClassName(array, Mode.RECORD)));
             sb.append(")");
         }

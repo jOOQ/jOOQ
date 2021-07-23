@@ -40,34 +40,56 @@ package org.jooq.meta;
 public class DefaultArrayDefinition extends AbstractDefinition implements ArrayDefinition {
 
     private final DataTypeDefinition     definedType;
+    private final DataTypeDefinition     definedIndexType;
     private transient DataTypeDefinition type;
+    private transient DataTypeDefinition indexType;
     private transient DataTypeDefinition resolvedType;
+    private transient DataTypeDefinition resolvedIndexType;
 
     public DefaultArrayDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
         this(schema, null, name, type);
     }
 
     public DefaultArrayDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, DataTypeDefinition type) {
+        this(schema, pkg, name, type, null);
+    }
+
+    public DefaultArrayDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, DataTypeDefinition type, DataTypeDefinition indexType) {
         super(schema.getDatabase(), schema, pkg, name, "", null);
 
         this.definedType = type;
+        this.definedIndexType = indexType;
     }
 
     @Override
     public DataTypeDefinition getElementType() {
-        if (type == null) {
+        if (type == null)
             type = AbstractTypedElementDefinition.mapDefinedType(this, this, definedType, null);
-        }
 
         return type;
     }
 
     @Override
     public DataTypeDefinition getElementType(JavaTypeResolver resolver) {
-        if (resolvedType == null) {
+        if (resolvedType == null)
             resolvedType = AbstractTypedElementDefinition.mapDefinedType(this, this, definedType, resolver);
-        }
 
         return resolvedType;
+    }
+
+    @Override
+    public DataTypeDefinition getIndexType() {
+        if (indexType == null && definedIndexType != null)
+            indexType = AbstractTypedElementDefinition.mapDefinedType(this, this, definedIndexType, null);
+
+        return indexType;
+    }
+
+    @Override
+    public DataTypeDefinition getIndexType(JavaTypeResolver resolver) {
+        if (resolvedIndexType == null && definedIndexType != null)
+            resolvedIndexType = AbstractTypedElementDefinition.mapDefinedType(this, this, definedIndexType, resolver);
+
+        return resolvedIndexType;
     }
 }

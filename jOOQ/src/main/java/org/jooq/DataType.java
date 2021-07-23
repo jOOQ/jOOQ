@@ -199,6 +199,13 @@ public interface DataType<T> extends Named {
 
 
 
+
+
+
+
+
+
+
     /**
      * Retrieve the data type for a given enum data type.
      */
@@ -894,6 +901,11 @@ public interface DataType<T> extends Named {
      * Whether this data type is an array type.
      */
     boolean isArray();
+
+    /**
+     * Whether this data type is an array type.
+     */
+    boolean isAssociativeArray();
 
     /**
      * Whether this data type is an embeddable type.

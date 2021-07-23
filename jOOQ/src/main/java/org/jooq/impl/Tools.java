@@ -69,7 +69,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
@@ -112,6 +111,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
@@ -233,6 +233,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 // ...
+// ...
 import org.jooq.Asterisk;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
@@ -317,8 +318,6 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
-
-import org.jetbrains.annotations.Nullable;
 
 import io.r2dbc.spi.R2dbcException;
 
@@ -947,6 +946,60 @@ final class Tools {
     static final List<Row> rows(Result<?> result) {
         return map(result, r -> r.valuesRow());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3172,6 +3225,52 @@ final class Tools {
 
         return sb.toString();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

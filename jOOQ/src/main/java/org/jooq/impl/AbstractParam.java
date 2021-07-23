@@ -48,6 +48,7 @@ import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import java.util.Arrays;
 
 // ...
+// ...
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -102,6 +103,8 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
              // [#3707] Protect value.toString call for certain jOOQ types.
              : value instanceof QualifiedRecord
              ? ((QualifiedRecord<?>) value).getQualifier().getName()
+
+
 
 
 

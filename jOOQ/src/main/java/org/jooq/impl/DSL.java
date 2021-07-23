@@ -165,6 +165,7 @@ import org.jooq.AggregateFunction;
 import org.jooq.AlterTableStep;
 import org.jooq.ArrayAggOrderByStep;
 // ...
+// ...
 import org.jooq.Asterisk;
 import org.jooq.Block;
 import org.jooq.Case;
@@ -27909,19 +27910,18 @@ public class DSL {
     public static <T> Param<T> val(Object value, DataType<T> type) {
 
         // Advanced data types have dedicated constant types
-        if (value instanceof QualifiedRecord) {
+        if (value instanceof QualifiedRecord)
             return new QualifiedRecordConstant((QualifiedRecord<?>) value);
-        }
+
+
 
 
 
 
 
         // The default behaviour
-        else {
-            T converted = type.convert(value);
-            return new Val<>(converted, mostSpecific(converted, type));
-        }
+        T converted = type.convert(value);
+        return new Val<>(converted, mostSpecific(converted, type));
     }
 
     /**

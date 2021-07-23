@@ -42,7 +42,6 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
-// ...
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -69,6 +68,7 @@ import java.util.List;
 import java.util.Set;
 
 // ...
+// ...
 import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -83,13 +83,11 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
-import org.jooq.LanguageContext;
 import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
-import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -97,7 +95,7 @@ import org.jooq.XML;
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
 
-import org.jetbrains.annotations.Nullable;
+// ...
 
 /**
  * @author Lukas Eder
@@ -374,6 +372,9 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
 
 
+
+
+
         else if (EnumType.class.isAssignableFrom(tType))
             return Types.VARCHAR;
         else if (QualifiedRecord.class.isAssignableFrom(tType))
@@ -494,6 +495,12 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     public /* non-final */ Class<? extends Record> getRecordType() {
         return null;
     }
+
+
+
+
+
+
 
 
 
@@ -651,6 +658,13 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         Class<?> tType = tType0();
         return 
             (!isBinary() && tType.isArray());
+    }
+
+    @Override
+    public final boolean isAssociativeArray() {
+        return false
+            
+        ;
     }
 
     @Override

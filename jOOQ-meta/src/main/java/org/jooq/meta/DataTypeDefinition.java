@@ -137,7 +137,7 @@ public interface DataTypeDefinition {
     boolean isArray();
 
     /**
-     * Whether this data type represens an array producing an
+     * Whether this data type represents an array producing an
      * {@link ArrayRecord} of udt types.
      */
     boolean isUDTArray();

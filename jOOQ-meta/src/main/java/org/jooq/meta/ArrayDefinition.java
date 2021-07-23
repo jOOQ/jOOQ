@@ -52,6 +52,18 @@ public interface ArrayDefinition extends Definition {
     PackageDefinition getPackage();
 
     /**
+     * @return The type of the ARRAY's index, or <code>null</code> if it's not
+     *         an associative array.
+     */
+    DataTypeDefinition getIndexType();
+
+    /**
+     * @return The type of the ARRAY's index, or <code>null</code> if it's not
+     *         an associative array.
+     */
+    DataTypeDefinition getIndexType(JavaTypeResolver resolver);
+
+    /**
      * @return The type of the ARRAY's elements
      */
     DataTypeDefinition getElementType();

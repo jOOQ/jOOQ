@@ -3842,7 +3842,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (configuration.family()) {
 
                 case H2:
-                    return OracleTypes.CURSOR;
+                    return -10; // OracleTypes.CURSOR;
 
                 default:
                     return Types.OTHER;

@@ -42,15 +42,10 @@ import org.jooq.RowId;
 /**
  * @author Lukas Eder
  */
-final class RowIdImpl implements RowId {
-    private final Object      value;
-
-    RowIdImpl(Object value) {
-        this.value = value;
-    }
+final /* record */ class RowIdImpl implements RowId { private final Object value; public RowIdImpl(Object value) { this.value = value; } public Object value() { return value; } @Override public boolean equals(Object o) { if (!(o instanceof RowIdImpl)) return false; RowIdImpl other = (RowIdImpl) o; if (!java.util.Objects.equals(this.value, other.value)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.value); }
 
     @Override
-    public final Object value() {
-        return value;
+    public String toString() {
+        return "" + value;
     }
 }

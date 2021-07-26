@@ -120,7 +120,7 @@ import org.jooq.codegen.GeneratorWriter.CloseResult;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractRoutine;
 // ...
-import org.jooq.impl.AssociativeArrayRecordImpl;
+// ...
 import org.jooq.impl.CatalogImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.DSL;

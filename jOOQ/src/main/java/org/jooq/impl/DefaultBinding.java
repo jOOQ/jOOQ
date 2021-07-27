@@ -3816,11 +3816,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 //     return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetch(ctx.resultSet().getArray(ctx.index()).getResultSet()));
 
                 case JSON:
-                case JSONB:
-                    return new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new StringReader(ctx.resultSet().getString(ctx.index())), true);
+                case JSONB: {
+                    String s = ctx.resultSet().getString(ctx.index());
+                    return s == null ? null : new JSONReader<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(new StringReader(s), true);
+                }
 
-                case XML:
-                    return new XMLHandler<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(ctx.resultSet().getString(ctx.index()));
+                case XML: {
+                    String s = ctx.resultSet().getString(ctx.index());
+                    return s == null ? null : new XMLHandler<>(ctx.dsl(), (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType()).read(s);
+                }
             }
 
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);

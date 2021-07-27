@@ -413,7 +413,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext sql(String s, boolean literal) {
         if (!literal)
-            s = NEWLINE.matcher(s).replaceAll("$0" + indentation());
+            s = Tools.replaceAll(s, NEWLINE.matcher(s), r -> r.group() + indentation());
 
         if (stringLiteral())
             s = StringUtils.replace(s, "'", stringLiteralEscapedApos);

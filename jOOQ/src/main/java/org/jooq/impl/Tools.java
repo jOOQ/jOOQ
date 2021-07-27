@@ -223,6 +223,7 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
@@ -6381,5 +6382,30 @@ final class Tools {
 
     static final String stringLiteral(String string) {
         return "\"" + string.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n\" + \n\"") + "\"";
+    }
+
+    /**
+     * Access to the JDK 9 {@link Matcher#replaceAll(Function)} function.
+     */
+    static final String replaceAll(String string, Matcher matcher, Function<MatchResult, String> replacer) {
+
+        if (true)
+            return matcher.replaceAll(replacer);
+
+
+        // Java 8 version
+        boolean find = matcher.find();
+        if (find) {
+            StringBuffer sb = new StringBuffer();
+
+            do
+                matcher.appendReplacement(sb, replacer.apply(matcher));
+            while (find = matcher.find());
+
+            matcher.appendTail(sb);
+            return sb.toString();
+        }
+
+        return string;
     }
 }

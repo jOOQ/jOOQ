@@ -134,7 +134,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
             rendersContent.set(i++, ((QueryPartInternal) e).rendersContent(ctx));
 
         int size = rendersContent.cardinality();
-        boolean format = ctx.format() && (size >= 2 && !isSimple());
+        boolean format = ctx.format() && (size >= 2 && !isSimple() || size > 4);
         boolean previousQualify = ctx.qualify();
         boolean previousAlreadyIndented = TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
         boolean indent = format && !previousAlreadyIndented;

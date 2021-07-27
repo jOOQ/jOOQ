@@ -148,26 +148,6 @@ final class Convert {
      */
     private static final Pattern UUID_PATTERN = Pattern.compile("(\\p{XDigit}{8})-?(\\p{XDigit}{4})-?(\\p{XDigit}{4})-?(\\p{XDigit}{4})-?(\\p{XDigit}{12})");
 
-    /**
-     * The Jackson ObjectMapper or Gson instance, if available.
-     */
-    private static final Object JSON_MAPPER;
-
-    /**
-     * The Jackson ObjectMapper::readValue or Gson::fromJson method, if available.
-     */
-    private static final Method JSON_READ_METHOD;
-
-    /**
-     * The Jackson ObjectMapper::writeValueToString or Gson::toJson method, if available.
-     */
-    private static final Method JSON_WRITE_METHOD;
-
-    /**
-     * Whether a JAXB implementation is available.
-     */
-    private static final boolean JAXB_AVAILABLE;
-
     static {
         Set<String> trueValues = new HashSet<>();
         Set<String> falseValues = new HashSet<>();
@@ -204,62 +184,93 @@ final class Convert {
 
         TRUE_VALUES = Collections.unmodifiableSet(trueValues);
         FALSE_VALUES = Collections.unmodifiableSet(falseValues);
+    }
 
-        Object jsonMapper = null;
-        Method jsonReadMethod = null;
-        Method jsonWriteMethod = null;
-        boolean jaxbAvailable = false;
+    private static final class _JSON {
 
-        try {
-            Class<?> klass = Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
+        /**
+         * The Jackson ObjectMapper or Gson instance, if available.
+         */
+        private static final Object JSON_MAPPER;
 
-            try {
-                Class<?> kotlin = Class.forName("com.fasterxml.jackson.module.kotlin.ExtensionsKt");
-                jsonMapper = kotlin.getMethod("jacksonObjectMapper").invoke(kotlin);
-                log.debug("Jackson kotlin module is available");
-            }
-            catch (Exception e) {
-                jsonMapper = klass.getDeclaredConstructor().newInstance();
-                log.debug("Jackson kotlin module is not available");
-            }
+        /**
+         * The Jackson ObjectMapper::readValue or Gson::fromJson method, if available.
+         */
+        private static final Method JSON_READ_METHOD;
 
-            jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
-            jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
-            log.debug("Jackson is available");
-        }
-        catch (Exception e1) {
-            log.debug("Jackson not available", e1.getMessage());
+        /**
+         * The Jackson ObjectMapper::writeValueToString or Gson::toJson method, if available.
+         */
+        private static final Method JSON_WRITE_METHOD;
+
+        static {
+            Object jsonMapper = null;
+            Method jsonReadMethod = null;
+            Method jsonWriteMethod = null;
 
             try {
-                Class<?> klass = Class.forName("com.google.gson.Gson");
+                Class<?> klass = Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
 
-                jsonMapper = klass.getDeclaredConstructor().newInstance();
-                jsonReadMethod = klass.getMethod("fromJson", String.class, Class.class);
-                jsonWriteMethod = klass.getMethod("toJson", Object.class);
-                log.debug("Gson is available");
+                try {
+                    Class<?> kotlin = Class.forName("com.fasterxml.jackson.module.kotlin.ExtensionsKt");
+                    jsonMapper = kotlin.getMethod("jacksonObjectMapper").invoke(kotlin);
+                    log.debug("Jackson kotlin module is available");
+                }
+                catch (Exception e) {
+                    jsonMapper = klass.getDeclaredConstructor().newInstance();
+                    log.debug("Jackson kotlin module is not available");
+                }
+
+                jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
+                jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
+                log.debug("Jackson is available");
             }
-            catch (Exception e2) {
-                log.debug("Gson not available", e2.getMessage());
+            catch (Exception e1) {
+                log.debug("Jackson not available", e1.getMessage());
+
+                try {
+                    Class<?> klass = Class.forName("com.google.gson.Gson");
+
+                    jsonMapper = klass.getDeclaredConstructor().newInstance();
+                    jsonReadMethod = klass.getMethod("fromJson", String.class, Class.class);
+                    jsonWriteMethod = klass.getMethod("toJson", Object.class);
+                    log.debug("Gson is available");
+                }
+                catch (Exception e2) {
+                    log.debug("Gson not available", e2.getMessage());
+                }
             }
+
+            JSON_MAPPER = jsonMapper;
+            JSON_READ_METHOD = jsonReadMethod;
+            JSON_WRITE_METHOD = jsonWriteMethod;
         }
+    }
 
-        JSON_MAPPER = jsonMapper;
-        JSON_READ_METHOD = jsonReadMethod;
-        JSON_WRITE_METHOD = jsonWriteMethod;
+    private static final class _XML {
 
-        try {
-            JAXB.marshal(new InformationSchema(), new StringWriter());
-            jaxbAvailable = true;
-            log.debug("JAXB is available");
+        /**
+         * Whether a JAXB implementation is available.
+         */
+        private static final boolean JAXB_AVAILABLE;
+
+        static {
+            boolean jaxbAvailable = false;
+
+            try {
+                JAXB.marshal(new InformationSchema(), new StringWriter());
+                jaxbAvailable = true;
+                log.debug("JAXB is available");
+            }
+
+            // [#10145] Depending on whether jOOQ is modularised or not, this can also
+            //          be a NoClassDefFoundError.
+            catch (Throwable t) {
+                log.debug("JAXB not available", t.getMessage());
+            }
+
+            JAXB_AVAILABLE = jaxbAvailable;
         }
-
-        // [#10145] Depending on whether jOOQ is modularised or not, this can also
-        //          be a NoClassDefFoundError.
-        catch (Throwable t) {
-            log.debug("JAXB not available", t.getMessage());
-        }
-
-        JAXB_AVAILABLE = jaxbAvailable;
     }
 
     /**
@@ -1083,9 +1094,9 @@ final class Convert {
                 }
 
                 // [#10072] Out of the box Jackson JSON mapping support
-                else if (fromClass == JSON.class && JSON_MAPPER != null) {
+                else if (fromClass == JSON.class && _JSON.JSON_MAPPER != null) {
                     try {
-                        return (U) JSON_READ_METHOD.invoke(JSON_MAPPER, ((JSON) from).data(), toClass);
+                        return (U) _JSON.JSON_READ_METHOD.invoke(_JSON.JSON_MAPPER, ((JSON) from).data(), toClass);
                     }
                     catch (Exception e) {
                         throw new DataTypeException("Error while mapping JSON to POJO using Jackson", e);
@@ -1093,9 +1104,9 @@ final class Convert {
                 }
 
                 // [#10072] Out of the box Jackson JSON mapping support
-                else if (fromClass == JSONB.class && JSON_MAPPER != null) {
+                else if (fromClass == JSONB.class && _JSON.JSON_MAPPER != null) {
                     try {
-                        return (U) JSON_READ_METHOD.invoke(JSON_MAPPER, ((JSONB) from).data(), toClass);
+                        return (U) _JSON.JSON_READ_METHOD.invoke(_JSON.JSON_MAPPER, ((JSONB) from).data(), toClass);
                     }
                     catch (Exception e) {
                         throw new DataTypeException("Error while mapping JSON to POJO using Jackson", e);
@@ -1104,9 +1115,9 @@ final class Convert {
 
                 // [#11213] Workaround for a problem when Jackson or Gson do not know
                 //          the generic List<X> type because toClass has its generics erased
-                else if (Map.class.isAssignableFrom(fromClass) && JSON_MAPPER != null) {
+                else if (Map.class.isAssignableFrom(fromClass) && _JSON.JSON_MAPPER != null) {
                     try {
-                        return (U) JSON_READ_METHOD.invoke(JSON_MAPPER, JSON_WRITE_METHOD.invoke(JSON_MAPPER, from), toClass);
+                        return (U) _JSON.JSON_READ_METHOD.invoke(_JSON.JSON_MAPPER, _JSON.JSON_WRITE_METHOD.invoke(_JSON.JSON_MAPPER, from), toClass);
                     }
                     catch (Exception e) {
                         throw new DataTypeException("Error while mapping JSON to POJO using Jackson", e);
@@ -1114,7 +1125,7 @@ final class Convert {
                 }
 
                 // [#10072] Out of the box JAXB mapping support
-                else if (fromClass == XML.class && JAXB_AVAILABLE) {
+                else if (fromClass == XML.class && _XML.JAXB_AVAILABLE) {
                     try {
                         return JAXB.unmarshal(new StringReader(((XML) from).data()), toClass);
                     }
@@ -1318,13 +1329,13 @@ final class Convert {
                 return UUID.fromString(UUID_PATTERN.matcher(string).replaceAll("$1-$2-$3-$4-$5"));
         }
 
-        private static DataTypeException fail(Object from, Class<?> toClass) {
+        private static final DataTypeException fail(Object from, Class<?> toClass) {
             String message = "Cannot convert from " + from + " (" + from.getClass() + ") to " + toClass;
 
             // [#10072] [#11023] Some mappings may not have worked because of badly set up classpaths
-            if ((from instanceof JSON || from instanceof JSONB) && JSON_MAPPER == null)
+            if ((from instanceof JSON || from instanceof JSONB) && _JSON.JSON_MAPPER == null)
                 return new DataTypeException(message + ". Check your classpath to see if Jackson or Gson is available to jOOQ.");
-            else if (from instanceof XML && !JAXB_AVAILABLE)
+            else if (from instanceof XML && !_XML.JAXB_AVAILABLE)
                 return new DataTypeException(message + ". Check your classpath to see if JAXB is available to jOOQ.");
             else
                 return new DataTypeException(message);

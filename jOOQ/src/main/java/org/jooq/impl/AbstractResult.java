@@ -233,7 +233,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 else
                     padded = rightPad(fields.field(index).getName(), widths[index]);
 
-                writer.append(abbreviate(padded, widths[index]));
+                if (widths[index] < 4)
+                    writer.append(padded);
+                else
+                    writer.append(abbreviate(padded, widths[index]));
             }
 
             if (format.verticalTableBorder())
@@ -294,7 +297,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         padded = rightPad(value, widths[index]);
                     }
 
-                    writer.append(abbreviate(padded, widths[index]));
+                    if (widths[index] < 4)
+                        writer.append(padded);
+                    else
+                        writer.append(abbreviate(padded, widths[index]));
                 }
 
                 if (format.verticalTableBorder())

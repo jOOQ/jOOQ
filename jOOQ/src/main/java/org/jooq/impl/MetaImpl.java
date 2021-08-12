@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
@@ -114,7 +115,6 @@ import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
-import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
@@ -281,18 +281,31 @@ final class MetaImpl extends AbstractMeta {
 
 
             if (!inverseSchemaCatalog) {
-                Result<Record> schemas = meta(meta -> dsl().fetch(
+                Result<Record> schemas = meta(meta -> {
 
 
 
 
 
 
-                    meta.getSchemas(),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     // [#2681] Work around a flaw in the MySQL JDBC driver
-                    SQLDataType.VARCHAR // TABLE_SCHEM
-                ));
+                    return dsl().fetch(meta.getSchemas(), VARCHAR); // TABLE_SCHEM
+                });
 
                 for (String name : schemas.getValues(0, String.class))
                     result.add(new MetaSchema(name, MetaCatalog.this));

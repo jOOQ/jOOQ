@@ -158,6 +158,11 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
+    public Name getQualifiedName() {
+        return super.getUnqualifiedName();
+    }
+
+    @Override
     public Class<? extends R> getRecordType() {
         return alias.wrapped().getRecordType();
     }

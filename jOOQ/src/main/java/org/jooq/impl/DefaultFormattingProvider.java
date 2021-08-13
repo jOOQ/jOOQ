@@ -88,6 +88,8 @@ public class DefaultFormattingProvider implements FormattingProvider {
 
     @Override
     public int width(String string) {
+
+        // [#12275] TODO Calculate string display width in presence of ideographic characters
         return string.length();
     }
 }

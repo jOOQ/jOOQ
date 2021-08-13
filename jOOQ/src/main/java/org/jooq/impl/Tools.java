@@ -4450,16 +4450,13 @@ final class Tools {
         for (int i = 0; i < fields.length; i++) {
             int[] position = positions.get(i);
 
-            if (position[0] < length) {
+            if (position[0] < length)
                 fields[i] = string.substring(position[0], Math.min(position[1], length)).trim();
-            }
-            else {
+            else
                 fields[i] = null;
-            }
 
-            if (StringUtils.equals(fields[i], nullLiteral)) {
+            if (StringUtils.equals(fields[i], nullLiteral))
                 fields[i] = null;
-            }
         }
     }
 

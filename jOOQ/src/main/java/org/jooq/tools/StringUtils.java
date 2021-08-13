@@ -335,6 +335,10 @@ public final class StringUtils {
         return rightPad(str, size, ' ');
     }
 
+    public static String rightPad(String str, int strSize, int size) {
+        return rightPad(str, strSize, size, ' ');
+    }
+
     /**
      * <p>Right pad a String with a specified character.</p>
      *
@@ -357,15 +361,22 @@ public final class StringUtils {
      * @since 2.0
      */
     public static String rightPad(String str, int size, char padChar) {
+        if (str == null)
+            return null;
+
+        return rightPad(str, str.length(), size, padChar);
+    }
+
+    public static String rightPad(String str, int strSize, int size, char padChar) {
         if (str == null) {
             return null;
         }
-        int pads = size - str.length();
+        int pads = size - strSize;
         if (pads <= 0) {
             return str; // returns original String when possible
         }
         if (pads > PAD_LIMIT) {
-            return rightPad(str, size, String.valueOf(padChar));
+            return rightPad(str, strSize, size, String.valueOf(padChar));
         }
         return str.concat(padding(pads, padChar));
     }
@@ -394,6 +405,13 @@ public final class StringUtils {
      *  <code>null</code> if null String input
      */
     public static String rightPad(String str, int size, String padStr) {
+        if (str == null)
+            return null;
+
+        return rightPad(str, str.length(), size, padStr);
+    }
+
+    public static String rightPad(String str, int strSize, int size, String padStr) {
         if (str == null) {
             return null;
         }
@@ -401,7 +419,7 @@ public final class StringUtils {
             padStr = " ";
         }
         int padLen = padStr.length();
-        int strLen = str.length();
+        int strLen = strSize;
         int pads = size - strLen;
         if (pads <= 0) {
             return str; // returns original String when possible
@@ -447,6 +465,10 @@ public final class StringUtils {
         return leftPad(str, size, ' ');
     }
 
+    public static String leftPad(String str, int strSize, int size) {
+        return leftPad(str, strSize, size, ' ');
+    }
+
     /**
      * <p>Left pad a String with a specified character.</p>
      *
@@ -469,15 +491,22 @@ public final class StringUtils {
      * @since 2.0
      */
     public static String leftPad(String str, int size, char padChar) {
+        if (str == null)
+            return null;
+
+        return leftPad(str, str.length(), size, padChar);
+    }
+
+    public static String leftPad(String str, int strSize, int size, char padChar) {
         if (str == null) {
             return null;
         }
-        int pads = size - str.length();
+        int pads = size - strSize;
         if (pads <= 0) {
             return str; // returns original String when possible
         }
         if (pads > PAD_LIMIT) {
-            return leftPad(str, size, String.valueOf(padChar));
+            return leftPad(str, strSize, size, String.valueOf(padChar));
         }
         return padding(pads, padChar).concat(str);
     }
@@ -506,6 +535,13 @@ public final class StringUtils {
      *  <code>null</code> if null String input
      */
     public static String leftPad(String str, int size, String padStr) {
+        if (str == null)
+            return null;
+
+        return leftPad(str, str.length(), size, padStr);
+    }
+
+    public static String leftPad(String str, int strSize, int size, String padStr) {
         if (str == null) {
             return null;
         }
@@ -513,7 +549,7 @@ public final class StringUtils {
             padStr = " ";
         }
         int padLen = padStr.length();
-        int strLen = str.length();
+        int strLen = strSize;
         int pads = size - strLen;
         if (pads <= 0) {
             return str; // returns original String when possible

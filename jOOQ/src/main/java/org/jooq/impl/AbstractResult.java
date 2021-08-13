@@ -78,6 +78,7 @@ import org.jooq.DSLContext;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Formattable;
+import org.jooq.FormattingProvider;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONFormat;
@@ -141,6 +142,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
     public final void format(Writer writer, TXTFormat format) {
         try {
 
+            final FormattingProvider fp = Tools.configuration(this).formattingProvider();
+
             // Numeric columns have greater max width because values are aligned
             final int NUM_COL_MAX_WIDTH = format.maxColWidth() == Integer.MAX_VALUE ? Integer.MAX_VALUE : 2 * format.maxColWidth();
 
@@ -187,7 +190,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 List<Integer> widthList = new ArrayList<>(1 + buffer.size());
 
                 // Add column name width first
-                widthList.add(min(colMaxWidth, max(format.minColWidth(), fields.field(index).getName().length())));
+                widthList.add(min(colMaxWidth, max(format.minColWidth(), fp.width(fields.field(index).getName()))));
 
                 // Add column values width
                 for (R record : buffer) {
@@ -197,7 +200,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     if (isNumCol)
                         value = alignNumberValue(decimalPlaces[index], value);
 
-                    widthList.add(min(colMaxWidth, value.length()));
+                    widthList.add(min(colMaxWidth, fp.width(value)));
                 }
 
                 // Find max
@@ -223,11 +226,13 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         writer.append(' ');
 
                 String padded;
+                String name = fields.field(index).getName();
+                int width = fp.width(name);
 
                 if (Number.class.isAssignableFrom(fields.field(index).getType()))
-                    padded = leftPad(fields.field(index).getName(), widths[index]);
+                    padded = leftPad(name, width, widths[index]);
                 else
-                    padded = rightPad(fields.field(index).getName(), widths[index]);
+                    padded = rightPad(name, width, widths[index]);
 
                 if (widths[index] < 4)
                     writer.append(padded);
@@ -281,17 +286,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         );
 
                     String padded;
-                    if (Number.class.isAssignableFrom(fields.field(index).getType())) {
-                        // Align number value before left pad
-                        value = alignNumberValue(decimalPlaces[index], value);
-
-                        // Left pad
-                        padded = leftPad(value, widths[index]);
-                    }
-                    else {
-                        // Right pad
-                        padded = rightPad(value, widths[index]);
-                    }
+                    if (Number.class.isAssignableFrom(fields.field(index).getType()))
+                        padded = leftPad(alignNumberValue(decimalPlaces[index], value), widths[index]);
+                    else
+                        padded = rightPad(value, fp.width(value), widths[index]);
 
                     if (widths[index] < 4)
                         writer.append(padded);
@@ -359,13 +357,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             int decimalPlaces = decimalPlaces(value);
             int rightPadSize = value.length() + columnDecimalPlaces - decimalPlaces;
 
-            if (decimalPlaces == 0) {
-                // If integer value, add one for decimal point
+            // If integer value, add one for decimal point
+            if (decimalPlaces == 0)
                 value = rightPad(value, rightPadSize + 1);
-            }
-            else {
+            else
                 value = rightPad(value, rightPadSize);
-            }
         }
 
         return value;
@@ -877,6 +873,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
         try {
             DSLContext ctx = configuration.dsl();
+            FormattingProvider fp = configuration.formattingProvider();
             Field<?> category = fields.field(format.category());
             TreeMap<Object, Result<R>> groups = new TreeMap<>(result.intoGroups(format.category()));
 
@@ -896,7 +893,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             int categoryPadding = 1;
             int categoryWidth = 0;
             for (Object o : categories)
-                categoryWidth = Math.max(categoryWidth, ("" + o).length());
+                categoryWidth = Math.max(categoryWidth, fp.width("" + o));
 
             double axisMin = Double.POSITIVE_INFINITY;
             double axisMax = Double.NEGATIVE_INFINITY;
@@ -946,7 +943,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         ? format.numericFormat().format(axisLegendPercent * 100.0) + "%"
                         : format.numericFormat().format(axisLegend);
 
-                    for (int x = axisLegendString.length(); x < verticalLegendWidth; x++)
+                    for (int x = fp.width(axisLegendString); x < verticalLegendWidth; x++)
                         writer.write(' ');
 
                     writer.write(axisLegendString);
@@ -1017,16 +1014,16 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     double rounding = 0.0;
                     for (double x = 0.0; x < chartWidth;) {
                         String label = "" + categories.get((int) (x / barWidth));
-                        int length = label.length();
+                        int width = fp.width(label);
 
-                        double padding = Math.max(categoryPadding, (barWidth - length) / 2);
+                        double padding = Math.max(categoryPadding, (barWidth - width) / 2);
 
                         rounding = (rounding + padding - Math.floor(padding)) % 1;
                         x = x + (padding + rounding);
                         for (int i = 0; i < (int) (padding + rounding); i++)
                             writer.write(' ');
 
-                        x = x + length;
+                        x = x + width;
                         if (x >= chartWidth)
                             break;
                         writer.write(label);

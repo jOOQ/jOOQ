@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.tools.StringUtils.rightPad;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A JSON formatting type, which can be used to configure JSON imports /
  * exports.
@@ -125,6 +127,7 @@ public final class JSONFormat {
     /**
      * The new value for the formatting flag, defaulting to <code>false</code>.
      */
+    @NotNull
     public final JSONFormat format(boolean newFormat) {
         return new JSONFormat(
             newFormat,
@@ -149,6 +152,7 @@ public final class JSONFormat {
     /**
      * The new newline character, defaulting to <code>\n</code>.
      */
+    @NotNull
     public final JSONFormat newline(String newNewline) {
         return new JSONFormat(
             format,
@@ -166,6 +170,7 @@ public final class JSONFormat {
     /**
      * The formatting flag.
      */
+    @NotNull
     public final String newline() {
         return format ? newline : "";
     }
@@ -173,6 +178,7 @@ public final class JSONFormat {
     /**
      * The new global indentation size applied on all levels, defaulting to <code>0</code>.
      */
+    @NotNull
     public final JSONFormat globalIndent(int newGlobalIndent) {
         return new JSONFormat(
             format,
@@ -197,6 +203,7 @@ public final class JSONFormat {
     /**
      * The new indentation size per level value, defaulting to <code>2</code>.
      */
+    @NotNull
     public final JSONFormat indent(int newIndent) {
         return new JSONFormat(
             format,
@@ -221,6 +228,7 @@ public final class JSONFormat {
     /**
      * Convenience method to get an indentation string at a given level.
      */
+    @NotNull
     public final String indentString(int level) {
         int i = level + globalIndent / indent;
 
@@ -236,6 +244,7 @@ public final class JSONFormat {
      * Whether to emit a header row with column names, defaulting to
      * <code>true</code>.
      */
+    @NotNull
     public final JSONFormat header(boolean newHeader) {
         return new JSONFormat(
             format,
@@ -262,6 +271,7 @@ public final class JSONFormat {
      * The record format to be applied, defaulting to
      * {@link RecordFormat#ARRAY}.
      */
+    @NotNull
     public final JSONFormat recordFormat(RecordFormat newRecordFormat) {
         return new JSONFormat(
             format,
@@ -280,6 +290,7 @@ public final class JSONFormat {
      * The record format to be applied, defaulting to
      * {@link RecordFormat#ARRAY}.
      */
+    @NotNull
     public final RecordFormat recordFormat() {
         return recordFormat;
     }
@@ -287,6 +298,7 @@ public final class JSONFormat {
     /**
      * Whether to wrap single column records in the {@link #recordFormat()}.
      */
+    @NotNull
     public final JSONFormat wrapSingleColumnRecords(boolean newWrapSingleColumnRecords) {
         return new JSONFormat(
             format,
@@ -312,6 +324,7 @@ public final class JSONFormat {
      * Whether nested {@link JSON} or {@link JSONB} content should be quoted
      * like a string, or nested into JSON formatted output.
      */
+    @NotNull
     public final JSONFormat quoteNested(boolean newQuoteNested) {
         return new JSONFormat(
             format,

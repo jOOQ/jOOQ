@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A text formatting type, which can be used to configure text imports /
@@ -100,6 +101,7 @@ public final class TXTFormat {
     /**
      * The maximum number of rows to be included in the format, defaulting to all rows.
      */
+    @NotNull
     public TXTFormat maxRows(int newMaxRows) {
         return new TXTFormat(
             newMaxRows,
@@ -124,6 +126,7 @@ public final class TXTFormat {
     /**
      * The minimum column width, defaulting to 4
      */
+    @NotNull
     public TXTFormat minColWidth(int newMinColWidth) {
         return new TXTFormat(
             maxRows,
@@ -145,10 +148,10 @@ public final class TXTFormat {
         return minColWidth;
     }
 
-
     /**
      * The minimum column width, defaulting to no limit.
      */
+    @NotNull
     public TXTFormat maxColWidth(int newMaxColWidth) {
         return new TXTFormat(
             maxRows,
@@ -174,6 +177,7 @@ public final class TXTFormat {
      * Whether the horizontal table border (top and bottom line) should be
      * displayed.
      */
+    @NotNull
     public TXTFormat horizontalTableBorder(boolean newHorizontalTableBorder) {
         return new TXTFormat(
             maxRows,
@@ -200,6 +204,7 @@ public final class TXTFormat {
      * Whether the horizontal header border (line between header and data cells)
      * should be displayed.
      */
+    @NotNull
     public TXTFormat horizontalHeaderBorder(boolean newHorizontalHeaderBorder) {
         return new TXTFormat(
             maxRows,
@@ -226,6 +231,7 @@ public final class TXTFormat {
      * Whether the horizontal cell border (line between data cells) should be
      * displayed.
      */
+    @NotNull
     public TXTFormat horizontalCellBorder(boolean newHorizontalCellBorder) {
         return new TXTFormat(
             maxRows,
@@ -252,6 +258,7 @@ public final class TXTFormat {
      * Whether the vertical table border (left and right most lines) should be
      * displayed.
      */
+    @NotNull
     public TXTFormat verticalTableBorder(boolean newVerticalTableBorder) {
         return new TXTFormat(
             maxRows,
@@ -278,6 +285,7 @@ public final class TXTFormat {
      * Whether the vertical cell borders (lines between data cells) should be
      * displayed.
      */
+    @NotNull
     public TXTFormat verticalCellBorder(boolean newVerticalCellBorder) {
         return new TXTFormat(
             maxRows,
@@ -304,6 +312,7 @@ public final class TXTFormat {
      * Whether horizontal and vertical lines should be intersected with a
      * <code>'+'</code> symbol.
      */
+    @NotNull
     public TXTFormat intersectLines(boolean newIntersectLines) {
         return new TXTFormat(
             maxRows,

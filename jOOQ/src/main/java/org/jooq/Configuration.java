@@ -543,6 +543,13 @@ public interface Configuration extends Serializable {
     @NotNull
     ConverterProvider converterProvider();
 
+    /**
+     * Get the configured <code>FormattingProvider</code> from this
+     * configuration.
+     */
+    @NotNull
+    FormattingProvider formattingProvider();
+
 
 
 
@@ -1195,6 +1202,19 @@ public interface Configuration extends Serializable {
     @NotNull
     Configuration set(ConverterProvider newConverterProvider);
 
+    /**
+     * Change this configuration to hold a new formatting provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newFormattingProvider The new formatting provider to be contained
+     *            in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration set(FormattingProvider newFormattingProvider);
+
 
 
 
@@ -1800,6 +1820,17 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(ConverterProvider newConverterProvider);
+
+    /**
+     * Create a derived configuration from this one, with new formatting
+     * provider.
+     *
+     * @param newFormattingProvider The new formatting provider to be contained
+     *            in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration derive(FormattingProvider newFormattingProvider);
 
 
 

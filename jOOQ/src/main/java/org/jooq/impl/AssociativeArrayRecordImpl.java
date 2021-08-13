@@ -388,13 +388,3 @@ package org.jooq.impl;
 
 
 
-
-
-
-
-
-
-
-
-
-

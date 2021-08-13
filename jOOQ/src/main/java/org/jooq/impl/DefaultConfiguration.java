@@ -66,6 +66,7 @@ import org.jooq.DiagnosticsListenerProvider;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
+import org.jooq.FormattingProvider;
 import org.jooq.MetaProvider;
 import org.jooq.MigrationListenerProvider;
 // ...
@@ -131,6 +132,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
     private transient UnwrapperProvider                 unwrapperProvider;
     private transient CharsetProvider                   charsetProvider;
     private transient ConverterProvider                 converterProvider;
+    private transient FormattingProvider                formattingProvider;
 
 
 
@@ -191,6 +193,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             null,
             null,
             null,
+            null,
 
 
 
@@ -231,6 +234,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             configuration.unwrapperProvider,
             configuration.charsetProvider,
             configuration.converterProvider,
+            configuration.formattingProvider,
 
 
 
@@ -270,6 +274,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         UnwrapperProvider unwrapperProvider,
         CharsetProvider charsetProvider,
         ConverterProvider converterProvider,
+        FormattingProvider formattingProvider,
 
 
 
@@ -298,6 +303,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         set(unwrapperProvider);
         set(charsetProvider);
         set(converterProvider);
+        set(formattingProvider);
 
 
 
@@ -361,6 +367,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -394,6 +401,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -427,6 +435,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -460,6 +469,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -498,6 +508,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -531,6 +542,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -564,6 +576,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -602,6 +615,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -640,6 +654,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -673,6 +688,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -706,6 +722,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -739,6 +756,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -772,6 +790,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -805,6 +824,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -838,6 +858,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -876,6 +897,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             newUnwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -909,6 +931,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             newCharsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -942,6 +965,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             newConverterProvider,
+            formattingProvider,
 
 
 
@@ -951,6 +975,41 @@ public class DefaultConfiguration extends AbstractConfiguration {
             data
         );
     }
+
+    @Override
+    public final Configuration derive(FormattingProvider newFormattingProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            interpreterConnectionProvider,
+            systemConnectionProvider,
+            connectionFactory,
+            metaProvider,
+            commitProvider,
+            executorProvider,
+            cacheProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            migrationListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            unwrapperProvider,
+            charsetProvider,
+            converterProvider,
+            newFormattingProvider,
+
+
+
+            clock,
+            dialect,
+            settings,
+            data
+        );
+    }
+
 
 
 
@@ -1011,6 +1070,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -1044,6 +1104,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -1077,6 +1138,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             unwrapperProvider,
             charsetProvider,
             converterProvider,
+            formattingProvider,
 
 
 
@@ -1272,6 +1334,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
     @Override
     public final Configuration set(ConverterProvider newConverterProvider) {
         this.converterProvider = newConverterProvider;
+        return this;
+    }
+
+    @Override
+    public final Configuration set(FormattingProvider newFormattingProvider) {
+        this.formattingProvider = newFormattingProvider;
         return this;
     }
 
@@ -1712,6 +1780,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
             : new DefaultConverterProvider();
     }
 
+    @Override
+    public final FormattingProvider formattingProvider() {
+        return formattingProvider != null
+            ? formattingProvider
+            : new DefaultFormattingProvider();
+    }
+
 
 
 
@@ -1827,6 +1902,10 @@ public class DefaultConfiguration extends AbstractConfiguration {
             ? converterProvider
             : null);
 
+        oos.writeObject(formattingProvider instanceof Serializable
+            ? formattingProvider
+            : null);
+
         // [#7062] Exclude reflection cache from serialisation
         for (Entry<Object, Object> entry : data.entrySet()) {
             if (entry.getKey() instanceof CacheType)
@@ -1874,6 +1953,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         unwrapperProvider = (UnwrapperProvider) ois.readObject();
         charsetProvider = (CharsetProvider) ois.readObject();
         converterProvider = (ConverterProvider) ois.readObject();
+        formattingProvider = (FormattingProvider) ois.readObject();
         data = new ConcurrentHashMap<>();
 
         Object key;

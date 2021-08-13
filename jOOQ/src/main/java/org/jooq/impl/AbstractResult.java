@@ -62,7 +62,6 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
@@ -76,15 +75,12 @@ import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
-import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
-import org.jooq.Fields;
 import org.jooq.Formattable;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONFormat;
-import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -116,11 +112,11 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 abstract class AbstractResult<R extends Record> extends AbstractFormattable implements FieldsTrait, Iterable<R> {
 
-    final AbstractRow<R>      fields;
-    Configuration             configuration;
+    final AbstractRow<R> fields;
 
     AbstractResult(Configuration configuration, AbstractRow<R> row) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.fields = row;
     }
 
@@ -459,7 +455,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
     @Override
     final JSONFormat defaultJSONFormat() {
-        return JSONFormat.DEFAULT_FOR_RESULTS;
+        return Tools.configuration(this).formattingProvider().jsonFormatForResults();
     }
 
     @Override
@@ -743,7 +739,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
     @Override
     final XMLFormat defaultXMLFormat() {
-        return XMLFormat.DEFAULT_FOR_RESULTS;
+        return Tools.configuration(this).formattingProvider().xmlFormatForResults();
     }
 
     @Override

@@ -39,12 +39,14 @@ package org.jooq.impl;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.List;
 
+import org.jooq.Attachable;
 import org.jooq.CSVFormat;
 import org.jooq.ChartFormat;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Formattable;
 import org.jooq.JSONFormat;
@@ -62,16 +64,51 @@ import org.xml.sax.SAXException;
  *
  * @author Lukas Eder
  */
-abstract class AbstractFormattable implements Formattable, Serializable {
+abstract class AbstractFormattable implements Formattable, Attachable {
+
+    Configuration configuration;
+
+    AbstractFormattable(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    // -------------------------------------------------------------------------
+    // The Attachable API
+    // -------------------------------------------------------------------------
+
+    abstract List<? extends Attachable> getAttachables();
+
+    @Override
+    public final void attach(Configuration c) {
+        configuration = c;
+
+        for (Attachable attachable : getAttachables())
+            if (attachable != null)
+                attachable.attach(c);
+    }
+
+    @Override
+    public final void detach() {
+        attach(null);
+    }
+
+    @Override
+    public final Configuration configuration() {
+        return configuration;
+    }
+
+    // -------------------------------------------------------------------------
+    // The Formattable API
+    // -------------------------------------------------------------------------
 
     @Override
     public final String format() {
-        return format(TXTFormat.DEFAULT);
+        return format(Tools.configuration(this).formattingProvider().txtFormat());
     }
 
     @Override
     public final String format(int maxRecords) {
-        return format(TXTFormat.DEFAULT.maxRows(maxRecords));
+        return format(Tools.configuration(this).formattingProvider().txtFormat().maxRows(maxRecords));
     }
 
     @Override
@@ -98,88 +135,42 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void format(Writer writer) {
-        format(writer, TXTFormat.DEFAULT);
+        format(writer, Tools.configuration(this).formattingProvider().txtFormat());
     }
 
     @Override
     public final void format(Writer writer, int maxRecords) {
-        format(writer, TXTFormat.DEFAULT.maxRows(maxRecords));
+        format(writer, Tools.configuration(this).formattingProvider().txtFormat().maxRows(maxRecords));
     }
 
     @Override
     public final String formatCSV() {
-        return formatCSV(true);
+        return formatCSV(Tools.configuration(this).formattingProvider().csvFormat());
     }
 
     @Override
     public final String formatCSV(boolean header) {
-        StringWriter writer = new StringWriter();
-        formatCSV(writer, header);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream) {
-        formatCSV(stream, true);
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, boolean header) {
-        formatCSV(new OutputStreamWriter(stream), header);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer) {
-        formatCSV(writer, true);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer, boolean header) {
-        formatCSV(writer, header, ',', "\"\"");
+        return formatCSV(Tools.configuration(this).formattingProvider().csvFormat().header(header));
     }
 
     @Override
     public final String formatCSV(char delimiter) {
-        return formatCSV(true, delimiter);
+        return formatCSV(Tools.configuration(this).formattingProvider().csvFormat().delimiter(delimiter));
     }
 
     @Override
     public final String formatCSV(boolean header, char delimiter) {
-        StringWriter writer = new StringWriter();
-        formatCSV(writer, header, delimiter);
-        return writer.toString();
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, char delimiter) {
-        formatCSV(stream, true, delimiter);
-    }
-
-    @Override
-    public final void formatCSV(OutputStream stream, boolean header, char delimiter) {
-        formatCSV(new OutputStreamWriter(stream), header, delimiter);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer, char delimiter) {
-        formatCSV(writer, true, delimiter);
-    }
-
-    @Override
-    public final void formatCSV(Writer writer, boolean header, char delimiter) {
-        formatCSV(writer, header, delimiter, "\"\"");
+        return formatCSV(Tools.configuration(this).formattingProvider().csvFormat().header(header).delimiter(delimiter));
     }
 
     @Override
     public final String formatCSV(char delimiter, String nullString) {
-        return formatCSV(true, delimiter, nullString);
+        return formatCSV(Tools.configuration(this).formattingProvider().csvFormat().delimiter(delimiter).nullString(nullString));
     }
 
     @Override
     public final String formatCSV(boolean header, char delimiter, String nullString) {
-        StringWriter writer = new StringWriter();
-        formatCSV(writer, header, delimiter, nullString);
-        return writer.toString();
+        return formatCSV(Tools.configuration(this).formattingProvider().csvFormat().header(header).delimiter(delimiter).nullString(nullString));
     }
 
     @Override
@@ -190,8 +181,28 @@ abstract class AbstractFormattable implements Formattable, Serializable {
     }
 
     @Override
+    public final void formatCSV(OutputStream stream) {
+        formatCSV(new OutputStreamWriter(stream));
+    }
+
+    @Override
+    public final void formatCSV(OutputStream stream, boolean header) {
+        formatCSV(new OutputStreamWriter(stream), header);
+    }
+
+    @Override
+    public final void formatCSV(OutputStream stream, char delimiter) {
+        formatCSV(stream, Tools.configuration(this).formattingProvider().csvFormat().delimiter(delimiter));
+    }
+
+    @Override
+    public final void formatCSV(OutputStream stream, boolean header, char delimiter) {
+        formatCSV(new OutputStreamWriter(stream), header, delimiter);
+    }
+
+    @Override
     public final void formatCSV(OutputStream stream, char delimiter, String nullString) {
-        formatCSV(stream, true, delimiter, nullString);
+        formatCSV(new OutputStreamWriter(stream), delimiter, nullString);
     }
 
     @Override
@@ -205,13 +216,33 @@ abstract class AbstractFormattable implements Formattable, Serializable {
     }
 
     @Override
+    public final void formatCSV(Writer writer) {
+        formatCSV(writer, Tools.configuration(this).formattingProvider().csvFormat());
+    }
+
+    @Override
+    public final void formatCSV(Writer writer, boolean header) {
+        formatCSV(writer, Tools.configuration(this).formattingProvider().csvFormat().header(header));
+    }
+
+    @Override
+    public final void formatCSV(Writer writer, char delimiter) {
+        formatCSV(writer, Tools.configuration(this).formattingProvider().csvFormat().delimiter(delimiter));
+    }
+
+    @Override
+    public final void formatCSV(Writer writer, boolean header, char delimiter) {
+        formatCSV(writer, Tools.configuration(this).formattingProvider().csvFormat().header(header).delimiter(delimiter));
+    }
+
+    @Override
     public final void formatCSV(Writer writer, char delimiter, String nullString) {
-        formatCSV(writer, true, delimiter, nullString);
+        formatCSV(writer, Tools.configuration(this).formattingProvider().csvFormat().delimiter(delimiter).nullString(nullString));
     }
 
     @Override
     public final void formatCSV(Writer writer, boolean header, char delimiter, String nullString) {
-        formatCSV(writer, new CSVFormat().header(header).delimiter(delimiter).nullString(nullString));
+        formatCSV(writer, Tools.configuration(this).formattingProvider().csvFormat().header(header).delimiter(delimiter).nullString(nullString));
     }
 
     abstract JSONFormat defaultJSONFormat();
@@ -300,7 +331,7 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void formatChart(Writer writer) {
-        formatChart(writer, ChartFormat.DEFAULT);
+        formatChart(writer, Tools.configuration(this).formattingProvider().chartFormat());
     }
 
     @Override

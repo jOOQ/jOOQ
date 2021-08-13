@@ -56,6 +56,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collector;
 
+import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Field;
@@ -123,22 +124,8 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     // -------------------------------------------------------------------------
 
     @Override
-    public final void attach(Configuration c) {
-        this.configuration = c;
-
-        for (R record : records)
-            if (record != null)
-                record.attach(c);
-    }
-
-    @Override
-    public final void detach() {
-        attach(null);
-    }
-
-    @Override
-    public final Configuration configuration() {
-        return configuration;
+    final List<? extends Attachable> getAttachables() {
+        return records;
     }
 
     // -------------------------------------------------------------------------
@@ -1139,7 +1126,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public String toString() {
-        return format(TXTFormat.DEFAULT.maxRows(50).maxColWidth(50));
+        return format(Tools.configuration(this).formattingProvider().txtFormat().maxRows(50).maxColWidth(50));
     }
 
     @Override

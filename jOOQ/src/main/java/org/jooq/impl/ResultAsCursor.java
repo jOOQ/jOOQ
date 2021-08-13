@@ -39,7 +39,9 @@ package org.jooq.impl;
 
 import java.sql.ResultSet;
 import java.util.Iterator;
+import java.util.List;
 
+import org.jooq.Attachable;
 import org.jooq.Record;
 import org.jooq.Result;
 
@@ -47,8 +49,9 @@ import org.jooq.Result;
  * @author Lukas Eder
  */
 final class ResultAsCursor<R extends Record> extends AbstractCursor<R> {
-    private final Result<R>   result;
-    private int               index;
+
+    private final Result<R> result;
+    private int             index;
 
     @SuppressWarnings("unchecked")
     ResultAsCursor(Result<R> result) {
@@ -56,6 +59,19 @@ final class ResultAsCursor<R extends Record> extends AbstractCursor<R> {
 
         this.result = result;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Attachable API
+    // -------------------------------------------------------------------------
+
+    @Override
+    final List<? extends Attachable> getAttachables() {
+        return result;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Cursor API
+    // -------------------------------------------------------------------------
 
     @Override
     public final Iterator<R> iterator() {

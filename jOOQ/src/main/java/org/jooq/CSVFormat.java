@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.CSVFormat.Quote.SPECIAL_CHARACTERS;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A CSV formatting type, which can be used to configure CSV imports / exports.
  * <p>
@@ -49,13 +51,15 @@ import static org.jooq.CSVFormat.Quote.SPECIAL_CHARACTERS;
  */
 public final class CSVFormat {
 
-    final String  delimiter;
-    final String  nullString;
-    final String  emptyString;
-    final String  newline;
-    final String  quoteString;
-    final Quote   quote;
-    final boolean header;
+    public static final CSVFormat DEFAULT = new CSVFormat();
+
+    final String                  delimiter;
+    final String                  nullString;
+    final String                  emptyString;
+    final String                  newline;
+    final String                  quoteString;
+    final Quote                   quote;
+    final boolean                 header;
 
     public CSVFormat() {
         this(
@@ -102,6 +106,7 @@ public final class CSVFormat {
      * </tr>
      * </table>
      */
+    @NotNull
     public CSVFormat delimiter(String newDelimiter) {
         return new CSVFormat(
             newDelimiter,
@@ -129,6 +134,7 @@ public final class CSVFormat {
      * </tr>
      * </table>
      */
+    @NotNull
     public CSVFormat delimiter(char newDelimiter) {
         return delimiter("" + newDelimiter);
     }
@@ -148,6 +154,7 @@ public final class CSVFormat {
      * </tr>
      * </table>
      */
+    @NotNull
     public String delimiter() {
         return delimiter;
     }
@@ -171,6 +178,7 @@ public final class CSVFormat {
      * </tr>
      * </table>
      */
+    @NotNull
     public CSVFormat nullString(String newNullString) {
         return new CSVFormat(
             delimiter,
@@ -202,6 +210,7 @@ public final class CSVFormat {
      * </tr>
      * </table>
      */
+    @NotNull
     public String nullString() {
         return nullString;
     }
@@ -221,6 +230,7 @@ public final class CSVFormat {
      * </tr>
      * </table>
      */
+    @NotNull
     public CSVFormat emptyString(String newEmptyString) {
         return new CSVFormat(
             delimiter,
@@ -248,6 +258,7 @@ public final class CSVFormat {
      * </tr>
      * </table>
      */
+    @NotNull
     public String emptyString() {
         return emptyString;
     }
@@ -255,6 +266,7 @@ public final class CSVFormat {
     /**
      * The string to be used to separate rows, defaulting to <code>\n</code>.
      */
+    @NotNull
     public CSVFormat newline(String newNewline) {
         return new CSVFormat(
             delimiter,
@@ -270,6 +282,7 @@ public final class CSVFormat {
     /**
      * The string to be used to separate rows, defaulting to <code>\n</code>.
      */
+    @NotNull
     public String newline() {
         return newline;
     }
@@ -278,6 +291,7 @@ public final class CSVFormat {
      * The string used to quote values according to the rules specified in
      * {@link #quote()}.
      */
+    @NotNull
     public CSVFormat quoteString(String newQuoteString) {
         return new CSVFormat(
             delimiter,
@@ -294,6 +308,7 @@ public final class CSVFormat {
      * The string used to quote values according to the rules specified in
      * {@link #quote()}.
      */
+    @NotNull
     public String quoteString() {
         return quoteString;
     }
@@ -301,6 +316,7 @@ public final class CSVFormat {
     /**
      * When to quote CSV content.
      */
+    @NotNull
     public CSVFormat quote(Quote newQuote) {
         return new CSVFormat(
             delimiter,
@@ -316,6 +332,7 @@ public final class CSVFormat {
     /**
      * When to quote CSV content.
      */
+    @NotNull
     public Quote quote() {
         return quote;
     }
@@ -324,6 +341,7 @@ public final class CSVFormat {
      * Whether to emit a header row with column names, defaulting to
      * <code>true</code>.
      */
+    @NotNull
     public CSVFormat header(boolean newHeader) {
         return new CSVFormat(
             delimiter,

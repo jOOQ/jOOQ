@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.text.DecimalFormat;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A CSV formatting type, which can be used to configure chart exports.
  * <p>
@@ -116,6 +118,7 @@ public final class ChartFormat {
     /**
      * The new output format, defaulting to {@link Output#ASCII}.
      */
+    @NotNull
     public ChartFormat output(Output newOutput) {
         return new ChartFormat(
             newOutput,
@@ -137,6 +140,7 @@ public final class ChartFormat {
     /**
      * The output format.
      */
+    @NotNull
     public Output output() {
         return output;
     }
@@ -144,6 +148,7 @@ public final class ChartFormat {
     /**
      * The new chart type, defaulting to {@link Type#AREA}.
      */
+    @NotNull
     public ChartFormat type(Type newType) {
         return new ChartFormat(
             output,
@@ -162,6 +167,7 @@ public final class ChartFormat {
         );
     }
 
+    @NotNull
     public Type type() {
         return type;
     }
@@ -169,6 +175,7 @@ public final class ChartFormat {
     /**
      * The new display format, defaulting to {@link Display#STACKED}.
      */
+    @NotNull
     public ChartFormat display(Display newDisplay) {
         return new ChartFormat(
             output,
@@ -190,6 +197,7 @@ public final class ChartFormat {
     /**
      * The display format.
      */
+    @NotNull
     public Display display() {
         return display;
     }
@@ -197,6 +205,7 @@ public final class ChartFormat {
     /**
      * The new chart dimensions, defaulting to <code>80 x 25</code>.
      */
+    @NotNull
     public ChartFormat dimensions(int newWidth, int newHeight) {
         return new ChartFormat(
             output,
@@ -218,6 +227,7 @@ public final class ChartFormat {
     /**
      * The new chart width, defaulting to <code>80</code>.
      */
+    @NotNull
     public ChartFormat width(int newWidth) {
         return dimensions(newWidth, height);
     }
@@ -232,6 +242,7 @@ public final class ChartFormat {
     /**
      * The new chart height, defaulting to <code>25</code>.
      */
+    @NotNull
     public ChartFormat height(int newHeight) {
         return dimensions(width, newHeight);
     }
@@ -246,6 +257,7 @@ public final class ChartFormat {
     /**
      * The new category source column number, defaulting to <code>0</code>.
      */
+    @NotNull
     public ChartFormat category(int newCategory) {
         return new ChartFormat(
             output,
@@ -274,6 +286,7 @@ public final class ChartFormat {
     /**
      * The new category as text value, defaulting to <code>true</code>.
      */
+    @NotNull
     public ChartFormat categoryAsText(boolean newCategoryAsText) {
         return new ChartFormat(
             output,
@@ -302,6 +315,7 @@ public final class ChartFormat {
     /**
      * The new value source column numbers, defaulting to <code>{ 1 }</code>.
      */
+    @NotNull
     public ChartFormat values(int... newValues) {
         return new ChartFormat(
             output,
@@ -323,6 +337,7 @@ public final class ChartFormat {
     /**
      * The value source column numbers.
      */
+    @NotNull
     public int[] values() {
         return values;
     }
@@ -330,6 +345,7 @@ public final class ChartFormat {
     /**
      * The new column shades, defaulting to <code>{ 'X' }</code>.
      */
+    @NotNull
     public ChartFormat shades(char... newShades) {
         return new ChartFormat(
             output,
@@ -351,6 +367,7 @@ public final class ChartFormat {
     /**
      * The value column shades.
      */
+    @NotNull
     public char[] shades() {
         return shades;
     }
@@ -358,6 +375,7 @@ public final class ChartFormat {
     /**
      * Whether to show legends, defaulting to <code>true</code>.
      */
+    @NotNull
     public ChartFormat showLegends(boolean newShowHorizontalLegend, boolean newShowVerticalLegend) {
         return new ChartFormat(
             output,
@@ -379,6 +397,7 @@ public final class ChartFormat {
     /**
      * Whether to show the horizontal legend, defaulting to <code>true</code>.
      */
+    @NotNull
     public ChartFormat showHorizontalLegend(boolean newShowHorizontalLegend) {
         return showLegends(newShowHorizontalLegend, showVerticalLegend);
     }
@@ -393,6 +412,7 @@ public final class ChartFormat {
     /**
      * Whether to show the vertical legend, defaulting to <code>true</code>.
      */
+    @NotNull
     public ChartFormat showVerticalLegend(boolean newShowVerticalLegend) {
         return showLegends(showHorizontalLegend, newShowVerticalLegend);
     }
@@ -407,6 +427,7 @@ public final class ChartFormat {
     /**
      * The new newline character, defaulting to <code>\n</code>.
      */
+    @NotNull
     public ChartFormat newline(String newNewline) {
         return new ChartFormat(
             output,
@@ -428,6 +449,7 @@ public final class ChartFormat {
     /**
      * The newline character.
      */
+    @NotNull
     public String newline() {
         return newline;
     }
@@ -435,6 +457,7 @@ public final class ChartFormat {
     /**
      * The new numeric format, defaulting to <code>###,###.00</code>.
      */
+    @NotNull
     public ChartFormat numericFormat(DecimalFormat newNumericFormat) {
         return new ChartFormat(
             output,
@@ -456,6 +479,7 @@ public final class ChartFormat {
     /**
      * The numeric format.
      */
+    @NotNull
     public DecimalFormat numericFormat() {
         return numericFormat;
     }

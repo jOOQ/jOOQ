@@ -38,13 +38,14 @@
 package org.jooq.impl;
 
 import java.util.Arrays;
-import java.util.List;
 
 // ...
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.JSONFormat;
 import org.jooq.Record;
+import org.jooq.XMLFormat;
 
 /**
  * A common base class for {@link Record} and {@link ArrayRecord}
@@ -54,42 +55,19 @@ import org.jooq.Record;
  *
  * @author Lukas Eder
  */
-abstract class AbstractStore extends AbstractFormattable implements Attachable {
-
-    private Configuration     configuration;
+abstract class AbstractStore extends AbstractFormattable {
 
     AbstractStore() {
         this(null);
     }
 
     AbstractStore(Configuration configuration) {
-        this.configuration = configuration;
+        super(configuration);
     }
 
     // -------------------------------------------------------------------------
     // The Attachable API
     // -------------------------------------------------------------------------
-
-    abstract List<Attachable> getAttachables();
-
-    @Override
-    public final void attach(Configuration c) {
-        configuration = c;
-
-        for (Attachable attachable : getAttachables())
-            if (attachable != null)
-                attachable.attach(c);
-    }
-
-    @Override
-    public final void detach() {
-        attach(null);
-    }
-
-    @Override
-    public final Configuration configuration() {
-        return configuration;
-    }
 
     /**
      * This method is used in generated code!
@@ -100,6 +78,20 @@ abstract class AbstractStore extends AbstractFormattable implements Attachable {
     @Deprecated
     protected final DSLContext create() {
         return DSL.using(configuration());
+    }
+
+    // -------------------------------------------------------------------------
+    // The Formattable API
+    // -------------------------------------------------------------------------
+
+    @Override
+    final JSONFormat defaultJSONFormat() {
+        return Tools.configuration(this).formattingProvider().jsonFormatForRecords();
+    }
+
+    @Override
+    final XMLFormat defaultXMLFormat() {
+        return Tools.configuration(this).formattingProvider().xmlFormatForRecords();
     }
 
     // -------------------------------------------------------------------------

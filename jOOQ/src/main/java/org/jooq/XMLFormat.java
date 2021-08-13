@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.tools.StringUtils.rightPad;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * An XML formatting type, which can be used to configure XML imports / exports.
  * <p>
@@ -106,6 +108,7 @@ public final class XMLFormat {
     /**
      * The new value for the xmlns flag, defaulting to <code>true</code>.
      */
+    @NotNull
     public final XMLFormat xmlns(boolean newXmlns) {
         return new XMLFormat(
             newXmlns,
@@ -130,6 +133,7 @@ public final class XMLFormat {
     /**
      * The new value for the formatting flag, defaulting to <code>false</code>.
      */
+    @NotNull
     public final XMLFormat format(boolean newFormat) {
         return new XMLFormat(
             xmlns,
@@ -154,6 +158,7 @@ public final class XMLFormat {
     /**
      * The new newline character, defaulting to <code>\n</code>.
      */
+    @NotNull
     public final XMLFormat newline(String newNewline) {
         return new XMLFormat(
             xmlns,
@@ -171,6 +176,7 @@ public final class XMLFormat {
     /**
      * The formatting flag.
      */
+    @NotNull
     public final String newline() {
         return format ? newline : "";
     }
@@ -178,6 +184,7 @@ public final class XMLFormat {
     /**
      * The new global indentation size applied on all levels, defaulting to <code>0</code>.
      */
+    @NotNull
     public final XMLFormat globalIndent(int newGlobalIndent) {
         return new XMLFormat(
             xmlns,
@@ -202,6 +209,7 @@ public final class XMLFormat {
     /**
      * The new indentation size per level value, defaulting to <code>2</code>.
      */
+    @NotNull
     public final XMLFormat indent(int newIndent) {
         return new XMLFormat(
             xmlns,
@@ -226,6 +234,7 @@ public final class XMLFormat {
     /**
      * Convenience method to get an indentation string at a given level.
      */
+    @NotNull
     public final String indentString(int level) {
         int i = level + globalIndent / indent;
 
@@ -246,6 +255,7 @@ public final class XMLFormat {
      * This flag is ignored on {@link Record#formatXML(XMLFormat)} and similar
      * methods.
      */
+    @NotNull
     public final XMLFormat header(boolean newHeader) {
         return new XMLFormat(
             xmlns,
@@ -271,6 +281,7 @@ public final class XMLFormat {
      * The record format to be applied, defaulting to
      * {@link RecordFormat#VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE}.
      */
+    @NotNull
     public final XMLFormat recordFormat(RecordFormat newRecordFormat) {
         return new XMLFormat(
             xmlns,
@@ -289,6 +300,7 @@ public final class XMLFormat {
      * The record format to be applied, defaulting to
      * {@link RecordFormat#VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE}.
      */
+    @NotNull
     public final RecordFormat recordFormat() {
         return recordFormat;
     }
@@ -297,6 +309,7 @@ public final class XMLFormat {
      * Whether nested {@link XML} content should be quoted like a string, or
      * nested into XML formatted output.
      */
+    @NotNull
     public final XMLFormat quoteNested(boolean newQuoteNested) {
         return new XMLFormat(
             xmlns,

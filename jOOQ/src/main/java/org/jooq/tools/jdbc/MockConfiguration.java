@@ -55,6 +55,7 @@ import org.jooq.DSLContext;
 import org.jooq.DiagnosticsListenerProvider;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
+import org.jooq.FormattingProvider;
 import org.jooq.MetaProvider;
 import org.jooq.MigrationListenerProvider;
 // ...
@@ -228,6 +229,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public ConverterProvider converterProvider() {
         return delegate.converterProvider();
+    }
+
+    @Override
+    public FormattingProvider formattingProvider() {
+        return delegate.formattingProvider();
     }
 
     @Override
@@ -412,6 +418,12 @@ public class MockConfiguration extends AbstractConfiguration {
     }
 
     @Override
+    public Configuration set(FormattingProvider newFormattingProvider) {
+        delegate.set(newFormattingProvider);
+        return this;
+    }
+
+    @Override
     public Configuration set(SQLDialect newDialect) {
         delegate.set(newDialect);
         return this;
@@ -561,6 +573,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public Configuration derive(ConverterProvider newConverterProvider) {
         return new MockConfiguration(delegate.derive(newConverterProvider), provider);
+    }
+
+    @Override
+    public Configuration derive(FormattingProvider newFormattingProvider) {
+        return new MockConfiguration(delegate.derive(newFormattingProvider), provider);
     }
 
     @Override

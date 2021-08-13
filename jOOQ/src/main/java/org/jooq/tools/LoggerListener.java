@@ -60,14 +60,10 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Routine;
-import org.jooq.TXTFormat;
 import org.jooq.VisitContext;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultVisitListener;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
@@ -161,7 +157,7 @@ public class LoggerListener extends DefaultExecuteListener {
     @Override
     public void resultEnd(ExecuteContext ctx) {
         if (ctx.result() != null && log.isDebugEnabled()) {
-            log(ctx.result());
+            log(ctx.configuration(), ctx.result());
             log.debug("Fetched row(s)", ctx.result().size());
         }
     }
@@ -172,13 +168,13 @@ public class LoggerListener extends DefaultExecuteListener {
         Result<Record> buffer = (Result<Record>) ctx.data(BUFFER);
 
         if (buffer != null && !buffer.isEmpty()) {
-            log(buffer);
+            log(ctx.configuration(), buffer);
             log.debug("Fetched row(s)", buffer.size() + (buffer.size() < maxRows() ? "" : " (or more)"));
         }
     }
 
-    private void log(Result<?> result) {
-        logMultiline("Fetched result", result.format(TXTFormat.DEFAULT.maxRows(maxRows()).maxColWidth(maxColWidth())), Level.FINE);
+    private void log(Configuration configuration, Result<?> result) {
+        logMultiline("Fetched result", result.format(configuration.formattingProvider().txtFormat().maxRows(maxRows()).maxColWidth(maxColWidth())), Level.FINE);
     }
 
     private int maxRows() {

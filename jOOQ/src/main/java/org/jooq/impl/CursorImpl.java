@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
 // ...
 import static org.jooq.impl.RowField.NO_NATIVE_SUPPORT;
 import static org.jooq.impl.Tools.embeddedFields;
@@ -67,10 +68,12 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
+import org.jooq.Attachable;
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.Converter;
 import org.jooq.ExecuteContext;
@@ -143,6 +146,19 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         else
             this.intern = null;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Attachable API
+    // -------------------------------------------------------------------------
+
+    @Override
+    final List<? extends Attachable> getAttachables() {
+        return emptyList();
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Cursor API
+    // -------------------------------------------------------------------------
 
 
 

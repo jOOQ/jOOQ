@@ -76,6 +76,11 @@ final class FieldAlias<T> extends AbstractField<T> {
         return true;
     }
 
+    @Override
+    public Name getQualifiedName() {
+        return getUnqualifiedName();
+    }
+
     /**
      * Get the aliased field wrapped by this field.
      */

@@ -9369,14 +9369,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // MySQL style
         else if (parseFunctionNameIf("DATE_ADD") || (sub = parseFunctionNameIf("DATE_SUB"))) {
             parse('(');
-            Field<?> date = parseField(Type.D);
+            Field<?> d = parseField(Type.D);
+
+            // [#12025] In the absence of meta data, assume TIMESTAMP
+            Field<?> date = d.getDataType().isDateTime() ? d : d.coerce(TIMESTAMP);
             parse(',');
 
             // [#8792] TODO: Support parsing interval expressions
             Field<?> interval = parseFieldIntervalLiteralIf();
             parse(')');
 
-            return sub ? date.sub(interval) : date.add(interval);
+            return sub ? DSL.dateSub((Field) date, (Field) interval) : DSL.dateAdd((Field) date, (Field) interval);
         }
 
         return null;

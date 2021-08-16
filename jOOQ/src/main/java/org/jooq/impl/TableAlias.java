@@ -159,7 +159,7 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
 
     @Override
     public Name getQualifiedName() {
-        return super.getUnqualifiedName();
+        return getUnqualifiedName();
     }
 
     @Override

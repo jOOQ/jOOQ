@@ -37,7 +37,10 @@
  */
 package org.jooq;
 
-import org.jooq.impl.DefaultExecuteListener;
+import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
+
+import org.jooq.impl.CallbackFormattingProvider;
 import org.jooq.impl.DefaultFormattingProvider;
 
 import org.jetbrains.annotations.NotNull;
@@ -113,4 +116,76 @@ public interface FormattingProvider {
      * {@link Character#isIdeographic(int)} character.
      */
     int width(String string);
+
+    /**
+     * Create an {@link FormattingProvider} with a {@link #txtFormat()}
+     * implementation.
+     */
+    @NotNull
+    public static CallbackFormattingProvider onTxtFormat(Supplier<? extends TXTFormat> newOnTxtFormat) {
+        return new CallbackFormattingProvider().onTxtFormat(newOnTxtFormat);
+    }
+
+    /**
+     * Create an {@link FormattingProvider} with a {@link #csvFormat()}
+     * implementation.
+     */
+    @NotNull
+    public static CallbackFormattingProvider onCsvFormat(Supplier<? extends CSVFormat> newOnCsvFormat) {
+        return new CallbackFormattingProvider().onCsvFormat(newOnCsvFormat);
+    }
+
+    /**
+     * Create an {@link FormattingProvider} with a
+     * {@link #jsonFormatForResults()} implementation.
+     */
+    @NotNull
+    public static CallbackFormattingProvider onJsonFormatForResults(Supplier<? extends JSONFormat> newOnJsonFormatForResults) {
+        return new CallbackFormattingProvider().onJsonFormatForResults(newOnJsonFormatForResults);
+    }
+
+    /**
+     * Create an {@link FormattingProvider} with a
+     * {@link #jsonFormatForRecords()} implementation.
+     */
+    @NotNull
+    public static CallbackFormattingProvider onJsonFormatForRecords(Supplier<? extends JSONFormat> newOnJsonFormatForRecords) {
+        return new CallbackFormattingProvider().onJsonFormatForRecords(newOnJsonFormatForRecords);
+    }
+
+    /**
+     * Create an {@link FormattingProvider} with a
+     * {@link #xmlFormatForResults()} implementation.
+     */
+    @NotNull
+    public static CallbackFormattingProvider onXmlFormatForResults(Supplier<? extends XMLFormat> newOnXmlFormatForResults) {
+        return new CallbackFormattingProvider().onXmlFormatForResults(newOnXmlFormatForResults);
+    }
+
+    /**
+     * Create an {@link FormattingProvider} with a {@link #xmlFormatForRecords()}
+     * implementation.
+     */
+    @NotNull
+    public static CallbackFormattingProvider onXmlFormatForRecords(Supplier<? extends XMLFormat> newOnXmlFormatForRecords) {
+        return new CallbackFormattingProvider().onXmlFormatForRecords(newOnXmlFormatForRecords);
+    }
+
+    /**
+     * Create an {@link FormattingProvider} with a {@link #chartFormat()}
+     * implementation.
+     */
+    @NotNull
+    public static CallbackFormattingProvider onChartFormat(Supplier<? extends ChartFormat> newOnChartFormat) {
+        return new CallbackFormattingProvider().onChartFormat(newOnChartFormat);
+    }
+
+    /**
+     * Create an {@link FormattingProvider} with a {@link #width(String)}
+     * implementation.
+     */
+    @NotNull
+    public static CallbackFormattingProvider onWidth(ToIntFunction<? super String> newOnWidth) {
+        return new CallbackFormattingProvider().onWidth(newOnWidth);
+    }
 }

@@ -54,14 +54,6 @@ import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.DefaultParseContext.FunctionKeyword.FK_AND;
 import static org.jooq.impl.DefaultParseContext.FunctionKeyword.FK_IN;
-import static org.jooq.impl.DefaultParseContext.Type.A;
-import static org.jooq.impl.DefaultParseContext.Type.B;
-import static org.jooq.impl.DefaultParseContext.Type.D;
-import static org.jooq.impl.DefaultParseContext.Type.J;
-import static org.jooq.impl.DefaultParseContext.Type.N;
-import static org.jooq.impl.DefaultParseContext.Type.S;
-import static org.jooq.impl.DefaultParseContext.Type.X;
-import static org.jooq.impl.DefaultParseContext.Type.Y;
 import static org.jooq.impl.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_DELETE;
@@ -127,14 +119,12 @@ import org.jooq.AlterDatabaseStep;
 import org.jooq.AlterDomainDropConstraintCascadeStep;
 import org.jooq.AlterDomainRenameConstraintStep;
 import org.jooq.AlterDomainStep;
-import org.jooq.AlterIndexFinalStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceFlagsStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableAddStep;
 import org.jooq.AlterTableDropStep;
-import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterTypeStep;
 import org.jooq.ArrayAggOrderByStep;
@@ -161,7 +151,6 @@ import org.jooq.CreateDomainDefaultStep;
 // ...
 // ...
 // ...
-import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateIndexWhereStep;
@@ -194,14 +183,10 @@ import org.jooq.DerivedColumnList;
 import org.jooq.Domain;
 import org.jooq.DropDomainCascadeStep;
 import org.jooq.DropIndexCascadeStep;
-import org.jooq.DropIndexFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
-import org.jooq.DropTableFinalStep;
 import org.jooq.DropTableStep;
-import org.jooq.DropTypeFinalStep;
 import org.jooq.DropTypeStep;
-import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
 import org.jooq.FieldOrConstraint;
 import org.jooq.FieldOrRow;
@@ -243,7 +228,6 @@ import org.jooq.LanguageContext;
 import org.jooq.LikeEscapeStep;
 // ...
 import org.jooq.Merge;
-import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeMatchedWhereStep;
@@ -267,7 +251,6 @@ import org.jooq.QualifiedAsterisk;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
 import org.jooq.RevokeFromStep;
@@ -292,7 +275,6 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.Truncate;
 import org.jooq.TruncateCascadeStep;
-import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.UpdateFromStep;
 import org.jooq.UpdateLimitStep;
@@ -326,7 +308,6 @@ import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
-import org.jooq.conf.SettingsTools;
 import org.jooq.impl.ScopeStack.Value;
 import org.jooq.impl.XMLParse.DocumentOrContent;
 import org.jooq.tools.StringUtils;
@@ -335,8 +316,6 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -517,7 +496,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         //         statements.
         if (TRUE.equals(configuration().data("org.jooq.ddl.parse-for-ddldatabase"))) {
             if (query instanceof Select) {
-                String sql =
+                String string =
                 configuration().deriveSettings(s -> s
                     .withRenderFormatted(false)
                     .withRenderKeywordCase(RenderKeywordCase.LOWER)
@@ -529,7 +508,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 // [#8910] special treatment for PostgreSQL pg_dump's curious
                 //         usage of the SET SCHEMA command
-                Matcher matcher = P_SEARCH_PATH.matcher(sql);
+                Matcher matcher = P_SEARCH_PATH.matcher(string);
                 String schema;
                 if (matcher.find())
                     if (!StringUtils.isBlank(schema = matcher.group(2)))
@@ -2007,7 +1986,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return map;
     }
 
-    @SuppressWarnings("null")
     private final Merge<?> parseMerge(WithImpl with) {
         parseKeyword("MERGE");
         parseKeywordIf("INTO");
@@ -2104,7 +2082,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         // TODO support multi clause MERGE
         // TODO support DELETE
-        MergeFinalStep<?> s3 = insert
+        Merge<?> s3 = insert
             ? insertWhere != null
                 ? s2.whenNotMatchedThenInsert(insertColumns).values(insertValues).where(insertWhere)
                 : s2.whenNotMatchedThenInsert(insertColumns).values(insertValues)
@@ -2663,7 +2641,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             ? step1.restartIdentity()
             : step1;
 
-        TruncateFinalStep<?> step3 =
+        Truncate<?> step3 =
               cascade
             ? step2.cascade()
             : restrict
@@ -3672,13 +3650,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Table<?> tableName = parseTableName();
         ifExists = ifExists || parseKeywordIf("IF EXISTS");
 
-        DropViewFinalStep s1;
-
-        s1 = ifExists
+        return ifExists
             ? dsl.dropViewIfExists(tableName)
             : dsl.dropView(tableName);
-
-        return s1;
     }
 
     private final DDLQuery parseCreateSequence() {
@@ -3689,7 +3663,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             ? dsl.createSequenceIfNotExists(schemaName)
             : dsl.createSequence(schemaName);
 
-        boolean restart = false;
         boolean startWith = false;
         boolean incrementBy = false;
         boolean minvalue = false;
@@ -4233,7 +4206,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         // TODO: [#10116] Support this clause also in the jOOQ API
                         parseKeywordIf("ON NULL");
 
-                        type = type.defaultValue((Field) toField(parseConcat(null)));
+                        type = type.defaultValue((Field) toField(parseConcat()));
 
                         // TODO: [#10115] Support this clause also in the jOOQ API
                         parseKeywordIf("WITH VALUES");
@@ -4306,7 +4279,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("ON UPDATE")) {
 
                     // [#6132] TODO: Support this feature in the jOOQ DDL API
-                    parseConcat(null);
+                    parseConcat();
                     onUpdate = true;
                     continue;
                 }
@@ -4761,7 +4734,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         throw expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME", "SET");
     }
 
-    private final AlterTableFinalStep parseCascadeRestrictIf(AlterTableDropStep step) {
+    private final DDLQuery parseCascadeRestrictIf(AlterTableDropStep step) {
         boolean cascade = parseKeywordIf("CASCADE");
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
@@ -4897,7 +4870,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else if (parseKeywordIf("SET NOT NULL") || parseNotNullOptionalEnable())
                 return s1.alter(field).setNotNull();
             else if (parseKeywordIf("SET DEFAULT"))
-                return s1.alter(field).default_((Field) toField(parseConcat(null)));
+                return s1.alter(field).default_((Field) toField(parseConcat()));
             else if (parseKeywordIf("TO") || parseKeywordIf("RENAME TO") || parseKeywordIf("RENAME AS"))
                 return s1.renameColumn(field).to(parseFieldName());
             else if (parseKeywordIf("TYPE") || parseKeywordIf("SET DATA TYPE"))
@@ -5023,7 +4996,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
         DropTableStep s1;
-        DropTableFinalStep s2;
 
         s1 = ifExists
            ? dsl.dropTableIfExists(tableName)
@@ -5031,13 +5003,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
            ? dsl.dropTemporaryTable(tableName)
            : dsl.dropTable(tableName);
 
-        s2 = cascade
+        return cascade
            ? s1.cascade()
            : restrict
            ? s1.restrict()
            : s1;
-
-        return s2;
     }
 
 
@@ -5415,19 +5385,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
         DropTypeStep s1;
-        DropTypeFinalStep s2;
 
         s1 = ifExists
            ? dsl.dropTypeIfExists(typeNames)
            : dsl.dropType(typeNames);
 
-        s2 = cascade
+        return cascade
            ? s1.cascade()
            : restrict
            ? s1.restrict()
            : s1;
-
-        return s2;
     }
 
     private final DDLQuery parseCreateDomain() {
@@ -5703,13 +5670,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         CreateIndexWhereStep s3 = include != null
             ? s2.include(include)
             : s2;
-        CreateIndexFinalStep s4 = condition != null
+
+        return condition != null
             ? s3.where(condition)
             : excludeNullKeys
             ? s3.excludeNullKeys()
             : s3;
-
-        return s4;
     }
 
     private SortField<?>[] parseParenthesisedSortSpecification() {
@@ -5737,9 +5703,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         AlterIndexStep s1 = ifExists
             ? dsl.alterIndexIfExists(indexName)
             : dsl.alterIndex(indexName);
-        AlterIndexFinalStep s2 = s1.renameTo(newName);
-        return s2;
-
+        return s1.renameTo(newName);
     }
 
     private final DDLQuery parseDropIndex() {
@@ -5751,7 +5715,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         DropIndexOnStep s1;
         DropIndexCascadeStep s2;
-        DropIndexFinalStep s3;
 
         s1 = ifExists
             ? dsl.dropIndexIfExists(indexName)
@@ -5761,13 +5724,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             ? s1.on(onTable)
             : s1;
 
-        s3 = parseKeywordIf("CASCADE")
+        return parseKeywordIf("CASCADE")
             ? s2.cascade()
             : parseKeywordIf("RESTRICT")
             ? s2.restrict()
             : s2;
-
-        return s3;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -5897,7 +5858,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             boolean not;
             boolean notOp = false;
 
-            left = parseConcat(null);
+            left = parseConcat();
             not = parseKeywordIf("NOT");
 
 
@@ -5944,7 +5905,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(((Row) left).size())), comp)
 
                     : left instanceof Field
-                        ? ((Field) left).compare(comp, toField(parseConcat(null)))
+                        ? ((Field) left).compare(comp, toField(parseConcat()))
                         : new RowCondition((Row) left, parseRow(((Row) left).size(), true), comp);
 
                 if (all || any)
@@ -5974,7 +5935,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 not = parseKeywordIf("DISTINCT FROM") == not;
                 if (left instanceof Field) {
-                    Field right = toField(parseConcat(null));
+                    Field right = toField(parseConcat());
                     return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
                 }
                 else {
@@ -5983,7 +5944,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
             }
             else if (!not && parseIf("@>")) {
-                return toField(left).contains((Field) toField(parseConcat(null)));
+                return toField(left).contains((Field) toField(parseConcat()));
             }
             else if (!forbidden.contains(FK_IN) && parseKeywordIf("IN")) {
                 Condition result;
@@ -6019,11 +5980,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else if (parseKeywordIf("BETWEEN")) {
                 boolean symmetric = !parseKeywordIf("ASYMMETRIC") && parseKeywordIf("SYMMETRIC");
                 FieldOrRow r1 = left instanceof Field
-                    ? parseConcat(null)
+                    ? parseConcat()
                     : parseRow(((Row) left).size());
                 parseKeyword("AND");
                 FieldOrRow r2 = left instanceof Field
-                    ? parseConcat(null)
+                    ? parseConcat()
                     : parseRow(((Row) left).size());
 
                 return symmetric
@@ -6057,7 +6018,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                             fields = emptyList();
                         }
                         else {
-                            fields = parseList(',', c -> toField(parseConcat(null)));
+                            fields = parseList(',', c -> toField(parseConcat()));
                             parse(')');
                         }
                         Field<String>[] fieldArray = fields.toArray(new Field[0]);
@@ -6079,7 +6040,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                             fields = emptyList();
                         }
                         else {
-                            fields = parseList(',', c -> toField(parseConcat(null)));
+                            fields = parseList(',', c -> toField(parseConcat()));
                             parse(')');
                         }
                         Field<String>[] fieldArray = fields.toArray(new Field[0]);
@@ -6088,13 +6049,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     }
                 }
                 else {
-                    Field right = toField(parseConcat(null));
+                    Field right = toField(parseConcat());
                     LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLike(right) : ((Field) left).like(right);
                     return parseEscapeClauseIf(like);
                 }
             }
             else if (left instanceof Field && (parseKeywordIf("ILIKE") || parseOperatorIf("~~*") || (notOp = parseOperatorIf("!~~*")))) {
-                Field right = toField(parseConcat(null));
+                Field right = toField(parseConcat());
                 LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLikeIgnoreCase(right) : ((Field) left).likeIgnoreCase(right);
                 return parseEscapeClauseIf(like);
             }
@@ -6103,13 +6064,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                                             || parseKeywordIf("LIKE_REGEX")
                                             || parseOperatorIf("~")
                                             || (notOp = parseOperatorIf("!~")))) {
-                Field right = toField(parseConcat(null));
+                Field right = toField(parseConcat());
                 return (not ^ notOp)
                         ? ((Field) left).notLikeRegex(right)
                         : ((Field) left).likeRegex(right);
             }
             else if (left instanceof Field && parseKeywordIf("SIMILAR TO")) {
-                Field right = toField(parseConcat(null));
+                Field right = toField(parseConcat());
                 LikeEscapeStep like = not ? ((Field) left).notSimilarTo(right) : ((Field) left).similarTo(right);
                 return parseEscapeClauseIf(like);
             }
@@ -6196,7 +6157,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result = generateSeries(one(), (Field<Integer>) rc);
             }
             else {
-                Field<?> f = parseField(Type.A);
+                Field<?> f = parseField();
 
                 // Work around a missing feature in unnest()
                 if (!f.getType().isArray())
@@ -6209,12 +6170,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
         else if (parseFunctionNameIf("GENERATE_SERIES", "SYSTEM_RANGE")) {
             parse('(');
-            Field from = toField(parseConcat(Type.N));
+            Field from = toField(parseConcat());
             parse(',');
-            Field to = toField(parseConcat(Type.N));
+            Field to = toField(parseConcat());
 
             Field step = parseIf(',')
-                ? toField(parseConcat(Type.N))
+                ? toField(parseConcat())
                 : null;
 
             parse(')');
@@ -6228,7 +6189,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             Field json = parseField();
             parse(',');
-            Field path = toField(parseConcat(Type.S));
+            Field path = toField(parseConcat());
             JSONTableColumnsStep s1 = (JSONTableColumnsStep) jsonTable(json, path);
             parseKeyword("COLUMNS");
             parse('(');
@@ -6253,7 +6214,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if (parseFunctionNameIf("XMLTABLE")) {
             parse('(');
 
-            XMLTablePassingStep s1 = xmltable((Field) toField(parseConcat(Type.S)));
+            XMLTablePassingStep s1 = xmltable((Field) toField(parseConcat()));
             XMLPassingMechanism m = parseXMLPassingMechanismIf();
             Field<XML> passing = m == null ? null : (Field<XML>) parseField();
 
@@ -6806,17 +6767,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
     }
 
-    @Override
-    public final Field<?> parseField() {
-        return parseField(null);
-    }
-
     private final SelectField<?> parseSelectField() {
         return (SelectField<?>) parseFieldOrRow();
-    }
-
-    private final FieldOrRow parseFieldOrRow() {
-        return parseFieldOrRow(null);
     }
 
     private final Row parseRow() {
@@ -6842,47 +6794,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return parseTuple(degree, allowDoubleParens);
     }
 
-    /**
-     * @deprecated [#11703] This type is no longer needed, remove it
-     */
-    @Deprecated
-    static enum Type {
-        A("array"),
-        D("date"),
-        S("string"),
-        N("numeric"),
-        B("boolean"),
-        Y("binary"),
-        J("json"),
-        X("xml");
-
-        private final String name;
-
-        private Type(String name) {
-            this.name = name;
-        }
-
-        boolean is(Type type) {
-            return true || type == null || type == this;
-        }
-
-        String getName() {
-            return name;
-        }
+    public final FieldOrRow parseFieldOrRow() {
+        return toFieldOrRow(parseOr());
     }
 
-    private final FieldOrRow parseFieldOrRow(Type type) {
-        if (B.is(type))
-            return toFieldOrRow(parseOr());
-        else
-            return parseConcat(type);
-    }
-
-    private final Field<?> parseField(Type type) {
-        if (B.is(type))
-            return toField(parseOr());
-        else
-            return toField(parseConcat(type));
+    @Override
+    public final Field<?> parseField() {
+        return toField(parseOr());
     }
 
     private final String parseHints() {
@@ -6968,23 +6886,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             throw expected("Field");
     }
 
-    private final FieldOrRow parseConcat(Type type) {
-        FieldOrRow r = parseCollated(type);
+    private final FieldOrRow parseConcat() {
+        FieldOrRow r = parseCollated();
 
-        if (S.is(type) && r instanceof Field)
+        if (r instanceof Field)
             while (parseIf("||"))
-                r = concat((Field) r, toField(parseCollated(type)));
+                r = concat((Field) r, toField(parseCollated()));
 
         return r;
     }
 
-    private final FieldOrRow parseCollated(Type type) {
-        FieldOrRow r = parseNumericOp(type);
+    private final FieldOrRow parseCollated() {
+        FieldOrRow r = parseNumericOp();
 
         if (r instanceof Field) {
-            if (S.is(type))
-                if (parseKeywordIf("COLLATE"))
-                    r = ((Field) r).collate(parseCollation());
+            if (parseKeywordIf("COLLATE"))
+                r = ((Field) r).collate(parseCollation());
 
 
 
@@ -7015,14 +6932,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Field<?> parseFieldNumericOpParenthesised() {
         parse('(');
-        Field<?> r = toField(parseNumericOp(N));
+        Field<?> r = toField(parseNumericOp());
         parse(')');
         return r;
     }
 
-    private final Field<?> parseFieldParenthesised(Type type) {
+    private final Field<?> parseFieldParenthesised() {
         parse('(');
-        Field<?> r = toField(parseField(type));
+        Field<?> r = toField(parseField());
         parse(')');
         return r;
     }
@@ -7037,38 +6954,38 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     // Any numeric operator of low precedence
     // See https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-PRECEDENCE
-    private final FieldOrRow parseNumericOp(Type type) {
-        FieldOrRow r = parseSum(type);
+    private final FieldOrRow parseNumericOp() {
+        FieldOrRow r = parseSum();
 
-        if (N.is(type) && r instanceof Field)
+        if (r instanceof Field)
             for (;;)
                 if (parseIf("<<"))
-                    r = ((Field) r).shl((Field) parseSum(type));
+                    r = ((Field) r).shl((Field) parseSum());
                 else if (parseIf(">>"))
-                    r = ((Field) r).shr((Field) parseSum(type));
+                    r = ((Field) r).shr((Field) parseSum());
                 else
                     break;
 
         return r;
     }
 
-    private final FieldOrRow parseSum(Type type) {
-        FieldOrRow r = parseFactor(type);
+    private final FieldOrRow parseSum() {
+        FieldOrRow r = parseFactor();
 
-        if ((N.is(type) || D.is(type)) && r instanceof Field)
+        if (r instanceof Field)
             for (;;)
                 if (parseIf('+'))
-                    r = parseSumRightOperand(type, r, true);
+                    r = parseSumRightOperand(r, true);
                 else if (parseIf('-'))
-                    r = parseSumRightOperand(type, r, false);
+                    r = parseSumRightOperand(r, false);
                 else
                     break;
 
         return r;
     }
 
-    private final Field parseSumRightOperand(Type type, FieldOrRow r, boolean add) {
-        Field rhs = (Field) parseFactor(type);
+    private final Field parseSumRightOperand(FieldOrRow r, boolean add) {
+        Field rhs = (Field) parseFactor();
         DatePart part;
 
         if ((parseKeywordIf("YEAR") || parseKeywordIf("YEARS")) && requireProEdition())
@@ -7106,17 +7023,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return lhs.sub(rhs);
     }
 
-    private final FieldOrRow parseFactor(Type type) {
-        FieldOrRow r = parseExp(type);
+    private final FieldOrRow parseFactor() {
+        FieldOrRow r = parseExp();
 
-        if (N.is(type) && r instanceof Field)
+        if (r instanceof Field)
             for (;;)
                 if (!peek("*=") && parseIf('*'))
-                    r = ((Field) r).mul((Field) parseExp(type));
+                    r = ((Field) r).mul((Field) parseExp());
                 else if (parseIf('/'))
-                    r = ((Field) r).div((Field) parseExp(type));
+                    r = ((Field) r).div((Field) parseExp());
                 else if (parseIf('%'))
-                    r = ((Field) r).mod((Field) parseExp(type));
+                    r = ((Field) r).mod((Field) parseExp());
 
 
 
@@ -7129,20 +7046,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return r;
     }
 
-    private final FieldOrRow parseExp(Type type) {
-        FieldOrRow r = parseUnaryOps(type);
+    private final FieldOrRow parseExp() {
+        FieldOrRow r = parseUnaryOps();
 
-        if (N.is(type) && r instanceof Field)
+        if (r instanceof Field)
             for (;;)
                 if (!peek("^=") && parseIf('^') || parseIf("**"))
-                    r = ((Field) r).pow(toField(parseUnaryOps(type)));
+                    r = ((Field) r).pow(toField(parseUnaryOps()));
                 else
                     break;
 
         return r;
     }
 
-    private final FieldOrRow parseUnaryOps(Type type) {
+    private final FieldOrRow parseUnaryOps() {
         if (parseKeywordIf("CONNECT_BY_ROOT") && requireProEdition()) {
 
 
@@ -7153,11 +7070,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Sign sign = parseSign();
 
         if (sign == Sign.NONE)
-            r = parseTerm(type);
+            r = parseTerm();
         else if (sign == Sign.PLUS)
-            r = toField(parseTerm(type));
+            r = toField(parseTerm());
         else if ((r = parseFieldUnsignedNumericLiteralIf(Sign.MINUS)) == null)
-            r = toField(parseTerm(type)).neg();
+            r = toField(parseTerm()).neg();
 
         if (parseTokensIf('(', '+', ')') && requireProEdition())
 
@@ -7184,7 +7101,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
         if (parseIf('[')) {
-            r = arrayGet((Field) toField(r), (Field) parseField(N));
+            r = arrayGet((Field) toField(r), (Field) parseField());
             parse(']');
         }
 
@@ -7220,7 +7137,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
     }
 
-    private final FieldOrRow parseTerm(Type type) {
+    private final FieldOrRow parseTerm() {
         FieldOrRow field;
         Object value;
 
@@ -7260,121 +7177,112 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'A':
-                if (N.is(type))
-                    if (parseFunctionNameIf("ABS"))
-                        return abs((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("ASC", "ASCII", "ASCII_VAL"))
-                        return ascii((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("ACOS"))
-                        return acos((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("ASIN"))
-                        return asin((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("ATAN", "ATN"))
-                        return atan((Field) parseFieldNumericOpParenthesised());
-                    else if ((field = parseFieldAtan2If()) != null)
-                        return field;
+                if (parseFunctionNameIf("ABS"))
+                    return abs((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("ASC", "ASCII", "ASCII_VAL"))
+                    return ascii((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("ACOS"))
+                    return acos((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("ASIN"))
+                    return asin((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("ATAN", "ATN"))
+                    return atan((Field) parseFieldNumericOpParenthesised());
+                else if ((field = parseFieldAtan2If()) != null)
+                    return field;
 
-                if (S.is(type))
-                    if (parseFunctionNameIf("ASCII_CHAR"))
-                        return chr((Field) parseFieldParenthesised(N));
+                else if (parseFunctionNameIf("ASCII_CHAR"))
+                    return chr((Field) parseFieldParenthesised());
 
-                if (A.is(type))
-                    if ((field = parseArrayValueConstructorIf()) != null)
-                        return field;
+                else if ((field = parseArrayValueConstructorIf()) != null)
+                    return field;
 
-                if (D.is(type))
-                    if (parseFunctionNameIf("ADD_YEARS"))
-                        return parseFieldAddDatePart(YEAR);
-                    else if (parseFunctionNameIf("ADD_MONTHS"))
-                        return parseFieldAddDatePart(MONTH);
-                    else if (parseFunctionNameIf("ADD_DAYS"))
-                        return parseFieldAddDatePart(DAY);
-                    else if (parseFunctionNameIf("ADD_HOURS"))
-                        return parseFieldAddDatePart(HOUR);
-                    else if (parseFunctionNameIf("ADD_MINUTES"))
-                        return parseFieldAddDatePart(MINUTE);
-                    else if (parseFunctionNameIf("ADD_SECONDS"))
-                        return parseFieldAddDatePart(SECOND);
+                else if (parseFunctionNameIf("ADD_YEARS"))
+                    return parseFieldAddDatePart(YEAR);
+                else if (parseFunctionNameIf("ADD_MONTHS"))
+                    return parseFieldAddDatePart(MONTH);
+                else if (parseFunctionNameIf("ADD_DAYS"))
+                    return parseFieldAddDatePart(DAY);
+                else if (parseFunctionNameIf("ADD_HOURS"))
+                    return parseFieldAddDatePart(HOUR);
+                else if (parseFunctionNameIf("ADD_MINUTES"))
+                    return parseFieldAddDatePart(MINUTE);
+                else if (parseFunctionNameIf("ADD_SECONDS"))
+                    return parseFieldAddDatePart(SECOND);
 
-                if ((field = parseFieldArrayGetIf()) != null)
+                else if ((field = parseFieldArrayGetIf()) != null)
                     return field;
 
                 break;
 
             case 'B':
-                if (N.is(type))
-                    if (parseFunctionNameIf("BIT_LENGTH"))
-                        return bitLength((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("BITCOUNT", "BIT_COUNT"))
-                        return bitCount((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("BYTE_LENGTH"))
-                        return octetLength((Field) parseFieldParenthesised(S));
-                    else if ((field = parseFieldBitwiseFunctionIf()) != null)
-                        return field;
+                if (parseFunctionNameIf("BIT_LENGTH"))
+                    return bitLength((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("BITCOUNT", "BIT_COUNT"))
+                    return bitCount((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("BYTE_LENGTH"))
+                    return octetLength((Field) parseFieldParenthesised());
+                else if ((field = parseFieldBitwiseFunctionIf()) != null)
+                    return field;
 
-                if (B.is(type))
-                    if ((value = parseBitLiteralIf()) != null)
-                        return DSL.inline((Boolean) value);
+                else if ((value = parseBitLiteralIf()) != null)
+                    return DSL.inline((Boolean) value);
 
                 break;
 
             case 'C':
-                if (S.is(type))
-                    if ((field = parseFieldConcatIf()) != null)
-                        return field;
-                    else if ((parseFunctionNameIf("CURRENT_CATALOG") && parseEmptyParens()))
-                        return currentCatalog();
-                    else if ((parseFunctionNameIf("CURRENT_DATABASE") && parseEmptyParens()))
-                        return currentCatalog();
-                    else if ((parseKeywordIf("CURRENT_SCHEMA", "CURRENT SCHEMA")) && parseEmptyParensIf())
-                        return currentSchema();
-                    else if ((parseKeywordIf("CURRENT_USER", "CURRENT USER", "CURRENTUSER")) && parseEmptyParensIf())
-                        return currentUser();
-                    else if (parseFunctionNameIf("CHR", "CHAR"))
-                        return chr((Field) parseFieldParenthesised(N));
+                if ((field = parseFieldConcatIf()) != null)
+                    return field;
+                else if ((parseFunctionNameIf("CURRENT_CATALOG") && parseEmptyParens()))
+                    return currentCatalog();
+                else if ((parseFunctionNameIf("CURRENT_DATABASE") && parseEmptyParens()))
+                    return currentCatalog();
+                else if ((parseKeywordIf("CURRENT_SCHEMA", "CURRENT SCHEMA")) && parseEmptyParensIf())
+                    return currentSchema();
+                else if ((parseKeywordIf("CURRENT_USER", "CURRENT USER", "CURRENTUSER")) && parseEmptyParensIf())
+                    return currentUser();
+                else if (parseFunctionNameIf("CHR", "CHAR"))
+                    return chr((Field) parseFieldParenthesised());
 
-                if (N.is(type))
-                    if ((field = parseFieldCharIndexIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("CHAR_LENGTH"))
-                        return charLength((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("CARDINALITY"))
-                        return cardinality((Field) parseFieldParenthesised(A));
-                    else if (parseFunctionNameIf("CEILING", "CEIL"))
-                        return ceil((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("COSH"))
-                        return cosh((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("COS"))
-                        return cos((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("COTH"))
-                        return coth((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("COT"))
-                        return cot((Field) parseFieldNumericOpParenthesised());
-                    else if ((field = parseNextvalCurrvalIf(SequenceMethod.CURRVAL)) != null)
-                        return field;
-                    else if (parseFunctionNameIf("CENTURY"))
-                        return century(parseFieldParenthesised(D));
+                else if ((field = parseFieldCharIndexIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("CHAR_LENGTH"))
+                    return charLength((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("CARDINALITY"))
+                    return cardinality((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("CEILING", "CEIL"))
+                    return ceil((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("COSH"))
+                    return cosh((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("COS"))
+                    return cos((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("COTH"))
+                    return coth((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("COT"))
+                    return cot((Field) parseFieldNumericOpParenthesised());
+                else if ((field = parseNextvalCurrvalIf(SequenceMethod.CURRVAL)) != null)
+                    return field;
+                else if (parseFunctionNameIf("CENTURY"))
+                    return century(parseFieldParenthesised());
 
-                if (D.is(type))
-                    if ((parseKeywordIf("CURRENT_DATE") || parseKeywordIf("CURRENT DATE")) && parseEmptyParensIf())
-                        return currentDate();
-                    else if (parseKeywordIf("CURRENT_TIMESTAMP") || parseKeywordIf("CURRENT TIMESTAMP")) {
-                        Field<Integer> precision = null;
-                        if (parseIf('('))
-                            if (!parseIf(')')) {
-                                precision = (Field<Integer>) parseField(N);
-                                parse(')');
-                            }
-                        return precision != null ? currentTimestamp(precision) : currentTimestamp();
-                    }
-                    else if ((parseKeywordIf("CURRENT_TIME") || parseKeywordIf("CURRENT TIME")) && parseEmptyParensIf())
-                        return currentTime();
-                    else if (parseFunctionNameIf("CURDATE") && parseEmptyParens())
-                        return currentDate();
-                    else if (parseFunctionNameIf("CURTIME") && parseEmptyParens())
-                        return currentTime();
+                else if ((parseKeywordIf("CURRENT_DATE") || parseKeywordIf("CURRENT DATE")) && parseEmptyParensIf())
+                    return currentDate();
+                else if (parseKeywordIf("CURRENT_TIMESTAMP") || parseKeywordIf("CURRENT TIMESTAMP")) {
+                    Field<Integer> precision = null;
+                    if (parseIf('('))
+                        if (!parseIf(')')) {
+                            precision = (Field<Integer>) parseField();
+                            parse(')');
+                        }
+                    return precision != null ? currentTimestamp(precision) : currentTimestamp();
+                }
+                else if ((parseKeywordIf("CURRENT_TIME") || parseKeywordIf("CURRENT TIME")) && parseEmptyParensIf())
+                    return currentTime();
+                else if (parseFunctionNameIf("CURDATE") && parseEmptyParens())
+                    return currentDate();
+                else if (parseFunctionNameIf("CURTIME") && parseEmptyParens())
+                    return currentTime();
 
-                if ((field = parseFieldCaseIf()) != null)
+                else if ((field = parseFieldCaseIf()) != null)
                     return field;
                 else if ((field = parseFieldCastIf()) != null)
                     return field;
@@ -7400,51 +7308,48 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'D':
-                if (S.is(type))
-                    if ((parseFunctionNameIf("DB_NAME") && parseEmptyParens()))
-                        return currentCatalog();
-                    else if ((parseFunctionNameIf("DBINFO") && parse('(') && parseStringLiteral("dbname") != null && parse(')')))
-                        return currentCatalog();
-                    else if (parseFunctionNameIf("DIGITS"))
-                        return digits((Field) parseFieldParenthesised(N));
+                if ((parseFunctionNameIf("DB_NAME") && parseEmptyParens()))
+                    return currentCatalog();
+                else if ((parseFunctionNameIf("DBINFO") && parse('(') && parseStringLiteral("dbname") != null && parse(')')))
+                    return currentCatalog();
+                else if (parseFunctionNameIf("DIGITS"))
+                    return digits((Field) parseFieldParenthesised());
 
-                if (D.is(type))
-                    if ((field = parseFieldDateLiteralIf()) != null)
-                        return field;
-                    else if ((field = parseFieldDateTruncIf()) != null)
-                        return field;
-                    else if ((field = parseFieldDateAddIf()) != null)
-                        return field;
-                    else if ((field = parseFieldDateDiffIf()) != null)
-                        return field;
-                    else if ((field = parseFieldDatePartIf()) != null)
-                        return field;
+                else if ((field = parseFieldDateLiteralIf()) != null)
+                    return field;
+                else if ((field = parseFieldDateTruncIf()) != null)
+                    return field;
+                else if ((field = parseFieldDateAddIf()) != null)
+                    return field;
+                else if ((field = parseFieldDateDiffIf()) != null)
+                    return field;
+                else if ((field = parseFieldDatePartIf()) != null)
+                    return field;
 
-                if (N.is(type))
-                    if ((field = parseFieldDenseRankIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("DECADE"))
-                        return decade(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("DAY")
-                          || parseFunctionNameIf("DAYOFMONTH"))
-                        return day(parseFieldParenthesised(D));
-                    // DB2 and MySQL support the non-ISO version where weeks go from Sunday = 1 to Saturday = 7
-                    else if (parseFunctionNameIf("DAYOFWEEK_ISO"))
-                        return isoDayOfWeek(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("DAYOFWEEK")
-                          || parseFunctionNameIf("DAY_OF_WEEK"))
-                        return dayOfWeek(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("DAYOFYEAR")
-                          || parseFunctionNameIf("DAY_OF_YEAR"))
-                        return dayOfYear(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("DEGREES")
-                          || parseFunctionNameIf("DEGREE")
-                          || parseFunctionNameIf("DEG"))
-                        return deg((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("DATALENGTH"))
-                        return octetLength((Field) parseFieldParenthesised(S));
+                else if ((field = parseFieldDenseRankIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("DECADE"))
+                    return decade(parseFieldParenthesised());
+                else if (parseFunctionNameIf("DAY")
+                      || parseFunctionNameIf("DAYOFMONTH"))
+                    return day(parseFieldParenthesised());
+                // DB2 and MySQL support the non-ISO version where weeks go from Sunday = 1 to Saturday = 7
+                else if (parseFunctionNameIf("DAYOFWEEK_ISO"))
+                    return isoDayOfWeek(parseFieldParenthesised());
+                else if (parseFunctionNameIf("DAYOFWEEK")
+                      || parseFunctionNameIf("DAY_OF_WEEK"))
+                    return dayOfWeek(parseFieldParenthesised());
+                else if (parseFunctionNameIf("DAYOFYEAR")
+                      || parseFunctionNameIf("DAY_OF_YEAR"))
+                    return dayOfYear(parseFieldParenthesised());
+                else if (parseFunctionNameIf("DEGREES")
+                      || parseFunctionNameIf("DEGREE")
+                      || parseFunctionNameIf("DEG"))
+                    return deg((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("DATALENGTH"))
+                    return octetLength((Field) parseFieldParenthesised());
 
-                if ((field = parseFieldDecodeIf()) != null)
+                else if ((field = parseFieldDecodeIf()) != null)
                     return field;
                 else if (parseKeywordIf("DEFAULT"))
                     return default_();
@@ -7454,28 +7359,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'E':
 
                 // [#6704] PostgreSQL E'...' escaped string literals
-                if (S.is(type))
-                    if (characterNext() == '\'')
-                        return inline(parseStringLiteral());
+                if (characterNext() == '\'')
+                    return inline(parseStringLiteral());
 
-                if (N.is(type))
-                    if ((field = parseFieldExtractIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("EXP"))
-                        return exp((Field) parseFieldNumericOpParenthesised());
+                else if ((field = parseFieldExtractIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("EXP"))
+                    return exp((Field) parseFieldNumericOpParenthesised());
 
-                if (D.is(type))
-                    if (parseFunctionNameIf("EPOCH"))
-                        return epoch(parseFieldParenthesised(D));
+                else if (parseFunctionNameIf("EPOCH"))
+                    return epoch(parseFieldParenthesised());
 
                 break;
 
             case 'F':
-                if (N.is(type))
-                    if (parseFunctionNameIf("FLOOR"))
-                        return floor((Field) parseFieldNumericOpParenthesised());
+                if (parseFunctionNameIf("FLOOR"))
+                    return floor((Field) parseFieldNumericOpParenthesised());
 
-                if ((field = parseFieldFirstValueIf()) != null)
+                else if ((field = parseFieldFirstValueIf()) != null)
                     return field;
                 else if ((field = parseFieldFieldIf()) != null)
                     return field;
@@ -7483,54 +7384,47 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'G':
-                if (D.is(type))
-                    if (parseKeywordIf("GETDATE") && parseEmptyParens())
-                        return currentTimestamp();
+                if (parseKeywordIf("GETDATE") && parseEmptyParens())
+                    return currentTimestamp();
 
-                if (S.is(type))
-                    if (parseFunctionNameIf("GENGUID", "GENERATE_UUID", "GEN_RANDOM_UUID") && parseEmptyParens())
-                        return uuid();
+                else if (parseFunctionNameIf("GENGUID", "GENERATE_UUID", "GEN_RANDOM_UUID") && parseEmptyParens())
+                    return uuid();
 
-                if ((field = parseFieldGreatestIf()) != null)
+                else if ((field = parseFieldGreatestIf()) != null)
                     return field;
-                else if (N.is(type) && (field = parseFieldGroupIdIf()) != null)
+                else if ((field = parseFieldGroupIdIf()) != null)
                     return field;
-                else if (N.is(type) && (field = parseFieldGroupingIdIf()) != null)
+                else if ((field = parseFieldGroupingIdIf()) != null)
                     return field;
-                else if (N.is(type) && (field = parseFieldGroupingIf()) != null)
+                else if ((field = parseFieldGroupingIf()) != null)
                     return field;
                 else
                     break;
 
             case 'H':
-                if (N.is(type))
-                    if (parseFunctionNameIf("HOUR"))
-                        return hour(parseFieldParenthesised(D));
+                if (parseFunctionNameIf("HOUR"))
+                    return hour(parseFieldParenthesised());
 
-                if (S.is(type))
-                    if (parseFunctionNameIf("HASH_MD5"))
-                        return md5((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("HEX"))
-                        return toHex((Field) parseFieldParenthesised(N));
+                else if (parseFunctionNameIf("HASH_MD5"))
+                    return md5((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("HEX"))
+                    return toHex((Field) parseFieldParenthesised());
 
                 break;
 
             case 'I':
-                if (D.is(type))
-                    if ((field = parseFieldIntervalLiteralIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("ISO_DAY_OF_WEEK"))
-                        return isoDayOfWeek(parseFieldParenthesised(D));
+                if ((field = parseFieldIntervalLiteralIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("ISO_DAY_OF_WEEK"))
+                    return isoDayOfWeek(parseFieldParenthesised());
 
-                if (N.is(type))
-                    if ((field = parseFieldInstrIf()) != null)
-                        return field;
+                else if ((field = parseFieldInstrIf()) != null)
+                    return field;
 
-                if (S.is(type))
-                    if ((field = parseFieldInsertIf()) != null)
-                        return field;
+                else if ((field = parseFieldInsertIf()) != null)
+                    return field;
 
-                if ((field = parseFieldIfnullIf()) != null)
+                else if ((field = parseFieldIfnullIf()) != null)
                     return field;
                 else if ((field = parseFieldIsnullIf()) != null)
                     return field;
@@ -7540,49 +7434,46 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
             case 'J':
-                if (J.is(type))
-                    if ((field = parseFieldJSONArrayConstructorIf()) != null)
-                        return field;
-                    else if ((field = parseFieldJSONObjectConstructorIf()) != null)
-                        return field;
-                    else if ((field = parseFieldJSONValueIf()) != null)
-                        return field;
+                if ((field = parseFieldJSONArrayConstructorIf()) != null)
+                    return field;
+                else if ((field = parseFieldJSONObjectConstructorIf()) != null)
+                    return field;
+                else if ((field = parseFieldJSONValueIf()) != null)
+                    return field;
 
                 break;
 
             case 'L':
-                if (S.is(type))
-                    if (parseFunctionNameIf("LOWER", "LCASE"))
-                        return lower((Field) parseFieldParenthesised(S));
-                    else if ((field = parseFieldLpadIf()) != null)
-                        return field;
-                    else if ((field = parseFieldLtrimIf()) != null)
-                        return field;
-                    else if ((field = parseFieldLeftIf()) != null)
-                        return field;
+                if (parseFunctionNameIf("LOWER", "LCASE"))
+                    return lower((Field) parseFieldParenthesised());
+                else if ((field = parseFieldLpadIf()) != null)
+                    return field;
+                else if ((field = parseFieldLtrimIf()) != null)
+                    return field;
+                else if ((field = parseFieldLeftIf()) != null)
+                    return field;
 
-                if (N.is(type))
-                    if (parseFunctionNameIf("LENGTH", "LEN"))
-                        return length((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("LENGTHB"))
-                        return octetLength((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("LN", "LOGN"))
-                        return ln((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("LOG10"))
-                        return log10((Field) parseFieldNumericOpParenthesised());
-                    else if ((field = parseFieldLogIf()) != null)
-                        return field;
-                    else if ((field = parseFieldLocateIf()) != null)
-                        return field;
-                    else if (parseKeywordIf("LEVEL") && requireProEdition()) {
+                else if (parseFunctionNameIf("LENGTH", "LEN"))
+                    return length((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("LENGTHB"))
+                    return octetLength((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("LN", "LOGN"))
+                    return ln((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("LOG10"))
+                    return log10((Field) parseFieldNumericOpParenthesised());
+                else if ((field = parseFieldLogIf()) != null)
+                    return field;
+                else if ((field = parseFieldLocateIf()) != null)
+                    return field;
+                else if (parseKeywordIf("LEVEL") && requireProEdition()) {
 
 
 
-                    }
-                    else if ((field = parseFieldShlIf()) != null)
-                        return field;
+                }
+                else if ((field = parseFieldShlIf()) != null)
+                    return field;
 
-                if ((field = parseFieldLeastIf()) != null)
+                else if ((field = parseFieldLeastIf()) != null)
                     return field;
                 else if ((field = parseFieldLeadLagIf()) != null)
                     return field;
@@ -7592,31 +7483,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'M':
-                if (N.is(type))
-                    if ((field = parseFieldModIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("MICROSECOND"))
-                        return microsecond(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("MILLENNIUM"))
-                        return millennium(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("MILLISECOND"))
-                        return millisecond(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("MINUTE"))
-                        return minute(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("MONTH"))
-                        return month(parseFieldParenthesised(D));
+                if ((field = parseFieldModIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("MICROSECOND"))
+                    return microsecond(parseFieldParenthesised());
+                else if (parseFunctionNameIf("MILLENNIUM"))
+                    return millennium(parseFieldParenthesised());
+                else if (parseFunctionNameIf("MILLISECOND"))
+                    return millisecond(parseFieldParenthesised());
+                else if (parseFunctionNameIf("MINUTE"))
+                    return minute(parseFieldParenthesised());
+                else if (parseFunctionNameIf("MONTH"))
+                    return month(parseFieldParenthesised());
 
-                if (S.is(type))
-                    if ((field = parseFieldMidIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("MD5"))
-                        return md5((Field) parseFieldParenthesised(S));
+                else if ((field = parseFieldMidIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("MD5"))
+                    return md5((Field) parseFieldParenthesised());
 
-                if (A.is(type))
-                    if ((field = parseMultisetValueConstructorIf()) != null)
-                        return field;
+                else if ((field = parseMultisetValueConstructorIf()) != null)
+                    return field;
 
-                if ((field = parseFieldGreatestIf()) != null)
+                else if ((field = parseFieldGreatestIf()) != null)
                     return field;
                 else if ((field = parseFieldLeastIf()) != null)
                     return field;
@@ -7628,13 +7516,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'N':
 
                 // [#9540] N'...' NVARCHAR literals
-                if (S.is(type))
-                    if (characterNext() == '\'')
-                        return inline(parseStringLiteral(), NVARCHAR);
-                    else if ((field = parseFieldNewIdIf()) != null)
-                        return field;
+                if (characterNext() == '\'')
+                    return inline(parseStringLiteral(), NVARCHAR);
+                else if ((field = parseFieldNewIdIf()) != null)
+                    return field;
 
-                if ((field = parseFieldNvl2If()) != null)
+                else if ((field = parseFieldNvl2If()) != null)
                     return field;
                 else if ((field = parseFieldNvlIf()) != null)
                     return field;
@@ -7651,7 +7538,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("NOW") && parse('(')) {
                     if (parseIf(')'))
                         return now();
-                    Field<Integer> precision = (Field<Integer>) parseField(N);
+                    Field<Integer> precision = (Field<Integer>) parseField();
                     parse(')');
                     return now(precision);
                 }
@@ -7659,32 +7546,29 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'O':
-                if (S.is(type))
-                    if ((field = parseFieldReplaceIf()) != null)
-                        return field;
-                    else if ((field = parseFieldOverlayIf()) != null)
-                        return field;
-                    else if ((field = parseFieldTranslateIf()) != null)
-                        return field;
+                if ((field = parseFieldReplaceIf()) != null)
+                    return field;
+                else if ((field = parseFieldOverlayIf()) != null)
+                    return field;
+                else if ((field = parseFieldTranslateIf()) != null)
+                    return field;
 
-                if (N.is(type))
-                    if (parseFunctionNameIf("OCTET_LENGTH"))
-                        return octetLength((Field) parseFieldParenthesised(S));
+                else if (parseFunctionNameIf("OCTET_LENGTH"))
+                    return octetLength((Field) parseFieldParenthesised());
 
                 break;
 
             case 'P':
-                if (N.is(type))
-                    if ((field = parseFieldPositionIf()) != null)
-                        return field;
-                    else if ((field = parseFieldPercentRankIf()) != null)
-                        return field;
-                    else if ((field = parseFieldPowerIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("PI") && parseEmptyParens())
-                        return pi();
+                if ((field = parseFieldPositionIf()) != null)
+                    return field;
+                else if ((field = parseFieldPercentRankIf()) != null)
+                    return field;
+                else if ((field = parseFieldPowerIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("PI") && parseEmptyParens())
+                    return pi();
 
-                if (parseKeywordIf("PRIOR") && requireProEdition()) {
+                else if (parseKeywordIf("PRIOR") && requireProEdition()) {
 
 
 
@@ -7693,215 +7577,197 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'Q':
-                if (S.is(type))
-                    if (characterNext() == '\'')
-                        return inline(parseStringLiteral());
+                if (characterNext() == '\'')
+                    return inline(parseStringLiteral());
 
-                if (D.is(type))
-                    if (parseFunctionNameIf("QUARTER"))
-                        return quarter(parseFieldParenthesised(D));
+                else if (parseFunctionNameIf("QUARTER"))
+                    return quarter(parseFieldParenthesised());
 
             case 'R':
-                if (S.is(type))
-                    if ((field = parseFieldReplaceIf()) != null)
-                        return field;
-                    else if ((field = parseFieldRegexpReplaceIf()) != null)
-                        return field;
-                    else if ((field = parseFieldRepeatIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("REVERSE"))
-                        return reverse((Field) parseFieldParenthesised(S));
-                    else if ((field = parseFieldRpadIf()) != null)
-                        return field;
-                    else if ((field = parseFieldRtrimIf()) != null)
-                        return field;
-                    else if ((field = parseFieldRightIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("RANDOM_UUID") && parseEmptyParens())
-                        return uuid();
+                if ((field = parseFieldReplaceIf()) != null)
+                    return field;
+                else if ((field = parseFieldRegexpReplaceIf()) != null)
+                    return field;
+                else if ((field = parseFieldRepeatIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("REVERSE"))
+                    return reverse((Field) parseFieldParenthesised());
+                else if ((field = parseFieldRpadIf()) != null)
+                    return field;
+                else if ((field = parseFieldRtrimIf()) != null)
+                    return field;
+                else if ((field = parseFieldRightIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("RANDOM_UUID") && parseEmptyParens())
+                    return uuid();
 
-                if (N.is(type))
-                    if ((field = parseFieldRowNumberIf()) != null)
-                        return field;
-                    else if ((field = parseFieldRankIf()) != null)
-                        return field;
-                    else if ((field = parseFieldRoundIf()) != null)
-                        return field;
-                    else if (parseKeywordIf("ROWNUM") && requireProEdition()) {
+                else if ((field = parseFieldRowNumberIf()) != null)
+                    return field;
+                else if ((field = parseFieldRankIf()) != null)
+                    return field;
+                else if ((field = parseFieldRoundIf()) != null)
+                    return field;
+                else if (parseKeywordIf("ROWNUM") && requireProEdition()) {
 
 
 
-                    }
-                    else if (parseFunctionNameIf("RADIANS")
-                          || parseFunctionNameIf("RADIAN")
-                          || parseFunctionNameIf("RAD"))
-                        return rad((Field) parseFieldNumericOpParenthesised());
-                    else if ((field = parseFieldRandIf()) != null)
-                        return field;
-                    else if ((field = parseFieldRatioToReportIf()) != null)
-                        return field;
-                    else if ((field = parseFieldShrIf()) != null)
-                        return field;
+                }
+                else if (parseFunctionNameIf("RADIANS")
+                      || parseFunctionNameIf("RADIAN")
+                      || parseFunctionNameIf("RAD"))
+                    return rad((Field) parseFieldNumericOpParenthesised());
+                else if ((field = parseFieldRandIf()) != null)
+                    return field;
+                else if ((field = parseFieldRatioToReportIf()) != null)
+                    return field;
+                else if ((field = parseFieldShrIf()) != null)
+                    return field;
 
-                if (parseFunctionNameIf("ROW"))
+                else if (parseFunctionNameIf("ROW"))
                     return parseTuple();
 
                 break;
 
             case 'S':
-                if (S.is(type))
-                    if ((field = parseFieldSubstringIf()) != null)
-                        return field;
-                    else if ((field = parseFieldSubstringIndexIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("SPACE"))
-                        return space((Field) parseFieldParenthesised(N));
-                    else if ((field = parseFieldSplitPartIf()) != null)
-                        return field;
-                    else if ((field = parseFieldReplaceIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("SCHEMA") && parseIf('(') && parse(')'))
-                        return currentSchema();
-                    else if (parseFunctionNameIf("STRREVERSE"))
-                        return reverse((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("SYSUUID") && parseEmptyParensIf())
-                        return uuid();
+                if ((field = parseFieldSubstringIf()) != null)
+                    return field;
+                else if ((field = parseFieldSubstringIndexIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("SPACE"))
+                    return space((Field) parseFieldParenthesised());
+                else if ((field = parseFieldSplitPartIf()) != null)
+                    return field;
+                else if ((field = parseFieldReplaceIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("SCHEMA") && parseIf('(') && parse(')'))
+                    return currentSchema();
+                else if (parseFunctionNameIf("STRREVERSE"))
+                    return reverse((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("SYSUUID") && parseEmptyParensIf())
+                    return uuid();
 
-                if (N.is(type))
-                    if (parseFunctionNameIf("SECOND"))
-                        return second(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("SEQ4", "SEQ8") && parse('(') && parse(')') && requireProEdition()) {
+                else if (parseFunctionNameIf("SECOND"))
+                    return second(parseFieldParenthesised());
+                else if (parseFunctionNameIf("SEQ4", "SEQ8") && parse('(') && parse(')') && requireProEdition()) {
 
 
 
-                    }
-                    else if (parseFunctionNameIf("SIGN", "SGN"))
-                        return sign((Field) parseFieldParenthesised(N));
-                    else if (parseFunctionNameIf("SQRT", "SQR"))
-                        return sqrt((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("SQUARE"))
-                        return square((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("SINH"))
-                        return sinh((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("SIN"))
-                        return sin((Field) parseFieldNumericOpParenthesised());
-                    else if ((field = parseFieldShlIf()) != null)
-                        return field;
-                    else if ((field = parseFieldShrIf()) != null)
-                        return field;
+                }
+                else if (parseFunctionNameIf("SIGN", "SGN"))
+                    return sign((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("SQRT", "SQR"))
+                    return sqrt((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("SQUARE"))
+                    return square((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("SINH"))
+                    return sinh((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("SIN"))
+                    return sin((Field) parseFieldNumericOpParenthesised());
+                else if ((field = parseFieldShlIf()) != null)
+                    return field;
+                else if ((field = parseFieldShrIf()) != null)
+                    return field;
 
-                if ((field = parseFieldSysConnectByPathIf()) != null)
+                else if ((field = parseFieldSysConnectByPathIf()) != null)
                     return field;
 
                 break;
 
             case 'T':
-                if (B.is(type))
-                    if ((field = parseBooleanValueExpressionIf()) != null)
-                        return field;
+                if ((field = parseBooleanValueExpressionIf()) != null)
+                    return field;
 
-                if (S.is(type))
-                    if ((field = parseFieldTrimIf()) != null)
-                        return field;
-                    else if ((field = parseFieldTranslateIf()) != null)
-                        return field;
-                    else if ((field = parseFieldToCharIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("TO_HEX"))
-                        return toHex((Field) parseFieldParenthesised(N));
+                else if ((field = parseFieldTrimIf()) != null)
+                    return field;
+                else if ((field = parseFieldTranslateIf()) != null)
+                    return field;
+                else if ((field = parseFieldToCharIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("TO_HEX"))
+                    return toHex((Field) parseFieldParenthesised());
 
-                if (N.is(type))
-                    if (parseFunctionNameIf("TANH"))
-                        return tanh((Field) parseFieldNumericOpParenthesised());
-                    else if (parseFunctionNameIf("TAN"))
-                        return tan((Field) parseFieldNumericOpParenthesised());
-                    else if ((field = parseFieldToNumberIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("TIMEZONE_HOUR"))
-                        return timezoneHour(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("TIMEZONE_MINUTE"))
-                        return timezoneMinute(parseFieldParenthesised(D));
-                    else if (parseFunctionNameIf("TIMEZONE"))
-                        return timezone(parseFieldParenthesised(D));
+                else if (parseFunctionNameIf("TANH"))
+                    return tanh((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("TAN"))
+                    return tan((Field) parseFieldNumericOpParenthesised());
+                else if ((field = parseFieldToNumberIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("TIMEZONE_HOUR"))
+                    return timezoneHour(parseFieldParenthesised());
+                else if (parseFunctionNameIf("TIMEZONE_MINUTE"))
+                    return timezoneMinute(parseFieldParenthesised());
+                else if (parseFunctionNameIf("TIMEZONE"))
+                    return timezone(parseFieldParenthesised());
 
-                if (D.is(type))
-                    if ((field = parseFieldTimestampLiteralIf()) != null)
-                        return field;
-                    else if ((field = parseFieldTimeLiteralIf()) != null)
-                        return field;
-                    else if ((field = parseFieldToDateIf()) != null)
-                        return field;
-                    else if ((field = parseFieldToTimestampIf()) != null)
-                        return field;
-                    else if ((field = parseFieldTimestampDiffIf()) != null)
-                        return field;
+                else if ((field = parseFieldTimestampLiteralIf()) != null)
+                    return field;
+                else if ((field = parseFieldTimeLiteralIf()) != null)
+                    return field;
+                else if ((field = parseFieldToDateIf()) != null)
+                    return field;
+                else if ((field = parseFieldToTimestampIf()) != null)
+                    return field;
+                else if ((field = parseFieldTimestampDiffIf()) != null)
+                    return field;
 
-                if (N.is(type) || D.is(type))
-                    if ((field = parseFieldTruncIf()) != null)
-                        return field;
+                else if ((field = parseFieldTruncIf()) != null)
+                    return field;
 
                 break;
 
             case 'U':
-                if (S.is(type))
-                    if (parseFunctionNameIf("UPPER", "UCASE"))
-                        return DSL.upper((Field) parseFieldParenthesised(S));
-                    else if (parseFunctionNameIf("UUID", "UUID_GENERATE", "UUID_STRING") && parseEmptyParens())
-                        return uuid();
+                if (parseFunctionNameIf("UPPER", "UCASE"))
+                    return DSL.upper((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("UUID", "UUID_GENERATE", "UUID_STRING") && parseEmptyParens())
+                    return uuid();
 
-                if (D.is(type))
-                    if (parseFunctionNameIf("UNIX_TIMESTAMP"))
-                        return epoch(parseFieldParenthesised(D));
+                else if (parseFunctionNameIf("UNIX_TIMESTAMP"))
+                    return epoch(parseFieldParenthesised());
 
                 break;
 
             case 'W':
-                if (N.is(type))
-                    if ((field = parseFieldWidthBucketIf()) != null)
-                        return field;
-                    else if (parseFunctionNameIf("WEEK"))
-                        return week(parseFieldParenthesised(D));
+                if ((field = parseFieldWidthBucketIf()) != null)
+                    return field;
+                else if (parseFunctionNameIf("WEEK"))
+                    return week(parseFieldParenthesised());
 
                 break;
 
             case 'X':
-                if (Y.is(type))
-                    if ((value = parseBinaryLiteralIf()) != null)
-                        return inline((byte[]) value);
+                if ((value = parseBinaryLiteralIf()) != null)
+                    return inline((byte[]) value);
 
-                if (X.is(type))
-                    if ((field = parseFieldXMLCommentIf()) != null)
-                        return field;
-                    else if ((field = parseFieldXMLConcatIf()) != null)
-                        return field;
-                    else if ((field = parseFieldXMLElementIf()) != null)
-                        return field;
-                    else if ((field = parseFieldXMLPIIf()) != null)
-                        return field;
-                    else if ((field = parseFieldXMLForestIf()) != null)
-                        return field;
-                    else if ((field = parseFieldXMLParseIf()) != null)
-                        return field;
-                    else if ((field = parseFieldXMLDocumentIf()) != null)
-                        return field;
-                    else if ((field = parseFieldXMLQueryIf()) != null)
-                        return field;
-                    else if ((field = parseFieldXMLSerializeIf()) != null)
-                        return field;
+                else if ((field = parseFieldXMLCommentIf()) != null)
+                    return field;
+                else if ((field = parseFieldXMLConcatIf()) != null)
+                    return field;
+                else if ((field = parseFieldXMLElementIf()) != null)
+                    return field;
+                else if ((field = parseFieldXMLPIIf()) != null)
+                    return field;
+                else if ((field = parseFieldXMLForestIf()) != null)
+                    return field;
+                else if ((field = parseFieldXMLParseIf()) != null)
+                    return field;
+                else if ((field = parseFieldXMLDocumentIf()) != null)
+                    return field;
+                else if ((field = parseFieldXMLQueryIf()) != null)
+                    return field;
+                else if ((field = parseFieldXMLSerializeIf()) != null)
+                    return field;
 
                 break;
 
             case 'Y':
-                if (N.is(type))
-                    if (parseFunctionNameIf("YEAR"))
-                        return year(parseFieldParenthesised(D));
+                if (parseFunctionNameIf("YEAR"))
+                    return year(parseFieldParenthesised());
 
                 break;
 
             case 'Z':
-                if (N.is(type))
-                    if (parseFunctionNameIf("ZEROIFNULL"))
-                        return coalesce(parseFieldParenthesised(type), zero());
+                if (parseFunctionNameIf("ZEROIFNULL"))
+                    return coalesce(parseFieldParenthesised(), zero());
 
                 break;
 
@@ -7917,9 +7783,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case '9':
             case '-':
             case '.':
-                if (N.is(type))
-                    if ((field = parseFieldUnsignedNumericLiteralIf(Sign.NONE)) != null)
-                        return field;
+                if ((field = parseFieldUnsignedNumericLiteralIf(Sign.NONE)) != null)
+                    return field;
 
                 break;
 
@@ -7937,7 +7802,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                         // TODO: Limit the supported expressions in this context to the ones specified here:
                         // http://download.oracle.com/otn-pub/jcp/jdbc-4_2-mrel2-eval-spec/jdbc4.2-fr-spec.pdf
-                        field = parseTerm(type);
+                        field = parseTerm();
                         break;
 
                     case 'T':
@@ -7993,7 +7858,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     }
 
                     parse('(');
-                    FieldOrRow r = parseFieldOrRow(type);
+                    FieldOrRow r = parseFieldOrRow();
                     List<Field<?>> list = null;
 
                     if (r instanceof Field) {
@@ -8004,7 +7869,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                             }
 
                             // TODO Allow for nesting ROWs
-                            list.add(parseField(type));
+                            list.add(parseField());
                         }
                     }
 
@@ -8048,11 +7913,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldSplitPartIf() {
         if (parseKeywordIf("SPLIT_PART")) {
             parse('(');
-            Field<?> f1 = parseField(S);
+            Field<?> f1 = parseField();
             parse(',');
-            Field<?> f2 = parseField(S);
+            Field<?> f2 = parseField();
             parse(',');
-            Field<?> f3 = parseField(N);
+            Field<?> f3 = parseField();
             parse(')');
 
             return splitPart((Field) f1, (Field) f2, (Field) f3);
@@ -8064,9 +7929,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldShlIf() {
         if (parseKeywordIf("SHL") || parseKeywordIf("SHIFTLEFT") || parseKeywordIf("LSHIFT")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return shl((Field) x, (Field) y);
@@ -8078,9 +7943,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldShrIf() {
         if (parseKeywordIf("SHR") || parseKeywordIf("SHIFTRIGHT") || parseKeywordIf("RSHIFT")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return shr((Field) x, (Field) y);
@@ -8123,22 +7988,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BITAND_AGG")) ||
             (agg = parseKeywordIf("BIN_AND_AGG"))) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitAndAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return bitAnd((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIT_NAND") || parseKeywordIf("BITNAND") || parseKeywordIf("BIN_NAND")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return bitNand((Field) x, (Field) y);
@@ -8150,22 +8015,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BITOR_AGG")) ||
             (agg = parseKeywordIf("BIN_OR_AGG"))) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitOrAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return bitOr((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIT_NOR") || parseKeywordIf("BITNOR") || parseKeywordIf("BIN_NOR")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return bitNor((Field) x, (Field) y);
@@ -8177,47 +8042,47 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BITXOR_AGG")) ||
             (agg = parseKeywordIf("BIN_XOR_AGG"))) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitXorAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return bitXor((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIT_XNOR") || parseKeywordIf("BITXNOR") || parseKeywordIf("BIN_XNOR")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return bitXNor((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIT_NOT") || parseKeywordIf("BITNOT") || parseKeywordIf("BIN_NOT")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(')');
 
             return bitNot((Field) x);
         }
         else if (parseKeywordIf("BIN_SHL", "BITSHIFTLEFT")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return shl((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIN_SHR", "BITSHIFTRIGHT")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return shr((Field) x, (Field) y);
@@ -8704,7 +8569,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final JSONEntry<?> parseJSONEntry() {
         boolean valueRequired = parseKeywordIf("KEY");
 
-        Field<String> key = (Field<String>) parseField(Type.S);
+        Field<String> key = (Field<String>) parseField();
         if (parseKeywordIf("VALUE"))
             ;
         else if (valueRequired)
@@ -8762,9 +8627,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldArrayGetIf() {
         if (parseFunctionNameIf("ARRAY_GET")) {
             parse('(');
-            Field f1 = parseField(A);
+            Field f1 = parseField();
             parse(',');
-            Field f2 = parseField(N);
+            Field f2 = parseField();
             parse(')');
 
             return arrayGet(f1, f2);
@@ -8776,9 +8641,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldAtan2If() {
         if (parseFunctionNameIf("ATN2", "ATAN2")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp(N));
+            Field<?> x = toField(parseNumericOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp(N));
+            Field<?> y = toField(parseNumericOp());
             parse(')');
 
             return atan2((Field) x, (Field) y);
@@ -8807,9 +8672,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 default:
-                    Field<?> base = toField(parseNumericOp(N));
+                    Field<?> base = toField(parseNumericOp());
                     parse(',');
-                    Field<?> value = toField(parseNumericOp(N));
+                    Field<?> value = toField(parseNumericOp());
                     parse(')');
                     return log((Field) value, (Field) base);
             }
@@ -8851,7 +8716,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return DSL.trunc((Field) arg1, p);
                 }
                 else {
-                    Field<?> arg2 = toField(parseNumericOp(N));
+                    Field<?> arg2 = toField(parseNumericOp());
                     parse(')');
                     return DSL.trunc((Field) arg1, (Field) arg2);
                 }
@@ -8881,9 +8746,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field arg2 = null;
 
             parse('(');
-            arg1 = toField(parseNumericOp(N));
+            arg1 = toField(parseNumericOp());
             if (parseIf(','))
-                arg2 = toField(parseNumericOp(N));
+                arg2 = toField(parseNumericOp());
 
             parse(')');
             return arg2 == null ? round(arg1) : round(arg1, arg2);
@@ -8895,9 +8760,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldPowerIf() {
         if (parseFunctionNameIf("POWER", "POW")) {
             parse('(');
-            Field arg1 = toField(parseNumericOp(N));
+            Field arg1 = toField(parseNumericOp());
             parse(',');
-            Field arg2 = toField(parseNumericOp(N));
+            Field arg2 = toField(parseNumericOp());
             parse(')');
             return DSL.power(arg1, arg2);
         }
@@ -8908,9 +8773,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldModIf() {
         if (parseFunctionNameIf("MOD")) {
             parse('(');
-            Field<?> f1 = parseField(N);
+            Field<?> f1 = parseField();
             parse(',');
-            Field<?> f2 = parseField(N);
+            Field<?> f2 = parseField();
             parse(')');
             return f1.mod((Field) f2);
         }
@@ -8921,13 +8786,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldWidthBucketIf() {
         if (parseFunctionNameIf("WIDTH_BUCKET")) {
             parse('(');
-            Field<?> f1 = parseField(N);
+            Field<?> f1 = parseField();
             parse(',');
-            Field<?> f2 = parseField(N);
+            Field<?> f2 = parseField();
             parse(',');
-            Field<?> f3 = parseField(N);
+            Field<?> f3 = parseField();
             parse(',');
-            Field<?> f4 = parseField(N);
+            Field<?> f4 = parseField();
             parse(')');
             return DSL.widthBucket((Field) f1, (Field) f2, (Field) f3, (Field) f4);
         }
@@ -9009,7 +8874,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return inline(parseTimestampLiteral());
             }
             else if (parseIf('(')) {
-                Field<?> f = parseField(S);
+                Field<?> f = parseField();
                 parse(')');
                 return timestamp((Field) f);
             }
@@ -9042,7 +8907,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return inline(parseTimeLiteral());
             }
             else if (parseIf('(')) {
-                Field<?> f = parseField(S);
+                Field<?> f = parseField();
                 parse(')');
                 return time((Field) f);
             }
@@ -9321,7 +9186,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseKeywordIf("DATE")) {
             if (parseIf('(')) {
-                Field<?> f = parseField(S);
+                Field<?> f = parseField();
                 parse(')');
                 return date((Field) f);
             }
@@ -9361,7 +9226,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 default:
                     part = parseDatePart();
                     parse(',');
-                    field = parseField(D);
+                    field = parseField();
                     break;
             }
 
@@ -9380,9 +9245,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             DatePart part = parseDatePart();
             parse(',');
-            Field<Number> interval = (Field<Number>) parseField(Type.N);
+            Field<Number> interval = (Field<Number>) parseField();
             parse(',');
-            Field<Date> date = (Field<Date>) parseField(Type.D);
+            Field<Date> date = (Field<Date>) parseField();
             parse(')');
 
             return DSL.dateAdd(date, interval, part);
@@ -9391,7 +9256,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // MySQL style
         else if (parseFunctionNameIf("DATE_ADD") || (sub = parseFunctionNameIf("DATE_SUB"))) {
             parse('(');
-            Field<?> d = parseField(Type.D);
+            Field<?> d = parseField();
 
             // [#12025] In the absence of meta data, assume TIMESTAMP
             Field<?> date = d.getDataType().isDateTime() ? d : d.coerce(TIMESTAMP);
@@ -9415,10 +9280,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             if (datePart != null)
                 parse(',');
 
-            Field<Date> d1 = (Field<Date>) parseField(Type.D);
+            Field<Date> d1 = (Field<Date>) parseField();
 
             if (parseIf(',')) {
-                Field<Date> d2 = (Field<Date>) parseField(Type.D);
+                Field<Date> d2 = (Field<Date>) parseField();
                 parse(')');
 
                 if (datePart != null)
@@ -9738,10 +9603,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldInstrIf() {
         if (parseFunctionNameIf("INSTR")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<String> f2 = (Field) parseField(S);
-            Field<Integer> f3 = parseIf(',') ? (Field) parseField(N) : null;
+            Field<String> f2 = (Field) parseField();
+            Field<Integer> f3 = parseIf(',') ? (Field) parseField() : null;
             parse(')');
 
             return f3 == null ? DSL.position(f1, f2) : DSL.position(f1, f2, f3);
@@ -9753,10 +9618,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldCharIndexIf() {
         if (parseFunctionNameIf("CHARINDEX")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<String> f2 = (Field) parseField(S);
-            Field<Integer> f3 = parseIf(',') ? (Field) parseField(N) : null;
+            Field<String> f2 = (Field) parseField();
+            Field<Integer> f3 = parseIf(',') ? (Field) parseField() : null;
             parse(')');
 
             return f3 == null ? DSL.position(f2, f1) : DSL.position(f2, f1, f3);
@@ -9768,10 +9633,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldLpadIf() {
         if (parseFunctionNameIf("LPAD")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<Integer> f2 = (Field) parseField(N);
-            Field<String> f3 = parseIf(',') ? (Field) parseField(S) : null;
+            Field<Integer> f2 = (Field) parseField();
+            Field<String> f3 = parseIf(',') ? (Field) parseField() : null;
             parse(')');
 
             return f3 == null ? lpad(f1, f2) : lpad(f1, f2, f3);
@@ -9783,10 +9648,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldRpadIf() {
         if (parseFunctionNameIf("RPAD")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<Integer> f2 = (Field) parseField(N);
-            Field<String> f3 = parseIf(',') ? (Field) parseField(S) : null;
+            Field<Integer> f2 = (Field) parseField();
+            Field<String> f3 = parseIf(',') ? (Field) parseField() : null;
             parse(')');
 
             return f3 == null ? rpad(f1, f2) : rpad(f1, f2, f3);
@@ -9798,13 +9663,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldInsertIf() {
         if (parseFunctionNameIf("INSERT")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<Number> f2 = (Field) parseField(N);
+            Field<Number> f2 = (Field) parseField();
             parse(',');
-            Field<Number> f3 = (Field) parseField(N);
+            Field<Number> f3 = (Field) parseField();
             parse(',');
-            Field<String> f4 = (Field) parseField(S);
+            Field<String> f4 = (Field) parseField();
             parse(')');
 
             return insert(f1, f2, f3, f4);
@@ -9816,14 +9681,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldOverlayIf() {
         if (parseFunctionNameIf("OVERLAY")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parseKeyword("PLACING");
-            Field<String> f2 = (Field) parseField(S);
+            Field<String> f2 = (Field) parseField();
             parseKeyword("FROM");
-            Field<Number> f3 = (Field) parseField(N);
+            Field<Number> f3 = (Field) parseField();
             Field<Number> f4 =
                 parseKeywordIf("FOR")
-              ? (Field) parseField(N)
+              ? (Field) parseField()
 
 
 
@@ -9841,10 +9706,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseFunctionNameIf("POSITION")) {
             parse('(');
             forbidden.add(FK_IN);
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parseKeyword("IN");
             forbidden.remove(FK_IN);
-            Field<String> f2 = (Field) parseField(S);
+            Field<String> f2 = (Field) parseField();
             parse(')');
             return DSL.position(f2, f1);
         }
@@ -9856,10 +9721,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean locate = parseFunctionNameIf("LOCATE");
         if (locate || parseFunctionNameIf("LOCATE_IN_STRING")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<String> f2 = (Field) parseField(S);
-            Field<Integer> f3 = (Field) (parseIf(',') ? parseField(N) : null);
+            Field<String> f2 = (Field) parseField();
+            Field<Integer> f3 = (Field) (parseIf(',') ? parseField() : null);
             parse(')');
 
 
@@ -9885,9 +9750,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldRepeatIf() {
         if (parseFunctionNameIf("REPEAT", "REPLICATE")) {
             parse('(');
-            Field<String> field = (Field) parseField(S);
+            Field<String> field = (Field) parseField();
             parse(',');
-            Field<Integer> count = (Field) parseField(N);
+            Field<Integer> count = (Field) parseField();
             parse(')');
             return DSL.repeat(field, count);
         }
@@ -9898,11 +9763,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldReplaceIf() {
         if (parseFunctionNameIf("REPLACE", "OREPLACE", "STR_REPLACE")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<String> f2 = (Field) parseField(S);
+            Field<String> f2 = (Field) parseField();
             Field<String> f3 = parseIf(',')
-                ? (Field) parseField(S)
+                ? (Field) parseField()
                 : null;
             parse(')');
             return f3 == null
@@ -9920,10 +9785,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (all || first || ifx || parseFunctionNameIf("REGEXP_REPLACE")) {
             parse('(');
-            Field field = parseField(S);
+            Field field = parseField();
             parse(',');
-            Field pattern = parseField(S);
-            Field replacement = parseIf(',') ? parseField(S) : null;
+            Field pattern = parseField();
+            Field replacement = parseIf(',') ? parseField() : null;
             Long i1;
             Long i2;
 
@@ -9975,11 +9840,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if (parseFunctionNameIf("REPLACE_REGEXPR")) {
             parse('(');
             forbidden.add(FK_IN);
-            Field pattern = parseField(S);
+            Field pattern = parseField();
             parseKeyword("IN");
             forbidden.remove(FK_IN);
-            Field field = parseField(S);
-            Field replacement = parseKeywordIf("WITH") ? parseField(S) : inline("");
+            Field field = parseField();
+            Field replacement = parseKeywordIf("WITH") ? parseField() : inline("");
             first = parseKeywordIf("OCCURRENCE") && !parseKeywordIf("ALL") && parse("1");
 
             parse(')');
@@ -9998,13 +9863,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (substring || substr) {
             boolean keywords = !substr;
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             if (substr || !(keywords = parseKeywordIf("FROM")))
                 parse(',');
-            Field f2 = toField(parseNumericOp(N));
+            Field f2 = toField(parseNumericOp());
             Field f3 =
                     ((keywords && parseKeywordIf("FOR")) || (!keywords && parseIf(',')))
-                ? (Field) toField(parseNumericOp(N))
+                ? (Field) toField(parseNumericOp())
                 : null;
             parse(')');
 
@@ -10019,11 +9884,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldSubstringIndexIf() {
         if (parseFunctionNameIf("SUBSTRING_INDEX")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<String> f2 = (Field) parseField(S);
+            Field<String> f2 = (Field) parseField();
             parse(',');
-            Field<Integer> f3 = (Field) parseField(N);
+            Field<Integer> f3 = (Field) parseField();
             parse(')');
 
             return substringIndex(f1, f2, f3);
@@ -10049,7 +9914,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     position(p);
                 }
                 else if (parseKeywordIf("FROM")) {
-                    Field<String> f = (Field) parseField(S);
+                    Field<String> f = (Field) parseField();
                     parse(')');
 
                     return leading ? ltrim(f)
@@ -10058,10 +9923,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
             }
 
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
 
             if (parseKeywordIf("FROM")) {
-                Field<String> f2 = (Field) parseField(S);
+                Field<String> f2 = (Field) parseField();
                 parse(')');
 
                 return leading ? ltrim(f2, f1)
@@ -10069,7 +9934,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                      : trim(f2, f1);
             }
             else {
-                Field<String> f2 = parseIf(',') ? (Field) parseField(S) : null;
+                Field<String> f2 = parseIf(',') ? (Field) parseField() : null;
                 parse(')');
 
                 return f2 == null ? trim(f1) : trim(f1, f2);
@@ -10082,11 +9947,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldTranslateIf() {
         if (parseFunctionNameIf("TRANSLATE", "OTRANSLATE")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<String> f2 = (Field) parseField(S);
+            Field<String> f2 = (Field) parseField();
             parse(',');
-            Field<String> f3 = (Field) parseField(S);
+            Field<String> f3 = (Field) parseField();
             parse(')');
 
 
@@ -10116,7 +9981,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldToNumberIf() {
         if (parseFunctionNameIf("TO_NUMBER")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(')');
             return cast(f1, SQLDataType.NUMERIC);
         }
@@ -10127,8 +9992,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldToDateIf() {
         if (parseFunctionNameIf("TO_DATE")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
-            Field<String> f2 = parseIf(',') ? (Field) parseField(S) : inline(settings().getParseDateFormat());
+            Field<String> f1 = (Field) parseField();
+            Field<String> f2 = parseIf(',') ? (Field) parseField() : inline(settings().getParseDateFormat());
             parse(')');
 
             return toDate(f1, f2);
@@ -10140,8 +10005,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldToTimestampIf() {
         if (parseFunctionNameIf("TO_TIMESTAMP")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
-            Field<String> f2 = parseIf(',') ? (Field) parseField(S) : inline(settings().getParseTimestampFormat());
+            Field<String> f1 = (Field) parseField();
+            Field<String> f2 = parseIf(',') ? (Field) parseField() : inline(settings().getParseTimestampFormat());
             parse(')');
 
             return toTimestamp(f1, f2);
@@ -10153,9 +10018,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldTimestampDiffIf() {
         if (parseFunctionNameIf("TIMESTAMPDIFF")) {
             parse('(');
-            Field<Timestamp> ts1 = (Field<Timestamp>) parseField(Type.D);
+            Field<Timestamp> ts1 = (Field<Timestamp>) parseField();
             parse(',');
-            Field<Timestamp> ts2 = (Field<Timestamp>) parseField(Type.D);
+            Field<Timestamp> ts2 = (Field<Timestamp>) parseField();
             parse(')');
 
             return DSL.timestampDiff(ts1, ts2);
@@ -10167,8 +10032,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldRtrimIf() {
         if (parseFunctionNameIf("RTRIM")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
-            Field<String> f2 = parseIf(',') ? (Field) parseField(S) : null;
+            Field<String> f1 = (Field) parseField();
+            Field<String> f2 = parseIf(',') ? (Field) parseField() : null;
             parse(')');
 
             return f2 == null ? rtrim(f1) : rtrim(f1, f2);
@@ -10180,8 +10045,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldLtrimIf() {
         if (parseFunctionNameIf("LTRIM")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
-            Field<String> f2 = parseIf(',') ? (Field) parseField(S) : null;
+            Field<String> f1 = (Field) parseField();
+            Field<String> f2 = parseIf(',') ? (Field) parseField() : null;
             parse(')');
 
             return f2 == null ? ltrim(f1) : ltrim(f1, f2);
@@ -10193,11 +10058,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldMidIf() {
         if (parseFunctionNameIf("MID")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<? extends Number> f2 = (Field) parseField(N);
+            Field<? extends Number> f2 = (Field) parseField();
             parse(',');
-            Field<? extends Number> f3 = (Field) parseField(N);
+            Field<? extends Number> f3 = (Field) parseField();
             parse(')');
             return mid(f1, f2, f3);
         }
@@ -10208,9 +10073,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldLeftIf() {
         if (parseFunctionNameIf("LEFT")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<? extends Number> f2 = (Field) parseField(N);
+            Field<? extends Number> f2 = (Field) parseField();
             parse(')');
             return left(f1, f2);
         }
@@ -10221,9 +10086,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldRightIf() {
         if (parseFunctionNameIf("RIGHT")) {
             parse('(');
-            Field<String> f1 = (Field) parseField(S);
+            Field<String> f1 = (Field) parseField();
             parse(',');
-            Field<? extends Number> f2 = (Field) parseField(N);
+            Field<? extends Number> f2 = (Field) parseField();
             parse(')');
             return right(f1, f2);
         }
@@ -10254,7 +10119,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldChooseIf() {
         if (parseFunctionNameIf("CHOOSE")) {
             parse('(');
-            Field<Integer> index = (Field<Integer>) parseField(Type.N);
+            Field<Integer> index = (Field<Integer>) parseField();
             parse(',');
             List<Field<?>> fields = parseList(',', ParseContext::parseField);
             parse(')');

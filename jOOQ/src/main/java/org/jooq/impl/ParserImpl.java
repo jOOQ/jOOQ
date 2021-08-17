@@ -52,6 +52,8 @@ import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.conf.SettingsTools.parseLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.DefaultParseContext.FunctionKeyword.FK_AND;
+import static org.jooq.impl.DefaultParseContext.FunctionKeyword.FK_IN;
 import static org.jooq.impl.DefaultParseContext.Type.A;
 import static org.jooq.impl.DefaultParseContext.Type.B;
 import static org.jooq.impl.DefaultParseContext.Type.D;
@@ -102,6 +104,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -5788,7 +5791,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final QueryPart parseAnd() {
         QueryPart condition = parseNot();
 
-        while (parseKeywordIf("AND"))
+        while (!forbidden.contains(FK_AND) && parseKeywordIf("AND"))
             condition = toCondition(condition).and(toCondition(parseNot()));
 
         return condition;
@@ -5982,7 +5985,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else if (!not && parseIf("@>")) {
                 return toField(left).contains((Field) toField(parseConcat(null)));
             }
-            else if (parseKeywordIf("IN")) {
+            else if (!forbidden.contains(FK_IN) && parseKeywordIf("IN")) {
                 Condition result;
                 parse('(');
                 if (peek(')'))
@@ -6339,6 +6342,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
         }
         else if (peekKeyword("FOR")
             && !peekKeyword("FOR JSON")
@@ -6348,6 +6353,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             && !peekKeyword("FOR UPDATE")
             && !peekKeyword("FOR XML")
             && parseKeyword("FOR") && requireProEdition()) {
+
+
+
 
 
 
@@ -6834,6 +6842,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return parseTuple(degree, allowDoubleParens);
     }
 
+    /**
+     * @deprecated [#11703] This type is no longer needed, remove it
+     */
+    @Deprecated
     static enum Type {
         A("array"),
         D("date"),
@@ -6851,7 +6863,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         boolean is(Type type) {
-            return type == null || type == this;
+            return true || type == null || type == this;
         }
 
         String getName() {
@@ -7954,44 +7966,54 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 // - A correlated subquery with nested set ops: E.g. ((select 1) except (select 2))
                 // - A combination of the above:                E.g. ((select 1) + 2, ((select 1) except (select 2)) + 2)
                 int p = position();
+                EnumSet fk = forbidden;
+
                 try {
-                    if (peekSelectOrWith(true)) {
-                        parse('(');
-                        SelectQueryImpl<Record> select = parseWithOrSelect();
-                        parse(')');
-                        if (Tools.degree(select) != 1)
-                            throw exception("Select list must contain exactly one column");
+                    if (!forbidden.isEmpty())
+                        forbidden = EnumSet.noneOf(FunctionKeyword.class);
 
-                        return field((Select) select);
-                    }
-                }
-                catch (ParserException e) {
+                    try {
+                        if (peekSelectOrWith(true)) {
+                            parse('(');
+                            SelectQueryImpl<Record> select = parseWithOrSelect();
+                            parse(')');
+                            if (Tools.degree(select) != 1)
+                                throw exception("Select list must contain exactly one column");
 
-                    // TODO: Find a better solution than backtracking, here, which doesn't complete in O(N)
-                    if (e.getMessage().contains("Token ')' expected"))
-                        position(p);
-                    else
-                        throw e;
-                }
-
-                parse('(');
-                FieldOrRow r = parseFieldOrRow(type);
-                List<Field<?>> list = null;
-
-                if (r instanceof Field) {
-                    while (parseIf(',')) {
-                        if (list == null) {
-                            list = new ArrayList<>();
-                            list.add((Field) r);
+                            return field((Select) select);
                         }
-
-                        // TODO Allow for nesting ROWs
-                        list.add(parseField(type));
                     }
-                }
+                    catch (ParserException e) {
 
-                parse(')');
-                return list != null ? row(list) : r;
+                        // TODO: Find a better solution than backtracking, here, which doesn't complete in O(N)
+                        if (e.getMessage().contains("Token ')' expected"))
+                            position(p);
+                        else
+                            throw e;
+                    }
+
+                    parse('(');
+                    FieldOrRow r = parseFieldOrRow(type);
+                    List<Field<?>> list = null;
+
+                    if (r instanceof Field) {
+                        while (parseIf(',')) {
+                            if (list == null) {
+                                list = new ArrayList<>();
+                                list.add((Field) r);
+                            }
+
+                            // TODO Allow for nesting ROWs
+                            list.add(parseField(type));
+                        }
+                    }
+
+                    parse(')');
+                    return list != null ? row(list) : r;
+                }
+                finally {
+                    forbidden = fk;
+                }
         }
 
         if ((field = parseAggregateFunctionIf()) != null)
@@ -9818,8 +9840,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldPositionIf() {
         if (parseFunctionNameIf("POSITION")) {
             parse('(');
+            forbidden.add(FK_IN);
             Field<String> f1 = (Field) parseField(S);
             parseKeyword("IN");
+            forbidden.remove(FK_IN);
             Field<String> f2 = (Field) parseField(S);
             parse(')');
             return DSL.position(f2, f1);
@@ -9950,8 +9974,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
         else if (parseFunctionNameIf("REPLACE_REGEXPR")) {
             parse('(');
+            forbidden.add(FK_IN);
             Field pattern = parseField(S);
             parseKeyword("IN");
+            forbidden.remove(FK_IN);
             Field field = parseField(S);
             Field replacement = parseKeywordIf("WITH") ? parseField(S) : inline("");
             first = parseKeywordIf("OCCURRENCE") && !parseKeywordIf("ALL") && parse("1");
@@ -13448,12 +13474,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final ScopeStack<Name, FieldProxy<?>> lookupFields           = new ScopeStack<>(null);
     private boolean                               scopeClear             = false;
     private LanguageContext                       languageContext        = LanguageContext.QUERY;
+    private EnumSet<FunctionKeyword>              forbidden       = EnumSet.noneOf(FunctionKeyword.class);
 
 
 
 
 
 
+
+    /**
+     * Keywords that can appear as syntactic tokens in functions are forbidden
+     * in non-parenthesised expressions passed as function arguments.
+     */
+    enum FunctionKeyword {
+        FK_AND,
+        FK_IN
+    }
 
     DefaultParseContext(
         DSLContext dsl,

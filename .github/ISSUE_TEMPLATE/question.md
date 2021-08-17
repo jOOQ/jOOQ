@@ -7,7 +7,7 @@
 
 ### Your question:
 
-Before asking your question, please check out the FAQ too: https://www.jooq.org/faq
+Before asking your question, please check out the FAQ too: https://www.jooq.org/faq. Have you considered asking your question on Stack Overflow instead? https://stackoverflow.com/questions/tagged/jooq. Many other users might have the same question, and they will find yours (and our answer) much more easily this way.
 
 ### Versions:
 

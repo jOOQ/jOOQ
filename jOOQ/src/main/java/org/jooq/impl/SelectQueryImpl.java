@@ -3815,7 +3815,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean knownTableSource() {
-        return traverseJoins(getFrom(), true, r -> !r, (r, t) -> r && t.fieldsRow().size() > 0);
+        return traverseJoins(
+            getFrom(),
+            true,
+            r -> !r,
+            null,
+
+            // [#12328] Don't recurse into the RHS if the join does not affect the projection
+            j -> j.type != JoinType.LEFT_ANTI_JOIN && j.type != JoinType.LEFT_SEMI_JOIN,
+            null,
+            
+            // TODO: PostgreSQL supports tables without columns, see e.g.
+            // https://blog.jooq.org/creating-tables-dum-and-dee-in-postgresql/
+            (r, t) -> r && t.fieldsRow().size() > 0
+        );
     }
 
     @SuppressWarnings("unchecked")

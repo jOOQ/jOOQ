@@ -6260,7 +6260,7 @@ final class Tools {
     }
 
     static final void traverseJoins(Table<?> t, Consumer<? super Table<?>> consumer) {
-        traverseJoins(t, null, x -> false, (result, x) -> { consumer.accept(x); return result; });
+        traverseJoins(t, null, null, (result, x) -> { consumer.accept(x); return result; });
     }
 
     static final <T> T traverseJoins(
@@ -6270,7 +6270,7 @@ final class Tools {
         BiFunction<? super T, ? super Table<?>, ? extends T> function
     ) {
         for (Table<?> t : i)
-            if (abort.test(result))
+            if (abort != null && abort.test(result))
                 return result;
             else
                 result = traverseJoins(t, result, abort, function);
@@ -6284,33 +6284,58 @@ final class Tools {
         Predicate<? super T> abort,
         BiFunction<? super T, ? super Table<?>, ? extends T> function
     ) {
-        return traverseJoins(t, result, abort, null, function);
+        return traverseJoins(t, result, abort, null, null, null, function);
+    }
+
+    static final <T> T traverseJoins(
+        Iterable<? extends Table<?>> i,
+        T result,
+        Predicate<? super T> abort,
+        Predicate<? super JoinTable> recurseLhs,
+        Predicate<? super JoinTable> recurseRhs,
+        BiFunction<? super T, ? super JoinType, ? extends T> joinTypeFunction,
+        BiFunction<? super T, ? super Table<?>, ? extends T> tableFunction
+    ) {
+        for (Table<?> t : i)
+            if (abort != null && abort.test(result))
+                return result;
+            else
+                result = traverseJoins(t, result, abort, recurseLhs, recurseRhs, joinTypeFunction, tableFunction);
+
+        return result;
     }
 
     static final <T> T traverseJoins(
         Table<?> t,
         T result,
         Predicate<? super T> abort,
+        Predicate<? super JoinTable> recurseLhs,
+        Predicate<? super JoinTable> recurseRhs,
         BiFunction<? super T, ? super JoinType, ? extends T> joinTypeFunction,
         BiFunction<? super T, ? super Table<?>, ? extends T> tableFunction
     ) {
-        if (abort.test(result))
+        if (abort != null && abort.test(result))
             return result;
 
         if (t instanceof JoinTable) {
-            result = traverseJoins(((JoinTable) t).lhs, result, abort, joinTypeFunction, tableFunction);
+            JoinTable j = (JoinTable) t;
 
-            if (abort.test(result))
-                return result;
+            if (recurseLhs == null || recurseLhs.test(j)) {
+                result = traverseJoins(j.lhs, result, abort, recurseLhs, recurseRhs, joinTypeFunction, tableFunction);
 
-            if (joinTypeFunction != null) {
-                result = joinTypeFunction.apply(result, ((JoinTable) t).type);
-
-                if (abort.test(result))
+                if (abort != null && abort.test(result))
                     return result;
             }
 
-            result = traverseJoins(((JoinTable) t).rhs, result, abort, joinTypeFunction, tableFunction);
+            if (joinTypeFunction != null) {
+                result = joinTypeFunction.apply(result, j.type);
+
+                if (abort != null && abort.test(result))
+                    return result;
+            }
+
+            if (recurseRhs == null || recurseRhs.test(j))
+                result = traverseJoins(j.rhs, result, abort, recurseLhs, recurseRhs, joinTypeFunction, tableFunction);
         }
         else if (tableFunction != null)
             result = tableFunction.apply(result, t);

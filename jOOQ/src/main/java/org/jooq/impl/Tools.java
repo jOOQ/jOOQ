@@ -260,6 +260,7 @@ import org.jooq.ForeignKey;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
+import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
@@ -6283,19 +6284,36 @@ final class Tools {
         Predicate<? super T> abort,
         BiFunction<? super T, ? super Table<?>, ? extends T> function
     ) {
+        return traverseJoins(t, result, abort, null, function);
+    }
+
+    static final <T> T traverseJoins(
+        Table<?> t,
+        T result,
+        Predicate<? super T> abort,
+        BiFunction<? super T, ? super JoinType, ? extends T> joinTypeFunction,
+        BiFunction<? super T, ? super Table<?>, ? extends T> tableFunction
+    ) {
         if (abort.test(result))
             return result;
 
         if (t instanceof JoinTable) {
-            result = traverseJoins(((JoinTable) t).lhs, result, abort, function);
+            result = traverseJoins(((JoinTable) t).lhs, result, abort, joinTypeFunction, tableFunction);
 
             if (abort.test(result))
                 return result;
 
-            result = traverseJoins(((JoinTable) t).rhs, result, abort, function);
+            if (joinTypeFunction != null) {
+                result = joinTypeFunction.apply(result, ((JoinTable) t).type);
+
+                if (abort.test(result))
+                    return result;
+            }
+
+            result = traverseJoins(((JoinTable) t).rhs, result, abort, joinTypeFunction, tableFunction);
         }
-        else
-            result = function.apply(result, t);
+        else if (tableFunction != null)
+            result = tableFunction.apply(result, t);
 
         return result;
     }

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
@@ -51,6 +52,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isEmpty;
@@ -276,18 +278,27 @@ final class MetaImpl extends AbstractMeta {
                 Result<Record> schemas = meta(new MetaFunction() {
                     @Override
                     public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                        return dsl().fetch(
 
 
 
 
 
 
-                            meta.getSchemas(),
 
-                            // [#2681] Work around a flaw in the MySQL JDBC driver
-                            SQLDataType.VARCHAR // TABLE_SCHEM
-                        );
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        return dsl().fetch(meta.getSchemas(), VARCHAR); // TABLE_SCHEM
                     }
                 });
 

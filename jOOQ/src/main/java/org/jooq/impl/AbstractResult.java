@@ -880,6 +880,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             throw new IllegalStateException();
 
         try {
+            if (result.isEmpty()) {
+                writer.append("No data available");
+                return;
+            }
+
             DSLContext ctx = configuration.dsl();
             Field<?> category = fields.field(format.category());
             TreeMap<Object, Result<R>> groups = new TreeMap<>(result.intoGroups(format.category()));

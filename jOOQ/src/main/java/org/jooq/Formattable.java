@@ -161,6 +161,7 @@ public interface Formattable {
      * @param delimiter The delimiter to use between records
      * @return The formatted result
      */
+    @NotNull
     String formatCSV(char delimiter);
 
     /**
@@ -172,6 +173,7 @@ public interface Formattable {
      * @param nullString A special string for encoding <code>NULL</code> values.
      * @return The formatted result
      */
+    @NotNull
     String formatCSV(char delimiter, String nullString);
 
     /**
@@ -182,6 +184,7 @@ public interface Formattable {
      * @param header Whether to emit a CSV header line
      * @return The formatted result
      */
+    @NotNull
     String formatCSV(boolean header);
 
     /**
@@ -193,6 +196,7 @@ public interface Formattable {
      * @param delimiter The delimiter to use between records
      * @return The formatted result
      */
+    @NotNull
     String formatCSV(boolean header, char delimiter);
 
     /**
@@ -203,6 +207,7 @@ public interface Formattable {
      * @param nullString A special string for encoding <code>NULL</code> values.
      * @return The formatted result
      */
+    @NotNull
     String formatCSV(boolean header, char delimiter, String nullString);
 
     /**
@@ -210,6 +215,7 @@ public interface Formattable {
      *
      * @return The formatted result
      */
+    @NotNull
     String formatCSV(CSVFormat format);
 
     /**
@@ -227,6 +233,7 @@ public interface Formattable {
      *
      * @return The formatted result
      */
+    @NotNull
     String formatJSON();
 
     /**
@@ -236,6 +243,7 @@ public interface Formattable {
      * @return The formatted result
      * @see JSONFormat
      */
+    @NotNull
     String formatJSON(JSONFormat format);
 
     /**
@@ -244,6 +252,7 @@ public interface Formattable {
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
+    @NotNull
     String formatXML();
 
     /**
@@ -252,10 +261,80 @@ public interface Formattable {
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
+    @NotNull
     String formatXML(XMLFormat format);
 
+    /**
+     * Get this result as an ASCII chart.
+     *
+     * @see #formatChart(ChartFormat)
+     */
+    @NotNull
     String formatChart();
 
+    /**
+     * Get this result as an ASCII chart.
+     * <p>
+     * When running a query like this: <code><pre>
+     * String chart =
+     * create.select(
+     *            BOOK_TO_BOOK_STORE.BOOK_STORE_NAME,
+     *            count(BOOK_TO_BOOK_STORE.BOOK_ID).as("books")
+     *        )
+     *        .from(BOOK_TO_BOOK_STORE)
+     *        .groupBy(BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)
+     *        .fetch()
+     *        .formatChart();
+     * </pre></code> Where the formatted result would look like this:
+     *
+     * <pre>
+     * +-------------------------+-----+
+     * |BOOK_STORE_NAME          |books|
+     * +-------------------------+-----+
+     * |Buchhandlung im Volkshaus|    1|
+     * |Ex Libris                |    2|
+     * |Orell Füssli             |    3|
+     * +-------------------------+-----+
+     * </pre>
+     *
+     * Then the chart might look something like this:
+     *
+     * <pre>
+     * 3.00|                                                  █████████████████████████
+     * 2.91|                                                  █████████████████████████
+     * 2.82|                                                  █████████████████████████
+     * 2.73|                                                  █████████████████████████
+     * 2.64|                                                  █████████████████████████
+     * 2.55|                                                  █████████████████████████
+     * 2.45|                                                  █████████████████████████
+     * 2.36|                                                  █████████████████████████
+     * 2.27|                                                  █████████████████████████
+     * 2.18|                                                  █████████████████████████
+     * 2.09|                                                  █████████████████████████
+     * 2.00|                         ██████████████████████████████████████████████████
+     * 1.91|                         ██████████████████████████████████████████████████
+     * 1.82|                         ██████████████████████████████████████████████████
+     * 1.73|                         ██████████████████████████████████████████████████
+     * 1.64|                         ██████████████████████████████████████████████████
+     * 1.55|                         ██████████████████████████████████████████████████
+     * 1.45|                         ██████████████████████████████████████████████████
+     * 1.36|                         ██████████████████████████████████████████████████
+     * 1.27|                         ██████████████████████████████████████████████████
+     * 1.18|                         ██████████████████████████████████████████████████
+     * 1.09|                         ██████████████████████████████████████████████████
+     * 1.00|███████████████████████████████████████████████████████████████████████████
+     * ----+---------------------------------------------------------------------------
+     *     | Buchhandlung im Volkshaus         Ex Libris               Orell Füssli
+     * </pre>
+     *
+     * It is possible to specify a variety of {@link ChartFormat} formatting
+     * specifications, such as the width, height, display type (default,
+     * stacked, 100% stacked), the column index of the category and value
+     * columns, etc.
+     *
+     * @see #formatChart(ChartFormat)
+     */
+    @NotNull
     String formatChart(ChartFormat format);
 
     /**
@@ -266,6 +345,7 @@ public interface Formattable {
      * <code>INSERT</code> statements into an <code>"UNKNOWN_TABLE"</code>. In
      * both cases, the {@link Result#fields()} are used for column names.
      */
+    @NotNull
     String formatInsert();
 
     /**
@@ -275,6 +355,7 @@ public interface Formattable {
      * into. If the <code>fields</code> argument is left empty, the
      * {@link Result#fields()} are used, instead.
      */
+    @NotNull
     String formatInsert(Table<?> table, Field<?>... fields);
 
     /**
@@ -550,6 +631,7 @@ public interface Formattable {
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
+    @NotNull
     Document intoXML();
 
     /**
@@ -559,6 +641,7 @@ public interface Formattable {
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
+    @NotNull
     Document intoXML(XMLFormat format);
 
     /**
@@ -570,6 +653,7 @@ public interface Formattable {
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
+    @NotNull
     <H extends ContentHandler> H intoXML(H handler) throws SAXException;
 
     /**
@@ -581,6 +665,7 @@ public interface Formattable {
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
      */
+    @NotNull
     <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException;
 
 }

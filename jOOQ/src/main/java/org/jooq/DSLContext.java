@@ -12608,6 +12608,55 @@ public interface DSLContext extends Scope {
     <T> List<T> fetchValues(TableField<?, T> field) throws DataAccessException;
 
     /**
+     * Execute the query and return a {@link Map} with the first column as the
+     * map key and the second column as the map value.
+     * <p>
+     * An exception is thrown, if the keys turn out to be non-unique in the
+     * result set. Use {@link #fetchGroups(ResultQuery)} instead, if your keys
+     * are non-unique.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
+     * The resulting map is iteration order preserving.
+     *
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key list is non-unique in the
+     *             result set.
+     * @see ResultQuery#fetchMap(Field, Field)
+     */
+    @NotNull
+    @Support
+    <K, V> Map<K, V> fetchMap(ResultQuery<? extends Record2<K, V>> query) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with the first column as the
+     * map key and the second column as the map values.
+     * <p>
+     * Unlike {@link #fetchMap(ResultQuery)}, this method allows for non-unique
+     * keys in the result set.
+     * <p>
+     * Whether this fetches an intermediate {@link Result} (accessible by
+     * {@link ExecuteListener} implementations), or streams records directly to
+     * the collector producing the result is governed by
+     * {@link Settings#getFetchIntermediateResult()}.
+     * <p>
+     * The resulting map is iteration order preserving.
+     *
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see ResultQuery#fetchGroups(Field, Field)
+     */
+    @NotNull
+    @Support
+    <K, V> Map<K, List<V>> fetchGroups(ResultQuery<? extends Record2<K, V>> query) throws DataAccessException;
+
+    /**
      * Execute a "Query by Example" (QBE) based on an example record.
      *
      * @param example The example record

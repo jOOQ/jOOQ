@@ -41,6 +41,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableMap;
+import static org.jooq.Records.intoGroups;
+import static org.jooq.Records.intoMap;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
@@ -212,6 +214,7 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+import org.jooq.Records;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -283,6 +286,8 @@ import org.jooq.tools.jdbc.MockConfiguration;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockRunnable;
 import org.jooq.util.xml.jaxb.InformationSchema;
+
+import org.jetbrains.annotations.NotNull;
 
 import io.r2dbc.spi.ConnectionFactory;
 
@@ -4651,6 +4656,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <T> List<T> fetchValues(TableField<?, T> field) {
         return fetchValues(select(field).from(field.getTable()));
+    }
+
+    @Override
+    public <K, V> Map<K, V> fetchMap(ResultQuery<? extends Record2<K, V>> query) {
+        return Tools.attach(query, configuration(), () -> query.collect(intoMap()));
+    }
+
+    @Override
+    public <K, V> Map<K, List<V>> fetchGroups(ResultQuery<? extends Record2<K, V>> query) {
+        return Tools.attach(query, configuration(), () -> query.collect(intoGroups()));
     }
 
     private final <T, R extends Record1<T>> T value1(R record) {

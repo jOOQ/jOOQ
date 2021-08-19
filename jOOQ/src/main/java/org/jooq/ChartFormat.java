@@ -66,6 +66,7 @@ public final class ChartFormat {
     final boolean                   showVerticalLegend;
     final String                    newline;
     final DecimalFormat             numericFormat;
+    final DecimalFormat             percentFormat;
 
     public ChartFormat() {
         this(
@@ -81,7 +82,8 @@ public final class ChartFormat {
             true,
             true,
             "\n",
-            new DecimalFormat("###,###.00")
+            new DecimalFormat("###,###.00"),
+            new DecimalFormat("##0.00'%'")
         );
     }
 
@@ -98,7 +100,8 @@ public final class ChartFormat {
         boolean showHorizontalLegend,
         boolean showVerticalLegend,
         String newline,
-        DecimalFormat numericFormat
+        DecimalFormat numericFormat,
+        DecimalFormat percentFormat
     ) {
         this.output = output;
         this.type = type;
@@ -113,6 +116,7 @@ public final class ChartFormat {
         this.showVerticalLegend = showVerticalLegend;
         this.newline = newline;
         this.numericFormat = numericFormat;
+        this.percentFormat = percentFormat;
     }
 
     /**
@@ -133,7 +137,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -163,7 +168,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -190,7 +196,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -220,7 +227,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -272,7 +280,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -301,7 +310,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -330,7 +340,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -360,7 +371,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -390,7 +402,8 @@ public final class ChartFormat {
             newShowHorizontalLegend,
             newShowVerticalLegend,
             newline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -442,7 +455,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newNewline,
-            numericFormat
+            numericFormat,
+            percentFormat
         );
     }
 
@@ -472,7 +486,8 @@ public final class ChartFormat {
             showHorizontalLegend,
             showVerticalLegend,
             newline,
-            newNumericFormat
+            newNumericFormat,
+            percentFormat
         );
     }
 
@@ -482,6 +497,37 @@ public final class ChartFormat {
     @NotNull
     public DecimalFormat numericFormat() {
         return numericFormat;
+    }
+
+    /**
+     * The new numeric format for percentages, defaulting to <code>###.00'%'</code>.
+     */
+    @NotNull
+    public ChartFormat percentFormat(DecimalFormat newPercentFormat) {
+        return new ChartFormat(
+            output,
+            type,
+            display,
+            width,
+            height,
+            category,
+            categoryAsText,
+            values,
+            shades,
+            showHorizontalLegend,
+            showVerticalLegend,
+            newline,
+            numericFormat,
+            newPercentFormat
+        );
+    }
+
+    /**
+     * The numeric format for percentages.
+     */
+    @NotNull
+    public DecimalFormat percentFormat() {
+        return percentFormat;
     }
 
     /**

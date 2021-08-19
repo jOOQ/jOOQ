@@ -917,10 +917,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             }
 
             int verticalLegendWidth = format.showVerticalLegend()
-                ? Math.max(
-                      format.numericFormat().format(axisMin).length(),
-                      format.numericFormat().format(axisMax).length()
-                  )
+                ? (format.display() == Display.HUNDRED_PERCENT_STACKED)
+                    ? fp.width(format.percentFormat().format(100.0))
+                    : Math.max(
+                          format.numericFormat().format(axisMin).length(),
+                          format.numericFormat().format(axisMax).length()
+                      )
                 : 0;
 
             int horizontalLegendHeight = format.showHorizontalLegend() ? 1 : 0;
@@ -940,7 +942,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 if (format.showVerticalLegend()) {
                     String axisLegendString = (format.display() == Display.HUNDRED_PERCENT_STACKED)
-                        ? format.numericFormat().format(axisLegendPercent * 100.0) + "%"
+                        ? format.percentFormat().format(axisLegendPercent * 100.0)
                         : format.numericFormat().format(axisLegend);
 
                     for (int x = fp.width(axisLegendString); x < verticalLegendWidth; x++)

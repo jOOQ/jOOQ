@@ -23,7 +23,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
-        <scala.version>2.12.9</scala.version>
 
         <db.url>jdbc:h2:~/flyway-test</db.url>
         <db.username>sa</db.username>
@@ -41,29 +40,10 @@
             <artifactId>h2</artifactId>
         </dependency>
 
-        <!-- Run Scala tests -->
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-            <version>${scala.version}</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.12</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -73,21 +53,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            
-            <!-- The Scala compiler plugin -->
-            <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
@@ -138,33 +103,6 @@
                                 <target>
                                     <packageName>org.jooq.example.flyway.j.db.h2</packageName>
                                     <directory>target/generated-sources/jooq-h2-java</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>scala-generator</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-
-                        <configuration>
-                            <jdbc>
-                                <url>${db.url}</url>
-                                <user>${db.username}</user>
-                            </jdbc>
-                            <generator>
-                                <name>org.jooq.codegen.ScalaGenerator</name>
-                                <database>
-                                    <includes>.*</includes>
-                                    <inputSchema>FLYWAY_TEST</inputSchema>
-                                    <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
-                                </database>
-                                <target>
-                                    <packageName>org.jooq.example.flyway.s.db.h2</packageName>
-                                    <directory>target/generated-sources/jooq-h2-scala</directory>
                                 </target>
                             </generator>
                         </configuration>

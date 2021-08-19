@@ -872,6 +872,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             throw new IllegalStateException();
 
         try {
+            if (result.isEmpty()) {
+                writer.append("No data available");
+                return;
+            }
+
             DSLContext ctx = configuration.dsl();
             FormattingProvider fp = configuration.formattingProvider();
             Field<?> category = fields.field(format.category());

@@ -52,15 +52,16 @@ public class TestContainersTest {
         }
     }
 
+    final /* record */ class Film { private final String title; public Film(String title) { this.title = title; } public String title() { return title; } @Override public boolean equals(Object o) { if (!(o instanceof Film)) return false; Film other = (Film) o; if (!java.util.Objects.equals(this.title, other.title)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.title); } @Override public String toString() { return new StringBuilder("Film[").append("title=").append(this.title).append("]").toString(); } }
+    final /* record */ class Actor { private final String firstName; private final String lastName; public Actor(String firstName, String lastName) { this.firstName = firstName; this.lastName = lastName; } public String firstName() { return firstName; } public String lastName() { return lastName; } @Override public boolean equals(Object o) { if (!(o instanceof Actor)) return false; Actor other = (Actor) o; if (!java.util.Objects.equals(this.firstName, other.firstName)) return false; if (!java.util.Objects.equals(this.lastName, other.lastName)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.firstName, this.lastName); } @Override public String toString() { return new StringBuilder("Actor[").append("firstName=").append(this.firstName).append(", lastName=").append(this.lastName).append("]").toString(); } }
+    final /* record */ class Category { private final String name; public Category(String name) { this.name = name; } public String name() { return name; } @Override public boolean equals(Object o) { if (!(o instanceof Category)) return false; Category other = (Category) o; if (!java.util.Objects.equals(this.name, other.name)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.name); } @Override public String toString() { return new StringBuilder("Category[").append("name=").append(this.name).append("]").toString(); } }
+
     @Test
     public void testMultisetMappingIntoJavaRecords() {
-        final /* record */ class Film { private final String title; public Film(String title) { this.title = title; } public String title() { return title; } @Override public boolean equals(Object o) { if (!(o instanceof Film)) return false; Film other = (Film) o; if (!java.util.Objects.equals(this.title, other.title)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.title); } @Override public String toString() { return new StringBuilder("Film[").append("title=").append(this.title).append("]").toString(); } }
-        final /* record */ class Actor { private final String firstName; private final String lastName; public Actor(String firstName, String lastName) { this.firstName = firstName; this.lastName = lastName; } public String firstName() { return firstName; } public String lastName() { return lastName; } @Override public boolean equals(Object o) { if (!(o instanceof Actor)) return false; Actor other = (Actor) o; if (!java.util.Objects.equals(this.firstName, other.firstName)) return false; if (!java.util.Objects.equals(this.lastName, other.lastName)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.firstName, this.lastName); } @Override public String toString() { return new StringBuilder("Actor[").append("firstName=").append(this.firstName).append(", lastName=").append(this.lastName).append("]").toString(); } }
-        final /* record */ class Category { private final String name; public Category(String name) { this.name = name; } public String name() { return name; } @Override public boolean equals(Object o) { if (!(o instanceof Category)) return false; Category other = (Category) o; if (!java.util.Objects.equals(this.name, other.name)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.name); } @Override public String toString() { return new StringBuilder("Category[").append("name=").append(this.name).append("]").toString(); } }
 
         // Get films by title, and their actors and categories as nested collections, as well as
         // all the customers that have rented the film
-        var result = println(ctx
+        Result<?> result = println(ctx
             .select(
                 FILM.TITLE.convertFrom(Film::new),
                 multiset(
@@ -91,7 +92,7 @@ public class TestContainersTest {
 
         // Get films by title, and their actors and categories as nested collections,
         // and all the customers that have rented the film, and their payments
-        var result = println(ctx
+        Result<?> result = println(ctx
             .select(
                 FILM.TITLE,
                 multiset(

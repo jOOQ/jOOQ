@@ -68,7 +68,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
+import static org.jooq.impl.DSL.finalTable;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.oldTable;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Keywords.K_BEGIN;
@@ -128,6 +130,7 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DMLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Delete;
@@ -171,7 +174,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery {
+abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery implements DMLQuery<R> {
+
     private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
 
     private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE  = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL);
@@ -362,6 +366,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             markTopLevelCteAndAccept(ctx, c -> {});
 
         boolean previousDeclareFields = ctx.declareFields();
+
+
 
 
 

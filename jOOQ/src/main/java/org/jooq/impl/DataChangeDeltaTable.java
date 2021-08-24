@@ -39,35 +39,85 @@ package org.jooq.impl;
 
 
 
+import static org.jooq.impl.Keywords.K_FINAL;
+import static org.jooq.impl.Keywords.K_NEW;
+import static org.jooq.impl.Keywords.K_OLD;
+import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Tools.abstractDMLQuery;
+
+import org.jooq.Context;
+import org.jooq.DMLQuery;
+import org.jooq.Delete;
+import org.jooq.Insert;
+import org.jooq.Merge;
+import org.jooq.Record;
+import org.jooq.Table;
+import org.jooq.TableOptions;
+import org.jooq.Update;
 
 
+/**
+ * @author Lukas Eder
+ */
+final class DataChangeDeltaTable<R extends Record> extends AbstractTable<R> {
 
+    private final ResultOption result;
+    private final DMLQuery<R>  query;
+    private final Table<R>     table;
 
+    DataChangeDeltaTable(ResultOption result, DMLQuery<R> query) {
+        super(TableOptions.expression(), table(query).getUnqualifiedName());
 
+        this.result = result;
+        this.query = query;
+        this.table = table(query);
+    }
 
+    enum ResultOption {
+        FINAL, OLD, NEW
+    }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private static final <R extends Record> Table<R> table(DMLQuery<R> query) {
+        if (query instanceof Insert || query instanceof Update || query instanceof Delete)
+            return (Table<R>) abstractDMLQuery(query).table();
+        else if (query instanceof Merge)
+            return ((MergeImpl) query).table();
+        else
+            throw new IllegalStateException("Unsupported query type: " + query);
+    }
 
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
+    @Override
+    public final void accept(Context<?> ctx) {
+        switch (result) {
+            case FINAL: ctx.visit(K_FINAL); break;
+            case OLD: ctx.visit(K_OLD); break;
+            case NEW: ctx.visit(K_NEW); break;
+            default: throw new IllegalStateException("Unsupported result option: " + result);
+        }
 
+        ctx.sql(' ').visit(K_TABLE)
+           .sqlIndentStart(" (")
+           .visit(query)
+           .sqlIndentEnd(')');
+    }
 
+    // -------------------------------------------------------------------------
+    // XXX: Table API
+    // -------------------------------------------------------------------------
 
+    @Override
+    public final Class<? extends R> getRecordType() {
+        return table.getRecordType();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @SuppressWarnings("unchecked")
+    @Override
+    final FieldsImpl<R> fields0() {
+        return ((AbstractRow<R>) table.fieldsRow()).fields;
+    }
+}

@@ -211,6 +211,7 @@ import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
+import org.jooq.DMLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
@@ -432,6 +433,7 @@ import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.DataChangeDeltaTable.ResultOption;
 import org.jooq.impl.XMLParse.DocumentOrContent;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -10885,6 +10887,48 @@ public class DSL {
     @Support
     public static Role role(Name name) {
         return new RoleImpl(name);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Data Change Delta Table
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the data change delta table with result option <code>OLD</code> to
+     * retrieve the modified data from before the {@link Update} or
+     * {@link Delete} statement was applied.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> oldTable(DMLQuery<R> query) {
+        return new DataChangeDeltaTable<>(ResultOption.OLD, query);
+    }
+
+    /**
+     * Get the data change delta table with result option <code>NEW</code> to
+     * retrieve the modified data from after the {@link Update} or
+     * {@link Insert} statement was applied.
+     * <p>
+     * This does not include trigger generated values.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> newTable(DMLQuery<R> query) {
+        return new DataChangeDeltaTable<R>(ResultOption.NEW, query);
+    }
+
+
+    /**
+     * Get the data change delta table with result option <code>NEW</code> to
+     * retrieve the modified data from after the {@link Update} or
+     * {@link Insert} statement was applied.
+     * <p>
+     * This includes trigger generated values.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> finalTable(DMLQuery<R> query) {
+        return new DataChangeDeltaTable<>(ResultOption.FINAL, query);
     }
 
     // -------------------------------------------------------------------------

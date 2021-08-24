@@ -248,6 +248,7 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
 import org.jooq.Cursor;
+import org.jooq.DMLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.EmbeddableRecord;

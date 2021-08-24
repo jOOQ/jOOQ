@@ -162,6 +162,7 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DataChangeDeltaTable.ResultOption;
 import org.jooq.impl.DefaultUnwrapperProvider.DefaultUnwrapper;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;

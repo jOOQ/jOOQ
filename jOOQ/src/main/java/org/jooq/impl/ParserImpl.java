@@ -174,6 +174,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 // ...
+import org.jooq.Delete;
 import org.jooq.DeleteLimitStep;
 import org.jooq.DeleteOrderByStep;
 import org.jooq.DeleteReturningStep;
@@ -200,6 +201,7 @@ import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
 // ...
 import org.jooq.Index;
+import org.jooq.Insert;
 import org.jooq.InsertOnConflictDoUpdateStep;
 import org.jooq.InsertOnConflictWhereIndexPredicateStep;
 import org.jooq.InsertOnConflictWhereStep;
@@ -276,6 +278,7 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.Truncate;
 import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateIdentityStep;
+import org.jooq.Update;
 import org.jooq.UpdateFromStep;
 import org.jooq.UpdateLimitStep;
 import org.jooq.UpdateOrderByStep;
@@ -6140,9 +6143,50 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-        // TODO [#5306] Support FINAL TABLE (<data change statement>)
-        // TODIO ONLY ( table primary )
-        if (parseFunctionNameIf("UNNEST", "TABLE")) {
+        // TODO ONLY ( table primary )
+        if (parseFunctionNameIf("OLD TABLE")) {
+            parse('(');
+            Query query = parseQuery(false, false);
+            parse(')');
+
+            if (query instanceof Merge)
+                result = oldTable((Merge<?>) query);
+            else if (query instanceof Update)
+                result = oldTable((Update<?>) query);
+            else if (query instanceof Delete)
+                result = oldTable((Delete<?>) query);
+            else
+                throw expected("UPDATE", "DELETE", "MERGE");
+        }
+        else if (parseFunctionNameIf("NEW TABLE")) {
+            parse('(');
+            Query query = parseQuery(false, false);
+            parse(')');
+
+            if (query instanceof Merge)
+                result = newTable((Merge<?>) query);
+            else if (query instanceof Insert)
+                result = newTable((Insert<?>) query);
+            else if (query instanceof Update)
+                result = newTable((Update<?>) query);
+            else
+                throw expected("INSERT", "UPDATE", "MERGE");
+        }
+        else if (parseFunctionNameIf("FINAL TABLE")) {
+            parse('(');
+            Query query = parseQuery(false, false);
+            parse(')');
+
+            if (query instanceof Merge)
+                result = finalTable((Merge<?>) query);
+            else if (query instanceof Insert)
+                result = finalTable((Insert<?>) query);
+            else if (query instanceof Update)
+                result = finalTable((Update<?>) query);
+            else
+                throw expected("INSERT", "UPDATE", "MERGE");
+        }
+        else if (parseFunctionNameIf("UNNEST", "TABLE")) {
             parse('(');
 
             if (parseFunctionNameIf("GENERATOR")) {

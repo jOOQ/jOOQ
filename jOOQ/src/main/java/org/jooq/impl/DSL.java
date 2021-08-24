@@ -10900,7 +10900,29 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    public static <R extends Record> Table<R> oldTable(DMLQuery<R> query) {
+    public static <R extends Record> Table<R> oldTable(Update<R> query) {
+        return new DataChangeDeltaTable<>(ResultOption.OLD, query);
+    }
+
+    /**
+     * Get the data change delta table with result option <code>OLD</code> to
+     * retrieve the modified data from before the {@link Update} or
+     * {@link Delete} statement was applied.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> oldTable(Delete<R> query) {
+        return new DataChangeDeltaTable<>(ResultOption.OLD, query);
+    }
+
+    /**
+     * Get the data change delta table with result option <code>OLD</code> to
+     * retrieve the modified data from before the {@link Update} or
+     * {@link Delete} statement was applied.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> oldTable(Merge<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.OLD, query);
     }
 
@@ -10913,10 +10935,35 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    public static <R extends Record> Table<R> newTable(DMLQuery<R> query) {
+    public static <R extends Record> Table<R> newTable(Insert<R> query) {
         return new DataChangeDeltaTable<R>(ResultOption.NEW, query);
     }
 
+    /**
+     * Get the data change delta table with result option <code>NEW</code> to
+     * retrieve the modified data from after the {@link Update} or
+     * {@link Insert} statement was applied.
+     * <p>
+     * This does not include trigger generated values.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> newTable(Update<R> query) {
+        return new DataChangeDeltaTable<R>(ResultOption.NEW, query);
+    }
+
+    /**
+     * Get the data change delta table with result option <code>NEW</code> to
+     * retrieve the modified data from after the {@link Update} or
+     * {@link Insert} statement was applied.
+     * <p>
+     * This does not include trigger generated values.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> newTable(Merge<R> query) {
+        return new DataChangeDeltaTable<R>(ResultOption.NEW, query);
+    }
 
     /**
      * Get the data change delta table with result option <code>NEW</code> to
@@ -10927,7 +10974,33 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, POSTGRES })
-    public static <R extends Record> Table<R> finalTable(DMLQuery<R> query) {
+    public static <R extends Record> Table<R> finalTable(Insert<R> query) {
+        return new DataChangeDeltaTable<>(ResultOption.FINAL, query);
+    }
+
+    /**
+     * Get the data change delta table with result option <code>NEW</code> to
+     * retrieve the modified data from after the {@link Update} or
+     * {@link Insert} statement was applied.
+     * <p>
+     * This includes trigger generated values.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> finalTable(Update<R> query) {
+        return new DataChangeDeltaTable<>(ResultOption.FINAL, query);
+    }
+
+    /**
+     * Get the data change delta table with result option <code>NEW</code> to
+     * retrieve the modified data from after the {@link Update} or
+     * {@link Insert} statement was applied.
+     * <p>
+     * This includes trigger generated values.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES })
+    public static <R extends Record> Table<R> finalTable(Merge<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.FINAL, query);
     }
 

@@ -63,6 +63,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Merge<R extends Record> extends RowCountQuery {
+public interface Merge<R extends Record> extends DMLQuery<R> {
 
 }

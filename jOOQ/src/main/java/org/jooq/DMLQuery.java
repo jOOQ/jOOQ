@@ -37,28 +37,13 @@
  */
 package org.jooq;
 
-import org.jooq.impl.DSL;
 
 /**
- * An <code>UPDATE</code> statement.
- * <p>
- * <strong>Example:</strong>
- * <p>
- * <code><pre>
- * // Assuming import static org.jooq.impl.DSL.*;
- *
- * using(configuration)
- *    .update(CUSTOMER)
- *    .set(CUSTOMER.STATUS, "Gold")
- *    .where(CUSTOMER.ID.eq(1))
- *    .execute();
- * </pre></code>
- * <p>
- * Instances can be created using {@link DSL#update(Table)}, or
- * {@link DSLContext#updateQuery(Table)} and overloads.
+ * A marker interface for all DML queries (namely {@link Insert},
+ * {@link Update}, {@link Delete}, and {@link Merge}).
  *
  * @author Lukas Eder
  */
-public interface Update<R extends Record> extends DMLQuery<R> {
+public interface DMLQuery<R extends Record> extends RowCountQuery {
 
 }

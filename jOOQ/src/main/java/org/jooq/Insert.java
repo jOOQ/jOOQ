@@ -59,6 +59,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Insert<R extends Record> extends RowCountQuery {
+public interface Insert<R extends Record> extends DMLQuery<R> {
 
 }
